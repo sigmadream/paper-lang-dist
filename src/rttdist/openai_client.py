@@ -16,14 +16,20 @@ from rttdist.artifacts import (
     MockOpenAIUsage,
 )
 from rttdist.config import PINNED_OPENAI_MODEL, SUPPORTED_OPENAI_MODELS
+from rttdist.embedding import (
+    EmbeddedSource,
+    EmbeddingProvider,
+    EmbeddingProviderError,
+    EmbeddingUsage,
+    hash_source_text,
+)
 from rttdist.extract import (
     SourceExtractionError as ExtractionPrimitiveError,
     extract_single_file_source as extract_single_file_source_primitive,
 )
 from rttdist.prompts import (
     PromptTemplateError,
-    build_cpp_to_target_prompt,
-    build_target_to_cpp_prompt,
+    build_translation_prompt,
 )
 
 
@@ -32,6 +38,10 @@ class OpenAIClientError(RuntimeError):
 
 
 class OpenAIResponseParseError(OpenAIClientError):
+    pass
+
+
+class OpenAIEmbeddingResponseParseError(OpenAIClientError):
     pass
 
 
@@ -44,10 +54,32 @@ class ChatCompletionsTransport(Protocol):
 
 
 @dataclass(frozen=True)
+class OpenAIEmbeddingTransportResponse:
+    payload: dict[str, Any]
+    request_id: str | None
+
+
+class EmbeddingsTransport(Protocol):
+    def create_embedding(
+        self, payload: dict[str, Any]
+    ) -> OpenAIEmbeddingTransportResponse: ...
+
+
+@dataclass(frozen=True)
 class TranslationResult:
     request: MockOpenAIRequest
     response: MockOpenAIResponse
     extracted_source: str
+
+
+@dataclass(frozen=True)
+class OpenAIEmbeddingResult:
+    configured_model: str
+    observed_model: str
+    request_id: str | None
+    dimensions: int
+    vector: tuple[float, ...]
+    usage: EmbeddingUsage | None
 
 
 class OpenAITranslationClient:
@@ -84,32 +116,17 @@ class OpenAITranslationClient:
         source_code: str,
         iteration_index: int,
     ) -> TranslationResult:
-        try:
-            prompt = build_cpp_to_target_prompt(
-                problem_id=problem_id,
-                target_language=target_language,
-                problem_statement=problem_statement,
-                sample_input=sample_input,
-                sample_output=sample_output,
-                source_code=source_code,
-            )
-        except PromptTemplateError as exc:
-            raise OpenAIClientError(str(exc)) from exc
-
-        metadata = {
-            "direction": prompt.direction,
-            "problem_id": problem_id,
-            "seed_language": "cpp",
-            "target_language": prompt.target_language,
-            "iteration_index": iteration_index,
-        }
-        request = MockOpenAIRequest(
-            model=self._model,
-            temperature=self._temperature,
-            messages=prompt.messages,
-            metadata=metadata,
+        return self.translate(
+            problem_id=problem_id,
+            source_language="cpp",
+            target_language=target_language,
+            problem_statement=problem_statement,
+            sample_input=sample_input,
+            sample_output=sample_output,
+            source_code=source_code,
+            iteration_index=iteration_index,
+            direction="seed_to_target",
         )
-        return self._translate(request)
 
     def translate_target_to_cpp(
         self,
@@ -122,14 +139,41 @@ class OpenAITranslationClient:
         source_code: str,
         iteration_index: int,
     ) -> TranslationResult:
+        return self.translate(
+            problem_id=problem_id,
+            source_language=source_language,
+            target_language="cpp",
+            problem_statement=problem_statement,
+            sample_input=sample_input,
+            sample_output=sample_output,
+            source_code=source_code,
+            iteration_index=iteration_index,
+            direction="target_to_seed",
+        )
+
+    def translate(
+        self,
+        *,
+        problem_id: str,
+        source_language: str,
+        target_language: str,
+        problem_statement: str,
+        sample_input: str,
+        sample_output: str,
+        source_code: str,
+        iteration_index: int,
+        direction: str = "source_to_target",
+    ) -> TranslationResult:
         try:
-            prompt = build_target_to_cpp_prompt(
+            prompt = build_translation_prompt(
                 problem_id=problem_id,
                 source_language=source_language,
+                target_language=target_language,
                 problem_statement=problem_statement,
                 sample_input=sample_input,
                 sample_output=sample_output,
                 source_code=source_code,
+                direction=direction,
             )
         except PromptTemplateError as exc:
             raise OpenAIClientError(str(exc)) from exc
@@ -137,9 +181,8 @@ class OpenAITranslationClient:
         metadata = {
             "direction": prompt.direction,
             "problem_id": problem_id,
-            "seed_language": "cpp",
             "source_language": prompt.source_language,
-            "target_language": "cpp",
+            "target_language": prompt.target_language,
             "iteration_index": iteration_index,
         }
         request = MockOpenAIRequest(
@@ -269,6 +312,65 @@ def parse_openai_response(raw_response: dict[str, Any]) -> MockOpenAIResponse:
     )
 
 
+def parse_openai_embedding_response(
+    *,
+    raw_response: dict[str, Any],
+    configured_model: str,
+    fallback_request_id: str | None = None,
+) -> OpenAIEmbeddingResult:
+    if not isinstance(raw_response, dict):
+        raise OpenAIEmbeddingResponseParseError(
+            "OpenAI embedding response payload must be a mapping."
+        )
+
+    model = raw_response.get("model")
+    if not isinstance(model, str) or not model.strip():
+        raise OpenAIEmbeddingResponseParseError(
+            "OpenAI embedding response `model` must be a non-empty string."
+        )
+
+    data = raw_response.get("data")
+    if not isinstance(data, list) or len(data) != 1:
+        raise OpenAIEmbeddingResponseParseError(
+            "OpenAI embedding response must contain exactly one data entry."
+        )
+    item = data[0]
+    if not isinstance(item, dict):
+        raise OpenAIEmbeddingResponseParseError(
+            "OpenAI embedding response data entry must be a mapping."
+        )
+
+    embedding_value = item.get("embedding")
+    if not isinstance(embedding_value, list) or not embedding_value:
+        raise OpenAIEmbeddingResponseParseError(
+            "OpenAI embedding response `data[0].embedding` must be a non-empty list."
+        )
+
+    parsed_vector: list[float] = []
+    for value in embedding_value:
+        if not isinstance(value, (int, float)) or isinstance(value, bool):
+            raise OpenAIEmbeddingResponseParseError(
+                "OpenAI embedding vector values must be numeric."
+            )
+        parsed_vector.append(float(value))
+
+    usage_payload = raw_response.get("usage")
+    usage = _parse_openai_embedding_usage(usage_payload)
+
+    request_id = _optional_text(raw_response.get("request_id"))
+    if request_id is None:
+        request_id = _optional_text(fallback_request_id)
+
+    return OpenAIEmbeddingResult(
+        configured_model=configured_model,
+        observed_model=model.strip(),
+        request_id=request_id,
+        dimensions=len(parsed_vector),
+        vector=tuple(parsed_vector),
+        usage=usage,
+    )
+
+
 def extract_single_file_source(response: MockOpenAIResponse | str) -> str:
     try:
         return extract_single_file_source_primitive(response)
@@ -283,6 +385,49 @@ def _parse_usage_token(raw_usage: dict[str, Any], *, field_name: str) -> int:
     if value < 0:
         raise OpenAIResponseParseError(f"`usage.{field_name}` must be >= 0.")
     return value
+
+
+def _parse_openai_embedding_usage(raw_usage: Any) -> EmbeddingUsage | None:
+    if raw_usage is None:
+        return None
+    if not isinstance(raw_usage, dict):
+        raise OpenAIEmbeddingResponseParseError(
+            "OpenAI embedding response `usage` must be a mapping when provided."
+        )
+
+    prompt_tokens = raw_usage.get("prompt_tokens")
+    total_tokens = raw_usage.get("total_tokens")
+    parsed_prompt_tokens: int | None = None
+    parsed_total_tokens: int | None = None
+
+    if prompt_tokens is not None:
+        if (
+            not isinstance(prompt_tokens, int)
+            or isinstance(prompt_tokens, bool)
+            or prompt_tokens < 0
+        ):
+            raise OpenAIEmbeddingResponseParseError(
+                "OpenAI embedding usage `prompt_tokens` must be an integer >= 0."
+            )
+        parsed_prompt_tokens = prompt_tokens
+
+    if total_tokens is not None:
+        if (
+            not isinstance(total_tokens, int)
+            or isinstance(total_tokens, bool)
+            or total_tokens < 0
+        ):
+            raise OpenAIEmbeddingResponseParseError(
+                "OpenAI embedding usage `total_tokens` must be an integer >= 0."
+            )
+        parsed_total_tokens = total_tokens
+
+    if parsed_prompt_tokens is None and parsed_total_tokens is None:
+        return None
+    return EmbeddingUsage(
+        prompt_tokens=parsed_prompt_tokens,
+        total_tokens=parsed_total_tokens,
+    )
 
 
 def _build_default_transport() -> ChatCompletionsTransport:
@@ -446,6 +591,17 @@ def _attach_translation_debug_payloads(
         setattr(exc, "response_payload", response_payload)
 
 
+def _attach_embedding_debug_payloads(
+    exc: Exception,
+    *,
+    request_payload: dict[str, Any],
+    response_payload: dict[str, Any] | None = None,
+) -> None:
+    setattr(exc, "request_payload", request_payload)
+    if response_payload is not None:
+        setattr(exc, "response_payload", response_payload)
+
+
 class _OpenAIChatCompletionsTransport:
     def __init__(self) -> None:
         self._client = OpenAI()
@@ -455,3 +611,95 @@ class _OpenAIChatCompletionsTransport:
         request_payload.pop("metadata", None)
         response = self._client.chat.completions.create(**request_payload)
         return response.model_dump(mode="python")
+
+
+class _OpenAIEmbeddingsTransport:
+    def __init__(self) -> None:
+        self._client = OpenAI()
+
+    def create_embedding(
+        self, payload: dict[str, Any]
+    ) -> OpenAIEmbeddingTransportResponse:
+        response = self._client.embeddings.create(**dict(payload))
+        request_id = _extract_openai_request_id(response)
+        return OpenAIEmbeddingTransportResponse(
+            payload=response.model_dump(mode="python"),
+            request_id=request_id,
+        )
+
+
+def _extract_openai_request_id(response: Any) -> str | None:
+    for attribute_name in ("_request_id", "request_id"):
+        attribute_value = getattr(response, attribute_name, None)
+        if isinstance(attribute_value, str) and attribute_value.strip():
+            return attribute_value.strip()
+
+    headers = getattr(response, "headers", None)
+    if isinstance(headers, dict):
+        for key in ("x-request-id", "request-id"):
+            header_value = headers.get(key)
+            if isinstance(header_value, str) and header_value.strip():
+                return header_value.strip()
+    return None
+
+
+DEFAULT_OPENAI_EMBEDDING_MODEL = "text-embedding-3-large"
+
+
+class OpenAIFinalSimilarityProvider(EmbeddingProvider):
+    provider_name = "openai"
+
+    def __init__(
+        self,
+        *,
+        model: str = DEFAULT_OPENAI_EMBEDDING_MODEL,
+        transport: EmbeddingsTransport | None = None,
+    ) -> None:
+        if not isinstance(model, str) or not model.strip():
+            raise OpenAIClientError("Embedding model must be a non-empty string.")
+        self.configured_model = model.strip()
+        self._transport = transport or _OpenAIEmbeddingsTransport()
+
+    def embed_source(self, *, source_text: str) -> EmbeddedSource:
+        if not isinstance(source_text, str) or not source_text.strip():
+            raise EmbeddingProviderError("Embedding source text must be non-empty.")
+
+        payload = {
+            "model": self.configured_model,
+            "input": source_text,
+            "encoding_format": "float",
+        }
+        try:
+            response = self._transport.create_embedding(payload)
+        except OpenAIClientError as exc:
+            _attach_embedding_debug_payloads(exc, request_payload=payload)
+            raise
+        except Exception as exc:
+            wrapped = OpenAIClientError(str(exc))
+            _attach_embedding_debug_payloads(wrapped, request_payload=payload)
+            raise wrapped from exc
+
+        try:
+            parsed = parse_openai_embedding_response(
+                raw_response=response.payload,
+                configured_model=self.configured_model,
+                fallback_request_id=response.request_id,
+            )
+        except OpenAIEmbeddingResponseParseError as exc:
+            _attach_embedding_debug_payloads(
+                exc,
+                request_payload=payload,
+                response_payload=response.payload,
+            )
+            raise
+
+        return EmbeddedSource(
+            source_hash=hash_source_text(source_text),
+            provider=self.provider_name,
+            configured_model=parsed.configured_model,
+            observed_model=parsed.observed_model,
+            request_id=parsed.request_id,
+            dimensions=parsed.dimensions,
+            vector=parsed.vector,
+            usage=parsed.usage,
+        )
