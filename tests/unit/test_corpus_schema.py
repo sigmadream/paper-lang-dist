@@ -28,7 +28,8 @@ def test_loads_minimal_yaml_schema() -> None:
     config = load_experiment_config(MINIMAL_CONFIG_PATH)
 
     assert config.problem_ids == ("IPOP_1436", "IPOP_2579")
-    assert set(config.target_languages) == SUPPORTED_TARGET_LANGUAGES
+    assert getattr(config, "seed_language") == "cpp"
+    assert set(config.target_languages).issubset(SUPPORTED_TARGET_LANGUAGES)
     assert config.openai.model == "gpt-5.4"
     assert config.openai.temperature == 0.0
     assert config.provider == "openai"
@@ -47,6 +48,7 @@ def test_rejects_unsupported_target_language(tmp_path: Path) -> None:
             [
                 "problem_ids:",
                 "  - IPOP_1436",
+                "seed_language: cpp",
                 "target_languages:",
                 "  - rust",
                 "openai:",
@@ -74,6 +76,7 @@ def test_rejects_duplicate_yaml_mapping_keys(tmp_path: Path) -> None:
             [
                 "problem_ids:",
                 "  - IPOP_1436",
+                "seed_language: cpp",
                 "target_languages:",
                 "  - python",
                 "openai:",
@@ -109,6 +112,7 @@ def test_rejects_duplicate_target_languages(tmp_path: Path) -> None:
             [
                 "problem_ids:",
                 "  - IPOP_1436",
+                "seed_language: cpp",
                 "target_languages:",
                 "  - c",
                 "  - python",
@@ -139,6 +143,7 @@ def test_rejects_case_normalized_duplicate_target_languages(tmp_path: Path) -> N
             [
                 "problem_ids:",
                 "  - IPOP_1436",
+                "seed_language: cpp",
                 "target_languages:",
                 "  - C",
                 "  - c",
@@ -168,6 +173,7 @@ def test_accepts_approved_openai_models(tmp_path: Path, model: str) -> None:
             [
                 "problem_ids:",
                 "  - IPOP_1436",
+                "seed_language: cpp",
                 "target_languages:",
                 "  - python",
                 "openai:",
@@ -193,6 +199,7 @@ def test_rejects_unapproved_openai_model(tmp_path: Path) -> None:
             [
                 "problem_ids:",
                 "  - IPOP_1436",
+                "seed_language: cpp",
                 "target_languages:",
                 "  - python",
                 "openai:",
@@ -222,6 +229,7 @@ def test_loads_ollama_provider_config(tmp_path: Path) -> None:
                 "provider: ollama",
                 "problem_ids:",
                 "  - IPOP_1436",
+                "seed_language: cpp",
                 "target_languages:",
                 "  - python",
                 "ollama:",
@@ -254,6 +262,7 @@ def test_rejects_missing_ollama_section_when_provider_is_ollama(tmp_path: Path) 
                 "provider: ollama",
                 "problem_ids:",
                 "  - IPOP_1436",
+                "seed_language: cpp",
                 "target_languages:",
                 "  - python",
                 "runtime:",

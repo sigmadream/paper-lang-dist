@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
-from rttdist.config import ExperimentConfig
+from rttdist.config import ExperimentConfig, reference_filename_for_language
 
 
 class CorpusValidationError(ValueError):
@@ -43,10 +43,11 @@ def validate_corpus(config: ExperimentConfig) -> tuple[ProblemCorpusEntry, ...]:
 
         fixture_pairs = _discover_fixture_pairs(problem_id, fixture_directory)
 
-        seed_path = config.corpus_root / problem_id / "reference.cpp"
+        seed_filename = reference_filename_for_language(config.seed_language)
+        seed_path = config.corpus_root / problem_id / seed_filename
         if not seed_path.is_file():
             raise CorpusValidationError(
-                f"Missing seed reference.cpp for problem `{problem_id}`: {seed_path}"
+                f"Missing seed {seed_filename} for problem `{problem_id}`: {seed_path}"
             )
 
         entries.append(
