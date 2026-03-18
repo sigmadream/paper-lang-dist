@@ -8,12 +8,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from rttdist.config import SUPPORTED_TARGET_LANGUAGES
+from rttdist.config import SUPPORTED_EXPERIMENT_LANGUAGES, SUPPORTED_TARGET_LANGUAGES
 from rttdist.failure_taxonomy import FailureRecord
 
-SEED_LANGUAGE = "cpp"
 SOURCE_FILE_EXTENSIONS = {
-    SEED_LANGUAGE: ".cpp",
+    "cpp": ".cpp",
     "c": ".c",
     "java": ".java",
     "python": ".py",
@@ -131,7 +130,7 @@ class IterationArtifactPaths:
     iteration_metadata_path: str
     openai_request_path: str
     openai_response_path: str
-    input_cpp_source_path: str
+    input_seed_source_path: str
     translated_source_path: str
     roundtrip_source_path: str
     compile_log_path: str
@@ -144,7 +143,7 @@ class IterationArtifactPaths:
             "iteration_metadata_path": self.iteration_metadata_path,
             "openai_request_path": self.openai_request_path,
             "openai_response_path": self.openai_response_path,
-            "input_cpp_source_path": self.input_cpp_source_path,
+            "input_seed_source_path": self.input_seed_source_path,
             "translated_source_path": self.translated_source_path,
             "roundtrip_source_path": self.roundtrip_source_path,
             "compile_log_path": self.compile_log_path,
@@ -209,6 +208,7 @@ def build_run_metadata(
     run_id: str,
     problem: CuratedProblemReference,
     target_language: str,
+    seed_language: str,
     max_iterations: int,
 ) -> RunMetadata:
     if not isinstance(max_iterations, int) or isinstance(max_iterations, bool):
@@ -218,12 +218,22 @@ def build_run_metadata(
             f"`max_iterations` must be >= 1, got {max_iterations}."
         )
 
-    run_directory = build_run_directory(run_id, problem.problem_id, target_language)
+    normalized_seed_language = _normalize_language(
+        seed_language,
+        field_name="seed_language",
+        supported=SUPPORTED_EXPERIMENT_LANGUAGES,
+    )
+    run_directory = build_run_directory(
+        run_id,
+        problem.problem_id,
+        target_language,
+        normalized_seed_language,
+    )
 
     return RunMetadata(
         run_id=_normalize_text(run_id, field_name="run_id"),
         problem=problem,
-        seed_language=SEED_LANGUAGE,
+        seed_language=normalized_seed_language,
         target_language=target_language,
         max_iterations=max_iterations,
         run_directory=_to_contract_path(run_directory),
@@ -231,17 +241,51 @@ def build_run_metadata(
     )
 
 
-def build_run_directory(run_id: str, problem_id: str, target_language: str) -> Path:
+def build_run_directory(
+    run_id: str,
+    problem_id: str,
+    target_language: str,
+    seed_language: str,
+) -> Path:
+    _validate_target_language(target_language)
+    normalized_seed_language = _normalize_language(
+        seed_language,
+        field_name="seed_language",
+        supported=SUPPORTED_EXPERIMENT_LANGUAGES,
+    )
+    normalized_target_language = _normalize_language(
+        target_language,
+        field_name="target_language",
+        supported=SUPPORTED_TARGET_LANGUAGES,
+    )
+    normalized_run_id = _normalize_text(run_id, field_name="run_id")
+    normalized_problem_id = _normalize_text(problem_id, field_name="problem_id")
+    return (
+        Path(normalized_run_id)
+        / normalized_problem_id
+        / f"{normalized_seed_language}-to-{normalized_target_language}"
+    )
+
+
+def build_legacy_run_directory(
+    run_id: str, problem_id: str, target_language: str
+) -> Path:
     _validate_target_language(target_language)
     normalized_run_id = _normalize_text(run_id, field_name="run_id")
     normalized_problem_id = _normalize_text(problem_id, field_name="problem_id")
-    return Path(normalized_run_id) / normalized_problem_id / target_language
+    normalized_target_language = _normalize_language(
+        target_language,
+        field_name="target_language",
+        supported=SUPPORTED_TARGET_LANGUAGES,
+    )
+    return Path(normalized_run_id) / normalized_problem_id / normalized_target_language
 
 
 def build_iteration_artifact_paths(
     run_id: str,
     problem_id: str,
     target_language: str,
+    seed_language: str,
     iteration_index: int,
 ) -> IterationArtifactPaths:
     if not isinstance(iteration_index, int) or isinstance(iteration_index, bool):
@@ -251,8 +295,14 @@ def build_iteration_artifact_paths(
             f"`iteration_index` must be >= 1, got {iteration_index}."
         )
 
-    run_directory = build_run_directory(run_id, problem_id, target_language)
+    run_directory = build_run_directory(
+        run_id,
+        problem_id,
+        target_language,
+        seed_language,
+    )
     iteration_directory = run_directory / "iterations" / f"iter-{iteration_index:03d}"
+    seed_source_extension = source_file_extension(seed_language)
     source_extension = source_file_extension(target_language)
 
     return IterationArtifactPaths(
@@ -266,7 +316,9 @@ def build_iteration_artifact_paths(
         openai_response_path=_to_contract_path(
             iteration_directory / "openai-response.json"
         ),
-        input_cpp_source_path=_to_contract_path(iteration_directory / "input.cpp"),
+        input_seed_source_path=_to_contract_path(
+            iteration_directory / f"input{seed_source_extension}"
+        ),
         translated_source_path=_to_contract_path(
             iteration_directory / f"translated{source_extension}"
         ),
@@ -312,9 +364,23 @@ def source_file_extension(language: str) -> str:
     except KeyError as exc:
         supported = ", ".join(sorted(SUPPORTED_TARGET_LANGUAGES))
         raise ArtifactContractError(
-            "Unsupported target language "
-            f"`{language}`. Supported target languages: {supported}."
+            f"Unsupported language `{language}`. Supported languages: {supported}."
         ) from exc
+
+
+def _normalize_language(
+    value: str,
+    *,
+    field_name: str,
+    supported: frozenset[str],
+) -> str:
+    normalized = value.strip().lower() if isinstance(value, str) else ""
+    if normalized not in supported:
+        supported_values = ", ".join(sorted(supported))
+        raise ArtifactContractError(
+            f"Unsupported {field_name} `{value}`. Supported values: {supported_values}."
+        )
+    return normalized
 
 
 def _normalize_text(value: str, *, field_name: str) -> str:

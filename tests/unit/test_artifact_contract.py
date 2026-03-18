@@ -3,7 +3,10 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
 from rttdist.artifacts import (
+    ArtifactContractError,
     CuratedProblemReference,
     IterationArtifactRecord,
     MockOpenAIChoice,
@@ -13,6 +16,7 @@ from rttdist.artifacts import (
     MockOpenAIUsage,
     RunArtifactRecord,
     build_iteration_artifact_paths,
+    build_run_directory,
     build_run_metadata,
 )
 from rttdist.failure_taxonomy import FailureRecord, FailureStatus
@@ -31,12 +35,14 @@ def test_run_artifact_contract_matches_golden_success_fixture() -> None:
         run_id="smoke",
         problem=problem,
         target_language="python",
+        seed_language="cpp",
         max_iterations=20,
     )
     iteration_paths = build_iteration_artifact_paths(
         run_id="smoke",
         problem_id=problem.problem_id,
         target_language="python",
+        seed_language="cpp",
         iteration_index=1,
     )
     iteration = IterationArtifactRecord(
@@ -87,6 +93,7 @@ def test_iteration_artifact_contract_matches_golden_compile_failure_fixture() ->
         run_id="smoke",
         problem_id=problem.problem_id,
         target_language="java",
+        seed_language="cpp",
         iteration_index=2,
     )
 
@@ -140,18 +147,35 @@ def test_iteration_artifact_contract_matches_golden_compile_failure_fixture() ->
     )
 
 
-def test_iteration_artifact_paths_include_iteration_input_cpp_snapshot() -> None:
+def test_ordered_pair_iteration_artifact_paths_include_iteration_seed_snapshot() -> (
+    None
+):
     iteration_paths = build_iteration_artifact_paths(
         run_id="smoke",
         problem_id="IPOP_1436",
         target_language="python",
+        seed_language="cpp",
         iteration_index=3,
     )
 
     assert (
-        iteration_paths.input_cpp_source_path
-        == "smoke/IPOP_1436/python/iterations/iter-003/input.cpp"
+        iteration_paths.input_seed_source_path
+        == "smoke/IPOP_1436/cpp-to-python/iterations/iter-003/input.cpp"
     )
+
+
+def test_ordered_pair_run_directory_includes_seed_and_target_identity() -> None:
+    problem = _build_curated_problem_reference()
+    metadata = build_run_metadata(
+        run_id="smoke",
+        problem=problem,
+        target_language="python",
+        seed_language="cpp",
+        max_iterations=20,
+    )
+
+    assert metadata.run_directory == "smoke/IPOP_1436/cpp-to-python"
+    assert metadata.run_metadata_path == "smoke/IPOP_1436/cpp-to-python/run.json"
 
 
 def _build_curated_problem_reference() -> CuratedProblemReference:
@@ -226,16 +250,6 @@ def _load_json(path: Path) -> dict[str, object]:
         return json.load(handle)
 
 
-import pytest
-
-from rttdist.artifacts import (
-    ArtifactContractError,
-    build_iteration_artifact_paths,
-    build_run_directory,
-    build_run_metadata,
-)
-
-
 class TestPathTraversalRejection:
     def test_run_id_rejects_forward_slash_separator(self) -> None:
         problem = _build_curated_problem_reference()
@@ -244,6 +258,7 @@ class TestPathTraversalRejection:
                 run_id="run/segment",
                 problem=problem,
                 target_language="python",
+                seed_language="cpp",
                 max_iterations=1,
             )
 
@@ -254,6 +269,7 @@ class TestPathTraversalRejection:
                 run_id=r"run\\segment",
                 problem=problem,
                 target_language="python",
+                seed_language="cpp",
                 max_iterations=1,
             )
 
@@ -264,6 +280,7 @@ class TestPathTraversalRejection:
                 run_id="../etc/passwd",
                 problem=problem,
                 target_language="python",
+                seed_language="cpp",
                 max_iterations=1,
             )
 
@@ -274,6 +291,7 @@ class TestPathTraversalRejection:
                 run_id="foo/bar/../../etc",
                 problem=problem,
                 target_language="python",
+                seed_language="cpp",
                 max_iterations=1,
             )
 
@@ -284,16 +302,17 @@ class TestPathTraversalRejection:
                 run_id="/etc/passwd",
                 problem=problem,
                 target_language="python",
+                seed_language="cpp",
                 max_iterations=1,
             )
 
     def test_problem_id_rejects_parent_directory(self) -> None:
         with pytest.raises(ArtifactContractError, match=r"path traversal"):
-            build_run_directory("run1", "../../../etc", "python")
+            build_run_directory("run1", "../../../etc", "python", "cpp")
 
     def test_problem_id_rejects_absolute_path(self) -> None:
         with pytest.raises(ArtifactContractError, match=r"absolute path"):
-            build_run_directory("run1", "/etc/passwd", "python")
+            build_run_directory("run1", "/etc/passwd", "python", "cpp")
 
     def test_iteration_artifact_paths_rejects_path_traversal_run_id(self) -> None:
         with pytest.raises(ArtifactContractError, match=r"path traversal"):
@@ -301,6 +320,7 @@ class TestPathTraversalRejection:
                 run_id="../foo",
                 problem_id="IPOP_1436",
                 target_language="python",
+                seed_language="cpp",
                 iteration_index=1,
             )
 
@@ -310,5 +330,6 @@ class TestPathTraversalRejection:
                 run_id="run1",
                 problem_id="../../etc",
                 target_language="python",
+                seed_language="cpp",
                 iteration_index=1,
             )
