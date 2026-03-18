@@ -6,7 +6,14 @@ from typing import Any
 
 import yaml
 
-SUPPORTED_TARGET_LANGUAGES = frozenset({"c", "java", "python"})
+SUPPORTED_EXPERIMENT_LANGUAGES = frozenset({"cpp", "c", "java", "python"})
+SUPPORTED_TARGET_LANGUAGES = frozenset({"cpp", "c", "java", "python"})
+REFERENCE_EXTENSION_BY_LANGUAGE = {
+    "cpp": "cpp",
+    "c": "c",
+    "java": "java",
+    "python": "py",
+}
 SUPPORTED_TRANSLATION_PROVIDERS = frozenset({"openai", "ollama"})
 SUPPORTED_OPENAI_MODELS = frozenset({"gpt-5.4", "gpt-5.4-mini", "gpt-5.3-codex"})
 PINNED_OPENAI_MODEL = "gpt-5.4"
@@ -66,6 +73,7 @@ class RuntimeConfig:
 @dataclass(frozen=True)
 class ExperimentConfig:
     problem_ids: tuple[str, ...]
+    seed_language: str
     target_languages: tuple[str, ...]
     openai: OpenAIConfig
     runtime: RuntimeConfig
@@ -101,7 +109,7 @@ def load_experiment_config(config_path: Path) -> ExperimentConfig:
     if not isinstance(raw_data, dict):
         raise ConfigValidationError(
             "Config root must be a mapping with keys: "
-            "problem_ids, target_languages, openai, runtime, output_root."
+            "problem_ids, seed_language, target_languages, openai, runtime, output_root."
         )
 
     return _parse_config(raw_data, config_dir=resolved_config_path.parent)
@@ -110,7 +118,12 @@ def load_experiment_config(config_path: Path) -> ExperimentConfig:
 def _parse_config(raw_data: dict[str, Any], config_dir: Path) -> ExperimentConfig:
     provider = _parse_provider(raw_data)
     problem_ids = _parse_problem_ids(raw_data)
+    seed_language = _parse_seed_language(raw_data)
     target_languages = _parse_target_languages(raw_data)
+    _validate_seed_target_language_pairs(
+        seed_language=seed_language,
+        target_languages=target_languages,
+    )
     openai = _parse_openai_config(raw_data, provider=provider)
     ollama = _parse_ollama_config(raw_data, provider=provider)
     runtime = _parse_runtime_config(raw_data)
@@ -131,6 +144,7 @@ def _parse_config(raw_data: dict[str, Any], config_dir: Path) -> ExperimentConfi
 
     return ExperimentConfig(
         problem_ids=problem_ids,
+        seed_language=seed_language,
         target_languages=target_languages,
         openai=openai,
         runtime=runtime,
@@ -183,8 +197,9 @@ def _parse_problem_ids(raw_data: dict[str, Any]) -> tuple[str, ...]:
 def _parse_target_languages(raw_data: dict[str, Any]) -> tuple[str, ...]:
     value = raw_data.get("target_languages")
     if not isinstance(value, list) or not value:
+        supported = ", ".join(sorted(SUPPORTED_TARGET_LANGUAGES))
         raise ConfigValidationError(
-            "`target_languages` must be a non-empty list using: c, java, python."
+            f"`target_languages` must be a non-empty list using: {supported}."
         )
 
     parsed: list[str] = []
@@ -210,6 +225,50 @@ def _parse_target_languages(raw_data: dict[str, Any]) -> tuple[str, ...]:
         parsed.append(normalized)
 
     return tuple(parsed)
+
+
+def _parse_seed_language(raw_data: dict[str, Any]) -> str:
+    value = raw_data.get("seed_language")
+    if not isinstance(value, str) or not value.strip():
+        supported = ", ".join(sorted(SUPPORTED_EXPERIMENT_LANGUAGES))
+        raise ConfigValidationError(
+            f"`seed_language` must be a non-empty string using: {supported}."
+        )
+
+    normalized = value.strip().lower()
+    if normalized not in SUPPORTED_EXPERIMENT_LANGUAGES:
+        supported = ", ".join(sorted(SUPPORTED_EXPERIMENT_LANGUAGES))
+        raise ConfigValidationError(
+            "Unsupported seed language "
+            f"`{value}`. Supported seed languages: {supported}."
+        )
+
+    return normalized
+
+
+def _validate_seed_target_language_pairs(
+    *,
+    seed_language: str,
+    target_languages: tuple[str, ...],
+) -> None:
+    for index, target_language in enumerate(target_languages):
+        if seed_language == target_language:
+            raise ConfigValidationError(
+                "Invalid language pair: `seed_language` and "
+                f"`target_languages[{index}]` must differ, got {seed_language!r}."
+            )
+
+
+def reference_filename_for_language(language: str) -> str:
+    normalized = language.strip().lower() if isinstance(language, str) else ""
+    extension = REFERENCE_EXTENSION_BY_LANGUAGE.get(normalized)
+    if extension is None:
+        supported = ", ".join(sorted(SUPPORTED_EXPERIMENT_LANGUAGES))
+        raise ConfigValidationError(
+            "Unsupported seed language "
+            f"`{language}`. Supported seed languages: {supported}."
+        )
+    return f"reference.{extension}"
 
 
 def _parse_openai_config(raw_data: dict[str, Any], *, provider: str) -> OpenAIConfig:
