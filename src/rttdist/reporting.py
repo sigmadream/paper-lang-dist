@@ -3,11 +3,13 @@ from __future__ import annotations
 from collections.abc import Callable
 from dataclasses import dataclass
 import json
+import math
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Sequence
 
 from rttdist.artifacts import ArtifactContractError, resolve_contract_path
 from rttdist.ast_metrics import compute_roundtrip_ast_distance_metrics
+from rttdist.config import SUPPORTED_TARGET_LANGUAGES
 from rttdist.failure_taxonomy import FailureRecord, failure_record_from_dict
 from rttdist.metrics import MetricExtractionError, compute_metric_deltas
 from rttdist.moss import MossSimilarityMatch
@@ -77,13 +79,21 @@ def generate_run_summary(
         )
         for path in manifest_paths
     ]
-    entries.sort(key=lambda item: (item["problem_id"], item["target_language"]))
+    entries.sort(
+        key=lambda item: (
+            item["problem_id"],
+            item["seed_language"],
+            item["target_language"],
+        )
+    )
+    ordered_pair_aggregates = _build_ordered_pair_aggregates(entries)
 
     return {
-        "schema_version": "report_summary.v1",
+        "schema_version": "report_summary.v2",
         "run_id": normalized_run_id,
         "result_count": len(entries),
         "results": entries,
+        "ordered_pair_aggregates": ordered_pair_aggregates,
     }
 
 
@@ -126,6 +136,14 @@ def write_run_summary(
 def render_run_summary_markdown(summary: dict[str, Any]) -> str:
     run_id = str(summary["run_id"])
     results = list(_require_list(summary.get("results"), field_name="results"))
+    aggregate_mappings = summary.get("ordered_pair_aggregates")
+    if isinstance(aggregate_mappings, dict):
+        ordered_pair_aggregates = [
+            _require_mapping(item, field_name="ordered_pair_aggregates")
+            for _, item in sorted(aggregate_mappings.items())
+        ]
+    else:
+        ordered_pair_aggregates = list(_build_ordered_pair_aggregates(results).values())
     include_moss = any("moss_similarity" in entry for entry in results)
 
     lines = [
@@ -135,21 +153,21 @@ def render_run_summary_markdown(summary: dict[str, Any]) -> str:
     if include_moss:
         lines.extend(
             [
-                "| Problem | Language | Final status | Iterations | Change-count distance | Convergence | Residual similarity | MOSS similarity | Semantic | AST distance to seed |",
+                "| Problem | Ordered pair | Final status | Iterations | Change-count distance | Convergence | Residual similarity | MOSS similarity | Semantic | AST distance to seed |",
                 "| --- | --- | --- | ---: | ---: | --- | --- | --- | --- | --- |",
             ]
         )
     else:
         lines.extend(
             [
-                "| Problem | Language | Final status | Iterations | Change-count distance | Convergence | Residual similarity | Semantic | AST distance to seed |",
+                "| Problem | Ordered pair | Final status | Iterations | Change-count distance | Convergence | Residual similarity | Semantic | AST distance to seed |",
                 "| --- | --- | --- | ---: | ---: | --- | --- | --- | --- |",
             ]
         )
     for entry in results:
         row_values = {
             "problem": entry["problem_id"],
-            "language": entry["target_language"],
+            "ordered_pair": _ordered_pair_key_from_entry(entry),
             "status": entry["final_status"],
             "iterations": entry["iteration_count"],
             "change_distance": _format_change_count_distance(
@@ -163,22 +181,91 @@ def render_run_summary_markdown(summary: dict[str, Any]) -> str:
         if include_moss:
             row_values["moss"] = _format_moss_measurement(entry.get("moss_similarity"))
             lines.append(
-                "| {problem} | {language} | {status} | {iterations} | {change_distance} | {convergence} | {residual} | {moss} | {semantic} | {ast} |".format(
+                "| {problem} | {ordered_pair} | {status} | {iterations} | {change_distance} | {convergence} | {residual} | {moss} | {semantic} | {ast} |".format(
                     **row_values
                 )
             )
         else:
             lines.append(
-                "| {problem} | {language} | {status} | {iterations} | {change_distance} | {convergence} | {residual} | {semantic} | {ast} |".format(
+                "| {problem} | {ordered_pair} | {status} | {iterations} | {change_distance} | {convergence} | {residual} | {semantic} | {ast} |".format(
                     **row_values
                 )
             )
 
+    lines.extend(
+        [
+            "",
+            "## Ordered-pair aggregates",
+            "",
+            "| Ordered pair | Results | Divergence rate | Measured divergence count | Unavailable divergence count | Infrastructure divergence count |",
+            "| --- | ---: | --- | ---: | ---: | ---: |",
+        ]
+    )
+    for aggregate in ordered_pair_aggregates:
+        divergence = _require_mapping(
+            aggregate.get("divergence"), field_name="ordered_pair_aggregate.divergence"
+        )
+        lines.append(
+            "| {ordered_pair} | {result_count} | {rate} | {measured} | {unavailable} | {infrastructure} |".format(
+                ordered_pair=_require_text(
+                    aggregate.get("ordered_pair_key"),
+                    field_name="ordered_pair_aggregate.ordered_pair_key",
+                ),
+                result_count=aggregate.get("result_count", 0),
+                rate=_format_aggregate_rate(divergence),
+                measured=divergence.get("measured_count", 0),
+                unavailable=divergence.get("unavailable_count", 0),
+                infrastructure=divergence.get("infrastructure_count", 0),
+            )
+        )
+
+    for aggregate in ordered_pair_aggregates:
+        ordered_pair_key = _require_text(
+            aggregate.get("ordered_pair_key"),
+            field_name="ordered_pair_aggregate.ordered_pair_key",
+        )
+        change_count_distance = _require_mapping(
+            aggregate.get("change_count_distance"),
+            field_name="ordered_pair_aggregate.change_count_distance",
+        )
+        residual_similarity = _require_mapping(
+            aggregate.get("residual_similarity"),
+            field_name="ordered_pair_aggregate.residual_similarity",
+        )
+        final_similarity_score = _require_mapping(
+            aggregate.get("final_similarity_score"),
+            field_name="ordered_pair_aggregate.final_similarity_score",
+        )
+        divergence = _require_mapping(
+            aggregate.get("divergence"), field_name="ordered_pair_aggregate.divergence"
+        )
+        lines.extend(
+            [
+                "",
+                f"### Ordered pair: {ordered_pair_key}",
+                "",
+                (
+                    "- Change-count distance aggregate: "
+                    f"{_format_numeric_aggregate(change_count_distance)}"
+                ),
+                (
+                    "- Residual similarity aggregate: "
+                    f"{_format_numeric_aggregate(residual_similarity)}"
+                ),
+                (
+                    "- Final similarity score aggregate: "
+                    f"{_format_numeric_aggregate(final_similarity_score)}"
+                ),
+                (f"- Divergence aggregate: {_format_divergence_aggregate(divergence)}"),
+            ]
+        )
+
     for entry in results:
         section_lines = [
             "",
-            f"## {entry['problem_id']} / {entry['target_language']}",
+            f"## {entry['problem_id']} / {_ordered_pair_key_from_entry(entry)}",
             "",
+            f"- Ordered pair: {_ordered_pair_key_from_entry(entry)}",
             f"- Final status: {entry['final_status']}",
             f"- Iteration count: {entry['iteration_count']}",
             (
@@ -221,6 +308,68 @@ def render_run_summary_markdown(summary: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def _build_final_similarity_summary(
+    *,
+    output_root: Path,
+    metadata: dict[str, Any],
+    manifest_path: Path,
+    failure_record: FailureRecord,
+) -> dict[str, Any]:
+    configured_relative_path = _optional_text(
+        metadata.get("final_similarity_artifact_path")
+    )
+    if configured_relative_path is not None:
+        similarity_path = _resolve_path_within_output_root(
+            output_root=output_root,
+            relative_path=configured_relative_path,
+            field_name="metadata.final_similarity_artifact_path",
+        )
+    else:
+        similarity_path = manifest_path.parent / "final-similarity.json"
+
+    payload = _load_optional_json(similarity_path)
+    if payload is None:
+        return _unavailable_measurement(
+            reason="missing_final_similarity_artifact",
+            failure_record=failure_record,
+        )
+
+    availability = payload.get("availability")
+    if availability == "measured":
+        score = payload.get("score")
+        if isinstance(score, (int, float)):
+            return _measured_measurement(
+                {
+                    "score": float(score),
+                    "provider": payload.get("provider"),
+                    "configured_model": payload.get("configured_model"),
+                    "observed_model": payload.get("observed_model"),
+                    "dimensions": payload.get("dimensions"),
+                    "usage": payload.get("usage"),
+                    "request_ids": payload.get("request_ids"),
+                    "source_hashes": payload.get("source_hashes"),
+                    "revision_evidence": payload.get("revision_evidence"),
+                }
+            )
+        return _unavailable_measurement(
+            reason="invalid_final_similarity_artifact",
+            failure_record=failure_record,
+        )
+
+    reason = payload.get("reason")
+    if isinstance(reason, str) and reason.strip():
+        return _unavailable_measurement(
+            reason=reason.strip(),
+            failure_record=failure_record,
+            details=_require_mapping(payload, field_name="final_similarity_artifact"),
+        )
+
+    return _unavailable_measurement(
+        reason="invalid_final_similarity_artifact",
+        failure_record=failure_record,
+    )
+
+
 def _build_summary_entry(
     *,
     output_root: Path,
@@ -249,6 +398,7 @@ def _build_summary_entry(
     )
 
     problem_id = _require_text(problem.get("problem_id"), field_name="problem_id")
+    seed_language = _optional_text(metadata.get("seed_language")) or "cpp"
     target_language = _require_text(
         metadata.get("target_language"), field_name="target_language"
     )
@@ -315,10 +465,21 @@ def _build_summary_entry(
         output_root=output_root,
         iterations=iterations,
     )
+    final_similarity = _build_final_similarity_summary(
+        output_root=output_root,
+        metadata=metadata,
+        manifest_path=manifest_path,
+        failure_record=final_record,
+    )
 
     entry = {
         "problem_id": problem_id,
+        "seed_language": seed_language,
         "target_language": target_language,
+        "ordered_pair_key": _ordered_pair_key(
+            seed_language=seed_language,
+            target_language=target_language,
+        ),
         "final_status": final_record.status.value,
         "iteration_count": len(iterations),
         "change_count_distance": _build_change_count_distance_summary(
@@ -327,9 +488,11 @@ def _build_summary_entry(
         "final_iteration_index": final_record.iteration_index,
         "convergence_outcome": _convergence_outcome(final_record),
         "residual_similarity": _build_residual_similarity_summary(
+            seed_language=seed_language,
             metrics_payload=metrics_payload,
             failure_record=final_record,
         ),
+        "final_similarity": final_similarity,
         "semantic_summary": semantic_summary,
         "ast_distance": _build_ast_distance_summary(
             seed_cpp_source=seed_source,
@@ -372,6 +535,9 @@ def _build_summary_entry(
                 artifact_paths.get("metrics_path"),
                 field_name="metrics_path",
             ),
+            "final_similarity_path": _optional_text(
+                metadata.get("final_similarity_artifact_path")
+            ),
         },
     }
     if moss_similarity_fn is not None:
@@ -384,6 +550,201 @@ def _build_summary_entry(
             moss_similarity_fn=moss_similarity_fn,
         )
     return entry
+
+
+def _ordered_pair_key(*, seed_language: str, target_language: str) -> str:
+    return f"{seed_language}->{target_language}"
+
+
+def _ordered_pair_key_from_entry(entry: dict[str, Any]) -> str:
+    existing = _optional_text(entry.get("ordered_pair_key"))
+    if existing is not None:
+        return existing
+    seed_language = _optional_text(entry.get("seed_language")) or "cpp"
+    target_language = _require_text(
+        entry.get("target_language"), field_name="target_language"
+    )
+    return _ordered_pair_key(
+        seed_language=seed_language, target_language=target_language
+    )
+
+
+def _build_ordered_pair_aggregates(
+    entries: Sequence[dict[str, Any]],
+) -> dict[str, dict[str, Any]]:
+    grouped_entries: dict[str, list[dict[str, Any]]] = {}
+    for entry in entries:
+        ordered_pair_key = _ordered_pair_key_from_entry(entry)
+        grouped_entries.setdefault(ordered_pair_key, []).append(entry)
+
+    aggregates: dict[str, dict[str, Any]] = {}
+    for ordered_pair_key in sorted(grouped_entries):
+        grouped = grouped_entries[ordered_pair_key]
+        seed_language, target_language = ordered_pair_key.split("->", maxsplit=1)
+        aggregates[ordered_pair_key] = {
+            "ordered_pair_key": ordered_pair_key,
+            "seed_language": seed_language,
+            "target_language": target_language,
+            "result_count": len(grouped),
+            "change_count_distance": _build_numeric_aggregate(
+                grouped,
+                measurement_getter=lambda item: item.get("change_count_distance"),
+                value_getter=lambda value: (
+                    float(value) if isinstance(value, (int, float)) else None
+                ),
+            ),
+            "residual_similarity": _build_numeric_aggregate(
+                grouped,
+                measurement_getter=lambda item: item.get("residual_similarity"),
+                value_getter=lambda value: (
+                    float(value) if isinstance(value, (int, float)) else None
+                ),
+            ),
+            "final_similarity_score": _build_numeric_aggregate(
+                grouped,
+                measurement_getter=lambda item: item.get("final_similarity"),
+                value_getter=_extract_final_similarity_score,
+            ),
+            "divergence": _build_divergence_aggregate(grouped),
+        }
+    return aggregates
+
+
+def _build_numeric_aggregate(
+    entries: Sequence[dict[str, Any]],
+    *,
+    measurement_getter: Callable[[dict[str, Any]], Any],
+    value_getter: Callable[[Any], float | None],
+) -> dict[str, Any]:
+    values: list[float] = []
+    unavailable_count = 0
+    infrastructure_count = 0
+    for entry in entries:
+        measurement = measurement_getter(entry)
+        measurement_mapping = (
+            _require_mapping(measurement, field_name="measurement")
+            if isinstance(measurement, dict)
+            else None
+        )
+        if measurement_mapping is None:
+            unavailable_count += 1
+            continue
+        if measurement_mapping.get("availability") != "measured":
+            unavailable_count += 1
+            if _is_infrastructure_measurement_failure(measurement_mapping):
+                infrastructure_count += 1
+            continue
+
+        value = value_getter(measurement_mapping.get("value"))
+        if value is None:
+            unavailable_count += 1
+            if _is_infrastructure_measurement_failure(measurement_mapping):
+                infrastructure_count += 1
+            continue
+        values.append(value)
+
+    measured_count = len(values)
+    payload: dict[str, Any] = {
+        "measured_count": measured_count,
+        "unavailable_count": unavailable_count,
+        "infrastructure_count": infrastructure_count,
+        "denominator": measured_count,
+    }
+    if measured_count == 0:
+        payload.update(
+            {
+                "availability": "unavailable",
+                "reason": "no_measured_values",
+            }
+        )
+        return payload
+
+    payload.update(
+        {
+            "availability": "measured",
+            "mean": sum(values) / measured_count,
+            "stddev": _population_stddev(values),
+        }
+    )
+    return payload
+
+
+def _extract_final_similarity_score(value: Any) -> float | None:
+    if not isinstance(value, dict):
+        return None
+    score = value.get("score")
+    if isinstance(score, (int, float)):
+        return float(score)
+    return None
+
+
+def _build_divergence_aggregate(entries: Sequence[dict[str, Any]]) -> dict[str, Any]:
+    divergent_count = 0
+    non_divergent_count = 0
+    unavailable_count = 0
+    infrastructure_count = 0
+
+    for entry in entries:
+        final_status = _optional_text(entry.get("final_status")) or ""
+        if _is_infrastructure_failure_status(final_status):
+            unavailable_count += 1
+            infrastructure_count += 1
+            continue
+
+        if final_status in {"success", "oscillation", "max_iter_no_convergence"}:
+            if entry.get("convergence_outcome") == "fixed_point":
+                non_divergent_count += 1
+            else:
+                divergent_count += 1
+            continue
+
+        unavailable_count += 1
+
+    measured_count = divergent_count + non_divergent_count
+    payload: dict[str, Any] = {
+        "divergent_count": divergent_count,
+        "non_divergent_count": non_divergent_count,
+        "measured_count": measured_count,
+        "unavailable_count": unavailable_count,
+        "infrastructure_count": infrastructure_count,
+        "denominator": measured_count,
+    }
+    if measured_count == 0:
+        payload.update(
+            {
+                "availability": "unavailable",
+                "reason": "no_measured_values",
+            }
+        )
+        return payload
+
+    payload.update(
+        {
+            "availability": "measured",
+            "divergence_rate": divergent_count / measured_count,
+        }
+    )
+    return payload
+
+
+def _is_infrastructure_measurement_failure(measurement: dict[str, Any]) -> bool:
+    failure = measurement.get("failure")
+    if not isinstance(failure, dict):
+        return False
+    status = _optional_text(failure.get("status"))
+    return _is_infrastructure_failure_status(status)
+
+
+def _is_infrastructure_failure_status(status: str | None) -> bool:
+    return status == "api_error"
+
+
+def _population_stddev(values: Sequence[float]) -> float:
+    if len(values) <= 1:
+        return 0.0
+    mean = sum(values) / len(values)
+    variance = sum((value - mean) ** 2 for value in values) / len(values)
+    return math.sqrt(variance)
 
 
 def _build_moss_similarity_summary(
@@ -456,15 +817,9 @@ def _collect_run_manifest_paths(
             )
         manifest_paths = tuple(sorted(unique_paths))
     else:
-        manifest_paths = tuple(
-            sorted(
-                _resolve_path_within_output_root(
-                    output_root=output_root,
-                    relative_path=path.relative_to(output_root).as_posix(),
-                    field_name="run_manifest_path",
-                )
-                for path in (output_root / run_id).glob("*/*/run.json")
-            )
+        manifest_paths = _discover_manifest_paths_for_run_id(
+            output_root=output_root,
+            run_id=run_id,
         )
 
     if not manifest_paths:
@@ -474,11 +829,54 @@ def _collect_run_manifest_paths(
     return manifest_paths
 
 
+def _discover_manifest_paths_for_run_id(
+    *, output_root: Path, run_id: str
+) -> tuple[Path, ...]:
+    run_root = _resolve_path_within_output_root(
+        output_root=output_root,
+        relative_path=run_id,
+        field_name="run_id",
+    )
+    v2_manifest_paths = _discover_v2_manifest_paths(run_root)
+    legacy_manifest_paths = _discover_legacy_v1_manifest_paths(run_root)
+
+    combined: set[Path] = set()
+    for path in v2_manifest_paths + legacy_manifest_paths:
+        combined.add(
+            _resolve_path_within_output_root(
+                output_root=output_root,
+                relative_path=path.relative_to(output_root).as_posix(),
+                field_name="run_manifest_path",
+            )
+        )
+    return tuple(sorted(combined))
+
+
+def _discover_v2_manifest_paths(run_root: Path) -> list[Path]:
+    return sorted(run_root.glob("*/*-to-*/run.json"))
+
+
+def _discover_legacy_v1_manifest_paths(run_root: Path) -> list[Path]:
+    legacy_paths: list[Path] = []
+    for path in sorted(run_root.glob("*/*/run.json")):
+        if path.parent.name not in SUPPORTED_TARGET_LANGUAGES:
+            continue
+        legacy_paths.append(path)
+    return legacy_paths
+
+
 def _build_residual_similarity_summary(
     *,
+    seed_language: str,
     metrics_payload: dict[str, Any] | None,
     failure_record: FailureRecord,
 ) -> dict[str, Any]:
+    if seed_language != "cpp":
+        return _unavailable_measurement(
+            reason="seed_language_not_cpp",
+            failure_record=failure_record,
+        )
+
     if metrics_payload is None:
         return _unavailable_measurement(
             reason="missing_metrics_artifact",
@@ -862,6 +1260,51 @@ def _format_metric_delta(delta: dict[str, Any]) -> str:
     return ", ".join(f"{name}={delta[name]}" for name in sorted(delta))
 
 
+def _format_numeric_aggregate(aggregate: dict[str, Any]) -> str:
+    measured_count = aggregate.get("measured_count", 0)
+    unavailable_count = aggregate.get("unavailable_count", 0)
+    infrastructure_count = aggregate.get("infrastructure_count", 0)
+    if aggregate.get("availability") != "measured":
+        return (
+            "unavailable "
+            f"(measured={measured_count}, unavailable={unavailable_count}, "
+            f"infrastructure={infrastructure_count})"
+        )
+    mean = aggregate.get("mean")
+    stddev = aggregate.get("stddev")
+    return (
+        f"mean={mean:.6f}, stddev={stddev:.6f}, measured={measured_count}, "
+        f"unavailable={unavailable_count}, infrastructure={infrastructure_count}"
+    )
+
+
+def _format_aggregate_rate(aggregate: dict[str, Any]) -> str:
+    if aggregate.get("availability") != "measured":
+        return "unavailable"
+    value = aggregate.get("divergence_rate")
+    if isinstance(value, float):
+        return f"{value:.6f}"
+    return str(value)
+
+
+def _format_divergence_aggregate(aggregate: dict[str, Any]) -> str:
+    measured_count = aggregate.get("measured_count", 0)
+    unavailable_count = aggregate.get("unavailable_count", 0)
+    infrastructure_count = aggregate.get("infrastructure_count", 0)
+    if aggregate.get("availability") != "measured":
+        return (
+            "unavailable "
+            f"(measured={measured_count}, unavailable={unavailable_count}, "
+            f"infrastructure={infrastructure_count})"
+        )
+    divergence_rate = aggregate.get("divergence_rate")
+    return (
+        f"rate={divergence_rate:.6f}, divergent={aggregate.get('divergent_count', 0)}, "
+        f"non_divergent={aggregate.get('non_divergent_count', 0)}, measured={measured_count}, "
+        f"unavailable={unavailable_count}, infrastructure={infrastructure_count}"
+    )
+
+
 def _relative_to(output_root: Path, path: Path) -> str:
     try:
         return path.resolve().relative_to(output_root.resolve()).as_posix()
@@ -907,3 +1350,10 @@ def _require_text(value: Any, *, field_name: str) -> str:
     if not isinstance(value, str) or not value.strip():
         raise ReportingError(f"Expected `{field_name}` to be a non-empty string.")
     return value.strip()
+
+
+def _optional_text(value: Any) -> str | None:
+    if not isinstance(value, str):
+        return None
+    stripped = value.strip()
+    return stripped if stripped else None

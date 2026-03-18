@@ -26,7 +26,7 @@ class _RunResultStub:
     run_manifest_path: Path
 
 
-def test_summary_fields_include_status_iterations_semantics_ast_and_complexity(
+def test_schema_version_summary_fields_include_status_iterations_semantics_ast_and_complexity(
     tmp_path: Path,
 ) -> None:
     output_root = tmp_path / "artifacts"
@@ -121,11 +121,13 @@ def test_summary_fields_include_status_iterations_semantics_ast_and_complexity(
 
     summary = generate_run_summary(output_root=output_root, run_id=run_id)
 
-    assert summary["schema_version"] == "report_summary.v1"
+    assert summary["schema_version"] == "report_summary.v2"
     assert summary["result_count"] == 1
     entry = summary["results"][0]
     assert entry["problem_id"] == "IPOP_SUMMARY"
+    assert entry["seed_language"] == "cpp"
     assert entry["target_language"] == "python"
+    assert entry["ordered_pair_key"] == "cpp->python"
     assert entry["final_status"] == "success"
     assert entry["iteration_count"] == 2
     assert entry["change_count_distance"] == {
@@ -156,6 +158,48 @@ def test_summary_fields_include_status_iterations_semantics_ast_and_complexity(
         "function_count": 0,
         "max_nesting_depth": 0,
     }
+    assert summary["ordered_pair_aggregates"]["cpp->python"] == {
+        "ordered_pair_key": "cpp->python",
+        "seed_language": "cpp",
+        "target_language": "python",
+        "result_count": 1,
+        "change_count_distance": {
+            "availability": "measured",
+            "mean": 2.0,
+            "stddev": 0.0,
+            "measured_count": 1,
+            "unavailable_count": 0,
+            "infrastructure_count": 0,
+            "denominator": 1,
+        },
+        "residual_similarity": {
+            "availability": "measured",
+            "mean": 1.0,
+            "stddev": 0.0,
+            "measured_count": 1,
+            "unavailable_count": 0,
+            "infrastructure_count": 0,
+            "denominator": 1,
+        },
+        "final_similarity_score": {
+            "availability": "unavailable",
+            "reason": "no_measured_values",
+            "measured_count": 0,
+            "unavailable_count": 1,
+            "infrastructure_count": 0,
+            "denominator": 0,
+        },
+        "divergence": {
+            "availability": "measured",
+            "divergence_rate": 0.0,
+            "divergent_count": 0,
+            "non_divergent_count": 1,
+            "measured_count": 1,
+            "unavailable_count": 0,
+            "infrastructure_count": 0,
+            "denominator": 1,
+        },
+    }
 
     artifacts = write_run_summary(output_root=output_root, run_id=run_id)
     assert (
@@ -164,6 +208,8 @@ def test_summary_fields_include_status_iterations_semantics_ast_and_complexity(
 
     markdown = artifacts.summary_markdown_path.read_text(encoding="utf-8")
     assert "# Run Summary: summary-fields" in markdown
+    assert "## Ordered-pair aggregates" in markdown
+    assert "### Ordered pair: cpp->python" in markdown
     assert "Change-count distance (1 cycle = C++ -> target -> C++): 2" in markdown
     assert "Residual similarity to seed C++: 1.000000" in markdown
     assert "Semantic summary: pass" in markdown
@@ -362,9 +408,192 @@ def test_summary_can_include_opt_in_moss_similarity(
     markdown = artifacts.summary_markdown_path.read_text(encoding="utf-8")
     assert "MOSS similarity to seed C++: seed=91%, roundtrip=88%" in markdown
     assert (
-        "| IPOP_MOSS | python | success | 1 | 1 | fixed_point | 1.000000 | seed=91%, roundtrip=88% | pass |"
+        "| IPOP_MOSS | cpp->python | success | 1 | 1 | fixed_point | 1.000000 | seed=91%, roundtrip=88% | pass |"
         in markdown
     )
+
+
+def test_ordered_pair_aggregates_keep_reverse_directions_and_divergence_denominator_rules(
+    tmp_path: Path,
+) -> None:
+    output_root = tmp_path / "artifacts"
+    output_root.mkdir(parents=True)
+    problem = _create_problem_reference(tmp_path, problem_id="IPOP_ORDERED_PAIR")
+    run_id = "summary-ordered-pair"
+
+    fixed_point_success = FailureRecord(
+        status=FailureStatus.SUCCESS,
+        stage="convergence",
+        iteration_index=1,
+        message="Fixed point reached.",
+        details={"convergence_status": "fixed_point"},
+    )
+    max_iter_result = FailureRecord(
+        status=FailureStatus.MAX_ITER_NO_CONVERGENCE,
+        stage="convergence",
+        iteration_index=1,
+        message="Iteration cap reached.",
+        details={"convergence_status": "continue"},
+    )
+    infrastructure_failure = FailureRecord(
+        status=FailureStatus.API_ERROR,
+        stage="cpp_to_target_translation",
+        iteration_index=1,
+        message="Provider unavailable.",
+        details={"error": "upstream failure"},
+    )
+
+    cpp_python_success = _write_iteration_artifacts(
+        output_root=output_root,
+        run_id=run_id,
+        problem_id=problem.problem_id,
+        target_language="python",
+        iteration_index=1,
+        result=fixed_point_success,
+        target_source="print(1)",
+        roundtrip_source="int solve(int x){ return x; }",
+        execution_payload={
+            "target": _execution_stage_payload(status="success"),
+            "roundtrip_cpp": _execution_stage_payload(status="success"),
+        },
+        metrics_payload={
+            "residual_similarity": 1.0,
+            "convergence_status": "fixed_point",
+        },
+    )
+    _write_run_manifest(
+        output_root=output_root,
+        run_id=run_id,
+        problem=problem,
+        target_language="python",
+        final_result=fixed_point_success,
+        iteration_payloads=[cpp_python_success],
+        seed_language="cpp",
+    )
+
+    cpp_python_max_iter = _write_iteration_artifacts(
+        output_root=output_root,
+        run_id=run_id,
+        problem_id=f"{problem.problem_id}_MAX_ITER",
+        target_language="python",
+        iteration_index=1,
+        result=max_iter_result,
+        target_source="print(2)",
+        roundtrip_source="int solve(int x){ return x + 1; }",
+        execution_payload={
+            "target": _execution_stage_payload(status="success"),
+            "roundtrip_cpp": _execution_stage_payload(status="success"),
+        },
+        metrics_payload={"residual_similarity": 0.4, "convergence_status": "continue"},
+    )
+    _write_run_manifest(
+        output_root=output_root,
+        run_id=run_id,
+        problem=_create_problem_reference(
+            tmp_path, problem_id="IPOP_ORDERED_PAIR_MAX_ITER"
+        ),
+        target_language="python",
+        final_result=max_iter_result,
+        iteration_payloads=[cpp_python_max_iter],
+        seed_language="cpp",
+    )
+
+    cpp_python_api_error = _write_iteration_artifacts(
+        output_root=output_root,
+        run_id=run_id,
+        problem_id=f"{problem.problem_id}_INFRA",
+        target_language="python",
+        iteration_index=1,
+        result=infrastructure_failure,
+        target_source="",
+        roundtrip_source="",
+        execution_payload={"target": None, "roundtrip_cpp": None},
+        metrics_payload={"residual_similarity": None, "convergence_status": "continue"},
+    )
+    _write_run_manifest(
+        output_root=output_root,
+        run_id=run_id,
+        problem=_create_problem_reference(
+            tmp_path, problem_id="IPOP_ORDERED_PAIR_INFRA"
+        ),
+        target_language="python",
+        final_result=infrastructure_failure,
+        iteration_payloads=[cpp_python_api_error],
+        seed_language="cpp",
+    )
+
+    python_cpp_success = _write_iteration_artifacts(
+        output_root=output_root,
+        run_id=run_id,
+        problem_id=f"{problem.problem_id}_REVERSE",
+        target_language="cpp",
+        iteration_index=1,
+        result=fixed_point_success,
+        target_source="int solve(int x){ return x; }",
+        roundtrip_source="int solve(int x){ return x; }",
+        execution_payload={
+            "target": _execution_stage_payload(status="success"),
+            "roundtrip_cpp": _execution_stage_payload(status="success"),
+        },
+        metrics_payload={
+            "residual_similarity": 1.0,
+            "convergence_status": "fixed_point",
+        },
+        seed_language="python",
+    )
+    _write_run_manifest(
+        output_root=output_root,
+        run_id=run_id,
+        problem=_create_problem_reference(
+            tmp_path, problem_id="IPOP_ORDERED_PAIR_REVERSE"
+        ),
+        target_language="cpp",
+        final_result=fixed_point_success,
+        iteration_payloads=[python_cpp_success],
+        seed_language="python",
+    )
+
+    summary = generate_run_summary(output_root=output_root, run_id=run_id)
+    aggregates = summary["ordered_pair_aggregates"]
+
+    assert sorted(aggregates) == ["cpp->python", "python->cpp"]
+
+    cpp_python = aggregates["cpp->python"]
+    assert cpp_python["result_count"] == 3
+    assert cpp_python["change_count_distance"]["mean"] == 2.0 / 3.0
+    assert cpp_python["change_count_distance"]["measured_count"] == 3
+    assert cpp_python["residual_similarity"]["measured_count"] == 2
+    assert cpp_python["residual_similarity"]["unavailable_count"] == 1
+    assert cpp_python["residual_similarity"]["infrastructure_count"] == 1
+    assert cpp_python["divergence"] == {
+        "availability": "measured",
+        "divergence_rate": 0.5,
+        "divergent_count": 1,
+        "non_divergent_count": 1,
+        "measured_count": 2,
+        "unavailable_count": 1,
+        "infrastructure_count": 1,
+        "denominator": 2,
+    }
+
+    python_cpp = aggregates["python->cpp"]
+    assert python_cpp["result_count"] == 1
+    assert python_cpp["residual_similarity"] == {
+        "availability": "unavailable",
+        "reason": "no_measured_values",
+        "measured_count": 0,
+        "unavailable_count": 1,
+        "infrastructure_count": 0,
+        "denominator": 0,
+    }
+    assert python_cpp["divergence"]["divergence_rate"] == 0.0
+
+    artifacts = write_run_summary(output_root=output_root, run_id=run_id)
+    markdown = artifacts.summary_markdown_path.read_text(encoding="utf-8")
+    assert "| IPOP_ORDERED_PAIR | cpp->python | success |" in markdown
+    assert "| IPOP_ORDERED_PAIR_REVERSE | python->cpp | success |" in markdown
+    assert "| cpp->python | 3 | 0.500000 | 2 | 1 | 1 |" in markdown
+    assert "| python->cpp | 1 | 0.000000 | 1 | 0 | 0 |" in markdown
 
 
 def test_summary_surfaces_moss_failures_without_breaking_report(
@@ -429,6 +658,62 @@ def test_summary_surfaces_moss_failures_without_breaking_report(
         "availability": "unavailable",
         "reason": "moss_execution_failed",
         "details": {"message": "mock moss failure"},
+    }
+
+
+def test_residual_similarity_is_unavailable_with_seed_language_not_cpp(
+    tmp_path: Path,
+) -> None:
+    output_root = tmp_path / "artifacts"
+    output_root.mkdir(parents=True)
+    problem = _create_problem_reference(tmp_path, problem_id="IPOP_NON_CPP_SEED")
+    run_id = "summary-non-cpp-seed"
+
+    result = FailureRecord(
+        status=FailureStatus.SUCCESS,
+        stage="convergence",
+        iteration_index=1,
+        message="Fixed point reached.",
+        details={"convergence_status": "fixed_point"},
+    )
+    iteration_payload = _write_iteration_artifacts(
+        output_root=output_root,
+        run_id=run_id,
+        problem_id=problem.problem_id,
+        target_language="python",
+        iteration_index=1,
+        result=result,
+        target_source="print(1)",
+        roundtrip_source="int solve(int x){ return x; }",
+        execution_payload={
+            "target": _execution_stage_payload(status="success"),
+            "roundtrip_cpp": _execution_stage_payload(status="success"),
+        },
+        metrics_payload={
+            "residual_similarity": 1.0,
+            "convergence_status": "fixed_point",
+        },
+    )
+    _write_run_manifest(
+        output_root=output_root,
+        run_id=run_id,
+        problem=problem,
+        target_language="python",
+        final_result=result,
+        iteration_payloads=[iteration_payload],
+        seed_language="python",
+    )
+
+    summary = generate_run_summary(output_root=output_root, run_id=run_id)
+
+    assert summary["results"][0]["residual_similarity"] == {
+        "availability": "unavailable",
+        "reason": "seed_language_not_cpp",
+        "failure": {
+            "status": "success",
+            "stage": "convergence",
+            "iteration_index": 1,
+        },
     }
 
 
@@ -610,6 +895,7 @@ def test_legacy_seed_fallback_rejects_absolute_host_path(
         run_id=run_id,
         problem=problem,
         target_language="python",
+        seed_language="cpp",
         max_iterations=20,
     )
     manifest_path = output_root / metadata.run_metadata_path
@@ -736,11 +1022,13 @@ def _write_run_manifest(
     target_language: str,
     final_result: FailureRecord,
     iteration_payloads: list[dict[str, Any]],
+    seed_language: str = "cpp",
 ) -> None:
     metadata = build_run_metadata(
         run_id=run_id,
         problem=problem,
         target_language=target_language,
+        seed_language=seed_language,
         max_iterations=20,
     )
     seed_artifact_path = Path(metadata.run_directory) / "seed" / "reference.cpp"
@@ -785,11 +1073,13 @@ def _write_iteration_artifacts(
     roundtrip_source: str,
     execution_payload: dict[str, object],
     metrics_payload: dict[str, object],
+    seed_language: str = "cpp",
 ) -> dict[str, Any]:
     paths = build_iteration_artifact_paths(
         run_id=run_id,
         problem_id=problem_id,
         target_language=target_language,
+        seed_language=seed_language,
         iteration_index=iteration_index,
     )
     for relative_path, content in (

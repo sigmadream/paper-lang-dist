@@ -12,6 +12,7 @@ from rttdist.artifacts import (
 )
 from rttdist.config import ExperimentConfig, OpenAIConfig, RuntimeConfig
 from rttdist.corpus import FixturePair, ProblemCorpusEntry
+from rttdist.embedding import EmbeddedSource, EmbeddingUsage, hash_source_text
 from rttdist.exec.adapters import (
     ExecutionBatchResult,
     ExecutionStatus,
@@ -27,6 +28,7 @@ def test_report_generation_writes_stable_summary_files_from_persisted_run_artifa
 ) -> None:
     config = ExperimentConfig(
         problem_ids=("IPOP_REPORT",),
+        seed_language="cpp",
         target_languages=("python", "c"),
         openai=OpenAIConfig(model="gpt-5.4", temperature=0.0),
         runtime=RuntimeConfig(max_iterations=2, timeout_seconds=1),
@@ -50,7 +52,7 @@ def test_report_generation_writes_stable_summary_files_from_persisted_run_artifa
     artifacts = write_run_summary(output_root=config.output_root, run_id="report-run")
 
     success_manifest_path = (
-        config.output_root / "report-run" / "IPOP_REPORT" / "c" / "run.json"
+        config.output_root / "report-run" / "IPOP_REPORT" / "cpp-to-c" / "run.json"
     )
     success_manifest = json.loads(success_manifest_path.read_text(encoding="utf-8"))
     seed_artifact_path = success_manifest["metadata"].get("seed_artifact_path")
@@ -69,7 +71,7 @@ def test_report_generation_writes_stable_summary_files_from_persisted_run_artifa
     assert artifacts.summary_markdown_path.is_file()
 
     summary = json.loads(artifacts.summary_json_path.read_text(encoding="utf-8"))
-    assert summary["schema_version"] == "report_summary.v1"
+    assert summary["schema_version"] == "report_summary.v2"
     assert summary["run_id"] == "report-run"
     assert summary["result_count"] == 2
 
@@ -78,6 +80,8 @@ def test_report_generation_writes_stable_summary_files_from_persisted_run_artifa
     }
     success_entry = by_target_language["c"]
     failure_entry = by_target_language["python"]
+    assert success_entry["ordered_pair_key"] == "cpp->c"
+    assert failure_entry["ordered_pair_key"] == "cpp->python"
 
     assert success_entry["final_status"] == "success"
     assert success_entry["iteration_count"] == 2
@@ -94,7 +98,7 @@ def test_report_generation_writes_stable_summary_files_from_persisted_run_artifa
     assert success_entry["complexity_deltas"]["target"]["availability"] == "measured"
     assert (
         success_entry["artifacts"]["run_manifest_path"]
-        == "report-run/IPOP_REPORT/c/run.json"
+        == "report-run/IPOP_REPORT/cpp-to-c/run.json"
     )
 
     assert failure_entry["final_status"] == "api_error"
@@ -122,13 +126,39 @@ def test_report_generation_writes_stable_summary_files_from_persisted_run_artifa
         == "unavailable"
     )
 
+    aggregates = summary["ordered_pair_aggregates"]
+    assert sorted(aggregates) == ["cpp->c", "cpp->python"]
+    assert aggregates["cpp->c"]["divergence"] == {
+        "availability": "measured",
+        "divergence_rate": 0.0,
+        "divergent_count": 0,
+        "non_divergent_count": 1,
+        "measured_count": 1,
+        "unavailable_count": 0,
+        "infrastructure_count": 0,
+        "denominator": 1,
+    }
+    assert aggregates["cpp->python"]["divergence"] == {
+        "availability": "unavailable",
+        "reason": "no_measured_values",
+        "divergent_count": 0,
+        "non_divergent_count": 0,
+        "measured_count": 0,
+        "unavailable_count": 1,
+        "infrastructure_count": 1,
+        "denominator": 0,
+    }
+
     markdown = artifacts.summary_markdown_path.read_text(encoding="utf-8")
     assert "# Run Summary: report-run" in markdown
-    assert "| IPOP_REPORT | c | success | 2 | 2 | fixed_point |" in markdown
+    assert "| IPOP_REPORT | cpp->c | success | 2 | 2 | fixed_point |" in markdown
     assert (
-        "| IPOP_REPORT | python | api_error | 1 | 0 | terminated_on_failure |"
+        "| IPOP_REPORT | cpp->python | api_error | 1 | 0 | terminated_on_failure |"
         in markdown
     )
+    assert "## Ordered-pair aggregates" in markdown
+    assert "| cpp->c | 1 | 0.000000 | 1 | 0 | 0 |" in markdown
+    assert "| cpp->python | 1 | unavailable | 0 | 1 | 1 |" in markdown
     assert "Change-count distance (1 cycle = C++ -> target -> C++): 2" in markdown
     assert (
         "Residual similarity to seed C++: unavailable (api_error at cpp_to_target_translation)"
@@ -150,6 +180,76 @@ def test_report_generation_writes_stable_summary_files_from_persisted_run_artifa
     )
 
 
+def test_report_generation_offline_embedding_artifact(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    config = ExperimentConfig(
+        problem_ids=("IPOP_REPORT_EMBED",),
+        seed_language="cpp",
+        target_languages=("c",),
+        openai=OpenAIConfig(model="gpt-5.4", temperature=0.0),
+        runtime=RuntimeConfig(max_iterations=2, timeout_seconds=1),
+        output_root=tmp_path / "artifacts",
+        problem_root=tmp_path / "problem",
+        corpus_root=tmp_path / "corpus" / "solutions",
+    )
+    config.output_root.mkdir(parents=True)
+    problem = _build_problem_entry(tmp_path, problem_id="IPOP_REPORT_EMBED")
+
+    run_pipeline_service(
+        config=config,
+        run_id="report-run-embed",
+        corpus_entries=(problem,),
+        translation_client_factory=SequencedFactory(
+            clients=(ConvergingTranslationClient(),)
+        ),
+        final_similarity_provider_factory=lambda: DeterministicEmbeddingProvider(),
+        evaluate_source_fn=FakeEvaluator(),
+    )
+
+    run_manifest_path = (
+        config.output_root
+        / "report-run-embed"
+        / "IPOP_REPORT_EMBED"
+        / "cpp-to-c"
+        / "run.json"
+    )
+    run_manifest = json.loads(run_manifest_path.read_text(encoding="utf-8"))
+    final_similarity_path = run_manifest["metadata"].get(
+        "final_similarity_artifact_path"
+    )
+    assert isinstance(final_similarity_path, str)
+
+    final_similarity = json.loads(
+        (config.output_root / final_similarity_path).read_text(encoding="utf-8")
+    )
+    assert final_similarity["availability"] == "measured"
+    assert isinstance(final_similarity.get("score"), float)
+    assert final_similarity["provider"] == "openai"
+    assert final_similarity["dimensions"] == 3
+    assert "seed_source_sha256" in final_similarity["source_hashes"]
+    assert "final_source_sha256" in final_similarity["source_hashes"]
+
+    class FailingOpenAI:
+        def __init__(self) -> None:
+            raise AssertionError("report must stay offline")
+
+    monkeypatch.setattr("rttdist.openai_client.OpenAI", FailingOpenAI)
+
+    summary_artifacts = write_run_summary(
+        output_root=config.output_root,
+        run_id="report-run-embed",
+    )
+    summary = json.loads(
+        summary_artifacts.summary_json_path.read_text(encoding="utf-8")
+    )
+    entry = summary["results"][0]
+    assert entry["final_similarity"]["availability"] == "measured"
+    assert isinstance(entry["final_similarity"]["value"]["score"], float)
+    assert entry["final_similarity"]["value"]["provider"] == "openai"
+
+
 class SequencedFactory:
     def __init__(self, *, clients: tuple[TranslationClientProtocol, ...]) -> None:
         self._clients = list(clients)
@@ -161,6 +261,41 @@ class SequencedFactory:
 
 
 class FailingTranslationClient:
+    def translate(
+        self,
+        *,
+        problem_id: str,
+        source_language: str,
+        target_language: str,
+        problem_statement: str,
+        sample_input: str,
+        sample_output: str,
+        source_code: str,
+        iteration_index: int,
+        direction: str,
+    ) -> TranslationResult:
+        if direction == "seed_to_target":
+            return self.translate_cpp_to_target(
+                problem_id=problem_id,
+                target_language=target_language,
+                problem_statement=problem_statement,
+                sample_input=sample_input,
+                sample_output=sample_output,
+                source_code=source_code,
+                iteration_index=iteration_index,
+            )
+        if direction == "target_to_roundtrip_cpp":
+            return self.translate_target_to_cpp(
+                problem_id=problem_id,
+                source_language=source_language,
+                problem_statement=problem_statement,
+                sample_input=sample_input,
+                sample_output=sample_output,
+                source_code=source_code,
+                iteration_index=iteration_index,
+            )
+        raise AssertionError(f"Unexpected translation direction: {direction!r}")
+
     def translate_cpp_to_target(
         self,
         *,
@@ -208,6 +343,41 @@ class ConvergingTranslationClient:
             "int solve(int x){ if (x > 0) { return x; } return 0; }",
             "int solve(int x){ if (x > 0) { return x; } return 0; }",
         ]
+
+    def translate(
+        self,
+        *,
+        problem_id: str,
+        source_language: str,
+        target_language: str,
+        problem_statement: str,
+        sample_input: str,
+        sample_output: str,
+        source_code: str,
+        iteration_index: int,
+        direction: str,
+    ) -> TranslationResult:
+        if direction == "seed_to_target":
+            return self.translate_cpp_to_target(
+                problem_id=problem_id,
+                target_language=target_language,
+                problem_statement=problem_statement,
+                sample_input=sample_input,
+                sample_output=sample_output,
+                source_code=source_code,
+                iteration_index=iteration_index,
+            )
+        if direction == "target_to_roundtrip_cpp":
+            return self.translate_target_to_cpp(
+                problem_id=problem_id,
+                source_language=source_language,
+                problem_statement=problem_statement,
+                sample_input=sample_input,
+                sample_output=sample_output,
+                source_code=source_code,
+                iteration_index=iteration_index,
+            )
+        raise AssertionError(f"Unexpected translation direction: {direction!r}")
 
     def translate_cpp_to_target(
         self,
@@ -311,6 +481,27 @@ class FakeEvaluator:
             compile_result=None,
             fixture_results=(fixture,),
             message="All fixture pairs passed.",
+        )
+
+
+class DeterministicEmbeddingProvider:
+    provider_name = "openai"
+    configured_model = "text-embedding-3-large"
+
+    def embed_source(self, *, source_text: str) -> EmbeddedSource:
+        source_hash = hash_source_text(source_text)
+        first = int(source_hash[0:2], 16) / 255.0 + 0.01
+        second = int(source_hash[2:4], 16) / 255.0 + 0.01
+        third = int(source_hash[4:6], 16) / 255.0 + 0.01
+        return EmbeddedSource(
+            source_hash=source_hash,
+            provider=self.provider_name,
+            configured_model=self.configured_model,
+            observed_model="text-embedding-3-large",
+            request_id=f"req_{source_hash[:8]}",
+            dimensions=3,
+            vector=(first, second, third),
+            usage=EmbeddingUsage(prompt_tokens=9, total_tokens=9),
         )
 
 
