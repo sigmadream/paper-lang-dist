@@ -10,6 +10,15 @@ This repository already measures several useful quantities, but they are not exa
 
 This note maps the current implementation to those three questions.
 
+## Update for current repo state
+
+This note originally described the early `cpp`-seed-only implementation. The current repository now supports configurable `seed_language`, ordered-pair artifact paths (`seed-to-target`), dual-state convergence (`seed_state`, `target_state`, `overall`), and a persisted embedding-based `final_similarity` artifact for the final comparison step.
+
+Two important consequences:
+
+- `residual_similarity` remains a `cpp`-token metric and is only measured when `seed_language == "cpp"`.
+- For non-`cpp` seeds, the final comparison signal is the persisted embedding-based `final_similarity`, which `report` reads offline from artifacts.
+
 ## Quick answer
 
 - Question 1: implemented

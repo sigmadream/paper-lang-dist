@@ -47,3 +47,4 @@
 
 47: - Quality fix: added explicit run_id validation in write_run_summary() to reject path traversal (../etc/passwd) and absolute paths, matching the contract-path safety pattern already used for artifact paths.
 48: - Quality fix: config loading now uses a custom SafeLoader that raises on duplicate YAML mapping keys, preventing silent override of repeated keys like 'output_root', 'runtime', or 'openai' blocks.
+- Regression gotcha (task-3 contract): tests must use v2 artifact keys/paths (`input_seed_source_path`, `<run>/<problem>/<seed>-to-<target>/...`) and report schema `report_summary.v2`; stale v1 assumptions (`input_cpp_source_path`, target-only run dirs, `report_summary.v1`) now fail.

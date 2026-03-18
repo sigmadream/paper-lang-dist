@@ -1,12 +1,34 @@
 # RTT Language Distance Experiment Tool
 
-> 이 저장소는 C++ 기준 해법을 `C`, `Java`, `Python`으로 왕복 번역한 뒤 다시 C++로 되돌리면서, 언어 간 거리를 정량화하기 위한 실험 도구입니다.
+> 이 저장소는 설정된 `seed_language` 기준 해법을 다른 언어로 왕복 번역하면서, 언어 간 거리와 수렴 특성을 정량화하기 위한 실험 도구입니다.
 
 핵심 아이디어는 다음 세 가지를 함께 보는 것입니다.
 
 - 왕복 번역이 몇 번 만에 고정점(`fixed_point`)에 도달하는가
 - 최종 round-trip C++가 원본 C++와 얼마나 비슷한가
 - 구조(AST)와 복잡도 메트릭이 언어별로 어떻게 달라지는가
+
+## 빠른 시작
+
+```shell
+python -m rttdist.cli validate-corpus --config real-smoke-openai.yaml
+python -m rttdist.cli run --config real-smoke-openai.yaml --run-id smoke-openai-00a
+python -m rttdist.cli report --config real-smoke-openai.yaml --run-id smoke-openai-00a --with-moss
+
+python -m rttdist.cli validate-corpus --config real-smoke-ollama.yaml
+python -m rttdist.cli run --config real-smoke-ollama.yaml --run-id smoke-ollama-00a
+python -m rttdist.cli report --config real-smoke-ollama.yaml --run-id smoke-ollama-00a --with-moss
+```
+
+## 현재 구현 상태 (v2)
+
+- 설정 파일은 명시적 `seed_language` 를 요구합니다.
+- 기준 해법 파일은 `reference.<ext>` 형식이며, `<ext>` 는 seed 언어에 따라 달라집니다.
+- 산출물 디렉터리는 `{seed_language}-to-{target_language}` ordered-pair 형태를 사용합니다.
+- 수렴 판정은 `seed_state`, `target_state`, `overall` 의 dual-state 구조를 기록합니다.
+- `residual_similarity` 는 `cpp` seed에만 측정되며, 비-`cpp` seed는 persisted embedding 기반 `final_similarity` 를 사용합니다.
+- `report_summary.v2` 는 per-result 목록과 `ordered_pair_aggregates` 를 함께 제공합니다.
+- `report` 명령은 persisted artifacts만 읽으며, report 시점에 embedding/network 작업을 다시 수행하지 않습니다.
 
 ## 현재 저장소에 들어 있는 것
 
@@ -98,10 +120,11 @@ python -m rttdist.cli report --run-id smoke --with-moss
 `validate-corpus` 는 다음을 검사합니다.
 
 - `problem_ids`
+- `seed_language`
 - 대상 언어 목록
 - 문제 설명 파일 존재 여부
 - 샘플 입출력 픽스처 존재 여부
-- `corpus/solutions/<problem-id>/reference.cpp` 존재 여부
+- `corpus/solutions/<problem-id>/reference.<ext>` 존재 여부 (`<ext>` 는 seed 언어에 따라 결정)
 
 ## 실행 방식
 
@@ -118,15 +141,16 @@ python -m rttdist.cli report --run-id smoke --with-moss
 설정 내용:
 
 - 문제: `IPOP_1436`, `IPOP_2579`
+- seed 언어: 기본 smoke는 `cpp`
 - 대상 언어: `c`, `java`, `python`
 - 모델 설정: `gpt-5.4`, `temperature=0`
 - 반복 한도: `20`
 - 타임아웃: `30초`
 
-mock 응답 파일에는 총 8개의 응답이 들어 있습니다.
+mock 응답 파일에는 기본 `cpp` seed smoke 경로와, 추가로 하나의 non-default seed 성공 경로(`python -> cpp`)가 들어 있습니다.
 
-- `IPOP_1436`: `cpp -> c/java/python` 3개 + `target -> cpp` 1개
-- `IPOP_2579`: `cpp -> c/java/python` 3개 + `target -> cpp` 1개
+- 기본 smoke: `cpp -> c/java/python`, `target -> roundtrip cpp`
+- 추가 smoke: `python -> cpp` non-default seed success path
 
 실행 예시는 다음과 같습니다.
 
@@ -234,6 +258,7 @@ OpenAI SDK를 통해 실제 API 호출로 실험하는 경로입니다.
 - `RTTDIST_OPENAI_MOCK_RESPONSES` 가 설정되어 있으면 mock transport를 사용합니다
 - 이 변수가 없으면 `OpenAI()` 클라이언트를 만들고 `client.chat.completions.create(...)` 를 호출합니다
 - OpenAI 모델은 `gpt-5.4`, `gpt-5.4-mini`, `gpt-5.3-codex` 중에서 선택 가능하고, 온도는 `0`만 허용합니다
+- embedding 기반 `final_similarity` 는 실행 시점에 persisted artifact로 저장되며, provenance로 configured model, observed model, request ids를 기록합니다. OpenAI는 true internal revision id를 노출하지 않으므로 그 값은 저장되지 않습니다.
 
 실행 전 준비:
 

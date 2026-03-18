@@ -14,6 +14,15 @@ that does **not** mean the same thing as "the code looks identical to me."
 
 This note explains what each quantity means in plain language.
 
+## Update for current repo state
+
+This explainer originally focused on the early `cpp`-seed-only pipeline. The current repository distinguishes two final comparison signals:
+
+- `residual_similarity`: cpp-only token overlap, available only when `seed_language == "cpp"`
+- `final_similarity`: persisted embedding-based similarity artifact, used as the final cross-seed comparison signal and consumed offline by `report`
+
+The current repository also persists dual-state convergence information (`seed_state`, `target_state`, `overall`) and reports ordered-pair aggregates under `report_summary.v2`.
+
 ## 1. Residual similarity
 
 ### Plain-language definition
