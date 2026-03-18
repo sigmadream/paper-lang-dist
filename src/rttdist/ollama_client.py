@@ -18,8 +18,7 @@ from rttdist.openai_client import (
 )
 from rttdist.prompts import (
     PromptTemplateError,
-    build_cpp_to_target_prompt,
-    build_target_to_cpp_prompt,
+    build_translation_prompt,
 )
 
 
@@ -117,33 +116,17 @@ class OllamaTranslationClient:
         source_code: str,
         iteration_index: int,
     ) -> TranslationResult:
-        try:
-            prompt = build_cpp_to_target_prompt(
-                problem_id=problem_id,
-                target_language=target_language,
-                problem_statement=problem_statement,
-                sample_input=sample_input,
-                sample_output=sample_output,
-                source_code=source_code,
-            )
-        except PromptTemplateError as exc:
-            raise OllamaClientError(str(exc)) from exc
-
-        request_payload = MockOpenAIRequest(
-            model=self._model,
-            temperature=self._temperature,
-            messages=prompt.messages,
-            metadata={
-                "provider": "ollama",
-                "direction": prompt.direction,
-                "problem_id": problem_id,
-                "seed_language": "cpp",
-                "target_language": prompt.target_language,
-                "iteration_index": iteration_index,
-                "host": self._host,
-            },
+        return self.translate(
+            problem_id=problem_id,
+            source_language="cpp",
+            target_language=target_language,
+            problem_statement=problem_statement,
+            sample_input=sample_input,
+            sample_output=sample_output,
+            source_code=source_code,
+            iteration_index=iteration_index,
+            direction="seed_to_target",
         )
-        return self._translate(request_payload)
 
     def translate_target_to_cpp(
         self,
@@ -156,14 +139,41 @@ class OllamaTranslationClient:
         source_code: str,
         iteration_index: int,
     ) -> TranslationResult:
+        return self.translate(
+            problem_id=problem_id,
+            source_language=source_language,
+            target_language="cpp",
+            problem_statement=problem_statement,
+            sample_input=sample_input,
+            sample_output=sample_output,
+            source_code=source_code,
+            iteration_index=iteration_index,
+            direction="target_to_seed",
+        )
+
+    def translate(
+        self,
+        *,
+        problem_id: str,
+        source_language: str,
+        target_language: str,
+        problem_statement: str,
+        sample_input: str,
+        sample_output: str,
+        source_code: str,
+        iteration_index: int,
+        direction: str = "source_to_target",
+    ) -> TranslationResult:
         try:
-            prompt = build_target_to_cpp_prompt(
+            prompt = build_translation_prompt(
                 problem_id=problem_id,
                 source_language=source_language,
+                target_language=target_language,
                 problem_statement=problem_statement,
                 sample_input=sample_input,
                 sample_output=sample_output,
                 source_code=source_code,
+                direction=direction,
             )
         except PromptTemplateError as exc:
             raise OllamaClientError(str(exc)) from exc
@@ -176,9 +186,8 @@ class OllamaTranslationClient:
                 "provider": "ollama",
                 "direction": prompt.direction,
                 "problem_id": problem_id,
-                "seed_language": "cpp",
                 "source_language": prompt.source_language,
-                "target_language": "cpp",
+                "target_language": prompt.target_language,
                 "iteration_index": iteration_index,
                 "host": self._host,
             },

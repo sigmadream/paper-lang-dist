@@ -43,7 +43,7 @@ class FakeOllamaTransport:
         return self._model_list_response
 
 
-def test_ollama_client_translates_both_directions_with_mocked_transport() -> None:
+def test_generic_translation_ollama_client_translates_ordered_language_pairs() -> None:
     statement, sample_input, sample_output, seed_cpp = _load_curated_problem_text()
     transport = FakeOllamaTransport(
         responses=[
@@ -59,23 +59,27 @@ def test_ollama_client_translates_both_directions_with_mocked_transport() -> Non
         transport=transport,
     )
 
-    to_python = client.translate_cpp_to_target(
+    to_python = client.translate(
         problem_id="IPOP_1436",
+        source_language="cpp",
         target_language="python",
         problem_statement=statement,
         sample_input=sample_input,
         sample_output=sample_output,
         source_code=seed_cpp,
         iteration_index=1,
+        direction="seed_to_target",
     )
-    back_to_cpp = client.translate_target_to_cpp(
+    back_to_cpp = client.translate(
         problem_id="IPOP_1436",
         source_language="python",
+        target_language="cpp",
         problem_statement=statement,
         sample_input=sample_input,
         sample_output=sample_output,
         source_code=to_python.extracted_source,
         iteration_index=1,
+        direction="target_to_seed",
     )
 
     assert len(transport.requests) == 2
@@ -83,6 +87,12 @@ def test_ollama_client_translates_both_directions_with_mocked_transport() -> Non
     second_metadata = cast(dict[str, object], transport.requests[1]["metadata"])
     assert first_metadata["iteration_index"] == "1"
     assert second_metadata["iteration_index"] == "1"
+    assert first_metadata["source_language"] == "cpp"
+    assert first_metadata["target_language"] == "python"
+    assert first_metadata["direction"] == "seed_to_target"
+    assert second_metadata["source_language"] == "python"
+    assert second_metadata["target_language"] == "cpp"
+    assert second_metadata["direction"] == "target_to_seed"
     assert to_python.request.model == "qwen2.5-coder:7b"
     assert to_python.request.metadata["provider"] == "ollama"
     assert back_to_cpp.request.metadata["provider"] == "ollama"
