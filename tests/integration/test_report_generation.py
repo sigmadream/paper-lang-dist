@@ -28,7 +28,7 @@ def test_report_generation_writes_stable_summary_files_from_persisted_run_artifa
     config = ExperimentConfig(
         problem_ids=("IPOP_REPORT",),
         target_languages=("python", "c"),
-        openai=OpenAIConfig(model="gpt-4o-mini", temperature=0.0),
+        openai=OpenAIConfig(model="gpt-5.4", temperature=0.0),
         runtime=RuntimeConfig(max_iterations=2, timeout_seconds=1),
         output_root=tmp_path / "artifacts",
         problem_root=tmp_path / "problem",
@@ -325,7 +325,7 @@ def _translation_result(
     extracted_source: str,
 ) -> TranslationResult:
     request = MockOpenAIRequest(
-        model="gpt-4o-mini",
+        model="gpt-5.4",
         temperature=0.0,
         messages=(
             MockOpenAIMessage(role="system", content=direction),
@@ -340,7 +340,7 @@ def _translation_result(
     )
     response = MockOpenAIResponse(
         response_id=f"resp-{direction}-{iteration_index}",
-        model="gpt-4o-mini",
+        model="gpt-5.4",
         choices=(
             MockOpenAIChoice(
                 index=0,

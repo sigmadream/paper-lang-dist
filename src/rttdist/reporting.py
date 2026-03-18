@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
 import json
 from pathlib import Path
@@ -9,6 +10,7 @@ from rttdist.artifacts import ArtifactContractError, resolve_contract_path
 from rttdist.ast_metrics import compute_roundtrip_ast_distance_metrics
 from rttdist.failure_taxonomy import FailureRecord, failure_record_from_dict
 from rttdist.metrics import MetricExtractionError, compute_metric_deltas
+from rttdist.moss import MossSimilarityMatch
 
 if TYPE_CHECKING:
     from rttdist.pipeline import RTTRunResult
@@ -16,6 +18,9 @@ if TYPE_CHECKING:
 
 class ReportingError(RuntimeError):
     pass
+
+
+MossSimilarityFn = Callable[[str, str, str], MossSimilarityMatch]
 
 
 def _resolve_run_id_within_output_root(*, output_root: Path, run_id: str) -> Path:
@@ -48,6 +53,7 @@ def generate_run_summary(
     output_root: Path,
     run_id: str,
     run_results: Sequence[RTTRunResult] | None = None,
+    moss_similarity_fn: MossSimilarityFn | None = None,
 ) -> dict[str, Any]:
     normalized_output_root = Path(output_root).resolve()
     normalized_run_id = (
@@ -64,7 +70,11 @@ def generate_run_summary(
         run_results=run_results,
     )
     entries = [
-        _build_summary_entry(output_root=normalized_output_root, manifest_path=path)
+        _build_summary_entry(
+            output_root=normalized_output_root,
+            manifest_path=path,
+            moss_similarity_fn=moss_similarity_fn,
+        )
         for path in manifest_paths
     ]
     entries.sort(key=lambda item: (item["problem_id"], item["target_language"]))
@@ -82,6 +92,7 @@ def write_run_summary(
     output_root: Path,
     run_id: str,
     run_results: Sequence[RTTRunResult] | None = None,
+    moss_similarity_fn: MossSimilarityFn | None = None,
 ) -> RunSummaryArtifacts:
     normalized_output_root = Path(output_root).resolve()
     run_root = _resolve_run_id_within_output_root(
@@ -94,6 +105,7 @@ def write_run_summary(
         output_root=normalized_output_root,
         run_id=run_id,
         run_results=run_results,
+        moss_similarity_fn=moss_similarity_fn,
     )
     summary_json_path = run_root / "summary.json"
     summary_markdown_path = run_root / "summary.md"
@@ -114,47 +126,78 @@ def write_run_summary(
 def render_run_summary_markdown(summary: dict[str, Any]) -> str:
     run_id = str(summary["run_id"])
     results = list(_require_list(summary.get("results"), field_name="results"))
+    include_moss = any("moss_similarity" in entry for entry in results)
 
     lines = [
         f"# Run Summary: {run_id}",
         "",
-        "| Problem | Language | Final status | Iterations | Change-count distance | Convergence | Residual similarity | Semantic | AST distance to seed |",
-        "| --- | --- | --- | ---: | ---: | --- | --- | --- | --- |",
     ]
-    for entry in results:
-        lines.append(
-            "| {problem} | {language} | {status} | {iterations} | {change_distance} | {convergence} | {residual} | {semantic} | {ast} |".format(
-                problem=entry["problem_id"],
-                language=entry["target_language"],
-                status=entry["final_status"],
-                iterations=entry["iteration_count"],
-                change_distance=_format_change_count_distance(
-                    entry["change_count_distance"]
-                ),
-                convergence=entry["convergence_outcome"],
-                residual=_format_measurement(entry["residual_similarity"]),
-                semantic=entry["semantic_summary"]["overall"],
-                ast=_format_ast_seed_distance(entry["ast_distance"]),
-            )
-        )
-
-    for entry in results:
+    if include_moss:
         lines.extend(
             [
-                "",
-                f"## {entry['problem_id']} / {entry['target_language']}",
-                "",
-                f"- Final status: {entry['final_status']}",
-                f"- Iteration count: {entry['iteration_count']}",
-                (
-                    "- Change-count distance (1 cycle = C++ -> target -> C++): "
-                    f"{_format_change_count_distance(entry['change_count_distance'])}"
-                ),
-                f"- Convergence outcome: {entry['convergence_outcome']}",
-                (
-                    "- Residual similarity to seed C++: "
-                    f"{_format_measurement(entry['residual_similarity'])}"
-                ),
+                "| Problem | Language | Final status | Iterations | Change-count distance | Convergence | Residual similarity | MOSS similarity | Semantic | AST distance to seed |",
+                "| --- | --- | --- | ---: | ---: | --- | --- | --- | --- | --- |",
+            ]
+        )
+    else:
+        lines.extend(
+            [
+                "| Problem | Language | Final status | Iterations | Change-count distance | Convergence | Residual similarity | Semantic | AST distance to seed |",
+                "| --- | --- | --- | ---: | ---: | --- | --- | --- | --- |",
+            ]
+        )
+    for entry in results:
+        row_values = {
+            "problem": entry["problem_id"],
+            "language": entry["target_language"],
+            "status": entry["final_status"],
+            "iterations": entry["iteration_count"],
+            "change_distance": _format_change_count_distance(
+                entry["change_count_distance"]
+            ),
+            "convergence": entry["convergence_outcome"],
+            "residual": _format_measurement(entry["residual_similarity"]),
+            "semantic": entry["semantic_summary"]["overall"],
+            "ast": _format_ast_seed_distance(entry["ast_distance"]),
+        }
+        if include_moss:
+            row_values["moss"] = _format_moss_measurement(entry.get("moss_similarity"))
+            lines.append(
+                "| {problem} | {language} | {status} | {iterations} | {change_distance} | {convergence} | {residual} | {moss} | {semantic} | {ast} |".format(
+                    **row_values
+                )
+            )
+        else:
+            lines.append(
+                "| {problem} | {language} | {status} | {iterations} | {change_distance} | {convergence} | {residual} | {semantic} | {ast} |".format(
+                    **row_values
+                )
+            )
+
+    for entry in results:
+        section_lines = [
+            "",
+            f"## {entry['problem_id']} / {entry['target_language']}",
+            "",
+            f"- Final status: {entry['final_status']}",
+            f"- Iteration count: {entry['iteration_count']}",
+            (
+                "- Change-count distance (1 cycle = C++ -> target -> C++): "
+                f"{_format_change_count_distance(entry['change_count_distance'])}"
+            ),
+            f"- Convergence outcome: {entry['convergence_outcome']}",
+            (
+                "- Residual similarity to seed C++: "
+                f"{_format_measurement(entry['residual_similarity'])}"
+            ),
+        ]
+        if "moss_similarity" in entry:
+            section_lines.append(
+                "- MOSS similarity to seed C++: "
+                f"{_format_moss_measurement(entry['moss_similarity'])}"
+            )
+        section_lines.extend(
+            [
                 (
                     "- Semantic summary: "
                     f"{entry['semantic_summary']['overall']} "
@@ -172,12 +215,18 @@ def render_run_summary_markdown(summary: dict[str, Any]) -> str:
                 ),
             ]
         )
+        lines.extend(section_lines)
 
     lines.append("")
     return "\n".join(lines)
 
 
-def _build_summary_entry(*, output_root: Path, manifest_path: Path) -> dict[str, Any]:
+def _build_summary_entry(
+    *,
+    output_root: Path,
+    manifest_path: Path,
+    moss_similarity_fn: MossSimilarityFn | None,
+) -> dict[str, Any]:
     manifest = _require_mapping(
         _load_json_file(manifest_path),
         field_name=f"manifest:{manifest_path.as_posix()}",
@@ -267,7 +316,7 @@ def _build_summary_entry(*, output_root: Path, manifest_path: Path) -> dict[str,
         iterations=iterations,
     )
 
-    return {
+    entry = {
         "problem_id": problem_id,
         "target_language": target_language,
         "final_status": final_record.status.value,
@@ -325,6 +374,58 @@ def _build_summary_entry(*, output_root: Path, manifest_path: Path) -> dict[str,
             ),
         },
     }
+    if moss_similarity_fn is not None:
+        entry["moss_similarity"] = _build_moss_similarity_summary(
+            seed_cpp_source=seed_source,
+            roundtrip_cpp_source=roundtrip_source,
+            failure_record=final_record,
+            problem_id=problem_id,
+            target_language=target_language,
+            moss_similarity_fn=moss_similarity_fn,
+        )
+    return entry
+
+
+def _build_moss_similarity_summary(
+    *,
+    seed_cpp_source: str | None,
+    roundtrip_cpp_source: str | None,
+    failure_record: FailureRecord,
+    problem_id: str,
+    target_language: str,
+    moss_similarity_fn: MossSimilarityFn,
+) -> dict[str, Any]:
+    if seed_cpp_source is None:
+        return _unavailable_measurement(
+            reason="missing_seed_cpp_source",
+            failure_record=failure_record,
+        )
+    if roundtrip_cpp_source is None:
+        return _unavailable_measurement(
+            reason="missing_roundtrip_cpp_source",
+            failure_record=failure_record,
+        )
+
+    try:
+        match = moss_similarity_fn(
+            seed_cpp_source,
+            roundtrip_cpp_source,
+            f"rttdist:{problem_id}/{target_language}",
+        )
+    except Exception as exc:
+        return _unavailable_measurement(
+            reason="moss_execution_failed",
+            details={"message": str(exc)},
+        )
+
+    return _measured_measurement(
+        {
+            "seed_percentage": match.seed_percentage,
+            "roundtrip_percentage": match.roundtrip_percentage,
+            "report_url": match.report_url,
+            "match_url": match.match_url,
+        }
+    )
 
 
 def _collect_run_manifest_paths(
@@ -721,6 +822,21 @@ def _format_change_count_distance(measurement: dict[str, Any]) -> str:
     if measurement.get("availability") != "measured":
         return _format_measurement(measurement)
     return str(measurement.get("value"))
+
+
+def _format_moss_measurement(measurement: dict[str, Any] | None) -> str:
+    if measurement is None:
+        return "not_requested"
+    if measurement.get("availability") != "measured":
+        return _format_measurement(measurement)
+
+    value = _require_mapping(
+        measurement.get("value"), field_name="moss_similarity.value"
+    )
+    return "seed={seed}%, roundtrip={roundtrip}%".format(
+        seed=value.get("seed_percentage"),
+        roundtrip=value.get("roundtrip_percentage"),
+    )
 
 
 def _format_complexity_measurement(measurement: dict[str, Any]) -> str:

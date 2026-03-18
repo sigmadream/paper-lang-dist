@@ -75,7 +75,7 @@ def _build_config(tmp_path: Path) -> ExperimentConfig:
     return ExperimentConfig(
         problem_ids=("IPOP_CLI",),
         target_languages=("python",),
-        openai=OpenAIConfig(model="gpt-4o-mini", temperature=0.0),
+        openai=OpenAIConfig(model="gpt-5.4", temperature=0.0),
         runtime=RuntimeConfig(max_iterations=2, timeout_seconds=1),
         output_root=output_root,
         problem_root=tmp_path / "problem",

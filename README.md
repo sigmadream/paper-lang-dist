@@ -56,6 +56,45 @@ python -m rttdist.cli resume --config <config.yaml> --run-id <run-id>
 python -m rttdist.cli report --run-id <run-id>
 ```
 
+주의:
+
+- `run-id`는 산출물 디렉터리 이름으로도 사용됩니다
+- 같은 `run-id`를 재사용하면 기존 아티팩트/상태를 다시 참조하게 되어, 이전 실패 결과가 그대로 보일 수 있습니다
+- 완전히 새 실행을 원하면 새 `run-id`를 쓰거나 기존 `artifacts.../<run-id>/` 디렉터리를 지운 뒤 다시 실행하세요
+
+### MOSS 유사도(선택 기능)
+
+리포트 생성 시 `moss.pl` 기반 유사도 측정은 기본 비활성입니다. 필요할 때만 `--with-moss`를 사용합니다.
+
+```bash
+python -m rttdist.cli run --config <config.yaml> --run-id <run-id> --with-moss
+python -m rttdist.cli resume --config <config.yaml> --run-id <run-id> --with-moss
+python -m rttdist.cli report --run-id <run-id> --with-moss
+```
+
+`moss.pl` 경로 지정 우선순위는 다음과 같습니다.
+
+- `--moss-script <path>`
+- 환경 변수 `RTTDIST_MOSS_SCRIPT`
+- 현재 작업 디렉터리의 `./moss.pl`
+
+예시:
+
+```bash
+python -m rttdist.cli report --run-id smoke --with-moss --moss-script ./moss.pl
+
+export RTTDIST_MOSS_SCRIPT=/Users/sd/Works/paper-lang-dist/moss.pl
+python -m rttdist.cli report --run-id smoke --with-moss
+```
+
+주의 사항:
+
+- MOSS는 원격 서비스이므로 네트워크 연결이 필요합니다
+- 코드가 `moss.stanford.edu`로 업로드됩니다
+- 계정/일일 제출 제한 및 결과 보관 기간 정책이 적용됩니다
+- MOSS가 비교 가능한 공통 구간을 찾지 못하면 실패로 처리하지 않고 `0%` similarity로 기록합니다 (`match_url`은 `null`)
+- MOSS 측정 실패 시 리포트 전체는 실패하지 않고, `moss_similarity`를 `unavailable`로 기록합니다
+
 `validate-corpus` 는 다음을 검사합니다.
 
 - `problem_ids`
@@ -80,7 +119,7 @@ python -m rttdist.cli report --run-id <run-id>
 
 - 문제: `IPOP_1436`, `IPOP_2579`
 - 대상 언어: `c`, `java`, `python`
-- 모델 설정: `gpt-4o-mini`, `temperature=0`
+- 모델 설정: `gpt-5.4`, `temperature=0`
 - 반복 한도: `20`
 - 타임아웃: `30초`
 
@@ -113,7 +152,7 @@ python -m rttdist.cli report --run-id smoke
 지원 방식은 두 가지입니다.
 
 - 전체 스모크 코퍼스용 설정: `tests/fixtures/config/minimal-ollama.yaml`
-- 가장 작은 1문제 x 1언어 smoke용 설정: `real-ollama-smoke.yaml`
+- 가장 작은 1문제 x 3언어 smoke용 설정: `real-ollama-smoke.yaml`
 
 `tests/fixtures/config/minimal-ollama.yaml`:
 
@@ -135,9 +174,15 @@ python -m rttdist.cli report --run-id smoke
 실행 전 확인:
 
 ```bash
+ollama pull qwen2.5-coder:7b
 ollama list
 ollama serve
 ```
+
+현재 `run`/`resume` 경로는 실행 시작 전에 Ollama 서버의 `/api/tags`를 조회해서 설정된 모델이 실제로 설치되어 있는지 확인합니다.
+
+- 모델이 없으면 첫 번역 요청까지 기다리지 않고 즉시 실패합니다
+- 에러 메시지에는 `ollama pull <model>` 형태의 복구 힌트가 포함됩니다
 
 현재 개발 환경에서는 다음 모델들이 확인되었습니다.
 
@@ -169,6 +214,8 @@ python -m rttdist.cli report --config tests/fixtures/config/minimal-ollama.yaml 
 - Ollama는 로컬 모델 품질과 머신 자원에 따라 결과 편차가 큽니다
 - 재현성을 위해 현재 구현은 `ollama.temperature = 0` 만 허용합니다
 - mock smoke와 달리 실행 시간이 더 길고 결과가 덜 고정적일 수 있습니다
+- 동일한 `run-id`로 재실행했는데 예전 실패 결과가 보이면 새 `run-id`로 다시 실행하거나 기존 `artifacts-ollama/<run-id>/`를 지우고 다시 시작하세요
+- 실행 중 `api_error`가 나면 콘솔에 `detail:` 줄로 실제 Ollama 원인(예: model not found, host unreachable)이 함께 출력됩니다
 
 ### 3) OpenAI 사용
 
@@ -177,7 +224,7 @@ OpenAI SDK를 통해 실제 API 호출로 실험하는 경로입니다.
 - 최소 실제 smoke 설정: `real-smoke.yaml`
 - 문제: `IPOP_1436`
 - 대상 언어: `python`
-- 모델: `gpt-4o-mini`
+- 모델: `gpt-5.4`
 - 출력 루트: `artifacts-real-openai/`
 
 현재 `tests/e2e/test_smoke_experiment.py` 는 mock 기반 smoke만 검증합니다. 즉, 테스트를 그대로 돌린다고 해서 실제 OpenAI API를 호출하지는 않습니다.
@@ -186,7 +233,7 @@ OpenAI SDK를 통해 실제 API 호출로 실험하는 경로입니다.
 
 - `RTTDIST_OPENAI_MOCK_RESPONSES` 가 설정되어 있으면 mock transport를 사용합니다
 - 이 변수가 없으면 `OpenAI()` 클라이언트를 만들고 `client.chat.completions.create(...)` 를 호출합니다
-- 현재 모델은 `gpt-4o-mini` 로 고정이고, 온도는 `0`만 허용합니다
+- OpenAI 모델은 `gpt-5.4`, `gpt-5.4-mini`, `gpt-5.3-codex` 중에서 선택 가능하고, 온도는 `0`만 허용합니다
 
 실행 전 준비:
 
@@ -256,6 +303,28 @@ python -m rttdist.cli report --config real-smoke.yaml --run-id real-smoke-001
 - `hash_normalized_cpp_tokens()`
 - `cpp_token_sorensen_dice_similarity()`
 - `compute_residual_similarity()`
+
+### 2-1. MOSS 유사도(선택)
+
+`--with-moss`를 사용하면 summary 생성 시 seed C++와 최종 round-trip C++ 한 쌍에 대해 MOSS를 추가로 측정합니다.
+
+구현 위치:
+
+- `src/rttdist/moss.py`
+- `src/rttdist/reporting.py`
+- `src/rttdist/cli.py`
+
+리포트 반영 방식:
+
+- `summary.json` 각 결과 엔트리에 `moss_similarity` 필드 추가
+- `summary.md` 테이블/상세 섹션에 MOSS 측정값 추가
+
+`moss_similarity` 값이 측정된 경우 포함되는 정보:
+
+- `seed_percentage`
+- `roundtrip_percentage`
+- `report_url`
+- `match_url` (`no matches`인 경우 `null`)
 
 ### 3. 고정점 판정(fixed point / oscillation)
 
@@ -403,6 +472,12 @@ python -m rttdist.cli report --config real-smoke.yaml --run-id real-smoke-001
 - 전체 스모크 요약 Markdown: `artifacts/smoke/summary.md`
 - 개별 실행 manifest: `artifacts/smoke/<problem>/<language>/run.json`
 - iteration 아티팩트: `artifacts/smoke/<problem>/<language>/iterations/iter-XXX/`
+
+각 iteration 디렉터리에는 최소한 다음 코드 스냅샷이 들어 있습니다.
+
+- `input.cpp`: 그 iteration 시작 시점에 `cpp -> target` 번역 입력으로 사용한 C++ 코드
+- `translated.<ext>`: 대상 언어로 번역된 코드
+- `roundtrip.cpp`: 대상 언어에서 다시 C++로 왕복 번역된 코드
 
 예를 들어 `IPOP_1436 / python`의 최종 manifest는 다음 위치에 있습니다.
 

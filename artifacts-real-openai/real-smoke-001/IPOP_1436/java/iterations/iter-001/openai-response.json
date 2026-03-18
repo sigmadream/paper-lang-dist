@@ -1,0 +1,40 @@
+{
+  "cpp_to_target": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "import java.io.BufferedReader;\nimport java.io.InputStreamReader;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        int n = Integer.parseInt(br.readLine().trim());\n\n        int count = 0;\n        int value = 665;\n        while (count < n) {\n            ++value;\n            if (String.valueOf(value).contains(\"666\")) {\n                ++count;\n            }\n        }\n\n        System.out.println(value);\n    }\n}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-DKn0rxm7Iszr50fNrNhPENXwBoqGL",
+    "model": "gpt-5.4-2026-03-05",
+    "usage": {
+      "completion_tokens": 116,
+      "prompt_tokens": 744,
+      "total_tokens": 860
+    }
+  },
+  "target_to_cpp": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    cin >> n;\n\n    int count = 0;\n    int value = 665;\n    while (count < n) {\n        ++value;\n        if (to_string(value).find(\"666\") != string::npos) {\n            ++count;\n        }\n    }\n\n    cout << value;\n    return 0;\n}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-DKn0u3bnezNE4l6rNdKpD23wHaNzW",
+    "model": "gpt-5.4-2026-03-05",
+    "usage": {
+      "completion_tokens": 102,
+      "prompt_tokens": 755,
+      "total_tokens": 857
+    }
+  }
+}

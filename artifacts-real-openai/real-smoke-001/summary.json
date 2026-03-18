@@ -1,59 +1,266 @@
 {
-  "result_count": 1,
+  "result_count": 6,
   "results": [
     {
       "artifacts": {
-        "final_execution_path": "real-smoke-001/IPOP_1436/python/iterations/iter-001/execution.json",
-        "final_iteration_directory": "real-smoke-001/IPOP_1436/python/iterations/iter-001",
-        "final_metrics_path": "real-smoke-001/IPOP_1436/python/iterations/iter-001/metrics.json",
-        "run_manifest_path": "real-smoke-001/IPOP_1436/python/run.json"
+        "final_execution_path": "real-smoke-001/IPOP_1436/c/iterations/iter-002/execution.json",
+        "final_iteration_directory": "real-smoke-001/IPOP_1436/c/iterations/iter-002",
+        "final_metrics_path": "real-smoke-001/IPOP_1436/c/iterations/iter-002/metrics.json",
+        "run_manifest_path": "real-smoke-001/IPOP_1436/c/run.json"
       },
       "ast_distance": {
-        "availability": "unavailable",
-        "failure": {
-          "iteration_index": 1,
-          "stage": "target_execution",
-          "status": "runtime_error"
-        },
-        "reason": "missing_roundtrip_cpp_source"
+        "availability": "measured",
+        "value": {
+          "distance_to_roundtrip_cpp": 0,
+          "distance_to_seed_cpp": 18,
+          "parse_status": {
+            "roundtrip_cpp": "ok",
+            "seed_cpp": "ok",
+            "target": "ok"
+          },
+          "parser_failures": {},
+          "status": "ok"
+        }
       },
       "change_count_distance": {
         "availability": "measured",
         "definition": "1 cycle = C++ -> target -> C++",
         "unit": "cpp_to_target_to_cpp_cycles",
-        "value": 0
+        "value": 2
       },
       "complexity_deltas": {
         "roundtrip_cpp": {
-          "availability": "unavailable",
-          "failure": {
-            "iteration_index": 1,
-            "stage": "target_execution",
-            "status": "runtime_error"
-          },
-          "reason": "missing_roundtrip_cpp_source"
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 4,
+                "function_count": 1,
+                "loc": 18,
+                "max_nesting_depth": 3,
+                "token_count": 98
+              }
+            },
+            "delta_vs_previous": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": 0,
+              "max_nesting_depth": 0,
+              "token_count": 0
+            },
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 1,
+              "function_count": 0,
+              "loc": -1,
+              "max_nesting_depth": 1,
+              "token_count": 9
+            },
+            "metric_set": "v1",
+            "previous": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 4,
+                "function_count": 1,
+                "loc": 18,
+                "max_nesting_depth": 3,
+                "token_count": 98
+              }
+            },
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 3,
+                "function_count": 1,
+                "loc": 19,
+                "max_nesting_depth": 2,
+                "token_count": 89
+              }
+            }
+          }
         },
         "target": {
           "availability": "measured",
           "value": {
             "current": {
-              "language": "python",
+              "language": "c",
               "metric_set": "v1",
               "metrics": {
-                "cyclomatic_complexity": 0,
-                "function_count": 0,
-                "loc": 6,
-                "max_nesting_depth": 0,
-                "token_count": 25
+                "cyclomatic_complexity": 4,
+                "function_count": 1,
+                "loc": 18,
+                "max_nesting_depth": 3,
+                "token_count": 90
+              }
+            },
+            "delta_vs_previous": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": 0,
+              "max_nesting_depth": 0,
+              "token_count": 0
+            },
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 1,
+              "function_count": 0,
+              "loc": -1,
+              "max_nesting_depth": 1,
+              "token_count": 1
+            },
+            "metric_set": "v1",
+            "previous": {
+              "language": "c",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 4,
+                "function_count": 1,
+                "loc": 18,
+                "max_nesting_depth": 3,
+                "token_count": 90
+              }
+            },
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 3,
+                "function_count": 1,
+                "loc": 19,
+                "max_nesting_depth": 2,
+                "token_count": 89
+              }
+            }
+          }
+        }
+      },
+      "convergence_outcome": "fixed_point",
+      "final_iteration_index": 2,
+      "final_status": "success",
+      "iteration_count": 2,
+      "moss_similarity": {
+        "availability": "measured",
+        "value": {
+          "match_url": null,
+          "report_url": "http://moss.stanford.edu/results/6/2090223488371",
+          "roundtrip_percentage": 0,
+          "seed_percentage": 0
+        }
+      },
+      "problem_id": "IPOP_1436",
+      "residual_similarity": {
+        "availability": "measured",
+        "value": 0.7040816326530612
+      },
+      "semantic_summary": {
+        "overall": "pass",
+        "roundtrip_cpp": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        },
+        "target": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        }
+      },
+      "target_language": "c"
+    },
+    {
+      "artifacts": {
+        "final_execution_path": "real-smoke-001/IPOP_1436/java/iterations/iter-001/execution.json",
+        "final_iteration_directory": "real-smoke-001/IPOP_1436/java/iterations/iter-001",
+        "final_metrics_path": "real-smoke-001/IPOP_1436/java/iterations/iter-001/metrics.json",
+        "run_manifest_path": "real-smoke-001/IPOP_1436/java/run.json"
+      },
+      "ast_distance": {
+        "availability": "measured",
+        "value": {
+          "distance_to_roundtrip_cpp": 17,
+          "distance_to_seed_cpp": 17,
+          "parse_status": {
+            "roundtrip_cpp": "ok",
+            "seed_cpp": "ok",
+            "target": "ok"
+          },
+          "parser_failures": {},
+          "status": "ok"
+        }
+      },
+      "change_count_distance": {
+        "availability": "measured",
+        "definition": "1 cycle = C++ -> target -> C++",
+        "unit": "cpp_to_target_to_cpp_cycles",
+        "value": 1
+      },
+      "complexity_deltas": {
+        "roundtrip_cpp": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 3,
+                "function_count": 1,
+                "loc": 18,
+                "max_nesting_depth": 2,
+                "token_count": 84
               }
             },
             "delta_vs_previous": null,
             "delta_vs_seed_cpp": {
-              "cyclomatic_complexity": -3,
-              "function_count": -1,
-              "loc": -13,
-              "max_nesting_depth": -2,
-              "token_count": -64
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": -1,
+              "max_nesting_depth": 0,
+              "token_count": -5
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 3,
+                "function_count": 1,
+                "loc": 19,
+                "max_nesting_depth": 2,
+                "token_count": 89
+              }
+            }
+          }
+        },
+        "target": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "java",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 3,
+                "function_count": 1,
+                "loc": 17,
+                "max_nesting_depth": 2,
+                "token_count": 115
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": -2,
+              "max_nesting_depth": 0,
+              "token_count": 26
             },
             "metric_set": "v1",
             "previous": null,
@@ -73,35 +280,659 @@
       },
       "convergence_outcome": "terminated_on_failure",
       "final_iteration_index": 1,
-      "final_status": "runtime_error",
+      "final_status": "compile_error",
       "iteration_count": 1,
+      "moss_similarity": {
+        "availability": "measured",
+        "value": {
+          "match_url": "http://moss.stanford.edu/results/5/4345847075778/match0.html",
+          "report_url": "http://moss.stanford.edu/results/5/4345847075778",
+          "roundtrip_percentage": 86,
+          "seed_percentage": 81
+        }
+      },
       "problem_id": "IPOP_1436",
       "residual_similarity": {
         "availability": "unavailable",
         "failure": {
           "iteration_index": 1,
-          "stage": "target_execution",
-          "status": "runtime_error"
+          "stage": "roundtrip_execution",
+          "status": "compile_error"
         },
         "reason": "residual_similarity_not_recorded"
       },
       "semantic_summary": {
         "overall": "fail",
         "roundtrip_cpp": {
-          "available": false,
+          "available": true,
           "fixture_fail_count": 0,
           "fixture_pass_count": 0,
-          "message": "stage_not_executed",
+          "message": "Compilation failed.",
           "passed": false,
-          "status": "not_evaluated"
+          "status": "compile_error"
         },
         "target": {
           "available": true,
-          "fixture_fail_count": 10,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        }
+      },
+      "target_language": "java"
+    },
+    {
+      "artifacts": {
+        "final_execution_path": "real-smoke-001/IPOP_1436/python/iterations/iter-001/execution.json",
+        "final_iteration_directory": "real-smoke-001/IPOP_1436/python/iterations/iter-001",
+        "final_metrics_path": "real-smoke-001/IPOP_1436/python/iterations/iter-001/metrics.json",
+        "run_manifest_path": "real-smoke-001/IPOP_1436/python/run.json"
+      },
+      "ast_distance": {
+        "availability": "measured",
+        "value": {
+          "distance_to_roundtrip_cpp": 34,
+          "distance_to_seed_cpp": 28,
+          "parse_status": {
+            "roundtrip_cpp": "ok",
+            "seed_cpp": "ok",
+            "target": "ok"
+          },
+          "parser_failures": {},
+          "status": "ok"
+        }
+      },
+      "change_count_distance": {
+        "availability": "measured",
+        "definition": "1 cycle = C++ -> target -> C++",
+        "unit": "cpp_to_target_to_cpp_cycles",
+        "value": 1
+      },
+      "complexity_deltas": {
+        "roundtrip_cpp": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 4,
+                "function_count": 1,
+                "loc": 19,
+                "max_nesting_depth": 3,
+                "token_count": 105
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 1,
+              "function_count": 0,
+              "loc": 0,
+              "max_nesting_depth": 1,
+              "token_count": 16
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 3,
+                "function_count": 1,
+                "loc": 19,
+                "max_nesting_depth": 2,
+                "token_count": 89
+              }
+            }
+          }
+        },
+        "target": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "python",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 3,
+                "function_count": 1,
+                "loc": 13,
+                "max_nesting_depth": 2,
+                "token_count": 72
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": -6,
+              "max_nesting_depth": 0,
+              "token_count": -17
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 3,
+                "function_count": 1,
+                "loc": 19,
+                "max_nesting_depth": 2,
+                "token_count": 89
+              }
+            }
+          }
+        }
+      },
+      "convergence_outcome": "terminated_on_failure",
+      "final_iteration_index": 1,
+      "final_status": "compile_error",
+      "iteration_count": 1,
+      "moss_similarity": {
+        "availability": "measured",
+        "value": {
+          "match_url": null,
+          "report_url": "http://moss.stanford.edu/results/7/6621274930398",
+          "roundtrip_percentage": 0,
+          "seed_percentage": 0
+        }
+      },
+      "problem_id": "IPOP_1436",
+      "residual_similarity": {
+        "availability": "unavailable",
+        "failure": {
+          "iteration_index": 1,
+          "stage": "roundtrip_execution",
+          "status": "compile_error"
+        },
+        "reason": "residual_similarity_not_recorded"
+      },
+      "semantic_summary": {
+        "overall": "fail",
+        "roundtrip_cpp": {
+          "available": true,
+          "fixture_fail_count": 0,
           "fixture_pass_count": 0,
-          "message": "At least one fixture failed at runtime.",
+          "message": "Compilation failed.",
           "passed": false,
-          "status": "runtime_error"
+          "status": "compile_error"
+        },
+        "target": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        }
+      },
+      "target_language": "python"
+    },
+    {
+      "artifacts": {
+        "final_execution_path": "real-smoke-001/IPOP_2579/c/iterations/iter-002/execution.json",
+        "final_iteration_directory": "real-smoke-001/IPOP_2579/c/iterations/iter-002",
+        "final_metrics_path": "real-smoke-001/IPOP_2579/c/iterations/iter-002/metrics.json",
+        "run_manifest_path": "real-smoke-001/IPOP_2579/c/run.json"
+      },
+      "ast_distance": {
+        "availability": "measured",
+        "value": {
+          "distance_to_roundtrip_cpp": 0,
+          "distance_to_seed_cpp": 33,
+          "parse_status": {
+            "roundtrip_cpp": "ok",
+            "seed_cpp": "ok",
+            "target": "ok"
+          },
+          "parser_failures": {},
+          "status": "ok"
+        }
+      },
+      "change_count_distance": {
+        "availability": "measured",
+        "definition": "1 cycle = C++ -> target -> C++",
+        "unit": "cpp_to_target_to_cpp_cycles",
+        "value": 2
+      },
+      "complexity_deltas": {
+        "roundtrip_cpp": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 1,
+                "loc": 23,
+                "max_nesting_depth": 1,
+                "token_count": 196
+              }
+            },
+            "delta_vs_previous": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": 0,
+              "max_nesting_depth": 0,
+              "token_count": 0
+            },
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 2,
+              "function_count": 0,
+              "loc": -3,
+              "max_nesting_depth": 0,
+              "token_count": 3
+            },
+            "metric_set": "v1",
+            "previous": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 1,
+                "loc": 23,
+                "max_nesting_depth": 1,
+                "token_count": 196
+              }
+            },
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 5,
+                "function_count": 1,
+                "loc": 26,
+                "max_nesting_depth": 1,
+                "token_count": 193
+              }
+            }
+          }
+        },
+        "target": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "c",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 1,
+                "loc": 23,
+                "max_nesting_depth": 1,
+                "token_count": 190
+              }
+            },
+            "delta_vs_previous": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": 0,
+              "max_nesting_depth": 0,
+              "token_count": 0
+            },
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 2,
+              "function_count": 0,
+              "loc": -3,
+              "max_nesting_depth": 0,
+              "token_count": -3
+            },
+            "metric_set": "v1",
+            "previous": {
+              "language": "c",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 1,
+                "loc": 23,
+                "max_nesting_depth": 1,
+                "token_count": 190
+              }
+            },
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 5,
+                "function_count": 1,
+                "loc": 26,
+                "max_nesting_depth": 1,
+                "token_count": 193
+              }
+            }
+          }
+        }
+      },
+      "convergence_outcome": "fixed_point",
+      "final_iteration_index": 2,
+      "final_status": "success",
+      "iteration_count": 2,
+      "moss_similarity": {
+        "availability": "measured",
+        "value": {
+          "match_url": "http://moss.stanford.edu/results/6/5722986348878/match0.html",
+          "report_url": "http://moss.stanford.edu/results/6/5722986348878",
+          "roundtrip_percentage": 29,
+          "seed_percentage": 30
+        }
+      },
+      "problem_id": "IPOP_2579",
+      "residual_similarity": {
+        "availability": "measured",
+        "value": 0.7959697732997482
+      },
+      "semantic_summary": {
+        "overall": "pass",
+        "roundtrip_cpp": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        },
+        "target": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        }
+      },
+      "target_language": "c"
+    },
+    {
+      "artifacts": {
+        "final_execution_path": "real-smoke-001/IPOP_2579/java/iterations/iter-001/execution.json",
+        "final_iteration_directory": "real-smoke-001/IPOP_2579/java/iterations/iter-001",
+        "final_metrics_path": "real-smoke-001/IPOP_2579/java/iterations/iter-001/metrics.json",
+        "run_manifest_path": "real-smoke-001/IPOP_2579/java/run.json"
+      },
+      "ast_distance": {
+        "availability": "measured",
+        "value": {
+          "distance_to_roundtrip_cpp": 25,
+          "distance_to_seed_cpp": 24,
+          "parse_status": {
+            "roundtrip_cpp": "ok",
+            "seed_cpp": "ok",
+            "target": "ok"
+          },
+          "parser_failures": {},
+          "status": "ok"
+        }
+      },
+      "change_count_distance": {
+        "availability": "measured",
+        "definition": "1 cycle = C++ -> target -> C++",
+        "unit": "cpp_to_target_to_cpp_cycles",
+        "value": 1
+      },
+      "complexity_deltas": {
+        "roundtrip_cpp": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 5,
+                "function_count": 1,
+                "loc": 23,
+                "max_nesting_depth": 1,
+                "token_count": 178
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": -3,
+              "max_nesting_depth": 0,
+              "token_count": -15
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 5,
+                "function_count": 1,
+                "loc": 26,
+                "max_nesting_depth": 1,
+                "token_count": 193
+              }
+            }
+          }
+        },
+        "target": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "java",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 5,
+                "function_count": 1,
+                "loc": 23,
+                "max_nesting_depth": 1,
+                "token_count": 233
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": -3,
+              "max_nesting_depth": 0,
+              "token_count": 40
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 5,
+                "function_count": 1,
+                "loc": 26,
+                "max_nesting_depth": 1,
+                "token_count": 193
+              }
+            }
+          }
+        }
+      },
+      "convergence_outcome": "terminated_on_failure",
+      "final_iteration_index": 1,
+      "final_status": "compile_error",
+      "iteration_count": 1,
+      "moss_similarity": {
+        "availability": "measured",
+        "value": {
+          "match_url": "http://moss.stanford.edu/results/2/4745480698506/match0.html",
+          "report_url": "http://moss.stanford.edu/results/2/4745480698506",
+          "roundtrip_percentage": 80,
+          "seed_percentage": 74
+        }
+      },
+      "problem_id": "IPOP_2579",
+      "residual_similarity": {
+        "availability": "unavailable",
+        "failure": {
+          "iteration_index": 1,
+          "stage": "roundtrip_execution",
+          "status": "compile_error"
+        },
+        "reason": "residual_similarity_not_recorded"
+      },
+      "semantic_summary": {
+        "overall": "fail",
+        "roundtrip_cpp": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 0,
+          "message": "Compilation failed.",
+          "passed": false,
+          "status": "compile_error"
+        },
+        "target": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        }
+      },
+      "target_language": "java"
+    },
+    {
+      "artifacts": {
+        "final_execution_path": "real-smoke-001/IPOP_2579/python/iterations/iter-001/execution.json",
+        "final_iteration_directory": "real-smoke-001/IPOP_2579/python/iterations/iter-001",
+        "final_metrics_path": "real-smoke-001/IPOP_2579/python/iterations/iter-001/metrics.json",
+        "run_manifest_path": "real-smoke-001/IPOP_2579/python/run.json"
+      },
+      "ast_distance": {
+        "availability": "measured",
+        "value": {
+          "distance_to_roundtrip_cpp": 58,
+          "distance_to_seed_cpp": 48,
+          "parse_status": {
+            "roundtrip_cpp": "ok",
+            "seed_cpp": "ok",
+            "target": "ok"
+          },
+          "parser_failures": {},
+          "status": "ok"
+        }
+      },
+      "change_count_distance": {
+        "availability": "measured",
+        "definition": "1 cycle = C++ -> target -> C++",
+        "unit": "cpp_to_target_to_cpp_cycles",
+        "value": 1
+      },
+      "complexity_deltas": {
+        "roundtrip_cpp": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 1,
+                "loc": 22,
+                "max_nesting_depth": 4,
+                "token_count": 223
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 2,
+              "function_count": 0,
+              "loc": -4,
+              "max_nesting_depth": 3,
+              "token_count": 30
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 5,
+                "function_count": 1,
+                "loc": 26,
+                "max_nesting_depth": 1,
+                "token_count": 193
+              }
+            }
+          }
+        },
+        "target": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "python",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 6,
+                "function_count": 1,
+                "loc": 19,
+                "max_nesting_depth": 5,
+                "token_count": 182
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 1,
+              "function_count": 0,
+              "loc": -7,
+              "max_nesting_depth": 4,
+              "token_count": -11
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 5,
+                "function_count": 1,
+                "loc": 26,
+                "max_nesting_depth": 1,
+                "token_count": 193
+              }
+            }
+          }
+        }
+      },
+      "convergence_outcome": "terminated_on_failure",
+      "final_iteration_index": 1,
+      "final_status": "compile_error",
+      "iteration_count": 1,
+      "moss_similarity": {
+        "availability": "measured",
+        "value": {
+          "match_url": "http://moss.stanford.edu/results/1/3847192116986/match0.html",
+          "report_url": "http://moss.stanford.edu/results/1/3847192116986",
+          "roundtrip_percentage": 51,
+          "seed_percentage": 61
+        }
+      },
+      "problem_id": "IPOP_2579",
+      "residual_similarity": {
+        "availability": "unavailable",
+        "failure": {
+          "iteration_index": 1,
+          "stage": "roundtrip_execution",
+          "status": "compile_error"
+        },
+        "reason": "residual_similarity_not_recorded"
+      },
+      "semantic_summary": {
+        "overall": "fail",
+        "roundtrip_cpp": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 0,
+          "message": "Compilation failed.",
+          "passed": false,
+          "status": "compile_error"
+        },
+        "target": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
         }
       },
       "target_language": "python"

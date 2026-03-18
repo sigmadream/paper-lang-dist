@@ -90,6 +90,12 @@ def test_client_rejects_non_deterministic_model_or_temperature() -> None:
     assert "Temperature must be 0" in str(temperature_excinfo.value)
 
 
+@pytest.mark.parametrize("model", ["gpt-5.4", "gpt-5.4-mini", "gpt-5.3-codex"])
+def test_client_accepts_approved_models(model: str) -> None:
+    client = OpenAITranslationClient(model=model, transport=FakeTransport(responses=[]))
+    assert client is not None
+
+
 def test_client_recovers_longest_unfenced_code_span_with_surrounding_prose() -> None:
     statement, sample_input, sample_output, seed_cpp = _load_curated_problem_text()
     transport = FakeTransport(

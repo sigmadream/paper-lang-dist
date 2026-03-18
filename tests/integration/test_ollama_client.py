@@ -9,6 +9,7 @@ from rttdist.ollama_client import (
     OllamaClientError,
     OllamaResponseParseError,
     OllamaTranslationClient,
+    ensure_ollama_model_available,
 )
 
 
@@ -19,8 +20,14 @@ CURATED_PROBLEM_ROOT = (
 
 
 class FakeOllamaTransport:
-    def __init__(self, responses: list[dict[str, object]]) -> None:
+    def __init__(
+        self,
+        responses: list[dict[str, object]],
+        *,
+        model_list_response: dict[str, object] | None = None,
+    ) -> None:
         self._responses = responses
+        self._model_list_response = model_list_response or {"models": []}
         self.requests: list[dict[str, object]] = []
 
     def create_chat_completion(self, payload: dict[str, object]) -> dict[str, object]:
@@ -31,6 +38,9 @@ class FakeOllamaTransport:
         if not isinstance(response, dict):
             raise AssertionError("Mocked Ollama response must be a mapping.")
         return response
+
+    def list_models(self) -> dict[str, object]:
+        return self._model_list_response
 
 
 def test_ollama_client_translates_both_directions_with_mocked_transport() -> None:
@@ -107,6 +117,42 @@ def test_ollama_client_rejects_missing_message_content() -> None:
             sample_output=sample_output,
             source_code=seed_cpp,
             iteration_index=1,
+        )
+
+
+def test_ensure_ollama_model_available_accepts_installed_model() -> None:
+    transport = FakeOllamaTransport(
+        responses=[],
+        model_list_response={
+            "models": [
+                {"name": "qwen2.5-coder:7b"},
+                {"name": "qwen2.5:3b"},
+            ]
+        },
+    )
+
+    ensure_ollama_model_available(
+        model="qwen2.5-coder:7b",
+        transport=transport,
+    )
+
+
+def test_ensure_ollama_model_available_reports_missing_model_clearly() -> None:
+    transport = FakeOllamaTransport(
+        responses=[],
+        model_list_response={
+            "models": [
+                {"name": "qwen2.5:3b"},
+                {"name": "qwen3:latest"},
+            ]
+        },
+    )
+
+    with pytest.raises(OllamaClientError, match="ollama pull qwen2.5-coder:7b"):
+        ensure_ollama_model_available(
+            model="qwen2.5-coder:7b",
+            host="http://localhost:11434",
+            transport=transport,
         )
 
 

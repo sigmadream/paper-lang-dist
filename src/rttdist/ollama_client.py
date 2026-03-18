@@ -38,6 +38,50 @@ class SourceExtractionError(OllamaClientError):
 class OllamaChatTransport(Protocol):
     def create_chat_completion(self, payload: dict[str, Any]) -> dict[str, Any]: ...
 
+    def list_models(self) -> dict[str, Any]: ...
+
+
+def ensure_ollama_model_available(
+    *,
+    model: str,
+    host: str = DEFAULT_OLLAMA_HOST,
+    transport: OllamaChatTransport | None = None,
+) -> None:
+    normalized_model = model.strip() if isinstance(model, str) else ""
+    if not normalized_model:
+        raise OllamaClientError("Model must be a non-empty string.")
+
+    normalized_host = host.strip().rstrip("/") if isinstance(host, str) else ""
+    if not normalized_host:
+        raise OllamaClientError("Host must be a non-empty string.")
+
+    effective_transport = transport or _OllamaHTTPTransport(host=normalized_host)
+    raw_response = effective_transport.list_models()
+    if not isinstance(raw_response, dict):
+        raise OllamaClientError("Ollama model list response must be a mapping.")
+
+    raw_models = raw_response.get("models")
+    if not isinstance(raw_models, list):
+        raise OllamaClientError("Ollama model list response must include `models`.")
+
+    installed_models: set[str] = set()
+    for item in raw_models:
+        if not isinstance(item, dict):
+            continue
+        for key in ("name", "model"):
+            value = item.get(key)
+            if isinstance(value, str) and value.strip():
+                installed_models.add(value.strip())
+
+    if normalized_model in installed_models:
+        return
+
+    installed_text = ", ".join(sorted(installed_models)) or "none"
+    raise OllamaClientError(
+        f"Ollama model `{normalized_model}` is not installed at {normalized_host}. "
+        f"Run `ollama pull {normalized_model}` first. Installed models: {installed_text}."
+    )
+
 
 class OllamaTranslationClient:
     def __init__(
@@ -278,12 +322,25 @@ class _OllamaHTTPTransport:
             "stream": False,
             "options": {"temperature": float(temperature)},
         }
-        request_body = json.dumps(body).encode("utf-8")
+        return self._request_json("/api/chat", method="POST", body=body)
+
+    def list_models(self) -> dict[str, Any]:
+        return self._request_json("/api/tags", method="GET")
+
+    def _request_json(
+        self,
+        path: str,
+        *,
+        method: str,
+        body: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        request_body = json.dumps(body).encode("utf-8") if body is not None else None
+        headers = {"Content-Type": "application/json"} if body is not None else {}
         http_request = request.Request(
-            url=f"{self.host}/api/chat",
+            url=f"{self.host}{path}",
             data=request_body,
-            headers={"Content-Type": "application/json"},
-            method="POST",
+            headers=headers,
+            method=method,
         )
 
         try:

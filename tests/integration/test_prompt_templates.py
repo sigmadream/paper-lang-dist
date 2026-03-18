@@ -97,7 +97,7 @@ def test_extract_single_file_source_rejects_unrecoverable_prose_only() -> None:
 def _response_from_content(content: str) -> MockOpenAIResponse:
     return MockOpenAIResponse(
         response_id="mock-response-001",
-        model="gpt-4o-mini",
+        model="gpt-5.4",
         choices=(
             MockOpenAIChoice(
                 index=0,

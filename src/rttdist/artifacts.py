@@ -131,6 +131,7 @@ class IterationArtifactPaths:
     iteration_metadata_path: str
     openai_request_path: str
     openai_response_path: str
+    input_cpp_source_path: str
     translated_source_path: str
     roundtrip_source_path: str
     compile_log_path: str
@@ -143,6 +144,7 @@ class IterationArtifactPaths:
             "iteration_metadata_path": self.iteration_metadata_path,
             "openai_request_path": self.openai_request_path,
             "openai_response_path": self.openai_response_path,
+            "input_cpp_source_path": self.input_cpp_source_path,
             "translated_source_path": self.translated_source_path,
             "roundtrip_source_path": self.roundtrip_source_path,
             "compile_log_path": self.compile_log_path,
@@ -264,6 +266,7 @@ def build_iteration_artifact_paths(
         openai_response_path=_to_contract_path(
             iteration_directory / "openai-response.json"
         ),
+        input_cpp_source_path=_to_contract_path(iteration_directory / "input.cpp"),
         translated_source_path=_to_contract_path(
             iteration_directory / f"translated{source_extension}"
         ),

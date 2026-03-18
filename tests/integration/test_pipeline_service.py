@@ -26,7 +26,7 @@ def test_pipeline_service_continues_other_targets_after_failure(tmp_path: Path) 
     config = ExperimentConfig(
         problem_ids=("IPOP_SERVICE",),
         target_languages=("python", "c"),
-        openai=OpenAIConfig(model="gpt-4o-mini", temperature=0.0),
+        openai=OpenAIConfig(model="gpt-5.4", temperature=0.0),
         runtime=RuntimeConfig(max_iterations=2, timeout_seconds=1),
         output_root=tmp_path / "artifacts",
         problem_root=tmp_path / "problem",
@@ -73,6 +73,7 @@ def test_pipeline_service_continues_other_targets_after_failure(tmp_path: Path) 
         failed_iter_paths.iteration_metadata_path,
         failed_iter_paths.openai_request_path,
         failed_iter_paths.openai_response_path,
+        failed_iter_paths.input_cpp_source_path,
         failed_iter_paths.translated_source_path,
         failed_iter_paths.roundtrip_source_path,
         failed_iter_paths.compile_log_path,
@@ -262,7 +263,7 @@ def _translation_result(
     extracted_source: str,
 ) -> TranslationResult:
     request = MockOpenAIRequest(
-        model="gpt-4o-mini",
+        model="gpt-5.4",
         temperature=0.0,
         messages=(
             MockOpenAIMessage(role="system", content=direction),
@@ -277,7 +278,7 @@ def _translation_result(
     )
     response = MockOpenAIResponse(
         response_id=f"resp-{iteration_index}",
-        model="gpt-4o-mini",
+        model="gpt-5.4",
         choices=(
             MockOpenAIChoice(
                 index=0,

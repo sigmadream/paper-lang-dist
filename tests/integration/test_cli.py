@@ -5,8 +5,12 @@ from __future__ import annotations
 import subprocess
 import sys
 from pathlib import Path
+from textwrap import dedent
 
 import pytest
+
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
 class TestCLI:
@@ -139,3 +143,57 @@ class TestCLI:
             text=True,
         )
         assert result.returncode == 0
+
+    def test_run_with_missing_ollama_model_fails_fast(self, tmp_path: Path):
+        config_path = tmp_path / "missing-model.yaml"
+        config_path.write_text(
+            dedent(
+                """
+                provider: ollama
+                problem_ids:
+                  - IPOP_1436
+                target_languages:
+                  - python
+                openai:
+                  model: gpt-5.4
+                  temperature: 0
+                ollama:
+                  model: definitely-missing-model
+                  temperature: 0
+                  host: http://localhost:11434
+                runtime:
+                  max_iterations: 1
+                  timeout_seconds: 30
+                output_root: {output_root}
+                problem_root: {problem_root}
+                corpus_root: {corpus_root}
+                """
+            )
+            .format(
+                output_root=(tmp_path / "artifacts-cli-test").as_posix(),
+                problem_root=(REPO_ROOT / "problem").as_posix(),
+                corpus_root=(REPO_ROOT / "corpus" / "solutions").as_posix(),
+            )
+            .strip()
+            + "\n",
+            encoding="utf-8",
+        )
+
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "rttdist.cli",
+                "run",
+                "--config",
+                str(config_path),
+                "--run-id",
+                "missing-model",
+            ],
+            capture_output=True,
+            text=True,
+        )
+
+        assert result.returncode != 0
+        assert "Ollama validation failed" in result.stderr
+        assert "ollama pull definitely-missing-model" in result.stderr

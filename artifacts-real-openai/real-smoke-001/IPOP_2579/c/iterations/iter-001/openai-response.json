@@ -1,0 +1,40 @@
+{
+  "cpp_to_target": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "#include <stdio.h>\n\nint main() {\n    int n;\n    if (scanf(\"%d\", &n) != 1) return 0;\n\n    int score[301] = {0};\n    int dp[301] = {0};\n\n    for (int index = 1; index <= n; ++index) {\n        scanf(\"%d\", &score[index]);\n    }\n\n    if (n >= 1) {\n        dp[1] = score[1];\n    }\n    if (n >= 2) {\n        dp[2] = score[1] + score[2];\n    }\n    for (int index = 3; index <= n; ++index) {\n        int a = dp[index - 2];\n        int b = dp[index - 3] + score[index - 1];\n        dp[index] = (a > b ? a : b) + score[index];\n    }\n\n    printf(\"%d\\n\", dp[n]);\n    return 0;\n}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-DKn11d5syHeI0RvkfulWfAMDKrFhG",
+    "model": "gpt-5.4-2026-03-05",
+    "usage": {
+      "completion_tokens": 208,
+      "prompt_tokens": 893,
+      "total_tokens": 1101
+    }
+  },
+  "target_to_cpp": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "#include <cstdio>\n\nint main() {\n    int n;\n    if (std::scanf(\"%d\", &n) != 1) return 0;\n\n    int score[301] = {0};\n    int dp[301] = {0};\n\n    for (int index = 1; index <= n; ++index) {\n        std::scanf(\"%d\", &score[index]);\n    }\n\n    if (n >= 1) {\n        dp[1] = score[1];\n    }\n    if (n >= 2) {\n        dp[2] = score[1] + score[2];\n    }\n    for (int index = 3; index <= n; ++index) {\n        int a = dp[index - 2];\n        int b = dp[index - 3] + score[index - 1];\n        dp[index] = (a > b ? a : b) + score[index];\n    }\n\n    std::printf(\"%d\\n\", dp[n]);\n    return 0;\n}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-DKn14NzvD0O9R47G6ANAQGjCxJibt",
+    "model": "gpt-5.4-2026-03-05",
+    "usage": {
+      "completion_tokens": 213,
+      "prompt_tokens": 895,
+      "total_tokens": 1108
+    }
+  }
+}

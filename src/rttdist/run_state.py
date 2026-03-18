@@ -425,6 +425,20 @@ def _is_iteration_artifact_complete(
         )
         if not resolved_path.is_file():
             return False
+    input_cpp_source_path = artifact_paths.get("input_cpp_source_path")
+    if input_cpp_source_path is not None:
+        if (
+            not isinstance(input_cpp_source_path, str)
+            or not input_cpp_source_path.strip()
+        ):
+            return False
+        resolved_input_path = _resolve_artifact_path_within_output_root(
+            output_root=output_root,
+            relative_path=input_cpp_source_path,
+            field_name="artifact_paths.input_cpp_source_path",
+        )
+        if not resolved_input_path.is_file():
+            return False
     return True
 
 

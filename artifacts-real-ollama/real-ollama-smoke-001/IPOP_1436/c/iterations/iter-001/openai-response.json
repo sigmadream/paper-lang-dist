@@ -1,0 +1,24 @@
+{
+  "cpp_to_target": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```c\n#include <stdio.h>\n#include <string.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n\n    int count = 0;\n    int value = 665;\n    while (count < n) {\n        ++value;\n        if (strstr((char*)&value, \"666\") != NULL) {\n            ++count;\n        }\n    }\n\n    printf(\"%d\\n\", value);\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "ollama-qwen2.5-coder:7b-response",
+    "model": "qwen2.5-coder:7b",
+    "usage": {
+      "completion_tokens": 99,
+      "prompt_tokens": 848,
+      "total_tokens": 947
+    }
+  },
+  "target_to_cpp": {
+    "error": "response unavailable due to early termination"
+  }
+}

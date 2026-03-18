@@ -8,7 +8,8 @@ import yaml
 
 SUPPORTED_TARGET_LANGUAGES = frozenset({"c", "java", "python"})
 SUPPORTED_TRANSLATION_PROVIDERS = frozenset({"openai", "ollama"})
-PINNED_OPENAI_MODEL = "gpt-4o-mini"
+SUPPORTED_OPENAI_MODELS = frozenset({"gpt-5.4", "gpt-5.4-mini", "gpt-5.3-codex"})
+PINNED_OPENAI_MODEL = "gpt-5.4"
 DEFAULT_OLLAMA_HOST = "http://localhost:11434"
 DEFAULT_OLLAMA_MODEL = "qwen2.5-coder:7b"
 
@@ -230,10 +231,11 @@ def _parse_openai_config(raw_data: dict[str, Any], *, provider: str) -> OpenAICo
             "`openai.model` must be a non-empty string when set."
         )
     model = model_raw.strip()
-    if model != PINNED_OPENAI_MODEL:
+    if model not in SUPPORTED_OPENAI_MODELS:
+        supported = ", ".join(sorted(SUPPORTED_OPENAI_MODELS))
         raise ConfigValidationError(
-            "`openai.model` is pinned for reproducibility and must be "
-            f"`{PINNED_OPENAI_MODEL}`."
+            "`openai.model` must be one of the approved reproducible models: "
+            f"{supported}."
         )
 
     temperature = value.get("temperature", 0)

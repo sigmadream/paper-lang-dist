@@ -45,6 +45,7 @@ def test_happy_resume_recovers_missing_manifest_and_continues_next_iteration(
     _write_partial_iteration(
         output_root=config.output_root,
         paths=iteration_paths,
+        input_cpp_source="int main(){return 0;}\n",
         target_source=prior_target,
         roundtrip_source=prior_roundtrip,
     )
@@ -455,7 +456,7 @@ def _build_config(
     return ExperimentConfig(
         problem_ids=("IPOP_TEST",),
         target_languages=("python",),
-        openai=OpenAIConfig(model="gpt-4o-mini", temperature=0.0),
+        openai=OpenAIConfig(model="gpt-5.4", temperature=0.0),
         runtime=RuntimeConfig(
             max_iterations=max_iterations,
             timeout_seconds=timeout_seconds,
@@ -503,7 +504,7 @@ def _translation_result(
     extracted_source: str,
 ) -> TranslationResult:
     request = MockOpenAIRequest(
-        model="gpt-4o-mini",
+        model="gpt-5.4",
         temperature=0.0,
         messages=(
             MockOpenAIMessage(role="system", content=direction),
@@ -518,7 +519,7 @@ def _translation_result(
     )
     response = MockOpenAIResponse(
         response_id=f"resp-{iteration_index}",
-        model="gpt-4o-mini",
+        model="gpt-5.4",
         choices=(
             MockOpenAIChoice(
                 index=0,
@@ -539,6 +540,7 @@ def _write_partial_iteration(
     *,
     output_root: Path,
     paths: IterationArtifactPaths,
+    input_cpp_source: str,
     target_source: str,
     roundtrip_source: str,
 ) -> None:
@@ -550,6 +552,9 @@ def _write_partial_iteration(
     _write_json(
         output_root / paths.openai_response_path,
         {"cpp_to_target": {}, "target_to_cpp": {}},
+    )
+    (output_root / paths.input_cpp_source_path).write_text(
+        input_cpp_source, encoding="utf-8"
     )
     (output_root / paths.translated_source_path).write_text(
         target_source, encoding="utf-8"

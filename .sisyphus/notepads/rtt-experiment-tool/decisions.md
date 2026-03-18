@@ -9,7 +9,7 @@
 - Canonical seed mapping is fixed to `corpus/solutions/<problem-id>/reference.cpp`, with validation order set to statement -> fixture directory -> fixture pair -> seed for deterministic fail-fast behavior.
 - Task 3 introduces two pure-Python contract modules: `rttdist.artifacts` for deterministic run/iteration artifact paths plus mock OpenAI payload envelopes, and `rttdist.failure_taxonomy` for the JSON-serializable outcome set `{success, compile_error, wrong_answer, timeout, oscillation, max_iter_no_convergence}`.
 - Run metadata now embeds a curated problem reference (statement, sample input/output, seed source paths) so later mocked/unit flows can point at stable in-repo fixtures while keeping artifact JSON independent from machine-specific absolute paths.
-- Task 4 pins OpenAI model usage to `gpt-4o-mini` and enforces temperature `0.0` at both config-parse and runtime client initialization to keep translation behavior deterministic.
+- Task 4 pins OpenAI model usage to `gpt-5.4` and enforces temperature `0.0` at both config-parse and runtime client initialization to keep translation behavior deterministic.
 - Prompt rendering is split into versioned, direction-specific builders (`seed_to_target`, `target_to_roundtrip_cpp`) with explicit problem context sections and strict single-file output constraints.
 - Task 5 keeps extraction reusable by moving the parsing primitive to `rttdist.extract`, but preserves the public `rttdist.openai_client.extract_single_file_source`/`SourceExtractionError` surface via a wrapper to avoid Task 4 regressions.
 - C++ residual similarity uses normalized token multisets rather than sets or edit distance, so repeated identifiers/operators still affect the score while remaining insensitive to comment and whitespace noise.

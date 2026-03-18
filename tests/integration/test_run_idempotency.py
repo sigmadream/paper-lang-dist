@@ -299,7 +299,7 @@ def _build_config(tmp_path: Path) -> ExperimentConfig:
     return ExperimentConfig(
         problem_ids=("IPOP_TEST",),
         target_languages=("python",),
-        openai=OpenAIConfig(model="gpt-4o-mini", temperature=0.0),
+        openai=OpenAIConfig(model="gpt-5.4", temperature=0.0),
         runtime=RuntimeConfig(max_iterations=3, timeout_seconds=1),
         output_root=output_root,
         problem_root=tmp_path / "problem",
@@ -344,7 +344,7 @@ def _translation_result(
     extracted_source: str,
 ) -> TranslationResult:
     request = MockOpenAIRequest(
-        model="gpt-4o-mini",
+        model="gpt-5.4",
         temperature=0.0,
         messages=(
             MockOpenAIMessage(role="system", content=direction),
@@ -359,7 +359,7 @@ def _translation_result(
     )
     response = MockOpenAIResponse(
         response_id=f"resp-{iteration_index}",
-        model="gpt-4o-mini",
+        model="gpt-5.4",
         choices=(
             MockOpenAIChoice(
                 index=0,

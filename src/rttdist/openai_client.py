@@ -15,7 +15,7 @@ from rttdist.artifacts import (
     MockOpenAIResponse,
     MockOpenAIUsage,
 )
-from rttdist.config import PINNED_OPENAI_MODEL
+from rttdist.config import PINNED_OPENAI_MODEL, SUPPORTED_OPENAI_MODELS
 from rttdist.extract import (
     SourceExtractionError as ExtractionPrimitiveError,
     extract_single_file_source as extract_single_file_source_primitive,
@@ -58,9 +58,11 @@ class OpenAITranslationClient:
         temperature: float = 0.0,
         transport: ChatCompletionsTransport | None = None,
     ) -> None:
-        if model != PINNED_OPENAI_MODEL:
+        if model not in SUPPORTED_OPENAI_MODELS:
+            supported = ", ".join(sorted(SUPPORTED_OPENAI_MODELS))
             raise OpenAIClientError(
-                f"Model is pinned to `{PINNED_OPENAI_MODEL}` for reproducibility."
+                "Model is pinned to an approved set for reproducibility and must be one of: "
+                f"{supported}."
             )
         if float(temperature) != 0.0:
             raise OpenAIClientError(

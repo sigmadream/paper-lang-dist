@@ -57,7 +57,7 @@ def test_run_artifact_contract_matches_golden_success_fixture() -> None:
         ),
         openai_response=MockOpenAIResponse(
             response_id="mock-response-001",
-            model="gpt-4o-mini",
+            model="gpt-5.4",
             choices=(
                 MockOpenAIChoice(
                     index=0,
@@ -108,7 +108,7 @@ def test_iteration_artifact_contract_matches_golden_compile_failure_fixture() ->
         ),
         openai_response=MockOpenAIResponse(
             response_id="mock-response-002",
-            model="gpt-4o-mini",
+            model="gpt-5.4",
             choices=(
                 MockOpenAIChoice(
                     index=0,
@@ -140,6 +140,20 @@ def test_iteration_artifact_contract_matches_golden_compile_failure_fixture() ->
     )
 
 
+def test_iteration_artifact_paths_include_iteration_input_cpp_snapshot() -> None:
+    iteration_paths = build_iteration_artifact_paths(
+        run_id="smoke",
+        problem_id="IPOP_1436",
+        target_language="python",
+        iteration_index=3,
+    )
+
+    assert (
+        iteration_paths.input_cpp_source_path
+        == "smoke/IPOP_1436/python/iterations/iter-003/input.cpp"
+    )
+
+
 def _build_curated_problem_reference() -> CuratedProblemReference:
     base_path = Path("tests") / "fixtures" / "curated_problem" / "IPOP_1436"
     return CuratedProblemReference(
@@ -159,7 +173,7 @@ def _build_openai_request(
 ) -> MockOpenAIRequest:
     target_name = target_language.capitalize()
     return MockOpenAIRequest(
-        model="gpt-4o-mini",
+        model="gpt-5.4",
         temperature=0.0,
         messages=(
             MockOpenAIMessage(

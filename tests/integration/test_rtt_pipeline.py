@@ -140,6 +140,7 @@ def test_pipeline_converges_and_writes_complete_iteration_artifacts(
             paths.iteration_metadata_path,
             paths.openai_request_path,
             paths.openai_response_path,
+            paths.input_cpp_source_path,
             paths.translated_source_path,
             paths.roundtrip_source_path,
             paths.compile_log_path,
@@ -151,6 +152,55 @@ def test_pipeline_converges_and_writes_complete_iteration_artifacts(
         execution_payload = _load_json(config.output_root / paths.execution_result_path)
         assert execution_payload["target"]["status"] == "success"
         assert execution_payload["roundtrip_cpp"]["status"] == "success"
+
+
+def test_pipeline_persists_iteration_input_cpp_history(
+    tmp_path: Path,
+) -> None:
+    run_id = "input-history"
+    config = _build_config(tmp_path, max_iterations=3)
+    problem = _build_problem_entry(tmp_path, problem_id="IPOP_INPUT_HISTORY")
+    seed_source = problem.seed_path.read_text(encoding="utf-8").rstrip()
+
+    first_roundtrip = "int main(){return 1;}"
+    second_roundtrip = "int main(){return 1;}"
+    translator = FakeTranslationClient(
+        target_sources=["print(1)", "print(1)"],
+        roundtrip_sources=[first_roundtrip, second_roundtrip],
+    )
+    evaluator = FakeEvaluator()
+
+    run_rtt_loop(
+        config=config,
+        run_id=run_id,
+        problem=problem,
+        target_language="python",
+        translation_client=translator,
+        evaluate_source_fn=evaluator,
+    )
+
+    iter1_paths = build_iteration_artifact_paths(
+        run_id=run_id,
+        problem_id=problem.problem_id,
+        target_language="python",
+        iteration_index=1,
+    )
+    iter2_paths = build_iteration_artifact_paths(
+        run_id=run_id,
+        problem_id=problem.problem_id,
+        target_language="python",
+        iteration_index=2,
+    )
+
+    iter1_input = (config.output_root / iter1_paths.input_cpp_source_path).read_text(
+        encoding="utf-8"
+    )
+    iter2_input = (config.output_root / iter2_paths.input_cpp_source_path).read_text(
+        encoding="utf-8"
+    )
+
+    assert iter1_input == f"{seed_source}\n"
+    assert iter2_input == f"{first_roundtrip}\n"
 
 
 def test_pipeline_stops_at_max_iteration_and_preserves_prior_artifacts(
@@ -265,7 +315,7 @@ def test_pipeline_persists_raw_translation_payloads_on_parse_error(
         responses=[
             {
                 "id": "resp-parse-001",
-                "model": "gpt-4o-mini",
+                "model": "gpt-5.4",
                 "choices": [
                     {
                         "index": 0,
@@ -557,7 +607,7 @@ def _build_config(tmp_path: Path, *, max_iterations: int) -> ExperimentConfig:
     return ExperimentConfig(
         problem_ids=("IPOP_TEST",),
         target_languages=("python",),
-        openai=OpenAIConfig(model="gpt-4o-mini", temperature=0.0),
+        openai=OpenAIConfig(model="gpt-5.4", temperature=0.0),
         runtime=RuntimeConfig(max_iterations=max_iterations, timeout_seconds=1),
         output_root=output_root,
         problem_root=tmp_path / "problem",
@@ -605,7 +655,7 @@ def _translation_result(
     extracted_source: str,
 ) -> TranslationResult:
     request = MockOpenAIRequest(
-        model="gpt-4o-mini",
+        model="gpt-5.4",
         temperature=0.0,
         messages=(
             MockOpenAIMessage(role="system", content=f"direction={direction}"),
@@ -621,7 +671,7 @@ def _translation_result(
     )
     response = MockOpenAIResponse(
         response_id=f"mock-{direction}-{iteration_index}",
-        model="gpt-4o-mini",
+        model="gpt-5.4",
         choices=(
             MockOpenAIChoice(
                 index=0,

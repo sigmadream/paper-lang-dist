@@ -192,6 +192,7 @@ def run_rtt_loop(
     for iteration_index in range(
         resume_plan.start_iteration, config.runtime.max_iterations + 1
     ):
+        iteration_input_cpp_source = current_cpp_source
         iteration_paths = build_iteration_artifact_paths(
             run_id=run_id,
             problem_id=problem.problem_id,
@@ -424,6 +425,9 @@ def run_rtt_loop(
         roundtrip_source_path = resolve_contract_path(
             config.output_root, iteration_paths.roundtrip_source_path
         )
+        input_cpp_source_path = resolve_contract_path(
+            config.output_root, iteration_paths.input_cpp_source_path
+        )
         compile_log_path = resolve_contract_path(
             config.output_root, iteration_paths.compile_log_path
         )
@@ -443,6 +447,7 @@ def run_rtt_loop(
             config.output_root, iteration_paths.iteration_metadata_path
         )
 
+        _write_text(input_cpp_source_path, f"{iteration_input_cpp_source}\n")
         _write_text(target_source_path, f"{target_source}\n")
         _write_text(roundtrip_source_path, f"{roundtrip_cpp_source}\n")
         _write_json(request_path, openai_request_payload)
@@ -862,7 +867,21 @@ def _seed_source_relative_path(*, output_root: Path, run_directory: Path) -> str
 
 def _write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
+    path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True,
+            default=_json_fallback,
+        ),
+        encoding="utf-8",
+    )
+
+
+def _json_fallback(value: object) -> object:
+    if isinstance(value, (set, frozenset)):
+        return sorted(str(item) for item in value)
+    return str(value)
 
 
 def _write_text(path: Path, text: str) -> None:

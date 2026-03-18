@@ -1,0 +1,40 @@
+{
+  "cpp_to_target": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "import sys\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    n = int(data[0])\n    score = [0] * (n + 1)\n    dp = [0] * (n + 1)\n    for i in range(1, n + 1):\n        score[i] = int(data[i])\n\n    if n >= 1:\n        dp[1] = score[1]\n    if n >= 2:\n        dp[2] = score[1] + score[2]\n    for i in range(3, n + 1):\n        dp[i] = max(dp[i - 2], dp[i - 3] + score[i - 1]) + score[i]\n\n    sys.stdout.write(str(dp[n]) + '\\n')\n\nif __name__ == \"__main__\":\n    main()\n",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-DKn1M9Ezb8N3QtOJVvAE2zrvS4xcs",
+    "model": "gpt-5.4-2026-03-05",
+    "usage": {
+      "completion_tokens": 186,
+      "prompt_tokens": 893,
+      "total_tokens": 1079
+    }
+  },
+  "target_to_cpp": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    vector<long long> data;\n    long long x;\n    while (cin >> x) data.push_back(x);\n    if (data.empty()) return 0;\n\n    int n = (int)data[0];\n    vector<long long> score(n + 1, 0), dp(n + 1, 0);\n\n    for (int i = 1; i <= n; ++i) {\n        score[i] = data[i];\n    }\n\n    if (n >= 1) dp[1] = score[1];\n    if (n >= 2) dp[2] = score[1] + score[2];\n    for (int i = 3; i <= n; ++i) {\n        dp[i] = max(dp[i - 2], dp[i - 3] + score[i - 1]) + score[i];\n    }\n\n    cout << dp[n] << '\\n';\n    return 0;\n}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-DKn1PbbtumYADPthk9wkG3bVUx8d6",
+    "model": "gpt-5.4-2026-03-05",
+    "usage": {
+      "completion_tokens": 228,
+      "prompt_tokens": 873,
+      "total_tokens": 1101
+    }
+  }
+}
