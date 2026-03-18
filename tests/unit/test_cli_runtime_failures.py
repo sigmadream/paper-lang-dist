@@ -74,6 +74,7 @@ def _build_config(tmp_path: Path) -> ExperimentConfig:
     output_root.mkdir(parents=True, exist_ok=True)
     return ExperimentConfig(
         problem_ids=("IPOP_CLI",),
+        seed_language="cpp",
         target_languages=("python",),
         openai=OpenAIConfig(model="gpt-5.4", temperature=0.0),
         runtime=RuntimeConfig(max_iterations=2, timeout_seconds=1),

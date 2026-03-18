@@ -152,6 +152,7 @@ class TestCLI:
                 provider: ollama
                 problem_ids:
                   - IPOP_1436
+                seed_language: cpp
                 target_languages:
                   - python
                 openai:
@@ -197,3 +198,121 @@ class TestCLI:
         assert result.returncode != 0
         assert "Ollama validation failed" in result.stderr
         assert "ollama pull definitely-missing-model" in result.stderr
+
+    def test_validate_corpus_seed_language_rejects_same_language_pair(
+        self,
+        tmp_path: Path,
+    ) -> None:
+        config_path = tmp_path / "same-language.yaml"
+        config_path.write_text(
+            dedent(
+                """
+                problem_ids:
+                  - IPOP_1436
+                seed_language: cpp
+                target_languages:
+                  - cpp
+                openai:
+                  model: gpt-5.4
+                  temperature: 0
+                runtime:
+                  max_iterations: 1
+                  timeout_seconds: 30
+                output_root: {output_root}
+                problem_root: {problem_root}
+                corpus_root: {corpus_root}
+                """
+            )
+            .format(
+                output_root=(tmp_path / "artifacts-cli-seed-validation").as_posix(),
+                problem_root=(REPO_ROOT / "problem").as_posix(),
+                corpus_root=(REPO_ROOT / "corpus" / "solutions").as_posix(),
+            )
+            .strip()
+            + "\n",
+            encoding="utf-8",
+        )
+
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "rttdist.cli",
+                "validate-corpus",
+                "--config",
+                str(config_path),
+            ],
+            capture_output=True,
+            text=True,
+        )
+
+        assert result.returncode != 0
+        assert "Config validation failed" in result.stderr
+        assert "seed_language" in result.stderr
+        assert "must differ" in result.stderr
+
+    def test_validate_corpus_seed_language_supports_non_default_seed_source(
+        self,
+        tmp_path: Path,
+    ) -> None:
+        problem_id = "SEED_LANG_CLI_001"
+        problem_root = tmp_path / "problem"
+        corpus_root = tmp_path / "corpus"
+        fixture_dir = problem_root / problem_id
+        seed_dir = corpus_root / problem_id
+
+        fixture_dir.mkdir(parents=True)
+        seed_dir.mkdir(parents=True)
+
+        (problem_root / f"{problem_id}.md").write_text("statement\n", encoding="utf-8")
+        (fixture_dir / "1.inp").write_text("1\n", encoding="utf-8")
+        (fixture_dir / "1.out").write_text("1\n", encoding="utf-8")
+        (seed_dir / "reference.py").write_text("print(1)\n", encoding="utf-8")
+
+        config_path = tmp_path / "non-default-seed.yaml"
+        config_path.write_text(
+            dedent(
+                """
+                problem_ids:
+                  - {problem_id}
+                seed_language: python
+                target_languages:
+                  - c
+                openai:
+                  model: gpt-5.4
+                  temperature: 0
+                runtime:
+                  max_iterations: 1
+                  timeout_seconds: 30
+                output_root: {output_root}
+                problem_root: {problem_root}
+                corpus_root: {corpus_root}
+                """
+            )
+            .format(
+                problem_id=problem_id,
+                output_root=(tmp_path / "artifacts-cli-non-default-seed").as_posix(),
+                problem_root=problem_root.as_posix(),
+                corpus_root=corpus_root.as_posix(),
+            )
+            .strip()
+            + "\n",
+            encoding="utf-8",
+        )
+
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "rttdist.cli",
+                "validate-corpus",
+                "--config",
+                str(config_path),
+            ],
+            capture_output=True,
+            text=True,
+        )
+
+        assert result.returncode == 0, result.stderr
+        assert "Seed language: python" in result.stdout
+        assert "Found 1 problem(s):" in result.stdout

@@ -214,6 +214,7 @@ def _cmd_validate_corpus(args: argparse.Namespace) -> int:
     entries = _validate_corpus_entries(config)
 
     print(f"Config validated successfully.")
+    print(f"Seed language: {config.seed_language}")
     print(f"Found {len(entries)} problem(s):")
     for entry in entries:
         print(f"  - {entry.problem_id}: {len(entry.fixture_pairs)} fixture pair(s)")
