@@ -4,7 +4,6 @@ from dataclasses import dataclass
 
 from rttdist.artifacts import MockOpenAIMessage
 
-SEED_LANGUAGE = "cpp"
 PROMPT_TEMPLATE_VERSION = "rtt.prompts.v1"
 
 LANGUAGE_LABELS = {
@@ -36,14 +35,10 @@ def build_cpp_to_target_prompt(
     sample_output: str,
     source_code: str,
 ) -> PromptBundle:
-    normalized_target = _normalize_language(
-        target_language, field_name="target_language"
-    )
-
-    return _build_prompt_bundle(
+    return build_translation_prompt(
         direction="seed_to_target",
-        source_language=SEED_LANGUAGE,
-        target_language=normalized_target,
+        source_language="cpp",
+        target_language=target_language,
         problem_id=problem_id,
         problem_statement=problem_statement,
         sample_input=sample_input,
@@ -61,18 +56,52 @@ def build_target_to_cpp_prompt(
     sample_output: str,
     source_code: str,
 ) -> PromptBundle:
-    normalized_source = _normalize_language(
-        source_language, field_name="source_language"
+    return build_translation_prompt(
+        direction="target_to_seed",
+        source_language=source_language,
+        target_language="cpp",
+        problem_id=problem_id,
+        problem_statement=problem_statement,
+        sample_input=sample_input,
+        sample_output=sample_output,
+        source_code=source_code,
     )
-    if normalized_source == SEED_LANGUAGE:
+
+
+def build_translation_prompt(
+    *,
+    problem_id: str,
+    source_language: str,
+    target_language: str,
+    problem_statement: str,
+    sample_input: str,
+    sample_output: str,
+    source_code: str,
+    direction: str | None = None,
+) -> PromptBundle:
+    normalized_source_language = _normalize_language(
+        source_language,
+        field_name="source_language",
+    )
+    normalized_target_language = _normalize_language(
+        target_language,
+        field_name="target_language",
+    )
+    if normalized_source_language == normalized_target_language:
         raise PromptTemplateError(
-            "`source_language` must not be `cpp` for roundtrip prompts."
+            "`source_language` and `target_language` must be different."
         )
 
+    normalized_direction = (
+        _normalize_text(direction, field_name="direction")
+        if direction is not None
+        else "source_to_target"
+    )
+
     return _build_prompt_bundle(
-        direction="target_to_roundtrip_cpp",
-        source_language=normalized_source,
-        target_language=SEED_LANGUAGE,
+        direction=normalized_direction,
+        source_language=normalized_source_language,
+        target_language=normalized_target_language,
         problem_id=problem_id,
         problem_statement=problem_statement,
         sample_input=sample_input,

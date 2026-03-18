@@ -9,17 +9,19 @@ from rttdist.artifacts import (
     MockOpenAIUsage,
 )
 from rttdist.openai_client import SourceExtractionError, extract_single_file_source
-from rttdist.prompts import build_cpp_to_target_prompt, build_target_to_cpp_prompt
+from rttdist.prompts import build_translation_prompt
 
 
-def test_cpp_to_target_prompt_is_deterministic_and_explicit() -> None:
-    bundle = build_cpp_to_target_prompt(
+def test_generic_translation_prompt_is_deterministic_and_explicit() -> None:
+    bundle = build_translation_prompt(
         problem_id="IPOP_1436",
+        source_language="cpp",
         target_language="python",
         problem_statement="Given N, print the Nth integer containing 666.",
         sample_input="1",
         sample_output="666",
         source_code="#include <iostream>\nint main(){return 0;}",
+        direction="seed_to_target",
     )
 
     assert bundle.direction == "seed_to_target"
@@ -41,20 +43,22 @@ def test_cpp_to_target_prompt_is_deterministic_and_explicit() -> None:
 
 
 def test_target_to_cpp_prompt_is_deterministic_and_explicit() -> None:
-    bundle = build_target_to_cpp_prompt(
+    bundle = build_translation_prompt(
         problem_id="IPOP_1436",
         source_language="java",
+        target_language="cpp",
         problem_statement="Given N, print the Nth integer containing 666.",
         sample_input="1",
         sample_output="666",
         source_code="public class Main { public static void main(String[] args) {} }",
+        direction="target_to_seed",
     )
 
     prompt = bundle.messages[1].content
-    assert bundle.direction == "target_to_roundtrip_cpp"
+    assert bundle.direction == "target_to_seed"
     assert bundle.source_language == "java"
     assert bundle.target_language == "cpp"
-    assert "Direction: target_to_roundtrip_cpp" in prompt
+    assert "Direction: target_to_seed" in prompt
     assert "Translate from Java to C++." in prompt
     assert "```java" in prompt
 
