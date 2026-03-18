@@ -1,0 +1,2 @@
+- `git status` and `git worktree list --porcelain` both fail with `fatal: not a git repository`, so strict `/start-work` worktree setup is currently blocked.
+- The active plan still references deleted file `.sisyphus/drafts/rtt-experiment-tool.md` at lines 213, 290, 329, 368, 485, 523, and 562; these references should be cleaned up before or during execution.

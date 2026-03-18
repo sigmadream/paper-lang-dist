@@ -1,0 +1,1 @@
+- Need a decision on how to proceed without a git repository: work in place, initialize git here, or switch to another git-backed worktree path.
