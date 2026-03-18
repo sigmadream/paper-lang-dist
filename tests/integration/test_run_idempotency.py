@@ -46,6 +46,7 @@ def test_idempotent_rerun_skips_existing_artifacts_when_checksums_match(
     )
     assert first_result.iteration_count == 2
     assert first_result.final_record.details["convergence_status"] == "fixed_point"
+    assert first_result.final_record.details["convergence"]["overall"] == "fixed_point"
 
     manifest_before = first_result.run_manifest_path.read_text(encoding="utf-8")
 
@@ -61,6 +62,7 @@ def test_idempotent_rerun_skips_existing_artifacts_when_checksums_match(
     assert second_result.iteration_count == 2
     assert second_result.final_record.status.value == "success"
     assert second_result.final_record.details["convergence_status"] == "fixed_point"
+    assert second_result.final_record.details["convergence"]["overall"] == "fixed_point"
     assert (
         second_result.run_manifest_path.read_text(encoding="utf-8") == manifest_before
     )
@@ -118,6 +120,7 @@ def test_run_uses_ollama_client_when_provider_is_ollama(
     config = _build_config(tmp_path)
     config = ExperimentConfig(
         problem_ids=config.problem_ids,
+        seed_language=config.seed_language,
         target_languages=config.target_languages,
         openai=config.openai,
         runtime=config.runtime,
@@ -169,6 +172,41 @@ class TrackingTranslationClient:
     ) -> None:
         self._target_sources = list(target_sources)
         self._roundtrip_sources = list(roundtrip_sources)
+
+    def translate(
+        self,
+        *,
+        problem_id: str,
+        source_language: str,
+        target_language: str,
+        problem_statement: str,
+        sample_input: str,
+        sample_output: str,
+        source_code: str,
+        iteration_index: int,
+        direction: str,
+    ) -> TranslationResult:
+        if direction == "seed_to_target":
+            return self.translate_cpp_to_target(
+                problem_id=problem_id,
+                target_language=target_language,
+                problem_statement=problem_statement,
+                sample_input=sample_input,
+                sample_output=sample_output,
+                source_code=source_code,
+                iteration_index=iteration_index,
+            )
+        if direction == "target_to_roundtrip_cpp":
+            return self.translate_target_to_cpp(
+                problem_id=problem_id,
+                source_language=source_language,
+                problem_statement=problem_statement,
+                sample_input=sample_input,
+                sample_output=sample_output,
+                source_code=source_code,
+                iteration_index=iteration_index,
+            )
+        raise AssertionError(f"Unexpected translation direction: {direction!r}")
 
     def translate_cpp_to_target(
         self,
@@ -226,6 +264,30 @@ class TrackingTranslationClient:
 
 
 class NoopTranslationClient:
+    def translate(
+        self,
+        *,
+        problem_id: str,
+        source_language: str,
+        target_language: str,
+        problem_statement: str,
+        sample_input: str,
+        sample_output: str,
+        source_code: str,
+        iteration_index: int,
+        direction: str,
+    ) -> TranslationResult:
+        del problem_id
+        del source_language
+        del target_language
+        del problem_statement
+        del sample_input
+        del sample_output
+        del source_code
+        del iteration_index
+        del direction
+        raise AssertionError("Idempotent rerun must not call translation.")
+
     def translate_cpp_to_target(self, **kwargs: object) -> TranslationResult:
         del kwargs
         raise AssertionError("Idempotent rerun must not call translation.")
@@ -298,6 +360,7 @@ def _build_config(tmp_path: Path) -> ExperimentConfig:
     output_root.mkdir(parents=True, exist_ok=True)
     return ExperimentConfig(
         problem_ids=("IPOP_TEST",),
+        seed_language="cpp",
         target_languages=("python",),
         openai=OpenAIConfig(model="gpt-5.4", temperature=0.0),
         runtime=RuntimeConfig(max_iterations=3, timeout_seconds=1),

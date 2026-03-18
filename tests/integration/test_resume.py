@@ -27,7 +27,7 @@ from rttdist.pipeline import run_rtt_loop
 from rttdist.run_state import ResumeValidationError
 
 
-def test_happy_resume_recovers_missing_manifest_and_continues_next_iteration(
+def test_manifest_v2_resume_recovers_missing_manifest_and_continues_next_iteration(
     tmp_path: Path,
 ) -> None:
     run_id = "resume-recovery"
@@ -38,6 +38,7 @@ def test_happy_resume_recovers_missing_manifest_and_continues_next_iteration(
         run_id=run_id,
         problem_id=problem.problem_id,
         target_language="python",
+        seed_language=config.seed_language,
         iteration_index=1,
     )
     prior_target = "print(666)\n"
@@ -80,9 +81,20 @@ def test_happy_resume_recovers_missing_manifest_and_continues_next_iteration(
     assert manifest["metadata"]["checksums"]["config_hash"]
     assert manifest["metadata"]["checksums"]["seed_source_hash"]
     assert manifest["metadata"]["checksums"]["prompt_template_hash"]
+    assert manifest["schema_version"] == "run_manifest.v2"
+    assert (
+        manifest["metadata"]["run_directory"]
+        == f"{run_id}/{problem.problem_id}/cpp-to-python"
+    )
+    assert manifest["metadata"]["run_metadata_path"].endswith("cpp-to-python/run.json")
     assert len(manifest["iterations"]) == 2
     assert manifest["iterations"][0]["iteration_index"] == 1
     assert manifest["iterations"][1]["iteration_index"] == 2
+    assert manifest["iterations"][1]["result"]["details"]["convergence"] == {
+        "seed_state": "fixed_point",
+        "target_state": "fixed_point",
+        "overall": "fixed_point",
+    }
 
 
 def test_resume_rejects_config_hash_mismatch_without_overwriting_artifacts(
@@ -122,6 +134,51 @@ def test_resume_rejects_config_hash_mismatch_without_overwriting_artifacts(
 
     manifest_after = first_run.run_manifest_path.read_text(encoding="utf-8")
     assert manifest_after == manifest_before
+
+
+def test_manifest_v2_seed_snapshot_path_uses_seed_language_extension(
+    tmp_path: Path,
+) -> None:
+    config = _build_config(tmp_path=tmp_path, max_iterations=1, timeout_seconds=1)
+    config = ExperimentConfig(
+        problem_ids=config.problem_ids,
+        seed_language="python",
+        target_languages=config.target_languages,
+        openai=config.openai,
+        runtime=config.runtime,
+        output_root=config.output_root,
+        problem_root=config.problem_root,
+        corpus_root=config.corpus_root,
+        provider=config.provider,
+        ollama=config.ollama,
+    )
+    problem = _build_problem_entry(tmp_path=tmp_path, problem_id="IPOP_SEED_PATH")
+    problem.seed_path.unlink()
+    seed_path = problem.seed_path.with_name("reference.py")
+    seed_path.write_text("print(0)\n", encoding="utf-8")
+    problem = ProblemCorpusEntry(
+        problem_id=problem.problem_id,
+        statement_path=problem.statement_path,
+        fixture_directory=problem.fixture_directory,
+        fixture_pairs=problem.fixture_pairs,
+        seed_path=seed_path,
+    )
+
+    result = run_rtt_loop(
+        config=config,
+        run_id="manifest-v2-seed-ext",
+        problem=problem,
+        target_language="cpp",
+        translation_client=TrackingTranslationClient(
+            target_sources=["int main(){return 0;}"],
+            roundtrip_sources=["int main(){return 0;}"],
+        ),
+        evaluate_source_fn=AlwaysSuccessEvaluator(),
+    )
+
+    manifest = json.loads(result.run_manifest_path.read_text(encoding="utf-8"))
+    assert manifest["metadata"]["seed_language"] == "python"
+    assert manifest["metadata"]["seed_artifact_path"].endswith("/seed/reference.py")
 
 
 def test_resume_rejects_seed_source_hash_mismatch(tmp_path: Path) -> None:
@@ -198,6 +255,82 @@ def test_resume_rejects_manifest_artifact_path_outside_output_root(
         )
 
 
+def test_resume_ordered_pair_or_embedding_metadata_rejects_identity_mismatch(
+    tmp_path: Path,
+) -> None:
+    run_id = "resume-ordered-pair-identity"
+    config = _build_config(tmp_path=tmp_path, max_iterations=2, timeout_seconds=1)
+    problem = _build_problem_entry(tmp_path=tmp_path, problem_id="IPOP_ORDERED_PAIR")
+
+    first_run = run_rtt_loop(
+        config=config,
+        run_id=run_id,
+        problem=problem,
+        target_language="python",
+        translation_client=TrackingTranslationClient(
+            target_sources=["print(1)", "print(1)"],
+            roundtrip_sources=["int main(){return 0;}", "int main(){return 0;}"],
+        ),
+        evaluate_source_fn=AlwaysSuccessEvaluator(),
+    )
+
+    manifest = json.loads(first_run.run_manifest_path.read_text(encoding="utf-8"))
+    manifest["metadata"]["run_directory"] = (
+        f"{run_id}/{problem.problem_id}/python-to-cpp"
+    )
+    first_run.run_manifest_path.write_text(
+        json.dumps(manifest, indent=2, sort_keys=True),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ResumeValidationError, match="run_directory mismatch"):
+        run_rtt_loop(
+            config=config,
+            run_id=run_id,
+            problem=problem,
+            target_language="python",
+            translation_client=BlockedTranslationClient(),
+            evaluate_source_fn=AlwaysSuccessEvaluator(),
+        )
+
+
+def test_resume_rejects_manifest_seed_language_identity_mismatch(
+    tmp_path: Path,
+) -> None:
+    run_id = "resume-seed-language-identity"
+    config = _build_config(tmp_path=tmp_path, max_iterations=2, timeout_seconds=1)
+    problem = _build_problem_entry(tmp_path=tmp_path, problem_id="IPOP_SEED_LANGUAGE")
+
+    first_run = run_rtt_loop(
+        config=config,
+        run_id=run_id,
+        problem=problem,
+        target_language="python",
+        translation_client=TrackingTranslationClient(
+            target_sources=["print(1)", "print(1)"],
+            roundtrip_sources=["int main(){return 0;}", "int main(){return 0;}"],
+        ),
+        evaluate_source_fn=AlwaysSuccessEvaluator(),
+    )
+
+    manifest = json.loads(first_run.run_manifest_path.read_text(encoding="utf-8"))
+    manifest["metadata"]["seed_language"] = "python"
+    first_run.run_manifest_path.write_text(
+        json.dumps(manifest, indent=2, sort_keys=True),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ResumeValidationError, match="seed_language mismatch"):
+        run_rtt_loop(
+            config=config,
+            run_id=run_id,
+            problem=problem,
+            target_language="python",
+            translation_client=BlockedTranslationClient(),
+            evaluate_source_fn=AlwaysSuccessEvaluator(),
+        )
+
+
 @pytest.mark.parametrize(
     "failure_status", ["api_error", "parse_error", "runtime_error"]
 )
@@ -261,6 +394,41 @@ class TrackingTranslationClient:
         self.cpp_to_target_calls: list[int] = []
         self.target_to_cpp_calls: list[int] = []
 
+    def translate(
+        self,
+        *,
+        problem_id: str,
+        source_language: str,
+        target_language: str,
+        problem_statement: str,
+        sample_input: str,
+        sample_output: str,
+        source_code: str,
+        iteration_index: int,
+        direction: str,
+    ) -> TranslationResult:
+        if direction == "seed_to_target":
+            return self.translate_cpp_to_target(
+                problem_id=problem_id,
+                target_language=target_language,
+                problem_statement=problem_statement,
+                sample_input=sample_input,
+                sample_output=sample_output,
+                source_code=source_code,
+                iteration_index=iteration_index,
+            )
+        if direction == "target_to_roundtrip_cpp":
+            return self.translate_target_to_cpp(
+                problem_id=problem_id,
+                source_language=source_language,
+                problem_statement=problem_statement,
+                sample_input=sample_input,
+                sample_output=sample_output,
+                source_code=source_code,
+                iteration_index=iteration_index,
+            )
+        raise AssertionError(f"Unexpected translation direction: {direction!r}")
+
     def translate_cpp_to_target(
         self,
         *,
@@ -319,6 +487,30 @@ class TrackingTranslationClient:
 
 
 class ApiFailingTranslationClient:
+    def translate(
+        self,
+        *,
+        problem_id: str,
+        source_language: str,
+        target_language: str,
+        problem_statement: str,
+        sample_input: str,
+        sample_output: str,
+        source_code: str,
+        iteration_index: int,
+        direction: str,
+    ) -> TranslationResult:
+        del problem_id
+        del source_language
+        del target_language
+        del problem_statement
+        del sample_input
+        del sample_output
+        del source_code
+        del iteration_index
+        del direction
+        raise RuntimeError("simulated api failure")
+
     def translate_cpp_to_target(self, **kwargs: object) -> TranslationResult:
         del kwargs
         raise RuntimeError("simulated api failure")
@@ -329,6 +521,30 @@ class ApiFailingTranslationClient:
 
 
 class ParseFailingTranslationClient:
+    def translate(
+        self,
+        *,
+        problem_id: str,
+        source_language: str,
+        target_language: str,
+        problem_statement: str,
+        sample_input: str,
+        sample_output: str,
+        source_code: str,
+        iteration_index: int,
+        direction: str,
+    ) -> TranslationResult:
+        del problem_id
+        del source_language
+        del target_language
+        del problem_statement
+        del sample_input
+        del sample_output
+        del source_code
+        del iteration_index
+        del direction
+        raise OpenAIResponseParseError("simulated parse failure")
+
     def translate_cpp_to_target(self, **kwargs: object) -> TranslationResult:
         del kwargs
         raise OpenAIResponseParseError("simulated parse failure")
@@ -342,6 +558,33 @@ class BlockedTranslationClient:
     def __init__(self) -> None:
         self.cpp_to_target_calls = 0
         self.target_to_cpp_calls = 0
+
+    def translate(
+        self,
+        *,
+        problem_id: str,
+        source_language: str,
+        target_language: str,
+        problem_statement: str,
+        sample_input: str,
+        sample_output: str,
+        source_code: str,
+        iteration_index: int,
+        direction: str,
+    ) -> TranslationResult:
+        del problem_id
+        del source_language
+        del target_language
+        del problem_statement
+        del sample_input
+        del sample_output
+        del source_code
+        del iteration_index
+        if direction == "seed_to_target":
+            self.cpp_to_target_calls += 1
+        else:
+            self.target_to_cpp_calls += 1
+        raise AssertionError("Resume should not invoke translation for terminal runs.")
 
     def translate_cpp_to_target(self, **kwargs: object) -> TranslationResult:
         del kwargs
@@ -455,6 +698,7 @@ def _build_config(
     output_root.mkdir(parents=True, exist_ok=True)
     return ExperimentConfig(
         problem_ids=("IPOP_TEST",),
+        seed_language="cpp",
         target_languages=("python",),
         openai=OpenAIConfig(model="gpt-5.4", temperature=0.0),
         runtime=RuntimeConfig(
@@ -553,7 +797,7 @@ def _write_partial_iteration(
         output_root / paths.openai_response_path,
         {"cpp_to_target": {}, "target_to_cpp": {}},
     )
-    (output_root / paths.input_cpp_source_path).write_text(
+    (output_root / paths.input_seed_source_path).write_text(
         input_cpp_source, encoding="utf-8"
     )
     (output_root / paths.translated_source_path).write_text(
@@ -596,6 +840,7 @@ def _write_partial_iteration(
                 "iteration_metadata_path": paths.iteration_metadata_path,
                 "openai_request_path": paths.openai_request_path,
                 "openai_response_path": paths.openai_response_path,
+                "input_seed_source_path": paths.input_seed_source_path,
                 "translated_source_path": paths.translated_source_path,
                 "roundtrip_source_path": paths.roundtrip_source_path,
                 "compile_log_path": paths.compile_log_path,

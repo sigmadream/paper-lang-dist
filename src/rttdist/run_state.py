@@ -23,12 +23,19 @@ class ResumeValidationError(RunStateError):
     pass
 
 
+RUN_MANIFEST_SCHEMA_VERSION_V1 = "run_manifest.v1"
+RUN_MANIFEST_SCHEMA_VERSION_V2 = "run_manifest.v2"
+ITERATION_INPUT_ARTIFACT_KEY_V1 = "input_cpp_source_path"
+ITERATION_INPUT_ARTIFACT_KEY_V2 = "input_seed_source_path"
+
+
 @dataclass(frozen=True)
 class RunResumePlan:
     manifest: dict[str, Any]
     start_iteration: int
-    current_cpp_source: str
-    roundtrip_cpp_history: tuple[str, ...]
+    current_seed_source: str
+    seed_source_history: tuple[str, ...]
+    target_source_history: tuple[str, ...]
     previous_status: str
     final_record: FailureRecord | None
 
@@ -37,6 +44,7 @@ def compute_config_hash(config: ExperimentConfig) -> str:
     payload = {
         "provider": config.provider,
         "problem_ids": list(config.problem_ids),
+        "seed_language": config.seed_language,
         "target_languages": list(config.target_languages),
         "openai": {
             "model": config.openai.model,
@@ -105,12 +113,14 @@ def plan_run_resume(
         return RunResumePlan(
             manifest=manifest,
             start_iteration=1,
-            current_cpp_source=seed_cpp_source,
-            roundtrip_cpp_history=(),
+            current_seed_source=seed_cpp_source,
+            seed_source_history=(),
+            target_source_history=(),
             previous_status="running",
             final_record=None,
         )
 
+    _validate_manifest_schema_compatibility(existing_manifest)
     _validate_metadata_compatibility(existing_manifest, metadata)
     _validate_resume_checksums(existing_manifest, checksums)
 
@@ -134,6 +144,9 @@ def plan_run_resume(
             ),
             field_name="problem.problem_id",
         ),
+        seed_language=_as_text(
+            metadata.get("seed_language"), field_name="seed_language"
+        ),
         target_language=_as_text(
             metadata.get("target_language"), field_name="target_language"
         ),
@@ -145,18 +158,25 @@ def plan_run_resume(
         return RunResumePlan(
             manifest=normalized_manifest,
             start_iteration=1,
-            current_cpp_source=seed_cpp_source,
-            roundtrip_cpp_history=(),
+            current_seed_source=seed_cpp_source,
+            seed_source_history=(),
+            target_source_history=(),
             previous_status="running",
             final_record=None,
         )
 
-    roundtrip_cpp_history = _read_roundtrip_history(
+    seed_source_history = _read_source_history(
         iterations=recovered_iterations,
         output_root=output_root,
+        artifact_key="roundtrip_source_path",
     )
-    current_cpp_source = (
-        roundtrip_cpp_history[-1] if roundtrip_cpp_history else seed_cpp_source
+    target_source_history = _read_source_history(
+        iterations=recovered_iterations,
+        output_root=output_root,
+        artifact_key="translated_source_path",
+    )
+    current_seed_source = (
+        seed_source_history[-1] if seed_source_history else seed_cpp_source
     )
     previous_status = _latest_status(recovered_iterations)
     last_record = _iteration_failure_record(recovered_iterations[-1])
@@ -166,8 +186,9 @@ def plan_run_resume(
         return RunResumePlan(
             manifest=normalized_manifest,
             start_iteration=len(recovered_iterations) + 1,
-            current_cpp_source=current_cpp_source,
-            roundtrip_cpp_history=tuple(roundtrip_cpp_history),
+            current_seed_source=current_seed_source,
+            seed_source_history=tuple(seed_source_history),
+            target_source_history=tuple(target_source_history),
             previous_status=previous_status,
             final_record=last_record,
         )
@@ -176,8 +197,9 @@ def plan_run_resume(
     return RunResumePlan(
         manifest=normalized_manifest,
         start_iteration=len(recovered_iterations) + 1,
-        current_cpp_source=current_cpp_source,
-        roundtrip_cpp_history=tuple(roundtrip_cpp_history),
+        current_seed_source=current_seed_source,
+        seed_source_history=tuple(seed_source_history),
+        target_source_history=tuple(target_source_history),
         previous_status=previous_status,
         final_record=None,
     )
@@ -190,6 +212,7 @@ def _build_new_manifest(
     created_at: str,
 ) -> dict[str, Any]:
     return {
+        "schema_version": RUN_MANIFEST_SCHEMA_VERSION_V2,
         "metadata": {
             **metadata,
             "config_hash": checksums["config_hash"],
@@ -235,7 +258,10 @@ def _recover_manifest_from_iteration_artifacts(
     if not recovered:
         return None
 
+    schema_version = _infer_recovered_manifest_schema_version(recovered)
+
     return {
+        "schema_version": schema_version,
         "metadata": {
             **metadata,
             "config_hash": checksums["config_hash"],
@@ -252,6 +278,9 @@ def _recover_manifest_from_iteration_artifacts(
                     "problem_id"
                 ),
                 field_name="problem.problem_id",
+            ),
+            seed_language=_as_text(
+                metadata.get("seed_language"), field_name="seed_language"
             ),
             target_language=_as_text(
                 metadata.get("target_language"), field_name="target_language"
@@ -278,6 +307,16 @@ def _validate_metadata_compatibility(
     existing_problem_id = _as_text(
         existing_problem.get("problem_id"), field_name="metadata.problem.problem_id"
     )
+    existing_seed_language = _as_text(
+        manifest_metadata.get("seed_language"), field_name="metadata.seed_language"
+    )
+    existing_run_directory = _as_text(
+        manifest_metadata.get("run_directory"), field_name="metadata.run_directory"
+    )
+    existing_run_metadata_path = _as_text(
+        manifest_metadata.get("run_metadata_path"),
+        field_name="metadata.run_metadata_path",
+    )
 
     expected_problem = _as_mapping(metadata.get("problem"), field_name="problem")
     expected_problem_id = _as_text(
@@ -286,6 +325,15 @@ def _validate_metadata_compatibility(
     expected_run_id = _as_text(metadata.get("run_id"), field_name="run_id")
     expected_target = _as_text(
         metadata.get("target_language"), field_name="target_language"
+    )
+    expected_seed_language = _as_text(
+        metadata.get("seed_language"), field_name="seed_language"
+    )
+    expected_run_directory = _as_text(
+        metadata.get("run_directory"), field_name="run_directory"
+    )
+    expected_run_metadata_path = _as_text(
+        metadata.get("run_metadata_path"), field_name="run_metadata_path"
     )
 
     if existing_run_id != expected_run_id:
@@ -296,10 +344,36 @@ def _validate_metadata_compatibility(
         raise ResumeValidationError(
             "Unsafe resume rejected: problem_id mismatch in existing manifest."
         )
+    if existing_seed_language != expected_seed_language:
+        raise ResumeValidationError(
+            "Unsafe resume rejected: seed_language mismatch in existing manifest."
+        )
     if existing_target != expected_target:
         raise ResumeValidationError(
             "Unsafe resume rejected: target_language mismatch in existing manifest."
         )
+    if existing_run_directory != expected_run_directory:
+        raise ResumeValidationError(
+            "Unsafe resume rejected: run_directory mismatch in existing manifest."
+        )
+    if existing_run_metadata_path != expected_run_metadata_path:
+        raise ResumeValidationError(
+            "Unsafe resume rejected: run_metadata_path mismatch in existing manifest."
+        )
+
+
+def _validate_manifest_schema_compatibility(manifest: dict[str, Any]) -> None:
+    schema_version = _as_optional_text(manifest.get("schema_version"))
+    if schema_version is None:
+        return
+    if schema_version in {
+        RUN_MANIFEST_SCHEMA_VERSION_V1,
+        RUN_MANIFEST_SCHEMA_VERSION_V2,
+    }:
+        return
+    raise ResumeValidationError(
+        "Unsafe resume rejected: unsupported run manifest schema version."
+    )
 
 
 def _validate_resume_checksums(
@@ -345,6 +419,13 @@ def _normalize_manifest(
     *,
     created_at: str,
 ) -> dict[str, Any]:
+    existing_schema_version = _as_optional_text(manifest.get("schema_version"))
+    normalized_schema_version = (
+        RUN_MANIFEST_SCHEMA_VERSION_V1
+        if existing_schema_version == RUN_MANIFEST_SCHEMA_VERSION_V1
+        else RUN_MANIFEST_SCHEMA_VERSION_V2
+    )
+
     normalized_metadata = {
         **metadata,
         "config_hash": checksums["config_hash"],
@@ -367,6 +448,7 @@ def _normalize_manifest(
         normalized_metadata["created_at"] = created_at
 
     return {
+        "schema_version": normalized_schema_version,
         "metadata": normalized_metadata,
         "status_transitions": _as_list(
             manifest.get("status_transitions"), field_name="status_transitions"
@@ -385,12 +467,23 @@ def _filter_contiguous_complete_iterations(
     recovered: list[dict[str, Any]] = []
     expected_index = 1
 
+    schema_version = _as_optional_text(manifest.get("schema_version"))
+    normalized_schema_version = (
+        RUN_MANIFEST_SCHEMA_VERSION_V1
+        if schema_version == RUN_MANIFEST_SCHEMA_VERSION_V1
+        else RUN_MANIFEST_SCHEMA_VERSION_V2
+    )
+
     for item in iterations:
         mapping = _as_mapping(item, field_name=f"iterations[{expected_index - 1}]")
         index = mapping.get("iteration_index")
         if not isinstance(index, int) or index != expected_index:
             break
-        if not _is_iteration_artifact_complete(mapping, output_root):
+        if not _is_iteration_artifact_complete(
+            mapping,
+            output_root,
+            schema_version=normalized_schema_version,
+        ):
             break
         recovered.append(mapping)
         expected_index += 1
@@ -399,7 +492,7 @@ def _filter_contiguous_complete_iterations(
 
 
 def _is_iteration_artifact_complete(
-    iteration: dict[str, Any], output_root: Path
+    iteration: dict[str, Any], output_root: Path, *, schema_version: str
 ) -> bool:
     artifact_paths = _as_mapping(
         iteration.get("artifact_paths"), field_name="artifact_paths"
@@ -425,43 +518,62 @@ def _is_iteration_artifact_complete(
         )
         if not resolved_path.is_file():
             return False
-    input_cpp_source_path = artifact_paths.get("input_cpp_source_path")
-    if input_cpp_source_path is not None:
+    if schema_version == RUN_MANIFEST_SCHEMA_VERSION_V1:
+        input_artifact_key = ITERATION_INPUT_ARTIFACT_KEY_V1
+    else:
+        input_artifact_key = ITERATION_INPUT_ARTIFACT_KEY_V2
+
+    input_seed_source_path = artifact_paths.get(input_artifact_key)
+    if input_seed_source_path is not None:
         if (
-            not isinstance(input_cpp_source_path, str)
-            or not input_cpp_source_path.strip()
+            not isinstance(input_seed_source_path, str)
+            or not input_seed_source_path.strip()
         ):
             return False
         resolved_input_path = _resolve_artifact_path_within_output_root(
             output_root=output_root,
-            relative_path=input_cpp_source_path,
-            field_name="artifact_paths.input_cpp_source_path",
+            relative_path=input_seed_source_path,
+            field_name=f"artifact_paths.{input_artifact_key}",
         )
         if not resolved_input_path.is_file():
             return False
+    elif schema_version == RUN_MANIFEST_SCHEMA_VERSION_V2:
+        return False
     return True
 
 
-def _read_roundtrip_history(
-    *, iterations: list[dict[str, Any]], output_root: Path
+def _infer_recovered_manifest_schema_version(
+    recovered_iterations: list[dict[str, Any]],
+) -> str:
+    for item in recovered_iterations:
+        artifact_paths = item.get("artifact_paths")
+        if not isinstance(artifact_paths, dict):
+            continue
+        if ITERATION_INPUT_ARTIFACT_KEY_V2 in artifact_paths:
+            return RUN_MANIFEST_SCHEMA_VERSION_V2
+        if ITERATION_INPUT_ARTIFACT_KEY_V1 in artifact_paths:
+            return RUN_MANIFEST_SCHEMA_VERSION_V1
+    return RUN_MANIFEST_SCHEMA_VERSION_V2
+
+
+def _read_source_history(
+    *, iterations: list[dict[str, Any]], output_root: Path, artifact_key: str
 ) -> list[str]:
     history: list[str] = []
     for item in iterations:
         artifact_paths = _as_mapping(
             item.get("artifact_paths"), field_name="artifact_paths"
         )
-        roundtrip_relative = _as_text(
-            artifact_paths.get("roundtrip_source_path"),
-            field_name="artifact_paths.roundtrip_source_path",
+        source_relative = _as_text(
+            artifact_paths.get(artifact_key),
+            field_name=f"artifact_paths.{artifact_key}",
         )
         source_path = _resolve_artifact_path_within_output_root(
             output_root=output_root,
-            relative_path=roundtrip_relative,
-            field_name="artifact_paths.roundtrip_source_path",
+            relative_path=source_relative,
+            field_name=f"artifact_paths.{artifact_key}",
         )
-        source_text = source_path.read_text(encoding="utf-8").rstrip()
-        if source_text:
-            history.append(source_text)
+        history.append(source_path.read_text(encoding="utf-8").rstrip())
     return history
 
 
@@ -492,6 +604,7 @@ def _rebuild_status_transitions(
     iterations: list[dict[str, Any]],
     *,
     problem_id: str,
+    seed_language: str,
     target_language: str,
 ) -> list[dict[str, Any]]:
     transitions: list[dict[str, Any]] = []
@@ -502,6 +615,7 @@ def _rebuild_status_transitions(
             {
                 "timestamp": item.get("ended_at") or item.get("started_at"),
                 "problem_id": problem_id,
+                "seed_language": seed_language,
                 "target_language": target_language,
                 "iteration_index": record.iteration_index,
                 "from_status": previous_status,
@@ -526,8 +640,20 @@ def _is_terminal_record(record: FailureRecord) -> bool:
         return True
     return (
         record.status == FailureStatus.SUCCESS
-        and record.details.get("convergence_status") == "fixed_point"
+        and _extract_overall_convergence_status(record.details) == "fixed_point"
     )
+
+
+def _extract_overall_convergence_status(details: dict[str, Any]) -> str | None:
+    convergence = details.get("convergence")
+    if isinstance(convergence, dict):
+        overall = convergence.get("overall")
+        if isinstance(overall, str) and overall.strip():
+            return overall.strip()
+    value = details.get("convergence_status")
+    if isinstance(value, str) and value.strip():
+        return value.strip()
+    return None
 
 
 def _sha256_text(value: str) -> str:
