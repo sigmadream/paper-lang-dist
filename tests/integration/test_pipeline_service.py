@@ -25,6 +25,7 @@ from rttdist.pipeline import TranslationClientProtocol, run_pipeline_service
 def test_pipeline_service_continues_other_targets_after_failure(tmp_path: Path) -> None:
     config = ExperimentConfig(
         problem_ids=("IPOP_SERVICE",),
+        seed_language="cpp",
         target_languages=("python", "c"),
         openai=OpenAIConfig(model="gpt-5.4", temperature=0.0),
         runtime=RuntimeConfig(max_iterations=2, timeout_seconds=1),
@@ -67,13 +68,14 @@ def test_pipeline_service_continues_other_targets_after_failure(tmp_path: Path) 
         run_id="svc",
         problem_id=problem.problem_id,
         target_language="python",
+        seed_language=config.seed_language,
         iteration_index=1,
     )
     for relative_path in (
         failed_iter_paths.iteration_metadata_path,
         failed_iter_paths.openai_request_path,
         failed_iter_paths.openai_response_path,
-        failed_iter_paths.input_cpp_source_path,
+        failed_iter_paths.input_seed_source_path,
         failed_iter_paths.translated_source_path,
         failed_iter_paths.roundtrip_source_path,
         failed_iter_paths.compile_log_path,

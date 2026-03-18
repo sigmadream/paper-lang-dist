@@ -35,6 +35,41 @@ class FakeTranslationClient:
         self._target_sources = list(target_sources)
         self._roundtrip_sources = list(roundtrip_sources)
 
+    def translate(
+        self,
+        *,
+        problem_id: str,
+        source_language: str,
+        target_language: str,
+        problem_statement: str,
+        sample_input: str,
+        sample_output: str,
+        source_code: str,
+        iteration_index: int,
+        direction: str,
+    ) -> TranslationResult:
+        if direction == "seed_to_target":
+            return self.translate_cpp_to_target(
+                problem_id=problem_id,
+                target_language=target_language,
+                problem_statement=problem_statement,
+                sample_input=sample_input,
+                sample_output=sample_output,
+                source_code=source_code,
+                iteration_index=iteration_index,
+            )
+        if direction == "target_to_roundtrip_cpp":
+            return self.translate_target_to_cpp(
+                problem_id=problem_id,
+                source_language=source_language,
+                problem_statement=problem_statement,
+                sample_input=sample_input,
+                sample_output=sample_output,
+                source_code=source_code,
+                iteration_index=iteration_index,
+            )
+        raise AssertionError(f"Unexpected translation direction: {direction!r}")
+
     def translate_cpp_to_target(
         self,
         *,
@@ -122,25 +157,46 @@ def test_pipeline_converges_and_writes_complete_iteration_artifacts(
     assert result.final_record.status.value == "success"
     assert result.final_record.stage == "convergence"
     assert result.final_record.details["convergence_status"] == "fixed_point"
+    assert result.final_record.details["convergence"] == {
+        "seed_state": "fixed_point",
+        "target_state": "fixed_point",
+        "overall": "fixed_point",
+    }
 
     manifest = _load_json(result.run_manifest_path)
     assert manifest["metadata"]["config_hash"]
     assert manifest["final"]["status"] == "success"
     assert manifest["final"]["details"]["convergence_status"] == "fixed_point"
+    assert manifest["final"]["details"]["convergence"]["overall"] == "fixed_point"
     assert len(manifest["status_transitions"]) == 2
+
+    iter2_paths = build_iteration_artifact_paths(
+        run_id=run_id,
+        problem_id=problem.problem_id,
+        target_language="python",
+        seed_language=config.seed_language,
+        iteration_index=2,
+    )
+    iter2_metrics = _load_json(config.output_root / iter2_paths.metrics_path)
+    assert iter2_metrics["convergence"] == {
+        "seed_state": "fixed_point",
+        "target_state": "fixed_point",
+        "overall": "fixed_point",
+    }
 
     for iteration_index in (1, 2):
         paths = build_iteration_artifact_paths(
             run_id=run_id,
             problem_id=problem.problem_id,
             target_language="python",
+            seed_language=config.seed_language,
             iteration_index=iteration_index,
         )
         for relative_path in (
             paths.iteration_metadata_path,
             paths.openai_request_path,
             paths.openai_response_path,
-            paths.input_cpp_source_path,
+            paths.input_seed_source_path,
             paths.translated_source_path,
             paths.roundtrip_source_path,
             paths.compile_log_path,
@@ -183,24 +239,75 @@ def test_pipeline_persists_iteration_input_cpp_history(
         run_id=run_id,
         problem_id=problem.problem_id,
         target_language="python",
+        seed_language=config.seed_language,
         iteration_index=1,
     )
     iter2_paths = build_iteration_artifact_paths(
         run_id=run_id,
         problem_id=problem.problem_id,
         target_language="python",
+        seed_language=config.seed_language,
         iteration_index=2,
     )
 
-    iter1_input = (config.output_root / iter1_paths.input_cpp_source_path).read_text(
+    iter1_input = (config.output_root / iter1_paths.input_seed_source_path).read_text(
         encoding="utf-8"
     )
-    iter2_input = (config.output_root / iter2_paths.input_cpp_source_path).read_text(
+    iter2_input = (config.output_root / iter2_paths.input_seed_source_path).read_text(
         encoding="utf-8"
     )
 
     assert iter1_input == f"{seed_source}\n"
     assert iter2_input == f"{first_roundtrip}\n"
+
+
+def test_pipeline_dual_state_history_requires_both_histories_to_fix_before_stopping(
+    tmp_path: Path,
+) -> None:
+    run_id = "dual-state-history"
+    config = _build_config(tmp_path, max_iterations=3)
+    problem = _build_problem_entry(tmp_path, problem_id="IPOP_DUAL_STATE")
+
+    translator = FakeTranslationClient(
+        target_sources=["print(1)", "print(2)", "print(2)"],
+        roundtrip_sources=[
+            "int main(){return 1;}",
+            "int main(){return 1;}",
+            "int main(){return 1;}",
+        ],
+    )
+    evaluator = FakeEvaluator()
+
+    result = run_rtt_loop(
+        config=config,
+        run_id=run_id,
+        problem=problem,
+        target_language="python",
+        translation_client=translator,
+        evaluate_source_fn=evaluator,
+    )
+
+    assert result.iteration_count == 3
+    assert result.final_record.status.value == "success"
+    assert result.final_record.details["convergence"] == {
+        "seed_state": "fixed_point",
+        "target_state": "fixed_point",
+        "overall": "fixed_point",
+    }
+
+    iter2_paths = build_iteration_artifact_paths(
+        run_id=run_id,
+        problem_id=problem.problem_id,
+        target_language="python",
+        seed_language=config.seed_language,
+        iteration_index=2,
+    )
+    iter2_metrics = _load_json(config.output_root / iter2_paths.metrics_path)
+    assert iter2_metrics["convergence"] == {
+        "seed_state": "fixed_point",
+        "target_state": "continue",
+        "overall": "continue",
+    }
 
 
 def test_pipeline_stops_at_max_iteration_and_preserves_prior_artifacts(
@@ -232,21 +339,25 @@ def test_pipeline_stops_at_max_iteration_and_preserves_prior_artifacts(
     assert result.iteration_count == 3
     assert result.final_record.status.value == "max_iter_no_convergence"
     assert result.final_record.stage == "convergence"
+    assert result.final_record.details["convergence"]["overall"] == "continue"
 
     manifest = _load_json(result.run_manifest_path)
     assert manifest["final"]["status"] == "max_iter_no_convergence"
     assert manifest["final"]["iteration_index"] == 3
+    assert manifest["final"]["details"]["convergence"]["overall"] == "continue"
 
     iter1_paths = build_iteration_artifact_paths(
         run_id=run_id,
         problem_id=problem.problem_id,
         target_language="python",
+        seed_language=config.seed_language,
         iteration_index=1,
     )
     iter3_paths = build_iteration_artifact_paths(
         run_id=run_id,
         problem_id=problem.problem_id,
         target_language="python",
+        seed_language=config.seed_language,
         iteration_index=3,
     )
     assert (config.output_root / iter1_paths.execution_result_path).is_file()
@@ -351,6 +462,7 @@ def test_pipeline_persists_raw_translation_payloads_on_parse_error(
         run_id="parse-payloads",
         problem_id=problem.problem_id,
         target_language="python",
+        seed_language=config.seed_language,
         iteration_index=1,
     )
     request_payload = _load_json(config.output_root / paths.openai_request_path)
@@ -388,12 +500,14 @@ def test_pipeline_persists_stable_iteration_execution_evidence_paths(
         run_id=run_id,
         problem_id=problem.problem_id,
         target_language="python",
+        seed_language=config.seed_language,
         iteration_index=1,
     )
     iter2_paths = build_iteration_artifact_paths(
         run_id=run_id,
         problem_id=problem.problem_id,
         target_language="python",
+        seed_language=config.seed_language,
         iteration_index=2,
     )
 
@@ -525,6 +639,30 @@ class RuntimeFailureEvaluator:
 
 
 class ParseFailingTranslationClient:
+    def translate(
+        self,
+        *,
+        problem_id: str,
+        source_language: str,
+        target_language: str,
+        problem_statement: str,
+        sample_input: str,
+        sample_output: str,
+        source_code: str,
+        iteration_index: int,
+        direction: str,
+    ) -> TranslationResult:
+        del problem_id
+        del source_language
+        del target_language
+        del problem_statement
+        del sample_input
+        del sample_output
+        del source_code
+        del iteration_index
+        del direction
+        raise OpenAIResponseParseError("missing choices")
+
     def translate_cpp_to_target(self, **kwargs: Any) -> TranslationResult:
         del kwargs
         raise OpenAIResponseParseError("missing choices")
@@ -606,6 +744,7 @@ def _build_config(tmp_path: Path, *, max_iterations: int) -> ExperimentConfig:
     output_root.mkdir(parents=True)
     return ExperimentConfig(
         problem_ids=("IPOP_TEST",),
+        seed_language="cpp",
         target_languages=("python",),
         openai=OpenAIConfig(model="gpt-5.4", temperature=0.0),
         runtime=RuntimeConfig(max_iterations=max_iterations, timeout_seconds=1),
