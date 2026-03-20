@@ -11,13 +11,13 @@
 ## 빠른 시작
 
 ```shell
-python -m rttdist.cli validate-corpus --config real-smoke-openai.yaml
-python -m rttdist.cli run --config real-smoke-openai.yaml --run-id smoke-openai-00a
-python -m rttdist.cli report --config real-smoke-openai.yaml --run-id smoke-openai-00a --with-moss
+uv run -m rttdist.cli validate-corpus --config real-smoke-ollama.yaml
+uv run -m rttdist.cli run --config real-smoke-ollama.yaml --run-id smoke-ollama-001
+uv run -m rttdist.cli report --config real-smoke-ollama.yaml --run-id smoke-ollama-001 --with-moss
 
-python -m rttdist.cli validate-corpus --config real-smoke-ollama.yaml
-python -m rttdist.cli run --config real-smoke-ollama.yaml --run-id smoke-ollama-00a
-python -m rttdist.cli report --config real-smoke-ollama.yaml --run-id smoke-ollama-00a --with-moss
+uv run -m rttdist.cli validate-corpus --config real-smoke-openai.yaml
+uv run -m rttdist.cli run --config real-smoke-openai.yaml --run-id smoke-openai-001
+uv run -m rttdist.cli report --config real-smoke-openai.yaml --run-id smoke-openai-001 --with-moss
 ```
 
 ## 현재 구현 상태 (v2)
@@ -37,39 +37,37 @@ python -m rttdist.cli report --config real-smoke-ollama.yaml --run-id smoke-olla
 - 실험 코드: `src/rttdist/`
 - 테스트: `tests/`
 - 스모크 실행 결과: `artifacts/smoke/`
-- 검증 증거: `.sisyphus/evidence/`
 
-현재 스모크 코퍼스는 정확히 두 문제만 사용합니다.
+현재 스모크 코퍼스는 정확히 다섯 문제만 사용합니다.
 
 - `IPOP_1436`: 영화감독 숌 (`problem/IPOP_1436.md`)
+- `IPOP_2110`: 공유기 설치 (`problem/IPOP_2110.md`)
+- `IPOP_2217`: 로프 (`problem/IPOP_2217.md`)
 - `IPOP_2579`: 계단 오르기 (`problem/IPOP_2579.md`)
+- `IPOP_5567`: 결혼식 (`problem/IPOP_5567.md`)
 
-두 문제 모두 샘플 픽스처 10쌍(`1.inp`~`10.inp`, `1.out`~`10.out`)을 가지고 있습니다.
+다섯 문제 모두 샘플 픽스처 10쌍(`1.inp`~`10.inp`, `1.out`~`10.out`)을 가지고 있습니다.
 
-## 요구 사항
 
-- Python 3.10+
-- 로컬 툴체인
-  - `gcc` (`C`)
-  - `g++` (`C++`)
-  - `javac` + `java` (`Java`)
-  - `python` (`Python`)
-
-오프라인 스모크 테스트는 OpenAI 네트워크 호출 대신 mock 응답 파일을 사용합니다. 실제 OpenAI API로 실행하려면 `RTTDIST_OPENAI_MOCK_RESPONSES`를 설정하지 않고 OpenAI SDK가 요구하는 인증 환경 변수를 준비해야 합니다.
 
 ## 설치
 
+### 요구 사항
+
+- python, gcc, g++, javac + java
+- uv
+
 ```bash
-python3 -m venv .venv
-. .venv/bin/activate
-python -m pip install -e ".[dev]"
+uv sync
 ```
+
+### 참고사항
+
+오프라인 스모크 테스트(유닛 테스트)에서만 OpenAI mock 응답 파일을 사용합니다. 기본 provider는 `ollama`이며, OpenAI를 사용하려면 설정 파일에 `provider: openai`를 명시하고 OpenAI SDK가 요구하는 인증 환경 변수를 준비해야 합니다.
 
 ## 기본 사용법
 
-CLI 엔트리포인트는 `python -m rttdist.cli` 입니다.
-
-모든 실행 방식에서 공통으로 쓰는 기본 명령은 같습니다.
+CLI 엔트리포인트는 `python -m rttdist.cli` 입니다. 모든 실행 방식에서 공통으로 쓰는 기본 명령은 같습니다.
 
 ```bash
 python -m rttdist.cli validate-corpus --config <config.yaml>
@@ -78,13 +76,11 @@ python -m rttdist.cli resume --config <config.yaml> --run-id <run-id>
 python -m rttdist.cli report --run-id <run-id>
 ```
 
-주의:
+- `run-id`는 산출물 디렉터리 이름으로도 사용
+- 같은 `run-id`를 재사용하면 기존 아티팩트/상태를 다시 참조하게 되어, 이전 실패 결과가 그대로 보일 수 있음
+- 완전히 새 실행을 원하면 새 `run-id`를 쓰거나 기존 `artifacts.../<run-id>/` 디렉터리를 지운 뒤 다시 실행
 
-- `run-id`는 산출물 디렉터리 이름으로도 사용됩니다
-- 같은 `run-id`를 재사용하면 기존 아티팩트/상태를 다시 참조하게 되어, 이전 실패 결과가 그대로 보일 수 있습니다
-- 완전히 새 실행을 원하면 새 `run-id`를 쓰거나 기존 `artifacts.../<run-id>/` 디렉터리를 지운 뒤 다시 실행하세요
-
-### MOSS 유사도(선택 기능)
+### MOSS 유사도
 
 리포트 생성 시 `moss.pl` 기반 유사도 측정은 기본 비활성입니다. 필요할 때만 `--with-moss`를 사용합니다.
 
@@ -100,22 +96,17 @@ python -m rttdist.cli report --run-id <run-id> --with-moss
 - 환경 변수 `RTTDIST_MOSS_SCRIPT`
 - 현재 작업 디렉터리의 `./moss.pl`
 
-예시:
-
 ```bash
 python -m rttdist.cli report --run-id smoke --with-moss --moss-script ./moss.pl
-
 export RTTDIST_MOSS_SCRIPT=/Users/sd/Works/paper-lang-dist/moss.pl
 python -m rttdist.cli report --run-id smoke --with-moss
 ```
 
-주의 사항:
-
-- MOSS는 원격 서비스이므로 네트워크 연결이 필요합니다
-- 코드가 `moss.stanford.edu`로 업로드됩니다
-- 계정/일일 제출 제한 및 결과 보관 기간 정책이 적용됩니다
-- MOSS가 비교 가능한 공통 구간을 찾지 못하면 실패로 처리하지 않고 `0%` similarity로 기록합니다 (`match_url`은 `null`)
-- MOSS 측정 실패 시 리포트 전체는 실패하지 않고, `moss_similarity`를 `unavailable`로 기록합니다
+- MOSS는 원격 서비스이므로 네트워크 연결이 필요
+- 코드가 `moss.stanford.edu`로 업로드
+- 계정/일일 제출 제한 및 결과 보관 기간 정책이 적용
+- MOSS가 비교 가능한 공통 구간을 찾지 못하면 실패로 처리하지 않고 `0%` similarity로 기록 (`match_url`은 `null`)
+- MOSS 측정 실패 시 리포트 전체는 실패하지 않고, `moss_similarity`를 `unavailable`로 기록
 
 `validate-corpus` 는 다음을 검사합니다.
 
@@ -130,48 +121,9 @@ python -m rttdist.cli report --run-id smoke --with-moss
 
 이 저장소는 현재 세 가지 방식으로 사용할 수 있습니다.
 
-### 1) Mock 사용
+### Ollama 사용
 
-가장 안정적이고 재현 가능한 회귀 테스트 경로입니다.
-
-- 설정 파일: `tests/fixtures/config/minimal.yaml`
-- mock 응답 파일: `tests/fixtures/e2e/smoke_openai_responses.json`
-- 출력 루트: `artifacts/`
-
-설정 내용:
-
-- 문제: `IPOP_1436`, `IPOP_2579`
-- seed 언어: 기본 smoke는 `cpp`
-- 대상 언어: `c`, `java`, `python`
-- 모델 설정: `gpt-5.4`, `temperature=0`
-- 반복 한도: `20`
-- 타임아웃: `30초`
-
-mock 응답 파일에는 기본 `cpp` seed smoke 경로와, 추가로 하나의 non-default seed 성공 경로(`python -> cpp`)가 들어 있습니다.
-
-- 기본 smoke: `cpp -> c/java/python`, `target -> roundtrip cpp`
-- 추가 smoke: `python -> cpp` non-default seed success path
-
-실행 예시는 다음과 같습니다.
-
-```bash
-export RTTDIST_OPENAI_MOCK_RESPONSES=tests/fixtures/e2e/smoke_openai_responses.json
-
-python -m rttdist.cli validate-corpus --config tests/fixtures/config/minimal.yaml
-python -m rttdist.cli run --config tests/fixtures/config/minimal.yaml --run-id smoke
-python -m rttdist.cli resume --config tests/fixtures/config/minimal.yaml --run-id smoke
-python -m rttdist.cli report --run-id smoke
-```
-
-추천 용도:
-
-- 빠른 회귀 테스트
-- CI성 검증
-- 고정된 결과를 기준으로 artifact/report 형식 검증
-
-### 2) Ollama 사용
-
-로컬 모델로 실제 번역을 시험하고 싶을 때 쓰는 경로입니다.
+로컬 모델로 실제 번역을 시험하고 싶을 때 쓰는 경로입니다. **기본 provider가 `ollama`이므로** `provider` 키를 생략하면 자동으로 Ollama를 사용합니다.
 
 지원 방식은 두 가지입니다.
 
@@ -241,7 +193,7 @@ python -m rttdist.cli report --config tests/fixtures/config/minimal-ollama.yaml 
 - 동일한 `run-id`로 재실행했는데 예전 실패 결과가 보이면 새 `run-id`로 다시 실행하거나 기존 `artifacts-ollama/<run-id>/`를 지우고 다시 시작하세요
 - 실행 중 `api_error`가 나면 콘솔에 `detail:` 줄로 실제 Ollama 원인(예: model not found, host unreachable)이 함께 출력됩니다
 
-### 3) OpenAI 사용
+### OpenAI 사용
 
 OpenAI SDK를 통해 실제 API 호출로 실험하는 경로입니다.
 
@@ -522,3 +474,41 @@ python -m pytest -q
 export RTTDIST_OPENAI_MOCK_RESPONSES=tests/fixtures/e2e/smoke_openai_responses.json
 python -m pytest tests/e2e -q
 ```
+
+### Mock 테스트
+
+- 설정 파일: `tests/fixtures/config/minimal.yaml`
+- mock 응답 파일: `tests/fixtures/e2e/smoke_openai_responses.json`
+- 출력 루트: `artifacts/`
+
+설정 내용:
+
+- 문제: `IPOP_1436`, `IPOP_2579`
+- provider: `openai` (mock 테스트이므로 명시 필요)
+- seed 언어: 기본 smoke는 `cpp`
+- 대상 언어: `c`, `java`, `python`
+- 모델 설정: `gpt-5.4`, `temperature=0`
+- 반복 한도: `20`
+- 타임아웃: `30초`
+
+mock 응답 파일에는 기본 `cpp` seed smoke 경로와, 추가로 하나의 non-default seed 성공 경로(`python -> cpp`)가 들어 있습니다.
+
+- 기본 smoke: `cpp -> c/java/python`, `target -> roundtrip cpp`
+- 추가 smoke: `python -> cpp` non-default seed success path
+
+실행 예시는 다음과 같습니다.
+
+```bash
+export RTTDIST_OPENAI_MOCK_RESPONSES=tests/fixtures/e2e/smoke_openai_responses.json
+
+python -m rttdist.cli validate-corpus --config tests/fixtures/config/minimal.yaml
+python -m rttdist.cli run --config tests/fixtures/config/minimal.yaml --run-id smoke
+python -m rttdist.cli resume --config tests/fixtures/config/minimal.yaml --run-id smoke
+python -m rttdist.cli report --run-id smoke
+```
+
+추천 용도:
+
+- 빠른 회귀 테스트
+- CI성 검증
+- 고정된 결과를 기준으로 artifact/report 형식 검증

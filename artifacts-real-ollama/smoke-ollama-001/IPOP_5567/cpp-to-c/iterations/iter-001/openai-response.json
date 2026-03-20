@@ -1,0 +1,40 @@
+{
+  "cpp_to_target": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```c\n#include <stdio.h>\n#include <stdlib.h>\n\n#define MAXN 501\n\nint main() {\n    int n, m;\n    scanf(\"%d %d\", &n, &m);\n\n    int adj[MAXN][MAXN] = {0};\n    for (int i = 0; i < m; i++) {\n        int u, v;\n        scanf(\"%d %d\", &u, &v);\n        adj[u][v] = 1;\n        adj[v][u] = 1;\n    }\n\n    int dist[MAXN];\n    for (int i = 0; i <= n; i++) {\n        dist[i] = -1;\n    }\n    dist[1] = 0;\n\n    int ans = 0;\n    int q[MAXN * MAXN], front = 0, rear = 0;\n    q[rear++] = 1;\n\n    while (front < rear) {\n        int curr = q[front++];\n        for (int next_node = 1; next_node <= n; next_node++) {\n            if (adj[curr][next_node] == 1 && dist[next_node] == -1) {\n                dist[next_node] = dist[curr] + 1;\n                q[rear++] = next_node;\n                if (dist[next_node] <= 2) {\n                    ans++;\n                }\n            }\n        }\n    }\n\n    printf(\"%d\\n\", ans);\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "ollama-qwen2.5-coder:7b-response",
+    "model": "qwen2.5-coder:7b",
+    "usage": {
+      "completion_tokens": 305,
+      "prompt_tokens": 846,
+      "total_tokens": 1151
+    }
+  },
+  "target_to_cpp": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <queue>\n\n#define MAXN 501\n\nint main() {\n    int n, m;\n    std::cin >> n >> m;\n\n    std::vector<std::vector<int>> adj(n + 1, std::vector<int>(n + 1, 0));\n    for (int i = 0; i < m; i++) {\n        int u, v;\n        std::cin >> u >> v;\n        adj[u][v] = 1;\n        adj[v][u] = 1;\n    }\n\n    std::vector<int> dist(n + 1, -1);\n    dist[1] = 0;\n\n    std::queue<int> q;\n    q.push(1);\n\n    int ans = 0;\n    while (!q.empty()) {\n        int curr = q.front();\n        q.pop();\n        for (int next_node = 1; next_node <= n; next_node++) {\n            if (adj[curr][next_node] == 1 && dist[next_node] == -1) {\n                dist[next_node] = dist[curr] + 1;\n                q.push(next_node);\n                if (dist[next_node] <= 2) {\n                    ans++;\n                }\n            }\n        }\n    }\n\n    std::cout << ans << std::endl;\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "ollama-qwen2.5-coder:7b-response",
+    "model": "qwen2.5-coder:7b",
+    "usage": {
+      "completion_tokens": 288,
+      "prompt_tokens": 898,
+      "total_tokens": 1186
+    }
+  }
+}

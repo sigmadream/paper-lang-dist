@@ -1,0 +1,24 @@
+{
+  "cpp_to_target": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```java\nimport java.util.Arrays;\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int[] ropes = new int[n];\n        \n        for (int i = 0; i < n; i++) {\n            ropes[i] = scanner.nextInt();\n        }\n        \n        Arrays.sort(ropes);\n        \n        long maxWeight = 0;\n        for (int i = 0; i < n; i++) {\n            long currentWeight = 1L * ropes[i] * (i + 1);\n            if (currentWeight > maxWeight) {\n                maxWeight = currentWeight;\n            }\n        }\n        \n        System.out.println(maxWeight);\n    }\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "ollama-qwen2.5-coder:7b-response",
+    "model": "qwen2.5-coder:7b",
+    "usage": {
+      "completion_tokens": 165,
+      "prompt_tokens": 651,
+      "total_tokens": 816
+    }
+  },
+  "target_to_cpp": {
+    "error": "response unavailable due to early termination"
+  }
+}

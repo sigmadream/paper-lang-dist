@@ -171,6 +171,7 @@ def test_accepts_approved_openai_models(tmp_path: Path, model: str) -> None:
     config_path.write_text(
         "\n".join(
             [
+                "provider: openai",
                 "problem_ids:",
                 "  - IPOP_1436",
                 "seed_language: cpp",
@@ -197,6 +198,7 @@ def test_rejects_unapproved_openai_model(tmp_path: Path) -> None:
     config_path.write_text(
         "\n".join(
             [
+                "provider: openai",
                 "problem_ids:",
                 "  - IPOP_1436",
                 "seed_language: cpp",

@@ -1,0 +1,24 @@
+{
+  "cpp_to_target": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```python\nfrom collections import deque\n\ndef main():\n    n, m = map(int, input().split())\n\n    adj = [[] for _ in range(n + 1)]\n    for _ in range(m):\n        u, v = map(int, input().split())\n        adj[u].append(v)\n        adj[v].append(u)\n\n    dist = [-1] * (n + 1)\n    q = deque([1])\n    dist[1] = 0\n\n    ans = 0\n\n    while q:\n        curr = q.popleft()\n\n        for next_node in adj[curr]:\n            if dist[next_node] == -1:\n                dist[next_node] = dist[curr] + 1\n                q.append(next_node)\n                if dist[next_node] <= 2:\n                    ans += 1\n\n    print(ans)\n\nif __name__ == \"__main__\":\n    main()\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "ollama-qwen2.5-coder:7b-response",
+    "model": "qwen2.5-coder:7b",
+    "usage": {
+      "completion_tokens": 185,
+      "prompt_tokens": 846,
+      "total_tokens": 1031
+    }
+  },
+  "target_to_cpp": {
+    "error": "response unavailable due to early termination"
+  }
+}

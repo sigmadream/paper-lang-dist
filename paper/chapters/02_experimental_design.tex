@@ -1,0 +1,116 @@
+%%% chapters/03_experimental_design.tex — 실험 설계
+\section{실험 설계}\label{sec:design}
+
+\subsection{실험 코퍼스}\label{ssec:corpus}
+
+실험 대상 코퍼스는 백준 온라인 저지(Baekjoon Online Judge)에서 선별한 5개 알고리즘
+문제로 구성된다. 각 문제는 서로 다른 알고리즘 패턴을 포함하도록 선택하였다.
+
+\begin{table}[htbp]
+  \centering
+  \caption{실험 코퍼스: 대상 문제 목록}\label{tab:corpus}
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    문제 ID     & 문제명      & 알고리즘 특성        \\
+    \midrule
+    IPOP\_1436  & 영화감독 숌  & 문자열 탐색, 반복문   \\
+    IPOP\_2110  & 공유기 설치  & 이분 탐색            \\
+    IPOP\_2217  & 로프        & 정렬, 그리디          \\
+    IPOP\_2579  & 계단 오르기  & 동적 프로그래밍       \\
+    IPOP\_5567  & 결혼식      & 정렬, 구간 처리       \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+각 문제에는 10쌍의 입출력 샘플 픽스처(fixture)가 제공되어, 번역된 코드의
+의미적 정확성(semantic correctness)을 자동으로 검증할 수 있도록 하였다.
+
+\subsection{기준 언어 및 대상 언어}\label{ssec:languages}
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{기준 언어(seed language)}: \cpp{}
+  \item \textbf{대상 언어(target languages)}: C, Java, Python
+  \item \textbf{언어 쌍(ordered pairs)}:
+    \textsf{cpp\rarr{}c}, \textsf{cpp\rarr{}java}, \textsf{cpp\rarr{}python}
+\end{itemize}
+
+\cpp{}를 기준 언어로 선택한 이유는
+(1)~세 대상 언어 모두와 구문적으로 어느 정도 공통 요소를 공유하면서도,
+(2)~각 언어로의 변환 시 서로 다른 수준의 구조적 변형이 필요하기 때문이다.
+특히 C는 \cpp{}의 부분 집합에 가까운 구문 유사성을, Java는 객체지향 래핑의 필요성을,
+Python은 근본적으로 다른 구문 규칙(들여쓰기 기반, 동적 타이핑)을 각각 대표한다.
+
+\subsection{실험 모델}\label{ssec:models}
+
+두 가지 LLM을 사용하여 동일 실험을 독립적으로 수행하였다.
+
+\begin{table}[htbp]
+  \centering
+  \caption{실험에 사용된 LLM 모델 사양}\label{tab:models}
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    항목                    & Ollama              & OpenAI            \\
+    \midrule
+    모델명                  & qwen2.5-coder:7b    & gpt-5.4           \\
+    유형                    & 로컬 오픈소스        & 상용 클라우드 API   \\
+    파라미터 규모            & 7B                  & 비공개\,(대규모)    \\
+    온도\,(temperature)     & 0                   & 0                 \\
+    실행 환경               & 로컬 머신            & 클라우드 API       \\
+    실행 ID                 & smoke-ollama-001    & smoke-openai-001  \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+두 모델 모두 temperature를 $0$으로 고정하여 결정론적(deterministic) 출력을 추구하였다.
+다만, $\text{temperature}=0$이더라도 완전한 재현성은 보장되지 않는다는 점에 유의해야 한다.
+
+\subsection{왕복 번역 파이프라인}\label{ssec:pipeline}
+
+실험 파이프라인의 한 주기(cycle)는 다음과 같은 단계로 구성된다.
+
+\begin{lstlisting}[caption={RTT 파이프라인 한 주기},label={lst:pipeline}]
+[기준 C++] → (LLM 번역) → [대상 언어 코드] → (컴파일/실행 검증) →
+ (LLM 역번역) → [왕복 C++ 코드] → (컴파일/실행 검증) → (수렴 판정)
+\end{lstlisting}
+
+수렴 판정(convergence detection)은 다음 규칙에 따른다.
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{고정점(fixed\_point)}: 마지막 두 왕복 \cpp{} 코드의 정규화된 해시가 동일
+  \item \textbf{진동(oscillation)}: 마지막 네 해시가 $A, B, A, B$ 패턴을 보이며 $A \neq B$
+  \item \textbf{실패 종료(terminated\_on\_failure)}: 컴파일 오류, 런타임 오류, 오답,
+    타임아웃 등으로 중단
+  \item 최대 반복 한도: 20회
+\end{itemize}
+
+\subsection{측정 지표}\label{ssec:metrics}
+
+각 실험 단위(문제--언어 쌍)에 대해 다음 지표를 수집하였다.
+
+\begin{enumerate}[leftmargin=2em, label=\arabic*)]
+  \item \textbf{변경 횟수 거리}(change-count distance, CCD):
+    완료된 왕복 주기 수. 값이 클수록 수렴에 오래 걸림을 의미한다.
+
+  \item \textbf{잔차 유사도}(residual similarity):
+    원본 \cpp{}와 최종 왕복 \cpp{}의 정규화된 토큰 멀티셋 간
+    S{\o}rensen--Dice 계수\,(식~\ref{eq:dice}).
+    값이 $1$에 가까울수록 원본 보존율이 높다.
+    \begin{equation}\label{eq:dice}
+      \mathrm{DSC}(X,Y) = \frac{2\,|X \cap Y|}{|X| + |Y|}
+    \end{equation}
+
+  \item \textbf{AST 편집 거리}(AST distance):
+    tree-sitter로 파싱한 뒤 언어 독립적 IR(중간 표현)로 정규화하고,
+    APTED(All Path Tree Edit Distance) 알고리즘으로 계산한 트리 편집 거리.
+
+  \item \textbf{MOSS 유사도}:
+    Stanford MOSS(Measure of Software Similarity) 시스템을 활용한 코드 유사도
+    측정. seed(원본 \cpp{} 대비)와 roundtrip(왕복 \cpp{} 대비) 두 방향을 기록한다.
+
+  \item \textbf{의미 보존 여부}(semantic pass/fail):
+    대상 언어 코드와 왕복 \cpp{} 코드가 모든 샘플 입출력을 통과하는지 여부.
+
+  \item \textbf{복잡도 델타}(complexity delta):
+    lizard 도구로 측정한 LOC, token\_count, cyclomatic\_complexity,
+    function\_count, max\_nesting\_depth의 원본 대비 변화량.
+\end{enumerate}

@@ -1,0 +1,98 @@
+%%% main.tex — 메인 드라이버 파일
+%%% 컴파일: xelatex main.tex (또는 latexmk -xelatex main)
+
+\documentclass[12pt, a4paper]{article}
+
+%% ── 한국어 조판 (kotex) ──────────────────────────────────
+\usepackage{fontspec}
+\usepackage{kotex}
+
+\setmainfont{KoPubWorldBatang}[
+  BoldFont = KoPubWorldBatang Bold,
+  AutoFakeSlant = 0.15
+]
+
+\setsansfont{KoPubWorldDotum}[
+  BoldFont = KoPubWorldDotum Bold,
+  AutoFakeSlant = 0.15
+]
+
+%% ── 페이지 레이아웃 ──────────────────────────────────────
+% \usepackage[
+%   top=30mm,
+%   bottom=30mm,
+%   left=25mm,
+%   right=25mm
+% ]{geometry}
+
+%% ── 수학 ─────────────────────────────────────────────────
+\usepackage{amsmath, amssymb, mathtools}
+
+%% ── 표 ───────────────────────────────────────────────────
+\usepackage{booktabs}       % \toprule, \midrule, \bottomrule
+\usepackage{multirow}       % 행 병합
+\usepackage{array}          % 열 서식 확장
+\usepackage{tabularx}       % 자동 폭 조절 표
+\usepackage{siunitx}        % 숫자 정렬 (S 열)
+
+%% ── 그래픽·색상 ──────────────────────────────────────────
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+
+%% ── 코드·알고리즘 ────────────────────────────────────────
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  numbers=none,
+  xleftmargin=1em,
+  framexleftmargin=0.5em,
+}
+
+%% ── 하이퍼링크·참고문헌 ──────────────────────────────────
+\usepackage[
+  colorlinks=true,
+  linkcolor=blue!70!black,
+  citecolor=green!50!black,
+  urlcolor=blue!60!black
+]{hyperref}
+\usepackage{url}
+
+%% ── 기타 유틸리티 ────────────────────────────────────────
+\usepackage{enumitem}       % 리스트 세밀 조정
+\usepackage{caption}        % 캡션 서식
+\captionsetup{
+  font=small,
+  labelfont=bf,
+  labelsep=period,
+  skip=6pt
+}
+
+%% ── 사용자 정의 매크로 ──────────────────────────────────
+\newcommand{\cpp}{\textsf{C\kern-.05em\raisebox{.3ex}{\scriptsize ++}}}
+\newcommand{\rarr}{\ensuremath{\rightarrow}}
+
+%% ══════════════════════════════════════════════════════════
+%%  제목·저자·날짜
+%% ══════════════════════════════════════════════════════════
+\title{LLM 기반 왕복 번역을 활용한 \\
+프로그래밍 언어 간 거리의 정량적 측정}
+\author{한상곤}
+\date{2026년 3월}
+
+%% ══════════════════════════════════════════════════════════
+\begin{document}
+
+\maketitle
+
+%% ── 각 장 포함 ───────────────────────────────────────────
+\input{chapters/00_abstract}
+ \input{chapters/01_introduction}
+% \input{chapters/03_experimental_design}
+% \input{chapters/04_results}
+% \input{chapters/05_recommendations}
+% \input{chapters/06_conclusion}
+% \input{chapters/07_references}
+
+\end{document}

@@ -80,7 +80,7 @@ class ExperimentConfig:
     output_root: Path
     problem_root: Path
     corpus_root: Path
-    provider: str = "openai"
+    provider: str = "ollama"
     ollama: OllamaConfig = field(
         default_factory=lambda: OllamaConfig(
             model=DEFAULT_OLLAMA_MODEL,
@@ -157,7 +157,7 @@ def _parse_config(raw_data: dict[str, Any], config_dir: Path) -> ExperimentConfi
 
 
 def _parse_provider(raw_data: dict[str, Any]) -> str:
-    value = raw_data.get("provider", "openai")
+    value = raw_data.get("provider", "ollama")
     if not isinstance(value, str) or not value.strip():
         raise ConfigValidationError("`provider` must be a non-empty string when set.")
 

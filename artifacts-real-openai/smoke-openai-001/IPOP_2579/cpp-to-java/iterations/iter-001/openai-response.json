@@ -1,0 +1,40 @@
+{
+  "cpp_to_target": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        FastScanner fs = new FastScanner(System.in);\n        int n = fs.nextInt();\n\n        int[] score = new int[n + 1];\n        int[] dp = new int[n + 1];\n\n        for (int i = 1; i <= n; i++) {\n            score[i] = fs.nextInt();\n        }\n\n        if (n >= 1) {\n            dp[1] = score[1];\n        }\n        if (n >= 2) {\n            dp[2] = score[1] + score[2];\n        }\n        for (int i = 3; i <= n; i++) {\n            dp[i] = Math.max(dp[i - 2], dp[i - 3] + score[i - 1]) + score[i];\n        }\n\n        StringBuilder sb = new StringBuilder();\n        sb.append(dp[n]).append('\\n');\n        System.out.print(sb.toString());\n    }\n\n    static class FastScanner {\n        private final InputStream in;\n        private final byte[] buffer = new byte[1 << 16];\n        private int ptr = 0, len = 0;\n\n        FastScanner(InputStream is) {\n            in = is;\n        }\n\n        private int read() throws IOException {\n            if (ptr >= len) {\n                len = in.read(buffer);\n                ptr = 0;\n                if (len <= 0) return -1;\n            }\n            return buffer[ptr++];\n        }\n\n        int nextInt() throws IOException {\n            int c;\n            do {\n                c = read();\n            } while (c <= ' ');\n\n            int sign = 1;\n            if (c == '-') {\n                sign = -1;\n                c = read();\n            }\n\n            int val = 0;\n            while (c > ' ') {\n                val = val * 10 + (c - '0');\n                c = read();\n            }\n            return val * sign;\n        }\n    }\n}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-DLJo4YVGfJDX8ZxyvWt01CVk2KiKV",
+    "model": "gpt-5.4-2026-03-05",
+    "usage": {
+      "completion_tokens": 431,
+      "prompt_tokens": 893,
+      "total_tokens": 1324
+    }
+  },
+  "target_to_cpp": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "#include <bits/stdc++.h>\nusing namespace std;\n\nclass FastScanner {\n    static const int BUFSIZE = 1 << 16;\n    istream& in;\n    char buffer[BUFSIZE];\n    int ptr = 0, len = 0;\n\npublic:\n    FastScanner(istream& is) : in(is) {}\n\n    int read() {\n        if (ptr >= len) {\n            in.read(buffer, BUFSIZE);\n            len = (int)in.gcount();\n            ptr = 0;\n            if (len <= 0) return -1;\n        }\n        return buffer[ptr++];\n    }\n\n    int nextInt() {\n        int c;\n        do {\n            c = read();\n        } while (c <= ' ');\n\n        int sign = 1;\n        if (c == '-') {\n            sign = -1;\n            c = read();\n        }\n\n        int val = 0;\n        while (c > ' ') {\n            val = val * 10 + (c - '0');\n            c = read();\n        }\n        return val * sign;\n    }\n};\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    FastScanner fs(cin);\n    int n = fs.nextInt();\n\n    vector<int> score(n + 1);\n    vector<int> dp(n + 1);\n\n    for (int i = 1; i <= n; i++) {\n        score[i] = fs.nextInt();\n    }\n\n    if (n >= 1) {\n        dp[1] = score[1];\n    }\n    if (n >= 2) {\n        dp[2] = score[1] + score[2];\n    }\n    for (int i = 3; i <= n; i++) {\n        dp[i] = max(dp[i - 2], dp[i - 3] + score[i - 1]) + score[i];\n    }\n\n    stringstream ss;\n    ss << dp[n] << '\\n';\n    cout << ss.str();\n    return 0;\n}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-DLJo9Oatm1JOTi9ZHUuvxoc05Kshq",
+    "model": "gpt-5.4-2026-03-05",
+    "usage": {
+      "completion_tokens": 431,
+      "prompt_tokens": 1118,
+      "total_tokens": 1549
+    }
+  }
+}

@@ -1,0 +1,45 @@
+%%% chapters/02_introduction.tex — 서론
+\section{서론}\label{sec:introduction}
+
+\subsection{연구 배경}\label{ssec:background}
+
+프로그래밍 언어 간의 ``거리''를 정량적으로 측정하려는 시도는 프로그래밍 언어론과
+소프트웨어 공학의 오랜 과제이다.
+전통적으로 언어 간 유사도는 구문(syntax) 계열, 타입 시스템, 패러다임(절차적\,$\cdot$\,%
+객체지향적\,$\cdot$\,함수형) 등의 정성적 분류에 의존해 왔다.
+그러나 이러한 분류는 실제 코드 변환 과정에서 나타나는 구조적\,$\cdot$\,%
+의미적 변형의 정도를 정확히 반영하지 못한다.
+
+한편, 대규모 언어 모델(LLM)의 코드 생성 및 번역 능력이 급속히 발전하면서, LLM을
+``번역기''로 활용하여 언어 간 변환을 수행하고 그 과정에서 발생하는 변형을 측정하는
+새로운 접근이 가능해졌다.
+자연어 처리 분야에서 왕복 번역(round-trip translation)은 기계 번역 품질을 평가하는
+고전적 기법이며, 이를 프로그래밍 언어에 적용하면 언어 간 거리를 반영하는 정량적
+지표를 도출할 수 있다는 가설이 본 연구의 출발점이다.
+
+\subsection{연구 목적}\label{ssec:objectives}
+
+본 연구의 목적은 다음 세 가지로 요약된다.
+
+\begin{enumerate}[leftmargin=2em, label=\arabic*)]
+  \item \textbf{RTT 기반 언어 거리 측정 프레임워크 구축}:
+    \cpp{}를 기준 언어(seed language)로 설정하고, C\,$\cdot$\,Java\,$\cdot$\,Python으로의
+    왕복 번역 순환을 통해 언어 간 거리를 다차원적으로 측정하는 자동화된 실험
+    파이프라인을 설계\,$\cdot$\,구현한다.
+  \item \textbf{이종 LLM 간 비교 분석}:
+    로컬 오픈소스 모델(Ollama, qwen2.5-coder:7b)과 상용 클라우드 모델(OpenAI,
+    gpt-5.4)의 번역 행동을 동일 코퍼스\,$\cdot$\,동일 조건에서 비교하여, 모델 특성이
+    언어 간 거리 측정 결과에 미치는 영향을 분석한다.
+  \item \textbf{다차원 지표의 종합적 해석}:
+    수렴 속도(반복 횟수), 잔차 토큰 유사도, AST 편집 거리, MOSS 표절 검사 유사도,
+    의미 보존 여부(semantic pass/fail) 등 이질적 지표들의 상호 관계를 분석하여,
+    각 지표가 드러내는 언어 간 거리의 서로 다른 측면을 조명한다.
+\end{enumerate}
+
+\subsection{논문의 구성}\label{ssec:organization}
+
+본 논문의 이후 구성은 다음과 같다.
+제\ref{sec:design}장에서는 실험 설계를 상세히 기술하고,
+제\ref{sec:results}장에서는 실험 결과를 표와 함께 해석한다.
+제\ref{sec:recommendations}장에서는 결과에 기반한 제언을,
+제\ref{sec:conclusion}장에서는 결론을 제시한다.

@@ -1,0 +1,306 @@
+%%% chapters/04_results.tex — 결과 해석
+\section{결과 해석}\label{sec:results}
+
+\subsection{전체 성공률 비교}\label{ssec:success-rate}
+
+두 모델의 최종 상태를 언어 쌍별로 비교한 결과를
+표~\ref{tab:status-dist}에 정리하였다.
+
+\begin{table}[htbp]
+  \centering
+  \caption{모델별\,$\cdot$\,언어 쌍별 최종 상태 분포}\label{tab:status-dist}
+  \small
+  \begin{tabular}{@{}llll@{}}
+    \toprule
+    문제 ID     & 언어 쌍               & Ollama 상태         & OpenAI 상태            \\
+    \midrule
+    IPOP\_1436  & \textsf{cpp\rarr{}c}      & timeout             & success                \\
+    IPOP\_1436  & \textsf{cpp\rarr{}java}   & success             & compile\_error         \\
+    IPOP\_1436  & \textsf{cpp\rarr{}python} & success             & compile\_error         \\
+    \addlinespace
+    IPOP\_2110  & \textsf{cpp\rarr{}c}      & success             & success                \\
+    IPOP\_2110  & \textsf{cpp\rarr{}java}   & oscillation         & parse\_error           \\
+    IPOP\_2110  & \textsf{cpp\rarr{}python} & success             & compile\_error         \\
+    \addlinespace
+    IPOP\_2217  & \textsf{cpp\rarr{}c}      & success             & success                \\
+    IPOP\_2217  & \textsf{cpp\rarr{}java}   & wrong\_answer       & compile\_error         \\
+    IPOP\_2217  & \textsf{cpp\rarr{}python} & success             & compile\_error         \\
+    \addlinespace
+    IPOP\_2579  & \textsf{cpp\rarr{}c}      & wrong\_answer       & success                \\
+    IPOP\_2579  & \textsf{cpp\rarr{}java}   & success             & parse\_error           \\
+    IPOP\_2579  & \textsf{cpp\rarr{}python} & runtime\_error      & compile\_error         \\
+    \addlinespace
+    IPOP\_5567  & \textsf{cpp\rarr{}c}      & oscillation         & success                \\
+    IPOP\_5567  & \textsf{cpp\rarr{}java}   & success             & compile\_error         \\
+    IPOP\_5567  & \textsf{cpp\rarr{}python} & runtime\_error      & compile\_error         \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+표~\ref{tab:success-summary}는 언어 쌍별 성공률을 요약한 것이다.
+
+\begin{table}[htbp]
+  \centering
+  \caption{모델별\,$\cdot$\,언어 쌍별 성공률 요약}\label{tab:success-summary}
+  \begin{tabular}{@{}l
+      S[table-format=1/1]@{\,}l
+      S[table-format=1/1]@{\,}l
+      S[table-format=1/1]@{\,}l
+      S[table-format=1/1]@{\,}l@{}}
+    \toprule
+    {언어 쌍}                      & \multicolumn{2}{c}{Ollama 성공}
+                                   & \multicolumn{2}{c}{Ollama 의미 통과}
+                                   & \multicolumn{2}{c}{OpenAI 성공}
+                                   & \multicolumn{2}{c}{OpenAI 의미 통과}    \\
+    \midrule
+    \textsf{cpp\rarr{}c}           & {2/5} & {(40\%)}  & {3/5} & {(60\%)}
+                                   & {5/5} & {(100\%)} & {5/5} & {(100\%)}  \\
+    \textsf{cpp\rarr{}java}        & {3/5} & {(60\%)}  & {4/5} & {(80\%)}
+                                   & {0/5} & {(0\%)}   & {0/5} & {(0\%)}    \\
+    \textsf{cpp\rarr{}python}      & {3/5} & {(60\%)}  & {3/5} & {(60\%)}
+                                   & {0/5} & {(0\%)}   & {0/5} & {(0\%)}    \\
+    \midrule
+    \textbf{전체}                  & {8/15} & {(53.3\%)} & {10/15} & {(66.7\%)}
+                                   & {5/15} & {(33.3\%)} & {5/15}  & {(33.3\%)} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+여기서 ``성공''은 최종 상태가 \texttt{success}인 경우를, ``의미 통과''는
+대상 언어 코드가 실행되어 정답을 산출한 경우(semantic=pass)를 의미한다.
+Ollama에서 oscillation 상태로 끝난 2건(IPOP\_2110/java, IPOP\_5567/c)도
+의미적으로는 정답을 산출하였으므로 ``의미 통과''에 포함된다.
+
+%% ────────────────────────────────────────────────────────
+\subsection{수렴 속도(반복 횟수) 분석}\label{ssec:convergence-speed}
+
+\begin{table}[htbp]
+  \centering
+  \caption{언어 쌍별 평균 반복 횟수 및 변경 횟수 거리(CCD)}\label{tab:iterations}
+  \begin{tabular}{@{}l
+      S[table-format=1.1] S[table-format=1.1]
+      S[table-format=1.1] S[table-format=1.1]@{}}
+    \toprule
+    {언어 쌍}
+      & {Ollama 평균 반복} & {Ollama 평균 CCD}
+      & {OpenAI 평균 반복} & {OpenAI 평균 CCD}   \\
+    \midrule
+    \textsf{cpp\rarr{}c}      & 2.2 & 1.8 & 5.4 & 5.4 \\
+    \textsf{cpp\rarr{}java}   & 2.4 & 2.2 & 1.2 & 0.8 \\
+    \textsf{cpp\rarr{}python} & 2.2 & 1.8 & 1.0 & 1.0 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+주목할 만한 차이가 관찰된다.
+Ollama는 세 언어 쌍 모두에서 비교적 균일한 수렴 속도(평균 $2.2$--$2.4$회)를 보여
+언어 쌍에 따른 편차가 작다.
+반면 OpenAI는 \textsf{cpp\rarr{}c}에서 평균 $5.4$회(IPOP\_2217에서 16회 반복)로
+매우 느린 수렴을 보이면서도, \textsf{cpp\rarr{}java}와 \textsf{cpp\rarr{}python}에서는
+대부분 1회차에서 실패로 종료되어 평균값이 낮게 나타났다.
+
+OpenAI의 \textsf{cpp\rarr{}c}에서 높은 반복 횟수는 역설적으로 해석할 수 있다.
+모델이 번역 시 코드 구조를 크게 재구성하면서도 의미적 정확성은 유지하여,
+고정점에 도달하기까지 많은 조정이 필요했음을 시사한다.
+
+%% ────────────────────────────────────────────────────────
+\subsection{잔차 유사도 분석}\label{ssec:residual}
+
+\begin{table}[htbp]
+  \centering
+  \caption{성공 사례의 잔차 유사도(Residual Similarity)}\label{tab:residual}
+  \begin{tabular}{@{}l
+      S[table-format=1.3] S[table-format=1.3]
+      S[table-format=1.3] S[table-format=1.3]@{}}
+    \toprule
+    {언어 쌍}
+      & {Ollama 평균} & {Ollama $\sigma$}
+      & {OpenAI 평균} & {OpenAI $\sigma$}   \\
+    \midrule
+    \textsf{cpp\rarr{}c}      & 0.848 & 0.015 & 0.696 & 0.118 \\
+    \textsf{cpp\rarr{}java}   & 0.894 & 0.038 & {---} & {---} \\
+    \textsf{cpp\rarr{}python} & 0.864 & 0.037 & {---} & {---} \\
+    \bottomrule
+  \end{tabular}
+  \par\smallskip
+  \footnotesize
+  ※ OpenAI의 \textsf{cpp\rarr{}java}, \textsf{cpp\rarr{}python}은
+  성공 사례가 없어 잔차 유사도 측정 불가.
+\end{table}
+
+Ollama는 세 언어 쌍 모두에서 $0.848$--$0.894$의 높은 잔차 유사도를 보여,
+왕복 번역 후에도 원본 \cpp{}의 토큰 구조를 상당 부분 보존하는 것으로 나타났다.
+또한 표준편차가 $0.015$--$0.038$로 작아, 문제의 종류에 관계없이 안정적인 보존율을
+유지하였다.
+
+반면 OpenAI의 \textsf{cpp\rarr{}c}는 평균 $0.696$으로 Ollama보다 약
+$15$\,\%p 낮으며, 표준편차도 $0.118$로 문제에 따른 편차가 컸다.
+이는 OpenAI가 C 번역 시 원본 \cpp{}의 구조를 더 적극적으로 재구성하며,
+IPOP\_5567($0.544$)에서 IPOP\_2110($0.827$)까지 문제 난이도에 따라
+재구성 정도가 크게 달라짐을 보여준다.
+
+%% ────────────────────────────────────────────────────────
+\subsection{AST 편집 거리 분석}\label{ssec:ast}
+
+\begin{table}[htbp]
+  \centering
+  \caption{성공 사례의 AST 편집 거리(seed \cpp{} 대비)}\label{tab:ast}
+  \begin{tabular}{@{}ll
+      S[table-format=3.0]
+      S[table-format=3.0]@{}}
+    \toprule
+    {문제 ID}    & {언어 쌍}
+      & {Ollama AST 거리} & {OpenAI AST 거리}  \\
+    \midrule
+    IPOP\_1436  & \textsf{cpp\rarr{}c}      & {---}       & 42    \\
+    IPOP\_1436  & \textsf{cpp\rarr{}java}   & 12          & {---} \\
+    IPOP\_1436  & \textsf{cpp\rarr{}python} & 33          & {---} \\
+    \addlinespace
+    IPOP\_2110  & \textsf{cpp\rarr{}c}      & 38          & 51    \\
+    IPOP\_2110  & \textsf{cpp\rarr{}java}   & {32\rlap{$^{*}$}} & {---} \\
+    IPOP\_2110  & \textsf{cpp\rarr{}python} & 66          & {---} \\
+    \addlinespace
+    IPOP\_2217  & \textsf{cpp\rarr{}c}      & 34          & 41    \\
+    IPOP\_2217  & \textsf{cpp\rarr{}python} & 51          & {---} \\
+    \addlinespace
+    IPOP\_2579  & \textsf{cpp\rarr{}c}      & {---}       & 26    \\
+    IPOP\_2579  & \textsf{cpp\rarr{}java}   & 15          & {---} \\
+    \addlinespace
+    IPOP\_5567  & \textsf{cpp\rarr{}c}      & {60\rlap{$^{*}$}}  & 125   \\
+    IPOP\_5567  & \textsf{cpp\rarr{}java}   & 49          & {---} \\
+    \bottomrule
+  \end{tabular}
+  \par\smallskip
+  \footnotesize
+  $^{*}$\,진동(oscillation) 상태로 종료된 사례.\quad
+  {---}\,실패하여 측정 불가.
+\end{table}
+
+AST 편집 거리에서 가장 두드러진 차이는 \textsf{cpp\rarr{}c} 변환이다.
+두 모델 모두 측정이 가능한 IPOP\_2110과 IPOP\_2217에서,
+OpenAI($51$, $41$)가 Ollama($38$, $34$)보다 일관되게 더 큰 AST 거리를 보인다.
+IPOP\_5567에서 OpenAI의 AST 거리 $125$는 Ollama의 $60$에 비해 2배 이상 크며,
+이는 OpenAI가 C 번역 시 함수 분리, 루프 구조 변환 등 대규모 구조적 재구성을
+수행하는 경향이 있음을 시사한다.
+
+Ollama의 \textsf{cpp\rarr{}java} 변환은 AST 거리가 $12$--$49$로 넓은 범위를 보이며,
+이는 Java의 클래스 래핑 등 필수적 구조 변환의 정도가 문제 복잡도에 따라
+달라짐을 반영한다.
+
+%% ────────────────────────────────────────────────────────
+\subsection{MOSS 유사도 분석}\label{ssec:moss}
+
+\begin{table}[htbp]
+  \centering
+  \caption{MOSS 유사도 비교 (seed \cpp{} 기준, seed\,/\,roundtrip)}\label{tab:moss}
+  \begin{tabular}{@{}llcc@{}}
+    \toprule
+    문제 ID    & 언어 쌍
+      & Ollama (seed/rt)  & OpenAI (seed/rt)   \\
+    \midrule
+    IPOP\_1436 & \textsf{cpp\rarr{}java}
+      & 64\,/\,76\%       & 81\,/\,86\%        \\
+    IPOP\_2110 & \textsf{cpp\rarr{}c}
+      & 44\,/\,39\%       & 44\,/\,40\%        \\
+    IPOP\_2110 & \textsf{cpp\rarr{}java}
+      & 44\,/\,47\%       & ---                \\
+    IPOP\_2579 & \textsf{cpp\rarr{}c}
+      & ---                & 52\,/\,49\%        \\
+    IPOP\_2579 & \textsf{cpp\rarr{}java}
+      & 70\,/\,76\%       & ---                \\
+    IPOP\_5567 & \textsf{cpp\rarr{}c}
+      & 14\,/\,12\%       & 0\,/\,0\%          \\
+    IPOP\_5567 & \textsf{cpp\rarr{}java}
+      & 77\,/\,85\%       & 29\,/\,90\%        \\
+    \bottomrule
+  \end{tabular}
+  \par\smallskip
+  \footnotesize
+  ---\,미측정 또는 실패.\quad
+  0\%는 MOSS가 유의미한 공통 구간을 발견하지 못한 경우.
+\end{table}
+
+MOSS 유사도는 잔차 유사도와 다른 관점을 제공한다.
+잔차 유사도가 토큰 수준의 겹침을 측정하는 반면, MOSS는 최소 매칭 단위(보통 수 줄
+이상)의 구조적 유사 구간을 탐지한다.
+예를 들어, Ollama의 IPOP\_1436/java는 잔차 유사도 $0.873$으로 높지만
+MOSS seed 유사도는 $64$\%로, 토큰은 상당수 보존되었으나 코드 구조(줄 순서, 블록
+구성)는 일부 변형되었음을 보여준다.
+
+흥미로운 점은 IPOP\_5567에서 OpenAI의 roundtrip MOSS가 $90$\%인 반면
+seed MOSS가 $29$\%인 경우이다.
+이는 번역 과정에서 구조적 재구성이 일어났으나, 역번역 시 해당 재구성이
+상당 부분 복원되어 왕복 \cpp{} 코드가 원본과는 다르지만 일관된 구조를
+유지했음을 시사한다.
+
+%% ────────────────────────────────────────────────────────
+\subsection{수렴 패턴 분석}\label{ssec:convergence-pattern}
+
+\begin{table}[htbp]
+  \centering
+  \caption{수렴 결과 유형별 분포}\label{tab:convergence}
+  \begin{tabular}{@{}l
+      S[table-format=2.0]
+      S[table-format=2.0]@{}}
+    \toprule
+    {수렴 유형}              & {Ollama 건수} & {OpenAI 건수}  \\
+    \midrule
+    fixed\_point             & 8  & 5  \\
+    oscillation              & 2  & 0  \\
+    terminated\_on\_failure  & 5  & 10 \\
+    \midrule
+    \textbf{합계}            & 15 & 15 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Ollama에서 관찰된 2건의 진동(oscillation)은 주목할 만하다.
+IPOP\_2110/java(4회 반복)와 IPOP\_5567/c(5회 반복)에서 발생한 진동은
+번역이 $A \rarr B \rarr A \rarr B$ 패턴으로 순환하면서도 의미적 정확성은
+유지하는 상태로, 이는 해당 언어 쌍에서 동등한 두 가지 표현이 안정적으로
+공존할 수 있음을 시사한다.
+
+OpenAI의 실패 10건 중 compile\_error가 8건, parse\_error가 2건으로,
+대부분 역번역된 \cpp{} 코드의 컴파일 오류가 원인이었다.
+이는 OpenAI가 대상 언어로의 순방향 번역은 성공하더라도, 역방향 번역 시
+\cpp{} 구문 규칙을 정확히 준수하지 못하는 경향이 있음을 보여준다.
+
+%% ────────────────────────────────────────────────────────
+\subsection{복잡도 델타 분석}\label{ssec:complexity}
+
+\begin{table}[htbp]
+  \centering
+  \caption{대표적 복잡도 변화 (대상 언어 vs 기준 \cpp{})}\label{tab:complexity}
+  \begin{tabular}{@{}lll
+      S[table-format=+2.0]
+      S[table-format=+3.0]
+      S[table-format=+1.0]
+      S[table-format=+1.0]@{}}
+    \toprule
+    {문제 ID}   & {언어 쌍}                 & {모델}
+      & {$\Delta$LOC} & {$\Delta$token}
+      & {$\Delta$cyc.} & {$\Delta$nest.}   \\
+    \midrule
+    IPOP\_2110  & \textsf{cpp\rarr{}c}      & Ollama &  -1 &   +5 &  0 & -1 \\
+    IPOP\_2110  & \textsf{cpp\rarr{}c}      & OpenAI &  +5 &  +72 & +4 & +1 \\
+    IPOP\_2579  & \textsf{cpp\rarr{}java}   & Ollama &  -4 &   +9 &  0 &  0 \\
+    IPOP\_5567  & \textsf{cpp\rarr{}c}      & OpenAI & +28 & +230 & +3 &  0 \\
+    IPOP\_5567  & \textsf{cpp\rarr{}java}   & Ollama &  +1 &  +57 &  0 & -1 \\
+    IPOP\_1436  & \textsf{cpp\rarr{}python} & Ollama &  -8 &  -36 &  0 &  0 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+이 표에서 두 모델 간의 핵심적 차이가 드러난다.
+동일한 IPOP\_2110의 \textsf{cpp\rarr{}c}에서 Ollama는
+$\text{LOC}\;{-1}$, $\text{token}\;{+5}$로
+원본과 거의 비슷한 크기의 코드를 생성한 반면, OpenAI는
+$\text{LOC}\;{+5}$, $\text{token}\;{+72}$, $\text{cyclomatic\_complexity}\;{+4}$로
+상당히 더 복잡한 코드를 산출하였다.
+IPOP\_5567/\textsf{cpp\rarr{}c}에서 OpenAI의 token 증가량 $+230$은 전체 실험 중
+가장 극단적인 값으로, 이 문제에서 OpenAI가 단일 함수를 복수 함수로 분리하는 등
+대규모 구조 변환을 시도했음을 반영한다.
+
+반면 Ollama의 \textsf{cpp\rarr{}python} 변환은 전반적으로 LOC와 token\_count가
+줄어드는 경향을 보여, Python의 간결한 구문이 코드 압축 효과로 이어지는
+자연스러운 패턴이 관찰된다.

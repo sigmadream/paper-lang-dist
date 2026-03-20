@@ -1,0 +1,92 @@
+%%% chapters/05_recommendations.tex — 제언
+\section{제언}\label{sec:recommendations}
+
+\subsection{실험 설계 개선을 위한 제언}\label{ssec:rec-design}
+
+\subsubsection{코퍼스 확장의 필요성}\label{sssec:corpus-expansion}
+
+현재 5개 문제로 구성된 실험 코퍼스는 예비 연구(pilot study)로서는 충분하나,
+통계적으로 유의미한 결론을 도출하기에는 표본 크기가 제한적이다.
+다음과 같은 확장을 제안한다.
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{문제 수 확대}: 최소 20--30개 문제로 확장하여 알고리즘 유형별
+    충분한 대표성을 확보
+  \item \textbf{난이도 스펙트럼 확장}: 현재 코퍼스에 없는 그래프 알고리즘,
+    트리 탐색, 문자열 처리 심화 문제 추가
+  \item \textbf{코드 복잡도 다양화}: 단일 함수 해법뿐 아니라
+    복수 함수\,$\cdot$\,클래스 구조를 포함하는 해법 추가
+\end{itemize}
+
+\subsubsection{대상 언어 확장}\label{sssec:language-expansion}
+
+현재 C, Java, Python의 세 언어에 더해, 다음 언어의 추가를 고려할 수 있다.
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Rust}: 소유권(ownership) 개념으로 인한 높은 변환 난이도
+  \item \textbf{Go}: 간결한 구문이지만 제네릭 부재(Go 1.18 이전)로 인한
+    독특한 변환 패턴
+  \item \textbf{JavaScript/TypeScript}: 동적\,$\cdot$\,정적 타이핑의 경계에서의
+    번역 행동
+\end{itemize}
+
+\subsubsection{멀티 시드 실험}\label{sssec:multi-seed}
+
+\cpp{} 이외의 언어를 기준으로 한 양방향 측정을 통해 언어 거리의
+비대칭성(asymmetry)을 검증할 필요가 있다.
+예를 들어, $D(\text{Python} \rarr \text{\cpp{}})$와
+$D(\text{\cpp{}} \rarr \text{Python})$이 동일한지 비교하면,
+LLM이 특정 방향의 번역에 체계적 편향을 가지는지 확인할 수 있다.
+
+\subsection{모델 활용을 위한 제언}\label{ssec:rec-model}
+
+\subsubsection{언어 쌍별 최적 모델 선택}\label{sssec:model-selection}
+
+실험 결과는 ``만능 번역 모델''이 존재하지 않는다는 점을 시사한다.
+실무적으로는 다음과 같은 언어 쌍별 전략을 고려할 수 있다.
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{\textsf{cpp\rarr{}c} 변환}: OpenAI(gpt-5.4)가 100\% 성공률로
+    더 적합하지만, 코드 구조가 크게 변형될 수 있으므로 구조 보존이 중요하다면
+    Ollama 검토
+  \item \textbf{\textsf{cpp\rarr{}java} 변환}: Ollama(qwen2.5-coder:7b)가
+    60--80\% 성공률로 현재 유일한 실용적 선택지
+  \item \textbf{\textsf{cpp\rarr{}python} 변환}: Ollama가 60\% 성공률로
+    상대적 우위이나, 런타임 에러 위험이 존재
+\end{itemize}
+
+\subsubsection{실패 패턴에 대한 대응 전략}\label{sssec:failure-strategy}
+
+OpenAI의 주된 실패 원인인 compile\_error/parse\_error에 대해 다음 전략을 제안한다.
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{컴파일 오류 자동 수정 루프}: 역번역된 \cpp{}의 컴파일 오류를
+    LLM에 피드백하여 수정을 시도하는 반복 구조 추가
+  \item \textbf{구문 검증 사전 필터링}: 역번역 결과를 AST 파싱하여 기본적인
+    구문 유효성을 확인하고, 실패 시 재번역 요청
+  \item \textbf{다중 모델 앙상블}: 한 모델의 실패 시 다른 모델로 폴백하는 전략
+\end{itemize}
+
+\subsection{지표 체계 개선을 위한 제언}\label{ssec:rec-metrics}
+
+\subsubsection{가중 복합 지표 도입}\label{sssec:composite-metric}
+
+현재 개별적으로 보고되는 지표들을 가중 결합하여 단일 ``언어 거리 점수''를
+산출하는 방안을 고려할 수 있다.
+
+\begin{equation}\label{eq:composite}
+  D(L_1, L_2)
+    = \alpha \cdot \bigl(1 - S_{\mathrm{res}}\bigr)
+    + \beta  \cdot \hat{d}_{\mathrm{AST}}
+    + \gamma \cdot \log\!\bigl(n_{\mathrm{iter}}\bigr)
+\end{equation}
+
+여기서 $\alpha$, $\beta$, $\gamma$는 연구 목적에 따라 조정 가능한 가중치이며,
+$\hat{d}_{\mathrm{AST}}$는 코퍼스 내 최대값으로 정규화한 AST 편집 거리,
+$S_{\mathrm{res}}$는 잔차 유사도, $n_{\mathrm{iter}}$는 반복 횟수이다.
+
+\subsubsection{의미적 등가성의 세분화}\label{sssec:semantic-granularity}
+
+현재의 이진(pass/fail) 의미 보존 판정을 세분화하여, 부분 통과율(예: 10개 중 7개
+통과), 출력 차이의 정도(수치 오차, 형식 차이 등)를 기록하면 의미적 측면에서의
+언어 거리를 더 세밀하게 측정할 수 있다.

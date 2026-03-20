@@ -244,7 +244,7 @@ def _write_temp_config(
     output_root = tmp_path / "artifacts"
     config_path = tmp_path / "smoke.yaml"
 
-    lines = ["problem_ids:"]
+    lines = ["provider: openai", "problem_ids:"]
     lines.extend(f"  - {problem_id}" for problem_id in selected_problem_ids)
     lines.append(f"seed_language: {selected_seed}")
     lines.append("target_languages:")
