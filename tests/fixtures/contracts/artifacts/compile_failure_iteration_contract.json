@@ -1,0 +1,66 @@
+{
+  "iteration_index": 2,
+  "result": {
+    "status": "compile_error",
+    "stage": "compile",
+    "iteration_index": 2,
+    "message": "Translated Java source did not compile against the curated fixture harness.",
+    "details": {
+      "compiler": "javac",
+      "log_path": "smoke/IPOP_1436/cpp-to-java/iterations/iter-002/compile.log"
+    }
+  },
+  "artifact_paths": {
+    "iteration_directory": "smoke/IPOP_1436/cpp-to-java/iterations/iter-002",
+    "iteration_metadata_path": "smoke/IPOP_1436/cpp-to-java/iterations/iter-002/iteration.json",
+    "openai_request_path": "smoke/IPOP_1436/cpp-to-java/iterations/iter-002/openai-request.json",
+    "openai_response_path": "smoke/IPOP_1436/cpp-to-java/iterations/iter-002/openai-response.json",
+    "input_seed_source_path": "smoke/IPOP_1436/cpp-to-java/iterations/iter-002/input.cpp",
+    "translated_source_path": "smoke/IPOP_1436/cpp-to-java/iterations/iter-002/translated.java",
+    "roundtrip_source_path": "smoke/IPOP_1436/cpp-to-java/iterations/iter-002/roundtrip.cpp",
+    "compile_log_path": "smoke/IPOP_1436/cpp-to-java/iterations/iter-002/compile.log",
+    "execution_result_path": "smoke/IPOP_1436/cpp-to-java/iterations/iter-002/execution.json",
+    "metrics_path": "smoke/IPOP_1436/cpp-to-java/iterations/iter-002/metrics.json"
+  },
+  "openai_request": {
+    "model": "gpt-5.4",
+    "temperature": 0.0,
+    "messages": [
+      {
+        "role": "system",
+        "content": "Translate the provided C++ solution into Java while preserving the curated sample I/O behavior."
+      },
+      {
+        "role": "user",
+        "content": "Problem: IPOP_1436\nStatement:\nMovie Director Shom\n\nGiven N, print the Nth positive integer that contains `666`.\nSample input:\n1\nExpected output:\n666\nReference C++:\n```cpp\n#include <iostream>\n\nint main() {\n    std::cout << 666 << \"\\n\";\n    return 0;\n}\n```"
+      }
+    ],
+    "metadata": {
+      "problem_id": "IPOP_1436",
+      "seed_language": "cpp",
+      "target_language": "java",
+      "iteration_index": "2",
+      "fixture_input_path": "tests/fixtures/curated_problem/IPOP_1436/1.inp",
+      "fixture_output_path": "tests/fixtures/curated_problem/IPOP_1436/1.out"
+    }
+  },
+  "openai_response": {
+    "id": "mock-response-002",
+    "model": "gpt-5.4",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```java\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(\"666\")\n    }\n}\n```"
+        },
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 131,
+      "completion_tokens": 38,
+      "total_tokens": 169
+    }
+  }
+}

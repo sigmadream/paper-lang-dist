@@ -1,0 +1,514 @@
+# RTT Language Distance Experiment Tool
+
+> 이 저장소는 설정된 `seed_language` 기준 해법을 다른 언어로 왕복 번역하면서, 언어 간 거리와 수렴 특성을 정량화하기 위한 실험 도구입니다.
+
+핵심 아이디어는 다음 세 가지를 함께 보는 것입니다.
+
+- 왕복 번역이 몇 번 만에 고정점(`fixed_point`)에 도달하는가
+- 최종 round-trip C++가 원본 C++와 얼마나 비슷한가
+- 구조(AST)와 복잡도 메트릭이 언어별로 어떻게 달라지는가
+
+## 빠른 시작
+
+```shell
+uv run -m rttdist.cli validate-corpus --config real-smoke-ollama.yaml
+uv run -m rttdist.cli run --config real-smoke-ollama.yaml --run-id smoke-ollama-001
+uv run -m rttdist.cli report --config real-smoke-ollama.yaml --run-id smoke-ollama-001 --with-moss
+
+uv run -m rttdist.cli validate-corpus --config real-smoke-openai.yaml
+uv run -m rttdist.cli run --config real-smoke-openai.yaml --run-id smoke-openai-001
+uv run -m rttdist.cli report --config real-smoke-openai.yaml --run-id smoke-openai-001 --with-moss
+```
+
+## 현재 구현 상태 (v2)
+
+- 설정 파일은 명시적 `seed_language` 를 요구합니다.
+- 기준 해법 파일은 `reference.<ext>` 형식이며, `<ext>` 는 seed 언어에 따라 달라집니다.
+- 산출물 디렉터리는 `{seed_language}-to-{target_language}` ordered-pair 형태를 사용합니다.
+- 수렴 판정은 `seed_state`, `target_state`, `overall` 의 dual-state 구조를 기록합니다.
+- `residual_similarity` 는 `cpp` seed에만 측정되며, 비-`cpp` seed는 persisted embedding 기반 `final_similarity` 를 사용합니다.
+- `report_summary.v2` 는 per-result 목록과 `ordered_pair_aggregates` 를 함께 제공합니다.
+- `report` 명령은 persisted artifacts만 읽으며, report 시점에 embedding/network 작업을 다시 수행하지 않습니다.
+
+## 현재 저장소에 들어 있는 것
+
+- 기준 문제 코퍼스: `problem/`
+- 기준 C++ 해법: `corpus/solutions/`
+- 실험 코드: `src/rttdist/`
+- 테스트: `tests/`
+- 스모크 실행 결과: `artifacts/smoke/`
+
+현재 스모크 코퍼스는 정확히 다섯 문제만 사용합니다.
+
+- `IPOP_1436`: 영화감독 숌 (`problem/IPOP_1436.md`)
+- `IPOP_2110`: 공유기 설치 (`problem/IPOP_2110.md`)
+- `IPOP_2217`: 로프 (`problem/IPOP_2217.md`)
+- `IPOP_2579`: 계단 오르기 (`problem/IPOP_2579.md`)
+- `IPOP_5567`: 결혼식 (`problem/IPOP_5567.md`)
+
+다섯 문제 모두 샘플 픽스처 10쌍(`1.inp`~`10.inp`, `1.out`~`10.out`)을 가지고 있습니다.
+
+
+
+## 설치
+
+### 요구 사항
+
+- python, gcc, g++, javac + java
+- uv
+
+```bash
+uv sync
+```
+
+### 참고사항
+
+오프라인 스모크 테스트(유닛 테스트)에서만 OpenAI mock 응답 파일을 사용합니다. 기본 provider는 `ollama`이며, OpenAI를 사용하려면 설정 파일에 `provider: openai`를 명시하고 OpenAI SDK가 요구하는 인증 환경 변수를 준비해야 합니다.
+
+## 기본 사용법
+
+CLI 엔트리포인트는 `python -m rttdist.cli` 입니다. 모든 실행 방식에서 공통으로 쓰는 기본 명령은 같습니다.
+
+```bash
+python -m rttdist.cli validate-corpus --config <config.yaml>
+python -m rttdist.cli run --config <config.yaml> --run-id <run-id>
+python -m rttdist.cli resume --config <config.yaml> --run-id <run-id>
+python -m rttdist.cli report --run-id <run-id>
+```
+
+- `run-id`는 산출물 디렉터리 이름으로도 사용
+- 같은 `run-id`를 재사용하면 기존 아티팩트/상태를 다시 참조하게 되어, 이전 실패 결과가 그대로 보일 수 있음
+- 완전히 새 실행을 원하면 새 `run-id`를 쓰거나 기존 `artifacts.../<run-id>/` 디렉터리를 지운 뒤 다시 실행
+
+### MOSS 유사도
+
+리포트 생성 시 `moss.pl` 기반 유사도 측정은 기본 비활성입니다. 필요할 때만 `--with-moss`를 사용합니다.
+
+```bash
+python -m rttdist.cli run --config <config.yaml> --run-id <run-id> --with-moss
+python -m rttdist.cli resume --config <config.yaml> --run-id <run-id> --with-moss
+python -m rttdist.cli report --run-id <run-id> --with-moss
+```
+
+`moss.pl` 경로 지정 우선순위는 다음과 같습니다.
+
+- `--moss-script <path>`
+- 환경 변수 `RTTDIST_MOSS_SCRIPT`
+- 현재 작업 디렉터리의 `./moss.pl`
+
+```bash
+python -m rttdist.cli report --run-id smoke --with-moss --moss-script ./moss.pl
+export RTTDIST_MOSS_SCRIPT=/Users/sd/Works/paper-lang-dist/moss.pl
+python -m rttdist.cli report --run-id smoke --with-moss
+```
+
+- MOSS는 원격 서비스이므로 네트워크 연결이 필요
+- 코드가 `moss.stanford.edu`로 업로드
+- 계정/일일 제출 제한 및 결과 보관 기간 정책이 적용
+- MOSS가 비교 가능한 공통 구간을 찾지 못하면 실패로 처리하지 않고 `0%` similarity로 기록 (`match_url`은 `null`)
+- MOSS 측정 실패 시 리포트 전체는 실패하지 않고, `moss_similarity`를 `unavailable`로 기록
+
+`validate-corpus` 는 다음을 검사합니다.
+
+- `problem_ids`
+- `seed_language`
+- 대상 언어 목록
+- 문제 설명 파일 존재 여부
+- 샘플 입출력 픽스처 존재 여부
+- `corpus/solutions/<problem-id>/reference.<ext>` 존재 여부 (`<ext>` 는 seed 언어에 따라 결정)
+
+## 실행 방식
+
+이 저장소는 현재 세 가지 방식으로 사용할 수 있습니다.
+
+### Ollama 사용
+
+로컬 모델로 실제 번역을 시험하고 싶을 때 쓰는 경로입니다. **기본 provider가 `ollama`이므로** `provider` 키를 생략하면 자동으로 Ollama를 사용합니다.
+
+지원 방식은 두 가지입니다.
+
+- 전체 스모크 코퍼스용 설정: `tests/fixtures/config/minimal-ollama.yaml`
+- 가장 작은 1문제 x 3언어 smoke용 설정: `real-ollama-smoke.yaml`
+
+`tests/fixtures/config/minimal-ollama.yaml`:
+
+- provider: `ollama`
+- 문제: `IPOP_1436`, `IPOP_2579`
+- 대상 언어: `c`, `java`, `python`
+- 모델: `qwen2.5-coder:7b`
+- 호스트: `http://localhost:11434`
+- 출력 루트: `artifacts-ollama/`
+
+`real-ollama-smoke.yaml`:
+
+- provider: `ollama`
+- 문제: `IPOP_1436`
+- 대상 언어: `python`
+- 모델: `qwen2.5-coder:7b`
+- 출력 루트: `artifacts-real-ollama/`
+
+실행 전 확인:
+
+```bash
+ollama pull qwen2.5-coder:7b
+ollama list
+ollama serve
+```
+
+현재 `run`/`resume` 경로는 실행 시작 전에 Ollama 서버의 `/api/tags`를 조회해서 설정된 모델이 실제로 설치되어 있는지 확인합니다.
+
+- 모델이 없으면 첫 번역 요청까지 기다리지 않고 즉시 실패합니다
+- 에러 메시지에는 `ollama pull <model>` 형태의 복구 힌트가 포함됩니다
+
+현재 개발 환경에서는 다음 모델들이 확인되었습니다.
+
+- `qwen2.5:3b`
+- `qwen3:latest`
+- `codellama:7b`
+- `qwen2.5-coder:7b`
+
+가장 작은 Ollama smoke 실행 예시:
+
+```bash
+python -m rttdist.cli validate-corpus --config real-ollama-smoke.yaml
+python -m rttdist.cli run --config real-ollama-smoke.yaml --run-id ollama-smoke-001
+python -m rttdist.cli resume --config real-ollama-smoke.yaml --run-id ollama-smoke-001
+python -m rttdist.cli report --config real-ollama-smoke.yaml --run-id ollama-smoke-001
+```
+
+전체 2문제 x 3언어 Ollama smoke 예시:
+
+```bash
+python -m rttdist.cli validate-corpus --config tests/fixtures/config/minimal-ollama.yaml
+python -m rttdist.cli run --config tests/fixtures/config/minimal-ollama.yaml --run-id ollama-minimal
+python -m rttdist.cli resume --config tests/fixtures/config/minimal-ollama.yaml --run-id ollama-minimal
+python -m rttdist.cli report --config tests/fixtures/config/minimal-ollama.yaml --run-id ollama-minimal
+```
+
+주의 사항:
+
+- Ollama는 로컬 모델 품질과 머신 자원에 따라 결과 편차가 큽니다
+- 재현성을 위해 현재 구현은 `ollama.temperature = 0` 만 허용합니다
+- mock smoke와 달리 실행 시간이 더 길고 결과가 덜 고정적일 수 있습니다
+- 동일한 `run-id`로 재실행했는데 예전 실패 결과가 보이면 새 `run-id`로 다시 실행하거나 기존 `artifacts-ollama/<run-id>/`를 지우고 다시 시작하세요
+- 실행 중 `api_error`가 나면 콘솔에 `detail:` 줄로 실제 Ollama 원인(예: model not found, host unreachable)이 함께 출력됩니다
+
+### OpenAI 사용
+
+OpenAI SDK를 통해 실제 API 호출로 실험하는 경로입니다.
+
+- 최소 실제 smoke 설정: `real-smoke.yaml`
+- 문제: `IPOP_1436`
+- 대상 언어: `python`
+- 모델: `gpt-5.4`
+- 출력 루트: `artifacts-real-openai/`
+
+현재 `tests/e2e/test_smoke_experiment.py` 는 mock 기반 smoke만 검증합니다. 즉, 테스트를 그대로 돌린다고 해서 실제 OpenAI API를 호출하지는 않습니다.
+
+실제 OpenAI SDK 경로는 `src/rttdist/openai_client.py` 에 있습니다.
+
+- `RTTDIST_OPENAI_MOCK_RESPONSES` 가 설정되어 있으면 mock transport를 사용합니다
+- 이 변수가 없으면 `OpenAI()` 클라이언트를 만들고 `client.chat.completions.create(...)` 를 호출합니다
+- OpenAI 모델은 `gpt-5.4`, `gpt-5.4-mini`, `gpt-5.3-codex` 중에서 선택 가능하고, 온도는 `0`만 허용합니다
+- embedding 기반 `final_similarity` 는 실행 시점에 persisted artifact로 저장되며, provenance로 configured model, observed model, request ids를 기록합니다. OpenAI는 true internal revision id를 노출하지 않으므로 그 값은 저장되지 않습니다.
+
+실행 전 준비:
+
+```bash
+unset RTTDIST_OPENAI_MOCK_RESPONSES
+export OPENAI_API_KEY=...your key...
+```
+
+실행 예시:
+
+```bash
+python -m rttdist.cli validate-corpus --config real-smoke.yaml
+python -m rttdist.cli run --config real-smoke.yaml --run-id real-smoke-001
+python -m rttdist.cli resume --config real-smoke.yaml --run-id real-smoke-001
+python -m rttdist.cli report --config real-smoke.yaml --run-id real-smoke-001
+```
+
+주의 사항:
+
+- OpenAI 사용은 호출 비용이 발생합니다
+- `temperature=0` 이어도 mock처럼 완전한 고정 응답을 보장하지는 않습니다
+- iteration 수가 늘면 호출 수와 비용도 함께 증가합니다
+
+## 어떤 방식을 언제 쓰면 좋은가
+
+- `mock`: 가장 빠르고 재현 가능. 기본 회귀 테스트용
+- `ollama`: API 비용 없이 로컬 모델 품질을 보고 싶을 때
+- `openai`: 실제 서비스형 모델 기준 결과를 보고 싶을 때
+
+## 코드 유사도 비교 방식
+
+이 프로젝트는 단순 문자열 diff가 아니라, 다음 축을 함께 기록합니다.
+
+### 1. Round-trip 반복
+
+한 실험 단위는 다음 순서로 진행됩니다.
+
+1. 기준 C++ 해법 선택
+2. `C++ -> 대상 언어` 번역
+3. `대상 언어 -> C++` round-trip 번역
+4. 대상 언어 코드와 round-trip C++ 코드를 모두 샘플 픽스처로 실행
+5. 고정점/진동 여부와 유사도 계산
+6. 필요하면 다음 iteration 반복
+
+구현 위치:
+
+- `src/rttdist/pipeline.py`
+- `src/rttdist/exec/adapters.py`
+
+### 2. 잔차 코드 유사도(residual similarity)
+
+원본 C++와 현재 round-trip C++의 유사도는 `src/rttdist/normalize.py` 와 `src/rttdist/fixed_point.py` 에 구현되어 있습니다.
+
+세부 규칙은 다음과 같습니다.
+
+- `Python`은 표준 라이브러리 `tokenize`로 토큰화합니다
+- `C/C++/Java`는 주석 제거 후 정규식 기반 토큰화로 문자열, 식별자, 숫자, 연산자를 추출합니다
+- 주석과 의미 없는 공백 차이는 무시합니다
+- 정규화된 C++ 토큰을 `\x00`로 이어 붙인 뒤 SHA-256 해시를 만들어 iteration 간 동일성 비교에 사용합니다
+- 원본 C++와 round-trip C++의 유사도는 정규화된 C++ 토큰 멀티셋에 대한 Sorensen-Dice 계수로 계산합니다
+
+즉, 이 프로젝트의 residual similarity는 “정규화된 C++ 토큰 멀티셋이 얼마나 겹치는가”를 보는 방식입니다.
+
+핵심 함수:
+
+- `normalize_tokens()`
+- `hash_normalized_cpp_tokens()`
+- `cpp_token_sorensen_dice_similarity()`
+- `compute_residual_similarity()`
+
+### 2-1. MOSS 유사도(선택)
+
+`--with-moss`를 사용하면 summary 생성 시 seed C++와 최종 round-trip C++ 한 쌍에 대해 MOSS를 추가로 측정합니다.
+
+구현 위치:
+
+- `src/rttdist/moss.py`
+- `src/rttdist/reporting.py`
+- `src/rttdist/cli.py`
+
+리포트 반영 방식:
+
+- `summary.json` 각 결과 엔트리에 `moss_similarity` 필드 추가
+- `summary.md` 테이블/상세 섹션에 MOSS 측정값 추가
+
+`moss_similarity` 값이 측정된 경우 포함되는 정보:
+
+- `seed_percentage`
+- `roundtrip_percentage`
+- `report_url`
+- `match_url` (`no matches`인 경우 `null`)
+
+### 3. 고정점 판정(fixed point / oscillation)
+
+고정점 판정은 `src/rttdist/fixed_point.py` 에 있습니다.
+
+- `fixed_point`: 마지막 두 round-trip C++의 정규화 해시가 같으면 성립
+- `oscillation`: 마지막 네 해시가 `A, B, A, B` 이고 `A != B` 이면 2-cycle 진동으로 판정
+- 그 외에는 `continue`
+
+즉, 현재 구현은 “임계값 기반 유사도 수렴”이 아니라 “정규화된 round-trip C++ 토큰 해시의 반복 패턴”을 고정점 기준으로 사용합니다.
+
+### 4. 변경횟수 기반 거리(change-count distance)
+
+간단한 버전의 변경횟수 기반 거리는 이제 구현되어 있습니다.
+
+현재 정의는 다음과 같습니다.
+
+> `C++ -> target -> C++` 왕복 1회를 거리 1로 계산한다.
+
+즉:
+
+- `C++ -> target -> C++` 왕복이 실제로 완료되면 거리 1 증가
+- 2회 왕복이 완료된 뒤 fixed point면 거리 2
+- 첫 번째 iteration에서 `C++ -> target` 단계에서 바로 실패하면 거리 0
+
+이 값은 리포트에서 `change_count_distance` 로 노출됩니다.
+
+중요한 점은, 이것은 **AST edit count** 나 **문장 단위 편집 횟수**가 아니라, 현재 단계에서는 **왕복 변환 cycle 수**를 거리로 쓰는 단순 지표라는 것입니다.
+
+### 5. AST 구조 거리
+
+구조적 차이는 `src/rttdist/ast_ir.py` 와 `src/rttdist/ast_metrics.py` 에 구현되어 있습니다.
+
+- 파서: `tree-sitter` (`c`, `cpp`, `java`, `python`)
+- 공통 IR: `function_def`, `for_loop`, `while_loop`, `if_stmt`, `return_stmt`, `call_expr`, `subscript_expr`, `block` 같은 공통 노드군으로 정규화
+- 거리 계산: `apted` Tree Edit Distance
+
+현재 리포트는 다음 두 거리를 기록합니다.
+
+- 대상 언어 AST vs 기준 C++ AST
+- 대상 언어 AST vs round-trip C++ AST
+
+중요한 점은 raw parser node label을 그대로 비교하지 않고, 언어 독립적인 IR로 바꾼 뒤 비교한다는 것입니다.
+
+### 6. 복잡도/어휘 메트릭
+
+복잡도 메트릭은 `src/rttdist/metrics.py` 에 구현되어 있습니다.
+
+추출기:
+
+- `lizard`
+
+현재 v1 메트릭 세트:
+
+- `loc`
+- `token_count`
+- `cyclomatic_complexity`
+- `function_count`
+- `max_nesting_depth`
+
+리포트에는 현재 코드의 절대값과 함께 다음 delta가 들어갑니다.
+
+- `delta_vs_seed_cpp`
+- `delta_vs_previous`
+
+즉, “원본 C++ 대비 얼마나 길어졌는가/단순해졌는가”, “직전 iteration 대비 얼마나 변했는가”를 같이 봅니다.
+
+### 7. 의미 보존 여부
+
+유사도만 보는 것이 아니라, 매 iteration에서 생성된 코드가 실제 샘플 입출력을 통과하는지도 확인합니다.
+
+- 대상 언어 코드 실행
+- round-trip C++ 코드 실행
+- 각 문제의 모든 `.inp` / `.out` 샘플 쌍 검사
+
+이 결과는 `semantic_summary` 로 리포트에 들어갑니다.
+
+## 현재 스모크 테스트 자료
+
+현재 스모크 테스트는 아래 자료를 사용합니다.
+
+- 기준 문제 설명: `problem/IPOP_1436.md`, `problem/IPOP_2579.md`
+- 기준 C++ 해법: `corpus/solutions/IPOP_1436/reference.cpp`, `corpus/solutions/IPOP_2579/reference.cpp`
+- 샘플 픽스처: 각 문제당 10쌍
+- mock 번역 응답: `tests/fixtures/e2e/smoke_openai_responses.json`
+- e2e 테스트: `tests/e2e/test_smoke_experiment.py`
+
+검증된 흐름:
+
+- `validate-corpus`
+- `run`
+- `resume`
+- `report`
+- `pytest tests/e2e -q`
+
+증거 파일:
+
+- `.sisyphus/evidence/task-13-smoke.txt`
+- `.sisyphus/evidence/task-13-smoke-error.txt`
+
+## 현재 스모크 결과 요약
+
+현재 저장된 결과는 `artifacts/smoke/summary.json`, `artifacts/smoke/summary.md` 에 있습니다.
+
+### 전체 요약
+
+- 실행 조합: 2문제 x 3언어 = 6개
+- 모든 조합 `success`
+- 모든 조합 `fixed_point`
+- 모든 조합 iteration 수 `2`
+- 모든 조합 residual similarity `1.0`
+- 모든 조합 target / roundtrip C++ 샘플 10/10 통과
+
+### 조합별 결과
+
+| Problem | Language | Status | Iterations | Residual | AST dist to seed | Target semantic |
+| --- | --- | --- | ---: | ---: | ---: | --- |
+| IPOP_1436 | c | success | 2 | 1.000000 | 19 | pass (10/10) |
+| IPOP_1436 | java | success | 2 | 1.000000 | 19 | pass (10/10) |
+| IPOP_1436 | python | success | 2 | 1.000000 | 29 | pass (10/10) |
+| IPOP_2579 | c | success | 2 | 1.000000 | 33 | pass (10/10) |
+| IPOP_2579 | java | success | 2 | 1.000000 | 24 | pass (10/10) |
+| IPOP_2579 | python | success | 2 | 1.000000 | 48 | pass (10/10) |
+
+### 해석 포인트
+
+- 스모크에서는 mock 응답이 안정적으로 설계되어 있어 모든 조합이 2회 만에 고정점에 도달했습니다
+- residual similarity가 모두 `1.0` 이므로, 최종 round-trip C++는 정규화 토큰 기준으로 원본 C++와 동일했습니다
+- 하지만 AST distance와 complexity delta는 언어별 차이를 여전히 보여줍니다
+  - `Java`는 대체로 token 수가 늘어나는 경향이 있습니다
+  - `Python`은 `loc`와 `token_count`는 줄지만, 문제에 따라 `max_nesting_depth`가 오를 수 있습니다
+  - `C`는 원본 C++와 가까운 편이지만, `cyclomatic_complexity`가 증가하는 경우가 있습니다
+
+예를 들어:
+
+- `IPOP_1436 / java`: `token_count +35`, `loc -1`, AST distance `19`
+- `IPOP_1436 / python`: `loc -4`, `token_count -14`, `max_nesting_depth +1`, AST distance `29`
+- `IPOP_2579 / python`: `loc -9`, `token_count -24`, `max_nesting_depth +4`, AST distance `48`
+
+즉, 현재 스모크 결과는 “최종 round-trip C++는 매우 안정적이지만, 중간 표현(target language)의 구조와 복잡도는 언어별로 다르게 변형된다”는 점을 보여줍니다.
+
+## 주요 산출물 위치
+
+- 전체 스모크 요약 JSON: `artifacts/smoke/summary.json`
+- 전체 스모크 요약 Markdown: `artifacts/smoke/summary.md`
+- 개별 실행 manifest: `artifacts/smoke/<problem>/<language>/run.json`
+- iteration 아티팩트: `artifacts/smoke/<problem>/<language>/iterations/iter-XXX/`
+
+각 iteration 디렉터리에는 최소한 다음 코드 스냅샷이 들어 있습니다.
+
+- `input.cpp`: 그 iteration 시작 시점에 `cpp -> target` 번역 입력으로 사용한 C++ 코드
+- `translated.<ext>`: 대상 언어로 번역된 코드
+- `roundtrip.cpp`: 대상 언어에서 다시 C++로 왕복 번역된 코드
+
+예를 들어 `IPOP_1436 / python`의 최종 manifest는 다음 위치에 있습니다.
+
+- `artifacts/smoke/IPOP_1436/python/run.json`
+
+## 테스트 실행
+
+전체 테스트:
+
+```bash
+python -m pytest -q
+```
+
+스모크 e2e만 실행:
+
+```bash
+export RTTDIST_OPENAI_MOCK_RESPONSES=tests/fixtures/e2e/smoke_openai_responses.json
+python -m pytest tests/e2e -q
+```
+
+### Mock 테스트
+
+- 설정 파일: `tests/fixtures/config/minimal.yaml`
+- mock 응답 파일: `tests/fixtures/e2e/smoke_openai_responses.json`
+- 출력 루트: `artifacts/`
+
+설정 내용:
+
+- 문제: `IPOP_1436`, `IPOP_2579`
+- provider: `openai` (mock 테스트이므로 명시 필요)
+- seed 언어: 기본 smoke는 `cpp`
+- 대상 언어: `c`, `java`, `python`
+- 모델 설정: `gpt-5.4`, `temperature=0`
+- 반복 한도: `20`
+- 타임아웃: `30초`
+
+mock 응답 파일에는 기본 `cpp` seed smoke 경로와, 추가로 하나의 non-default seed 성공 경로(`python -> cpp`)가 들어 있습니다.
+
+- 기본 smoke: `cpp -> c/java/python`, `target -> roundtrip cpp`
+- 추가 smoke: `python -> cpp` non-default seed success path
+
+실행 예시는 다음과 같습니다.
+
+```bash
+export RTTDIST_OPENAI_MOCK_RESPONSES=tests/fixtures/e2e/smoke_openai_responses.json
+
+python -m rttdist.cli validate-corpus --config tests/fixtures/config/minimal.yaml
+python -m rttdist.cli run --config tests/fixtures/config/minimal.yaml --run-id smoke
+python -m rttdist.cli resume --config tests/fixtures/config/minimal.yaml --run-id smoke
+python -m rttdist.cli report --run-id smoke
+```
+
+추천 용도:
+
+- 빠른 회귀 테스트
+- CI성 검증
+- 고정된 결과를 기준으로 artifact/report 형식 검증

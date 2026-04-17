@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rttdist"
+version = "0.1.0"
+description = "Bootstrap scaffold for round-trip translation distance experiments."
+requires-python = ">=3.10"
+dependencies = [
+    "openai==1.109.1",
+    "PyYAML==6.0.3",
+    "tree-sitter==0.25.2",
+    "tree-sitter-c==0.23.6",
+    "tree-sitter-cpp==0.23.4",
+    "tree-sitter-java==0.23.5",
+    "tree-sitter-python==0.23.6",
+    "apted==1.0.3",
+    "lizard==1.21.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==8.4.2",
+]
+
+[project.scripts]
+rttdist = "rttdist.cli:main"
+
+[tool.pytest.ini_options]
+addopts = ["-ra"]
+testpaths = ["tests"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,48 @@
+{
+  "cpp_to_target": {
+    "messages": [
+      {
+        "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation.",
+        "role": "system"
+      },
+      {
+        "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_5567\nTranslate from C++ to Java.\n\n[CONSTRAINTS]\n- Preserve exact input/output behavior for the provided sample.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n\ubb38\uc81c\n\uc0c1\uadfc\uc774\ub294 \uc790\uc2e0\uc758 \uacb0\ud63c\uc2dd\uc5d0 \ud559\uad50 \ub3d9\uae30 \uc911 \uc790\uc2e0\uc758 \uce5c\uad6c\uc640 \uce5c\uad6c\uc758 \uce5c\uad6c\ub97c \ucd08\ub300\ud558\uae30\ub85c \ud588\ub2e4. \uc0c1\uadfc\uc774\uc758 \ub3d9\uae30\ub294 \ubaa8\ub450 N\uba85\uc774\uace0, \uc774 \ud559\uc0dd\ub4e4\uc758 \ud559\ubc88\uc740 \ubaa8\ub450 1\ubd80\ud130 N\uae4c\uc9c0\uc774\ub2e4. \uc0c1\uadfc\uc774\uc758 \ud559\ubc88\uc740 1\uc774\ub2e4.\n\n\uc0c1\uadfc\uc774\ub294 \ub3d9\uae30\ub4e4\uc758 \uce5c\uad6c \uad00\uacc4\ub97c \ubaa8\ub450 \uc870\uc0ac\ud55c \ub9ac\uc2a4\ud2b8\ub97c \uac00\uc9c0\uace0 \uc788\ub2e4. \uc774 \ub9ac\uc2a4\ud2b8\ub97c \ubc14\ud0d5\uc73c\ub85c \uacb0\ud63c\uc2dd\uc5d0 \ucd08\ub300\ud560 \uc0ac\ub78c\uc758 \uc218\ub97c \uad6c\ud558\ub294 \ud504\ub85c\uadf8\ub7a8\uc744 \uc791\uc131\ud558\uc2dc\uc624.\n\n\uc785\ub825\n\uccab\uc9f8 \uc904\uc5d0 \uc0c1\uadfc\uc774\uc758 \ub3d9\uae30\uc758 \uc218 n (2 \u2264 n \u2264 500)\uc774 \uc8fc\uc5b4\uc9c4\ub2e4. \ub458\uc9f8 \uc904\uc5d0\ub294 \ub9ac\uc2a4\ud2b8\uc758 \uae38\uc774 m (1 \u2264 m \u2264 10000)\uc774 \uc8fc\uc5b4\uc9c4\ub2e4. \ub2e4\uc74c \uc904\ubd80\ud130 m\uac1c \uc904\uc5d0\ub294 \uce5c\uad6c \uad00\uacc4 ai bi\uac00 \uc8fc\uc5b4\uc9c4\ub2e4. (1 \u2264 ai < bi \u2264 n) ai\uc640 bi\uac00 \uce5c\uad6c\ub77c\ub294 \ub73b\uc774\uba70, bi\uc640 ai\ub3c4 \uce5c\uad6c\uad00\uacc4\uc774\ub2e4. \n\n\ucd9c\ub825\n\uccab\uc9f8 \uc904\uc5d0 \uc0c1\uadfc\uc774\uc758 \uacb0\ud63c\uc2dd\uc5d0 \ucd08\ub300\ud558\ub294 \ub3d9\uae30\uc758 \uc218\ub97c \ucd9c\ub825\ud55c\ub2e4.\n\n\uc608\uc81c \uc785\ub825 1 \n6\n5\n1 2\n1 3\n3 4\n2 3\n4 5\n\uc608\uc81c \ucd9c\ub825 1 \n3\n\uc608\uc81c \uc785\ub825 2 \n6\n5\n2 3\n3 4\n4 5\n5 6\n2 5\n\uc608\uc81c \ucd9c\ub825 2 \n0\n\ud78c\ud2b8\n\uc608\uc81c 1\uc758 \uacbd\uc6b0 2\uc640 3\uc740 \uc0c1\uadfc\uc774\uc758 \uce5c\uad6c\uc774\ub2e4. \ub610, 3\uacfc 4\ub294 \uce5c\uad6c\uc774\uae30 \ub54c\ubb38\uc5d0, 4\ub294 \uc0c1\uadfc\uc774\uc758 \uce5c\uad6c\uc758 \uce5c\uad6c\uc774\ub2e4. 5\uc640 6\uc740 \uce5c\uad6c\ub3c4 \uc544\ub2c8\uace0, \uce5c\uad6c\uc758 \uce5c\uad6c\ub3c4 \uc544\ub2c8\ub2e4. \ub530\ub77c\uc11c 2, 3, 4 3\uba85\uc758 \uce5c\uad6c\ub97c \uacb0\ud63c\uc2dd\uc5d0 \ucd08\ub300\ud55c\ub2e4.\n\n[SAMPLE INPUT]\n1\n0\n\n[EXPECTED OUTPUT]\n0\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n#include <queue>\n\nusing namespace std;\n\nint main() {\n    int n, m;\n    cin >> n >> m;\n\n    vector<vector<int>> adj(n + 1);\n    for (int i = 0; i < m; i++) {\n        int u, v;\n        cin >> u >> v;\n        adj[u].push_back(v);\n        adj[v].push_back(u);\n    }\n\n    vector<int> dist(n + 1, -1);\n    queue<int> q;\n\n    q.push(1);\n    dist[1] = 0;\n\n    int ans = 0;\n\n    while (!q.empty()) {\n        int curr = q.front();\n        q.pop();\n\n        for (int nextNode : adj[curr]) {\n            if (dist[nextNode] == -1) {\n                dist[nextNode] = dist[curr] + 1;\n                q.push(nextNode);\n                if (dist[nextNode] <= 2) {\n                    ans++;\n                }\n            }\n        }\n    }\n\n    cout << ans;\n\n    return 0;\n}\n```",
+        "role": "user"
+      }
+    ],
+    "metadata": {
+      "direction": "seed_to_target",
+      "host": "http://localhost:11434",
+      "iteration_index": "3",
+      "problem_id": "IPOP_5567",
+      "provider": "ollama",
+      "source_language": "cpp",
+      "target_language": "java"
+    },
+    "model": "qwen2.5-coder:7b",
+    "temperature": 0.0
+  },
+  "target_to_cpp": {
+    "messages": [
+      {
+        "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation.",
+        "role": "system"
+      },
+      {
+        "content": "[TASK]\nDirection: target_to_roundtrip_cpp\nProblem ID: IPOP_5567\nTranslate from Java to C++.\n\n[CONSTRAINTS]\n- Preserve exact input/output behavior for the provided sample.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n\ubb38\uc81c\n\uc0c1\uadfc\uc774\ub294 \uc790\uc2e0\uc758 \uacb0\ud63c\uc2dd\uc5d0 \ud559\uad50 \ub3d9\uae30 \uc911 \uc790\uc2e0\uc758 \uce5c\uad6c\uc640 \uce5c\uad6c\uc758 \uce5c\uad6c\ub97c \ucd08\ub300\ud558\uae30\ub85c \ud588\ub2e4. \uc0c1\uadfc\uc774\uc758 \ub3d9\uae30\ub294 \ubaa8\ub450 N\uba85\uc774\uace0, \uc774 \ud559\uc0dd\ub4e4\uc758 \ud559\ubc88\uc740 \ubaa8\ub450 1\ubd80\ud130 N\uae4c\uc9c0\uc774\ub2e4. \uc0c1\uadfc\uc774\uc758 \ud559\ubc88\uc740 1\uc774\ub2e4.\n\n\uc0c1\uadfc\uc774\ub294 \ub3d9\uae30\ub4e4\uc758 \uce5c\uad6c \uad00\uacc4\ub97c \ubaa8\ub450 \uc870\uc0ac\ud55c \ub9ac\uc2a4\ud2b8\ub97c \uac00\uc9c0\uace0 \uc788\ub2e4. \uc774 \ub9ac\uc2a4\ud2b8\ub97c \ubc14\ud0d5\uc73c\ub85c \uacb0\ud63c\uc2dd\uc5d0 \ucd08\ub300\ud560 \uc0ac\ub78c\uc758 \uc218\ub97c \uad6c\ud558\ub294 \ud504\ub85c\uadf8\ub7a8\uc744 \uc791\uc131\ud558\uc2dc\uc624.\n\n\uc785\ub825\n\uccab\uc9f8 \uc904\uc5d0 \uc0c1\uadfc\uc774\uc758 \ub3d9\uae30\uc758 \uc218 n (2 \u2264 n \u2264 500)\uc774 \uc8fc\uc5b4\uc9c4\ub2e4. \ub458\uc9f8 \uc904\uc5d0\ub294 \ub9ac\uc2a4\ud2b8\uc758 \uae38\uc774 m (1 \u2264 m \u2264 10000)\uc774 \uc8fc\uc5b4\uc9c4\ub2e4. \ub2e4\uc74c \uc904\ubd80\ud130 m\uac1c \uc904\uc5d0\ub294 \uce5c\uad6c \uad00\uacc4 ai bi\uac00 \uc8fc\uc5b4\uc9c4\ub2e4. (1 \u2264 ai < bi \u2264 n) ai\uc640 bi\uac00 \uce5c\uad6c\ub77c\ub294 \ub73b\uc774\uba70, bi\uc640 ai\ub3c4 \uce5c\uad6c\uad00\uacc4\uc774\ub2e4. \n\n\ucd9c\ub825\n\uccab\uc9f8 \uc904\uc5d0 \uc0c1\uadfc\uc774\uc758 \uacb0\ud63c\uc2dd\uc5d0 \ucd08\ub300\ud558\ub294 \ub3d9\uae30\uc758 \uc218\ub97c \ucd9c\ub825\ud55c\ub2e4.\n\n\uc608\uc81c \uc785\ub825 1 \n6\n5\n1 2\n1 3\n3 4\n2 3\n4 5\n\uc608\uc81c \ucd9c\ub825 1 \n3\n\uc608\uc81c \uc785\ub825 2 \n6\n5\n2 3\n3 4\n4 5\n5 6\n2 5\n\uc608\uc81c \ucd9c\ub825 2 \n0\n\ud78c\ud2b8\n\uc608\uc81c 1\uc758 \uacbd\uc6b0 2\uc640 3\uc740 \uc0c1\uadfc\uc774\uc758 \uce5c\uad6c\uc774\ub2e4. \ub610, 3\uacfc 4\ub294 \uce5c\uad6c\uc774\uae30 \ub54c\ubb38\uc5d0, 4\ub294 \uc0c1\uadfc\uc774\uc758 \uce5c\uad6c\uc758 \uce5c\uad6c\uc774\ub2e4. 5\uc640 6\uc740 \uce5c\uad6c\ub3c4 \uc544\ub2c8\uace0, \uce5c\uad6c\uc758 \uce5c\uad6c\ub3c4 \uc544\ub2c8\ub2e4. \ub530\ub77c\uc11c 2, 3, 4 3\uba85\uc758 \uce5c\uad6c\ub97c \uacb0\ud63c\uc2dd\uc5d0 \ucd08\ub300\ud55c\ub2e4.\n\n[SAMPLE INPUT]\n1\n0\n\n[EXPECTED OUTPUT]\n0\n\n[SOURCE CODE - Java]\n```java\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int m = scanner.nextInt();\n\n        List<List<Integer>> adj = new ArrayList<>();\n        for (int i = 0; i <= n; i++) {\n            adj.add(new ArrayList<>());\n        }\n\n        for (int i = 0; i < m; i++) {\n            int u = scanner.nextInt();\n            int v = scanner.nextInt();\n            adj.get(u).add(v);\n            adj.get(v).add(u);\n        }\n\n        int[] dist = new int[n + 1];\n        Arrays.fill(dist, -1);\n        Queue<Integer> q = new LinkedList<>();\n\n        q.add(1);\n        dist[1] = 0;\n\n        int ans = 0;\n\n        while (!q.isEmpty()) {\n            int curr = q.poll();\n\n            for (int nextNode : adj.get(curr)) {\n                if (dist[nextNode] == -1) {\n                    dist[nextNode] = dist[curr] + 1;\n                    q.add(nextNode);\n                    if (dist[nextNode] <= 2) {\n                        ans++;\n                    }\n                }\n            }\n        }\n\n        System.out.println(ans);\n\n        scanner.close();\n    }\n}\n```",
+        "role": "user"
+      }
+    ],
+    "metadata": {
+      "direction": "target_to_roundtrip_cpp",
+      "host": "http://localhost:11434",
+      "iteration_index": "3",
+      "problem_id": "IPOP_5567",
+      "provider": "ollama",
+      "source_language": "java",
+      "target_language": "cpp"
+    },
+    "model": "qwen2.5-coder:7b",
+    "temperature": 0.0
+  }
+}

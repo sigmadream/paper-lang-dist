@@ -1,0 +1,24 @@
+{
+  "cpp_to_target": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```c\n#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n\n    int score[301], dp[301];\n    for (int index = 1; index <= n; ++index) {\n        scanf(\"%d\", &score[index]);\n    }\n\n    if (n >= 1) {\n        dp[1] = score[1];\n    }\n    if (n >= 2) {\n        dp[2] = score[1] + score[2];\n    }\n    for (int index = 3; index <= n; ++index) {\n        dp[index] = ((dp[index - 2] > dp[index - 3]) ? dp[index - 2] : dp[index - 3] + score[index - 1]) + score[index];\n    }\n\n    printf(\"%d\\n\", dp[n]);\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "ollama-qwen2.5-coder:7b-response",
+    "model": "qwen2.5-coder:7b",
+    "usage": {
+      "completion_tokens": 193,
+      "prompt_tokens": 1006,
+      "total_tokens": 1199
+    }
+  },
+  "target_to_cpp": {
+    "error": "response unavailable due to early termination"
+  }
+}

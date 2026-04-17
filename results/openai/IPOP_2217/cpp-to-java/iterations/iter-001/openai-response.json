@@ -1,0 +1,40 @@
+{
+  "cpp_to_target": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        FastScanner fs = new FastScanner(System.in);\n        int n;\n        try {\n            n = fs.nextInt();\n        } catch (Exception e) {\n            return;\n        }\n\n        Integer[] ropes = new Integer[n];\n        for (int i = 0; i < n; i++) {\n            ropes[i] = fs.nextInt();\n        }\n\n        Arrays.sort(ropes, Collections.reverseOrder());\n\n        long maxWeight = 0;\n        for (int i = 0; i < n; i++) {\n            long currentWeight = 1L * ropes[i] * (i + 1);\n            if (currentWeight > maxWeight) {\n                maxWeight = currentWeight;\n            }\n        }\n\n        System.out.print(maxWeight + \"\\n\");\n    }\n\n    static class FastScanner {\n        private final InputStream in;\n        private final byte[] buffer = new byte[1 << 16];\n        private int ptr = 0, len = 0;\n\n        FastScanner(InputStream is) {\n            in = is;\n        }\n\n        private int read() throws IOException {\n            if (ptr >= len) {\n                len = in.read(buffer);\n                ptr = 0;\n                if (len <= 0) return -1;\n            }\n            return buffer[ptr++];\n        }\n\n        int nextInt() throws IOException {\n            int c;\n            do {\n                c = read();\n                if (c == -1) throw new EOFException();\n            } while (c <= ' ');\n\n            int sign = 1;\n            if (c == '-') {\n                sign = -1;\n                c = read();\n            }\n\n            int val = 0;\n            while (c > ' ') {\n                val = val * 10 + (c - '0');\n                c = read();\n            }\n            return val * sign;\n        }\n    }\n}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-DLJndryT44UdiKM2Zfvkl4DhVMLfi",
+    "model": "gpt-5.4-2026-03-05",
+    "usage": {
+      "completion_tokens": 411,
+      "prompt_tokens": 611,
+      "total_tokens": 1022
+    }
+  },
+  "target_to_cpp": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "#include <bits/stdc++.h>\nusing namespace std;\n\nclass FastScanner {\n    static const int BUFSIZE = 1 << 16;\n    istream& in;\n    char buffer[BUFSIZE];\n    int ptr = 0, len = 0;\n\n    int read() {\n        if (ptr >= len) {\n            in.read(buffer, BUFSIZE);\n            len = (int)in.gcount();\n            ptr = 0;\n            if (len <= 0) return -1;\n        }\n        return buffer[ptr++];\n    }\n\npublic:\n    FastScanner(istream& is) : in(is) {}\n\n    int nextInt() {\n        int c;\n        do {\n            c = read();\n            if (c == -1) throw runtime_error(\"EOF\");\n        } while (c <= ' ');\n\n        int sign = 1;\n        if (c == '-') {\n            sign = -1;\n            c = read();\n        }\n\n        int val = 0;\n        while (c > ' ') {\n            val = val * 10 + (c - '0');\n            c = read();\n        }\n        return val * sign;\n    }\n};\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    FastScanner fs(cin);\n    int n;\n    try {\n        n = fs.nextInt();\n    } catch (...) {\n        return 0;\n    }\n\n    vector<int> ropes(n);\n    for (int i = 0; i < n; i++) {\n        ropes[i] = fs.nextInt();\n    }\n\n    sort(ropes.begin(), ropes.end(), greater<int>());\n\n    long long maxWeight = 0;\n    for (int i = 0; i < n; i++) {\n        long long currentWeight = 1LL * ropes[i] * (i + 1);\n        if (currentWeight > maxWeight) {\n            maxWeight = currentWeight;\n        }\n    }\n\n    cout << maxWeight << '\\n';\n    return 0;\n}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-DLJniMTxskTc4PPdKwl8YDwXFnh4v",
+    "model": "gpt-5.4-2026-03-05",
+    "usage": {
+      "completion_tokens": 424,
+      "prompt_tokens": 845,
+      "total_tokens": 1269
+    }
+  }
+}

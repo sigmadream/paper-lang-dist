@@ -1,0 +1,44 @@
+{
+  "cpp_to_target": {
+    "messages": [
+      {
+        "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation.",
+        "role": "system"
+      },
+      {
+        "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_2217\nTranslate from C++ to Python.\n\n[CONSTRAINTS]\n- Preserve exact input/output behavior for the provided sample.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n\ubb38\uc81c\nN(1 \u2264 N \u2264 100,000)\uac1c\uc758 \ub85c\ud504\uac00 \uc788\ub2e4. \uc774 \ub85c\ud504\ub97c \uc774\uc6a9\ud558\uc5ec \uc774\ub7f0 \uc800\ub7f0 \ubb3c\uccb4\ub97c \ub4e4\uc5b4\uc62c\ub9b4 \uc218 \uc788\ub2e4. \uac01\uac01\uc758 \ub85c\ud504\ub294 \uadf8 \uad75\uae30\ub098 \uae38\uc774\uac00 \ub2e4\ub974\uae30 \ub54c\ubb38\uc5d0 \ub4e4 \uc218 \uc788\ub294 \ubb3c\uccb4\uc758 \uc911\ub7c9\uc774 \uc11c\ub85c \ub2e4\ub97c \uc218\ub3c4 \uc788\ub2e4.\n\n\ud558\uc9c0\ub9cc \uc5ec\ub7ec \uac1c\uc758 \ub85c\ud504\ub97c \ubcd1\ub82c\ub85c \uc5f0\uacb0\ud558\uba74 \uac01\uac01\uc758 \ub85c\ud504\uc5d0 \uac78\ub9ac\ub294 \uc911\ub7c9\uc744 \ub098\ub20c \uc218 \uc788\ub2e4. k\uac1c\uc758 \ub85c\ud504\ub97c \uc0ac\uc6a9\ud558\uc5ec \uc911\ub7c9\uc774 w\uc778 \ubb3c\uccb4\ub97c \ub4e4\uc5b4\uc62c\ub9b4 \ub54c, \uac01\uac01\uc758 \ub85c\ud504\uc5d0\ub294 \ubaa8\ub450 \uace0\ub974\uac8c w/k \ub9cc\ud07c\uc758 \uc911\ub7c9\uc774 \uac78\ub9ac\uac8c \ub41c\ub2e4.\n\n\uac01 \ub85c\ud504\ub4e4\uc5d0 \ub300\ud55c \uc815\ubcf4\uac00 \uc8fc\uc5b4\uc84c\uc744 \ub54c, \uc774 \ub85c\ud504\ub4e4\uc744 \uc774\uc6a9\ud558\uc5ec \ub4e4\uc5b4\uc62c\ub9b4 \uc218 \uc788\ub294 \ubb3c\uccb4\uc758 \ucd5c\ub300 \uc911\ub7c9\uc744 \uad6c\ud574\ub0b4\ub294 \ud504\ub85c\uadf8\ub7a8\uc744 \uc791\uc131\ud558\uc2dc\uc624. \ubaa8\ub4e0 \ub85c\ud504\ub97c \uc0ac\uc6a9\ud574\uc57c \ud560 \ud544\uc694\ub294 \uc5c6\uc73c\uba70, \uc784\uc758\ub85c \uba87 \uac1c\uc758 \ub85c\ud504\ub97c \uace8\ub77c\uc11c \uc0ac\uc6a9\ud574\ub3c4 \ub41c\ub2e4.\n\n\uc785\ub825\n\uccab\uc9f8 \uc904\uc5d0 \uc815\uc218 N\uc774 \uc8fc\uc5b4\uc9c4\ub2e4. \ub2e4\uc74c N\uac1c\uc758 \uc904\uc5d0\ub294 \uac01 \ub85c\ud504\uac00 \ubc84\ud2f8 \uc218 \uc788\ub294 \ucd5c\ub300 \uc911\ub7c9\uc774 \uc8fc\uc5b4\uc9c4\ub2e4. \uc774 \uac12\uc740 10,000\uc744 \ub118\uc9c0 \uc54a\ub294 \uc790\uc5f0\uc218\uc774\ub2e4.\n\n\ucd9c\ub825\n\uccab\uc9f8 \uc904\uc5d0 \ub2f5\uc744 \ucd9c\ub825\ud55c\ub2e4.\n\n\uc608\uc81c \uc785\ub825 1 \n2\n10\n15\n\uc608\uc81c \ucd9c\ub825 1 \n20\n\n[SAMPLE INPUT]\n3\n10\n20\n30\n\n[EXPECTED OUTPUT]\n40\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<int> ropes(n);\n    for (int i = 0; i < n; i++) {\n        cin >> ropes[i];\n    }\n\n    sort(ropes.begin(), ropes.end(), greater<int>());\n\n    long long max_weight = 0;\n    for (int i = 0; i < n; i++) {\n        long long current_weight = 1LL * ropes[i] * (i + 1);\n        if (current_weight > max_weight) {\n            max_weight = current_weight;\n        }\n    }\n\n    cout << max_weight << \"\\n\";\n    return 0;\n}\n```",
+        "role": "user"
+      }
+    ],
+    "metadata": {
+      "direction": "seed_to_target",
+      "iteration_index": "1",
+      "problem_id": "IPOP_2217",
+      "source_language": "cpp",
+      "target_language": "python"
+    },
+    "model": "gpt-5.4",
+    "temperature": 0.0
+  },
+  "target_to_cpp": {
+    "messages": [
+      {
+        "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation.",
+        "role": "system"
+      },
+      {
+        "content": "[TASK]\nDirection: target_to_roundtrip_cpp\nProblem ID: IPOP_2217\nTranslate from Python to C++.\n\n[CONSTRAINTS]\n- Preserve exact input/output behavior for the provided sample.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n\ubb38\uc81c\nN(1 \u2264 N \u2264 100,000)\uac1c\uc758 \ub85c\ud504\uac00 \uc788\ub2e4. \uc774 \ub85c\ud504\ub97c \uc774\uc6a9\ud558\uc5ec \uc774\ub7f0 \uc800\ub7f0 \ubb3c\uccb4\ub97c \ub4e4\uc5b4\uc62c\ub9b4 \uc218 \uc788\ub2e4. \uac01\uac01\uc758 \ub85c\ud504\ub294 \uadf8 \uad75\uae30\ub098 \uae38\uc774\uac00 \ub2e4\ub974\uae30 \ub54c\ubb38\uc5d0 \ub4e4 \uc218 \uc788\ub294 \ubb3c\uccb4\uc758 \uc911\ub7c9\uc774 \uc11c\ub85c \ub2e4\ub97c \uc218\ub3c4 \uc788\ub2e4.\n\n\ud558\uc9c0\ub9cc \uc5ec\ub7ec \uac1c\uc758 \ub85c\ud504\ub97c \ubcd1\ub82c\ub85c \uc5f0\uacb0\ud558\uba74 \uac01\uac01\uc758 \ub85c\ud504\uc5d0 \uac78\ub9ac\ub294 \uc911\ub7c9\uc744 \ub098\ub20c \uc218 \uc788\ub2e4. k\uac1c\uc758 \ub85c\ud504\ub97c \uc0ac\uc6a9\ud558\uc5ec \uc911\ub7c9\uc774 w\uc778 \ubb3c\uccb4\ub97c \ub4e4\uc5b4\uc62c\ub9b4 \ub54c, \uac01\uac01\uc758 \ub85c\ud504\uc5d0\ub294 \ubaa8\ub450 \uace0\ub974\uac8c w/k \ub9cc\ud07c\uc758 \uc911\ub7c9\uc774 \uac78\ub9ac\uac8c \ub41c\ub2e4.\n\n\uac01 \ub85c\ud504\ub4e4\uc5d0 \ub300\ud55c \uc815\ubcf4\uac00 \uc8fc\uc5b4\uc84c\uc744 \ub54c, \uc774 \ub85c\ud504\ub4e4\uc744 \uc774\uc6a9\ud558\uc5ec \ub4e4\uc5b4\uc62c\ub9b4 \uc218 \uc788\ub294 \ubb3c\uccb4\uc758 \ucd5c\ub300 \uc911\ub7c9\uc744 \uad6c\ud574\ub0b4\ub294 \ud504\ub85c\uadf8\ub7a8\uc744 \uc791\uc131\ud558\uc2dc\uc624. \ubaa8\ub4e0 \ub85c\ud504\ub97c \uc0ac\uc6a9\ud574\uc57c \ud560 \ud544\uc694\ub294 \uc5c6\uc73c\uba70, \uc784\uc758\ub85c \uba87 \uac1c\uc758 \ub85c\ud504\ub97c \uace8\ub77c\uc11c \uc0ac\uc6a9\ud574\ub3c4 \ub41c\ub2e4.\n\n\uc785\ub825\n\uccab\uc9f8 \uc904\uc5d0 \uc815\uc218 N\uc774 \uc8fc\uc5b4\uc9c4\ub2e4. \ub2e4\uc74c N\uac1c\uc758 \uc904\uc5d0\ub294 \uac01 \ub85c\ud504\uac00 \ubc84\ud2f8 \uc218 \uc788\ub294 \ucd5c\ub300 \uc911\ub7c9\uc774 \uc8fc\uc5b4\uc9c4\ub2e4. \uc774 \uac12\uc740 10,000\uc744 \ub118\uc9c0 \uc54a\ub294 \uc790\uc5f0\uc218\uc774\ub2e4.\n\n\ucd9c\ub825\n\uccab\uc9f8 \uc904\uc5d0 \ub2f5\uc744 \ucd9c\ub825\ud55c\ub2e4.\n\n\uc608\uc81c \uc785\ub825 1 \n2\n10\n15\n\uc608\uc81c \ucd9c\ub825 1 \n20\n\n[SAMPLE INPUT]\n3\n10\n20\n30\n\n[EXPECTED OUTPUT]\n40\n\n[SOURCE CODE - Python]\n```python\nimport sys\n\ndef main():\n    data = sys.stdin.buffer.read().split()\n    if not data:\n        return\n    n = int(data[0])\n    ropes = list(map(int, data[1:1 + n]))\n    ropes.sort(reverse=True)\n\n    max_weight = 0\n    for i, r in enumerate(ropes):\n        current_weight = r * (i + 1)\n        if current_weight > max_weight:\n            max_weight = current_weight\n\n    sys.stdout.write(str(max_weight) + \"\\n\")\n\nif __name__ == \"__main__\":\n    main()\n```",
+        "role": "user"
+      }
+    ],
+    "metadata": {
+      "direction": "target_to_roundtrip_cpp",
+      "iteration_index": "1",
+      "problem_id": "IPOP_2217",
+      "source_language": "python",
+      "target_language": "cpp"
+    },
+    "model": "gpt-5.4",
+    "temperature": 0.0
+  }
+}
