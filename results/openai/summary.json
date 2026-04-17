@@ -1,0 +1,3142 @@
+{
+  "ordered_pair_aggregates": {
+    "cpp->c": {
+      "change_count_distance": {
+        "availability": "measured",
+        "denominator": 5,
+        "infrastructure_count": 0,
+        "mean": 5.4,
+        "measured_count": 5,
+        "stddev": 5.351635264103861,
+        "unavailable_count": 0
+      },
+      "divergence": {
+        "availability": "measured",
+        "denominator": 5,
+        "divergence_rate": 0.0,
+        "divergent_count": 0,
+        "infrastructure_count": 0,
+        "measured_count": 5,
+        "non_divergent_count": 5,
+        "unavailable_count": 0
+      },
+      "final_similarity_score": {
+        "availability": "measured",
+        "denominator": 5,
+        "infrastructure_count": 0,
+        "mean": 0.8570557289702145,
+        "measured_count": 5,
+        "stddev": 0.028324810691193823,
+        "unavailable_count": 0
+      },
+      "ordered_pair_key": "cpp->c",
+      "residual_similarity": {
+        "availability": "measured",
+        "denominator": 5,
+        "infrastructure_count": 0,
+        "mean": 0.6964819438747827,
+        "measured_count": 5,
+        "stddev": 0.11798527844379876,
+        "unavailable_count": 0
+      },
+      "result_count": 5,
+      "seed_language": "cpp",
+      "target_language": "c"
+    },
+    "cpp->java": {
+      "change_count_distance": {
+        "availability": "measured",
+        "denominator": 5,
+        "infrastructure_count": 0,
+        "mean": 0.8,
+        "measured_count": 5,
+        "stddev": 0.7483314773547883,
+        "unavailable_count": 0
+      },
+      "divergence": {
+        "availability": "unavailable",
+        "denominator": 0,
+        "divergent_count": 0,
+        "infrastructure_count": 0,
+        "measured_count": 0,
+        "non_divergent_count": 0,
+        "reason": "no_measured_values",
+        "unavailable_count": 5
+      },
+      "final_similarity_score": {
+        "availability": "measured",
+        "denominator": 3,
+        "infrastructure_count": 0,
+        "mean": 0.6254916665582229,
+        "measured_count": 3,
+        "stddev": 0.35356451949652046,
+        "unavailable_count": 2
+      },
+      "ordered_pair_key": "cpp->java",
+      "residual_similarity": {
+        "availability": "unavailable",
+        "denominator": 0,
+        "infrastructure_count": 0,
+        "measured_count": 0,
+        "reason": "no_measured_values",
+        "unavailable_count": 5
+      },
+      "result_count": 5,
+      "seed_language": "cpp",
+      "target_language": "java"
+    },
+    "cpp->python": {
+      "change_count_distance": {
+        "availability": "measured",
+        "denominator": 5,
+        "infrastructure_count": 0,
+        "mean": 1.0,
+        "measured_count": 5,
+        "stddev": 0.0,
+        "unavailable_count": 0
+      },
+      "divergence": {
+        "availability": "unavailable",
+        "denominator": 0,
+        "divergent_count": 0,
+        "infrastructure_count": 0,
+        "measured_count": 0,
+        "non_divergent_count": 0,
+        "reason": "no_measured_values",
+        "unavailable_count": 5
+      },
+      "final_similarity_score": {
+        "availability": "measured",
+        "denominator": 5,
+        "infrastructure_count": 0,
+        "mean": 0.9239207202438562,
+        "measured_count": 5,
+        "stddev": 0.038033700772678314,
+        "unavailable_count": 0
+      },
+      "ordered_pair_key": "cpp->python",
+      "residual_similarity": {
+        "availability": "unavailable",
+        "denominator": 0,
+        "infrastructure_count": 0,
+        "measured_count": 0,
+        "reason": "no_measured_values",
+        "unavailable_count": 5
+      },
+      "result_count": 5,
+      "seed_language": "cpp",
+      "target_language": "python"
+    }
+  },
+  "result_count": 15,
+  "results": [
+    {
+      "artifacts": {
+        "final_execution_path": "smoke-openai-001/IPOP_1436/cpp-to-c/iterations/iter-002/execution.json",
+        "final_iteration_directory": "smoke-openai-001/IPOP_1436/cpp-to-c/iterations/iter-002",
+        "final_metrics_path": "smoke-openai-001/IPOP_1436/cpp-to-c/iterations/iter-002/metrics.json",
+        "final_similarity_path": "smoke-openai-001/IPOP_1436/cpp-to-c/final-similarity.json",
+        "run_manifest_path": "smoke-openai-001/IPOP_1436/cpp-to-c/run.json"
+      },
+      "ast_distance": {
+        "availability": "measured",
+        "value": {
+          "distance_to_roundtrip_cpp": 0,
+          "distance_to_seed_cpp": 42,
+          "parse_status": {
+            "roundtrip_cpp": "ok",
+            "seed_cpp": "ok",
+            "target": "ok"
+          },
+          "parser_failures": {},
+          "status": "ok"
+        }
+      },
+      "change_count_distance": {
+        "availability": "measured",
+        "definition": "1 cycle = C++ -> target -> C++",
+        "unit": "cpp_to_target_to_cpp_cycles",
+        "value": 2
+      },
+      "complexity_deltas": {
+        "roundtrip_cpp": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 9,
+                "function_count": 2,
+                "loc": 29,
+                "max_nesting_depth": 3,
+                "token_count": 140
+              }
+            },
+            "delta_vs_previous": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": 0,
+              "max_nesting_depth": 0,
+              "token_count": 0
+            },
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 6,
+              "function_count": 1,
+              "loc": 10,
+              "max_nesting_depth": 1,
+              "token_count": 51
+            },
+            "metric_set": "v1",
+            "previous": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 9,
+                "function_count": 2,
+                "loc": 29,
+                "max_nesting_depth": 3,
+                "token_count": 140
+              }
+            },
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 3,
+                "function_count": 1,
+                "loc": 19,
+                "max_nesting_depth": 2,
+                "token_count": 89
+              }
+            }
+          }
+        },
+        "target": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "c",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 9,
+                "function_count": 2,
+                "loc": 29,
+                "max_nesting_depth": 3,
+                "token_count": 136
+              }
+            },
+            "delta_vs_previous": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": 0,
+              "max_nesting_depth": 0,
+              "token_count": 0
+            },
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 6,
+              "function_count": 1,
+              "loc": 10,
+              "max_nesting_depth": 1,
+              "token_count": 47
+            },
+            "metric_set": "v1",
+            "previous": {
+              "language": "c",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 9,
+                "function_count": 2,
+                "loc": 29,
+                "max_nesting_depth": 3,
+                "token_count": 136
+              }
+            },
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 3,
+                "function_count": 1,
+                "loc": 19,
+                "max_nesting_depth": 2,
+                "token_count": 89
+              }
+            }
+          }
+        }
+      },
+      "convergence_outcome": "fixed_point",
+      "final_iteration_index": 2,
+      "final_similarity": {
+        "availability": "measured",
+        "value": {
+          "configured_model": "text-embedding-3-large",
+          "dimensions": 3072,
+          "observed_model": "text-embedding-3-large",
+          "provider": "openai",
+          "request_ids": {
+            "final": "req_a770e82faf42401fac72e0c590564e6c",
+            "seed": "req_2102e32d8927417bae594005b446c152"
+          },
+          "revision_evidence": {
+            "configured_model": "text-embedding-3-large",
+            "observed_models": {
+              "final": "text-embedding-3-large",
+              "seed": "text-embedding-3-large"
+            },
+            "request_ids": {
+              "final": "req_a770e82faf42401fac72e0c590564e6c",
+              "seed": "req_2102e32d8927417bae594005b446c152"
+            }
+          },
+          "score": 0.8025703920703398,
+          "source_hashes": {
+            "final_source_sha256": "cc882974e98bd36c339fd4dbb7db2231c2807664b250312e03f1d0c32ee73616",
+            "seed_source_sha256": "ebc5741faa08ba2a79c7a083fb43d335f8033dcdfe3148ecb439932de8b397c7"
+          },
+          "usage": {
+            "combined": {
+              "prompt_tokens": 282,
+              "total_tokens": 282
+            },
+            "final": {
+              "prompt_tokens": 179,
+              "total_tokens": 179
+            },
+            "seed": {
+              "prompt_tokens": 103,
+              "total_tokens": 103
+            }
+          }
+        }
+      },
+      "final_status": "success",
+      "iteration_count": 2,
+      "moss_similarity": {
+        "availability": "measured",
+        "value": {
+          "match_url": null,
+          "report_url": "http://moss.stanford.edu/results/1/6468285043697",
+          "roundtrip_percentage": 0,
+          "seed_percentage": 0
+        }
+      },
+      "ordered_pair_key": "cpp->c",
+      "problem_id": "IPOP_1436",
+      "residual_similarity": {
+        "availability": "measured",
+        "value": 0.5641025641025641
+      },
+      "seed_language": "cpp",
+      "semantic_summary": {
+        "overall": "pass",
+        "roundtrip_cpp": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        },
+        "target": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        }
+      },
+      "target_language": "c"
+    },
+    {
+      "artifacts": {
+        "final_execution_path": "smoke-openai-001/IPOP_1436/cpp-to-java/iterations/iter-002/execution.json",
+        "final_iteration_directory": "smoke-openai-001/IPOP_1436/cpp-to-java/iterations/iter-002",
+        "final_metrics_path": "smoke-openai-001/IPOP_1436/cpp-to-java/iterations/iter-002/metrics.json",
+        "final_similarity_path": "smoke-openai-001/IPOP_1436/cpp-to-java/final-similarity.json",
+        "run_manifest_path": "smoke-openai-001/IPOP_1436/cpp-to-java/run.json"
+      },
+      "ast_distance": {
+        "availability": "measured",
+        "value": {
+          "distance_to_roundtrip_cpp": 17,
+          "distance_to_seed_cpp": 17,
+          "parse_status": {
+            "roundtrip_cpp": "ok",
+            "seed_cpp": "ok",
+            "target": "ok"
+          },
+          "parser_failures": {},
+          "status": "ok"
+        }
+      },
+      "change_count_distance": {
+        "availability": "measured",
+        "definition": "1 cycle = C++ -> target -> C++",
+        "unit": "cpp_to_target_to_cpp_cycles",
+        "value": 2
+      },
+      "complexity_deltas": {
+        "roundtrip_cpp": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 3,
+                "function_count": 1,
+                "loc": 18,
+                "max_nesting_depth": 2,
+                "token_count": 84
+              }
+            },
+            "delta_vs_previous": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": -1,
+              "max_nesting_depth": 0,
+              "token_count": -2
+            },
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": -1,
+              "max_nesting_depth": 0,
+              "token_count": -5
+            },
+            "metric_set": "v1",
+            "previous": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 3,
+                "function_count": 1,
+                "loc": 19,
+                "max_nesting_depth": 2,
+                "token_count": 86
+              }
+            },
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 3,
+                "function_count": 1,
+                "loc": 19,
+                "max_nesting_depth": 2,
+                "token_count": 89
+              }
+            }
+          }
+        },
+        "target": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "java",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 3,
+                "function_count": 1,
+                "loc": 17,
+                "max_nesting_depth": 2,
+                "token_count": 115
+              }
+            },
+            "delta_vs_previous": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": 0,
+              "max_nesting_depth": 0,
+              "token_count": 0
+            },
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": -2,
+              "max_nesting_depth": 0,
+              "token_count": 26
+            },
+            "metric_set": "v1",
+            "previous": {
+              "language": "java",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 3,
+                "function_count": 1,
+                "loc": 17,
+                "max_nesting_depth": 2,
+                "token_count": 115
+              }
+            },
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 3,
+                "function_count": 1,
+                "loc": 19,
+                "max_nesting_depth": 2,
+                "token_count": 89
+              }
+            }
+          }
+        }
+      },
+      "convergence_outcome": "terminated_on_failure",
+      "final_iteration_index": 2,
+      "final_similarity": {
+        "availability": "measured",
+        "value": {
+          "configured_model": "text-embedding-3-large",
+          "dimensions": 3072,
+          "observed_model": "text-embedding-3-large",
+          "provider": "openai",
+          "request_ids": {
+            "final": "req_ae0d79650a284fdf8a383785203bf593",
+            "seed": "req_c39691f3d6844789ad67f521b64aa717"
+          },
+          "revision_evidence": {
+            "configured_model": "text-embedding-3-large",
+            "observed_models": {
+              "final": "text-embedding-3-large",
+              "seed": "text-embedding-3-large"
+            },
+            "request_ids": {
+              "final": "req_ae0d79650a284fdf8a383785203bf593",
+              "seed": "req_c39691f3d6844789ad67f521b64aa717"
+            }
+          },
+          "score": 0.9783289744931698,
+          "source_hashes": {
+            "final_source_sha256": "3afc2c801b72c0c12231c3a175870461a686acf18ebe96261e6e74a76fca4bf3",
+            "seed_source_sha256": "ebc5741faa08ba2a79c7a083fb43d335f8033dcdfe3148ecb439932de8b397c7"
+          },
+          "usage": {
+            "combined": {
+              "prompt_tokens": 202,
+              "total_tokens": 202
+            },
+            "final": {
+              "prompt_tokens": 99,
+              "total_tokens": 99
+            },
+            "seed": {
+              "prompt_tokens": 103,
+              "total_tokens": 103
+            }
+          }
+        }
+      },
+      "final_status": "compile_error",
+      "iteration_count": 2,
+      "moss_similarity": {
+        "availability": "measured",
+        "value": {
+          "match_url": "http://moss.stanford.edu/results/1/101047904203/match0.html",
+          "report_url": "http://moss.stanford.edu/results/1/101047904203",
+          "roundtrip_percentage": 86,
+          "seed_percentage": 81
+        }
+      },
+      "ordered_pair_key": "cpp->java",
+      "problem_id": "IPOP_1436",
+      "residual_similarity": {
+        "availability": "unavailable",
+        "failure": {
+          "iteration_index": 2,
+          "stage": "roundtrip_execution",
+          "status": "compile_error"
+        },
+        "reason": "residual_similarity_not_recorded"
+      },
+      "seed_language": "cpp",
+      "semantic_summary": {
+        "overall": "fail",
+        "roundtrip_cpp": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 0,
+          "message": "Compilation failed.",
+          "passed": false,
+          "status": "compile_error"
+        },
+        "target": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        }
+      },
+      "target_language": "java"
+    },
+    {
+      "artifacts": {
+        "final_execution_path": "smoke-openai-001/IPOP_1436/cpp-to-python/iterations/iter-001/execution.json",
+        "final_iteration_directory": "smoke-openai-001/IPOP_1436/cpp-to-python/iterations/iter-001",
+        "final_metrics_path": "smoke-openai-001/IPOP_1436/cpp-to-python/iterations/iter-001/metrics.json",
+        "final_similarity_path": "smoke-openai-001/IPOP_1436/cpp-to-python/final-similarity.json",
+        "run_manifest_path": "smoke-openai-001/IPOP_1436/cpp-to-python/run.json"
+      },
+      "ast_distance": {
+        "availability": "measured",
+        "value": {
+          "distance_to_roundtrip_cpp": 34,
+          "distance_to_seed_cpp": 28,
+          "parse_status": {
+            "roundtrip_cpp": "ok",
+            "seed_cpp": "ok",
+            "target": "ok"
+          },
+          "parser_failures": {},
+          "status": "ok"
+        }
+      },
+      "change_count_distance": {
+        "availability": "measured",
+        "definition": "1 cycle = C++ -> target -> C++",
+        "unit": "cpp_to_target_to_cpp_cycles",
+        "value": 1
+      },
+      "complexity_deltas": {
+        "roundtrip_cpp": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 4,
+                "function_count": 1,
+                "loc": 19,
+                "max_nesting_depth": 3,
+                "token_count": 105
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 1,
+              "function_count": 0,
+              "loc": 0,
+              "max_nesting_depth": 1,
+              "token_count": 16
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 3,
+                "function_count": 1,
+                "loc": 19,
+                "max_nesting_depth": 2,
+                "token_count": 89
+              }
+            }
+          }
+        },
+        "target": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "python",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 3,
+                "function_count": 1,
+                "loc": 13,
+                "max_nesting_depth": 2,
+                "token_count": 72
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": -6,
+              "max_nesting_depth": 0,
+              "token_count": -17
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 3,
+                "function_count": 1,
+                "loc": 19,
+                "max_nesting_depth": 2,
+                "token_count": 89
+              }
+            }
+          }
+        }
+      },
+      "convergence_outcome": "terminated_on_failure",
+      "final_iteration_index": 1,
+      "final_similarity": {
+        "availability": "measured",
+        "value": {
+          "configured_model": "text-embedding-3-large",
+          "dimensions": 3072,
+          "observed_model": "text-embedding-3-large",
+          "provider": "openai",
+          "request_ids": {
+            "final": "req_167cba1bf3774f519d31bc96664e5ad2",
+            "seed": "req_b6c8e0b2af7e4606b0bb31c7ef9a3b07"
+          },
+          "revision_evidence": {
+            "configured_model": "text-embedding-3-large",
+            "observed_models": {
+              "final": "text-embedding-3-large",
+              "seed": "text-embedding-3-large"
+            },
+            "request_ids": {
+              "final": "req_167cba1bf3774f519d31bc96664e5ad2",
+              "seed": "req_b6c8e0b2af7e4606b0bb31c7ef9a3b07"
+            }
+          },
+          "score": 0.9325836122877281,
+          "source_hashes": {
+            "final_source_sha256": "9d57fa95468ebf385a15da81b77dd53add585c93b17cfafdccfe9ed10d383b4e",
+            "seed_source_sha256": "ebc5741faa08ba2a79c7a083fb43d335f8033dcdfe3148ecb439932de8b397c7"
+          },
+          "usage": {
+            "combined": {
+              "prompt_tokens": 223,
+              "total_tokens": 223
+            },
+            "final": {
+              "prompt_tokens": 120,
+              "total_tokens": 120
+            },
+            "seed": {
+              "prompt_tokens": 103,
+              "total_tokens": 103
+            }
+          }
+        }
+      },
+      "final_status": "compile_error",
+      "iteration_count": 1,
+      "moss_similarity": {
+        "availability": "measured",
+        "value": {
+          "match_url": null,
+          "report_url": "http://moss.stanford.edu/results/2/2156854680247",
+          "roundtrip_percentage": 0,
+          "seed_percentage": 0
+        }
+      },
+      "ordered_pair_key": "cpp->python",
+      "problem_id": "IPOP_1436",
+      "residual_similarity": {
+        "availability": "unavailable",
+        "failure": {
+          "iteration_index": 1,
+          "stage": "roundtrip_execution",
+          "status": "compile_error"
+        },
+        "reason": "residual_similarity_not_recorded"
+      },
+      "seed_language": "cpp",
+      "semantic_summary": {
+        "overall": "fail",
+        "roundtrip_cpp": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 0,
+          "message": "Compilation failed.",
+          "passed": false,
+          "status": "compile_error"
+        },
+        "target": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        }
+      },
+      "target_language": "python"
+    },
+    {
+      "artifacts": {
+        "final_execution_path": "smoke-openai-001/IPOP_2110/cpp-to-c/iterations/iter-004/execution.json",
+        "final_iteration_directory": "smoke-openai-001/IPOP_2110/cpp-to-c/iterations/iter-004",
+        "final_metrics_path": "smoke-openai-001/IPOP_2110/cpp-to-c/iterations/iter-004/metrics.json",
+        "final_similarity_path": "smoke-openai-001/IPOP_2110/cpp-to-c/final-similarity.json",
+        "run_manifest_path": "smoke-openai-001/IPOP_2110/cpp-to-c/run.json"
+      },
+      "ast_distance": {
+        "availability": "measured",
+        "value": {
+          "distance_to_roundtrip_cpp": 19,
+          "distance_to_seed_cpp": 51,
+          "parse_status": {
+            "roundtrip_cpp": "ok",
+            "seed_cpp": "ok",
+            "target": "ok"
+          },
+          "parser_failures": {},
+          "status": "ok"
+        }
+      },
+      "change_count_distance": {
+        "availability": "measured",
+        "definition": "1 cycle = C++ -> target -> C++",
+        "unit": "cpp_to_target_to_cpp_cycles",
+        "value": 4
+      },
+      "complexity_deltas": {
+        "roundtrip_cpp": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 8,
+                "function_count": 1,
+                "loc": 34,
+                "max_nesting_depth": 5,
+                "token_count": 250
+              }
+            },
+            "delta_vs_previous": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": 0,
+              "max_nesting_depth": 0,
+              "token_count": 0
+            },
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 1,
+              "function_count": 0,
+              "loc": -1,
+              "max_nesting_depth": 1,
+              "token_count": 17
+            },
+            "metric_set": "v1",
+            "previous": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 8,
+                "function_count": 1,
+                "loc": 34,
+                "max_nesting_depth": 5,
+                "token_count": 250
+              }
+            },
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 1,
+                "loc": 35,
+                "max_nesting_depth": 4,
+                "token_count": 233
+              }
+            }
+          }
+        },
+        "target": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "c",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 11,
+                "function_count": 2,
+                "loc": 40,
+                "max_nesting_depth": 5,
+                "token_count": 305
+              }
+            },
+            "delta_vs_previous": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": 0,
+              "max_nesting_depth": 0,
+              "token_count": 0
+            },
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 4,
+              "function_count": 1,
+              "loc": 5,
+              "max_nesting_depth": 1,
+              "token_count": 72
+            },
+            "metric_set": "v1",
+            "previous": {
+              "language": "c",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 11,
+                "function_count": 2,
+                "loc": 40,
+                "max_nesting_depth": 5,
+                "token_count": 305
+              }
+            },
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 1,
+                "loc": 35,
+                "max_nesting_depth": 4,
+                "token_count": 233
+              }
+            }
+          }
+        }
+      },
+      "convergence_outcome": "fixed_point",
+      "final_iteration_index": 4,
+      "final_similarity": {
+        "availability": "measured",
+        "value": {
+          "configured_model": "text-embedding-3-large",
+          "dimensions": 3072,
+          "observed_model": "text-embedding-3-large",
+          "provider": "openai",
+          "request_ids": {
+            "final": "req_fc979950154447a9b81bdb4a52065505",
+            "seed": "req_1a4b75f600664f548691773c45f6e4ea"
+          },
+          "revision_evidence": {
+            "configured_model": "text-embedding-3-large",
+            "observed_models": {
+              "final": "text-embedding-3-large",
+              "seed": "text-embedding-3-large"
+            },
+            "request_ids": {
+              "final": "req_fc979950154447a9b81bdb4a52065505",
+              "seed": "req_1a4b75f600664f548691773c45f6e4ea"
+            }
+          },
+          "score": 0.8784102260833283,
+          "source_hashes": {
+            "final_source_sha256": "bec383476252fa95087bad1e0072ec804ce83353bfdc308c5e65335bf4003b17",
+            "seed_source_sha256": "5d97ab02930fffe89a10c83b199834648a7578f82d44979ac918dd8e8ccc0ce4"
+          },
+          "usage": {
+            "combined": {
+              "prompt_tokens": 520,
+              "total_tokens": 520
+            },
+            "final": {
+              "prompt_tokens": 277,
+              "total_tokens": 277
+            },
+            "seed": {
+              "prompt_tokens": 243,
+              "total_tokens": 243
+            }
+          }
+        }
+      },
+      "final_status": "success",
+      "iteration_count": 4,
+      "moss_similarity": {
+        "availability": "measured",
+        "value": {
+          "match_url": "http://moss.stanford.edu/results/2/9422380401260/match0.html",
+          "report_url": "http://moss.stanford.edu/results/2/9422380401260",
+          "roundtrip_percentage": 40,
+          "seed_percentage": 44
+        }
+      },
+      "ordered_pair_key": "cpp->c",
+      "problem_id": "IPOP_2110",
+      "residual_similarity": {
+        "availability": "measured",
+        "value": 0.8266129032258065
+      },
+      "seed_language": "cpp",
+      "semantic_summary": {
+        "overall": "pass",
+        "roundtrip_cpp": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        },
+        "target": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        }
+      },
+      "target_language": "c"
+    },
+    {
+      "artifacts": {
+        "final_execution_path": "smoke-openai-001/IPOP_2110/cpp-to-java/iterations/iter-001/execution.json",
+        "final_iteration_directory": "smoke-openai-001/IPOP_2110/cpp-to-java/iterations/iter-001",
+        "final_metrics_path": "smoke-openai-001/IPOP_2110/cpp-to-java/iterations/iter-001/metrics.json",
+        "final_similarity_path": "smoke-openai-001/IPOP_2110/cpp-to-java/final-similarity.json",
+        "run_manifest_path": "smoke-openai-001/IPOP_2110/cpp-to-java/run.json"
+      },
+      "ast_distance": {
+        "availability": "unavailable",
+        "failure": {
+          "iteration_index": 1,
+          "stage": "target_to_cpp_translation",
+          "status": "parse_error"
+        },
+        "reason": "missing_roundtrip_cpp_source"
+      },
+      "change_count_distance": {
+        "availability": "measured",
+        "definition": "1 cycle = C++ -> target -> C++",
+        "unit": "cpp_to_target_to_cpp_cycles",
+        "value": 0
+      },
+      "complexity_deltas": {
+        "roundtrip_cpp": {
+          "availability": "unavailable",
+          "failure": {
+            "iteration_index": 1,
+            "stage": "target_to_cpp_translation",
+            "status": "parse_error"
+          },
+          "reason": "missing_roundtrip_cpp_source"
+        },
+        "target": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "java",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 16,
+                "function_count": 3,
+                "loc": 67,
+                "max_nesting_depth": 5,
+                "token_count": 462
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 9,
+              "function_count": 2,
+              "loc": 32,
+              "max_nesting_depth": 1,
+              "token_count": 229
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 1,
+                "loc": 35,
+                "max_nesting_depth": 4,
+                "token_count": 233
+              }
+            }
+          }
+        }
+      },
+      "convergence_outcome": "terminated_on_failure",
+      "final_iteration_index": 1,
+      "final_similarity": {
+        "availability": "unavailable",
+        "details": {
+          "availability": "unavailable",
+          "computed_at": "2026-03-20T02:20:48.906769Z",
+          "configured_model": "text-embedding-3-large",
+          "dimensions": null,
+          "observed_model": null,
+          "provider": "openai",
+          "reason": "missing_final_seed_language_source",
+          "request_ids": {
+            "final": null,
+            "seed": null
+          },
+          "revision_evidence": {
+            "configured_model": "text-embedding-3-large",
+            "observed_models": {
+              "final": null,
+              "seed": null
+            },
+            "request_ids": {
+              "final": null,
+              "seed": null
+            }
+          },
+          "schema_version": "final_similarity.v1",
+          "score": null,
+          "source_artifacts": {
+            "final_roundtrip_source_path": "smoke-openai-001/IPOP_2110/cpp-to-java/iterations/iter-001/roundtrip.cpp",
+            "seed_artifact_path": "smoke-openai-001/IPOP_2110/cpp-to-java/seed/reference.cpp"
+          },
+          "source_hashes": {
+            "final_source_sha256": null,
+            "seed_source_sha256": "5d97ab02930fffe89a10c83b199834648a7578f82d44979ac918dd8e8ccc0ce4"
+          },
+          "usage": {
+            "combined": {},
+            "final": null,
+            "seed": null
+          }
+        },
+        "failure": {
+          "iteration_index": 1,
+          "stage": "target_to_cpp_translation",
+          "status": "parse_error"
+        },
+        "reason": "missing_final_seed_language_source"
+      },
+      "final_status": "parse_error",
+      "iteration_count": 1,
+      "moss_similarity": {
+        "availability": "unavailable",
+        "failure": {
+          "iteration_index": 1,
+          "stage": "target_to_cpp_translation",
+          "status": "parse_error"
+        },
+        "reason": "missing_roundtrip_cpp_source"
+      },
+      "ordered_pair_key": "cpp->java",
+      "problem_id": "IPOP_2110",
+      "residual_similarity": {
+        "availability": "unavailable",
+        "failure": {
+          "iteration_index": 1,
+          "stage": "target_to_cpp_translation",
+          "status": "parse_error"
+        },
+        "reason": "residual_similarity_not_recorded"
+      },
+      "seed_language": "cpp",
+      "semantic_summary": {
+        "overall": "fail",
+        "roundtrip_cpp": {
+          "available": false,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 0,
+          "message": "stage_not_executed",
+          "passed": false,
+          "status": "not_evaluated"
+        },
+        "target": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        }
+      },
+      "target_language": "java"
+    },
+    {
+      "artifacts": {
+        "final_execution_path": "smoke-openai-001/IPOP_2110/cpp-to-python/iterations/iter-001/execution.json",
+        "final_iteration_directory": "smoke-openai-001/IPOP_2110/cpp-to-python/iterations/iter-001",
+        "final_metrics_path": "smoke-openai-001/IPOP_2110/cpp-to-python/iterations/iter-001/metrics.json",
+        "final_similarity_path": "smoke-openai-001/IPOP_2110/cpp-to-python/final-similarity.json",
+        "run_manifest_path": "smoke-openai-001/IPOP_2110/cpp-to-python/run.json"
+      },
+      "ast_distance": {
+        "availability": "measured",
+        "value": {
+          "distance_to_roundtrip_cpp": 71,
+          "distance_to_seed_cpp": 71,
+          "parse_status": {
+            "roundtrip_cpp": "ok",
+            "seed_cpp": "ok",
+            "target": "ok"
+          },
+          "parser_failures": {},
+          "status": "ok"
+        }
+      },
+      "change_count_distance": {
+        "availability": "measured",
+        "definition": "1 cycle = C++ -> target -> C++",
+        "unit": "cpp_to_target_to_cpp_cycles",
+        "value": 1
+      },
+      "complexity_deltas": {
+        "roundtrip_cpp": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 1,
+                "loc": 33,
+                "max_nesting_depth": 4,
+                "token_count": 235
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": -2,
+              "max_nesting_depth": 0,
+              "token_count": 2
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 1,
+                "loc": 35,
+                "max_nesting_depth": 4,
+                "token_count": 233
+              }
+            }
+          }
+        },
+        "target": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "python",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 6,
+                "function_count": 1,
+                "loc": 28,
+                "max_nesting_depth": 5,
+                "token_count": 180
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": -1,
+              "function_count": 0,
+              "loc": -7,
+              "max_nesting_depth": 1,
+              "token_count": -53
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 1,
+                "loc": 35,
+                "max_nesting_depth": 4,
+                "token_count": 233
+              }
+            }
+          }
+        }
+      },
+      "convergence_outcome": "terminated_on_failure",
+      "final_iteration_index": 1,
+      "final_similarity": {
+        "availability": "measured",
+        "value": {
+          "configured_model": "text-embedding-3-large",
+          "dimensions": 3072,
+          "observed_model": "text-embedding-3-large",
+          "provider": "openai",
+          "request_ids": {
+            "final": "req_45ae72421c774111959ebc92b634bc9d",
+            "seed": "req_be0516827ad141118b9ab0c4a60fdd0c"
+          },
+          "revision_evidence": {
+            "configured_model": "text-embedding-3-large",
+            "observed_models": {
+              "final": "text-embedding-3-large",
+              "seed": "text-embedding-3-large"
+            },
+            "request_ids": {
+              "final": "req_45ae72421c774111959ebc92b634bc9d",
+              "seed": "req_be0516827ad141118b9ab0c4a60fdd0c"
+            }
+          },
+          "score": 0.955894776708011,
+          "source_hashes": {
+            "final_source_sha256": "ada469c44b6f95c80ca4ecdccddfb804d70f455285fda69d11d301fd291c18af",
+            "seed_source_sha256": "5d97ab02930fffe89a10c83b199834648a7578f82d44979ac918dd8e8ccc0ce4"
+          },
+          "usage": {
+            "combined": {
+              "prompt_tokens": 489,
+              "total_tokens": 489
+            },
+            "final": {
+              "prompt_tokens": 246,
+              "total_tokens": 246
+            },
+            "seed": {
+              "prompt_tokens": 243,
+              "total_tokens": 243
+            }
+          }
+        }
+      },
+      "final_status": "compile_error",
+      "iteration_count": 1,
+      "moss_similarity": {
+        "availability": "measured",
+        "value": {
+          "match_url": "http://moss.stanford.edu/results/2/7209135506219/match0.html",
+          "report_url": "http://moss.stanford.edu/results/2/7209135506219",
+          "roundtrip_percentage": 32,
+          "seed_percentage": 33
+        }
+      },
+      "ordered_pair_key": "cpp->python",
+      "problem_id": "IPOP_2110",
+      "residual_similarity": {
+        "availability": "unavailable",
+        "failure": {
+          "iteration_index": 1,
+          "stage": "roundtrip_execution",
+          "status": "compile_error"
+        },
+        "reason": "residual_similarity_not_recorded"
+      },
+      "seed_language": "cpp",
+      "semantic_summary": {
+        "overall": "fail",
+        "roundtrip_cpp": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 0,
+          "message": "Compilation failed.",
+          "passed": false,
+          "status": "compile_error"
+        },
+        "target": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        }
+      },
+      "target_language": "python"
+    },
+    {
+      "artifacts": {
+        "final_execution_path": "smoke-openai-001/IPOP_2217/cpp-to-c/iterations/iter-016/execution.json",
+        "final_iteration_directory": "smoke-openai-001/IPOP_2217/cpp-to-c/iterations/iter-016",
+        "final_metrics_path": "smoke-openai-001/IPOP_2217/cpp-to-c/iterations/iter-016/metrics.json",
+        "final_similarity_path": "smoke-openai-001/IPOP_2217/cpp-to-c/final-similarity.json",
+        "run_manifest_path": "smoke-openai-001/IPOP_2217/cpp-to-c/run.json"
+      },
+      "ast_distance": {
+        "availability": "measured",
+        "value": {
+          "distance_to_roundtrip_cpp": 7,
+          "distance_to_seed_cpp": 41,
+          "parse_status": {
+            "roundtrip_cpp": "ok",
+            "seed_cpp": "ok",
+            "target": "ok"
+          },
+          "parser_failures": {},
+          "status": "ok"
+        }
+      },
+      "change_count_distance": {
+        "availability": "measured",
+        "definition": "1 cycle = C++ -> target -> C++",
+        "unit": "cpp_to_target_to_cpp_cycles",
+        "value": 16
+      },
+      "complexity_deltas": {
+        "roundtrip_cpp": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 2,
+                "loc": 26,
+                "max_nesting_depth": 3,
+                "token_count": 189
+              }
+            },
+            "delta_vs_previous": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": 0,
+              "max_nesting_depth": 0,
+              "token_count": 0
+            },
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 2,
+              "function_count": 1,
+              "loc": 2,
+              "max_nesting_depth": 1,
+              "token_count": 26
+            },
+            "metric_set": "v1",
+            "previous": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 2,
+                "loc": 26,
+                "max_nesting_depth": 3,
+                "token_count": 189
+              }
+            },
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 5,
+                "function_count": 1,
+                "loc": 24,
+                "max_nesting_depth": 2,
+                "token_count": 163
+              }
+            }
+          }
+        },
+        "target": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "c",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 2,
+                "loc": 27,
+                "max_nesting_depth": 3,
+                "token_count": 204
+              }
+            },
+            "delta_vs_previous": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": 0,
+              "max_nesting_depth": 0,
+              "token_count": 0
+            },
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 2,
+              "function_count": 1,
+              "loc": 3,
+              "max_nesting_depth": 1,
+              "token_count": 41
+            },
+            "metric_set": "v1",
+            "previous": {
+              "language": "c",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 2,
+                "loc": 27,
+                "max_nesting_depth": 3,
+                "token_count": 204
+              }
+            },
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 5,
+                "function_count": 1,
+                "loc": 24,
+                "max_nesting_depth": 2,
+                "token_count": 163
+              }
+            }
+          }
+        }
+      },
+      "convergence_outcome": "fixed_point",
+      "final_iteration_index": 16,
+      "final_similarity": {
+        "availability": "measured",
+        "value": {
+          "configured_model": "text-embedding-3-large",
+          "dimensions": 3072,
+          "observed_model": "text-embedding-3-large",
+          "provider": "openai",
+          "request_ids": {
+            "final": "req_0609557df82744df9c8d1d16ce481270",
+            "seed": "req_963c1fbd1cc14c909d7657c6fba490b4"
+          },
+          "revision_evidence": {
+            "configured_model": "text-embedding-3-large",
+            "observed_models": {
+              "final": "text-embedding-3-large",
+              "seed": "text-embedding-3-large"
+            },
+            "request_ids": {
+              "final": "req_0609557df82744df9c8d1d16ce481270",
+              "seed": "req_963c1fbd1cc14c909d7657c6fba490b4"
+            }
+          },
+          "score": 0.8801181255643991,
+          "source_hashes": {
+            "final_source_sha256": "e8c19e1ea51b18ce92adfad152e5385699b688a2298163d84915e25dd0770e4d",
+            "seed_source_sha256": "49f828824ab4abfd87d1e69bb70976883ae441e5db52dc6b15e7bffb3db3b122"
+          },
+          "usage": {
+            "combined": {
+              "prompt_tokens": 396,
+              "total_tokens": 396
+            },
+            "final": {
+              "prompt_tokens": 222,
+              "total_tokens": 222
+            },
+            "seed": {
+              "prompt_tokens": 174,
+              "total_tokens": 174
+            }
+          }
+        }
+      },
+      "final_status": "success",
+      "iteration_count": 16,
+      "moss_similarity": {
+        "availability": "measured",
+        "value": {
+          "match_url": "http://moss.stanford.edu/results/0/9202759322683/match0.html",
+          "report_url": "http://moss.stanford.edu/results/0/9202759322683",
+          "roundtrip_percentage": 26,
+          "seed_percentage": 31
+        }
+      },
+      "ordered_pair_key": "cpp->c",
+      "problem_id": "IPOP_2217",
+      "residual_similarity": {
+        "availability": "measured",
+        "value": 0.7650273224043715
+      },
+      "seed_language": "cpp",
+      "semantic_summary": {
+        "overall": "pass",
+        "roundtrip_cpp": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        },
+        "target": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        }
+      },
+      "target_language": "c"
+    },
+    {
+      "artifacts": {
+        "final_execution_path": "smoke-openai-001/IPOP_2217/cpp-to-java/iterations/iter-001/execution.json",
+        "final_iteration_directory": "smoke-openai-001/IPOP_2217/cpp-to-java/iterations/iter-001",
+        "final_metrics_path": "smoke-openai-001/IPOP_2217/cpp-to-java/iterations/iter-001/metrics.json",
+        "final_similarity_path": "smoke-openai-001/IPOP_2217/cpp-to-java/final-similarity.json",
+        "run_manifest_path": "smoke-openai-001/IPOP_2217/cpp-to-java/run.json"
+      },
+      "ast_distance": {
+        "availability": "measured",
+        "value": {
+          "distance_to_roundtrip_cpp": 109,
+          "distance_to_seed_cpp": 93,
+          "parse_status": {
+            "roundtrip_cpp": "ok",
+            "seed_cpp": "ok",
+            "target": "ok"
+          },
+          "parser_failures": {},
+          "status": "ok"
+        }
+      },
+      "change_count_distance": {
+        "availability": "measured",
+        "definition": "1 cycle = C++ -> target -> C++",
+        "unit": "cpp_to_target_to_cpp_cycles",
+        "value": 1
+      },
+      "complexity_deltas": {
+        "roundtrip_cpp": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 3,
+                "function_count": 1,
+                "loc": 9,
+                "max_nesting_depth": 2,
+                "token_count": 55
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": -2,
+              "function_count": 0,
+              "loc": -15,
+              "max_nesting_depth": 0,
+              "token_count": -108
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 5,
+                "function_count": 1,
+                "loc": 24,
+                "max_nesting_depth": 2,
+                "token_count": 163
+              }
+            }
+          }
+        },
+        "target": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "java",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 14,
+                "function_count": 4,
+                "loc": 60,
+                "max_nesting_depth": 2,
+                "token_count": 372
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 9,
+              "function_count": 3,
+              "loc": 36,
+              "max_nesting_depth": 0,
+              "token_count": 209
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 5,
+                "function_count": 1,
+                "loc": 24,
+                "max_nesting_depth": 2,
+                "token_count": 163
+              }
+            }
+          }
+        }
+      },
+      "convergence_outcome": "terminated_on_failure",
+      "final_iteration_index": 1,
+      "final_similarity": {
+        "availability": "measured",
+        "value": {
+          "configured_model": "text-embedding-3-large",
+          "dimensions": 3072,
+          "observed_model": "text-embedding-3-large",
+          "provider": "openai",
+          "request_ids": {
+            "final": "req_3abb2076217a49ac846d250661afebf5",
+            "seed": "req_911c658e732b48ffa6773d2a4de8370b"
+          },
+          "revision_evidence": {
+            "configured_model": "text-embedding-3-large",
+            "observed_models": {
+              "final": "text-embedding-3-large",
+              "seed": "text-embedding-3-large"
+            },
+            "request_ids": {
+              "final": "req_3abb2076217a49ac846d250661afebf5",
+              "seed": "req_911c658e732b48ffa6773d2a4de8370b"
+            }
+          },
+          "score": 0.1422486658268026,
+          "source_hashes": {
+            "final_source_sha256": "4407cbd595ee02f0e74cc9927e6d4e833b669121183c7ed17f352ef790556385",
+            "seed_source_sha256": "49f828824ab4abfd87d1e69bb70976883ae441e5db52dc6b15e7bffb3db3b122"
+          },
+          "usage": {
+            "combined": {
+              "prompt_tokens": 233,
+              "total_tokens": 233
+            },
+            "final": {
+              "prompt_tokens": 59,
+              "total_tokens": 59
+            },
+            "seed": {
+              "prompt_tokens": 174,
+              "total_tokens": 174
+            }
+          }
+        }
+      },
+      "final_status": "compile_error",
+      "iteration_count": 1,
+      "moss_similarity": {
+        "availability": "measured",
+        "value": {
+          "match_url": null,
+          "report_url": "http://moss.stanford.edu/results/0/2744881138588",
+          "roundtrip_percentage": 0,
+          "seed_percentage": 0
+        }
+      },
+      "ordered_pair_key": "cpp->java",
+      "problem_id": "IPOP_2217",
+      "residual_similarity": {
+        "availability": "unavailable",
+        "failure": {
+          "iteration_index": 1,
+          "stage": "roundtrip_execution",
+          "status": "compile_error"
+        },
+        "reason": "residual_similarity_not_recorded"
+      },
+      "seed_language": "cpp",
+      "semantic_summary": {
+        "overall": "fail",
+        "roundtrip_cpp": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 0,
+          "message": "Compilation failed.",
+          "passed": false,
+          "status": "compile_error"
+        },
+        "target": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        }
+      },
+      "target_language": "java"
+    },
+    {
+      "artifacts": {
+        "final_execution_path": "smoke-openai-001/IPOP_2217/cpp-to-python/iterations/iter-001/execution.json",
+        "final_iteration_directory": "smoke-openai-001/IPOP_2217/cpp-to-python/iterations/iter-001",
+        "final_metrics_path": "smoke-openai-001/IPOP_2217/cpp-to-python/iterations/iter-001/metrics.json",
+        "final_similarity_path": "smoke-openai-001/IPOP_2217/cpp-to-python/final-similarity.json",
+        "run_manifest_path": "smoke-openai-001/IPOP_2217/cpp-to-python/run.json"
+      },
+      "ast_distance": {
+        "availability": "measured",
+        "value": {
+          "distance_to_roundtrip_cpp": 54,
+          "distance_to_seed_cpp": 54,
+          "parse_status": {
+            "roundtrip_cpp": "ok",
+            "seed_cpp": "ok",
+            "target": "ok"
+          },
+          "parser_failures": {},
+          "status": "ok"
+        }
+      },
+      "change_count_distance": {
+        "availability": "measured",
+        "definition": "1 cycle = C++ -> target -> C++",
+        "unit": "cpp_to_target_to_cpp_cycles",
+        "value": 1
+      },
+      "complexity_deltas": {
+        "roundtrip_cpp": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 5,
+                "function_count": 1,
+                "loc": 18,
+                "max_nesting_depth": 4,
+                "token_count": 151
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": -6,
+              "max_nesting_depth": 2,
+              "token_count": -12
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 5,
+                "function_count": 1,
+                "loc": 24,
+                "max_nesting_depth": 2,
+                "token_count": 163
+              }
+            }
+          }
+        },
+        "target": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "python",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 4,
+                "function_count": 1,
+                "loc": 16,
+                "max_nesting_depth": 3,
+                "token_count": 113
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": -1,
+              "function_count": 0,
+              "loc": -8,
+              "max_nesting_depth": 1,
+              "token_count": -50
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 5,
+                "function_count": 1,
+                "loc": 24,
+                "max_nesting_depth": 2,
+                "token_count": 163
+              }
+            }
+          }
+        }
+      },
+      "convergence_outcome": "terminated_on_failure",
+      "final_iteration_index": 1,
+      "final_similarity": {
+        "availability": "measured",
+        "value": {
+          "configured_model": "text-embedding-3-large",
+          "dimensions": 3072,
+          "observed_model": "text-embedding-3-large",
+          "provider": "openai",
+          "request_ids": {
+            "final": "req_adc79d4f8274486d8cc4aaf80a0e13bf",
+            "seed": "req_c5e546ce99ca48409ec37a957b5853e3"
+          },
+          "revision_evidence": {
+            "configured_model": "text-embedding-3-large",
+            "observed_models": {
+              "final": "text-embedding-3-large",
+              "seed": "text-embedding-3-large"
+            },
+            "request_ids": {
+              "final": "req_adc79d4f8274486d8cc4aaf80a0e13bf",
+              "seed": "req_c5e546ce99ca48409ec37a957b5853e3"
+            }
+          },
+          "score": 0.9657652984180157,
+          "source_hashes": {
+            "final_source_sha256": "d1c6653dc795b84104de8915eab74de037700f92e086c17c8cbeacffb9424700",
+            "seed_source_sha256": "49f828824ab4abfd87d1e69bb70976883ae441e5db52dc6b15e7bffb3db3b122"
+          },
+          "usage": {
+            "combined": {
+              "prompt_tokens": 330,
+              "total_tokens": 330
+            },
+            "final": {
+              "prompt_tokens": 156,
+              "total_tokens": 156
+            },
+            "seed": {
+              "prompt_tokens": 174,
+              "total_tokens": 174
+            }
+          }
+        }
+      },
+      "final_status": "compile_error",
+      "iteration_count": 1,
+      "moss_similarity": {
+        "availability": "measured",
+        "value": {
+          "match_url": "http://moss.stanford.edu/results/1/2835522183190/match0.html",
+          "report_url": "http://moss.stanford.edu/results/1/2835522183190",
+          "roundtrip_percentage": 36,
+          "seed_percentage": 34
+        }
+      },
+      "ordered_pair_key": "cpp->python",
+      "problem_id": "IPOP_2217",
+      "residual_similarity": {
+        "availability": "unavailable",
+        "failure": {
+          "iteration_index": 1,
+          "stage": "roundtrip_execution",
+          "status": "compile_error"
+        },
+        "reason": "residual_similarity_not_recorded"
+      },
+      "seed_language": "cpp",
+      "semantic_summary": {
+        "overall": "fail",
+        "roundtrip_cpp": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 0,
+          "message": "Compilation failed.",
+          "passed": false,
+          "status": "compile_error"
+        },
+        "target": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        }
+      },
+      "target_language": "python"
+    },
+    {
+      "artifacts": {
+        "final_execution_path": "smoke-openai-001/IPOP_2579/cpp-to-c/iterations/iter-002/execution.json",
+        "final_iteration_directory": "smoke-openai-001/IPOP_2579/cpp-to-c/iterations/iter-002",
+        "final_metrics_path": "smoke-openai-001/IPOP_2579/cpp-to-c/iterations/iter-002/metrics.json",
+        "final_similarity_path": "smoke-openai-001/IPOP_2579/cpp-to-c/final-similarity.json",
+        "run_manifest_path": "smoke-openai-001/IPOP_2579/cpp-to-c/run.json"
+      },
+      "ast_distance": {
+        "availability": "measured",
+        "value": {
+          "distance_to_roundtrip_cpp": 0,
+          "distance_to_seed_cpp": 26,
+          "parse_status": {
+            "roundtrip_cpp": "ok",
+            "seed_cpp": "ok",
+            "target": "ok"
+          },
+          "parser_failures": {},
+          "status": "ok"
+        }
+      },
+      "change_count_distance": {
+        "availability": "measured",
+        "definition": "1 cycle = C++ -> target -> C++",
+        "unit": "cpp_to_target_to_cpp_cycles",
+        "value": 2
+      },
+      "complexity_deltas": {
+        "roundtrip_cpp": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 8,
+                "function_count": 2,
+                "loc": 24,
+                "max_nesting_depth": 1,
+                "token_count": 203
+              }
+            },
+            "delta_vs_previous": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": 0,
+              "max_nesting_depth": 0,
+              "token_count": 0
+            },
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 3,
+              "function_count": 1,
+              "loc": -2,
+              "max_nesting_depth": 0,
+              "token_count": 10
+            },
+            "metric_set": "v1",
+            "previous": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 8,
+                "function_count": 2,
+                "loc": 24,
+                "max_nesting_depth": 1,
+                "token_count": 203
+              }
+            },
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 5,
+                "function_count": 1,
+                "loc": 26,
+                "max_nesting_depth": 1,
+                "token_count": 193
+              }
+            }
+          }
+        },
+        "target": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "c",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 8,
+                "function_count": 2,
+                "loc": 24,
+                "max_nesting_depth": 1,
+                "token_count": 197
+              }
+            },
+            "delta_vs_previous": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": 0,
+              "max_nesting_depth": 0,
+              "token_count": 0
+            },
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 3,
+              "function_count": 1,
+              "loc": -2,
+              "max_nesting_depth": 0,
+              "token_count": 4
+            },
+            "metric_set": "v1",
+            "previous": {
+              "language": "c",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 8,
+                "function_count": 2,
+                "loc": 24,
+                "max_nesting_depth": 1,
+                "token_count": 197
+              }
+            },
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 5,
+                "function_count": 1,
+                "loc": 26,
+                "max_nesting_depth": 1,
+                "token_count": 193
+              }
+            }
+          }
+        }
+      },
+      "convergence_outcome": "fixed_point",
+      "final_iteration_index": 2,
+      "final_similarity": {
+        "availability": "measured",
+        "value": {
+          "configured_model": "text-embedding-3-large",
+          "dimensions": 3072,
+          "observed_model": "text-embedding-3-large",
+          "provider": "openai",
+          "request_ids": {
+            "final": "req_45a3d27c60f544adb53caeced9d208d0",
+            "seed": "req_f44ef62880a844a990f53b338d201b5a"
+          },
+          "revision_evidence": {
+            "configured_model": "text-embedding-3-large",
+            "observed_models": {
+              "final": "text-embedding-3-large",
+              "seed": "text-embedding-3-large"
+            },
+            "request_ids": {
+              "final": "req_45a3d27c60f544adb53caeced9d208d0",
+              "seed": "req_f44ef62880a844a990f53b338d201b5a"
+            }
+          },
+          "score": 0.8635471925821738,
+          "source_hashes": {
+            "final_source_sha256": "3642ae58a4815a57c826e842d3a675b67c8c6c399da790eb1cc4ae1f40dd76de",
+            "seed_source_sha256": "a9c573780f5c37eb78239a1209d8643ef59c03a153682e5d2e217830ed3154c7"
+          },
+          "usage": {
+            "combined": {
+              "prompt_tokens": 418,
+              "total_tokens": 418
+            },
+            "final": {
+              "prompt_tokens": 214,
+              "total_tokens": 214
+            },
+            "seed": {
+              "prompt_tokens": 204,
+              "total_tokens": 204
+            }
+          }
+        }
+      },
+      "final_status": "success",
+      "iteration_count": 2,
+      "moss_similarity": {
+        "availability": "measured",
+        "value": {
+          "match_url": "http://moss.stanford.edu/results/4/8065045395373/match0.html",
+          "report_url": "http://moss.stanford.edu/results/4/8065045395373",
+          "roundtrip_percentage": 49,
+          "seed_percentage": 52
+        }
+      },
+      "ordered_pair_key": "cpp->c",
+      "problem_id": "IPOP_2579",
+      "residual_similarity": {
+        "availability": "measured",
+        "value": 0.7821782178217822
+      },
+      "seed_language": "cpp",
+      "semantic_summary": {
+        "overall": "pass",
+        "roundtrip_cpp": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        },
+        "target": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        }
+      },
+      "target_language": "c"
+    },
+    {
+      "artifacts": {
+        "final_execution_path": "smoke-openai-001/IPOP_2579/cpp-to-java/iterations/iter-001/execution.json",
+        "final_iteration_directory": "smoke-openai-001/IPOP_2579/cpp-to-java/iterations/iter-001",
+        "final_metrics_path": "smoke-openai-001/IPOP_2579/cpp-to-java/iterations/iter-001/metrics.json",
+        "final_similarity_path": "smoke-openai-001/IPOP_2579/cpp-to-java/final-similarity.json",
+        "run_manifest_path": "smoke-openai-001/IPOP_2579/cpp-to-java/run.json"
+      },
+      "ast_distance": {
+        "availability": "unavailable",
+        "failure": {
+          "iteration_index": 1,
+          "stage": "target_to_cpp_translation",
+          "status": "parse_error"
+        },
+        "reason": "missing_roundtrip_cpp_source"
+      },
+      "change_count_distance": {
+        "availability": "measured",
+        "definition": "1 cycle = C++ -> target -> C++",
+        "unit": "cpp_to_target_to_cpp_cycles",
+        "value": 0
+      },
+      "complexity_deltas": {
+        "roundtrip_cpp": {
+          "availability": "unavailable",
+          "failure": {
+            "iteration_index": 1,
+            "stage": "target_to_cpp_translation",
+            "status": "parse_error"
+          },
+          "reason": "missing_roundtrip_cpp_source"
+        },
+        "target": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "java",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 13,
+                "function_count": 4,
+                "loc": 58,
+                "max_nesting_depth": 2,
+                "token_count": 416
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 8,
+              "function_count": 3,
+              "loc": 32,
+              "max_nesting_depth": 1,
+              "token_count": 223
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 5,
+                "function_count": 1,
+                "loc": 26,
+                "max_nesting_depth": 1,
+                "token_count": 193
+              }
+            }
+          }
+        }
+      },
+      "convergence_outcome": "terminated_on_failure",
+      "final_iteration_index": 1,
+      "final_similarity": {
+        "availability": "unavailable",
+        "details": {
+          "availability": "unavailable",
+          "computed_at": "2026-03-20T02:23:26.876929Z",
+          "configured_model": "text-embedding-3-large",
+          "dimensions": null,
+          "observed_model": null,
+          "provider": "openai",
+          "reason": "missing_final_seed_language_source",
+          "request_ids": {
+            "final": null,
+            "seed": null
+          },
+          "revision_evidence": {
+            "configured_model": "text-embedding-3-large",
+            "observed_models": {
+              "final": null,
+              "seed": null
+            },
+            "request_ids": {
+              "final": null,
+              "seed": null
+            }
+          },
+          "schema_version": "final_similarity.v1",
+          "score": null,
+          "source_artifacts": {
+            "final_roundtrip_source_path": "smoke-openai-001/IPOP_2579/cpp-to-java/iterations/iter-001/roundtrip.cpp",
+            "seed_artifact_path": "smoke-openai-001/IPOP_2579/cpp-to-java/seed/reference.cpp"
+          },
+          "source_hashes": {
+            "final_source_sha256": null,
+            "seed_source_sha256": "a9c573780f5c37eb78239a1209d8643ef59c03a153682e5d2e217830ed3154c7"
+          },
+          "usage": {
+            "combined": {},
+            "final": null,
+            "seed": null
+          }
+        },
+        "failure": {
+          "iteration_index": 1,
+          "stage": "target_to_cpp_translation",
+          "status": "parse_error"
+        },
+        "reason": "missing_final_seed_language_source"
+      },
+      "final_status": "parse_error",
+      "iteration_count": 1,
+      "moss_similarity": {
+        "availability": "unavailable",
+        "failure": {
+          "iteration_index": 1,
+          "stage": "target_to_cpp_translation",
+          "status": "parse_error"
+        },
+        "reason": "missing_roundtrip_cpp_source"
+      },
+      "ordered_pair_key": "cpp->java",
+      "problem_id": "IPOP_2579",
+      "residual_similarity": {
+        "availability": "unavailable",
+        "failure": {
+          "iteration_index": 1,
+          "stage": "target_to_cpp_translation",
+          "status": "parse_error"
+        },
+        "reason": "residual_similarity_not_recorded"
+      },
+      "seed_language": "cpp",
+      "semantic_summary": {
+        "overall": "fail",
+        "roundtrip_cpp": {
+          "available": false,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 0,
+          "message": "stage_not_executed",
+          "passed": false,
+          "status": "not_evaluated"
+        },
+        "target": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        }
+      },
+      "target_language": "java"
+    },
+    {
+      "artifacts": {
+        "final_execution_path": "smoke-openai-001/IPOP_2579/cpp-to-python/iterations/iter-001/execution.json",
+        "final_iteration_directory": "smoke-openai-001/IPOP_2579/cpp-to-python/iterations/iter-001",
+        "final_metrics_path": "smoke-openai-001/IPOP_2579/cpp-to-python/iterations/iter-001/metrics.json",
+        "final_similarity_path": "smoke-openai-001/IPOP_2579/cpp-to-python/final-similarity.json",
+        "run_manifest_path": "smoke-openai-001/IPOP_2579/cpp-to-python/run.json"
+      },
+      "ast_distance": {
+        "availability": "measured",
+        "value": {
+          "distance_to_roundtrip_cpp": 58,
+          "distance_to_seed_cpp": 49,
+          "parse_status": {
+            "roundtrip_cpp": "ok",
+            "seed_cpp": "ok",
+            "target": "ok"
+          },
+          "parser_failures": {},
+          "status": "ok"
+        }
+      },
+      "change_count_distance": {
+        "availability": "measured",
+        "definition": "1 cycle = C++ -> target -> C++",
+        "unit": "cpp_to_target_to_cpp_cycles",
+        "value": 1
+      },
+      "complexity_deltas": {
+        "roundtrip_cpp": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 1,
+                "loc": 22,
+                "max_nesting_depth": 4,
+                "token_count": 217
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 2,
+              "function_count": 0,
+              "loc": -4,
+              "max_nesting_depth": 3,
+              "token_count": 24
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 5,
+                "function_count": 1,
+                "loc": 26,
+                "max_nesting_depth": 1,
+                "token_count": 193
+              }
+            }
+          }
+        },
+        "target": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "python",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 6,
+                "function_count": 1,
+                "loc": 19,
+                "max_nesting_depth": 5,
+                "token_count": 184
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 1,
+              "function_count": 0,
+              "loc": -7,
+              "max_nesting_depth": 4,
+              "token_count": -9
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 5,
+                "function_count": 1,
+                "loc": 26,
+                "max_nesting_depth": 1,
+                "token_count": 193
+              }
+            }
+          }
+        }
+      },
+      "convergence_outcome": "terminated_on_failure",
+      "final_iteration_index": 1,
+      "final_similarity": {
+        "availability": "measured",
+        "value": {
+          "configured_model": "text-embedding-3-large",
+          "dimensions": 3072,
+          "observed_model": "text-embedding-3-large",
+          "provider": "openai",
+          "request_ids": {
+            "final": "req_1da0db8be25c499b8025a80fe48c029c",
+            "seed": "req_b9f09550e3124264b66113ad7e9efc79"
+          },
+          "revision_evidence": {
+            "configured_model": "text-embedding-3-large",
+            "observed_models": {
+              "final": "text-embedding-3-large",
+              "seed": "text-embedding-3-large"
+            },
+            "request_ids": {
+              "final": "req_1da0db8be25c499b8025a80fe48c029c",
+              "seed": "req_b9f09550e3124264b66113ad7e9efc79"
+            }
+          },
+          "score": 0.9048481338971164,
+          "source_hashes": {
+            "final_source_sha256": "f0f4a72f853042b7cf6fecef0aa3377d78e200f84fa9ca79a6da7ff08d99161f",
+            "seed_source_sha256": "a9c573780f5c37eb78239a1209d8643ef59c03a153682e5d2e217830ed3154c7"
+          },
+          "usage": {
+            "combined": {
+              "prompt_tokens": 424,
+              "total_tokens": 424
+            },
+            "final": {
+              "prompt_tokens": 220,
+              "total_tokens": 220
+            },
+            "seed": {
+              "prompt_tokens": 204,
+              "total_tokens": 204
+            }
+          }
+        }
+      },
+      "final_status": "compile_error",
+      "iteration_count": 1,
+      "moss_similarity": {
+        "availability": "measured",
+        "value": {
+          "match_url": "http://moss.stanford.edu/results/1/3669236135120/match0.html",
+          "report_url": "http://moss.stanford.edu/results/1/3669236135120",
+          "roundtrip_percentage": 53,
+          "seed_percentage": 61
+        }
+      },
+      "ordered_pair_key": "cpp->python",
+      "problem_id": "IPOP_2579",
+      "residual_similarity": {
+        "availability": "unavailable",
+        "failure": {
+          "iteration_index": 1,
+          "stage": "roundtrip_execution",
+          "status": "compile_error"
+        },
+        "reason": "residual_similarity_not_recorded"
+      },
+      "seed_language": "cpp",
+      "semantic_summary": {
+        "overall": "fail",
+        "roundtrip_cpp": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 0,
+          "message": "Compilation failed.",
+          "passed": false,
+          "status": "compile_error"
+        },
+        "target": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        }
+      },
+      "target_language": "python"
+    },
+    {
+      "artifacts": {
+        "final_execution_path": "smoke-openai-001/IPOP_5567/cpp-to-c/iterations/iter-003/execution.json",
+        "final_iteration_directory": "smoke-openai-001/IPOP_5567/cpp-to-c/iterations/iter-003",
+        "final_metrics_path": "smoke-openai-001/IPOP_5567/cpp-to-c/iterations/iter-003/metrics.json",
+        "final_similarity_path": "smoke-openai-001/IPOP_5567/cpp-to-c/final-similarity.json",
+        "run_manifest_path": "smoke-openai-001/IPOP_5567/cpp-to-c/run.json"
+      },
+      "ast_distance": {
+        "availability": "measured",
+        "value": {
+          "distance_to_roundtrip_cpp": 0,
+          "distance_to_seed_cpp": 125,
+          "parse_status": {
+            "roundtrip_cpp": "ok",
+            "seed_cpp": "ok",
+            "target": "ok"
+          },
+          "parser_failures": {},
+          "status": "ok"
+        }
+      },
+      "change_count_distance": {
+        "availability": "measured",
+        "definition": "1 cycle = C++ -> target -> C++",
+        "unit": "cpp_to_target_to_cpp_cycles",
+        "value": 3
+      },
+      "complexity_deltas": {
+        "roundtrip_cpp": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 10,
+                "function_count": 1,
+                "loc": 65,
+                "max_nesting_depth": 3,
+                "token_count": 496
+              }
+            },
+            "delta_vs_previous": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": 0,
+              "max_nesting_depth": 0,
+              "token_count": 0
+            },
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 3,
+              "function_count": 0,
+              "loc": 28,
+              "max_nesting_depth": 0,
+              "token_count": 249
+            },
+            "metric_set": "v1",
+            "previous": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 10,
+                "function_count": 1,
+                "loc": 65,
+                "max_nesting_depth": 3,
+                "token_count": 496
+              }
+            },
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 1,
+                "loc": 37,
+                "max_nesting_depth": 3,
+                "token_count": 247
+              }
+            }
+          }
+        },
+        "target": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "c",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 10,
+                "function_count": 1,
+                "loc": 65,
+                "max_nesting_depth": 3,
+                "token_count": 477
+              }
+            },
+            "delta_vs_previous": {
+              "cyclomatic_complexity": 0,
+              "function_count": 0,
+              "loc": 0,
+              "max_nesting_depth": 0,
+              "token_count": 0
+            },
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 3,
+              "function_count": 0,
+              "loc": 28,
+              "max_nesting_depth": 0,
+              "token_count": 230
+            },
+            "metric_set": "v1",
+            "previous": {
+              "language": "c",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 10,
+                "function_count": 1,
+                "loc": 65,
+                "max_nesting_depth": 3,
+                "token_count": 477
+              }
+            },
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 1,
+                "loc": 37,
+                "max_nesting_depth": 3,
+                "token_count": 247
+              }
+            }
+          }
+        }
+      },
+      "convergence_outcome": "fixed_point",
+      "final_iteration_index": 3,
+      "final_similarity": {
+        "availability": "measured",
+        "value": {
+          "configured_model": "text-embedding-3-large",
+          "dimensions": 3072,
+          "observed_model": "text-embedding-3-large",
+          "provider": "openai",
+          "request_ids": {
+            "final": "req_93c0c5352d864c2d8aa99aa20d180591",
+            "seed": "req_fd73b540472a48bf968eb319d25811d5"
+          },
+          "revision_evidence": {
+            "configured_model": "text-embedding-3-large",
+            "observed_models": {
+              "final": "text-embedding-3-large",
+              "seed": "text-embedding-3-large"
+            },
+            "request_ids": {
+              "final": "req_93c0c5352d864c2d8aa99aa20d180591",
+              "seed": "req_fd73b540472a48bf968eb319d25811d5"
+            }
+          },
+          "score": 0.860632708550832,
+          "source_hashes": {
+            "final_source_sha256": "f39d556ef10f4cd7ffb4f10b092eb9fef306b23b8063ac701458b66ecd0f4ec8",
+            "seed_source_sha256": "fae45687b11c22b933fac8bafffa872c485fd318a9baf222fe5ec3ca5533560d"
+          },
+          "usage": {
+            "combined": {
+              "prompt_tokens": 756,
+              "total_tokens": 756
+            },
+            "final": {
+              "prompt_tokens": 507,
+              "total_tokens": 507
+            },
+            "seed": {
+              "prompt_tokens": 249,
+              "total_tokens": 249
+            }
+          }
+        }
+      },
+      "final_status": "success",
+      "iteration_count": 3,
+      "moss_similarity": {
+        "availability": "measured",
+        "value": {
+          "match_url": null,
+          "report_url": "http://moss.stanford.edu/results/7/678919931847",
+          "roundtrip_percentage": 0,
+          "seed_percentage": 0
+        }
+      },
+      "ordered_pair_key": "cpp->c",
+      "problem_id": "IPOP_5567",
+      "residual_similarity": {
+        "availability": "measured",
+        "value": 0.5444887118193891
+      },
+      "seed_language": "cpp",
+      "semantic_summary": {
+        "overall": "pass",
+        "roundtrip_cpp": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        },
+        "target": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        }
+      },
+      "target_language": "c"
+    },
+    {
+      "artifacts": {
+        "final_execution_path": "smoke-openai-001/IPOP_5567/cpp-to-java/iterations/iter-001/execution.json",
+        "final_iteration_directory": "smoke-openai-001/IPOP_5567/cpp-to-java/iterations/iter-001",
+        "final_metrics_path": "smoke-openai-001/IPOP_5567/cpp-to-java/iterations/iter-001/metrics.json",
+        "final_similarity_path": "smoke-openai-001/IPOP_5567/cpp-to-java/final-similarity.json",
+        "run_manifest_path": "smoke-openai-001/IPOP_5567/cpp-to-java/run.json"
+      },
+      "ast_distance": {
+        "availability": "measured",
+        "value": {
+          "distance_to_roundtrip_cpp": 147,
+          "distance_to_seed_cpp": 121,
+          "parse_status": {
+            "roundtrip_cpp": "ok",
+            "seed_cpp": "ok",
+            "target": "ok"
+          },
+          "parser_failures": {},
+          "status": "ok"
+        }
+      },
+      "change_count_distance": {
+        "availability": "measured",
+        "definition": "1 cycle = C++ -> target -> C++",
+        "unit": "cpp_to_target_to_cpp_cycles",
+        "value": 1
+      },
+      "complexity_deltas": {
+        "roundtrip_cpp": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 4,
+                "function_count": 1,
+                "loc": 13,
+                "max_nesting_depth": 2,
+                "token_count": 83
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": -3,
+              "function_count": 0,
+              "loc": -24,
+              "max_nesting_depth": -1,
+              "token_count": -164
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 1,
+                "loc": 37,
+                "max_nesting_depth": 3,
+                "token_count": 247
+              }
+            }
+          }
+        },
+        "target": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "java",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 18,
+                "function_count": 5,
+                "loc": 75,
+                "max_nesting_depth": 4,
+                "token_count": 518
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 11,
+              "function_count": 4,
+              "loc": 38,
+              "max_nesting_depth": 1,
+              "token_count": 271
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 1,
+                "loc": 37,
+                "max_nesting_depth": 3,
+                "token_count": 247
+              }
+            }
+          }
+        }
+      },
+      "convergence_outcome": "terminated_on_failure",
+      "final_iteration_index": 1,
+      "final_similarity": {
+        "availability": "measured",
+        "value": {
+          "configured_model": "text-embedding-3-large",
+          "dimensions": 3072,
+          "observed_model": "text-embedding-3-large",
+          "provider": "openai",
+          "request_ids": {
+            "final": "req_4e1ffb76b43342f9af92f1656a7e9556",
+            "seed": "req_b317b3272f214e6abd60498ba5a4f837"
+          },
+          "revision_evidence": {
+            "configured_model": "text-embedding-3-large",
+            "observed_models": {
+              "final": "text-embedding-3-large",
+              "seed": "text-embedding-3-large"
+            },
+            "request_ids": {
+              "final": "req_4e1ffb76b43342f9af92f1656a7e9556",
+              "seed": "req_b317b3272f214e6abd60498ba5a4f837"
+            }
+          },
+          "score": 0.7558973593546963,
+          "source_hashes": {
+            "final_source_sha256": "33cc0022ad23fe87465893bd624e7e1ec1d6d59b5672ed6be4fa016c245e97b6",
+            "seed_source_sha256": "fae45687b11c22b933fac8bafffa872c485fd318a9baf222fe5ec3ca5533560d"
+          },
+          "usage": {
+            "combined": {
+              "prompt_tokens": 332,
+              "total_tokens": 332
+            },
+            "final": {
+              "prompt_tokens": 83,
+              "total_tokens": 83
+            },
+            "seed": {
+              "prompt_tokens": 249,
+              "total_tokens": 249
+            }
+          }
+        }
+      },
+      "final_status": "compile_error",
+      "iteration_count": 1,
+      "moss_similarity": {
+        "availability": "measured",
+        "value": {
+          "match_url": "http://moss.stanford.edu/results/0/2954347786466/match0.html",
+          "report_url": "http://moss.stanford.edu/results/0/2954347786466",
+          "roundtrip_percentage": 90,
+          "seed_percentage": 29
+        }
+      },
+      "ordered_pair_key": "cpp->java",
+      "problem_id": "IPOP_5567",
+      "residual_similarity": {
+        "availability": "unavailable",
+        "failure": {
+          "iteration_index": 1,
+          "stage": "roundtrip_execution",
+          "status": "compile_error"
+        },
+        "reason": "residual_similarity_not_recorded"
+      },
+      "seed_language": "cpp",
+      "semantic_summary": {
+        "overall": "fail",
+        "roundtrip_cpp": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 0,
+          "message": "Compilation failed.",
+          "passed": false,
+          "status": "compile_error"
+        },
+        "target": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        }
+      },
+      "target_language": "java"
+    },
+    {
+      "artifacts": {
+        "final_execution_path": "smoke-openai-001/IPOP_5567/cpp-to-python/iterations/iter-001/execution.json",
+        "final_iteration_directory": "smoke-openai-001/IPOP_5567/cpp-to-python/iterations/iter-001",
+        "final_metrics_path": "smoke-openai-001/IPOP_5567/cpp-to-python/iterations/iter-001/metrics.json",
+        "final_similarity_path": "smoke-openai-001/IPOP_5567/cpp-to-python/final-similarity.json",
+        "run_manifest_path": "smoke-openai-001/IPOP_5567/cpp-to-python/run.json"
+      },
+      "ast_distance": {
+        "availability": "measured",
+        "value": {
+          "distance_to_roundtrip_cpp": 103,
+          "distance_to_seed_cpp": 81,
+          "parse_status": {
+            "roundtrip_cpp": "ok",
+            "seed_cpp": "ok",
+            "target": "ok"
+          },
+          "parser_failures": {},
+          "status": "ok"
+        }
+      },
+      "change_count_distance": {
+        "availability": "measured",
+        "definition": "1 cycle = C++ -> target -> C++",
+        "unit": "cpp_to_target_to_cpp_cycles",
+        "value": 1
+      },
+      "complexity_deltas": {
+        "roundtrip_cpp": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 15,
+                "function_count": 1,
+                "loc": 42,
+                "max_nesting_depth": 7,
+                "token_count": 341
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 8,
+              "function_count": 0,
+              "loc": 5,
+              "max_nesting_depth": 4,
+              "token_count": 94
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 1,
+                "loc": 37,
+                "max_nesting_depth": 3,
+                "token_count": 247
+              }
+            }
+          }
+        },
+        "target": {
+          "availability": "measured",
+          "value": {
+            "current": {
+              "language": "python",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 8,
+                "function_count": 1,
+                "loc": 30,
+                "max_nesting_depth": 7,
+                "token_count": 223
+              }
+            },
+            "delta_vs_previous": null,
+            "delta_vs_seed_cpp": {
+              "cyclomatic_complexity": 1,
+              "function_count": 0,
+              "loc": -7,
+              "max_nesting_depth": 4,
+              "token_count": -24
+            },
+            "metric_set": "v1",
+            "previous": null,
+            "seed_cpp": {
+              "language": "cpp",
+              "metric_set": "v1",
+              "metrics": {
+                "cyclomatic_complexity": 7,
+                "function_count": 1,
+                "loc": 37,
+                "max_nesting_depth": 3,
+                "token_count": 247
+              }
+            }
+          }
+        }
+      },
+      "convergence_outcome": "terminated_on_failure",
+      "final_iteration_index": 1,
+      "final_similarity": {
+        "availability": "measured",
+        "value": {
+          "configured_model": "text-embedding-3-large",
+          "dimensions": 3072,
+          "observed_model": "text-embedding-3-large",
+          "provider": "openai",
+          "request_ids": {
+            "final": "req_f4eacb133c1e4d3eb7bb2c1cb20c48b6",
+            "seed": "req_012b1a9948154f6a8fc45acd8c46a61a"
+          },
+          "revision_evidence": {
+            "configured_model": "text-embedding-3-large",
+            "observed_models": {
+              "final": "text-embedding-3-large",
+              "seed": "text-embedding-3-large"
+            },
+            "request_ids": {
+              "final": "req_f4eacb133c1e4d3eb7bb2c1cb20c48b6",
+              "seed": "req_012b1a9948154f6a8fc45acd8c46a61a"
+            }
+          },
+          "score": 0.8605117799084097,
+          "source_hashes": {
+            "final_source_sha256": "b4580f68159543be5e2abe8e692b86cce8930e1bdf410df42dfc68e88083467a",
+            "seed_source_sha256": "fae45687b11c22b933fac8bafffa872c485fd318a9baf222fe5ec3ca5533560d"
+          },
+          "usage": {
+            "combined": {
+              "prompt_tokens": 593,
+              "total_tokens": 593
+            },
+            "final": {
+              "prompt_tokens": 344,
+              "total_tokens": 344
+            },
+            "seed": {
+              "prompt_tokens": 249,
+              "total_tokens": 249
+            }
+          }
+        }
+      },
+      "final_status": "compile_error",
+      "iteration_count": 1,
+      "moss_similarity": {
+        "availability": "measured",
+        "value": {
+          "match_url": "http://moss.stanford.edu/results/2/8862538501593/match0.html",
+          "report_url": "http://moss.stanford.edu/results/2/8862538501593",
+          "roundtrip_percentage": 37,
+          "seed_percentage": 54
+        }
+      },
+      "ordered_pair_key": "cpp->python",
+      "problem_id": "IPOP_5567",
+      "residual_similarity": {
+        "availability": "unavailable",
+        "failure": {
+          "iteration_index": 1,
+          "stage": "roundtrip_execution",
+          "status": "compile_error"
+        },
+        "reason": "residual_similarity_not_recorded"
+      },
+      "seed_language": "cpp",
+      "semantic_summary": {
+        "overall": "fail",
+        "roundtrip_cpp": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 0,
+          "message": "Compilation failed.",
+          "passed": false,
+          "status": "compile_error"
+        },
+        "target": {
+          "available": true,
+          "fixture_fail_count": 0,
+          "fixture_pass_count": 10,
+          "message": "All fixture pairs passed.",
+          "passed": true,
+          "status": "success"
+        }
+      },
+      "target_language": "python"
+    }
+  ],
+  "run_id": "smoke-openai-001",
+  "schema_version": "report_summary.v2"
+}

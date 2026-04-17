@@ -1,0 +1,85 @@
+{
+  "metadata": {
+    "run_id": "smoke",
+    "problem": {
+      "problem_id": "IPOP_1436",
+      "statement_path": "tests/fixtures/curated_problem/IPOP_1436/statement.md",
+      "fixture_input_path": "tests/fixtures/curated_problem/IPOP_1436/1.inp",
+      "fixture_output_path": "tests/fixtures/curated_problem/IPOP_1436/1.out",
+      "seed_source_path": "tests/fixtures/curated_problem/IPOP_1436/reference.cpp"
+    },
+    "seed_language": "cpp",
+    "target_language": "python",
+    "max_iterations": 20,
+    "run_directory": "smoke/IPOP_1436/cpp-to-python",
+    "run_metadata_path": "smoke/IPOP_1436/cpp-to-python/run.json"
+  },
+  "iterations": [
+    {
+      "iteration_index": 1,
+      "result": {
+        "status": "success",
+        "stage": "completed",
+        "iteration_index": 1,
+        "message": "Round-trip translation satisfied the curated sample contract.",
+        "details": {
+          "fixture_input_path": "tests/fixtures/curated_problem/IPOP_1436/1.inp",
+          "fixture_output_path": "tests/fixtures/curated_problem/IPOP_1436/1.out"
+        }
+      },
+      "artifact_paths": {
+        "iteration_directory": "smoke/IPOP_1436/cpp-to-python/iterations/iter-001",
+        "iteration_metadata_path": "smoke/IPOP_1436/cpp-to-python/iterations/iter-001/iteration.json",
+        "llm_request_path": "smoke/IPOP_1436/cpp-to-python/iterations/iter-001/llm-request.json",
+        "llm_response_path": "smoke/IPOP_1436/cpp-to-python/iterations/iter-001/llm-response.json",
+        "input_seed_source_path": "smoke/IPOP_1436/cpp-to-python/iterations/iter-001/input.cpp",
+        "translated_source_path": "smoke/IPOP_1436/cpp-to-python/iterations/iter-001/translated.py",
+        "roundtrip_source_path": "smoke/IPOP_1436/cpp-to-python/iterations/iter-001/roundtrip.cpp",
+        "compile_log_path": "smoke/IPOP_1436/cpp-to-python/iterations/iter-001/compile.log",
+        "execution_result_path": "smoke/IPOP_1436/cpp-to-python/iterations/iter-001/execution.json",
+        "metrics_path": "smoke/IPOP_1436/cpp-to-python/iterations/iter-001/metrics.json"
+      },
+      "llm_request": {
+        "model": "gpt-5.4",
+        "temperature": 0.0,
+        "messages": [
+          {
+            "role": "system",
+            "content": "Translate the provided C++ solution into Python while preserving the curated sample I/O behavior."
+          },
+          {
+            "role": "user",
+            "content": "Problem: IPOP_1436\nStatement:\nMovie Director Shom\n\nGiven N, print the Nth positive integer that contains `666`.\nSample input:\n1\nExpected output:\n666\nReference C++:\n```cpp\n#include <iostream>\n\nint main() {\n    std::cout << 666 << \"\\n\";\n    return 0;\n}\n```"
+          }
+        ],
+        "metadata": {
+          "problem_id": "IPOP_1436",
+          "seed_language": "cpp",
+          "target_language": "python",
+          "iteration_index": 1,
+          "fixture_input_path": "tests/fixtures/curated_problem/IPOP_1436/1.inp",
+          "fixture_output_path": "tests/fixtures/curated_problem/IPOP_1436/1.out"
+        }
+      },
+      "llm_response": {
+        "id": "mock-response-001",
+        "model": "gpt-5.4",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```python\nprint(666)\n```"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 123,
+          "completion_tokens": 21,
+          "total_tokens": 144
+        }
+      }
+    }
+  ]
+}

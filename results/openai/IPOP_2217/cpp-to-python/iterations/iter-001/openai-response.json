@@ -1,0 +1,40 @@
+{
+  "cpp_to_target": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "import sys\n\ndef main():\n    data = sys.stdin.buffer.read().split()\n    if not data:\n        return\n    n = int(data[0])\n    ropes = list(map(int, data[1:1 + n]))\n    ropes.sort(reverse=True)\n\n    max_weight = 0\n    for i, r in enumerate(ropes):\n        current_weight = r * (i + 1)\n        if current_weight > max_weight:\n            max_weight = current_weight\n\n    sys.stdout.write(str(max_weight) + \"\\n\")\n\nif __name__ == \"__main__\":\n    main()\n",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-DLJnnbQRRZ4QyB5A9RG43QTVukQg0",
+    "model": "gpt-5.4-2026-03-05",
+    "usage": {
+      "completion_tokens": 124,
+      "prompt_tokens": 611,
+      "total_tokens": 735
+    }
+  },
+  "target_to_cpp": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<int> ropes(n);\n    for (int i = 0; i < n; ++i) cin >> ropes[i];\n\n    sort(ropes.begin(), ropes.end(), greater<int>());\n\n    int max_weight = 0;\n    for (int i = 0; i < n; ++i) {\n        int current_weight = ropes[i] * (i + 1);\n        if (current_weight > max_weight) max_weight = current_weight;\n    }\n\n    cout << max_weight << '\\n';\n    return 0;\n}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-DLJnpscwQJSMWnidZhK8NeTvD013R",
+    "model": "gpt-5.4-2026-03-05",
+    "usage": {
+      "completion_tokens": 160,
+      "prompt_tokens": 558,
+      "total_tokens": 718
+    }
+  }
+}

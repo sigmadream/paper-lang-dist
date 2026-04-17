@@ -1,0 +1,40 @@
+{
+  "cpp_to_target": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "#include <stdio.h>\n#include <stdlib.h>\n\nstatic int cmp_desc(const void *a, const void *b) {\n    int x = *(const int *)a;\n    int y = *(const int *)b;\n    return y - x;\n}\n\nint main() {\n    int n;\n    if (scanf(\"%d\", &n) != 1) return 0;\n\n    int *ropes = (int *)malloc(sizeof(int) * n);\n    if (!ropes) return 0;\n\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &ropes[i]);\n    }\n\n    qsort(ropes, n, sizeof(int), cmp_desc);\n\n    long long max_weight = 0;\n    for (int i = 0; i < n; i++) {\n        long long current_weight = 1LL * ropes[i] * (i + 1);\n        if (current_weight > max_weight) {\n            max_weight = current_weight;\n        }\n    }\n\n    printf(\"%lld\\n\", max_weight);\n\n    free(ropes);\n    return 0;\n}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-DLJm3AUpOv2e9i6KEqEnBCN2dPXnq",
+    "model": "gpt-5.4-2026-03-05",
+    "usage": {
+      "completion_tokens": 237,
+      "prompt_tokens": 658,
+      "total_tokens": 895
+    }
+  },
+  "target_to_cpp": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "#include <cstdio>\n#include <cstdlib>\n#include <algorithm>\n\nstatic bool cmp_desc(int a, int b) {\n    return a > b;\n}\n\nint main() {\n    int n;\n    if (std::scanf(\"%d\", &n) != 1) return 0;\n\n    int *ropes = (int *)std::malloc(sizeof(int) * n);\n    if (!ropes) return 0;\n\n    for (int i = 0; i < n; i++) {\n        std::scanf(\"%d\", &ropes[i]);\n    }\n\n    std::sort(ropes, ropes + n, cmp_desc);\n\n    long long max_weight = 0;\n    for (int i = 0; i < n; i++) {\n        long long current_weight = 1LL * ropes[i] * (i + 1);\n        if (current_weight > max_weight) {\n            max_weight = current_weight;\n        }\n    }\n\n    std::printf(\"%lld\\n\", max_weight);\n\n    std::free(ropes);\n    return 0;\n}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-DLJm6rAAut9Kw0yvGMXTxA2RpeJGA",
+    "model": "gpt-5.4-2026-03-05",
+    "usage": {
+      "completion_tokens": 225,
+      "prompt_tokens": 671,
+      "total_tokens": 896
+    }
+  }
+}

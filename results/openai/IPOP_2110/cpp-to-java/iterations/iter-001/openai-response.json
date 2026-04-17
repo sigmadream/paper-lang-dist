@@ -1,0 +1,40 @@
+{
+  "cpp_to_target": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n    static class FastScanner {\n        private final InputStream in = System.in;\n        private final byte[] buffer = new byte[1 << 16];\n        private int ptr = 0, len = 0;\n\n        private int read() throws IOException {\n            if (ptr >= len) {\n                len = in.read(buffer);\n                ptr = 0;\n                if (len <= 0) return -1;\n            }\n            return buffer[ptr++];\n        }\n\n        int nextInt() throws IOException {\n            int c;\n            do {\n                c = read();\n                if (c == -1) return Integer.MIN_VALUE;\n            } while (c <= ' ');\n\n            int sign = 1;\n            if (c == '-') {\n                sign = -1;\n                c = read();\n            }\n\n            int val = 0;\n            while (c > ' ') {\n                val = val * 10 + (c - '0');\n                c = read();\n            }\n            return val * sign;\n        }\n    }\n\n    public static void main(String[] args) throws Exception {\n        FastScanner fs = new FastScanner();\n        int n = fs.nextInt();\n        int c = fs.nextInt();\n        if (n == Integer.MIN_VALUE || c == Integer.MIN_VALUE) return;\n\n        int[] a = new int[n];\n        for (int i = 0; i < n; i++) a[i] = fs.nextInt();\n\n        Arrays.sort(a);\n\n        int left = 1;\n        int right = a[n - 1] - a[0];\n        int ans = 0;\n\n        while (left <= right) {\n            int mid = left + (right - left) / 2;\n            int count = 1;\n            int prev = a[0];\n\n            for (int i = 1; i < n; i++) {\n                if (a[i] - prev >= mid) {\n                    count++;\n                    prev = a[i];\n                }\n            }\n\n            if (count >= c) {\n                ans = mid;\n                left = mid + 1;\n            } else {\n                right = mid - 1;\n            }\n        }\n\n        StringBuilder sb = new StringBuilder();\n        sb.append(ans).append('\\n');\n        System.out.print(sb.toString());\n    }\n}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-DLJlWw8fo5TjuhWWH2udpwPSZYEmM",
+    "model": "gpt-5.4-2026-03-05",
+    "usage": {
+      "completion_tokens": 490,
+      "prompt_tokens": 737,
+      "total_tokens": 1227
+    }
+  },
+  "target_to_cpp": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "#include <bits/stdc++.h>\nusing namespace std;\n\nclass FastScanner {\n    static const int BUFSIZE = 1 << 16;\n    unsigned char buffer[BUFSIZE];\n    int ptr = 0, len = 0;\n\n    int read() {\n        if (ptr >= len) {\n            len = (int)fread(buffer, 1, BUFSIZE, stdin);\n            ptr = 0;\n            if (len <= 0) return -1;\n        }\n        return buffer[ptr++];\n    }\n\npublic:\n    int nextInt() {\n        int c;\n        do {\n            c = read();\n            if (c == -1) return INT_MIN;\n        } while (c <= ' ');\n\n        int sign = 1;\n        if (c == '-') {\n            sign = -1;\n            c = read();\n        }\n\n        int val = 0;\n        while (c > ' ') {\n            val = val * 10 + (c - '0');\n            c = read();\n        }\n        return val * sign;\n    }\n};\n\nint main() {\n    FastScanner fs;\n    int n = fs.nextInt();\n    int c = fs.nextInt();\n    if (n == INT_MIN || c == INT_MIN) return 0;\n\n    vector<int> a(n);\n    for (int i = 0; i < n; i++) a[i] = fs.nextInt();\n\n    sort(a.begin(), a.end());\n\n    int left = 1;\n    int right = a[n - 1] - a[0];\n    int ans = 0;\n\n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        int count = 1;\n        int prev = a[0];\n\n        for (int i = 1; i < n; i++) {\n            if (a[i] - prev >= mid) {\n                count++;\n                prev = a[i];\n            }\n        }\n\n        if (count >= c) {\n            ans = mid;\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n\n    string output = to_string(ans);\n    output.push_back('\\n');\n    fwrite(output.c_str(), 1, output.size(), stdout);\n    return 0;\n}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-DLJlbpsDa9BMQMef5Qvdgbajmagl3",
+    "model": "gpt-5.4-2026-03-05",
+    "usage": {
+      "completion_tokens": 486,
+      "prompt_tokens": 982,
+      "total_tokens": 1468
+    }
+  }
+}

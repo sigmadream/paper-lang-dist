@@ -1,0 +1,122 @@
+{
+  "responses": [
+    {
+      "id": "ip1436-cpp-to-c",
+      "match": {
+        "direction": "seed_to_target",
+        "problem_id": "IPOP_1436",
+        "source_language": "cpp",
+        "target_language": "c"
+      },
+      "prompt_tokens": 10,
+      "completion_tokens": 20,
+      "content": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    int n;\n    if (scanf(\"%d\", &n) != 1) {\n        return 0;\n    }\n\n    int count = 0;\n    int value = 665;\n    char buffer[32];\n    while (count < n) {\n        ++value;\n        snprintf(buffer, sizeof(buffer), \"%d\", value);\n        if (strstr(buffer, \"666\") != NULL) {\n            ++count;\n        }\n    }\n\n    printf(\"%d\\n\", value);\n    return 0;\n}"
+    },
+    {
+      "id": "ip1436-cpp-to-java",
+      "match": {
+        "direction": "seed_to_target",
+        "problem_id": "IPOP_1436",
+        "source_language": "cpp",
+        "target_language": "java"
+      },
+      "prompt_tokens": 10,
+      "completion_tokens": 20,
+      "content": "import java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));\n        int n = Integer.parseInt(reader.readLine().trim());\n\n        int count = 0;\n        int value = 665;\n        while (count < n) {\n            value += 1;\n            if (Integer.toString(value).contains(\"666\")) {\n                count += 1;\n            }\n        }\n\n        System.out.println(value);\n    }\n}"
+    },
+    {
+      "id": "ip1436-cpp-to-python",
+      "match": {
+        "direction": "seed_to_target",
+        "problem_id": "IPOP_1436",
+        "source_language": "cpp",
+        "target_language": "python"
+      },
+      "prompt_tokens": 10,
+      "completion_tokens": 20,
+      "content": "import sys\n\n\ndef main() -> None:\n    data = sys.stdin.read().strip()\n    if not data:\n        return\n\n    n = int(data)\n    count = 0\n    value = 665\n    while count < n:\n        value += 1\n        if \"666\" in str(value):\n            count += 1\n\n    sys.stdout.write(f\"{value}\\n\")\n\n\nif __name__ == \"__main__\":\n    main()"
+    },
+    {
+      "id": "ip1436-roundtrip-cpp",
+      "match": {
+        "direction": "target_to_roundtrip_cpp",
+        "problem_id": "IPOP_1436",
+        "target_language": "cpp"
+      },
+      "prompt_tokens": 10,
+      "completion_tokens": 20,
+      "content": "#include <iostream>\n#include <string>\n\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    cin >> n;\n\n    int count = 0;\n    int value = 665;\n    while (count < n) {\n        ++value;\n        if (to_string(value).find(\"666\") != string::npos) {\n            ++count;\n        }\n    }\n\n    cout << value << '\\n';\n    return 0;\n}"
+    },
+    {
+      "id": "ip2579-cpp-to-c",
+      "match": {
+        "direction": "seed_to_target",
+        "problem_id": "IPOP_2579",
+        "source_language": "cpp",
+        "target_language": "c"
+      },
+      "prompt_tokens": 10,
+      "completion_tokens": 20,
+      "content": "#include <stdio.h>\n\nint main(void) {\n    int n;\n    if (scanf(\"%d\", &n) != 1) {\n        return 0;\n    }\n\n    int score[301] = {0};\n    int dp[301] = {0};\n    for (int index = 1; index <= n; ++index) {\n        scanf(\"%d\", &score[index]);\n    }\n\n    if (n >= 1) {\n        dp[1] = score[1];\n    }\n    if (n >= 2) {\n        dp[2] = score[1] + score[2];\n    }\n    for (int index = 3; index <= n; ++index) {\n        int skip_previous = dp[index - 2];\n        int take_previous = dp[index - 3] + score[index - 1];\n        dp[index] = (skip_previous > take_previous ? skip_previous : take_previous) + score[index];\n    }\n\n    printf(\"%d\\n\", dp[n]);\n    return 0;\n}"
+    },
+    {
+      "id": "ip2579-cpp-to-java",
+      "match": {
+        "direction": "seed_to_target",
+        "problem_id": "IPOP_2579",
+        "source_language": "cpp",
+        "target_language": "java"
+      },
+      "prompt_tokens": 10,
+      "completion_tokens": 20,
+      "content": "import java.io.BufferedReader;\nimport java.io.InputStreamReader;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));\n        int n = Integer.parseInt(reader.readLine().trim());\n\n        int[] score = new int[n + 1];\n        int[] dp = new int[n + 1];\n        for (int index = 1; index <= n; ++index) {\n            score[index] = Integer.parseInt(reader.readLine().trim());\n        }\n\n        if (n >= 1) {\n            dp[1] = score[1];\n        }\n        if (n >= 2) {\n            dp[2] = score[1] + score[2];\n        }\n        for (int index = 3; index <= n; ++index) {\n            dp[index] = Math.max(dp[index - 2], dp[index - 3] + score[index - 1]) + score[index];\n        }\n\n        System.out.println(dp[n]);\n    }\n}"
+    },
+    {
+      "id": "ip2579-cpp-to-python",
+      "match": {
+        "direction": "seed_to_target",
+        "problem_id": "IPOP_2579",
+        "source_language": "cpp",
+        "target_language": "python"
+      },
+      "prompt_tokens": 10,
+      "completion_tokens": 20,
+      "content": "import sys\n\n\ndef main() -> None:\n    data = sys.stdin.read().strip().split()\n    if not data:\n        return\n\n    n = int(data[0])\n    values = [0] + [int(value) for value in data[1:1 + n]]\n    dp = [0] * (n + 1)\n\n    if n >= 1:\n        dp[1] = values[1]\n    if n >= 2:\n        dp[2] = values[1] + values[2]\n    for index in range(3, n + 1):\n        dp[index] = max(dp[index - 2], dp[index - 3] + values[index - 1]) + values[index]\n\n    sys.stdout.write(f\"{dp[n]}\\n\")\n\n\nif __name__ == \"__main__\":\n    main()"
+    },
+    {
+      "id": "ip2579-roundtrip-cpp",
+      "match": {
+        "direction": "target_to_roundtrip_cpp",
+        "problem_id": "IPOP_2579",
+        "target_language": "cpp"
+      },
+      "prompt_tokens": 10,
+      "completion_tokens": 20,
+      "content": "#include <algorithm>\n#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    cin >> n;\n\n    vector<int> score(n + 1, 0);\n    vector<int> dp(n + 1, 0);\n    for (int index = 1; index <= n; ++index) {\n        cin >> score[index];\n    }\n\n    if (n >= 1) {\n        dp[1] = score[1];\n    }\n    if (n >= 2) {\n        dp[2] = score[1] + score[2];\n    }\n    for (int index = 3; index <= n; ++index) {\n        dp[index] = max(dp[index - 2], dp[index - 3] + score[index - 1]) + score[index];\n    }\n\n    cout << dp[n] << '\\n';\n    return 0;\n}"
+    },
+    {
+      "id": "ip1436-python-to-cpp",
+      "match": {
+        "direction": "seed_to_target",
+        "problem_id": "IPOP_1436",
+        "source_language": "python",
+        "target_language": "cpp"
+      },
+      "prompt_tokens": 10,
+      "completion_tokens": 20,
+      "content": "#include <iostream>\n#include <string>\n\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    cin >> n;\n\n    int count = 0;\n    int value = 665;\n    while (count < n) {\n        ++value;\n        if (to_string(value).find(\"666\") != string::npos) {\n            ++count;\n        }\n    }\n\n    cout << value << '\\n';\n    return 0;\n}"
+    },
+    {
+      "id": "ip1436-cpp-to-python-roundtrip",
+      "match": {
+        "direction": "target_to_roundtrip_cpp",
+        "problem_id": "IPOP_1436",
+        "source_language": "cpp",
+        "target_language": "python"
+      },
+      "prompt_tokens": 10,
+      "completion_tokens": 20,
+      "content": "import sys\n\n\ndef main() -> None:\n    data = sys.stdin.read().strip()\n    if not data:\n        return\n\n    n = int(data)\n    count = 0\n    value = 665\n    while count < n:\n        value += 1\n        if \"666\" in str(value):\n            count += 1\n\n    sys.stdout.write(f\"{value}\\n\")\n\n\nif __name__ == \"__main__\":\n    main()"
+    }
+  ]
+}

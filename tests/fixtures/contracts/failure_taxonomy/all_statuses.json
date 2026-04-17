@@ -1,0 +1,92 @@
+[
+  {
+    "status": "success",
+    "stage": "completed",
+    "iteration_index": 1,
+    "message": "Round-trip translation satisfied the curated sample contract.",
+    "details": {
+      "sample_output_file": "tests/fixtures/curated_problem/IPOP_1436/1.out"
+    }
+  },
+  {
+    "status": "api_error",
+    "stage": "translation",
+    "iteration_index": 2,
+    "message": "LLM API request failed due to a transport outage.",
+    "details": {
+      "error_type": "LMStudioClientError",
+      "error": "connection reset"
+    }
+  },
+  {
+    "status": "parse_error",
+    "stage": "translation",
+    "iteration_index": 2,
+    "message": "LLM response parsing failed for fenced code extraction.",
+    "details": {
+      "error_type": "LMStudioResponseParseError",
+      "error": "missing choices"
+    }
+  },
+  {
+    "status": "compile_error",
+    "stage": "compile",
+    "iteration_index": 2,
+    "message": "Translated source failed to compile for the target language.",
+    "details": {
+      "compiler": "javac",
+      "log_path": "smoke/IPOP_1436/java/iterations/iter-002/compile.log"
+    }
+  },
+  {
+    "status": "runtime_error",
+    "stage": "execution",
+    "iteration_index": 3,
+    "message": "Program exited with a runtime error while running fixtures.",
+    "details": {
+      "exit_code": 1,
+      "stderr": "segmentation fault"
+    }
+  },
+  {
+    "status": "wrong_answer",
+    "stage": "execution",
+    "iteration_index": 3,
+    "message": "Program output did not match the curated sample output.",
+    "details": {
+      "expected_output_path": "tests/fixtures/curated_problem/IPOP_1436/1.out",
+      "actual_output": "667"
+    }
+  },
+  {
+    "status": "timeout",
+    "stage": "execution",
+    "iteration_index": 4,
+    "message": "Program exceeded the configured execution timeout.",
+    "details": {
+      "timeout_seconds": 30
+    }
+  },
+  {
+    "status": "oscillation",
+    "stage": "convergence",
+    "iteration_index": 6,
+    "message": "Normalized round-trip hashes repeated with period 2.",
+    "details": {
+      "hash_cycle": [
+        "hash-a",
+        "hash-b",
+        "hash-a"
+      ]
+    }
+  },
+  {
+    "status": "max_iter_no_convergence",
+    "stage": "convergence",
+    "iteration_index": 20,
+    "message": "Iteration cap was reached before convergence.",
+    "details": {
+      "max_iterations": 20
+    }
+  }
+]

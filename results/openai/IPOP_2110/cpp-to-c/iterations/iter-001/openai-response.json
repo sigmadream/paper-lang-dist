@@ -1,0 +1,40 @@
+{
+  "cpp_to_target": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "#include <stdio.h>\n#include <stdlib.h>\n\nstatic int cmp_int(const void *a, const void *b) {\n    int x = *(const int *)a;\n    int y = *(const int *)b;\n    if (x < y) return -1;\n    if (x > y) return 1;\n    return 0;\n}\n\nint main(void) {\n    int n, c;\n    if (scanf(\"%d %d\", &n, &c) != 2) return 0;\n\n    int *a = (int *)malloc((size_t)n * sizeof(int));\n    if (!a) return 0;\n\n    for (int i = 0; i < n; i++) scanf(\"%d\", &a[i]);\n\n    qsort(a, (size_t)n, sizeof(int), cmp_int);\n\n    int left = 1;\n    int right = a[n - 1] - a[0];\n    int ans = 0;\n\n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        int count = 1;\n        int prev = a[0];\n\n        for (int i = 1; i < n; i++) {\n            if (a[i] - prev >= mid) {\n                count++;\n                prev = a[i];\n            }\n        }\n\n        if (count >= c) {\n            ans = mid;\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n\n    printf(\"%d\\n\", ans);\n\n    free(a);\n    return 0;\n}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-DLJkzLzL1hLthH7H2mDPEeo8xVWGn",
+    "model": "gpt-5.4-2026-03-05",
+    "usage": {
+      "completion_tokens": 338,
+      "prompt_tokens": 737,
+      "total_tokens": 1075
+    }
+  },
+  "target_to_cpp": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "#include <cstdio>\n#include <cstdlib>\n#include <algorithm>\n\nint main() {\n    int n, c;\n    if (std::scanf(\"%d %d\", &n, &c) != 2) return 0;\n\n    int *a = (int *)std::malloc((size_t)n * sizeof(int));\n    if (!a) return 0;\n\n    for (int i = 0; i < n; i++) std::scanf(\"%d\", &a[i]);\n\n    std::sort(a, a + n);\n\n    int left = 1;\n    int right = a[n - 1] - a[0];\n    int ans = 0;\n\n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        int count = 1;\n        int prev = a[0];\n\n        for (int i = 1; i < n; i++) {\n            if (a[i] - prev >= mid) {\n                count++;\n                prev = a[i];\n            }\n        }\n\n        if (count >= c) {\n            ans = mid;\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n\n    std::printf(\"%d\\n\", ans);\n\n    std::free(a);\n    return 0;\n}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-DLJl3fKHC0KsVhfD02CFvYZwgwhMj",
+    "model": "gpt-5.4-2026-03-05",
+    "usage": {
+      "completion_tokens": 280,
+      "prompt_tokens": 830,
+      "total_tokens": 1110
+    }
+  }
+}
