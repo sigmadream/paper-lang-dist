@@ -17,16 +17,9 @@ from rttdist.artifacts import (
 )
 from rttdist.config import ExperimentConfig, reference_filename_for_language
 from rttdist.corpus import ProblemCorpusEntry
-from rttdist.embedding import (
-    EmbeddedSource,
-    EmbeddingProvider,
-    EmbeddingProviderError,
-    cosine_similarity,
-    hash_source_text,
-)
 from rttdist.exec import ExecutionBatchResult, ExecutionStatus, evaluate_source
 from rttdist.failure_taxonomy import FailureRecord, FailureStatus
-from rttdist.fixed_point import classify_dual_cpp_histories, compute_residual_similarity
+from rttdist.fixed_point import classify_cpp_history
 from rttdist.lmstudio_client import (
     LMStudioClientError,
     LMStudioResponseParseError,
@@ -127,26 +120,35 @@ def run_rtt_loop(
     problem: ProblemCorpusEntry,
     target_language: str,
     translation_client: TranslationClientProtocol | None = None,
-    final_similarity_provider: EmbeddingProvider | None = None,
     evaluate_source_fn: EvaluateSourceProtocol = evaluate_source,
     timestamp_provider: TimestampProvider | None = None,
 ) -> RTTRunResult:
     now = timestamp_provider or _utcnow
+    language_route = _build_language_route(
+        seed_language=config.seed_language,
+        intermediate_languages=config.target_languages,
+    )
+    route_terminal_language = language_route[-2]
+    route_key = "->".join(language_route)
 
     problem_reference = _build_curated_problem_reference(problem)
     metadata = build_run_metadata(
         run_id=run_id,
         problem=problem_reference,
-        target_language=target_language,
+        target_language=route_terminal_language,
         seed_language=config.seed_language,
         max_iterations=config.runtime.max_iterations,
     ).to_dict()
+    metadata["language_route"] = list(language_route)
+    metadata["route_key"] = route_key
+    metadata["experiment_unit"] = "rtt_cycle"
+
     run_directory, run_manifest_path = _select_run_paths_for_resume(
         output_root=config.output_root,
         run_id=run_id,
         problem_id=problem.problem_id,
         seed_language=config.seed_language,
-        target_language=target_language,
+        target_language=route_terminal_language,
     )
     run_directory_relative = run_directory.relative_to(
         config.output_root.resolve()
@@ -164,13 +166,9 @@ def run_rtt_loop(
     )
 
     statement = problem.statement_path.read_text(encoding="utf-8").strip()
-    sample_input = (
-        problem.fixture_pairs[0].input_path.read_text(encoding="utf-8").strip()
-    )
-    sample_output = (
-        problem.fixture_pairs[0].output_path.read_text(encoding="utf-8").strip()
-    )
-    seed_cpp_source = problem.seed_path.read_text(encoding="utf-8").rstrip()
+    sample_input = problem.fixture_pairs[0].input_path.read_text(encoding="utf-8").strip()
+    sample_output = problem.fixture_pairs[0].output_path.read_text(encoding="utf-8").strip()
+    seed_source = problem.seed_path.read_text(encoding="utf-8").rstrip()
 
     resume_plan = plan_run_resume(
         run_manifest_path=run_manifest_path,
@@ -180,49 +178,39 @@ def run_rtt_loop(
         checksums=build_manifest_checksums(
             config=config,
             prompt_template_version=PROMPT_TEMPLATE_VERSION,
-            seed_source=seed_cpp_source,
+            seed_source=seed_source,
         ),
-        seed_cpp_source=seed_cpp_source,
+        seed_cpp_source=seed_source,
         created_at=_to_iso(now()),
     )
     manifest = resume_plan.manifest
     manifest_metadata = manifest.get("metadata")
     if not isinstance(manifest_metadata, dict):
         raise RTTLoopError("Run manifest metadata is missing or invalid.")
+    manifest_metadata["language_route"] = list(language_route)
+    manifest_metadata["route_key"] = route_key
+    manifest_metadata["experiment_unit"] = "rtt_cycle"
+
     seed_artifact_path = _ensure_seed_source_artifact(
         output_root=config.output_root,
         run_directory=run_directory,
-        seed_cpp_source=seed_cpp_source,
+        seed_cpp_source=seed_source,
         seed_language=config.seed_language,
     )
-    seed_artifact_path_changed = (
-        manifest_metadata.get("seed_artifact_path") != seed_artifact_path
-    )
-    if seed_artifact_path_changed:
+    if manifest_metadata.get("seed_artifact_path") != seed_artifact_path:
         manifest_metadata["seed_artifact_path"] = seed_artifact_path
 
     current_seed_source = resume_plan.current_seed_source
     seed_source_history = list(resume_plan.seed_source_history)
-    target_source_history = list(resume_plan.target_source_history)
     previous_status = resume_plan.previous_status
     final_record: FailureRecord | None = resume_plan.final_record
 
     if final_record is not None:
-        _persist_final_similarity_artifact(
-            config=config,
-            run_directory=run_directory,
-            manifest=manifest,
-            final_similarity_provider=final_similarity_provider
-            or _build_final_similarity_provider(config),
-            seed_cpp_source=seed_cpp_source,
-            now=now,
-        )
-        if seed_artifact_path_changed:
-            _write_json(run_manifest_path, manifest)
+        _write_json(run_manifest_path, manifest)
         return RTTRunResult(
             run_id=run_id,
             problem_id=problem.problem_id,
-            target_language=target_language,
+            target_language=route_terminal_language,
             iteration_count=len(manifest["iterations"]),
             final_record=final_record,
             run_manifest_path=run_manifest_path,
@@ -238,267 +226,203 @@ def run_rtt_loop(
         iteration_paths = build_iteration_artifact_paths(
             run_id=run_id,
             problem_id=problem.problem_id,
-            target_language=target_language,
+            target_language=route_terminal_language,
             seed_language=config.seed_language,
             iteration_index=iteration_index,
         )
         iteration_started_at = _to_iso(now())
-
-        llm_request_payload: dict[str, Any] = {
-            "cpp_to_target": None,
-            "target_to_cpp": None,
-        }
-        llm_response_payload: dict[str, Any] = {
-            "cpp_to_target": None,
-            "target_to_cpp": None,
-        }
-        execution_payload: dict[str, Any] = {
-            "target": None,
-            "roundtrip_cpp": None,
-        }
+        iteration_directory = resolve_contract_path(
+            config.output_root, iteration_paths.iteration_directory
+        )
+        route_steps = _build_route_steps(language_route)
+        llm_request_payload: dict[str, Any] = {}
+        llm_response_payload: dict[str, Any] = {}
+        execution_payload: dict[str, Any] = {"steps": [], "target": None, "roundtrip_cpp": None}
         metric_payload: dict[str, Any] = {
-            "residual_similarity": None,
-            "convergence": {
-                "seed_state": "continue",
-                "target_state": "continue",
-                "overall": "continue",
-            },
+            "rtt_distance": None,
+            "convergence": {"seed_state": "continue", "overall": "continue"},
             "convergence_status": "continue",
+            "language_route": list(language_route),
         }
         iteration_record: FailureRecord | None = None
+        route_step_records: list[dict[str, Any]] = []
+        produced_by_language: dict[str, str] = {}
+        current_source = current_seed_source
+        roundtrip_source = ""
+        final_intermediate_source = ""
 
-        target_source = ""
-        roundtrip_cpp_source = ""
-        target_evaluation: ExecutionBatchResult | None = None
-        roundtrip_evaluation: ExecutionBatchResult | None = None
-
-        try:
-            cpp_to_target = _translate_with_explicit_languages(
-                client,
-                problem_id=problem.problem_id,
-                source_language=config.seed_language,
-                target_language=target_language,
-                problem_statement=statement,
-                sample_input=sample_input,
-                sample_output=sample_output,
-                source_code=current_seed_source,
-                iteration_index=iteration_index,
-                direction="seed_to_target",
+        for step_index, source_language, next_language in route_steps:
+            step_key = _route_step_key(step_index, source_language, next_language)
+            llm_request_payload[step_key] = None
+            llm_response_payload[step_key] = None
+            source_path = _route_step_source_path(
+                output_root=config.output_root,
+                iteration_directory=iteration_directory,
+                iteration_paths=iteration_paths,
+                step_index=step_index,
+                language=next_language,
+                is_final_seed_step=next_language == config.seed_language,
+                is_terminal_intermediate=step_index == len(route_steps) - 1,
             )
-            llm_request_payload["cpp_to_target"] = cpp_to_target.request.to_dict()
-            llm_response_payload["cpp_to_target"] = cpp_to_target.response.to_dict()
-            target_source = cpp_to_target.extracted_source.rstrip()
-        except Exception as exc:
-            _capture_translation_debug_payloads(
-                exc=exc,
-                request_slot="cpp_to_target",
-                response_slot="cpp_to_target",
-                request_payloads=llm_request_payload,
-                response_payloads=llm_response_payload,
-            )
-            iteration_record = _failure_from_translation_exception(
-                exc=exc,
-                iteration_index=iteration_index,
-                stage="cpp_to_target_translation",
-            )
-
-        if iteration_record is None:
-            target_source_path = resolve_contract_path(
-                config.output_root, iteration_paths.translated_source_path
-            )
-            _write_text(target_source_path, f"{target_source}\n")
-
+            relative_source_path = source_path.relative_to(config.output_root.resolve()).as_posix()
             try:
-                target_evaluation = evaluate_source_fn(
-                    language=target_language,
-                    source_path=target_source_path,
-                    problem=problem,
-                    workspace_root=run_directory,
-                    timeout_seconds=config.runtime.timeout_seconds,
-                )
-                execution_payload["target"] = _execution_batch_to_dict(
-                    result=target_evaluation,
-                    output_root=config.output_root,
-                    iteration_paths=iteration_paths,
-                    stage_name="target",
-                )
-            except Exception as exc:
-                iteration_record = _failure_from_runtime_exception(
-                    exc=exc,
-                    iteration_index=iteration_index,
-                    stage="target_execution",
-                    message="Target program evaluation failed unexpectedly.",
-                )
-
-        if iteration_record is None:
-            if target_evaluation is None:
-                raise RTTLoopError("Internal error: target evaluation missing.")
-            target_failure = _failure_from_execution_result(
-                result=target_evaluation,
-                iteration_index=iteration_index,
-                stage="target_execution",
-            )
-            if target_failure is not None:
-                iteration_record = target_failure
-
-        if iteration_record is None:
-            try:
-                target_to_cpp = _translate_with_explicit_languages(
+                translation = _translate_with_explicit_languages(
                     client,
                     problem_id=problem.problem_id,
-                    source_language=target_language,
-                    target_language=config.seed_language,
+                    source_language=source_language,
+                    target_language=next_language,
                     problem_statement=statement,
                     sample_input=sample_input,
                     sample_output=sample_output,
-                    source_code=target_source,
+                    source_code=current_source,
                     iteration_index=iteration_index,
-                    direction="target_to_roundtrip_cpp",
+                    direction=step_key,
                 )
-                llm_request_payload["target_to_cpp"] = (
-                    target_to_cpp.request.to_dict()
-                )
-                llm_response_payload["target_to_cpp"] = (
-                    target_to_cpp.response.to_dict()
-                )
-                roundtrip_cpp_source = target_to_cpp.extracted_source.rstrip()
+                llm_request_payload[step_key] = translation.request.to_dict()
+                llm_response_payload[step_key] = translation.response.to_dict()
+                translated_source = translation.extracted_source.rstrip()
+                _write_text(source_path, f"{translated_source}\n")
             except Exception as exc:
                 _capture_translation_debug_payloads(
                     exc=exc,
-                    request_slot="target_to_cpp",
-                    response_slot="target_to_cpp",
+                    request_slot=step_key,
+                    response_slot=step_key,
                     request_payloads=llm_request_payload,
                     response_payloads=llm_response_payload,
                 )
                 iteration_record = _failure_from_translation_exception(
                     exc=exc,
                     iteration_index=iteration_index,
-                    stage="target_to_cpp_translation",
+                    stage=f"{step_key}_translation",
                 )
+                translated_source = ""
 
-        if iteration_record is None:
-            roundtrip_source_path = resolve_contract_path(
-                config.output_root, iteration_paths.roundtrip_source_path
-            )
-            _write_text(roundtrip_source_path, f"{roundtrip_cpp_source}\n")
+            route_step_record = {
+                "step_index": step_index,
+                "source_language": source_language,
+                "target_language": next_language,
+                "direction": step_key,
+                "source_path": relative_source_path,
+                "request_key": step_key,
+                "response_key": step_key,
+                "execution_key": None,
+            }
+            route_step_records.append(route_step_record)
 
+            if iteration_record is not None:
+                break
+
+            execution_key = "roundtrip_cpp" if next_language == config.seed_language else f"step_{step_index:03d}_{next_language}"
+            route_step_record["execution_key"] = execution_key
             try:
-                roundtrip_evaluation = evaluate_source_fn(
-                    language=config.seed_language,
-                    source_path=roundtrip_source_path,
+                evaluation = evaluate_source_fn(
+                    language=next_language,
+                    source_path=source_path,
                     problem=problem,
                     workspace_root=run_directory,
                     timeout_seconds=config.runtime.timeout_seconds,
                 )
-                execution_payload["roundtrip_cpp"] = _execution_batch_to_dict(
-                    result=roundtrip_evaluation,
+                execution_result = _execution_batch_to_dict(
+                    result=evaluation,
                     output_root=config.output_root,
                     iteration_paths=iteration_paths,
-                    stage_name="roundtrip_cpp",
+                    stage_name=execution_key,
                 )
+                execution_payload[execution_key] = execution_result
+                execution_payload["steps"].append(execution_result)
             except Exception as exc:
                 iteration_record = _failure_from_runtime_exception(
                     exc=exc,
                     iteration_index=iteration_index,
-                    stage="roundtrip_execution",
-                    message="Roundtrip C++ evaluation failed unexpectedly.",
+                    stage=f"{step_key}_execution",
+                    message="RTT route step evaluation failed unexpectedly.",
                 )
+                break
+
+            step_failure = _failure_from_execution_result(
+                result=evaluation,
+                iteration_index=iteration_index,
+                stage=f"{step_key}_execution",
+            )
+            if step_failure is not None:
+                iteration_record = step_failure
+                break
+
+            current_source = translated_source
+            produced_by_language[next_language] = translated_source
+            if next_language == config.seed_language:
+                roundtrip_source = translated_source
+            else:
+                final_intermediate_source = translated_source
+                execution_payload["target"] = execution_payload[execution_key]
 
         if iteration_record is None:
-            if roundtrip_evaluation is None:
-                raise RTTLoopError("Internal error: roundtrip evaluation missing.")
-            roundtrip_failure = _failure_from_execution_result(
-                result=roundtrip_evaluation,
-                iteration_index=iteration_index,
-                stage="roundtrip_execution",
-            )
-            if roundtrip_failure is not None:
-                iteration_record = roundtrip_failure
-            else:
-                target_source_history.append(target_source)
-                seed_source_history.append(roundtrip_cpp_source)
-                residual_similarity = compute_residual_similarity(
-                    seed_cpp_source=seed_cpp_source,
-                    candidate_cpp_source=roundtrip_cpp_source,
-                )
-                convergence = classify_dual_cpp_histories(
-                    seed_source_history=seed_source_history,
-                    target_source_history=target_source_history,
-                )
-                metric_payload = {
-                    "residual_similarity": residual_similarity,
-                    "convergence": {
-                        "seed_state": convergence.seed_state,
-                        "target_state": convergence.target_state,
-                        "overall": convergence.overall,
+            seed_source_history.append(roundtrip_source)
+            convergence_status = classify_cpp_history(seed_source_history)
+            completed_cycles = len(seed_source_history) - 1
+            metric_payload = {
+                "rtt_distance": {
+                    "availability": "measured",
+                    "value": completed_cycles,
+                    "unit": "completed_full_routes",
+                    "definition": "one route = " + route_key,
+                },
+                "convergence": {
+                    "seed_state": convergence_status,
+                    "overall": convergence_status,
+                },
+                "convergence_status": convergence_status,
+                "language_route": list(language_route),
+            }
+            if convergence_status == "fixed_point":
+                iteration_record = FailureRecord(
+                    status=FailureStatus.SUCCESS,
+                    stage="convergence",
+                    iteration_index=iteration_index,
+                    message="Fixed point reached after a complete RTT language route.",
+                    details={
+                        "convergence_status": "fixed_point",
+                        "convergence": metric_payload["convergence"],
+                        "language_route": list(language_route),
                     },
-                    "convergence_status": convergence.overall,
-                }
-
-                if convergence.overall == "fixed_point":
-                    iteration_record = FailureRecord(
-                        status=FailureStatus.SUCCESS,
-                        stage="convergence",
-                        iteration_index=iteration_index,
-                        message="Fixed point reached for both seed and target histories.",
-                        details={
-                            "convergence_status": "fixed_point",
-                            "convergence": metric_payload["convergence"],
-                        },
-                    )
-                elif convergence.overall == "oscillation":
-                    iteration_record = FailureRecord(
-                        status=FailureStatus.OSCILLATION,
-                        stage="convergence",
-                        iteration_index=iteration_index,
-                        message="Detected oscillation before dual-state fixed point convergence.",
-                        details={
-                            "convergence_status": "oscillation",
-                            "convergence": metric_payload["convergence"],
-                        },
-                    )
-                else:
-                    iteration_record = FailureRecord(
-                        status=FailureStatus.SUCCESS,
-                        stage="iteration",
-                        iteration_index=iteration_index,
-                        message="Iteration completed; dual-state convergence still in progress.",
-                        details={
-                            "convergence_status": "continue",
-                            "convergence": metric_payload["convergence"],
-                        },
-                    )
-                    current_seed_source = roundtrip_cpp_source
+                )
+            elif convergence_status == "oscillation":
+                iteration_record = FailureRecord(
+                    status=FailureStatus.OSCILLATION,
+                    stage="convergence",
+                    iteration_index=iteration_index,
+                    message="Detected oscillation before RTT route fixed point convergence.",
+                    details={
+                        "convergence_status": "oscillation",
+                        "convergence": metric_payload["convergence"],
+                        "language_route": list(language_route),
+                    },
+                )
+            else:
+                iteration_record = FailureRecord(
+                    status=FailureStatus.SUCCESS,
+                    stage="iteration",
+                    iteration_index=iteration_index,
+                    message="Full RTT route completed; convergence still in progress.",
+                    details={
+                        "convergence_status": "continue",
+                        "convergence": metric_payload["convergence"],
+                        "language_route": list(language_route),
+                    },
+                )
+                current_seed_source = roundtrip_source
 
         if iteration_record is None:
             raise RTTLoopError("Internal error: final record was not produced.")
-        assert iteration_record is not None
 
-        if llm_request_payload["cpp_to_target"] is None:
-            llm_request_payload["cpp_to_target"] = {
-                "error": "request unavailable due to upstream failure"
-            }
-        if llm_response_payload["cpp_to_target"] is None:
-            llm_response_payload["cpp_to_target"] = {
-                "error": "response unavailable due to upstream failure"
-            }
-        if llm_request_payload["target_to_cpp"] is None:
-            llm_request_payload["target_to_cpp"] = {
-                "error": "request unavailable due to early termination"
-            }
-        if llm_response_payload["target_to_cpp"] is None:
-            llm_response_payload["target_to_cpp"] = {
-                "error": "response unavailable due to early termination"
-            }
-
-        target_source_path = resolve_contract_path(
+        input_seed_source_path = resolve_contract_path(
+            config.output_root, iteration_paths.input_seed_source_path
+        )
+        translated_source_path = resolve_contract_path(
             config.output_root, iteration_paths.translated_source_path
         )
         roundtrip_source_path = resolve_contract_path(
             config.output_root, iteration_paths.roundtrip_source_path
-        )
-        input_seed_source_path = resolve_contract_path(
-            config.output_root, iteration_paths.input_seed_source_path
         )
         compile_log_path = resolve_contract_path(
             config.output_root, iteration_paths.compile_log_path
@@ -506,29 +430,22 @@ def run_rtt_loop(
         execution_result_path = resolve_contract_path(
             config.output_root, iteration_paths.execution_result_path
         )
-        metrics_path = resolve_contract_path(
-            config.output_root, iteration_paths.metrics_path
-        )
-        request_path = resolve_contract_path(
-            config.output_root, iteration_paths.llm_request_path
-        )
-        response_path = resolve_contract_path(
-            config.output_root, iteration_paths.llm_response_path
-        )
+        metrics_path = resolve_contract_path(config.output_root, iteration_paths.metrics_path)
+        request_path = resolve_contract_path(config.output_root, iteration_paths.llm_request_path)
+        response_path = resolve_contract_path(config.output_root, iteration_paths.llm_response_path)
         iteration_metadata_path = resolve_contract_path(
             config.output_root, iteration_paths.iteration_metadata_path
         )
 
         _write_text(input_seed_source_path, f"{iteration_input_seed_source}\n")
-        _write_text(target_source_path, f"{target_source}\n")
-        _write_text(roundtrip_source_path, f"{roundtrip_cpp_source}\n")
-        _write_json(request_path, llm_request_payload)
-        _write_json(response_path, llm_response_payload)
+        _write_text(translated_source_path, f"{final_intermediate_source}\n")
+        _write_text(roundtrip_source_path, f"{roundtrip_source}\n")
+        _write_json(request_path, _fill_missing_payloads(llm_request_payload, "request unavailable"))
+        _write_json(response_path, _fill_missing_payloads(llm_response_payload, "response unavailable"))
         _write_compile_log(
             output_root=config.output_root,
             compile_log_path=compile_log_path,
-            target_execution=execution_payload.get("target"),
-            roundtrip_execution=execution_payload.get("roundtrip_cpp"),
+            execution_payload=execution_payload,
         )
         _write_json(execution_result_path, execution_payload)
         _write_json(metrics_path, metric_payload)
@@ -543,14 +460,13 @@ def run_rtt_loop(
                 status=FailureStatus.MAX_ITER_NO_CONVERGENCE,
                 stage="convergence",
                 iteration_index=iteration_index,
-                message="Iteration cap reached before convergence.",
+                message="Iteration cap reached before RTT route convergence.",
                 details={
                     "max_iterations": config.runtime.max_iterations,
-                    "last_residual_similarity": metric_payload["residual_similarity"],
                     "convergence_status": "continue",
                     "convergence": metric_payload["convergence"],
                     "seed_history_length": len(seed_source_history),
-                    "target_history_length": len(target_source_history),
+                    "language_route": list(language_route),
                 },
             )
             iteration_status = iteration_record.status
@@ -561,6 +477,7 @@ def run_rtt_loop(
             "ended_at": _to_iso(now()),
             "result": iteration_record.to_dict(),
             "artifact_paths": iteration_paths.to_dict(),
+            "route_steps": route_step_records,
         }
         _write_json(iteration_metadata_path, iteration_payload)
 
@@ -570,7 +487,8 @@ def run_rtt_loop(
                 "timestamp": _to_iso(now()),
                 "problem_id": problem.problem_id,
                 "seed_language": config.seed_language,
-                "target_language": target_language,
+                "target_language": route_terminal_language,
+                "route_key": route_key,
                 "iteration_index": iteration_index,
                 "from_status": previous_status,
                 "to_status": iteration_status.value,
@@ -595,11 +513,9 @@ def run_rtt_loop(
             iteration_status == FailureStatus.SUCCESS
             and _overall_convergence_status(iteration_record) == "fixed_point"
         )
-        if should_stop:
-            final_record = iteration_record
-            break
-
         final_record = iteration_record
+        if should_stop:
+            break
 
     if final_record is None:
         raise RTTLoopError("Internal error: loop completed without a final record.")
@@ -607,21 +523,12 @@ def run_rtt_loop(
     manifest["final"] = final_record.to_dict()
     manifest["metadata"]["ended_at"] = _to_iso(now())
     manifest["metadata"]["updated_at"] = manifest["metadata"]["ended_at"]
-    _persist_final_similarity_artifact(
-        config=config,
-        run_directory=run_directory,
-        manifest=manifest,
-        final_similarity_provider=final_similarity_provider
-        or _build_final_similarity_provider(config),
-        seed_cpp_source=seed_cpp_source,
-        now=now,
-    )
     _write_json(run_manifest_path, manifest)
 
     return RTTRunResult(
         run_id=run_id,
         problem_id=problem.problem_id,
-        target_language=target_language,
+        target_language=route_terminal_language,
         iteration_count=len(manifest["iterations"]),
         final_record=final_record,
         run_manifest_path=run_manifest_path,
@@ -635,36 +542,28 @@ def run_pipeline_service(
     run_id: str,
     corpus_entries: Sequence[ProblemCorpusEntry],
     translation_client_factory: Callable[[], TranslationClientProtocol] | None = None,
-    final_similarity_provider_factory: Callable[[], EmbeddingProvider | None]
-    | None = None,
     evaluate_source_fn: EvaluateSourceProtocol = evaluate_source,
     timestamp_provider: TimestampProvider | None = None,
 ) -> tuple[RTTRunResult, ...]:
     results: list[RTTRunResult] = []
+    route_terminal_language = config.target_languages[-1]
     for problem in corpus_entries:
-        for target_language in config.target_languages:
-            client = (
-                translation_client_factory()
-                if translation_client_factory is not None
-                else None
+        client = (
+            translation_client_factory()
+            if translation_client_factory is not None
+            else None
+        )
+        results.append(
+            run_rtt_loop(
+                config=config,
+                run_id=run_id,
+                problem=problem,
+                target_language=route_terminal_language,
+                translation_client=client,
+                evaluate_source_fn=evaluate_source_fn,
+                timestamp_provider=timestamp_provider,
             )
-            final_similarity_provider = (
-                final_similarity_provider_factory()
-                if final_similarity_provider_factory is not None
-                else None
-            )
-            results.append(
-                run_rtt_loop(
-                    config=config,
-                    run_id=run_id,
-                    problem=problem,
-                    target_language=target_language,
-                    translation_client=client,
-                    final_similarity_provider=final_similarity_provider,
-                    evaluate_source_fn=evaluate_source_fn,
-                    timestamp_provider=timestamp_provider,
-                )
-            )
+        )
     return tuple(results)
 
 
@@ -678,287 +577,63 @@ def _build_translation_client(config: ExperimentConfig) -> TranslationClientProt
     raise RTTLoopError(f"Unsupported translation provider: {config.provider}")
 
 
-def _build_final_similarity_provider(
-    config: ExperimentConfig,
-) -> EmbeddingProvider | None:
-    return None
+def _build_language_route(
+    *, seed_language: str, intermediate_languages: Sequence[str]
+) -> tuple[str, ...]:
+    route = (seed_language, *tuple(intermediate_languages), seed_language)
+    if len(route) < 3:
+        raise RTTLoopError("RTT route requires at least one intermediate language.")
+    for left, right in zip(route, route[1:]):
+        if left == right:
+            raise RTTLoopError(
+                f"RTT route contains adjacent duplicate language: {left!r}."
+            )
+    return route
 
 
-def _persist_final_similarity_artifact(
+def _build_route_steps(language_route: Sequence[str]) -> list[tuple[int, str, str]]:
+    return [
+        (index, source_language, target_language)
+        for index, (source_language, target_language) in enumerate(
+            zip(language_route, language_route[1:]), start=1
+        )
+    ]
+
+
+def _route_step_key(step_index: int, source_language: str, target_language: str) -> str:
+    return f"step_{step_index:03d}_{source_language}_to_{target_language}"
+
+
+def _route_step_source_path(
     *,
-    config: ExperimentConfig,
-    run_directory: Path,
-    manifest: dict[str, Any],
-    final_similarity_provider: EmbeddingProvider | None,
-    seed_cpp_source: str,
-    now: TimestampProvider,
-) -> None:
-    metadata = manifest.get("metadata")
-    if not isinstance(metadata, dict):
-        raise RTTLoopError("Run manifest metadata is missing or invalid.")
+    output_root: Path,
+    iteration_directory: Path,
+    iteration_paths: Any,
+    step_index: int,
+    language: str,
+    is_final_seed_step: bool,
+    is_terminal_intermediate: bool,
+) -> Path:
+    if is_final_seed_step:
+        return resolve_contract_path(output_root, iteration_paths.roundtrip_source_path)
+    if is_terminal_intermediate:
+        return resolve_contract_path(output_root, iteration_paths.translated_source_path)
+    return iteration_directory / "steps" / f"step-{step_index:03d}{_source_extension(language)}"
 
-    default_relative_path = (
-        run_directory.relative_to(config.output_root.resolve())
-        / "final-similarity.json"
-    ).as_posix()
-    relative_path = metadata.get("final_similarity_artifact_path")
-    if not isinstance(relative_path, str) or not relative_path.strip():
-        relative_path = default_relative_path
-        metadata["final_similarity_artifact_path"] = relative_path
-    artifact_path = resolve_contract_path(config.output_root, relative_path)
 
-    final_source, final_source_path = _load_final_roundtrip_source_for_similarity(
-        output_root=config.output_root,
-        manifest=manifest,
-    )
-
-    source_hashes = {
-        "seed_source_sha256": hash_source_text(seed_cpp_source),
-        "final_source_sha256": None
-        if final_source is None
-        else hash_source_text(final_source),
-    }
-
-    existing_artifact = _load_json_if_exists(artifact_path)
-    if isinstance(existing_artifact, dict):
-        if existing_artifact.get("source_hashes") == source_hashes:
-            return
-
-    if final_source is None:
-        payload = _build_unavailable_final_similarity_payload(
-            reason="missing_final_seed_language_source",
-            source_hashes=source_hashes,
-            seed_artifact_path=metadata.get("seed_artifact_path"),
-            final_roundtrip_source_path=final_source_path,
-            provider=final_similarity_provider,
-            now=now,
-        )
-        _write_json(artifact_path, payload)
-        return
-
-    if final_similarity_provider is None:
-        payload = _build_unavailable_final_similarity_payload(
-            reason="embedding_provider_not_configured",
-            source_hashes=source_hashes,
-            seed_artifact_path=metadata.get("seed_artifact_path"),
-            final_roundtrip_source_path=final_source_path,
-            provider=None,
-            now=now,
-        )
-        _write_json(artifact_path, payload)
-        return
-
+def _source_extension(language: str) -> str:
+    extension_by_language = {"cpp": ".cpp", "c": ".c", "java": ".java", "python": ".py"}
     try:
-        seed_embedding = final_similarity_provider.embed_source(
-            source_text=seed_cpp_source
-        )
-        final_embedding = final_similarity_provider.embed_source(
-            source_text=final_source
-        )
-        if seed_embedding.provider != final_embedding.provider:
-            raise EmbeddingProviderError(
-                "Final similarity requires one embedding provider for both sources."
-            )
-        if seed_embedding.configured_model != final_embedding.configured_model:
-            raise EmbeddingProviderError(
-                "Final similarity requires one configured embedding model."
-            )
-        if seed_embedding.dimensions != final_embedding.dimensions:
-            raise EmbeddingProviderError(
-                "Final similarity requires equal embedding dimensions."
-            )
-
-        score = cosine_similarity(seed_embedding.vector, final_embedding.vector)
-        payload = _build_measured_final_similarity_payload(
-            score=score,
-            source_hashes=source_hashes,
-            seed_embedding=seed_embedding,
-            final_embedding=final_embedding,
-            seed_artifact_path=metadata.get("seed_artifact_path"),
-            final_roundtrip_source_path=final_source_path,
-            now=now,
-        )
-    except Exception as exc:
-        payload = _build_unavailable_final_similarity_payload(
-            reason="embedding_measurement_failed",
-            source_hashes=source_hashes,
-            seed_artifact_path=metadata.get("seed_artifact_path"),
-            final_roundtrip_source_path=final_source_path,
-            provider=final_similarity_provider,
-            now=now,
-            details={
-                "error_type": type(exc).__name__,
-                "error": str(exc),
-            },
-        )
-    _write_json(artifact_path, payload)
+        return extension_by_language[language]
+    except KeyError as exc:
+        raise RTTLoopError(f"Unsupported route language: {language!r}.") from exc
 
 
-def _build_measured_final_similarity_payload(
-    *,
-    score: float,
-    source_hashes: dict[str, Any],
-    seed_embedding: EmbeddedSource,
-    final_embedding: EmbeddedSource,
-    seed_artifact_path: Any,
-    final_roundtrip_source_path: str | None,
-    now: TimestampProvider,
-) -> dict[str, Any]:
-    seed_usage = (
-        None if seed_embedding.usage is None else seed_embedding.usage.to_dict()
-    )
-    final_usage = (
-        None if final_embedding.usage is None else final_embedding.usage.to_dict()
-    )
-    combined_usage: dict[str, int] = {}
-    prompt_total = _sum_optional_ints(
-        None if seed_usage is None else seed_usage.get("prompt_tokens"),
-        None if final_usage is None else final_usage.get("prompt_tokens"),
-    )
-    total_tokens = _sum_optional_ints(
-        None if seed_usage is None else seed_usage.get("total_tokens"),
-        None if final_usage is None else final_usage.get("total_tokens"),
-    )
-    if prompt_total is not None:
-        combined_usage["prompt_tokens"] = prompt_total
-    if total_tokens is not None:
-        combined_usage["total_tokens"] = total_tokens
-
-    observed_model: str | None = None
-    if seed_embedding.observed_model == final_embedding.observed_model:
-        observed_model = seed_embedding.observed_model
-
+def _fill_missing_payloads(payloads: dict[str, Any], message: str) -> dict[str, Any]:
     return {
-        "schema_version": "final_similarity.v1",
-        "computed_at": _to_iso(now()),
-        "availability": "measured",
-        "score": float(score),
-        "provider": seed_embedding.provider,
-        "configured_model": seed_embedding.configured_model,
-        "observed_model": observed_model,
-        "dimensions": seed_embedding.dimensions,
-        "usage": {
-            "seed": seed_usage,
-            "final": final_usage,
-            "combined": combined_usage,
-        },
-        "request_ids": {
-            "seed": seed_embedding.request_id,
-            "final": final_embedding.request_id,
-        },
-        "source_hashes": source_hashes,
-        "source_artifacts": {
-            "seed_artifact_path": seed_artifact_path,
-            "final_roundtrip_source_path": final_roundtrip_source_path,
-        },
-        "revision_evidence": {
-            "configured_model": seed_embedding.configured_model,
-            "observed_models": {
-                "seed": seed_embedding.observed_model,
-                "final": final_embedding.observed_model,
-            },
-            "request_ids": {
-                "seed": seed_embedding.request_id,
-                "final": final_embedding.request_id,
-            },
-        },
+        key: ({"error": message} if value is None else value)
+        for key, value in payloads.items()
     }
-
-
-def _build_unavailable_final_similarity_payload(
-    *,
-    reason: str,
-    source_hashes: dict[str, Any],
-    seed_artifact_path: Any,
-    final_roundtrip_source_path: str | None,
-    provider: EmbeddingProvider | None,
-    now: TimestampProvider,
-    details: dict[str, Any] | None = None,
-) -> dict[str, Any]:
-    payload: dict[str, Any] = {
-        "schema_version": "final_similarity.v1",
-        "computed_at": _to_iso(now()),
-        "availability": "unavailable",
-        "reason": reason,
-        "score": None,
-        "provider": None if provider is None else provider.provider_name,
-        "configured_model": None if provider is None else provider.configured_model,
-        "observed_model": None,
-        "dimensions": None,
-        "usage": {
-            "seed": None,
-            "final": None,
-            "combined": {},
-        },
-        "request_ids": {
-            "seed": None,
-            "final": None,
-        },
-        "source_hashes": source_hashes,
-        "source_artifacts": {
-            "seed_artifact_path": seed_artifact_path,
-            "final_roundtrip_source_path": final_roundtrip_source_path,
-        },
-        "revision_evidence": {
-            "configured_model": None if provider is None else provider.configured_model,
-            "observed_models": {
-                "seed": None,
-                "final": None,
-            },
-            "request_ids": {
-                "seed": None,
-                "final": None,
-            },
-        },
-    }
-    if details is not None:
-        payload["details"] = details
-    return payload
-
-
-def _load_final_roundtrip_source_for_similarity(
-    *, output_root: Path, manifest: dict[str, Any]
-) -> tuple[str | None, str | None]:
-    iterations = manifest.get("iterations")
-    if not isinstance(iterations, list) or not iterations:
-        return None, None
-
-    last_iteration = iterations[-1]
-    if not isinstance(last_iteration, dict):
-        return None, None
-    artifact_paths = last_iteration.get("artifact_paths")
-    if not isinstance(artifact_paths, dict):
-        return None, None
-
-    roundtrip_path = artifact_paths.get("roundtrip_source_path")
-    if not isinstance(roundtrip_path, str) or not roundtrip_path.strip():
-        return None, None
-    path = resolve_contract_path(output_root, roundtrip_path)
-    if not path.is_file():
-        return None, roundtrip_path
-    source = path.read_text(encoding="utf-8").rstrip()
-    if not source.strip():
-        return None, roundtrip_path
-    return source, roundtrip_path
-
-
-def _load_json_if_exists(path: Path) -> dict[str, Any] | None:
-    if not path.is_file():
-        return None
-    payload = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(payload, dict):
-        return None
-    return payload
-
-
-def _sum_optional_ints(left: Any, right: Any) -> int | None:
-    values: list[int] = []
-    for item in (left, right):
-        if isinstance(item, int) and not isinstance(item, bool):
-            values.append(item)
-    if not values:
-        return None
-    return sum(values)
 
 
 def _build_curated_problem_reference(
@@ -1050,6 +725,7 @@ def _execution_batch_to_dict(
         )
 
     return {
+        "stage_name": stage_name,
         "language": result.language,
         "problem_id": result.problem_id,
         "status": result.status.value,
@@ -1074,16 +750,17 @@ def _write_compile_log(
     *,
     output_root: Path,
     compile_log_path: Path,
-    target_execution: dict[str, Any] | None,
-    roundtrip_execution: dict[str, Any] | None,
+    execution_payload: dict[str, Any],
 ) -> None:
-    target_log = _extract_compile_log_text(target_execution, output_root=output_root)
-    roundtrip_log = _extract_compile_log_text(
-        roundtrip_execution, output_root=output_root
-    )
-
-    log_text = f"[target]\n{target_log}\n[roundtrip_cpp]\n{roundtrip_log}\n"
-    _write_text(compile_log_path, log_text)
+    sections: list[str] = []
+    for step in execution_payload.get("steps", []):
+        if not isinstance(step, dict):
+            continue
+        stage = str(step.get("stage_name") or step.get("language") or "step")
+        sections.append(f"[{stage}]\n{_extract_compile_log_text(step, output_root=output_root)}")
+    if not sections:
+        sections.append("[rtt]\ncompile log unavailable")
+    _write_text(compile_log_path, "\n".join(sections) + "\n")
 
 
 def _extract_compile_log_text(

@@ -94,7 +94,6 @@ def test_report_generation_writes_stable_summary_files_from_persisted_run_artifa
     assert success_entry["convergence_outcome"] == "fixed_point"
     assert success_entry["residual_similarity"]["availability"] == "measured"
     assert success_entry["semantic_summary"]["overall"] == "pass"
-    assert success_entry["ast_distance"]["availability"] == "measured"
     assert success_entry["complexity_deltas"]["target"]["availability"] == "measured"
     assert (
         success_entry["artifacts"]["run_manifest_path"]
@@ -119,7 +118,6 @@ def test_report_generation_writes_stable_summary_files_from_persisted_run_artifa
             "iteration_index": 1,
         },
     }
-    assert failure_entry["ast_distance"]["availability"] == "unavailable"
     assert failure_entry["complexity_deltas"]["target"]["availability"] == "unavailable"
     assert (
         failure_entry["complexity_deltas"]["roundtrip_cpp"]["availability"]
@@ -174,10 +172,7 @@ def test_report_generation_writes_stable_summary_files_from_persisted_run_artifa
     regenerated_by_target_language = {
         entry["target_language"]: entry for entry in regenerated_summary["results"]
     }
-    assert (
-        regenerated_by_target_language["c"]["ast_distance"]["availability"]
-        == "measured"
-    )
+    assert regenerated_by_target_language["c"]["final_status"] == "success"
 
 
 def test_report_generation_offline_embedding_artifact(

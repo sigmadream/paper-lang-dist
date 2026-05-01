@@ -12,7 +12,7 @@ from rttdist.artifacts import (
     MockLLMResponse,
     MockLLMUsage,
 )
-from rttdist.config import ExperimentConfig, LMStudioConfig, LMStudioConfig, RuntimeConfig
+from rttdist.config import ExperimentConfig, LMStudioConfig, RuntimeConfig
 from rttdist.corpus import FixturePair, ProblemCorpusEntry
 from rttdist.exec.adapters import (
     ExecutionBatchResult,
@@ -113,7 +113,7 @@ def test_idempotent_rerun_without_translation_work_does_not_construct_lmstudio_c
     assert second_result.final_record.status.value == "success"
 
 
-def test_run_uses_lmstudio_client_when_provider_is_ollama(
+def test_run_uses_lmstudio_client_when_provider_is_lmstudio(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -130,13 +130,13 @@ def test_run_uses_lmstudio_client_when_provider_is_ollama(
         lmstudio=LMStudioConfig(
             model="qwen2.5-coder:7b",
             temperature=0.0,
-            host="http://localhost:11434",
+            host="http://localhost:1234/v1",
         ),
     )
-    problem = _build_problem_entry(tmp_path, problem_id="IPOP_OLLAMA_SELECTION")
+    problem = _build_problem_entry(tmp_path, problem_id="IPOP_LMSTUDIO_SELECTION")
     created: list[dict[str, object]] = []
 
-    class FakeOllamaClient(TrackingTranslationClient):
+    class FakeLMStudioClient(TrackingTranslationClient):
         def __init__(self, **kwargs: object) -> None:
             created.append(dict(kwargs))
             super().__init__(
@@ -144,11 +144,11 @@ def test_run_uses_lmstudio_client_when_provider_is_ollama(
                 roundtrip_sources=["int main(){return 0;}", "int main(){return 0;}"],
             )
 
-    monkeypatch.setattr(pipeline_module, "LMStudioTranslationClient", FakeOllamaClient)
+    monkeypatch.setattr(pipeline_module, "LMStudioTranslationClient", FakeLMStudioClient)
 
     result = run_rtt_loop(
         config=config,
-        run_id="ollama-selection",
+        run_id="lmstudio-selection",
         problem=problem,
         target_language="python",
         translation_client=None,
@@ -160,7 +160,7 @@ def test_run_uses_lmstudio_client_when_provider_is_ollama(
         {
             "model": "qwen2.5-coder:7b",
             "temperature": 0.0,
-            "host": "http://localhost:11434",
+            "host": "http://localhost:1234/v1",
         }
     ]
 

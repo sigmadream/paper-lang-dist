@@ -26,7 +26,7 @@ class _RunResultStub:
     run_manifest_path: Path
 
 
-def test_schema_version_summary_fields_include_status_iterations_semantics_ast_and_complexity(
+def test_schema_version_summary_fields_include_status_iterations_semantics_and_complexity(
     tmp_path: Path,
 ) -> None:
     output_root = tmp_path / "artifacts"
@@ -143,8 +143,6 @@ def test_schema_version_summary_fields_include_status_iterations_semantics_ast_a
     }
     assert entry["semantic_summary"]["overall"] == "pass"
     assert entry["semantic_summary"]["target"]["status"] == "success"
-    assert entry["ast_distance"]["availability"] == "measured"
-    assert entry["ast_distance"]["value"]["distance_to_seed_cpp"] is not None
     assert entry["complexity_deltas"]["target"]["availability"] == "measured"
     assert (
         entry["complexity_deltas"]["target"]["value"]["delta_vs_previous"] is not None
@@ -213,7 +211,6 @@ def test_schema_version_summary_fields_include_status_iterations_semantics_ast_a
     assert "Change-count distance (1 cycle = C++ -> target -> C++): 2" in markdown
     assert "Residual similarity to seed C++: 1.000000" in markdown
     assert "Semantic summary: pass" in markdown
-    assert "AST distance:" in markdown
     assert "Target complexity deltas:" in markdown
 
 
@@ -282,24 +279,7 @@ def test_failed_metric_inputs_are_rendered_explicitly_in_summary_outputs(
             "iteration_index": 1,
         },
     }
-    assert entry["ast_distance"] == {
-        "availability": "unavailable",
-        "reason": "missing_target_source",
-        "failure": {
-            "status": "api_error",
-            "stage": "cpp_to_target_translation",
-            "iteration_index": 1,
-        },
-    }
     assert entry["complexity_deltas"]["target"] == {
-        "availability": "unavailable",
-        "reason": "missing_target_source",
-        "failure": {
-            "status": "api_error",
-            "stage": "cpp_to_target_translation",
-            "iteration_index": 1,
-        },
-    }
     assert entry["complexity_deltas"]["roundtrip_cpp"] == {
         "availability": "unavailable",
         "reason": "missing_roundtrip_cpp_source",
@@ -316,9 +296,6 @@ def test_failed_metric_inputs_are_rendered_explicitly_in_summary_outputs(
     assert (
         "Residual similarity to seed C++: unavailable (api_error at cpp_to_target_translation)"
         in markdown
-    )
-    assert (
-        "AST distance: unavailable (api_error at cpp_to_target_translation)" in markdown
     )
     assert (
         "Roundtrip C++ complexity deltas: unavailable (api_error at cpp_to_target_translation)"

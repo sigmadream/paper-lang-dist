@@ -8,7 +8,6 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any, Sequence
 
 from rttdist.artifacts import ArtifactContractError, resolve_contract_path
-from rttdist.ast_metrics import compute_roundtrip_ast_distance_metrics
 from rttdist.config import SUPPORTED_TARGET_LANGUAGES
 from rttdist.failure_taxonomy import FailureRecord, failure_record_from_dict
 from rttdist.metrics import MetricExtractionError, compute_metric_deltas
@@ -153,15 +152,15 @@ def render_run_summary_markdown(summary: dict[str, Any]) -> str:
     if include_moss:
         lines.extend(
             [
-                "| Problem | Ordered pair | Final status | Iterations | Change-count distance | Convergence | Residual similarity | MOSS similarity | Semantic | AST distance to seed |",
-                "| --- | --- | --- | ---: | ---: | --- | --- | --- | --- | --- |",
+                "| Problem | Ordered pair | Final status | Iterations | Change-count distance | Convergence | Residual similarity | MOSS similarity | Semantic |",
+                "| --- | --- | --- | ---: | ---: | --- | --- | --- |",
             ]
         )
     else:
         lines.extend(
             [
-                "| Problem | Ordered pair | Final status | Iterations | Change-count distance | Convergence | Residual similarity | Semantic | AST distance to seed |",
-                "| --- | --- | --- | ---: | ---: | --- | --- | --- | --- |",
+                "| Problem | Ordered pair | Final status | Iterations | Change-count distance | Convergence | Residual similarity | Semantic |",
+                "| --- | --- | --- | ---: | ---: | --- | --- | --- |",
             ]
         )
     for entry in results:
@@ -176,18 +175,17 @@ def render_run_summary_markdown(summary: dict[str, Any]) -> str:
             "convergence": entry["convergence_outcome"],
             "residual": _format_measurement(entry["residual_similarity"]),
             "semantic": entry["semantic_summary"]["overall"],
-            "ast": _format_ast_seed_distance(entry["ast_distance"]),
         }
         if include_moss:
             row_values["moss"] = _format_moss_measurement(entry.get("moss_similarity"))
             lines.append(
-                "| {problem} | {ordered_pair} | {status} | {iterations} | {change_distance} | {convergence} | {residual} | {moss} | {semantic} | {ast} |".format(
+                "| {problem} | {ordered_pair} | {status} | {iterations} | {change_distance} | {convergence} | {residual} | {moss} | {semantic} |".format(
                     **row_values
                 )
             )
         else:
             lines.append(
-                "| {problem} | {ordered_pair} | {status} | {iterations} | {change_distance} | {convergence} | {residual} | {semantic} | {ast} |".format(
+                "| {problem} | {ordered_pair} | {status} | {iterations} | {change_distance} | {convergence} | {residual} | {semantic} |".format(
                     **row_values
                 )
             )
@@ -291,7 +289,6 @@ def render_run_summary_markdown(summary: dict[str, Any]) -> str:
                     f"(target={entry['semantic_summary']['target']['status']}, "
                     f"roundtrip_cpp={entry['semantic_summary']['roundtrip_cpp']['status']})"
                 ),
-                f"- AST distance: {_format_ast_distance(entry['ast_distance'])}",
                 (
                     "- Target complexity deltas: "
                     f"{_format_complexity_measurement(entry['complexity_deltas']['target'])}"
@@ -494,13 +491,6 @@ def _build_summary_entry(
         ),
         "final_similarity": final_similarity,
         "semantic_summary": semantic_summary,
-        "ast_distance": _build_ast_distance_summary(
-            seed_cpp_source=seed_source,
-            target_language=target_language,
-            target_source=translated_source,
-            roundtrip_cpp_source=roundtrip_source,
-            failure_record=final_record,
-        ),
         "complexity_deltas": {
             "target": _build_complexity_delta_summary(
                 current_language=target_language,
@@ -929,44 +919,6 @@ def _count_completed_rtt_cycles(*, output_root: Path, iterations: list[Any]) -> 
     return completed
 
 
-def _build_ast_distance_summary(
-    *,
-    seed_cpp_source: str | None,
-    target_language: str,
-    target_source: str | None,
-    roundtrip_cpp_source: str | None,
-    failure_record: FailureRecord,
-) -> dict[str, Any]:
-    missing_source_reason = _missing_metric_input_reason(
-        seed_cpp_source=seed_cpp_source,
-        target_source=target_source,
-        roundtrip_cpp_source=roundtrip_cpp_source,
-    )
-    if missing_source_reason is not None:
-        return _unavailable_measurement(
-            reason=missing_source_reason,
-            failure_record=failure_record,
-        )
-
-    if seed_cpp_source is None or target_source is None or roundtrip_cpp_source is None:
-        raise ReportingError(
-            "AST distance inputs unexpectedly missing after validation."
-        )
-
-    ast_distance = compute_roundtrip_ast_distance_metrics(
-        seed_cpp_source=seed_cpp_source,
-        target_language=target_language,
-        target_source=target_source,
-        roundtrip_cpp_source=roundtrip_cpp_source,
-    )
-    if ast_distance.status != "ok":
-        return _unavailable_measurement(
-            reason="ast_parser_failure",
-            details=ast_distance.to_dict(),
-        )
-    return _measured_measurement(ast_distance.to_dict())
-
-
 def _build_complexity_delta_summary(
     *,
     current_language: str,
@@ -1196,24 +1148,6 @@ def _format_measurement(measurement: dict[str, Any]) -> str:
         failure_stage = failure.get("stage", "unknown")
         return f"unavailable ({failure_status} at {failure_stage})"
     return f"unavailable ({measurement.get('reason', 'unknown')})"
-
-
-def _format_ast_seed_distance(measurement: dict[str, Any]) -> str:
-    if measurement.get("availability") != "measured":
-        return _format_measurement(measurement)
-    value = _require_mapping(measurement.get("value"), field_name="ast_distance.value")
-    return str(value.get("distance_to_seed_cpp"))
-
-
-def _format_ast_distance(measurement: dict[str, Any]) -> str:
-    if measurement.get("availability") != "measured":
-        return _format_measurement(measurement)
-
-    value = _require_mapping(measurement.get("value"), field_name="ast_distance.value")
-    return "distance_to_seed_cpp={seed}, distance_to_roundtrip_cpp={roundtrip}".format(
-        seed=value.get("distance_to_seed_cpp"),
-        roundtrip=value.get("distance_to_roundtrip_cpp"),
-    )
 
 
 def _format_change_count_distance(measurement: dict[str, Any]) -> str:
