@@ -1,28 +1,21 @@
 # RTT Language Distance Experiment Tool
 
-C++ 기준 해법을 여러 언어 경로로 번역한 뒤 다시 C++로 닫는 **RTT(Round-Trip Translation) 실험 도구**입니다.
-이 저장소는 실제 실험용 저장소이므로 현재 실행 경로는 **LM Studio + RTT route**만 남겨두었습니다.
-
-예를 들어 설정이 아래와 같다면:
+> C++ 기준 해법을 여러 언어 경로로 번역한 뒤 다시 C++로 닫는 RTT(Round-Trip Translation) 실험 도구입니다.
 
 ```yaml
 seed_language: cpp
 target_languages: [c, java, python]
 ```
 
-한 사이클은 다음처럼 닫힙니다.
+`target_languages`는 혼합 경로가 아니라 독립 실험 대상 목록입니다. 따라서 위 설정은 아래 3개 RTT 실험을 각각 실행합니다.
 
 ```text
-cpp -> c -> java -> python -> cpp'
+cpp -> c -> cpp'
+cpp -> java -> cpp'
+cpp -> python -> cpp'
 ```
 
-이 경우:
-
-- `RTT cycle count`: 1
-- `translation_count_per_cycle`: 4
-- `completed_translation_count`: 실제 완료된 변환 단계 수
-
-즉, **A-B-C-D-A'는 4번 번역해서 RTT 1사이클을 완료한 것**으로 기록됩니다.
+각 독립 실험에서 한 사이클은 `seed -> target -> seed'`로 닫히며, 이 경우 각 실험의 `translation_count_per_cycle`은 2입니다.
 
 ---
 
@@ -70,7 +63,7 @@ uv sync
 
 1. LM Studio를 실행합니다.
 2. 사용할 코드 모델을 다운로드합니다. 예: `qwen2.5-coder:7b` 또는 로컬 환경에 맞는 코드 모델
-3. **Local Server**를 시작합니다.
+3. Local Server를 시작합니다.
 4. 기본 주소가 아래와 같은지 확인합니다.
 
 ```text
@@ -106,8 +99,7 @@ problem_root: ./problem
 corpus_root: ./corpus/solutions
 ```
 
-`target_languages`는 개별 언어쌍 목록이 아니라 **RTT 경로의 중간 언어 순서**입니다.
-위 설정은 `cpp -> c -> java -> python -> cpp'` 한 경로를 실행합니다.
+`target_languages`는 독립 RTT 실험 대상 목록입니다. 위 설정은 한 문제마다 `cpp -> c -> cpp'`, `cpp -> java -> cpp'`, `cpp -> python -> cpp'` 세 실험을 실행합니다.
 
 ### 4) 실행
 
@@ -119,9 +111,9 @@ uv run -m rttdist.cli run --config lmstudio_1.yaml --run-id lmstudio-rtt-demo
 실행 중에는 다음과 같은 진행 로그가 콘솔에 출력됩니다.
 
 ```text
-[RTT] IPOP_1436: RTT route cpp->c->java->python->cpp (4 translations per cycle)
-[RTT] IPOP_1436: iteration 1 step 1/4 cpp->c translating
-[RTT] IPOP_1436: iteration 1 step 1/4 cpp->c complete
+[RTT] IPOP_1436: RTT route cpp->c->cpp (2 translations per cycle)
+[RTT] IPOP_1436: iteration 1 step 1/2 cpp->c translating
+[RTT] IPOP_1436: iteration 1 step 1/2 cpp->c complete
 ...
 ```
 
@@ -163,7 +155,7 @@ artifacts-lmstudio/<run-id>/<problem>/<route>/iterations/iter-001/conversion.log
 
 | 필드 | 의미 |
 | --- | --- |
-| `rtt_route_key` | 실행한 전체 RTT 경로. 예: `cpp->c->java->python->cpp` |
+| `rtt_route_key` | 실행한 독립 RTT 경로. 예: `cpp->python->cpp` |
 | `rtt_distance.value` | 완료된 RTT cycle 수 |
 | `translation_count_per_cycle` | RTT 1사이클을 완성하는 데 필요한 번역/변환 횟수 |
 | `attempted_translation_count` | 마지막 iteration에서 시도한 변환 횟수 |
@@ -176,14 +168,14 @@ artifacts-lmstudio/<run-id>/<problem>/<route>/iterations/iter-001/conversion.log
 예시 해석:
 
 ```text
-RTT route: cpp->c->java->python->cpp
+RTT route: cpp->python->cpp
 RTT cycle count: 1
-Translations per RTT cycle: 4
-Completed translations in final iteration: 4
+Translations per RTT cycle: 2
+Completed translations in final iteration: 2
 Semantic summary: pass
 ```
 
-이는 `cpp -> c -> java -> python -> cpp'` 변환이 4번 모두 완료되어 RTT 1사이클이 끝났다는 뜻입니다.
+이는 `cpp -> python -> cpp'` 변환이 2번 모두 완료되어 Python 대상 RTT 1사이클이 끝났다는 뜻입니다.
 
 ---
 
@@ -196,13 +188,13 @@ Semantic summary: pass
 ```text
 problem_id=IPOP_1436
 iteration=1
-language_route=cpp->c->java->python->cpp
-translation_count_per_cycle=4
-step 1/4 START cpp->c
-step 1/4 TRANSLATED cpp->c chars=1234
-step 1/4 COMPLETE cpp->c
+language_route=cpp->python->cpp
+translation_count_per_cycle=2
+step 1/2 START cpp->python
+step 1/2 TRANSLATED cpp->python chars=1234
+step 1/2 COMPLETE cpp->python
 ...
-summary attempted=4 completed=4 failed=0
+summary attempted=2 completed=2 failed=0
 ```
 
 함께 볼 파일:

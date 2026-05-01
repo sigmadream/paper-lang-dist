@@ -125,12 +125,9 @@ def run_rtt_loop(
     progress_logger: Callable[[str], None] | None = None,
 ) -> RTTRunResult:
     now = timestamp_provider or _utcnow
-    configured_intermediates = config.target_languages
-    if config.seed_language in configured_intermediates and target_language != config.seed_language:
-        configured_intermediates = (target_language,)
     language_route = _build_language_route(
         seed_language=config.seed_language,
-        intermediate_languages=configured_intermediates,
+        intermediate_languages=(target_language,),
     )
     route_terminal_language = language_route[-2]
     route_key = "->".join(language_route)
@@ -686,25 +683,25 @@ def run_pipeline_service(
     progress_logger: Callable[[str], None] | None = None,
 ) -> tuple[RTTRunResult, ...]:
     results: list[RTTRunResult] = []
-    route_terminal_language = config.target_languages[-1]
     for problem in corpus_entries:
-        client = (
-            translation_client_factory()
-            if translation_client_factory is not None
-            else None
-        )
-        results.append(
-            run_rtt_loop(
-                config=config,
-                run_id=run_id,
-                problem=problem,
-                target_language=route_terminal_language,
-                translation_client=client,
-                evaluate_source_fn=evaluate_source_fn,
-                timestamp_provider=timestamp_provider,
-                progress_logger=progress_logger,
+        for target_language in config.target_languages:
+            client = (
+                translation_client_factory()
+                if translation_client_factory is not None
+                else None
             )
-        )
+            results.append(
+                run_rtt_loop(
+                    config=config,
+                    run_id=run_id,
+                    problem=problem,
+                    target_language=target_language,
+                    translation_client=client,
+                    evaluate_source_fn=evaluate_source_fn,
+                    timestamp_provider=timestamp_provider,
+                    progress_logger=progress_logger,
+                )
+            )
     return tuple(results)
 
 

@@ -31,30 +31,28 @@ class SuccessEvaluator:
         return ExecutionBatchResult(language=language, problem_id=problem.problem_id, status=ExecutionStatus.SUCCESS, work_directory=work, compile_log_path=log, compile_result=None, fixture_results=tuple(), message="ok")
 
 
-def test_rtt_loop_completes_configured_a_b_c_d_a_route(tmp_path: Path) -> None:
+def test_rtt_loop_runs_one_independent_target_route(tmp_path: Path) -> None:
     config = _config(tmp_path)
     problem = _problem(tmp_path)
     client = RouteClient([
-        "int main(){return 0;}",
-        "class Main { public static void main(String[] args){} }",
         "print(0)",
         "int main(){return 0;}",
     ])
     result = run_rtt_loop(config=config, run_id="r", problem=problem, target_language="python", translation_client=client, evaluate_source_fn=SuccessEvaluator())
     assert result.final_record.status.value == "success"
-    assert client.calls == [("cpp", "c"), ("c", "java"), ("java", "python"), ("python", "cpp")]
+    assert client.calls == [("cpp", "python"), ("python", "cpp")]
     paths = build_iteration_artifact_paths(run_id="r", problem_id=problem.problem_id, target_language="python", seed_language="cpp", iteration_index=1)
     assert (config.output_root / paths.roundtrip_source_path).is_file()
 
     metrics = json.loads((config.output_root / paths.metrics_path).read_text(encoding="utf-8"))
-    assert metrics["translation_count_per_cycle"] == 4
-    assert metrics["attempted_translation_count"] == 4
-    assert metrics["completed_translation_count"] == 4
+    assert metrics["translation_count_per_cycle"] == 2
+    assert metrics["attempted_translation_count"] == 2
+    assert metrics["completed_translation_count"] == 2
     assert metrics["failed_translation_count"] == 0
     assert metrics["translation_count"] == {
-        "per_cycle": 4,
-        "attempted": 4,
-        "completed": 4,
+        "per_cycle": 2,
+        "attempted": 2,
+        "completed": 2,
         "failed": 0,
         "unit": "translations",
         "definition": "number of source->target conversions in one complete RTT language route",
@@ -63,16 +61,14 @@ def test_rtt_loop_completes_configured_a_b_c_d_a_route(tmp_path: Path) -> None:
         (step["source_language"], step["target_language"], step["status"])
         for step in metrics["translation_steps"]
     ] == [
-        ("cpp", "c", "completed"),
-        ("c", "java", "completed"),
-        ("java", "python", "completed"),
+        ("cpp", "python", "completed"),
         ("python", "cpp", "completed"),
     ]
     conversion_log = config.output_root / metrics["conversion_log_path"]
     assert conversion_log.is_file()
     log_text = conversion_log.read_text(encoding="utf-8")
-    assert "translation_count_per_cycle=4" in log_text
-    assert "step 4/4 COMPLETE python->cpp" in log_text
+    assert "translation_count_per_cycle=2" in log_text
+    assert "step 2/2 COMPLETE python->cpp" in log_text
 
 
 def _config(tmp_path: Path) -> ExperimentConfig:
