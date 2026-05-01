@@ -18,14 +18,14 @@ def test_run_returns_runtime_exit_code_with_deterministic_error_message(
     )
     monkeypatch.setattr(
         "rttdist.cli.run_pipeline_service",
-        lambda **_kwargs: (_ for _ in ()).throw(RuntimeError("mock pipeline failure")),
+        lambda **_kwargs: (_ for _ in ()).throw(RuntimeError("pipeline failure")),
     )
 
     exit_code = main(["run", "--config", "dummy.yaml", "--run-id", "run-fail"])
 
     captured = capsys.readouterr()
     assert exit_code == EXIT_RUNTIME_ERROR
-    assert "Pipeline execution failed: mock pipeline failure" in captured.err
+    assert "Pipeline execution failed: pipeline failure" in captured.err
     assert "Traceback" not in captured.err
 
 
@@ -41,14 +41,14 @@ def test_resume_returns_runtime_exit_code_with_deterministic_error_message(
     )
     monkeypatch.setattr(
         "rttdist.cli.run_pipeline_service",
-        lambda **_kwargs: (_ for _ in ()).throw(RuntimeError("mock resume failure")),
+        lambda **_kwargs: (_ for _ in ()).throw(RuntimeError("resume failure")),
     )
 
     exit_code = main(["resume", "--config", "dummy.yaml", "--run-id", "resume-fail"])
 
     captured = capsys.readouterr()
     assert exit_code == EXIT_RUNTIME_ERROR
-    assert "Resume failed: mock resume failure" in captured.err
+    assert "Resume failed: resume failure" in captured.err
     assert "Traceback" not in captured.err
 
 
@@ -58,14 +58,14 @@ def test_report_returns_runtime_exit_code_with_deterministic_error_message(
 ) -> None:
     monkeypatch.setattr(
         "rttdist.cli.write_run_summary",
-        lambda **_kwargs: (_ for _ in ()).throw(RuntimeError("mock report failure")),
+        lambda **_kwargs: (_ for _ in ()).throw(RuntimeError("report failure")),
     )
 
     exit_code = main(["report", "--run-id", "report-fail"])
 
     captured = capsys.readouterr()
     assert exit_code == EXIT_RUNTIME_ERROR
-    assert "Report generation failed: mock report failure" in captured.err
+    assert "Report generation failed: report failure" in captured.err
     assert "Traceback" not in captured.err
 
 
