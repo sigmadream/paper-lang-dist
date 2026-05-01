@@ -93,7 +93,6 @@ mock을 꺼야 합니다.
 unset RTTDIST_LLM_MOCK_RESPONSES
 uv run -m rttdist.cli validate-corpus --config lmstudio_5.yaml
 uv run -m rttdist.cli run --config lmstudio_5.yaml --run-id lmstudio-demo
-uv run -m rttdist.cli report --config lmstudio_5.yaml --run-id lmstudio-demo --with-moss
 ```
 
 ### 3) 결과 위치
@@ -165,8 +164,6 @@ results/        저장해 둔 예시 결과 요약
 ### `run-id`는 왜 중요하나요?
 같은 `run-id`를 다시 쓰면 기존 산출물을 이어서 보게 됩니다. 새 실험은 새 `run-id`를 쓰는 것이 안전합니다.
 
-### MOSS는 꼭 써야 하나요?
-아니요. 선택입니다. 빠르게 볼 때는 빼고, 코드 유사도까지 보고 싶을 때만 `--with-moss`를 추가하세요.
 
 ### 왜 mock 실습부터 하라고 하나요?
 로컬 모델을 돌리기 전에 전체 흐름이 정상인지 가장 빠르게 확인할 수 있는 방법이기 때문입니다.

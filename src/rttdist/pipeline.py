@@ -124,9 +124,12 @@ def run_rtt_loop(
     timestamp_provider: TimestampProvider | None = None,
 ) -> RTTRunResult:
     now = timestamp_provider or _utcnow
+    configured_intermediates = config.target_languages
+    if config.seed_language in configured_intermediates and target_language != config.seed_language:
+        configured_intermediates = (target_language,)
     language_route = _build_language_route(
         seed_language=config.seed_language,
-        intermediate_languages=config.target_languages,
+        intermediate_languages=configured_intermediates,
     )
     route_terminal_language = language_route[-2]
     route_key = "->".join(language_route)
@@ -201,7 +204,7 @@ def run_rtt_loop(
         manifest_metadata["seed_artifact_path"] = seed_artifact_path
 
     current_seed_source = resume_plan.current_seed_source
-    seed_source_history = list(resume_plan.seed_source_history)
+    seed_source_history = [seed_source, *resume_plan.seed_source_history]
     previous_status = resume_plan.previous_status
     final_record: FailureRecord | None = resume_plan.final_record
 
@@ -265,6 +268,13 @@ def run_rtt_loop(
                 is_terminal_intermediate=step_index == len(route_steps) - 1,
             )
             relative_source_path = source_path.relative_to(config.output_root.resolve()).as_posix()
+            direction = _legacy_direction_for_step(
+                step_index=step_index,
+                step_count=len(route_steps),
+                source_language=source_language,
+                target_language=next_language,
+                seed_language=config.seed_language,
+            )
             try:
                 translation = _translate_with_explicit_languages(
                     client,
@@ -276,10 +286,16 @@ def run_rtt_loop(
                     sample_output=sample_output,
                     source_code=current_source,
                     iteration_index=iteration_index,
-                    direction=step_key,
+                    direction=direction,
                 )
                 llm_request_payload[step_key] = translation.request.to_dict()
                 llm_response_payload[step_key] = translation.response.to_dict()
+                if step_index == 1:
+                    llm_request_payload["cpp_to_target"] = translation.request.to_dict()
+                    llm_response_payload["cpp_to_target"] = translation.response.to_dict()
+                if next_language == config.seed_language:
+                    llm_request_payload["target_to_cpp"] = translation.request.to_dict()
+                    llm_response_payload["target_to_cpp"] = translation.response.to_dict()
                 translated_source = translation.extracted_source.rstrip()
                 _write_text(source_path, f"{translated_source}\n")
             except Exception as exc:
@@ -602,6 +618,22 @@ def _build_route_steps(language_route: Sequence[str]) -> list[tuple[int, str, st
 
 def _route_step_key(step_index: int, source_language: str, target_language: str) -> str:
     return f"step_{step_index:03d}_{source_language}_to_{target_language}"
+
+
+
+def _legacy_direction_for_step(
+    *,
+    step_index: int,
+    step_count: int,
+    source_language: str,
+    target_language: str,
+    seed_language: str,
+) -> str:
+    if step_index == 1:
+        return "seed_to_target"
+    if step_index == step_count and target_language == seed_language:
+        return "target_to_roundtrip_cpp"
+    return _route_step_key(step_index, source_language, target_language)
 
 
 def _route_step_source_path(

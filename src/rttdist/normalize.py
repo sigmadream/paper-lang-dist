@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from collections import Counter
 from io import StringIO
 from typing import Final
 import hashlib
@@ -59,27 +58,6 @@ def normalize_cpp_tokens(source: str) -> tuple[str, ...]:
 def hash_normalized_cpp_tokens(source: str) -> str:
     token_bytes = "\x00".join(normalize_cpp_tokens(source)).encode("utf-8")
     return hashlib.sha256(token_bytes).hexdigest()
-
-
-def cpp_token_sorensen_dice_similarity(
-    seed_source: str, candidate_source: str
-) -> float:
-    """Compute Sorensen-Dice similarity over normalized C++ token multisets.
-
-    This intentionally uses token multiplicity rather than set membership so repeated
-    identifiers, literals, and operators continue to affect the residual score.
-    """
-
-    left_tokens = normalize_cpp_tokens(seed_source)
-    right_tokens = normalize_cpp_tokens(candidate_source)
-
-    if not left_tokens and not right_tokens:
-        return 1.0
-
-    left_counts = Counter(left_tokens)
-    right_counts = Counter(right_tokens)
-    overlap = sum(min(left_counts[token], right_counts[token]) for token in left_counts)
-    return (2.0 * overlap) / (len(left_tokens) + len(right_tokens))
 
 
 def _normalize_language(language: str) -> str:
