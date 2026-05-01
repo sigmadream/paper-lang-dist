@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 from rttdist.artifacts import MockLLMChoice, MockLLMMessage, MockLLMRequest, MockLLMResponse, MockLLMUsage, build_iteration_artifact_paths
@@ -44,6 +45,34 @@ def test_rtt_loop_completes_configured_a_b_c_d_a_route(tmp_path: Path) -> None:
     assert client.calls == [("cpp", "c"), ("c", "java"), ("java", "python"), ("python", "cpp")]
     paths = build_iteration_artifact_paths(run_id="r", problem_id=problem.problem_id, target_language="python", seed_language="cpp", iteration_index=1)
     assert (config.output_root / paths.roundtrip_source_path).is_file()
+
+    metrics = json.loads((config.output_root / paths.metrics_path).read_text(encoding="utf-8"))
+    assert metrics["translation_count_per_cycle"] == 4
+    assert metrics["attempted_translation_count"] == 4
+    assert metrics["completed_translation_count"] == 4
+    assert metrics["failed_translation_count"] == 0
+    assert metrics["translation_count"] == {
+        "per_cycle": 4,
+        "attempted": 4,
+        "completed": 4,
+        "failed": 0,
+        "unit": "translations",
+        "definition": "number of source->target conversions in one complete RTT language route",
+    }
+    assert [
+        (step["source_language"], step["target_language"], step["status"])
+        for step in metrics["translation_steps"]
+    ] == [
+        ("cpp", "c", "completed"),
+        ("c", "java", "completed"),
+        ("java", "python", "completed"),
+        ("python", "cpp", "completed"),
+    ]
+    conversion_log = config.output_root / metrics["conversion_log_path"]
+    assert conversion_log.is_file()
+    log_text = conversion_log.read_text(encoding="utf-8")
+    assert "translation_count_per_cycle=4" in log_text
+    assert "step 4/4 COMPLETE python->cpp" in log_text
 
 
 def _config(tmp_path: Path) -> ExperimentConfig:

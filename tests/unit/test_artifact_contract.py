@@ -147,7 +147,7 @@ def test_iteration_artifact_contract_matches_golden_compile_failure_fixture() ->
     )
 
 
-def test_ordered_pair_iteration_artifact_paths_include_iteration_seed_snapshot() -> (
+def test_rtt_route_iteration_artifact_paths_include_iteration_seed_snapshot() -> (
     None
 ):
     iteration_paths = build_iteration_artifact_paths(
@@ -164,7 +164,7 @@ def test_ordered_pair_iteration_artifact_paths_include_iteration_seed_snapshot()
     )
 
 
-def test_ordered_pair_run_directory_includes_seed_and_target_identity() -> None:
+def test_rtt_route_run_directory_includes_seed_and_target_identity() -> None:
     problem = _build_curated_problem_reference()
     metadata = build_run_metadata(
         run_id="smoke",
