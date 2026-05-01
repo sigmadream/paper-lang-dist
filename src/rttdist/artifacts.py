@@ -42,7 +42,7 @@ class CuratedProblemReference:
 
 
 @dataclass(frozen=True)
-class MockLLMMessage:
+class LLMMessage:
     role: str
     content: str
 
@@ -54,10 +54,10 @@ class MockLLMMessage:
 
 
 @dataclass(frozen=True)
-class MockLLMRequest:
+class LLMRequest:
     model: str
     temperature: float
-    messages: tuple[MockLLMMessage, ...]
+    messages: tuple[LLMMessage, ...]
     metadata: dict[str, Any]
 
     def to_dict(self) -> dict[str, Any]:
@@ -81,9 +81,9 @@ def _stringify_metadata_value(value: Any) -> Any:
 
 
 @dataclass(frozen=True)
-class MockLLMChoice:
+class LLMChoice:
     index: int
-    message: MockLLMMessage
+    message: LLMMessage
     finish_reason: str
 
     def to_dict(self) -> dict[str, Any]:
@@ -95,7 +95,7 @@ class MockLLMChoice:
 
 
 @dataclass(frozen=True)
-class MockLLMUsage:
+class LLMUsage:
     prompt_tokens: int
     completion_tokens: int
     total_tokens: int
@@ -109,11 +109,11 @@ class MockLLMUsage:
 
 
 @dataclass(frozen=True)
-class MockLLMResponse:
+class LLMResponse:
     response_id: str
     model: str
-    choices: tuple[MockLLMChoice, ...]
-    usage: MockLLMUsage
+    choices: tuple[LLMChoice, ...]
+    usage: LLMUsage
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -179,8 +179,8 @@ class IterationArtifactRecord:
     iteration_index: int
     result: FailureRecord
     artifact_paths: IterationArtifactPaths
-    llm_request: MockLLMRequest
-    llm_response: MockLLMResponse
+    llm_request: LLMRequest
+    llm_response: LLMResponse
 
     def to_dict(self) -> dict[str, Any]:
         return {

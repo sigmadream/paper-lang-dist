@@ -6,7 +6,7 @@ import hashlib
 
 import pytest
 
-from rttdist.artifacts import MockLLMResponse
+from rttdist.artifacts import LLMResponse
 from rttdist import lmstudio_client as lmstudio_client_module
 from rttdist.lmstudio_client import (
     LMStudioClientError,
@@ -21,7 +21,7 @@ CURATED_PROBLEM_ROOT = (
 )
 
 
-class FakeTransport:
+class RecordingTransport:
     def __init__(self, responses: list[dict[str, object]]) -> None:
         self._responses = responses
         self.requests: list[dict[str, object]] = []
@@ -29,16 +29,16 @@ class FakeTransport:
     def create_chat_completion(self, payload: dict[str, object]) -> dict[str, object]:
         self.requests.append(payload)
         if not self._responses:
-            raise AssertionError("No mocked LM Studio response available.")
+            raise AssertionError("No scripted LM Studio response available.")
         response = self._responses.pop(0)
         if not isinstance(response, dict):
-            raise AssertionError("Mocked LM Studio response must be a mapping.")
+            raise AssertionError("Scripted LM Studio response must be a mapping.")
         return response
 
 
 def test_generic_translation_client_translates_ordered_language_pairs() -> None:
     statement, sample_input, sample_output, seed_cpp = _load_curated_problem_text()
-    transport = FakeTransport(
+    transport = RecordingTransport(
         responses=[
             _build_response("```python\ndef solve():\n    print(666)\n```"),
             _build_response(
@@ -104,7 +104,7 @@ def test_client_rejects_invalid_model_or_temperature() -> None:
 
 def test_client_recovers_longest_unfenced_code_span_with_surrounding_prose() -> None:
     statement, sample_input, sample_output, seed_cpp = _load_curated_problem_text()
-    transport = FakeTransport(
+    transport = RecordingTransport(
         responses=[
             _build_response(
                 "Here is the translated program.\n"
@@ -133,7 +133,7 @@ def test_client_recovers_longest_unfenced_code_span_with_surrounding_prose() -> 
 
 def test_source_extraction_error_keeps_request_and_response_payloads() -> None:
     statement, sample_input, sample_output, seed_cpp = _load_curated_problem_text()
-    transport = FakeTransport(
+    transport = RecordingTransport(
         responses=[
             _build_response(
                 "No code can be provided in this answer. Please rewrite manually."
@@ -175,7 +175,7 @@ def _load_curated_problem_text() -> tuple[str, str, str, str]:
 
 def _build_response(content: str) -> dict[str, object]:
     return {
-        "id": "mock-response-001",
+        "id": "response-001",
         "model": "gpt-5.4",
         "choices": [
             {

@@ -9,11 +9,11 @@ from rttdist.artifacts import (
     ArtifactContractError,
     CuratedProblemReference,
     IterationArtifactRecord,
-    MockLLMChoice,
-    MockLLMMessage,
-    MockLLMRequest,
-    MockLLMResponse,
-    MockLLMUsage,
+    LLMChoice,
+    LLMMessage,
+    LLMRequest,
+    LLMResponse,
+    LLMUsage,
     RunArtifactRecord,
     build_iteration_artifact_paths,
     build_run_directory,
@@ -61,20 +61,20 @@ def test_run_artifact_contract_matches_golden_success_fixture() -> None:
         llm_request=_build_llm_request(
             problem=problem, target_language="python", iteration_index=1
         ),
-        llm_response=MockLLMResponse(
-            response_id="mock-response-001",
+        llm_response=LLMResponse(
+            response_id="response-001",
             model="gpt-5.4",
             choices=(
-                MockLLMChoice(
+                LLMChoice(
                     index=0,
-                    message=MockLLMMessage(
+                    message=LLMMessage(
                         role="assistant",
                         content="```python\nprint(666)\n```",
                     ),
                     finish_reason="stop",
                 ),
             ),
-            usage=MockLLMUsage(
+            usage=LLMUsage(
                 prompt_tokens=123,
                 completion_tokens=21,
                 total_tokens=144,
@@ -113,13 +113,13 @@ def test_iteration_artifact_contract_matches_golden_compile_failure_fixture() ->
         llm_request=_build_llm_request(
             problem=problem, target_language="java", iteration_index=2
         ),
-        llm_response=MockLLMResponse(
-            response_id="mock-response-002",
+        llm_response=LLMResponse(
+            response_id="response-002",
             model="gpt-5.4",
             choices=(
-                MockLLMChoice(
+                LLMChoice(
                     index=0,
-                    message=MockLLMMessage(
+                    message=LLMMessage(
                         role="assistant",
                         content=(
                             "```java\n"
@@ -134,7 +134,7 @@ def test_iteration_artifact_contract_matches_golden_compile_failure_fixture() ->
                     finish_reason="stop",
                 ),
             ),
-            usage=MockLLMUsage(
+            usage=LLMUsage(
                 prompt_tokens=131,
                 completion_tokens=38,
                 total_tokens=169,
@@ -194,20 +194,20 @@ def _build_llm_request(
     problem: CuratedProblemReference,
     target_language: str,
     iteration_index: int,
-) -> MockLLMRequest:
+) -> LLMRequest:
     target_name = target_language.capitalize()
-    return MockLLMRequest(
+    return LLMRequest(
         model="gpt-5.4",
         temperature=0.0,
         messages=(
-            MockLLMMessage(
+            LLMMessage(
                 role="system",
                 content=(
                     "Translate the provided C++ solution into "
                     f"{target_name} while preserving the curated sample I/O behavior."
                 ),
             ),
-            MockLLMMessage(
+            LLMMessage(
                 role="user",
                 content=_build_user_prompt(problem),
             ),

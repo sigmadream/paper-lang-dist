@@ -3,10 +3,10 @@ from __future__ import annotations
 import pytest
 
 from rttdist.artifacts import (
-    MockLLMChoice,
-    MockLLMMessage,
-    MockLLMResponse,
-    MockLLMUsage,
+    LLMChoice,
+    LLMMessage,
+    LLMResponse,
+    LLMUsage,
 )
 from rttdist.lmstudio_client import SourceExtractionError, extract_single_file_source
 from rttdist.prompts import build_translation_prompt
@@ -98,16 +98,16 @@ def test_extract_single_file_source_rejects_unrecoverable_prose_only() -> None:
     assert "recoverable single-file source code" in str(excinfo.value)
 
 
-def _response_from_content(content: str) -> MockLLMResponse:
-    return MockLLMResponse(
-        response_id="mock-response-001",
+def _response_from_content(content: str) -> LLMResponse:
+    return LLMResponse(
+        response_id="response-001",
         model="gpt-5.4",
         choices=(
-            MockLLMChoice(
+            LLMChoice(
                 index=0,
-                message=MockLLMMessage(role="assistant", content=content),
+                message=LLMMessage(role="assistant", content=content),
                 finish_reason="stop",
             ),
         ),
-        usage=MockLLMUsage(prompt_tokens=10, completion_tokens=5, total_tokens=15),
+        usage=LLMUsage(prompt_tokens=10, completion_tokens=5, total_tokens=15),
     )

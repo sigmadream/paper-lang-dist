@@ -2,17 +2,15 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import json
-import os
-from pathlib import Path
 from typing import Any, Protocol
 from urllib import error, request
 
 from rttdist.artifacts import (
-    MockLLMChoice,
-    MockLLMMessage,
-    MockLLMRequest,
-    MockLLMResponse,
-    MockLLMUsage,
+    LLMChoice,
+    LLMMessage,
+    LLMRequest,
+    LLMResponse,
+    LLMUsage,
 )
 from rttdist.config import DEFAULT_LMSTUDIO_HOST
 from rttdist.extract import (
@@ -43,22 +41,9 @@ class LMStudioChatTransport(Protocol):
 
 @dataclass(frozen=True)
 class TranslationResult:
-    request: MockLLMRequest
-    response: MockLLMResponse
+    request: LLMRequest
+    response: LLMResponse
     extracted_source: str
-
-
-@dataclass(frozen=True)
-class _FixtureResponseEntry:
-    match: dict[str, Any]
-    content: str
-    response_id: str | None = None
-    prompt_tokens: int = 0
-    completion_tokens: int = 0
-
-    @property
-    def total_tokens(self) -> int:
-        return self.prompt_tokens + self.completion_tokens
 
 
 class LMStudioTranslationClient:
@@ -165,7 +150,7 @@ class LMStudioTranslationClient:
             "iteration_index": iteration_index,
             "provider": "lmstudio",
         }
-        request_payload = MockLLMRequest(
+        request_payload = LLMRequest(
             model=self._model,
             temperature=self._temperature,
             messages=prompt.messages,
@@ -173,7 +158,7 @@ class LMStudioTranslationClient:
         )
         return self._translate(request_payload)
 
-    def _translate(self, request_payload: MockLLMRequest) -> TranslationResult:
+    def _translate(self, request_payload: LLMRequest) -> TranslationResult:
         payload = request_payload.to_dict()
         try:
             response_payload = self._transport.create_chat_completion(payload)
@@ -213,114 +198,10 @@ class LMStudioTranslationClient:
 
 
 def _build_default_transport(*, host: str) -> LMStudioChatTransport:
-    fixture_path = os.environ.get("RTTDIST_LLM_MOCK_RESPONSES")
-    if fixture_path:
-        return _FixtureChatCompletionsTransport(Path(fixture_path))
     return _LMStudioHTTPTransport(host=host)
 
 
-class _FixtureChatCompletionsTransport:
-    def __init__(self, fixture_path: Path) -> None:
-        self._fixture_path = Path(fixture_path).resolve()
-        self._responses = self._load_fixture(self._fixture_path)
-
-    def create_chat_completion(self, payload: dict[str, Any]) -> dict[str, Any]:
-        if not isinstance(payload, dict):
-            raise LMStudioClientError("Mock transport payload must be a mapping.")
-
-        metadata = payload.get("metadata")
-        if not isinstance(metadata, dict):
-            raise LMStudioClientError(
-                "Mock transport payload must include request metadata."
-            )
-
-        for index, entry in enumerate(self._responses, start=1):
-            if all(metadata.get(key) == value for key, value in entry.match.items()):
-                model = payload.get("model")
-                if not isinstance(model, str) or not model.strip():
-                    raise LMStudioClientError(
-                        "Mock transport payload must include a non-empty model."
-                    )
-                return {
-                    "id": entry.response_id or f"mock-response-{index:03d}",
-                    "model": model,
-                    "choices": [
-                        {
-                            "index": 0,
-                            "message": {
-                                "role": "assistant",
-                                "content": _render_mock_response_content(entry.content),
-                            },
-                            "finish_reason": "stop",
-                        }
-                    ],
-                    "usage": {
-                        "prompt_tokens": entry.prompt_tokens,
-                        "completion_tokens": entry.completion_tokens,
-                        "total_tokens": entry.total_tokens,
-                    },
-                }
-
-        raise LMStudioClientError(
-            "No mock LM Studio response matched request metadata from "
-            f"{self._fixture_path}: {metadata}"
-        )
-
-    def _load_fixture(self, fixture_path: Path) -> tuple[_FixtureResponseEntry, ...]:
-        try:
-            raw_data = json.loads(fixture_path.read_text(encoding="utf-8"))
-        except OSError as exc:
-            raise LMStudioClientError(
-                f"Unable to read mock LM Studio fixture: {fixture_path}"
-            ) from exc
-        except json.JSONDecodeError as exc:
-            raise LMStudioClientError(
-                f"Invalid JSON in mock LM Studio fixture: {fixture_path}"
-            ) from exc
-
-        if not isinstance(raw_data, dict):
-            raise LMStudioClientError(
-                "Mock LM Studio fixture root must be a mapping with `responses`."
-            )
-
-        raw_responses = raw_data.get("responses")
-        if not isinstance(raw_responses, list) or not raw_responses:
-            raise LMStudioClientError(
-                "Mock LM Studio fixture must define a non-empty `responses` list."
-            )
-
-        parsed: list[_FixtureResponseEntry] = []
-        for index, raw_entry in enumerate(raw_responses):
-            if not isinstance(raw_entry, dict):
-                raise LMStudioClientError(
-                    f"Mock LM Studio fixture response #{index} must be a mapping."
-                )
-
-            match = raw_entry.get("match")
-            if not isinstance(match, dict):
-                raise LMStudioClientError(
-                    f"Mock LM Studio fixture response #{index} must include `match` mapping."
-                )
-
-            content = raw_entry.get("content")
-            if not isinstance(content, str) or not content.strip():
-                raise LMStudioClientError(
-                    f"Mock LM Studio fixture response #{index} must include non-empty `content`."
-                )
-
-            parsed.append(
-                _FixtureResponseEntry(
-                    match=match,
-                    content=content.strip(),
-                    response_id=raw_entry.get("id"),
-                    prompt_tokens=int(raw_entry.get("prompt_tokens", 0)),
-                    completion_tokens=int(raw_entry.get("completion_tokens", 0)),
-                )
-            )
-        return tuple(parsed)
-
-
-def parse_lmstudio_response(raw_response: dict[str, Any]) -> MockLLMResponse:
+def parse_lmstudio_response(raw_response: dict[str, Any]) -> LLMResponse:
     if not isinstance(raw_response, dict):
         raise LMStudioResponseParseError("LM Studio response payload must be a mapping.")
 
@@ -342,7 +223,7 @@ def parse_lmstudio_response(raw_response: dict[str, Any]) -> MockLLMResponse:
             "LM Studio response must contain at least one `choices` entry."
         )
 
-    choices: list[MockLLMChoice] = []
+    choices: list[LLMChoice] = []
     for raw_choice in raw_choices:
         if not isinstance(raw_choice, dict):
             raise LMStudioResponseParseError("Each `choices` entry must be a mapping.")
@@ -371,9 +252,9 @@ def parse_lmstudio_response(raw_response: dict[str, Any]) -> MockLLMResponse:
             )
 
         choices.append(
-            MockLLMChoice(
+            LLMChoice(
                 index=index,
-                message=MockLLMMessage(role=role.strip(), content=content),
+                message=LLMMessage(role=role.strip(), content=content),
                 finish_reason=finish_reason.strip(),
             )
         )
@@ -389,11 +270,11 @@ def parse_lmstudio_response(raw_response: dict[str, Any]) -> MockLLMResponse:
     if total_tokens == 0 and (prompt_tokens > 0 or completion_tokens > 0):
         total_tokens = prompt_tokens + completion_tokens
 
-    return MockLLMResponse(
+    return LLMResponse(
         response_id=response_id.strip(),
         model=model.strip(),
         choices=tuple(choices),
-        usage=MockLLMUsage(
+        usage=LLMUsage(
             prompt_tokens=prompt_tokens,
             completion_tokens=completion_tokens,
             total_tokens=total_tokens,
@@ -401,7 +282,7 @@ def parse_lmstudio_response(raw_response: dict[str, Any]) -> MockLLMResponse:
     )
 
 
-def extract_single_file_source(response: MockLLMResponse | str) -> str:
+def extract_single_file_source(response: LLMResponse | str) -> str:
     try:
         return extract_single_file_source_primitive(response)
     except ExtractionPrimitiveError as exc:
@@ -482,13 +363,6 @@ class _LMStudioHTTPTransport:
         if not isinstance(parsed, dict):
             raise LMStudioClientError("LM Studio response root must be a mapping.")
         return parsed
-
-
-def _render_mock_response_content(content: str) -> str:
-    # If content doesn't look like code, wrap it in a mock markdown block for extraction tests
-    if "```" not in content and "def " not in content and "#include" not in content:
-        return f"Here is the translated code:\n\n```cpp\n{content}\n```"
-    return content
 
 
 def _attach_translation_debug_payloads(

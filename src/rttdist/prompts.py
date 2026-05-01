@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from rttdist.artifacts import MockLLMMessage
+from rttdist.artifacts import LLMMessage
 
 PROMPT_TEMPLATE_VERSION = "rtt.prompts.v1"
 
@@ -23,7 +23,7 @@ class PromptBundle:
     direction: str
     source_language: str
     target_language: str
-    messages: tuple[MockLLMMessage, ...]
+    messages: tuple[LLMMessage, ...]
 
 
 def build_cpp_to_target_prompt(
@@ -132,14 +132,14 @@ def _build_prompt_bundle(
     source_label = _language_label(source_language)
     target_label = _language_label(target_language)
 
-    system_message = MockLLMMessage(
+    system_message = LLMMessage(
         role="system",
         content=(
             "You are a deterministic code translator for round-trip translation experiments. "
             "Preserve behavior exactly. Return only one source file with no explanation."
         ),
     )
-    user_message = MockLLMMessage(
+    user_message = LLMMessage(
         role="user",
         content=(
             f"[TASK]\n"

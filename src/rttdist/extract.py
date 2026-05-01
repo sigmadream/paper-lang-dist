@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Final
 import re
 
-from rttdist.artifacts import MockLLMResponse
+from rttdist.artifacts import LLMResponse
 
 _FENCED_CODE_PATTERN: Final[re.Pattern[str]] = re.compile(
     r"```[^\n]*\n(.*?)```", re.DOTALL
@@ -14,7 +14,7 @@ class SourceExtractionError(RuntimeError):
     pass
 
 
-def extract_single_file_source(response: MockLLMResponse | str) -> str:
+def extract_single_file_source(response: LLMResponse | str) -> str:
     if isinstance(response, str):
         return extract_single_file_source_text(response)
     return extract_single_file_source_text(response.choices[0].message.content)

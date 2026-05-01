@@ -1,7 +1,7 @@
 # RTT Language Distance Experiment Tool
 
 C++ 기준 해법을 여러 언어 경로로 번역한 뒤 다시 C++로 닫는 **RTT(Round-Trip Translation) 실험 도구**입니다.
-현재 코드는 의도적으로 단순화되어 있으며, 실험 실행 경로는 **LM Studio + RTT route**만 지원합니다.
+이 저장소는 실제 실험용 저장소이므로 현재 실행 경로는 **LM Studio + RTT route**만 남겨두었습니다.
 
 예를 들어 설정이 아래와 같다면:
 
@@ -40,18 +40,17 @@ cpp -> c -> java -> python -> cpp'
 
 지원하지 않는 것:
 
-- Ollama provider
-- pairwise 실험/보고서
+- LM Studio 외 다른 로컬 LLM 실행기
+- 기존 언어쌍별 실험/보고서
 - 별도 구조/유사도/복잡도 지표
-- 외부 API provider
+- 외부 API 실행 경로
+- 대체 응답 fixture를 통한 실험 실행
 
-향후 지표나 provider는 현재 RTT-only 구조 위에 새 모듈로 추가하면 됩니다.
+향후 지표나 실행 경로는 현재 RTT-only 구조 위에 새 모듈로 추가하면 됩니다.
 
 ---
 
-## 빠른 시작: mock으로 파이프라인 확인
-
-실제 LM Studio 서버 없이 CLI와 artifact 생성을 확인할 수 있습니다.
+## 실제 실험: LM Studio 사용
 
 ### 1) 설치
 
@@ -67,49 +66,7 @@ uv sync
 - Java/Javac
 - Python 실행 환경
 
-### 2) mock 응답 활성화
-
-```bash
-export RTTDIST_LLM_MOCK_RESPONSES=tests/fixtures/e2e/smoke_llm_responses.json
-```
-
-### 3) 검증 및 실행
-
-```bash
-uv run -m rttdist.cli validate-corpus --config tests/fixtures/config/minimal.yaml
-uv run -m rttdist.cli run --config tests/fixtures/config/minimal.yaml --run-id tutorial-mock
-```
-
-실행 중에는 다음과 같은 진행 로그가 콘솔에 출력됩니다.
-
-```text
-[RTT] IPOP_1436: RTT route cpp->c->java->python->cpp (4 translations per cycle)
-[RTT] IPOP_1436: iteration 1 step 1/4 cpp->c translating
-[RTT] IPOP_1436: iteration 1 step 1/4 cpp->c complete
-...
-```
-
-### 4) 결과 확인
-
-```bash
-cat artifacts/tutorial-mock/summary.md
-```
-
-주요 산출물:
-
-```text
-artifacts/<run-id>/summary.json
-artifacts/<run-id>/summary.md
-artifacts/<run-id>/<problem>/<route>/run.json
-artifacts/<run-id>/<problem>/<route>/iterations/iter-001/metrics.json
-artifacts/<run-id>/<problem>/<route>/iterations/iter-001/conversion.log
-```
-
----
-
-## 실제 실험: LM Studio 사용
-
-### 1) LM Studio 준비
+### 2) LM Studio 준비
 
 1. LM Studio를 실행합니다.
 2. 사용할 코드 모델을 다운로드합니다. 예: `qwen2.5-coder:7b` 또는 로컬 환경에 맞는 코드 모델
@@ -120,7 +77,7 @@ artifacts/<run-id>/<problem>/<route>/iterations/iter-001/conversion.log
 http://localhost:1234/v1
 ```
 
-### 2) 설정 파일 확인
+### 3) 설정 파일 확인
 
 기본 예시는 `lmstudio_1.yaml`입니다.
 
@@ -149,17 +106,23 @@ problem_root: ./problem
 corpus_root: ./corpus/solutions
 ```
 
-`target_languages`는 개별 pair 목록이 아니라 **RTT 경로의 중간 언어 순서**입니다.
+`target_languages`는 개별 언어쌍 목록이 아니라 **RTT 경로의 중간 언어 순서**입니다.
 위 설정은 `cpp -> c -> java -> python -> cpp'` 한 경로를 실행합니다.
 
-### 3) 실행
-
-mock 환경변수를 꺼야 실제 LM Studio를 사용합니다.
+### 4) 실행
 
 ```bash
-unset RTTDIST_LLM_MOCK_RESPONSES
 uv run -m rttdist.cli validate-corpus --config lmstudio_1.yaml
 uv run -m rttdist.cli run --config lmstudio_1.yaml --run-id lmstudio-rtt-demo
+```
+
+실행 중에는 다음과 같은 진행 로그가 콘솔에 출력됩니다.
+
+```text
+[RTT] IPOP_1436: RTT route cpp->c->java->python->cpp (4 translations per cycle)
+[RTT] IPOP_1436: iteration 1 step 1/4 cpp->c translating
+[RTT] IPOP_1436: iteration 1 step 1/4 cpp->c complete
+...
 ```
 
 중단된 동일 run-id를 이어서 보려면:
@@ -172,6 +135,24 @@ uv run -m rttdist.cli resume --config lmstudio_1.yaml --run-id lmstudio-rtt-demo
 
 ```bash
 uv run -m rttdist.cli report --config lmstudio_1.yaml --run-id lmstudio-rtt-demo
+```
+
+---
+
+## 결과 확인
+
+```bash
+cat artifacts-lmstudio/lmstudio-rtt-demo/summary.md
+```
+
+주요 산출물:
+
+```text
+artifacts-lmstudio/<run-id>/summary.json
+artifacts-lmstudio/<run-id>/summary.md
+artifacts-lmstudio/<run-id>/<problem>/<route>/run.json
+artifacts-lmstudio/<run-id>/<problem>/<route>/iterations/iter-001/metrics.json
+artifacts-lmstudio/<run-id>/<problem>/<route>/iterations/iter-001/conversion.log
 ```
 
 ---
@@ -240,7 +221,7 @@ summary attempted=4 completed=4 failed=0
 corpus/solutions/      기준 해법(reference.cpp 등)
 problem/               문제 설명과 샘플 입출력
 src/rttdist/           RTT 실험 CLI 및 파이프라인
-tests/                 테스트와 mock 실험 fixture
+tests/                 실제 코드 경로 검증 테스트
 lmstudio_1.yaml        LM Studio 실험 예시 설정
 artifacts*/            실행 후 생성되는 실험 산출물
 ```
@@ -259,11 +240,4 @@ uv run pytest
 
 ```bash
 uv run python -m compileall -q src
-```
-
-mock 기반 e2e만 빠르게 확인:
-
-```bash
-export RTTDIST_LLM_MOCK_RESPONSES=tests/fixtures/e2e/smoke_llm_responses.json
-uv run pytest tests/e2e -q
 ```

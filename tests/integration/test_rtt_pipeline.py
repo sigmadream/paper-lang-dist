@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from rttdist.artifacts import MockLLMChoice, MockLLMMessage, MockLLMRequest, MockLLMResponse, MockLLMUsage, build_iteration_artifact_paths
+from rttdist.artifacts import LLMChoice, LLMMessage, LLMRequest, LLMResponse, LLMUsage, build_iteration_artifact_paths
 from rttdist.config import ExperimentConfig, LMStudioConfig, RuntimeConfig
 from rttdist.corpus import FixturePair, ProblemCorpusEntry
 from rttdist.exec.adapters import ExecutionBatchResult, ExecutionStatus
@@ -17,8 +17,8 @@ class RouteClient:
     def translate(self, **kwargs) -> TranslationResult:
         self.calls.append((kwargs["source_language"], kwargs["target_language"]))
         source = self.sources.pop(0)
-        request = MockLLMRequest(model="test", temperature=0.0, messages=(MockLLMMessage(role="user", content="x"),), metadata={"source_language": kwargs["source_language"], "target_language": kwargs["target_language"], "iteration_index": kwargs["iteration_index"]})
-        response = MockLLMResponse(response_id="r", model="test", choices=(MockLLMChoice(index=0, message=MockLLMMessage(role="assistant", content=source), finish_reason="stop"),), usage=MockLLMUsage(prompt_tokens=0, completion_tokens=0, total_tokens=0))
+        request = LLMRequest(model="test", temperature=0.0, messages=(LLMMessage(role="user", content="x"),), metadata={"source_language": kwargs["source_language"], "target_language": kwargs["target_language"], "iteration_index": kwargs["iteration_index"]})
+        response = LLMResponse(response_id="r", model="test", choices=(LLMChoice(index=0, message=LLMMessage(role="assistant", content=source), finish_reason="stop"),), usage=LLMUsage(prompt_tokens=0, completion_tokens=0, total_tokens=0))
         return TranslationResult(request=request, response=response, extracted_source=source)
 
 
