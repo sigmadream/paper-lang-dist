@@ -232,6 +232,7 @@ def _cmd_run(args: argparse.Namespace) -> int:
             config=config,
             run_id=run_id,
             corpus_entries=entries,
+            progress_logger=_print_experiment_progress,
         )
     except Exception as exc:
         _error(f"Pipeline execution failed: {exc}")
@@ -284,6 +285,7 @@ def _cmd_resume(args: argparse.Namespace) -> int:
             config=config,
             run_id=run_id,
             corpus_entries=entries,
+            progress_logger=_print_experiment_progress,
         )
     except Exception as exc:
         _error(f"Resume failed: {exc}")
@@ -348,6 +350,10 @@ def _cmd_report(args: argparse.Namespace) -> int:
         return EXIT_RUNTIME_ERROR
 
     return EXIT_SUCCESS
+
+
+def _print_experiment_progress(message: str) -> None:
+    print(f"[RTT] {message}")
 
 
 def _write_summary_or_exit(

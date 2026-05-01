@@ -122,6 +122,7 @@ def run_rtt_loop(
     translation_client: TranslationClientProtocol | None = None,
     evaluate_source_fn: EvaluateSourceProtocol = evaluate_source,
     timestamp_provider: TimestampProvider | None = None,
+    progress_logger: Callable[[str], None] | None = None,
 ) -> RTTRunResult:
     now = timestamp_provider or _utcnow
     configured_intermediates = config.target_languages
@@ -133,6 +134,7 @@ def run_rtt_loop(
     )
     route_terminal_language = language_route[-2]
     route_key = "->".join(language_route)
+    route_step_count = len(_build_route_steps(language_route))
 
     problem_reference = _build_curated_problem_reference(problem)
     metadata = build_run_metadata(
@@ -145,6 +147,7 @@ def run_rtt_loop(
     metadata["language_route"] = list(language_route)
     metadata["route_key"] = route_key
     metadata["experiment_unit"] = "rtt_cycle"
+    metadata["translation_count_per_cycle"] = route_step_count
 
     run_directory, run_manifest_path = _select_run_paths_for_resume(
         output_root=config.output_root,
@@ -193,6 +196,7 @@ def run_rtt_loop(
     manifest_metadata["language_route"] = list(language_route)
     manifest_metadata["route_key"] = route_key
     manifest_metadata["experiment_unit"] = "rtt_cycle"
+    manifest_metadata["translation_count_per_cycle"] = route_step_count
 
     seed_artifact_path = _ensure_seed_source_artifact(
         output_root=config.output_root,
@@ -221,6 +225,10 @@ def run_rtt_loop(
         )
 
     client = translation_client or _build_translation_client(config)
+    _emit_progress(
+        progress_logger,
+        f"{problem.problem_id}: RTT route {route_key} ({route_step_count} translations per cycle)",
+    )
 
     for iteration_index in range(
         resume_plan.start_iteration, config.runtime.max_iterations + 1
@@ -238,6 +246,25 @@ def run_rtt_loop(
             config.output_root, iteration_paths.iteration_directory
         )
         route_steps = _build_route_steps(language_route)
+        translation_count_per_cycle = len(route_steps)
+        attempted_translation_count = 0
+        completed_translation_count = 0
+        failed_translation_count = 0
+        translation_steps: list[dict[str, Any]] = []
+        conversion_log_relative_path = (
+            Path(iteration_paths.iteration_directory) / "conversion.log"
+        ).as_posix()
+        conversion_log_lines = [
+            f"problem_id={problem.problem_id}",
+            f"iteration={iteration_index}",
+            f"language_route={route_key}",
+            f"translation_count_per_cycle={translation_count_per_cycle}",
+        ]
+        _emit_progress(
+            progress_logger,
+            f"{problem.problem_id}: iteration {iteration_index} starts; "
+            f"expecting {translation_count_per_cycle} translations",
+        )
         llm_request_payload: dict[str, Any] = {}
         llm_response_payload: dict[str, Any] = {}
         execution_payload: dict[str, Any] = {"steps": [], "target": None, "roundtrip_cpp": None}
@@ -275,6 +302,26 @@ def run_rtt_loop(
                 target_language=next_language,
                 seed_language=config.seed_language,
             )
+            step_metric = {
+                "step_index": step_index,
+                "source_language": source_language,
+                "target_language": next_language,
+                "direction": step_key,
+                "status": "started",
+                "source_path": relative_source_path,
+            }
+            translation_steps.append(step_metric)
+            attempted_translation_count += 1
+            _append_conversion_log(
+                conversion_log_lines,
+                f"step {step_index}/{translation_count_per_cycle} START {source_language}->{next_language}",
+            )
+            _emit_progress(
+                progress_logger,
+                f"{problem.problem_id}: iteration {iteration_index} "
+                f"step {step_index}/{translation_count_per_cycle} "
+                f"{source_language}->{next_language} translating",
+            )
             try:
                 translation = _translate_with_explicit_languages(
                     client,
@@ -298,6 +345,14 @@ def run_rtt_loop(
                     llm_response_payload["target_to_cpp"] = translation.response.to_dict()
                 translated_source = translation.extracted_source.rstrip()
                 _write_text(source_path, f"{translated_source}\n")
+                completed_translation_count += 1
+                step_metric["status"] = "translated"
+                step_metric["output_chars"] = len(translated_source)
+                _append_conversion_log(
+                    conversion_log_lines,
+                    f"step {step_index}/{translation_count_per_cycle} TRANSLATED "
+                    f"{source_language}->{next_language} chars={len(translated_source)}",
+                )
             except Exception as exc:
                 _capture_translation_debug_payloads(
                     exc=exc,
@@ -310,6 +365,20 @@ def run_rtt_loop(
                     exc=exc,
                     iteration_index=iteration_index,
                     stage=f"{step_key}_translation",
+                )
+                failed_translation_count += 1
+                step_metric["status"] = "translation_failed"
+                step_metric["error"] = str(exc)
+                _append_conversion_log(
+                    conversion_log_lines,
+                    f"step {step_index}/{translation_count_per_cycle} TRANSLATION_FAILED "
+                    f"{source_language}->{next_language}: {exc}",
+                )
+                _emit_progress(
+                    progress_logger,
+                    f"{problem.problem_id}: iteration {iteration_index} "
+                    f"step {step_index}/{translation_count_per_cycle} "
+                    f"{source_language}->{next_language} translation failed",
                 )
                 translated_source = ""
 
@@ -353,6 +422,13 @@ def run_rtt_loop(
                     stage=f"{step_key}_execution",
                     message="RTT route step evaluation failed unexpectedly.",
                 )
+                step_metric["status"] = "evaluation_failed"
+                step_metric["error"] = str(exc)
+                _append_conversion_log(
+                    conversion_log_lines,
+                    f"step {step_index}/{translation_count_per_cycle} EVALUATION_FAILED "
+                    f"{source_language}->{next_language}: {exc}",
+                )
                 break
 
             step_failure = _failure_from_execution_result(
@@ -362,7 +438,28 @@ def run_rtt_loop(
             )
             if step_failure is not None:
                 iteration_record = step_failure
+                step_metric["status"] = "evaluation_failed"
+                step_metric["evaluation_status"] = evaluation.status.value
+                _append_conversion_log(
+                    conversion_log_lines,
+                    f"step {step_index}/{translation_count_per_cycle} EVALUATION_FAILED "
+                    f"{source_language}->{next_language}: {evaluation.status.value}",
+                )
                 break
+
+            step_metric["status"] = "completed"
+            step_metric["evaluation_status"] = evaluation.status.value
+            _append_conversion_log(
+                conversion_log_lines,
+                f"step {step_index}/{translation_count_per_cycle} COMPLETE "
+                f"{source_language}->{next_language}",
+            )
+            _emit_progress(
+                progress_logger,
+                f"{problem.problem_id}: iteration {iteration_index} "
+                f"step {step_index}/{translation_count_per_cycle} "
+                f"{source_language}->{next_language} complete",
+            )
 
             current_source = translated_source
             produced_by_language[next_language] = translated_source
@@ -458,6 +555,26 @@ def run_rtt_loop(
         _write_text(roundtrip_source_path, f"{roundtrip_source}\n")
         _write_json(request_path, _fill_missing_payloads(llm_request_payload, "request unavailable"))
         _write_json(response_path, _fill_missing_payloads(llm_response_payload, "response unavailable"))
+        metric_payload.update(
+            _build_translation_count_metrics(
+                translation_count_per_cycle=translation_count_per_cycle,
+                attempted_translation_count=attempted_translation_count,
+                completed_translation_count=completed_translation_count,
+                failed_translation_count=failed_translation_count,
+                translation_steps=translation_steps,
+                conversion_log_path=conversion_log_relative_path,
+            )
+        )
+        conversion_log_path = resolve_contract_path(
+            config.output_root, conversion_log_relative_path
+        )
+        _append_conversion_log(
+            conversion_log_lines,
+            "summary "
+            f"attempted={attempted_translation_count} "
+            f"completed={completed_translation_count} "
+            f"failed={failed_translation_count}",
+        )
         _write_compile_log(
             output_root=config.output_root,
             compile_log_path=compile_log_path,
@@ -465,6 +582,7 @@ def run_rtt_loop(
         )
         _write_json(execution_result_path, execution_payload)
         _write_json(metrics_path, metric_payload)
+        _write_text(conversion_log_path, "\n".join(conversion_log_lines) + "\n")
 
         iteration_status = iteration_record.status
         if (
@@ -494,6 +612,11 @@ def run_rtt_loop(
             "result": iteration_record.to_dict(),
             "artifact_paths": iteration_paths.to_dict(),
             "route_steps": route_step_records,
+            "translation_count_per_cycle": translation_count_per_cycle,
+            "attempted_translation_count": attempted_translation_count,
+            "completed_translation_count": completed_translation_count,
+            "failed_translation_count": failed_translation_count,
+            "conversion_log_path": conversion_log_relative_path,
         }
         _write_json(iteration_metadata_path, iteration_payload)
 
@@ -560,6 +683,7 @@ def run_pipeline_service(
     translation_client_factory: Callable[[], TranslationClientProtocol] | None = None,
     evaluate_source_fn: EvaluateSourceProtocol = evaluate_source,
     timestamp_provider: TimestampProvider | None = None,
+    progress_logger: Callable[[str], None] | None = None,
 ) -> tuple[RTTRunResult, ...]:
     results: list[RTTRunResult] = []
     route_terminal_language = config.target_languages[-1]
@@ -578,9 +702,48 @@ def run_pipeline_service(
                 translation_client=client,
                 evaluate_source_fn=evaluate_source_fn,
                 timestamp_provider=timestamp_provider,
+                progress_logger=progress_logger,
             )
         )
     return tuple(results)
+
+
+def _build_translation_count_metrics(
+    *,
+    translation_count_per_cycle: int,
+    attempted_translation_count: int,
+    completed_translation_count: int,
+    failed_translation_count: int,
+    translation_steps: Sequence[dict[str, Any]],
+    conversion_log_path: str,
+) -> dict[str, Any]:
+    return {
+        "translation_count_per_cycle": translation_count_per_cycle,
+        "attempted_translation_count": attempted_translation_count,
+        "completed_translation_count": completed_translation_count,
+        "failed_translation_count": failed_translation_count,
+        "translation_count": {
+            "per_cycle": translation_count_per_cycle,
+            "attempted": attempted_translation_count,
+            "completed": completed_translation_count,
+            "failed": failed_translation_count,
+            "unit": "translations",
+            "definition": "number of source->target conversions in one complete RTT language route",
+        },
+        "translation_steps": [dict(step) for step in translation_steps],
+        "conversion_log_path": conversion_log_path,
+    }
+
+
+def _append_conversion_log(lines: list[str], message: str) -> None:
+    lines.append(message)
+
+
+def _emit_progress(
+    progress_logger: Callable[[str], None] | None, message: str
+) -> None:
+    if progress_logger is not None:
+        progress_logger(message)
 
 
 def _build_translation_client(config: ExperimentConfig) -> TranslationClientProtocol:
