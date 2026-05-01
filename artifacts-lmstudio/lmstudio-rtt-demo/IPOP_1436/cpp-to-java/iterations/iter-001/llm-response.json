@@ -1,0 +1,78 @@
+{
+  "cpp_to_target": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        scanner.close();\n\n        int count = 0;\n        int value = 665;\n        while (count < n) {\n            ++value;\n            if (String.valueOf(value).contains(\"666\")) {\n                ++count;\n            }\n        }\n\n        System.out.println(value);\n    }\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-jscgsmmqma7ionvn5gvp8",
+    "model": "qwen/qwen2.5-coder-14b",
+    "usage": {
+      "completion_tokens": 103,
+      "prompt_tokens": 848,
+      "total_tokens": 951
+    }
+  },
+  "step_001_cpp_to_java": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        scanner.close();\n\n        int count = 0;\n        int value = 665;\n        while (count < n) {\n            ++value;\n            if (String.valueOf(value).contains(\"666\")) {\n                ++count;\n            }\n        }\n\n        System.out.println(value);\n    }\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-jscgsmmqma7ionvn5gvp8",
+    "model": "qwen/qwen2.5-coder-14b",
+    "usage": {
+      "completion_tokens": 103,
+      "prompt_tokens": 848,
+      "total_tokens": 951
+    }
+  },
+  "step_002_java_to_cpp": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    int n;\n    std::cin >> n;\n\n    int count = 0;\n    int value = 665;\n    while (count < n) {\n        ++value;\n        if (std::to_string(value).find(\"666\") != std::string::npos) {\n            ++count;\n        }\n    }\n\n    std::cout << value << std::endl;\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-wpnfvb37jgmxmm614bwivh",
+    "model": "qwen/qwen2.5-coder-14b",
+    "usage": {
+      "completion_tokens": 104,
+      "prompt_tokens": 840,
+      "total_tokens": 944
+    }
+  },
+  "target_to_cpp": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    int n;\n    std::cin >> n;\n\n    int count = 0;\n    int value = 665;\n    while (count < n) {\n        ++value;\n        if (std::to_string(value).find(\"666\") != std::string::npos) {\n            ++count;\n        }\n    }\n\n    std::cout << value << std::endl;\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "id": "chatcmpl-wpnfvb37jgmxmm614bwivh",
+    "model": "qwen/qwen2.5-coder-14b",
+    "usage": {
+      "completion_tokens": 104,
+      "prompt_tokens": 840,
+      "total_tokens": 944
+    }
+  }
+}

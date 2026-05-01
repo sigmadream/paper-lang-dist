@@ -1,0 +1,62 @@
+{
+  "artifact_paths": {
+    "compile_log_path": "lmstudio-rtt-demo/IPOP_1436/cpp-to-python/iterations/iter-002/compile.log",
+    "execution_result_path": "lmstudio-rtt-demo/IPOP_1436/cpp-to-python/iterations/iter-002/execution.json",
+    "input_seed_source_path": "lmstudio-rtt-demo/IPOP_1436/cpp-to-python/iterations/iter-002/input.cpp",
+    "iteration_directory": "lmstudio-rtt-demo/IPOP_1436/cpp-to-python/iterations/iter-002",
+    "iteration_metadata_path": "lmstudio-rtt-demo/IPOP_1436/cpp-to-python/iterations/iter-002/iteration.json",
+    "llm_request_path": "lmstudio-rtt-demo/IPOP_1436/cpp-to-python/iterations/iter-002/llm-request.json",
+    "llm_response_path": "lmstudio-rtt-demo/IPOP_1436/cpp-to-python/iterations/iter-002/llm-response.json",
+    "metrics_path": "lmstudio-rtt-demo/IPOP_1436/cpp-to-python/iterations/iter-002/metrics.json",
+    "roundtrip_source_path": "lmstudio-rtt-demo/IPOP_1436/cpp-to-python/iterations/iter-002/roundtrip.cpp",
+    "translated_source_path": "lmstudio-rtt-demo/IPOP_1436/cpp-to-python/iterations/iter-002/translated.py"
+  },
+  "attempted_translation_count": 2,
+  "completed_translation_count": 2,
+  "conversion_log_path": "lmstudio-rtt-demo/IPOP_1436/cpp-to-python/iterations/iter-002/conversion.log",
+  "ended_at": "2026-05-01T11:41:57.084908Z",
+  "failed_translation_count": 0,
+  "iteration_index": 2,
+  "result": {
+    "details": {
+      "convergence": {
+        "overall": "fixed_point",
+        "seed_state": "fixed_point"
+      },
+      "convergence_status": "fixed_point",
+      "language_route": [
+        "cpp",
+        "python",
+        "cpp"
+      ]
+    },
+    "iteration_index": 2,
+    "message": "Fixed point reached after a complete RTT language route.",
+    "stage": "convergence",
+    "status": "success"
+  },
+  "route_steps": [
+    {
+      "direction": "step_001_cpp_to_python",
+      "execution_key": "step_001_python",
+      "request_key": "step_001_cpp_to_python",
+      "response_key": "step_001_cpp_to_python",
+      "source_language": "cpp",
+      "source_path": "lmstudio-rtt-demo/IPOP_1436/cpp-to-python/iterations/iter-002/translated.py",
+      "step_index": 1,
+      "target_language": "python"
+    },
+    {
+      "direction": "step_002_python_to_cpp",
+      "execution_key": "roundtrip_cpp",
+      "request_key": "step_002_python_to_cpp",
+      "response_key": "step_002_python_to_cpp",
+      "source_language": "python",
+      "source_path": "lmstudio-rtt-demo/IPOP_1436/cpp-to-python/iterations/iter-002/roundtrip.cpp",
+      "step_index": 2,
+      "target_language": "cpp"
+    }
+  ],
+  "started_at": "2026-05-01T11:41:43.403132Z",
+  "translation_count_per_cycle": 2
+}
