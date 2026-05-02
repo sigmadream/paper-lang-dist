@@ -8,6 +8,10 @@ from pathlib import Path
 from typing import Any, TYPE_CHECKING
 
 from rttdist.failure_taxonomy import FailureRecord, failure_record_from_dict
+from rttdist.metrics import (
+    LEGACY_RTT_DISTANCE_MISSING_REASON,
+    build_legacy_distance_metrics_fallback,
+)
 
 if TYPE_CHECKING:
     from rttdist.pipeline import RTTRunResult
@@ -103,7 +107,7 @@ def render_run_summary_markdown(summary: dict[str, Any]) -> str:
                 per_cycle=entry["translation_count_per_cycle"],
                 completed=entry["completed_translation_count"],
                 convergence=entry["convergence_outcome"],
-                semantic=entry["semantic_summary"]["overall"],
+                semantic=_paper_semantic_status(entry),
             )
         )
 
@@ -142,7 +146,10 @@ def render_run_summary_markdown(summary: dict[str, Any]) -> str:
             f"- Failed translations in final iteration: {entry['failed_translation_count']}",
             f"- Conversion log: {entry['artifacts']['final_conversion_log_path']}",
             f"- Convergence outcome: {entry['convergence_outcome']}",
-            f"- Semantic summary: {entry['semantic_summary']['overall']}",
+            f"- Semantic preservation: {_paper_semantic_status(entry)}",
+            f"- Legacy semantic summary (raw execution): {entry['semantic_summary']['overall']}",
+            f"- Residual similarity: {_format_distance_metric(entry['distance_metrics'].get('residual_similarity'))}",
+            f"- Complexity delta: {_format_distance_metric(entry['distance_metrics'].get('complexity_delta'))}",
         ])
     lines.append("")
     return "\n".join(lines)
@@ -177,6 +184,22 @@ def _build_summary_entry(*, output_root: Path, manifest_path: Path) -> dict[str,
     language_route = _normalize_language_route(metadata.get("language_route"), seed_language, target_language)
     route_key = _optional_text(metadata.get("route_key")) or "->".join(language_route)
     completed_cycles = _count_completed_rtt_cycles(output_root=output_root, iterations=iterations)
+    rtt_distance_summary = _build_rtt_distance_summary(
+        completed_cycle_count=completed_cycles,
+        metrics_payload=metrics_payload,
+    )
+    translation_summary = _build_translation_count_summary(
+        language_route=language_route,
+        final_iteration=final_iteration,
+        metrics_payload=metrics_payload,
+    )
+    semantic_summary = _build_semantic_summary(execution_payload)
+    distance_metrics_summary = _build_distance_metrics_summary(
+        metrics_payload=metrics_payload,
+        rtt_distance=rtt_distance_summary,
+        evaluation_checks=translation_summary.get("evaluation_checks"),
+        translation_steps=translation_summary.get("translation_steps", []),
+    )
     return {
         "problem_id": _require_text(problem.get("problem_id"), field_name="problem_id"),
         "seed_language": seed_language,
@@ -185,18 +208,12 @@ def _build_summary_entry(*, output_root: Path, manifest_path: Path) -> dict[str,
         "rtt_route_key": route_key,
         "final_status": final_record.status.value,
         "iteration_count": len(iterations),
-        "rtt_distance": _build_rtt_distance_summary(
-            completed_cycle_count=completed_cycles,
-            metrics_payload=metrics_payload,
-        ),
-        **_build_translation_count_summary(
-            language_route=language_route,
-            final_iteration=final_iteration,
-            metrics_payload=metrics_payload,
-        ),
+        "rtt_distance": rtt_distance_summary,
+        **translation_summary,
         "final_iteration_index": final_record.iteration_index,
         "convergence_outcome": _convergence_outcome(final_record),
-        "semantic_summary": _build_semantic_summary(execution_payload),
+        "semantic_summary": semantic_summary,
+        "distance_metrics": distance_metrics_summary,
         "artifacts": {
             "run_manifest_path": _relative_to(output_root, manifest_path),
             "final_iteration_directory": _require_text(artifact_paths.get("iteration_directory"), field_name="iteration_directory"),
@@ -216,12 +233,36 @@ def _normalize_language_route(value: Any, seed_language: str, target_language: s
 def _build_rtt_distance_summary(*, completed_cycle_count: int, metrics_payload: dict[str, Any] | None) -> dict[str, Any]:
     if isinstance(metrics_payload, dict) and isinstance(metrics_payload.get("rtt_distance"), dict):
         return _require_mapping(metrics_payload["rtt_distance"], field_name="rtt_distance")
+    if isinstance(metrics_payload, dict) and "rtt_distance" in metrics_payload:
+        return {
+            "availability": "unavailable",
+            "reason": LEGACY_RTT_DISTANCE_MISSING_REASON,
+            "unit": "completed_full_routes",
+        }
     return {
         "availability": "measured",
         "value": int(completed_cycle_count),
         "unit": "completed_full_routes",
         "definition": "one route = configured language_route",
     }
+
+
+def _build_distance_metrics_summary(
+    *,
+    metrics_payload: dict[str, Any] | None,
+    rtt_distance: dict[str, Any],
+    evaluation_checks: Any,
+    translation_steps: Any,
+) -> dict[str, Any]:
+    if isinstance(metrics_payload, dict) and isinstance(metrics_payload.get("distance_metrics"), dict):
+        return dict(metrics_payload["distance_metrics"])
+    steps = translation_steps if isinstance(translation_steps, list) else []
+    checks = evaluation_checks if isinstance(evaluation_checks, dict) else {}
+    return build_legacy_distance_metrics_fallback(
+        rtt_distance=rtt_distance,
+        evaluation_checks=checks,
+        translation_steps=[step for step in steps if isinstance(step, dict)],
+    )
 
 
 def _build_translation_count_summary(
@@ -247,7 +288,12 @@ def _build_translation_count_summary(
                 "failed_translation_count": _coerce_int(
                     translation_count.get("failed"), 0
                 ),
-                "translation_steps": _optional_list(metrics_payload.get("translation_steps")),
+                "translation_steps": _optional_list(
+                    metrics_payload.get("translation_steps")
+                ),
+                "evaluation_checks": _optional_mapping(
+                    metrics_payload.get("evaluation_checks")
+                ),
             }
         return {
             "translation_count_per_cycle": _coerce_int(
@@ -262,7 +308,12 @@ def _build_translation_count_summary(
             "failed_translation_count": _coerce_int(
                 metrics_payload.get("failed_translation_count"), 0
             ),
-            "translation_steps": _optional_list(metrics_payload.get("translation_steps")),
+            "translation_steps": _optional_list(
+                metrics_payload.get("translation_steps")
+            ),
+            "evaluation_checks": _optional_mapping(
+                metrics_payload.get("evaluation_checks")
+            ),
         }
     return {
         "translation_count_per_cycle": _coerce_int(
@@ -278,6 +329,7 @@ def _build_translation_count_summary(
             final_iteration.get("failed_translation_count"), 0
         ),
         "translation_steps": [],
+        "evaluation_checks": {},
     }
 
 
@@ -305,6 +357,10 @@ def _coerce_int(value: Any, fallback: int) -> int:
 
 def _optional_list(value: Any) -> list[Any]:
     return value if isinstance(value, list) else []
+
+
+def _optional_mapping(value: Any) -> dict[str, Any]:
+    return value if isinstance(value, dict) else {}
 
 
 def _count_completed_rtt_cycles(*, output_root: Path, iterations: Sequence[Any]) -> int:
@@ -471,6 +527,40 @@ def _format_measurement(measurement: dict[str, Any]) -> str:
     if isinstance(failure, dict):
         return f"unavailable ({failure.get('status', 'unknown')} at {failure.get('stage', 'unknown')})"
     return f"unavailable ({measurement.get('reason', 'unknown')})"
+
+
+def _paper_semantic_status(entry: dict[str, Any]) -> str:
+    distance_metrics = entry.get("distance_metrics")
+    if isinstance(distance_metrics, dict):
+        semantic_preservation = distance_metrics.get("semantic_preservation")
+        if isinstance(semantic_preservation, dict):
+            status = semantic_preservation.get("status")
+            if isinstance(status, str) and status:
+                return status
+    semantic_summary = entry.get("semantic_summary")
+    if isinstance(semantic_summary, dict):
+        status = semantic_summary.get("overall")
+        if isinstance(status, str) and status:
+            return status
+    return "unknown"
+
+
+def _format_distance_metric(metric: Any) -> str:
+    if not isinstance(metric, dict):
+        return "unavailable (missing)"
+    if metric.get("available") is True or metric.get("availability") == "measured":
+        value = metric.get("value")
+        if isinstance(value, float):
+            return f"measured {value:.6f}"
+        if value is not None:
+            return f"measured {value}"
+        status = metric.get("status")
+        return str(status) if isinstance(status, str) and status else "available"
+    reason = metric.get("reason")
+    if isinstance(reason, str) and reason:
+        return f"unavailable ({reason})"
+    status = metric.get("status")
+    return f"unavailable ({status})" if isinstance(status, str) and status else "unavailable"
 
 
 def _format_aggregate_rate(measurement: dict[str, Any]) -> str:

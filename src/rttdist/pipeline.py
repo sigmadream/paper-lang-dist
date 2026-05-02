@@ -27,6 +27,10 @@ from rttdist.lmstudio_client import (
     SourceExtractionError,
     TranslationResult,
 )
+from rttdist.metrics import (
+    build_distance_metrics,
+    build_unavailable_rtt_distance,
+)
 from rttdist.prompts import PROMPT_TEMPLATE_VERSION
 from rttdist.run_state import build_manifest_checksums, plan_run_resume
 
@@ -306,6 +310,7 @@ def run_rtt_loop(
                 "direction": step_key,
                 "status": "started",
                 "source_path": relative_source_path,
+                **_not_evaluated_execution_check_summary(),
             }
             translation_steps.append(step_metric)
             attempted_translation_count += 1
@@ -412,6 +417,9 @@ def run_rtt_loop(
                 )
                 execution_payload[execution_key] = execution_result
                 execution_payload["steps"].append(execution_result)
+                step_evaluation_checks = _execution_check_summary(evaluation)
+                step_metric.update(step_evaluation_checks)
+                route_step_record.update(step_evaluation_checks)
             except Exception as exc:
                 iteration_record = _failure_from_runtime_exception(
                     exc=exc,
@@ -434,29 +442,48 @@ def run_rtt_loop(
                 stage=f"{step_key}_execution",
             )
             if step_failure is not None:
-                iteration_record = step_failure
-                step_metric["status"] = "evaluation_failed"
+                step_metric["evaluation_status"] = evaluation.status.value
+                if _should_continue_after_step_functionality_failure(
+                    result=evaluation,
+                    target_language=next_language,
+                    seed_language=config.seed_language,
+                ):
+                    step_metric["status"] = "completed_with_functionality_failure"
+                    _append_conversion_log(
+                        conversion_log_lines,
+                        f"step {step_index}/{translation_count_per_cycle} "
+                        f"FUNCTIONALITY_FAILED_CONTINUING "
+                        f"{source_language}->{next_language}: {evaluation.status.value}",
+                    )
+                    _emit_progress(
+                        progress_logger,
+                        f"{problem.problem_id}: iteration {iteration_index} "
+                        f"step {step_index}/{translation_count_per_cycle} "
+                        f"{source_language}->{next_language} functionality failed; continuing route",
+                    )
+                else:
+                    iteration_record = step_failure
+                    step_metric["status"] = "evaluation_failed"
+                    _append_conversion_log(
+                        conversion_log_lines,
+                        f"step {step_index}/{translation_count_per_cycle} EVALUATION_FAILED "
+                        f"{source_language}->{next_language}: {evaluation.status.value}",
+                    )
+                    break
+            else:
+                step_metric["status"] = "completed"
                 step_metric["evaluation_status"] = evaluation.status.value
                 _append_conversion_log(
                     conversion_log_lines,
-                    f"step {step_index}/{translation_count_per_cycle} EVALUATION_FAILED "
-                    f"{source_language}->{next_language}: {evaluation.status.value}",
+                    f"step {step_index}/{translation_count_per_cycle} COMPLETE "
+                    f"{source_language}->{next_language}",
                 )
-                break
-
-            step_metric["status"] = "completed"
-            step_metric["evaluation_status"] = evaluation.status.value
-            _append_conversion_log(
-                conversion_log_lines,
-                f"step {step_index}/{translation_count_per_cycle} COMPLETE "
-                f"{source_language}->{next_language}",
-            )
-            _emit_progress(
-                progress_logger,
-                f"{problem.problem_id}: iteration {iteration_index} "
-                f"step {step_index}/{translation_count_per_cycle} "
-                f"{source_language}->{next_language} complete",
-            )
+                _emit_progress(
+                    progress_logger,
+                    f"{problem.problem_id}: iteration {iteration_index} "
+                    f"step {step_index}/{translation_count_per_cycle} "
+                    f"{source_language}->{next_language} complete",
+                )
 
             current_source = translated_source
             produced_by_language[next_language] = translated_source
@@ -561,6 +588,17 @@ def run_rtt_loop(
                 translation_steps=translation_steps,
                 conversion_log_path=conversion_log_relative_path,
             )
+        )
+        if not isinstance(metric_payload.get("rtt_distance"), dict):
+            metric_payload["rtt_distance"] = build_unavailable_rtt_distance(
+                iteration_record
+            )
+        metric_payload["distance_metrics"] = build_distance_metrics(
+            rtt_distance=metric_payload["rtt_distance"],
+            evaluation_checks=metric_payload.get("evaluation_checks"),
+            translation_steps=translation_steps,
+            reference_source=iteration_input_seed_source,
+            candidate_source=roundtrip_source,
         )
         conversion_log_path = resolve_contract_path(
             config.output_root, conversion_log_relative_path
@@ -728,7 +766,42 @@ def _build_translation_count_metrics(
             "definition": "number of source->target conversions in one complete RTT language route",
         },
         "translation_steps": [dict(step) for step in translation_steps],
+        "evaluation_checks": _build_evaluation_check_metrics(translation_steps),
         "conversion_log_path": conversion_log_path,
+    }
+
+
+def _build_evaluation_check_metrics(
+    translation_steps: Sequence[dict[str, Any]],
+) -> dict[str, Any]:
+    compile_status_counts: dict[str, int] = {}
+    functionality_status_counts: dict[str, int] = {}
+    for step in translation_steps:
+        compile_status = step.get("compile_status")
+        if isinstance(compile_status, str) and compile_status:
+            compile_status_counts[compile_status] = (
+                compile_status_counts.get(compile_status, 0) + 1
+            )
+        functionality_status = step.get("functionality_status")
+        if isinstance(functionality_status, str) and functionality_status:
+            functionality_status_counts[functionality_status] = (
+                functionality_status_counts.get(functionality_status, 0) + 1
+            )
+    return {
+        "compile": {
+            "passed": compile_status_counts.get("passed", 0),
+            "failed": compile_status_counts.get("failed", 0),
+            "skipped": compile_status_counts.get("skipped", 0),
+            "not_evaluated": compile_status_counts.get("not_evaluated", 0),
+            "by_status": compile_status_counts,
+        },
+        "functionality": {
+            "passed": functionality_status_counts.get("passed", 0),
+            "failed": functionality_status_counts.get("failed", 0),
+            "not_run": functionality_status_counts.get("not_run", 0),
+            "not_evaluated": functionality_status_counts.get("not_evaluated", 0),
+            "by_status": functionality_status_counts,
+        },
     }
 
 
@@ -872,6 +945,87 @@ def _failure_from_execution_result(
     )
 
 
+def _should_continue_after_step_functionality_failure(
+    *,
+    result: ExecutionBatchResult,
+    target_language: str,
+    seed_language: str,
+) -> bool:
+    return (
+        target_language != seed_language
+        and _compile_check_payload(result)["passed"]
+        and result.status
+        in {
+            ExecutionStatus.WRONG_ANSWER,
+            ExecutionStatus.RUNTIME_ERROR,
+            ExecutionStatus.TIMEOUT,
+        }
+    )
+
+
+def _execution_check_summary(result: ExecutionBatchResult) -> dict[str, Any]:
+    compile_check = _compile_check_payload(result)
+    functionality_check = _functionality_check_payload(result)
+    return {
+        "compile_status": compile_check["status"],
+        "compile_passed": compile_check["passed"],
+        "compile_check": compile_check,
+        "functionality_status": functionality_check["status"],
+        "functionality_passed": functionality_check["passed"],
+        "functionality_check": functionality_check,
+    }
+
+
+def _not_evaluated_execution_check_summary() -> dict[str, Any]:
+    compile_check = {"available": False, "status": "not_evaluated", "passed": False}
+    functionality_check = {
+        "available": False,
+        "status": "not_evaluated",
+        "passed": False,
+    }
+    return {
+        "compile_status": compile_check["status"],
+        "compile_passed": compile_check["passed"],
+        "compile_check": compile_check,
+        "functionality_status": functionality_check["status"],
+        "functionality_passed": functionality_check["passed"],
+        "functionality_check": functionality_check,
+    }
+
+
+def _compile_check_payload(result: ExecutionBatchResult) -> dict[str, Any]:
+    compile_result = result.compile_result
+    if compile_result is None:
+        return {"available": False, "status": "skipped", "passed": True}
+    passed = not compile_result.timed_out and compile_result.exit_code == 0
+    return {
+        "available": True,
+        "status": "passed" if passed else "failed",
+        "passed": passed,
+        "exit_code": compile_result.exit_code,
+        "timed_out": compile_result.timed_out,
+        "duration_seconds": compile_result.duration_seconds,
+    }
+
+
+def _functionality_check_payload(result: ExecutionBatchResult) -> dict[str, Any]:
+    if result.status == ExecutionStatus.COMPILE_ERROR:
+        return {"available": False, "status": "not_run", "passed": False}
+    passed = result.status == ExecutionStatus.SUCCESS
+    return {
+        "available": True,
+        "status": "passed" if passed else "failed",
+        "passed": passed,
+        "execution_status": result.status.value,
+        "fixture_pass_count": sum(
+            1 for item in result.fixture_results if item.status == ExecutionStatus.SUCCESS
+        ),
+        "fixture_fail_count": sum(
+            1 for item in result.fixture_results if item.status != ExecutionStatus.SUCCESS
+        ),
+    }
+
+
 def _execution_batch_to_dict(
     *,
     result: ExecutionBatchResult,
@@ -924,6 +1078,7 @@ def _execution_batch_to_dict(
         "work_directory": result.work_directory.as_posix(),
         "compile_log_path": compile_log_path,
         "message": result.message,
+        **_execution_check_summary(result),
         "compile_result": None
         if result.compile_result is None
         else {
