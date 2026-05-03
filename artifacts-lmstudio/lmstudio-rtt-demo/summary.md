@@ -25,7 +25,10 @@
 - Failed translations in final iteration: 0
 - Conversion log: lmstudio-rtt-demo/IPOP_1436/cpp-to-c/iterations/iter-002/conversion.log
 - Convergence outcome: fixed_point
-- Semantic summary: pass
+- Semantic preservation: pass
+- Legacy semantic summary (raw execution): pass
+- Residual similarity: measured 1.000000
+- Complexity delta: unavailable (optional_tool_not_configured_or_not_installed)
 
 ## IPOP_1436 / cpp->java->cpp
 
@@ -38,7 +41,10 @@
 - Failed translations in final iteration: 0
 - Conversion log: lmstudio-rtt-demo/IPOP_1436/cpp-to-java/iterations/iter-002/conversion.log
 - Convergence outcome: fixed_point
-- Semantic summary: pass
+- Semantic preservation: pass
+- Legacy semantic summary (raw execution): pass
+- Residual similarity: measured 1.000000
+- Complexity delta: unavailable (optional_tool_not_configured_or_not_installed)
 
 ## IPOP_1436 / cpp->python->cpp
 
@@ -51,4 +57,7 @@
 - Failed translations in final iteration: 0
 - Conversion log: lmstudio-rtt-demo/IPOP_1436/cpp-to-python/iterations/iter-002/conversion.log
 - Convergence outcome: fixed_point
-- Semantic summary: pass
+- Semantic preservation: pass
+- Legacy semantic summary (raw execution): pass
+- Residual similarity: measured 1.000000
+- Complexity delta: unavailable (optional_tool_not_configured_or_not_installed)
