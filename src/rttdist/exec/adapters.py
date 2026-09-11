@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
 import shutil
@@ -60,6 +60,7 @@ class ExecutionBatchResult:
     compile_result: ProcessResult | None
     fixture_results: tuple[FixtureRunResult, ...]
     message: str
+    details: dict = field(default_factory=dict)
 
 
 class ExecutionAdapter:
@@ -118,6 +119,7 @@ class ExecutionAdapter:
                     compile_result=compile_result,
                     fixture_results=tuple(),
                     message="Compilation exceeded timeout.",
+                    details={"compile_timed_out": True},
                 )
             if compile_result.exit_code != 0:
                 missing_toolchain = _missing_executable_name(compile_result)
@@ -125,6 +127,7 @@ class ExecutionAdapter:
                     language=self.language,
                     problem_id=problem.problem_id,
                     status=ExecutionStatus.COMPILE_ERROR,
+                    details={"missing_toolchain": missing_toolchain} if missing_toolchain else {},
                     work_directory=work_directory,
                     compile_log_path=compile_log_path,
                     compile_result=compile_result,
@@ -463,6 +466,8 @@ def _run_subprocess(
             input=input_text,
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             timeout=timeout_seconds,
             check=False,
         )

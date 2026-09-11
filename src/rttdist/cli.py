@@ -51,6 +51,7 @@ def build_parser() -> argparse.ArgumentParser:
         help="Validate config and corpus without running experiments",
     )
     _add_config_arguments(validate_parser)
+    validate_parser.add_argument("--execute", action="store_true")
     validate_parser.set_defaults(func=_cmd_validate_corpus)
 
     # run command
@@ -78,6 +79,7 @@ def build_parser() -> argparse.ArgumentParser:
         help="Resume a previous run using existing artifacts",
     )
     _add_config_arguments(resume_parser)
+    resume_parser.add_argument("--new-attempt", action="store_true", help="Preserve an unresumable infrastructure attempt and start a new one")
     resume_parser.add_argument(
         "--run-id",
         dest="run_id_option",
@@ -97,6 +99,7 @@ def build_parser() -> argparse.ArgumentParser:
         help="Generate summary report from existing run",
     )
     _add_config_arguments(report_parser)
+    report_parser.add_argument("--runs", help="Comma-separated main run IDs with identical conditions")
     report_parser.add_argument(
         "--run-id",
         dest="run_id_option",
@@ -194,6 +197,14 @@ def _cmd_validate_corpus(args: argparse.Namespace) -> int:
     config = _load_config(config_path)
     entries = _validate_corpus_entries(config)
 
+    if args.execute:
+        from rttdist.experiment_io import validate_execute
+        validate_execute(config)
+        return EXIT_SUCCESS
+
+    from rttdist.ast_similarity import parser_smoke
+    parser_smoke()
+
     print(f"Config validated successfully.")
     print(f"Seed language: {config.seed_language}")
     print(f"Found {len(entries)} problem(s):")
@@ -226,6 +237,9 @@ def _cmd_run(args: argparse.Namespace) -> int:
 
     print(f"Starting run: {run_id}")
     print(f"Output root: {config.output_root}")
+
+    if config.experiment_version:
+        return _run_v1(config, config_path, run_id, resume=False)
 
     try:
         results = run_pipeline_service(
@@ -280,6 +294,9 @@ def _cmd_resume(args: argparse.Namespace) -> int:
     print(f"Resuming run: {run_id}")
     print(f"Output root: {config.output_root}")
 
+    if config.experiment_version:
+        return _run_v1(config, config_path, run_id, resume=True, new_attempt=args.new_attempt)
+
     try:
         results = run_pipeline_service(
             config=config,
@@ -315,6 +332,11 @@ def _cmd_resume(args: argparse.Namespace) -> int:
 
 def _cmd_report(args: argparse.Namespace) -> int:
     """Generate summary report from existing run."""
+    if args.runs:
+        from rttdist.reporting_v1 import report_runs
+        config = _load_config(args.config_option or args.config)
+        report_runs(config.output_root, args.runs.split(","))
+        return EXIT_SUCCESS
     run_id = _resolve_required_argument(
         positional=args.run_id,
         option=args.run_id_option,
@@ -336,6 +358,11 @@ def _cmd_report(args: argparse.Namespace) -> int:
         output_root = Path("artifacts")
 
     print(f"Generating report for run: {run_id}")
+
+    if (output_root / run_id / "run_metadata.json").exists():
+        from rttdist.reporting_v1 import report_runs
+        report_runs(output_root, [run_id])
+        return EXIT_SUCCESS
 
     try:
         artifacts = write_run_summary(
@@ -379,6 +406,15 @@ def _write_summary_or_exit(
 
 def _validate_provider_runtime_or_exit(config: ExperimentConfig) -> None:
     pass
+
+
+def _run_v1(config, path, run_id, resume, new_attempt=False):
+    import yaml
+    from rttdist.experiment_v1 import run_experiment
+    raw = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
+    results = run_experiment(config, raw, run_id, resume=resume, new_attempt=new_attempt)
+    print(f"Recorded {len(results)} experiments")
+    return EXIT_RUNTIME_ERROR if any(r["status"] == "api_error" or r["details"].get("missing_toolchain") for r in results) else EXIT_SUCCESS
 
 
 def main(argv: Sequence[str] | None = None) -> int:

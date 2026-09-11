@@ -1,5 +1,20 @@
 # RTT Language Distance Experiment Tool
 
+현재 SF 실험은 `experiment_version`이 있는 설정(`lmstudio_pilot_v1.yaml`, `lmstudio_v1.yaml`)으로 실행한다. 기존 설정과 아래 schema 1 설명은 구버전 실행/리포트에 해당한다. 1차 정의는 [계획](docs/PLAN_v1_metrics.md), 실제 실행 기록은 [실험 로그](docs/EXPERIMENT_v1_log.md)를 참고한다.
+
+SF의 첫 왕복은 t=1이고, tau_c는 최초 인접 정규화 토큰 해시 일치 시점이다. K=10은 후보 탐색에만 적용하며 확인 왕복은 tau_c+1부터 최대 tau_c+5까지 수행한다. `p_SF(c)`는 후보가 존재하고 후보까지 모든 단계가 통과하며 확인 1..c의 해시와 기능이 유지된 비율이다. parse_error를 분모에 포함하고 인프라 중단은 제외한다. tau와 Delta_0는 성공 조건부 통계다.
+
+```powershell
+$env:UV_CACHE_DIR = 'D:/works/paper-lang-dist/.uv-cache'
+$env:PATH = 'D:/works/paper-lang-dist/.tools/gcc/bin;D:/works/paper-lang-dist/.tools/R/bin/x64;' + $env:PATH
+$env:PYTHONUTF8 = '1'
+uv run rttdist validate-corpus --config lmstudio_validate_v1.yaml --execute
+uv run rttdist run --config lmstudio_pilot_v1.yaml --run-id pilot-example
+uv run rttdist report --config lmstudio_pilot_v1.yaml --run-id pilot-example
+```
+
+검증을 다시 실행하면 검증 해시가 바뀐다. 이미 실행한 run의 재개에는 그 run과 일치하는 검증 기록과 코드/모델 조건이 필요하다. 원본 응답은 각 단계의 llm-response.json 및 api-attempt 기록에, 선택된 실험 시도는 경로별 attempts.json에 보존된다. 모델 응답이 완료된 단계는 재개 시 재요청하지 않는다.
+
 > C++을 여러 언어 경로로 번역한 뒤 다시 C++로 닫는 RTT(Round-Trip Translation) 실험 도구입니다.
 
 ```yaml

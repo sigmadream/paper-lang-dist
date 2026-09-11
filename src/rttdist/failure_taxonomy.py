@@ -20,6 +20,17 @@ class FailureStatus(str, Enum):
     TIMEOUT = "timeout"
     OSCILLATION = "oscillation"
     MAX_ITER_NO_CONVERGENCE = "max_iter_no_convergence"
+    CONFIRMATION_FAILED = "confirmation_failed"
+
+
+def paper_category(record):
+    raw = record.to_dict() if isinstance(record, FailureRecord) else record
+    status = raw["status"]
+    if status == "api_error" or raw.get("details", {}).get("missing_toolchain"):
+        return "infrastructure"
+    return {"success": "success", "parse_error": "format_error",
+            "oscillation": "oscillation", "max_iter_no_convergence": "max_iterations",
+            "confirmation_failed": "confirmation_failed"}.get(status, "functionality_error")
 
 
 def parse_failure_status(value: str) -> FailureStatus:

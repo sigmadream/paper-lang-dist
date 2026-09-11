@@ -54,12 +54,15 @@ class LMStudioConfig:
     model: str
     temperature: float
     host: str
+    max_tokens: int | None = None
 
 
 @dataclass(frozen=True)
 class RuntimeConfig:
     max_iterations: int
     timeout_seconds: int
+    confirmation_cycles: int = 5
+    stop_on_intermediate_failure: bool = True
 
 
 @dataclass(frozen=True)
@@ -73,6 +76,7 @@ class ExperimentConfig:
     problem_root: Path
     corpus_root: Path
     provider: str = "lmstudio"
+    experiment_version: str | None = None
 
 
 def load_experiment_config(config_path: Path) -> ExperimentConfig:
@@ -136,6 +140,7 @@ def _parse_config(raw_data: dict[str, Any], config_dir: Path) -> ExperimentConfi
         problem_root=problem_root,
         corpus_root=corpus_root,
         provider=provider,
+        experiment_version=raw_data.get("experiment_version"),
     )
 
 
@@ -291,8 +296,12 @@ def _parse_lmstudio_config(raw_data: dict[str, Any], *, provider: str) -> LMStud
             "`lmstudio.temperature` must be 0 for deterministic translations."
         )
 
+    max_tokens = value.get("max_tokens")
+    if max_tokens is not None and (type(max_tokens) is not int or max_tokens < 1):
+        raise ConfigValidationError("`lmstudio.max_tokens` must be a positive integer.")
     return LMStudioConfig(
         model=model_raw.strip(),
+        max_tokens=max_tokens,
         temperature=0.0,
         host=host_raw.strip(),
     )
@@ -323,8 +332,16 @@ def _parse_runtime_config(raw_data: dict[str, Any]) -> RuntimeConfig:
             f"`runtime.timeout_seconds` must be >= 1, got {timeout_seconds}."
         )
 
+    confirmation_cycles = value.get("confirmation_cycles", 5)
+    if type(confirmation_cycles) is not int or not 0 <= confirmation_cycles <= 5:
+        raise ConfigValidationError("`runtime.confirmation_cycles` must be in 0..5.")
+    stop = value.get("stop_on_intermediate_failure", True)
+    if type(stop) is not bool:
+        raise ConfigValidationError("`runtime.stop_on_intermediate_failure` must be boolean.")
     return RuntimeConfig(
         max_iterations=max_iterations,
+        confirmation_cycles=confirmation_cycles,
+        stop_on_intermediate_failure=stop,
         timeout_seconds=timeout_seconds,
     )
 
