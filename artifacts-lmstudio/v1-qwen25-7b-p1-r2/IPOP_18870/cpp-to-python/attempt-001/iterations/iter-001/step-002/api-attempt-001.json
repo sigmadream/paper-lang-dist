@@ -1,0 +1,28 @@
+{
+  "started_at": "2026-09-11T09:05:24.094803+00:00",
+  "seconds": 8.596591400000761,
+  "request": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+      },
+      {
+        "role": "user",
+        "content": "[TASK]\nDirection: target_to_seed\nProblem ID: IPOP_18870\nTranslate from Python to C++.\n\n[CONSTRAINTS]\n- Preserve exact input/output behavior for the provided sample.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n문제\n수직선 위에 N개의 좌표 X_1, X_2, ..., X_N이 있다. 이 좌표에 좌표 압축을 적용하려고 한다.\nX_i를 좌표 압축한 결과 X'_i의 값은 X_i > X_j를 만족하는 서로 다른 좌표 X_j의 개수와 같아야 한다.\nX_1, X_2, ..., X_N에 좌표 압축을 적용한 결과 X'_1, X'_2, ..., X'_N를 출력해보자.\n\n입력\n첫째 줄에 N이 주어진다.\n둘째 줄에는 공백 한 칸으로 구분된 X_1, X_2, ..., X_N이 주어진다.\n\n출력\n첫째 줄에 X'_1, X'_2, ..., X'_N를 공백 한 칸으로 구분해서 출력한다.\n\n제한\n- 1 <= N <= 1,000,000\n- -10^9 <= X_i <= 10^9\n\n예제 입력 1\n5\n2 4 -10 4 -9\n\n예제 출력 1\n2 3 0 3 1\n\n예제 입력 2\n6\n1000 999 1000 999 1000 999\n\n예제 출력 2\n1 0 1 0 1 0\n\n[SAMPLE INPUT]\n5\n2 4 -10 4 -9\n\n[EXPECTED OUTPUT]\n2 3 0 3 1\n\n[SOURCE CODE - Python]\n```python\nimport sys\nfrom typing import List\n\ndef main():\n    input = sys.stdin.read\n    data = input().split()\n    \n    n = int(data[0])\n    a = list(map(int, data[1:]))\n    \n    sorted_a = sorted(set(a))\n    compressed = {x: i for i, x in enumerate(sorted_a)}\n    \n    for x in a:\n        print(compressed[x], end=\" \")\n    print()\n\nif __name__ == \"__main__\":\n    main()\n```"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "stream": false,
+    "top_p": 1,
+    "top_k": 0,
+    "repeat_penalty": 1,
+    "seed": 20260911
+  },
+  "http_status": 200,
+  "raw_response": "{\n  \"id\": \"chatcmpl-jz4n2ouz2ecn6xun4lp0u\",\n  \"object\": \"chat.completion\",\n  \"created\": 1789117526,\n  \"model\": \"qwen2.5-coder-7b-instruct\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"```cpp\\n#include <iostream>\\n#include <vector>\\n#include <set>\\n#include <algorithm>\\n\\nint main() {\\n    std::ios::sync_with_stdio(false);\\n    std::cin.tie(nullptr);\\n    std::cout.tie(nullptr);\\n\\n    int n;\\n    std::cin >> n;\\n    std::vector<int> a(n);\\n    for (int i = 0; i < n; ++i) {\\n        std::cin >> a[i];\\n    }\\n\\n    std::set<int> sorted_a(a.begin(), a.end());\\n    std::vector<int> compressed;\\n    for (const auto& x : sorted_a) {\\n        compressed.push_back(x);\\n    }\\n\\n    for (int i = 0; i < n; ++i) {\\n        auto it = std::lower_bound(compressed.begin(), compressed.end(), a[i]);\\n        std::cout << std::distance(compressed.begin(), it) << \\\" \\\";\\n    }\\n    std::cout << std::endl;\\n\\n    return 0;\\n}\\n```\",\n        \"reasoning_content\": \"\",\n        \"tool_calls\": []\n      },\n      \"logprobs\": null,\n      \"finish_reason\": \"stop\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 595,\n    \"completion_tokens\": 207,\n    \"total_tokens\": 802,\n    \"completion_tokens_details\": {\n      \"reasoning_tokens\": 0\n    }\n  },\n  \"stats\": {},\n  \"system_fingerprint\": \"qwen2.5-coder-7b-instruct\"\n}",
+  "error": null,
+  "will_retry": false
+}

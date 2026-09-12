@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-vkzcr2lvy6kkm62whj7i",
+  "object": "chat.completion",
+  "created": 1789118741,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```c\n#include <stdio.h>\n#include <stdlib.h>\n\nint compare(const void *a, const void *b) {\n    return (*(int*)b - *(int*)a);\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n\n    int ropes[n];\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &ropes[i]);\n    }\n\n    qsort(ropes, n, sizeof(int), compare);\n\n    long long max_weight = 0;\n    for (int i = 0; i < n; i++) {\n        long long current_weight = (long long)ropes[i] * (i + 1);\n        if (current_weight > max_weight) {\n            max_weight = current_weight;\n        }\n    }\n\n    printf(\"%lld\\n\", max_weight);\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 667,
+    "completion_tokens": 186,
+    "total_tokens": 853,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

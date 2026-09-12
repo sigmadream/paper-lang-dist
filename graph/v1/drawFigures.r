@@ -13,6 +13,22 @@ num <- function(x) if (is.null(x)) NA_real_ else as.numeric(x)
 obs <- s$observations
 valid <- function(r, c=5) isTRUE(r$success[[as.character(c)]])
 metric <- function(r, m) num(r$distance_metrics$delta_0[[m]]$value)
+quartile_boxplot <- function(groups, col, ...) {
+  b <- boxplot(groups, plot=FALSE)
+  b$out <- numeric(0)
+  b$group <- numeric(0)
+  for(i in seq_along(groups)) {
+    values <- groups[[i]]
+    if(!length(values)) next
+    q <- quantile(values, c(.25,.5,.75), type=7, names=FALSE)
+    spread <- q[3]-q[1]
+    inside <- values >= q[1]-1.5*spread & values <= q[3]+1.5*spread
+    b$stats[,i] <- c(min(values[inside]),q,max(values[inside]))
+    b$out <- c(b$out,values[!inside])
+    b$group <- c(b$group,rep(i,sum(!inside)))
+  }
+  bxp(b,boxfill=col,...)
+}
 draw <- function(name, fun, width=9, height=5.8) {
   for (format in c("png", "pdf")) {
     path <- file.path(out, paste0(name, ".", format))
@@ -29,7 +45,8 @@ draw("sf_distance", function() {
   for(i in seq_along(routes)) {
     a <- s$rtt_route_aggregates[[routes[i]]]
     ci <- unlist(a$by_confirmation[["5"]]$d_sf_ci95)
-    if(length(ci)==2) arrows(x[i],ci[1],x[i],ci[2],angle=90,code=3,length=.06)
+    if(length(ci)==2 && ci[1]!=ci[2]) arrows(x[i],ci[1],x[i],ci[2],angle=90,code=3,length=.06)
+    else if(length(ci)==2) segments(x[i]-.05,ci[1],x[i]+.05,ci[2])
     text(x[i],1.05,paste0("P=",a$problem_count,", n=",a$evaluable_count),cex=.85)
   }
 })
@@ -46,7 +63,7 @@ draw("sf_confirmation", function() {
 draw("tau", function() {
   groups <- lapply(routes,function(route) sapply(Filter(function(r) r$route==route && valid(r), obs),function(r) num(r$tau)))
   names(groups) <- paste0(labels,"\nn=",lengths(groups))
-  if(any(lengths(groups)>0)) boxplot(groups,col=colors,ylab="Candidate iteration tau (successful c=5)",main="Conditional stabilization time")
+  if(any(lengths(groups)>0)) quartile_boxplot(groups,col=colors,ylab="Candidate iteration tau (successful c=5)",main="Conditional stabilization time")
   else {plot.new();title("No c=5 successes: tau unavailable")}
 })
 draw("delta_0", function() {
@@ -59,7 +76,7 @@ draw("delta_0", function() {
       values[!is.na(values)]
     })
     names(groups) <- paste0(labels,"\nn=",lengths(groups))
-    if(any(lengths(groups)>0)) boxplot(groups,col=colors,ylim=c(0,1),ylab="Delta_0",main=titles[j])
+    if(any(lengths(groups)>0)) quartile_boxplot(groups,col=colors,ylim=c(0,1),ylab="Delta_0",main=titles[j])
     else {plot.new();title(paste(titles[j],"unavailable"))}
     if(j==3) {
       successes <- sum(sapply(obs,valid))
@@ -70,6 +87,8 @@ draw("delta_0", function() {
 draw("dice_tsed", function() {
   paired <- Filter(function(r) valid(r) && !is.na(metric(r,"token_multiset_dice")) && !is.na(metric(r,"ast_tsed")),obs)
   plot(0,0,type="n",xlim=c(0,1),ylim=c(0,1),xlab="Token Dice similarity",ylab="AST TSED similarity",main=paste0("Paired successful observations (n=",length(paired),")"))
+  successes <- sum(sapply(obs,valid))
+  mtext(paste0("Paired measurements / c=5 successes: ",length(paired),"/",successes),side=3,line=.2,cex=.8)
   for(i in seq_along(routes)) {
     g <- Filter(function(r) r$route==routes[i],paired)
     if(length(g)) points(sapply(g,function(r) 1-metric(r,"token_multiset_dice")),sapply(g,function(r) 1-metric(r,"ast_tsed")),pch=15+i,col=colors[i])

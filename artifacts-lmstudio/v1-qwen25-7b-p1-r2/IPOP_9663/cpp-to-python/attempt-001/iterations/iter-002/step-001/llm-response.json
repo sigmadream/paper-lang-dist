@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-hhqc96udyu7jr4e7sfl8dr",
+  "object": "chat.completion",
+  "created": 1789120568,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```python\ndef solve(r):\n    global ans\n    if r == n:\n        ans += 1\n        return\n    for c in range(n):\n        if col[c] or diag1[r + c] or diag2[r - c + n - 1]:\n            continue\n        col[c] = diag1[r + c] = diag2[r - c + n - 1] = True\n        solve(r + 1)\n        col[c] = diag1[r + c] = diag2[r - c + n - 1] = False\n\nn = int(input())\nans = 0\ncol = [False] * n\ndiag1 = [False] * (2 * n - 1)\ndiag2 = [False] * (2 * n - 1)\nsolve(0)\nprint(ans)\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 511,
+    "completion_tokens": 176,
+    "total_tokens": 687,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

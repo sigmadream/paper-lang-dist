@@ -1,0 +1,2642 @@
+{
+  "manifest_version": 3,
+  "run_id": "v1-qwen25-7b-p1-r3",
+  "problem_id": "IPOP_14719",
+  "route": "cpp-to-java",
+  "target_language": "java",
+  "attempt_id": "attempt-001",
+  "condition_hash": "29e16350e2c777776f7ff61f106ded25f3d8d66401edf169916f885f1cc82349",
+  "validation_hash": "d6a73caf81a3c409125b2705e5654814dddc6f8ec3d3c38fb10e307634d78da2",
+  "distance_metrics": {
+    "schema_version": 2,
+    "stabilization": {
+      "tau_candidate": 2,
+      "confirmation_cycles_run": 5,
+      "confirmations_held": 5,
+      "first_broken_confirmation": null,
+      "first_break_reason": null
+    },
+    "route_preservation": {
+      "candidate_phase_all_passed": true,
+      "first_failed_step": null,
+      "evaluated_step_count": 14,
+      "per_confirmation": [
+        {
+          "confirmation_index": 1,
+          "hash_unchanged": true,
+          "all_steps_passed": true,
+          "status": "success"
+        },
+        {
+          "confirmation_index": 2,
+          "hash_unchanged": true,
+          "all_steps_passed": true,
+          "status": "success"
+        },
+        {
+          "confirmation_index": 3,
+          "hash_unchanged": true,
+          "all_steps_passed": true,
+          "status": "success"
+        },
+        {
+          "confirmation_index": 4,
+          "hash_unchanged": true,
+          "all_steps_passed": true,
+          "status": "success"
+        },
+        {
+          "confirmation_index": 5,
+          "hash_unchanged": true,
+          "all_steps_passed": true,
+          "status": "success"
+        }
+      ]
+    },
+    "delta_0": {
+      "token_multiset_dice": {
+        "metric": "token_multiset_dice",
+        "status": "measured",
+        "value": 0.11538461538461542,
+        "reason": null,
+        "reference": "seed_source",
+        "candidate": "stabilized_source"
+      },
+      "token_sequence_ratio": {
+        "metric": "token_sequence_ratio",
+        "status": "measured",
+        "value": 0.125,
+        "reason": null,
+        "reference": "seed_source",
+        "candidate": "stabilized_source"
+      },
+      "ast_tsed": {
+        "metric": "ast_tsed",
+        "representation_version": "cpp-named-identifiers-abstract-operators-literals-v1",
+        "ted": 44,
+        "node_counts": [
+          208,
+          206
+        ],
+        "error_counts": [
+          0,
+          0
+        ],
+        "missing_counts": [
+          0,
+          0
+        ],
+        "cost_config": {
+          "insert": 1,
+          "delete": 1,
+          "rename": 1
+        },
+        "parser_versions": {
+          "tree-sitter": "0.26.0",
+          "tree-sitter-cpp": "0.23.4",
+          "apted": "1.0.3"
+        },
+        "wall_seconds": 0.5000021000014385,
+        "sampled_peak_memory_bytes": 23506944,
+        "status": "measured",
+        "value": 0.21153846153846156,
+        "reason": null,
+        "process_seconds": 0.3443560999985493,
+        "peak_memory_bytes": 26259456,
+        "reference": "seed_source",
+        "candidate": "stabilized_source"
+      }
+    }
+  },
+  "iterations": [
+    {
+      "iteration_index": 1,
+      "phase": "candidate",
+      "confirmation_index": null,
+      "steps": [
+        {
+          "step_index": 1,
+          "source_language": "cpp",
+          "target_language": "java",
+          "status": "success",
+          "truncated": false,
+          "source_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\source.java",
+          "execution": {
+            "language": "java",
+            "problem_id": "IPOP_14719",
+            "status": "success",
+            "work_directory": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java",
+            "compile_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\compile.log",
+            "compile_result": {
+              "command": [
+                "javac",
+                "-encoding",
+                "UTF-8",
+                "-d",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\build",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\Main.java"
+              ],
+              "stdout": "",
+              "stderr": "",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.4789134999991802
+            },
+            "fixture_results": [
+              {
+                "fixture_stem": "1",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.115094599997974,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\fixtures\\1\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\fixtures\\1\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "10",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.09872940000059316,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\fixtures\\10\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\fixtures\\10\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "2",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.09686239999791724,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\fixtures\\2\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\fixtures\\2\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "3",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.09855529999913415,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\fixtures\\3\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\fixtures\\3\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "4",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.09862920000159647,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\fixtures\\4\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\fixtures\\4\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "5",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.11235769999984768,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\fixtures\\5\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\fixtures\\5\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "6",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.10127020000072662,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\fixtures\\6\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\fixtures\\6\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "7",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.10906299999987823,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\fixtures\\7\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\fixtures\\7\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "8",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.10972489999767276,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\fixtures\\8\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\fixtures\\8\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "9",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.0936900999986392,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\fixtures\\9\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_14719\\java\\fixtures\\9\\stderr.log",
+                "message": "Program output matched expected output."
+              }
+            ],
+            "message": "All fixture pairs passed.",
+            "details": {}
+          },
+          "details": {}
+        },
+        {
+          "step_index": 2,
+          "source_language": "java",
+          "target_language": "cpp",
+          "status": "success",
+          "truncated": false,
+          "source_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\source.cpp",
+          "execution": {
+            "language": "cpp",
+            "problem_id": "IPOP_14719",
+            "status": "success",
+            "work_directory": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp",
+            "compile_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\compile.log",
+            "compile_result": {
+              "command": [
+                "g++",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\Main.cpp",
+                "-O2",
+                "-std=c++17",
+                "-o",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\program"
+              ],
+              "stdout": "",
+              "stderr": "",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.6466285999995307
+            },
+            "fixture_results": [
+              {
+                "fixture_stem": "1",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.25354150000202935,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\1\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\1\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "10",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.008706700002221623,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\10\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\10\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "2",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009098500002437504,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\2\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\2\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "3",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009361100001115119,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\3\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\3\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "4",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.008658300001116004,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\4\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\4\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "5",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009320500001194887,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\5\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\5\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "6",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009132999999565072,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\6\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\6\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "7",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.00871240000196849,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\7\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\7\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "8",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009397899997566128,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\8\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\8\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "9",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.00829390000217245,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\9\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-001\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\9\\stderr.log",
+                "message": "Program output matched expected output."
+              }
+            ],
+            "message": "All fixture pairs passed.",
+            "details": {}
+          },
+          "details": {}
+        }
+      ],
+      "status": "success",
+      "hash_unchanged": null,
+      "all_steps_passed": true,
+      "roundtrip_hash": "9537edb33a69a43e0ab37f6fc94e64de26fff3b076193234cdcf1e17a625ad7e",
+      "delta_step": {
+        "token_multiset_dice": {
+          "metric": "token_multiset_dice",
+          "status": "measured",
+          "value": 0.11538461538461542,
+          "reason": null,
+          "reference": "previous_source",
+          "candidate": "roundtrip_source"
+        },
+        "token_sequence_ratio": {
+          "metric": "token_sequence_ratio",
+          "status": "measured",
+          "value": 0.125,
+          "reason": null,
+          "reference": "previous_source",
+          "candidate": "roundtrip_source"
+        }
+      }
+    },
+    {
+      "iteration_index": 2,
+      "phase": "candidate",
+      "confirmation_index": null,
+      "steps": [
+        {
+          "step_index": 1,
+          "source_language": "cpp",
+          "target_language": "java",
+          "status": "success",
+          "truncated": false,
+          "source_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\source.java",
+          "execution": {
+            "language": "java",
+            "problem_id": "IPOP_14719",
+            "status": "success",
+            "work_directory": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java",
+            "compile_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\compile.log",
+            "compile_result": {
+              "command": [
+                "javac",
+                "-encoding",
+                "UTF-8",
+                "-d",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\build",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\Main.java"
+              ],
+              "stdout": "",
+              "stderr": "",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.49900780000098166
+            },
+            "fixture_results": [
+              {
+                "fixture_stem": "1",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.10490719999870635,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\fixtures\\1\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\fixtures\\1\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "10",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.0963824000027671,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\fixtures\\10\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\fixtures\\10\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "2",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.08656799999880604,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\fixtures\\2\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\fixtures\\2\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "3",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.09405260000130511,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\fixtures\\3\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\fixtures\\3\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "4",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.10974210000131279,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\fixtures\\4\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\fixtures\\4\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "5",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.09332570000333362,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\fixtures\\5\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\fixtures\\5\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "6",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.1117034999988391,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\fixtures\\6\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\fixtures\\6\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "7",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.1147406999989471,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\fixtures\\7\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\fixtures\\7\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "8",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.11810350000087055,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\fixtures\\8\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\fixtures\\8\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "9",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.09739650000119582,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\fixtures\\9\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-001\\exec\\IPOP_14719\\java\\fixtures\\9\\stderr.log",
+                "message": "Program output matched expected output."
+              }
+            ],
+            "message": "All fixture pairs passed.",
+            "details": {}
+          },
+          "details": {}
+        },
+        {
+          "step_index": 2,
+          "source_language": "java",
+          "target_language": "cpp",
+          "status": "success",
+          "truncated": false,
+          "source_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\source.cpp",
+          "execution": {
+            "language": "cpp",
+            "problem_id": "IPOP_14719",
+            "status": "success",
+            "work_directory": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp",
+            "compile_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\compile.log",
+            "compile_result": {
+              "command": [
+                "g++",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\Main.cpp",
+                "-O2",
+                "-std=c++17",
+                "-o",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\program"
+              ],
+              "stdout": "",
+              "stderr": "",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.6267560000014782
+            },
+            "fixture_results": [
+              {
+                "fixture_stem": "1",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.18785879999995814,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\1\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\1\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "10",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.008186999999452382,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\10\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\10\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "2",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.008519200000591809,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\2\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\2\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "3",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.010168300002987962,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\3\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\3\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "4",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.008819799997581868,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\4\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\4\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "5",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009367899998323992,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\5\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\5\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "6",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.00900539999929606,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\6\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\6\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "7",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.00980830000116839,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\7\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\7\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "8",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.00925439999991795,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\8\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\8\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "9",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009477499999775318,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\9\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\9\\stderr.log",
+                "message": "Program output matched expected output."
+              }
+            ],
+            "message": "All fixture pairs passed.",
+            "details": {}
+          },
+          "details": {}
+        }
+      ],
+      "status": "success",
+      "hash_unchanged": null,
+      "all_steps_passed": true,
+      "roundtrip_hash": "9537edb33a69a43e0ab37f6fc94e64de26fff3b076193234cdcf1e17a625ad7e",
+      "delta_step": {
+        "token_multiset_dice": {
+          "metric": "token_multiset_dice",
+          "status": "measured",
+          "value": 0.0,
+          "reason": null,
+          "reference": "previous_source",
+          "candidate": "roundtrip_source"
+        },
+        "token_sequence_ratio": {
+          "metric": "token_sequence_ratio",
+          "status": "measured",
+          "value": 0.0,
+          "reason": null,
+          "reference": "previous_source",
+          "candidate": "roundtrip_source"
+        }
+      }
+    },
+    {
+      "iteration_index": 3,
+      "phase": "confirmation",
+      "confirmation_index": 1,
+      "steps": [
+        {
+          "step_index": 1,
+          "source_language": "cpp",
+          "target_language": "java",
+          "status": "success",
+          "truncated": false,
+          "source_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\source.java",
+          "execution": {
+            "language": "java",
+            "problem_id": "IPOP_14719",
+            "status": "success",
+            "work_directory": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java",
+            "compile_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\compile.log",
+            "compile_result": {
+              "command": [
+                "javac",
+                "-encoding",
+                "UTF-8",
+                "-d",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\build",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\Main.java"
+              ],
+              "stdout": "",
+              "stderr": "",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.5154258999973536
+            },
+            "fixture_results": [
+              {
+                "fixture_stem": "1",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.10866949999763165,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\fixtures\\1\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\fixtures\\1\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "10",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.0926145000012184,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\fixtures\\10\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\fixtures\\10\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "2",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.12007380000068224,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\fixtures\\2\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\fixtures\\2\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "3",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.1080149999979767,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\fixtures\\3\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\fixtures\\3\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "4",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.0936316999977862,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\fixtures\\4\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\fixtures\\4\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "5",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.1088605999975698,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\fixtures\\5\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\fixtures\\5\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "6",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.10723119999966002,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\fixtures\\6\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\fixtures\\6\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "7",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.10482580000098096,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\fixtures\\7\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\fixtures\\7\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "8",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.09378420000211918,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\fixtures\\8\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\fixtures\\8\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "9",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.10802930000136257,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\fixtures\\9\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-001\\exec\\IPOP_14719\\java\\fixtures\\9\\stderr.log",
+                "message": "Program output matched expected output."
+              }
+            ],
+            "message": "All fixture pairs passed.",
+            "details": {}
+          },
+          "details": {}
+        },
+        {
+          "step_index": 2,
+          "source_language": "java",
+          "target_language": "cpp",
+          "status": "success",
+          "truncated": false,
+          "source_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\source.cpp",
+          "execution": {
+            "language": "cpp",
+            "problem_id": "IPOP_14719",
+            "status": "success",
+            "work_directory": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp",
+            "compile_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\compile.log",
+            "compile_result": {
+              "command": [
+                "g++",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\Main.cpp",
+                "-O2",
+                "-std=c++17",
+                "-o",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\program"
+              ],
+              "stdout": "",
+              "stderr": "",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.7082234999979846
+            },
+            "fixture_results": [
+              {
+                "fixture_stem": "1",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.2609630000006291,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\1\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\1\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "10",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009708699999464443,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\10\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\10\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "2",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009182900001178496,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\2\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\2\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "3",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.008118300000205636,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\3\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\3\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "4",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.008609900000010384,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\4\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\4\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "5",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009512099997664336,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\5\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\5\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "6",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009047300001839176,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\6\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\6\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "7",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.008820499999274034,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\7\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\7\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "8",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009479499996814411,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\8\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\8\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "9",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.00771800000075018,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\9\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-003\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\9\\stderr.log",
+                "message": "Program output matched expected output."
+              }
+            ],
+            "message": "All fixture pairs passed.",
+            "details": {}
+          },
+          "details": {}
+        }
+      ],
+      "status": "success",
+      "hash_unchanged": true,
+      "all_steps_passed": true,
+      "roundtrip_hash": "9537edb33a69a43e0ab37f6fc94e64de26fff3b076193234cdcf1e17a625ad7e",
+      "delta_step": {
+        "token_multiset_dice": {
+          "metric": "token_multiset_dice",
+          "status": "measured",
+          "value": 0.0,
+          "reason": null,
+          "reference": "previous_source",
+          "candidate": "roundtrip_source"
+        },
+        "token_sequence_ratio": {
+          "metric": "token_sequence_ratio",
+          "status": "measured",
+          "value": 0.0,
+          "reason": null,
+          "reference": "previous_source",
+          "candidate": "roundtrip_source"
+        }
+      }
+    },
+    {
+      "iteration_index": 4,
+      "phase": "confirmation",
+      "confirmation_index": 2,
+      "steps": [
+        {
+          "step_index": 1,
+          "source_language": "cpp",
+          "target_language": "java",
+          "status": "success",
+          "truncated": false,
+          "source_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\source.java",
+          "execution": {
+            "language": "java",
+            "problem_id": "IPOP_14719",
+            "status": "success",
+            "work_directory": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java",
+            "compile_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\compile.log",
+            "compile_result": {
+              "command": [
+                "javac",
+                "-encoding",
+                "UTF-8",
+                "-d",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\build",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\Main.java"
+              ],
+              "stdout": "",
+              "stderr": "",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.5224859999980254
+            },
+            "fixture_results": [
+              {
+                "fixture_stem": "1",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.10409140000047046,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\fixtures\\1\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\fixtures\\1\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "10",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.10228339999957825,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\fixtures\\10\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\fixtures\\10\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "2",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.1097291000005498,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\fixtures\\2\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\fixtures\\2\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "3",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.10565950000091107,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\fixtures\\3\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\fixtures\\3\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "4",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.11182730000291485,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\fixtures\\4\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\fixtures\\4\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "5",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.11043040000004112,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\fixtures\\5\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\fixtures\\5\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "6",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.11345319999963976,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\fixtures\\6\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\fixtures\\6\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "7",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.10311860000001616,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\fixtures\\7\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\fixtures\\7\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "8",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.11040280000088387,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\fixtures\\8\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\fixtures\\8\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "9",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.11196189999827766,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\fixtures\\9\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-001\\exec\\IPOP_14719\\java\\fixtures\\9\\stderr.log",
+                "message": "Program output matched expected output."
+              }
+            ],
+            "message": "All fixture pairs passed.",
+            "details": {}
+          },
+          "details": {}
+        },
+        {
+          "step_index": 2,
+          "source_language": "java",
+          "target_language": "cpp",
+          "status": "success",
+          "truncated": false,
+          "source_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\source.cpp",
+          "execution": {
+            "language": "cpp",
+            "problem_id": "IPOP_14719",
+            "status": "success",
+            "work_directory": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp",
+            "compile_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\compile.log",
+            "compile_result": {
+              "command": [
+                "g++",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\Main.cpp",
+                "-O2",
+                "-std=c++17",
+                "-o",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\program"
+              ],
+              "stdout": "",
+              "stderr": "",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.629732099998364
+            },
+            "fixture_results": [
+              {
+                "fixture_stem": "1",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.2631241000017326,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\1\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\1\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "10",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.007369599999947241,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\10\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\10\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "2",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.00819229999979143,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\2\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\2\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "3",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009294600000430364,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\3\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\3\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "4",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009557399996992899,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\4\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\4\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "5",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009271700000681449,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\5\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\5\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "6",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.008155300001817523,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\6\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\6\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "7",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.00987149999855319,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\7\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\7\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "8",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.00924730000042473,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\8\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\8\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "9",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.010652600001776591,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\9\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-004\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\9\\stderr.log",
+                "message": "Program output matched expected output."
+              }
+            ],
+            "message": "All fixture pairs passed.",
+            "details": {}
+          },
+          "details": {}
+        }
+      ],
+      "status": "success",
+      "hash_unchanged": true,
+      "all_steps_passed": true,
+      "roundtrip_hash": "9537edb33a69a43e0ab37f6fc94e64de26fff3b076193234cdcf1e17a625ad7e",
+      "delta_step": {
+        "token_multiset_dice": {
+          "metric": "token_multiset_dice",
+          "status": "measured",
+          "value": 0.0,
+          "reason": null,
+          "reference": "previous_source",
+          "candidate": "roundtrip_source"
+        },
+        "token_sequence_ratio": {
+          "metric": "token_sequence_ratio",
+          "status": "measured",
+          "value": 0.0,
+          "reason": null,
+          "reference": "previous_source",
+          "candidate": "roundtrip_source"
+        }
+      }
+    },
+    {
+      "iteration_index": 5,
+      "phase": "confirmation",
+      "confirmation_index": 3,
+      "steps": [
+        {
+          "step_index": 1,
+          "source_language": "cpp",
+          "target_language": "java",
+          "status": "success",
+          "truncated": false,
+          "source_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\source.java",
+          "execution": {
+            "language": "java",
+            "problem_id": "IPOP_14719",
+            "status": "success",
+            "work_directory": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java",
+            "compile_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\compile.log",
+            "compile_result": {
+              "command": [
+                "javac",
+                "-encoding",
+                "UTF-8",
+                "-d",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\build",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\Main.java"
+              ],
+              "stdout": "",
+              "stderr": "",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.4821394999999029
+            },
+            "fixture_results": [
+              {
+                "fixture_stem": "1",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.1007142999987991,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\fixtures\\1\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\fixtures\\1\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "10",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.11085170000296785,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\fixtures\\10\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\fixtures\\10\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "2",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.1183175999976811,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\fixtures\\2\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\fixtures\\2\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "3",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.11064280000209692,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\fixtures\\3\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\fixtures\\3\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "4",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.12825359999987995,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\fixtures\\4\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\fixtures\\4\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "5",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.11897769999995944,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\fixtures\\5\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\fixtures\\5\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "6",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.1095257999986643,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\fixtures\\6\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\fixtures\\6\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "7",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.12453839999943739,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\fixtures\\7\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\fixtures\\7\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "8",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.11428570000134641,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\fixtures\\8\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\fixtures\\8\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "9",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.10758129999885568,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\fixtures\\9\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-001\\exec\\IPOP_14719\\java\\fixtures\\9\\stderr.log",
+                "message": "Program output matched expected output."
+              }
+            ],
+            "message": "All fixture pairs passed.",
+            "details": {}
+          },
+          "details": {}
+        },
+        {
+          "step_index": 2,
+          "source_language": "java",
+          "target_language": "cpp",
+          "status": "success",
+          "truncated": false,
+          "source_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\source.cpp",
+          "execution": {
+            "language": "cpp",
+            "problem_id": "IPOP_14719",
+            "status": "success",
+            "work_directory": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp",
+            "compile_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\compile.log",
+            "compile_result": {
+              "command": [
+                "g++",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\Main.cpp",
+                "-O2",
+                "-std=c++17",
+                "-o",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\program"
+              ],
+              "stdout": "",
+              "stderr": "",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.6350884999992559
+            },
+            "fixture_results": [
+              {
+                "fixture_stem": "1",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.2542124999999942,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\1\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\1\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "10",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009522600001218962,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\10\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\10\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "2",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.00921089999974356,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\2\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\2\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "3",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.010221099997579586,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\3\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\3\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "4",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.008755099999689264,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\4\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\4\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "5",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009143899998889538,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\5\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\5\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "6",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009208299998135772,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\6\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\6\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "7",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.010833000000275206,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\7\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\7\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "8",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009935699999914505,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\8\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\8\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "9",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.0095882999994501,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\9\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-005\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\9\\stderr.log",
+                "message": "Program output matched expected output."
+              }
+            ],
+            "message": "All fixture pairs passed.",
+            "details": {}
+          },
+          "details": {}
+        }
+      ],
+      "status": "success",
+      "hash_unchanged": true,
+      "all_steps_passed": true,
+      "roundtrip_hash": "9537edb33a69a43e0ab37f6fc94e64de26fff3b076193234cdcf1e17a625ad7e",
+      "delta_step": {
+        "token_multiset_dice": {
+          "metric": "token_multiset_dice",
+          "status": "measured",
+          "value": 0.0,
+          "reason": null,
+          "reference": "previous_source",
+          "candidate": "roundtrip_source"
+        },
+        "token_sequence_ratio": {
+          "metric": "token_sequence_ratio",
+          "status": "measured",
+          "value": 0.0,
+          "reason": null,
+          "reference": "previous_source",
+          "candidate": "roundtrip_source"
+        }
+      }
+    },
+    {
+      "iteration_index": 6,
+      "phase": "confirmation",
+      "confirmation_index": 4,
+      "steps": [
+        {
+          "step_index": 1,
+          "source_language": "cpp",
+          "target_language": "java",
+          "status": "success",
+          "truncated": false,
+          "source_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\source.java",
+          "execution": {
+            "language": "java",
+            "problem_id": "IPOP_14719",
+            "status": "success",
+            "work_directory": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java",
+            "compile_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\compile.log",
+            "compile_result": {
+              "command": [
+                "javac",
+                "-encoding",
+                "UTF-8",
+                "-d",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\build",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\Main.java"
+              ],
+              "stdout": "",
+              "stderr": "",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.509124600001087
+            },
+            "fixture_results": [
+              {
+                "fixture_stem": "1",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.10025599999789847,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\fixtures\\1\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\fixtures\\1\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "10",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.12975530000039726,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\fixtures\\10\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\fixtures\\10\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "2",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.11439959999916027,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\fixtures\\2\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\fixtures\\2\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "3",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.09765509999851929,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\fixtures\\3\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\fixtures\\3\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "4",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.11702119999972638,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\fixtures\\4\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\fixtures\\4\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "5",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.11468049999893992,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\fixtures\\5\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\fixtures\\5\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "6",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.11536569999952917,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\fixtures\\6\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\fixtures\\6\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "7",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.11257300000215764,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\fixtures\\7\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\fixtures\\7\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "8",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.1001605000019481,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\fixtures\\8\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\fixtures\\8\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "9",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.09675240000069607,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\fixtures\\9\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-001\\exec\\IPOP_14719\\java\\fixtures\\9\\stderr.log",
+                "message": "Program output matched expected output."
+              }
+            ],
+            "message": "All fixture pairs passed.",
+            "details": {}
+          },
+          "details": {}
+        },
+        {
+          "step_index": 2,
+          "source_language": "java",
+          "target_language": "cpp",
+          "status": "success",
+          "truncated": false,
+          "source_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\source.cpp",
+          "execution": {
+            "language": "cpp",
+            "problem_id": "IPOP_14719",
+            "status": "success",
+            "work_directory": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp",
+            "compile_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\compile.log",
+            "compile_result": {
+              "command": [
+                "g++",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\Main.cpp",
+                "-O2",
+                "-std=c++17",
+                "-o",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\program"
+              ],
+              "stdout": "",
+              "stderr": "",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.7107689999975264
+            },
+            "fixture_results": [
+              {
+                "fixture_stem": "1",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.26683029999912833,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\1\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\1\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "10",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.010233400000288384,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\10\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\10\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "2",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.008232200001657475,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\2\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\2\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "3",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.008181900000636233,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\3\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\3\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "4",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.008056300001044292,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\4\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\4\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "5",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009792400000151247,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\5\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\5\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "6",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.008057600000029197,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\6\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\6\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "7",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.010226099999272265,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\7\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\7\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "8",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009237900001608068,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\8\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\8\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "9",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.010566699998889817,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\9\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-006\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\9\\stderr.log",
+                "message": "Program output matched expected output."
+              }
+            ],
+            "message": "All fixture pairs passed.",
+            "details": {}
+          },
+          "details": {}
+        }
+      ],
+      "status": "success",
+      "hash_unchanged": true,
+      "all_steps_passed": true,
+      "roundtrip_hash": "9537edb33a69a43e0ab37f6fc94e64de26fff3b076193234cdcf1e17a625ad7e",
+      "delta_step": {
+        "token_multiset_dice": {
+          "metric": "token_multiset_dice",
+          "status": "measured",
+          "value": 0.0,
+          "reason": null,
+          "reference": "previous_source",
+          "candidate": "roundtrip_source"
+        },
+        "token_sequence_ratio": {
+          "metric": "token_sequence_ratio",
+          "status": "measured",
+          "value": 0.0,
+          "reason": null,
+          "reference": "previous_source",
+          "candidate": "roundtrip_source"
+        }
+      }
+    },
+    {
+      "iteration_index": 7,
+      "phase": "confirmation",
+      "confirmation_index": 5,
+      "steps": [
+        {
+          "step_index": 1,
+          "source_language": "cpp",
+          "target_language": "java",
+          "status": "success",
+          "truncated": false,
+          "source_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\source.java",
+          "execution": {
+            "language": "java",
+            "problem_id": "IPOP_14719",
+            "status": "success",
+            "work_directory": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java",
+            "compile_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\compile.log",
+            "compile_result": {
+              "command": [
+                "javac",
+                "-encoding",
+                "UTF-8",
+                "-d",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\build",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\Main.java"
+              ],
+              "stdout": "",
+              "stderr": "",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.5047876000026008
+            },
+            "fixture_results": [
+              {
+                "fixture_stem": "1",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.1015847999988182,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\fixtures\\1\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\fixtures\\1\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "10",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.1112622000000556,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\fixtures\\10\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\fixtures\\10\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "2",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.11456010000256356,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\fixtures\\2\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\fixtures\\2\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "3",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.11495210000066436,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\fixtures\\3\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\fixtures\\3\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "4",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.11566949999905773,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\fixtures\\4\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\fixtures\\4\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "5",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.1182652000024973,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\fixtures\\5\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\fixtures\\5\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "6",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.10867220000000088,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\fixtures\\6\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\fixtures\\6\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "7",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.09885250000297674,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\fixtures\\7\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\fixtures\\7\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "8",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.11371839999992517,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\fixtures\\8\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\fixtures\\8\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "9",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.0995675999984087,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\fixtures\\9\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-001\\exec\\IPOP_14719\\java\\fixtures\\9\\stderr.log",
+                "message": "Program output matched expected output."
+              }
+            ],
+            "message": "All fixture pairs passed.",
+            "details": {}
+          },
+          "details": {}
+        },
+        {
+          "step_index": 2,
+          "source_language": "java",
+          "target_language": "cpp",
+          "status": "success",
+          "truncated": false,
+          "source_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\source.cpp",
+          "execution": {
+            "language": "cpp",
+            "problem_id": "IPOP_14719",
+            "status": "success",
+            "work_directory": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp",
+            "compile_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\compile.log",
+            "compile_result": {
+              "command": [
+                "g++",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\Main.cpp",
+                "-O2",
+                "-std=c++17",
+                "-o",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\program"
+              ],
+              "stdout": "",
+              "stderr": "",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.6880772999975306
+            },
+            "fixture_results": [
+              {
+                "fixture_stem": "1",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\1.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.24708000000100583,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\1\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\1\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "10",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\10.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.008599900000263005,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\10\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\10\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "2",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\2.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.008860599999024998,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\2\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\2\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "3",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\3.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.008394500000576954,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\3\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\3\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "4",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\4.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.008870999998180196,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\4\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\4\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "5",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\5.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009671700001490535,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\5\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\5\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "6",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\6.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.010038899999926798,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\6\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\6\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "7",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\7.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009746100000484148,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\7\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\7\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "8",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\8.out",
+                "status": "success",
+                "stdout": "5\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.009111200000916142,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\8\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\8\\stderr.log",
+                "message": "Program output matched expected output."
+              },
+              {
+                "fixture_stem": "9",
+                "input_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.inp",
+                "output_path": "D:\\works\\paper-lang-dist\\problem\\IPOP_14719\\9.out",
+                "status": "success",
+                "stdout": "0\n",
+                "stderr": "",
+                "exit_code": 0,
+                "duration_seconds": 0.01057079999736743,
+                "stdout_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\9\\stdout.log",
+                "stderr_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-007\\step-002\\exec\\IPOP_14719\\cpp\\fixtures\\9\\stderr.log",
+                "message": "Program output matched expected output."
+              }
+            ],
+            "message": "All fixture pairs passed.",
+            "details": {}
+          },
+          "details": {}
+        }
+      ],
+      "status": "success",
+      "hash_unchanged": true,
+      "all_steps_passed": true,
+      "roundtrip_hash": "9537edb33a69a43e0ab37f6fc94e64de26fff3b076193234cdcf1e17a625ad7e",
+      "delta_step": {
+        "token_multiset_dice": {
+          "metric": "token_multiset_dice",
+          "status": "measured",
+          "value": 0.0,
+          "reason": null,
+          "reference": "previous_source",
+          "candidate": "roundtrip_source"
+        },
+        "token_sequence_ratio": {
+          "metric": "token_sequence_ratio",
+          "status": "measured",
+          "value": 0.0,
+          "reason": null,
+          "reference": "previous_source",
+          "candidate": "roundtrip_source"
+        }
+      }
+    }
+  ],
+  "status": "success",
+  "details": {
+    "confirmation_index": 5
+  },
+  "hash_history": [
+    "39560a69be448dad72926ba0c725919726dab1a9f3528384a9904f2c0208568d",
+    "9537edb33a69a43e0ab37f6fc94e64de26fff3b076193234cdcf1e17a625ad7e",
+    "9537edb33a69a43e0ab37f6fc94e64de26fff3b076193234cdcf1e17a625ad7e",
+    "9537edb33a69a43e0ab37f6fc94e64de26fff3b076193234cdcf1e17a625ad7e",
+    "9537edb33a69a43e0ab37f6fc94e64de26fff3b076193234cdcf1e17a625ad7e",
+    "9537edb33a69a43e0ab37f6fc94e64de26fff3b076193234cdcf1e17a625ad7e",
+    "9537edb33a69a43e0ab37f6fc94e64de26fff3b076193234cdcf1e17a625ad7e",
+    "9537edb33a69a43e0ab37f6fc94e64de26fff3b076193234cdcf1e17a625ad7e"
+  ],
+  "candidate_source_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_14719\\cpp-to-java\\attempt-001\\iterations\\iter-002\\roundtrip.cpp",
+  "finished_at": "2026-09-11T08:57:23.842466+00:00"
+}

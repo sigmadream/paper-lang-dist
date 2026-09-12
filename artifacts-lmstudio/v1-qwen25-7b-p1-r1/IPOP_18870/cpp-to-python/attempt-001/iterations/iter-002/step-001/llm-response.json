@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-mkzvtips7tw54ebn01azi",
+  "object": "chat.completion",
+  "created": 1789117357,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```python\ndef coordinate_compression(n, a):\n    sorted_a = sorted(set(a))\n    compressed = {x: i for i, x in enumerate(sorted_a)}\n    result = [compressed[x] for x in a]\n    return result\n\ndef main():\n    import sys\n    input = sys.stdin.read\n    data = input().split()\n    \n    n = int(data[0])\n    a = list(map(int, data[1:]))\n\n    result = coordinate_compression(n, a)\n    print(' '.join(map(str, result)))\n\nif __name__ == \"__main__\":\n    main()\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 697,
+    "completion_tokens": 126,
+    "total_tokens": 823,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

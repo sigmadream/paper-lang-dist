@@ -1,0 +1,28 @@
+{
+  "started_at": "2026-09-11T09:45:10.184580+00:00",
+  "seconds": 6.9501808999993955,
+  "request": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+      },
+      {
+        "role": "user",
+        "content": "[TASK]\nDirection: target_to_seed\nProblem ID: IPOP_9012\nTranslate from Java to C++.\n\n[CONSTRAINTS]\n- Preserve exact input/output behavior for the provided sample.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n문제\n괄호 문자열(Parenthesis String, PS)은 두 개의 괄호 기호인 ‘(’ 와 ‘)’ 만으로 구성되어 있는 문자열이다. 그 중에서 괄호의 모양이 바르게 구성된 문자열을 올바른 괄호 문자열(Valid PS, VPS)이라고 부른다. 한 쌍의 괄호 기호로 된 “( )” 문자열은 기본 VPS 이라고 부른다. 만일 x 가 VPS 라면 이것을 하나의 괄호에 넣은 새로운 문자열 “(x)”도 VPS 가 된다. 그리고 두 VPS x 와 y를 접합(concatenation)시킨 새로운 문자열 xy도 VPS 가 된다. 예를 들어 “(())()”와 “((()))” 는 VPS 이지만 “(()(”, “(())()))” , 그리고 “(()” 는 모두 VPS 가 아닌 문자열이다. \n\n여러분은 입력으로 주어진 괄호 문자열이 VPS 인지 아닌지를 판단해서 그 결과를 YES 와 NO 로 나타내어야 한다. \n\n입력\n입력 데이터는 표준 입력을 사용한다. 입력은 T개의 테스트 데이터로 주어진다. 입력의 첫 번째 줄에는 입력 데이터의 수를 나타내는 정수 T가 주어진다. 각 테스트 데이터의 첫째 줄에는 괄호 문자열이 한 줄에 주어진다. 하나의 괄호 문자열의 길이는 2 이상 50 이하이다. \n\n출력\n출력은 표준 출력을 사용한다. 만일 입력 괄호 문자열이 올바른 괄호 문자열(VPS)이면 “YES”, 아니면 “NO”를 한 줄에 하나씩 차례대로 출력해야 한다.\n\n예제 입력 1\n6\n(())())\n(((()())()\n(()())((()))\n((()()(()))(((())))()\n()()()()(()()())()\n(()((())()(\n\n예제 출력 1\nNO\nNO\nYES\nNO\nYES\nNO\n\n예제 입력 2\n3\n((\n))\n())(()\n\n예제 출력 2\nNO\nNO\nNO\n\n[SAMPLE INPUT]\n6\n(())())\n(((()())()\n(()())((()))\n((()()(()))(((())))()\n()()()()(()()())()\n(()((())()(\n\n[EXPECTED OUTPUT]\nNO\nNO\nYES\nNO\nYES\nNO\n\n[SOURCE CODE - Java]\n```java\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int t = scanner.nextInt();\n        scanner.nextLine();\n        while (t-- > 0) {\n            String s = scanner.nextLine();\n            int bal = 0;\n            boolean valid = true;\n            for (char c : s.toCharArray()) {\n                if (c == '(') bal++;\n                else bal--;\n                if (bal < 0) {\n                    valid = false;\n                    break;\n                }\n            }\n            if (bal != 0) valid = false;\n            System.out.println(valid ? \"YES\" : \"NO\");\n        }\n    }\n}\n```"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "stream": false,
+    "top_p": 1,
+    "top_k": 0,
+    "repeat_penalty": 1,
+    "seed": 20260911
+  },
+  "http_status": 200,
+  "raw_response": "{\n  \"id\": \"chatcmpl-fhref36br3jheoparx4tws\",\n  \"object\": \"chat.completion\",\n  \"created\": 1789119912,\n  \"model\": \"qwen2.5-coder-7b-instruct\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"```cpp\\n#include <iostream>\\n#include <string>\\n\\nint main() {\\n    int t;\\n    std::cin >> t;\\n    std::cin.ignore();\\n    while (t-- > 0) {\\n        std::string s;\\n        std::getline(std::cin, s);\\n        int bal = 0;\\n        bool valid = true;\\n        for (char c : s) {\\n            if (c == '(') bal++;\\n            else bal--;\\n            if (bal < 0) {\\n                valid = false;\\n                break;\\n            }\\n        }\\n        if (bal != 0) valid = false;\\n        std::cout << (valid ? \\\"YES\\\" : \\\"NO\\\") << std::endl;\\n    }\\n    return 0;\\n}\\n```\",\n        \"reasoning_content\": \"\",\n        \"tool_calls\": []\n      },\n      \"logprobs\": null,\n      \"finish_reason\": \"stop\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 835,\n    \"completion_tokens\": 156,\n    \"total_tokens\": 991,\n    \"completion_tokens_details\": {\n      \"reasoning_tokens\": 0\n    }\n  },\n  \"stats\": {},\n  \"system_fingerprint\": \"qwen2.5-coder-7b-instruct\"\n}",
+  "error": null,
+  "will_retry": false
+}

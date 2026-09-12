@@ -1,0 +1,28 @@
+{
+  "started_at": "2026-09-11T09:21:35.226748+00:00",
+  "seconds": 10.422568399997544,
+  "request": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+      },
+      {
+        "role": "user",
+        "content": "[TASK]\nDirection: target_to_seed\nProblem ID: IPOP_2110\nTranslate from Java to C++.\n\n[CONSTRAINTS]\n- Preserve exact input/output behavior for the provided sample.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n문제\n도현이의 집 N개가 수직선 위에 있다. 각각의 집의 좌표는 x1, ..., xN이고, 집 여러개가 같은 좌표를 가지는 일은 없다.\n\n도현이는 언제 어디서나 와이파이를 즐기기 위해서 집에 공유기 C개를 설치하려고 한다. 최대한 많은 곳에서 와이파이를 사용하려고 하기 때문에, 한 집에는 공유기를 하나만 설치할 수 있고, 가장 인접한 두 공유기 사이의 거리를 가능한 크게 하여 설치하려고 한다.\n\nC개의 공유기를 N개의 집에 적당히 설치해서, 가장 인접한 두 공유기 사이의 거리를 최대로 하는 프로그램을 작성하시오.\n\n입력\n첫째 줄에 집의 개수 N (2 ≤ N ≤ 200,000)과 공유기의 개수 C (2 ≤ C ≤ N)이 하나 이상의 빈 칸을 사이에 두고 주어진다. 둘째 줄부터 N개의 줄에는 집의 좌표를 나타내는 xi (0 ≤ xi ≤ 1,000,000,000)가 한 줄에 하나씩 주어진다.\n\n출력\n첫째 줄에 가장 인접한 두 공유기 사이의 최대 거리를 출력한다.\n\n예제 입력 1 \n5 3\n1\n2\n8\n4\n9\n예제 출력 1 \n3\n힌트\n공유기를 1, 4, 8 또는 1, 4, 9에 설치하면 가장 인접한 두 공유기 사이의 거리는 3이고, 이 거리보다 크게 공유기를 3개 설치할 수 없다.\n\n[SAMPLE INPUT]\n2 2\n1\n100\n\n[EXPECTED OUTPUT]\n99\n\n[SOURCE CODE - Java]\n```java\nimport java.util.Arrays;\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int c = scanner.nextInt();\n        int[] a = new int[n];\n        for (int i = 0; i < n; i++) {\n            a[i] = scanner.nextInt();\n        }\n        Arrays.sort(a);\n\n        int left = 1;\n        int right = a[n - 1] - a[0];\n        int ans = 0;\n\n        while (left <= right) {\n            int mid = left + (right - left) / 2;\n            int count = 1;\n            int prev = a[0];\n\n            for (int i = 1; i < n; i++) {\n                if (a[i] - prev >= mid) {\n                    count++;\n                    prev = a[i];\n                }\n            }\n\n            if (count >= c) {\n                ans = mid;\n                left = mid + 1;\n            } else {\n                right = mid - 1;\n            }\n        }\n\n        System.out.println(ans);\n    }\n}\n```"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "stream": false,
+    "top_p": 1,
+    "top_k": 0,
+    "repeat_penalty": 1,
+    "seed": 20260911
+  },
+  "http_status": 200,
+  "raw_response": "{\n  \"id\": \"chatcmpl-t5qchs2icoijtoxz4ynge\",\n  \"object\": \"chat.completion\",\n  \"created\": 1789118497,\n  \"model\": \"qwen2.5-coder-7b-instruct\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"```cpp\\n#include <iostream>\\n#include <algorithm>\\n#include <vector>\\n\\nint main() {\\n    int n, c;\\n    std::cin >> n >> c;\\n    std::vector<int> a(n);\\n    for (int i = 0; i < n; i++) {\\n        std::cin >> a[i];\\n    }\\n    std::sort(a.begin(), a.end());\\n\\n    int left = 1;\\n    int right = a[n - 1] - a[0];\\n    int ans = 0;\\n\\n    while (left <= right) {\\n        int mid = left + (right - left) / 2;\\n        int count = 1;\\n        int prev = a[0];\\n\\n        for (int i = 1; i < n; i++) {\\n            if (a[i] - prev >= mid) {\\n                count++;\\n                prev = a[i];\\n            }\\n        }\\n\\n        if (count >= c) {\\n            ans = mid;\\n            left = mid + 1;\\n        } else {\\n            right = mid - 1;\\n        }\\n    }\\n\\n    std::cout << ans << std::endl;\\n    return 0;\\n}\\n```\",\n        \"reasoning_content\": \"\",\n        \"tool_calls\": []\n      },\n      \"logprobs\": null,\n      \"finish_reason\": \"stop\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 798,\n    \"completion_tokens\": 243,\n    \"total_tokens\": 1041,\n    \"completion_tokens_details\": {\n      \"reasoning_tokens\": 0\n    }\n  },\n  \"stats\": {},\n  \"system_fingerprint\": \"qwen2.5-coder-7b-instruct\"\n}",
+  "error": null,
+  "will_retry": false
+}

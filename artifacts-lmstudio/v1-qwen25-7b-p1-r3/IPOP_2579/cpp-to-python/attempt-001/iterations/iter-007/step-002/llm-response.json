@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-1wr8mhk4gqfduqaxcrmaor",
+  "object": "chat.completion",
+  "created": 1789119510,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n    std::cout.tie(nullptr);\n\n    int n;\n    std::cin >> n;\n\n    std::vector<int> score(n + 1);\n    std::vector<int> dp(n + 1);\n\n    for (int i = 1; i <= n; ++i) {\n        std::cin >> score[i];\n    }\n\n    if (n >= 1) {\n        dp[1] = score[1];\n    }\n    if (n >= 2) {\n        dp[2] = score[1] + score[2];\n    }\n    for (int i = 3; i <= n; ++i) {\n        dp[i] = std::max(dp[i - 2], dp[i - 3] + score[i - 1]) + score[i];\n    }\n\n    std::cout << dp[n] << std::endl;\n\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 975,
+    "completion_tokens": 223,
+    "total_tokens": 1198,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

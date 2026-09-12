@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-y5axautiwdloyp349nhas",
+  "object": "chat.completion",
+  "created": 1789120103,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    int t;\n    std::cin >> t;\n    while (t--) {\n        std::string s;\n        std::cin >> s;\n        int bal = 0;\n        for (char c : s) {\n            if (c == '(') bal++;\n            else bal--;\n            if (bal < 0) {\n                std::cout << \"NO\\n\";\n                goto next;\n            }\n        }\n        if (bal != 0) {\n            std::cout << \"NO\\n\";\n        } else {\n            std::cout << \"YES\\n\";\n        }\n        next:;\n    }\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 835,
+    "completion_tokens": 146,
+    "total_tokens": 981,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

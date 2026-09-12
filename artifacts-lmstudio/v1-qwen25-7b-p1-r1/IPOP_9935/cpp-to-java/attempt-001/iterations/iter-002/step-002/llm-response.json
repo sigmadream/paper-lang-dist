@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-bl75vele529hoc266t1q2",
+  "object": "chat.completion",
+  "created": 1789120557,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::string s, bomb;\n    std::cin >> s >> bomb;\n    \n    std::string res = \"\";\n    int b_len = bomb.length();\n    \n    for (char c : s) {\n        res += c;\n        if (res.length() >= b_len) {\n            bool match = true;\n            for (int i = 0; i < b_len; i++) {\n                if (res[res.length() - b_len + i] != bomb[i]) {\n                    match = false;\n                    break;\n                }\n            }\n            if (match) {\n                res = res.substr(0, res.length() - b_len);\n            }\n        }\n    }\n    \n    if (res.empty()) std::cout << \"FRULA\";\n    else std::cout << res;\n    \n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 774,
+    "completion_tokens": 186,
+    "total_tokens": 960,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

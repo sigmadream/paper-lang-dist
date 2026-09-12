@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-m2qkq6xc7yl2pqhhmendgs",
+  "object": "chat.completion",
+  "created": 1789118852,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n    std::cout.tie(nullptr);\n\n    int n, c;\n    std::cin >> n >> c;\n    std::vector<int> a(n);\n    for (int i = 0; i < n; ++i) {\n        std::cin >> a[i];\n    }\n\n    std::sort(a.begin(), a.end());\n\n    int left = 1;\n    int right = a[n - 1] - a[0];\n    int ans = 0;\n\n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        int count = 1;\n        int prev = a[0];\n\n        for (int i = 1; i < n; ++i) {\n            if (a[i] - prev >= mid) {\n                count += 1;\n                prev = a[i];\n            }\n        }\n\n        if (count >= c) {\n            ans = mid;\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n\n    std::cout << ans << std::endl;\n\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 754,
+    "completion_tokens": 272,
+    "total_tokens": 1026,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

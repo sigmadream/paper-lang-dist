@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-ih9ccstyo5cjr07j94nzf",
+  "object": "chat.completion",
+  "created": 1789120181,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```python\ndef is_valid_parenthesis(s):\n    bal = 0\n    for c in s:\n        if c == '(':\n            bal += 1\n        else:\n            bal -= 1\n        if bal < 0:\n            return False\n    return bal == 0\n\ndef main():\n    import sys\n    input = sys.stdin.read\n    data = input().split()\n    t = int(data[0])\n    for i in range(1, t + 1):\n        s = data[i]\n        if is_valid_parenthesis(s):\n            print(\"YES\")\n        else:\n            print(\"NO\")\n\nif __name__ == \"__main__\":\n    main()\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 850,
+    "completion_tokens": 145,
+    "total_tokens": 995,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

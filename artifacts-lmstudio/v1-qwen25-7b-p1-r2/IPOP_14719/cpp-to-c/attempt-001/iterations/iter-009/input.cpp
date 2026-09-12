@@ -1,0 +1,22 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int h, w;
+    cin >> h >> w;
+    vector<int> a(w);
+    for (int i = 0; i < w; i++) cin >> a[i];
+    
+    int ans = 0;
+    for (int i = 1; i < w - 1; i++) {
+        int left_max = 0, right_max = 0;
+        for (int j = 0; j <= i; j++) left_max = (left_max < a[j]) ? a[j] : left_max;
+        for (int j = i; j < w; j++) right_max = (right_max < a[j]) ? a[j] : right_max;
+        int bound = (left_max < right_max) ? left_max : right_max;
+        if (bound > a[i]) ans += bound - a[i];
+    }
+    
+    cout << ans << endl;
+    return 0;
+}

@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-ai2m4oaeekc2zl28zo3q8d",
+  "object": "chat.completion",
+  "created": 1789119230,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```c\n#include <stdio.h>\n\nint gcd(int a, int b) {\n    while (b != 0) {\n        int r = a % b;\n        a = b;\n        b = r;\n    }\n    return a;\n}\n\nint main() {\n    int a, b;\n    if (scanf(\"%d %d\", &a, &b) != 2) return 0;\n    int g = gcd(a, b);\n    printf(\"%d\\n\", g);\n    printf(\"%d\\n\", (a / g) * b);\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 428,
+    "completion_tokens": 123,
+    "total_tokens": 551,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

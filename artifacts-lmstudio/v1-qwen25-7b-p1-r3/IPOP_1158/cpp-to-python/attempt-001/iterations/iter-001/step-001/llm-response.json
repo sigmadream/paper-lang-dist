@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-b21f1xul2sbq3ay0nb3bt",
+  "object": "chat.completion",
+  "created": 1789116341,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```python\ndef josephus(n, k):\n    q = list(range(1, n + 1))\n    idx = 0\n    result = []\n    \n    while q:\n        idx = (idx + k - 1) % len(q)\n        result.append(q.pop(idx))\n    \n    return result\n\ndef main():\n    n, k = map(int, input().split())\n    result = josephus(n, k)\n    print(f\"<{', '.join(map(str, result))}>\")\n\nif __name__ == \"__main__\":\n    main()\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 609,
+    "completion_tokens": 119,
+    "total_tokens": 728,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

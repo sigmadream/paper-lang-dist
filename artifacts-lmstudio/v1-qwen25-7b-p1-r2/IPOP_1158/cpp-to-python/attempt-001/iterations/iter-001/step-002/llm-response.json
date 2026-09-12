@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-jyv5pwy6k8ecpzecm0k5v9",
+  "object": "chat.completion",
+  "created": 1789116348,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <queue>\n\nstd::vector<int> josephus(int n, int k) {\n    std::queue<int> q;\n    for (int i = 1; i <= n; ++i) {\n        q.push(i);\n    }\n    std::vector<int> result;\n    int idx = 0;\n    \n    while (!q.empty()) {\n        idx = (idx + k - 1) % q.size();\n        for (int i = 0; i < idx; ++i) {\n            q.push(q.front());\n            q.pop();\n        }\n        result.push_back(q.front());\n        q.pop();\n    }\n    \n    return result;\n}\n\nint main() {\n    int n, k;\n    std::cin >> n >> k;\n    std::vector<int> result = josephus(n, k);\n    std::cout << \"<\";\n    for (size_t i = 0; i < result.size(); ++i) {\n        if (i > 0) std::cout << \", \";\n        std::cout << result[i];\n    }\n    std::cout << \">\" << std::endl;\n    \n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 571,
+    "completion_tokens": 252,
+    "total_tokens": 823,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

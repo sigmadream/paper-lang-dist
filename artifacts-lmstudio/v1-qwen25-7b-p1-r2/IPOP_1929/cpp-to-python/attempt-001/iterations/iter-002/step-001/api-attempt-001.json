@@ -1,0 +1,28 @@
+{
+  "started_at": "2026-09-11T09:10:16.416785+00:00",
+  "seconds": 6.699698000000353,
+  "request": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+      },
+      {
+        "role": "user",
+        "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_1929\nTranslate from C++ to Python.\n\n[CONSTRAINTS]\n- Preserve exact input/output behavior for the provided sample.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n문제\nM이상 N이하의 소수를 모두 출력하는 프로그램을 작성하시오.\n\n입력\n첫째 줄에 자연수 M과 N이 빈 칸을 사이에 두고 주어진다. (1 ≤ M ≤ N ≤ 1,000,000) M이상 N이하의 소수가 하나 이상 있는 입력만 주어진다.\n\n출력\n한 줄에 하나씩, 증가하는 순서대로 소수를 출력한다.\n\n예제 입력 1\n3 16\n\n예제 출력 1\n3\n5\n7\n11\n13\n\n[SAMPLE INPUT]\n3 16\n\n[EXPECTED OUTPUT]\n3\n5\n7\n11\n13\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n#include <cmath>\n\nvoid sieve_of_eratosthenes(int m, int n) {\n    std::vector<bool> is_prime(n + 1, true);\n    is_prime[0] = is_prime[1] = false;\n    \n    for (int i = 2; i <= std::sqrt(n); ++i) {\n        if (is_prime[i]) {\n            for (int j = i * i; j <= n; j += i) {\n                is_prime[j] = false;\n            }\n        }\n    }\n    \n    for (int i = m; i <= n; ++i) {\n        if (is_prime[i]) {\n            std::cout << i << std::endl;\n        }\n    }\n}\n\nint main() {\n    int m, n;\n    std::cin >> m >> n;\n    \n    sieve_of_eratosthenes(m, n);\n    \n    return 0;\n}\n```"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "stream": false,
+    "top_p": 1,
+    "top_k": 0,
+    "repeat_penalty": 1,
+    "seed": 20260911
+  },
+  "http_status": 200,
+  "raw_response": "{\n  \"id\": \"chatcmpl-tx1oy001mget57orargy5j\",\n  \"object\": \"chat.completion\",\n  \"created\": 1789117818,\n  \"model\": \"qwen2.5-coder-7b-instruct\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"```python\\nimport math\\n\\ndef sieve_of_eratosthenes(m, n):\\n    is_prime = [True] * (n + 1)\\n    is_prime[0] = is_prime[1] = False\\n    \\n    for i in range(2, int(math.sqrt(n)) + 1):\\n        if is_prime[i]:\\n            for j in range(i * i, n + 1, i):\\n                is_prime[j] = False\\n    \\n    for i in range(m, n + 1):\\n        if is_prime[i]:\\n            print(i)\\n\\nif __name__ == \\\"__main__\\\":\\n    m, n = map(int, input().split())\\n    \\n    sieve_of_eratosthenes(m, n)\\n```\",\n        \"reasoning_content\": \"\",\n        \"tool_calls\": []\n      },\n      \"logprobs\": null,\n      \"finish_reason\": \"stop\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 498,\n    \"completion_tokens\": 151,\n    \"total_tokens\": 649,\n    \"completion_tokens_details\": {\n      \"reasoning_tokens\": 0\n    }\n  },\n  \"stats\": {},\n  \"system_fingerprint\": \"qwen2.5-coder-7b-instruct\"\n}",
+  "error": null,
+  "will_retry": false
+}

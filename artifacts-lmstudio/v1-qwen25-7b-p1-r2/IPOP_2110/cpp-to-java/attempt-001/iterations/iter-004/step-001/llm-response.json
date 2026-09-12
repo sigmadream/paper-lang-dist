@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-ud3dk00ppikuho2jeguah",
+  "object": "chat.completion",
+  "created": 1789118708,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```java\nimport java.util.Arrays;\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int c = scanner.nextInt();\n        int[] a = new int[n];\n        for (int i = 0; i < n; i++) {\n            a[i] = scanner.nextInt();\n        }\n        Arrays.sort(a);\n\n        int left = 1;\n        int right = a[n - 1] - a[0];\n        int ans = 0;\n\n        while (left <= right) {\n            int mid = left + (right - left) / 2;\n            int count = 1;\n            int prev = a[0];\n\n            for (int i = 1; i < n; i++) {\n                if (a[i] - prev >= mid) {\n                    count++;\n                    prev = a[i];\n                }\n            }\n\n            if (count >= c) {\n                ans = mid;\n                left = mid + 1;\n            } else {\n                right = mid - 1;\n            }\n        }\n\n        System.out.println(ans);\n    }\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 796,
+    "completion_tokens": 246,
+    "total_tokens": 1042,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

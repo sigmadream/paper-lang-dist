@@ -1,0 +1,20 @@
+{
+  "model": "qwen2.5-coder-7b-instruct",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+    },
+    {
+      "role": "user",
+      "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_9663\nTranslate from C++ to Python.\n\n[CONSTRAINTS]\n- Preserve exact input/output behavior for the provided sample.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n문제\nN-Queen 문제는 크기가 N × N인 체스판 위에 퀸 N개를 서로 공격할 수 없게 놓는 문제이다.\nN이 주어졌을 때, 퀸을 놓는 방법의 수를 구하는 프로그램을 작성하시오.\n\n입력\n첫째 줄에 N이 주어진다. (1 ≤ N < 15)\n\n출력\n첫째 줄에 퀸 N개를 서로 공격할 수 없게 놓는 경우의 수를 출력한다.\n\n예제 입력 1\n8\n\n예제 출력 1\n92\n\n[SAMPLE INPUT]\n8\n\n[EXPECTED OUTPUT]\n92\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\nusing namespace std;\n\nint n, ans;\nvector<bool> col, diag1, diag2;\n\nvoid solve(int r) {\n    if (r == n) {\n        ans++;\n        return;\n    }\n    for (int c = 0; c < n; c++) {\n        if (col[c] || diag1[r + c] || diag2[r - c + n - 1]) continue;\n        col[c] = diag1[r + c] = diag2[r - c + n - 1] = true;\n        solve(r + 1);\n        col[c] = diag1[r + c] = diag2[r - c + n - 1] = false;\n    }\n}\n\nint main() {\n    cin >> n;\n    ans = 0;\n    col.resize(n, false);\n    diag1.resize(2 * n - 1, false);\n    diag2.resize(2 * n - 1, false);\n    solve(0);\n    cout << ans << endl;\n    return 0;\n}\n```"
+    }
+  ],
+  "temperature": 0,
+  "max_tokens": 4096,
+  "stream": false,
+  "top_p": 1,
+  "top_k": 0,
+  "repeat_penalty": 1,
+  "seed": 20260911
+}

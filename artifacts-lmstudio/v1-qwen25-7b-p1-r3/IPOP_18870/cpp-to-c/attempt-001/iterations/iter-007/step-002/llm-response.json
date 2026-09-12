@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-ra0ge1oj0irrbh2dknfh",
+  "object": "chat.completion",
+  "created": 1789117550,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint main() {\n    int n;\n    std::cin >> n;\n    \n    std::vector<int> a(n);\n    for (int i = 0; i < n; i++) std::cin >> a[i];\n    \n    std::vector<int> sorted_a = a;\n    std::sort(sorted_a.begin(), sorted_a.end());\n    \n    std::vector<int> unique_a;\n    for (int i = 0; i < n; i++) {\n        if (i == 0 || sorted_a[i] != sorted_a[i - 1]) {\n            unique_a.push_back(sorted_a[i]);\n        }\n    }\n    \n    for (int i = 0; i < n; i++) {\n        int compressed = 0;\n        for (int j = 0; j < unique_a.size(); j++) {\n            if (a[i] > unique_a[j]) compressed++;\n        }\n        std::cout << compressed << \" \";\n    }\n    std::cout << std::endl;\n    \n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 763,
+    "completion_tokens": 232,
+    "total_tokens": 995,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

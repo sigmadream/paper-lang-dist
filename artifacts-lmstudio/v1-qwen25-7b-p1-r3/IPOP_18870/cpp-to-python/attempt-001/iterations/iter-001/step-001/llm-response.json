@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-mvvvct1d8mj6a2wkc3pycc",
+  "object": "chat.completion",
+  "created": 1789117571,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```python\nimport sys\nfrom typing import List\n\ndef main():\n    input = sys.stdin.read\n    data = input().split()\n    \n    n = int(data[0])\n    a = list(map(int, data[1:]))\n    \n    sorted_a = sorted(set(a))\n    compressed = {x: i for i, x in enumerate(sorted_a)}\n    \n    for x in a:\n        print(compressed[x], end=\" \")\n    print()\n\nif __name__ == \"__main__\":\n    main()\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 669,
+    "completion_tokens": 106,
+    "total_tokens": 775,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

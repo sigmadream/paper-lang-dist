@@ -248,7 +248,27 @@ def report_runs(output_root, runs):
     for route, agg in aggregates.items():
         for c, stat in agg["by_confirmation"].items():
             lines.append(f"| {route} | {c} | {stat['success_count']}/{agg['evaluable_count']} | {stat['p_sf']} | {stat['d_sf']} | {stat['p_sf_ci95']} ({stat['ci_status']}) |")
-    lines.extend(["", "Conditional statistics and failure categories are preserved in summary.json.", ""])
+    lines.extend(["", "Values below are median [Q1, Q3]; n. Conditional statistics use SF successes at the specified c.", "",
+                  "| Route | c | tau | Delta_0 Dice | Delta_0 sequence | Delta_0 AST | AST measured/success |",
+                  "|---|---:|---|---|---|---|---|"])
+    def describe(stat):
+        if not stat["n"]:
+            return "unavailable; n=0"
+        return f"{stat['median']:.4f} [{stat['q1']:.4f}, {stat['q3']:.4f}]; n={stat['n']}"
+    for route, agg in aggregates.items():
+        for c in ("1", "5"):
+            if c not in agg["conditional"]:
+                continue
+            conditional = agg["conditional"][c]
+            delta = conditional["delta_0"]
+            cells = [describe(conditional["tau"])] + [describe(delta[m]) for m in METRICS]
+            lines.append(f"| {route} | {c} | " + " | ".join(cells) + f" | {delta['ast_tsed']['n']}/{conditional['success_count']} |")
+    lines.extend(["", "Failure rates use all evaluable observations as the denominator at c_max.", "",
+                  "| Route | Category | Count | Rate |", "|---|---|---:|---:|"])
+    for route, agg in aggregates.items():
+        for category, stat in agg["failures"]["categories"].items():
+            lines.append(f"| {route} | {category} | {stat['count']} | {stat['rate']} |")
+    lines.extend(["", "Full confidence intervals, AST missingness, exclusions and repeatability are preserved in summary.json.", ""])
     (directory / "summary.md").write_text("\n".join(lines), encoding="utf-8")
     print(directory / "summary.json", flush=True)
     return summary

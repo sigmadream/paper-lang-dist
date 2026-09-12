@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-47g4n2it87oh1zopiz3lkt",
+  "object": "chat.completion",
+  "created": 1789120324,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```c\n#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char a[1001], b[1001];\n    if (scanf(\"%s %s\", a, b) != 2) return 0;\n    \n    int n = strlen(a);\n    int m = strlen(b);\n    int dp[1001][1001] = {0};\n    \n    for (int i = 1; i <= n; i++) {\n        for (int j = 1; j <= m; j++) {\n            if (a[i - 1] == b[j - 1]) dp[i][j] = dp[i - 1][j - 1] + 1;\n            else dp[i][j] = dp[i - 1][j] > dp[i][j - 1] ? dp[i - 1][j] : dp[i][j - 1];\n        }\n    }\n    \n    printf(\"%d\\n\", dp[n][m]);\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 534,
+    "completion_tokens": 224,
+    "total_tokens": 758,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

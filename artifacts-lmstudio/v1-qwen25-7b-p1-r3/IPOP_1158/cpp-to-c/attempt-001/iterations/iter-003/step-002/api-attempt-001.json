@@ -1,0 +1,28 @@
+{
+  "started_at": "2026-09-11T08:43:49.219605+00:00",
+  "seconds": 7.955274399999325,
+  "request": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+      },
+      {
+        "role": "user",
+        "content": "[TASK]\nDirection: target_to_seed\nProblem ID: IPOP_1158\nTranslate from C to C++.\n\n[CONSTRAINTS]\n- Preserve exact input/output behavior for the provided sample.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n문제\n요세푸스 문제는 다음과 같다.\n1번부터 N번까지 N명의 사람이 원을 이루면서 앉아있고, 양의 정수 K(≤ N)가 주어진다. 이제 순서대로 K번째 사람을 제거한다. 한 사람이 제거되면 남은 사람들로 이루어진 원을 따라 이 과정을 계속해 나간다. 이 과정은 N명의 사람이 모두 제거될 때까지 계속된다. 원에서 사람들이 제거되는 순서를 (N, K)-요세푸스 순열이라고 한다. 예를 들어 (7, 3)-요세푸스 순열은 <3, 6, 2, 7, 5, 1, 4>이다.\nN과 K가 주어지면 (N, K)-요세푸스 순열을 구하는 프로그램을 작성하시오.\n\n입력\n첫째 줄에 N과 K가 빈 칸을 사이에 두고 순서대로 주어진다. (1 ≤ K ≤ N ≤ 5,000)\n\n출력\n예제와 같이 요세푸스 순열을 출력한다.\n\n예제 입력 1\n7 3\n\n예제 출력 1\n<3, 6, 2, 7, 5, 1, 4>\n\n[SAMPLE INPUT]\n7 3\n\n[EXPECTED OUTPUT]\n<3, 6, 2, 7, 5, 1, 4>\n\n[SOURCE CODE - C]\n```c\n#include <stdio.h>\n\nint main() {\n    int n, k;\n    if (scanf(\"%d %d\", &n, &k) == 2) {\n        int q[n];\n        for (int i = 0; i < n; i++) q[i] = i + 1;\n        \n        printf(\"<\");\n        int idx = 0;\n        while (n > 0) {\n            idx = (idx + k - 1) % n;\n            printf(\"%d\", q[idx]);\n            n--;\n            if (n > 0) printf(\", \");\n            for (int i = idx; i < n; i++) q[i] = q[i + 1];\n        }\n        printf(\">\\n\");\n    }\n    return 0;\n}\n```"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "stream": false,
+    "top_p": 1,
+    "top_k": 0,
+    "repeat_penalty": 1,
+    "seed": 20260911
+  },
+  "http_status": 200,
+  "raw_response": "{\n  \"id\": \"chatcmpl-oh57cbyu5pssyl7iwfm9ak\",\n  \"object\": \"chat.completion\",\n  \"created\": 1789116231,\n  \"model\": \"qwen2.5-coder-7b-instruct\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"```cpp\\n#include <iostream>\\n#include <vector>\\n\\nint main() {\\n    int n, k;\\n    if (std::cin >> n >> k) {\\n        std::vector<int> q(n);\\n        for (int i = 0; i < n; i++) q[i] = i + 1;\\n        \\n        std::cout << \\\"<\\\";\\n        int idx = 0;\\n        while (n > 0) {\\n            idx = (idx + k - 1) % n;\\n            std::cout << q[idx];\\n            n--;\\n            if (n > 0) std::cout << \\\", \\\";\\n            for (int i = idx; i < n; i++) q[i] = q[i + 1];\\n        }\\n        std::cout << \\\">\\\\n\\\";\\n    }\\n    return 0;\\n}\\n```\",\n        \"reasoning_content\": \"\",\n        \"tool_calls\": []\n      },\n      \"logprobs\": null,\n      \"finish_reason\": \"stop\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 618,\n    \"completion_tokens\": 174,\n    \"total_tokens\": 792,\n    \"completion_tokens_details\": {\n      \"reasoning_tokens\": 0\n    }\n  },\n  \"stats\": {},\n  \"system_fingerprint\": \"qwen2.5-coder-7b-instruct\"\n}",
+  "error": null,
+  "will_retry": false
+}

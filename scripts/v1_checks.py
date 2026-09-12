@@ -7,9 +7,10 @@ from rttdist.ast_similarity import ast_similarity
 from rttdist.config import load_experiment_config
 from rttdist.corpus import FixturePair, ProblemCorpusEntry
 from rttdist.exec.adapters import evaluate_source
-from rttdist.experiment_io import environment, read_json, write_json
+from rttdist.experiment_io import digest, environment, read_json, write_json
 from rttdist.similarity import token_deltas
 from rttdist.normalize import hash_normalized_cpp_tokens
+from rttdist.extract import extract_single_file_source_text, SourceExtractionError
 
 
 def prepare():
@@ -50,7 +51,7 @@ def prepare():
     for name, source in variants.items():
         responses[name] = {"token_deltas": token_deltas(a, source), "ast_similarity": ast_similarity(a, source)}
     # Structurally indistinguishable renamed statements intentionally collapse after abstraction.
-    responses["reorder_abstract_equal"] = {"ast_similarity": ast_similarity('int f(){a();b();}', 'int f(){b();a();}')}
+    responses["reorder_abstract_equal"] = {"token_deltas": token_deltas('int f(){a();b();}', 'int f(){b();a();}'), "ast_similarity": ast_similarity('int f(){a();b();}', 'int f(){b();a();}')}
     responses["for_to_while"] = {"token_deltas": token_deltas(variants["for"], variants["while"]), "ast_similarity": ast_similarity(variants["for"], variants["while"])}
     write_json(root / "similarity_variants.json", responses)
     assert responses["rename"]["ast_similarity"]["value"] == 1
@@ -63,14 +64,31 @@ def prepare():
     write_json(root / "original_ast.json", original_stats)
 
 
-def audit(summary_path):
+def audit(summary_path, allow_partial=False):
     s = read_json(summary_path)
     rows, meta = s["observations"], s["run_metadata"]
+    output_root = Path(summary_path).resolve().parent.parent
+    for metadata in meta:
+        condition_keys = ("experiment_version", "problem_ids", "target_languages", "runtime", "lmstudio", "server",
+                          "decoding", "validation_hash", "code", "ast", "recovery", "execution_schedule")
+        conditions = {key: metadata[key] for key in condition_keys if key in metadata}
+        assert digest(conditions) == metadata["condition_hash"]
+        assert digest(metadata["code"]["file_hashes"]) == metadata["code"]["source_hash"]
+        for relative, checksum in metadata["code"]["file_hashes"].items():
+            assert digest((output_root / metadata["run_id"] / "code_snapshot" / relative).read_bytes()) == checksum
+        validation = dict(metadata["validation_snapshot"])
+        validation_hash = validation.pop("validation_hash")
+        assert digest(validation) == validation_hash == metadata["validation_hash"]
+        for problem in metadata["problem_ids"]:
+            assert validation["problems"][problem]["status"] == "success"
+            for filename, checksum in validation["content_hashes"][problem].items():
+                assert digest(Path(filename).read_bytes()) == checksum
     expected = len(meta[0]["problem_ids"])*len(meta[0]["target_languages"])*len(meta)
-    assert len(rows) == expected
-    assert not s["exclusions"]
+    assert len(rows) <= expected if allow_partial else len(rows) == expected
+    if not allow_partial:
+        assert not s["exclusions"]
     keys = {(r["problem_id"], r["run_id"], r["route"]) for r in rows}
-    assert len(keys) == expected
+    assert len(keys) == len(rows)
     for row in rows:
         successes = list(row["success"].values())
         assert successes == sorted(successes, reverse=True)
@@ -101,7 +119,23 @@ def audit(summary_path):
                 assert req["model"] == meta[0]["lmstudio"]["model"]
                 assert req["max_tokens"] == meta[0]["lmstudio"]["max_tokens"]
                 assert req["temperature"] == 0
+                for key, value in meta[0]["decoding"].items():
+                    assert req[key] == value
                 assert step["truncated"] == any(ch.get("finish_reason") == "length" for ch in response.get("choices", []))
+                if step.get("source_path"):
+                    extracted = extract_single_file_source_text(response["choices"][0]["message"]["content"])
+                    translated_source = Path(step["source_path"]).read_text(encoding="utf-8")
+                    assert translated_source.rstrip() == extracted.rstrip()
+                    prepared_filename = {"cpp": "Main.cpp", "c": "Main.c", "java": "Main.java", "python": "main.py"}[step["target_language"]]
+                    prepared = Path(step["execution"]["work_directory"]) / prepared_filename
+                    assert prepared.read_text(encoding="utf-8") == translated_source
+                elif step["status"] == "parse_error":
+                    try:
+                        extract_single_file_source_text(response["choices"][0]["message"]["content"])
+                    except (SourceExtractionError, KeyError, IndexError, TypeError):
+                        pass
+                    else:
+                        raise AssertionError("A recorded parse_error is extractable with the pinned extractor")
                 if step["status"] == "success":
                     execution = step["execution"]
                     expected_fixtures = len(meta[0]["validation_snapshot"]["problems"][row["problem_id"]]["fixture_results"])
@@ -139,14 +173,15 @@ def audit(summary_path):
             cond = agg["conditional"][c]
             for metric in cond["delta_0"].values():
                 assert metric["n"]+sum(metric["excluded_by_reason"].values()) == cond["success_count"]
-    result = {"passed": True, "expected": expected, "observed": len(rows), "run_count": len(meta),
+    result = {"passed": True, "scope": "completed_observations_only" if allow_partial else "complete_experiment",
+              "expected": expected, "observed": len(rows), "run_count": len(meta),
               "problem_count": len(meta[0]["problem_ids"]), "condition_hash": meta[0]["condition_hash"]}
-    write_json(Path(summary_path).parent / "completion_audit.json", result)
+    write_json(Path(summary_path).parent / ("partial_audit.json" if allow_partial else "completion_audit.json"), result)
     print(result)
 
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        audit(sys.argv[1])
+        audit(sys.argv[1], allow_partial="--partial" in sys.argv)
     else:
         prepare()

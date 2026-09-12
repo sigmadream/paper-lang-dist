@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-hww5k3tf68hil5luw69tll",
+  "object": "chat.completion",
+  "created": 1789120530,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\nusing namespace std;\n\nint ans = 0;\nint n;\nint *col, *diag1, *diag2;\n\nvoid solve(int r) {\n    if (r == n) {\n        ans++;\n        return;\n    }\n    for (int c = 0; c < n; c++) {\n        if (col[c] || diag1[r + c] || diag2[r - c + n - 1]) continue;\n        col[c] = diag1[r + c] = diag2[r - c + n - 1] = 1;\n        solve(r + 1);\n        col[c] = diag1[r + c] = diag2[r - c + n - 1] = 0;\n    }\n}\n\nint main() {\n    cin >> n;\n    \n    col = new int[n];\n    diag1 = new int[2 * n - 1];\n    diag2 = new int[2 * n - 1];\n    \n    for (int i = 0; i < n; i++) col[i] = diag1[i] = diag2[i] = 0;\n    solve(0);\n    \n    cout << ans << endl;\n    delete[] col;\n    delete[] diag1;\n    delete[] diag2;\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 581,
+    "completion_tokens": 277,
+    "total_tokens": 858,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

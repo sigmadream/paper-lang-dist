@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-z74wloazjh1jca6dcu59",
+  "object": "chat.completion",
+  "created": 1789119752,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```c\n#include <stdio.h>\n#include <stdlib.h>\n\n#define MAXN 501\n#define MAXM 10001\n\nint n, m;\nint adj[MAXN][MAXN];\nint dist[MAXN];\n\nvoid bfs() {\n    int q[MAXN];\n    int front = 0, rear = 0;\n    q[rear++] = 1;\n    dist[1] = 0;\n\n    while (front < rear) {\n        int curr = q[front++];\n        for (int next_node = 1; next_node <= n; next_node++) {\n            if (adj[curr][next_node] && dist[next_node] == -1) {\n                dist[next_node] = dist[curr] + 1;\n                q[rear++] = next_node;\n                if (dist[next_node] <= 2) {\n                    dist[next_node] = 1;\n                }\n            }\n        }\n    }\n}\n\nint main() {\n    scanf(\"%d %d\", &n, &m);\n    for (int i = 0; i < m; i++) {\n        int u, v;\n        scanf(\"%d %d\", &u, &v);\n        adj[u][v] = 1;\n        adj[v][u] = 1;\n    }\n\n    for (int i = 1; i <= n; i++) {\n        dist[i] = -1;\n    }\n\n    bfs();\n\n    int ans = 0;\n    for (int i = 1; i <= n; i++) {\n        if (dist[i] <= 2) {\n            ans++;\n        }\n    }\n\n    printf(\"%d\\n\", ans);\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 846,
+    "completion_tokens": 352,
+    "total_tokens": 1198,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

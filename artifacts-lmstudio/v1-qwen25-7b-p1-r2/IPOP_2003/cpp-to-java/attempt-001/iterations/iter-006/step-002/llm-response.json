@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-3clfkd8zcwzfpi98bqxu9u",
+  "object": "chat.completion",
+  "created": 1789118326,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    int n;\n    long long m;\n    std::cin >> n >> m;\n    \n    std::vector<long long> a(n);\n    for (int i = 0; i < n; i++) {\n        std::cin >> a[i];\n    }\n    \n    int ans = 0;\n    long long sum = 0;\n    int end = 0;\n    \n    for (int start = 0; start < n; start++) {\n        while (sum < m && end < n) {\n            sum += a[end];\n            end++;\n        }\n        if (sum == m) ans++;\n        sum -= a[start];\n    }\n    \n    std::cout << ans << std::endl;\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 582,
+    "completion_tokens": 170,
+    "total_tokens": 752,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-d07cp5i7rtlqata2kupgbs",
+  "object": "chat.completion",
+  "created": 1789116196,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```java\nimport java.util.Scanner;\nimport java.util.LinkedList;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int k = scanner.nextInt();\n        \n        LinkedList<Integer> queue = new LinkedList<>();\n        for (int i = 1; i <= n; i++) {\n            queue.add(i);\n        }\n        \n        System.out.print(\"<\");\n        int idx = 0;\n        while (!queue.isEmpty()) {\n            idx = (idx + k - 1) % queue.size();\n            System.out.print(queue.remove(idx));\n            if (!queue.isEmpty()) {\n                System.out.print(\", \");\n            }\n        }\n        System.out.println(\">\");\n    }\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 609,
+    "completion_tokens": 155,
+    "total_tokens": 764,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

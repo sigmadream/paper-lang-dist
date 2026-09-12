@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-sl7whmvovvzgfq2kp9h0q",
+  "object": "chat.completion",
+  "created": 1789117594,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <set>\n#include <algorithm>\n#include <sstream>\n\nstd::vector<int> coordinate_compression(int n, const std::vector<int>& a) {\n    std::set<int> sorted_a(a.begin(), a.end());\n    std::vector<int> compressed;\n    std::unordered_map<int, int> index_map;\n\n    int index = 0;\n    for (const auto& x : sorted_a) {\n        index_map[x] = index++;\n    }\n\n    for (const auto& x : a) {\n        compressed.push_back(index_map[x]);\n    }\n\n    return compressed;\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n    std::cout.tie(nullptr);\n\n    int n;\n    std::cin >> n;\n    std::vector<int> a(n);\n    for (int i = 0; i < n; ++i) {\n        std::cin >> a[i];\n    }\n\n    std::vector<int> result = coordinate_compression(n, a);\n    for (size_t i = 0; i < result.size(); ++i) {\n        if (i > 0) std::cout << \" \";\n        std::cout << result[i];\n    }\n    std::cout << std::endl;\n\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 615,
+    "completion_tokens": 282,
+    "total_tokens": 897,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-42460tkb14noivjsadpskr",
+  "object": "chat.completion",
+  "created": 1789118851,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```python\ndef max_weight(n, ropes):\n    ropes.sort(reverse=True)\n    max_weight = 0\n    for i in range(n):\n        current_weight = ropes[i] * (i + 1)\n        if current_weight > max_weight:\n            max_weight = current_weight\n    return max_weight\n\nif __name__ == \"__main__\":\n    import sys\n    input = sys.stdin.read\n    data = input().split()\n    n = int(data[0])\n    ropes = list(map(int, data[1:]))\n    print(max_weight(n, ropes))\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 651,
+    "completion_tokens": 120,
+    "total_tokens": 771,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-j1jg52i2b11rphbafpe2o",
+  "object": "chat.completion",
+  "created": 1789117089,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n    std::cout.tie(nullptr);\n\n    int h, w;\n    std::cin >> h >> w;\n    std::vector<int> a(w);\n    for (int i = 0; i < w; ++i) {\n        std::cin >> a[i];\n    }\n\n    int ans = 0;\n    for (int i = 1; i < w - 1; ++i) {\n        int left_max = *std::max_element(a.begin(), a.begin() + i + 1);\n        int right_max = *std::max_element(a.begin() + i, a.end());\n        int bound = std::min(left_max, right_max);\n        if (bound > a[i]) {\n            ans += bound - a[i];\n        }\n    }\n\n    std::cout << ans << std::endl;\n\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 639,
+    "completion_tokens": 215,
+    "total_tokens": 854,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

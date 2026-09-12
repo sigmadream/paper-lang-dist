@@ -1,0 +1,28 @@
+{
+  "started_at": "2026-09-11T08:34:24.559621+00:00",
+  "seconds": 6.9905780000008235,
+  "request": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+      },
+      {
+        "role": "user",
+        "content": "[TASK]\nDirection: target_to_seed\nProblem ID: IPOP_5567\nTranslate from Java to C++.\n\n[CONSTRAINTS]\n- Preserve exact input/output behavior for the provided sample.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n문제\n상근이는 자신의 결혼식에 학교 동기 중 자신의 친구와 친구의 친구를 초대하기로 했다. 상근이의 동기는 모두 N명이고, 이 학생들의 학번은 모두 1부터 N까지이다. 상근이의 학번은 1이다.\n\n상근이는 동기들의 친구 관계를 모두 조사한 리스트를 가지고 있다. 이 리스트를 바탕으로 결혼식에 초대할 사람의 수를 구하는 프로그램을 작성하시오.\n\n입력\n첫째 줄에 상근이의 동기의 수 n (2 ≤ n ≤ 500)이 주어진다. 둘째 줄에는 리스트의 길이 m (1 ≤ m ≤ 10000)이 주어진다. 다음 줄부터 m개 줄에는 친구 관계 ai bi가 주어진다. (1 ≤ ai < bi ≤ n) ai와 bi가 친구라는 뜻이며, bi와 ai도 친구관계이다. \n\n출력\n첫째 줄에 상근이의 결혼식에 초대하는 동기의 수를 출력한다.\n\n예제 입력 1 \n6\n5\n1 2\n1 3\n3 4\n2 3\n4 5\n예제 출력 1 \n3\n예제 입력 2 \n6\n5\n2 3\n3 4\n4 5\n5 6\n2 5\n예제 출력 2 \n0\n힌트\n예제 1의 경우 2와 3은 상근이의 친구이다. 또, 3과 4는 친구이기 때문에, 4는 상근이의 친구의 친구이다. 5와 6은 친구도 아니고, 친구의 친구도 아니다. 따라서 2, 3, 4 3명의 친구를 결혼식에 초대한다.\n\n[SAMPLE INPUT]\n1\n0\n\n[EXPECTED OUTPUT]\n0\n\n[SOURCE CODE - Java]\n```java\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int m = scanner.nextInt();\n\n        List<List<Integer>> adj = new ArrayList<>();\n        for (int i = 0; i <= n; i++) {\n            adj.add(new ArrayList<>());\n        }\n\n        for (int i = 0; i < m; i++) {\n            int u = scanner.nextInt();\n            int v = scanner.nextInt();\n            adj.get(u).add(v);\n            adj.get(v).add(u);\n        }\n\n        int[] dist = new int[n + 1];\n        Arrays.fill(dist, -1);\n        Queue<Integer> q = new LinkedList<>();\n\n        q.add(1);\n        dist[1] = 0;\n\n        int ans = 0;\n\n        while (!q.isEmpty()) {\n            int curr = q.poll();\n\n            for (int nextNode : adj.get(curr)) {\n                if (dist[nextNode] == -1) {\n                    dist[nextNode] = dist[curr] + 1;\n                    q.add(nextNode);\n                    if (dist[nextNode] <= 2) {\n                        ans++;\n                    }\n                }\n            }\n        }\n\n        System.out.println(ans);\n\n        scanner.close();\n    }\n}\n```"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "stream": false,
+    "top_p": 1,
+    "top_k": 0,
+    "repeat_penalty": 1,
+    "seed": 20260911
+  },
+  "http_status": 200,
+  "raw_response": "{\n  \"id\": \"chatcmpl-1z1duwgrjeqqzs7kwj38f\",\n  \"object\": \"chat.completion\",\n  \"created\": 1789115666,\n  \"model\": \"qwen2.5-coder-7b-instruct\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"```cpp\\n#include <iostream>\\n#include <vector>\\n#include <queue>\\n#include <cstring>\\n\\nusing namespace std;\\n\\nint main() {\\n    int n, m;\\n    cin >> n >> m;\\n\\n    vector<vector<int>> adj(n + 1);\\n    for (int i = 0; i < m; i++) {\\n        int u, v;\\n        cin >> u >> v;\\n        adj[u].push_back(v);\\n        adj[v].push_back(u);\\n    }\\n\\n    int dist[n + 1];\\n    memset(dist, -1, sizeof(dist));\\n    queue<int> q;\\n\\n    q.push(1);\\n    dist[1] = 0;\\n\\n    int ans = 0;\\n\\n    while (!q.empty()) {\\n        int curr = q.front();\\n        q.pop();\\n\\n        for (int nextNode : adj[curr]) {\\n            if (dist[nextNode] == -1) {\\n                dist[nextNode] = dist[curr] + 1;\\n                q.push(nextNode);\\n                if (dist[nextNode] <= 2) {\\n                    ans++;\\n                }\\n            }\\n        }\\n    }\\n\\n    cout << ans << endl;\\n\\n    return 0;\\n}\\n```\",\n        \"reasoning_content\": \"\",\n        \"tool_calls\": []\n      },\n      \"logprobs\": null,\n      \"finish_reason\": \"stop\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 864,\n    \"completion_tokens\": 242,\n    \"total_tokens\": 1106,\n    \"completion_tokens_details\": {\n      \"reasoning_tokens\": 0\n    }\n  },\n  \"stats\": {},\n  \"system_fingerprint\": \"qwen2.5-coder-7b-instruct\"\n}",
+  "error": null,
+  "will_retry": false
+}

@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-00d2t6gourji5iwdwllbgha",
+  "object": "chat.completion",
+  "created": 1789116427,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <string>\n\nvoid hanoi(int n, int start, int mid, int end, std::vector<std::pair<int, int>>& moves) {\n    if (n == 1) {\n        moves.push_back({start, end});\n        return;\n    }\n    hanoi(n - 1, start, end, mid, moves);\n    moves.push_back({start, end});\n    hanoi(n - 1, mid, start, end, moves);\n}\n\nint main() {\n    std::string input;\n    std::getline(std::cin, input);\n    int n = std::stoi(input);\n    std::vector<std::pair<int, int>> moves;\n    hanoi(n, 1, 2, 3, moves);\n    std::cout << moves.size() << std::endl;\n    for (const auto& move : moves) {\n        std::cout << move.first << \" \" << move.second << std::endl;\n    }\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 668,
+    "completion_tokens": 218,
+    "total_tokens": 886,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

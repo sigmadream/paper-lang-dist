@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-kcejbi9r7soeus6ycw3sws",
+  "object": "chat.completion",
+  "created": 1789117152,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```python\ndef main():\n    import sys\n    input = sys.stdin.read\n    data = input().split()\n\n    h = int(data[0])\n    w = int(data[1])\n    a = list(map(int, data[2:]))\n\n    ans = 0\n    for i in range(1, w - 1):\n        left_max = max(a[:i + 1])\n        right_max = max(a[i:])\n        bound = min(left_max, right_max)\n        if bound > a[i]:\n            ans += bound - a[i]\n\n    print(ans)\n\nif __name__ == \"__main__\":\n    main()\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 722,
+    "completion_tokens": 133,
+    "total_tokens": 855,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

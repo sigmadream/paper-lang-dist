@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-mb8ck6cv8q9wgbs4qwm8",
+  "object": "chat.completion",
+  "created": 1789117649,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\nusing namespace std;\n\nint main() {\n    int m, n;\n    if (cin >> m >> n) {\n        bool is_prime[n + 1];\n        for (int i = 0; i <= n; i++) is_prime[i] = true;\n        is_prime[0] = is_prime[1] = false;\n        \n        for (int i = 2; i * i <= n; i++) {\n            if (is_prime[i]) {\n                for (int j = i * i; j <= n; j += i) {\n                    is_prime[j] = false;\n                }\n            }\n        }\n        \n        for (int i = m; i <= n; i++) {\n            if (is_prime[i]) cout << i << endl;\n        }\n    }\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 482,
+    "completion_tokens": 178,
+    "total_tokens": 660,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

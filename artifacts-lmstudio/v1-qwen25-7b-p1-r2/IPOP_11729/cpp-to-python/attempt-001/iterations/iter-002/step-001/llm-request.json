@@ -1,0 +1,20 @@
+{
+  "model": "qwen2.5-coder-7b-instruct",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+    },
+    {
+      "role": "user",
+      "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_11729\nTranslate from C++ to Python.\n\n[CONSTRAINTS]\n- Preserve exact input/output behavior for the provided sample.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n문제\n세 개의 장대가 있고 첫 번째 장대에는 반경이 서로 다른 n개의 원판이 쌓여 있다. 각 원판은 반경이 큰 순서대로 쌓여있다. 이제 수도승들이 다음 규칙에 따라 첫 번째 장대에서 세 번째 장대로 옮기려 한다.\n\n1. 한 번에 한 개의 원판만을 다른 탑으로 옮길 수 있다.\n2. 쌓아 놓은 원판은 항상 위의 것이 아래의 것보다 작아야 한다.\n\n이 작업을 수행하는데 필요한 이동 순서를 출력하는 프로그램을 작성하라. 단, 이동 횟수는 최소가 되어야 한다.\n\n입력\n첫째 줄에 첫 번째 장대에 쌓인 원판의 개수 N (1 ≤ N ≤ 20)이 주어진다.\n\n출력\n첫째 줄에 옮긴 횟수 K를 출력한다.\n\n두 번째 줄부터 수행 과정을 출력한다. 두 번째 줄부터 K개의 줄에 걸쳐 두 정수 A B를 빈칸을 사이에 두고 출력하는데, 이는 A번째 탑의 가장 위에 있는 원판을 B번째 탑의 가장 위로 옮긴다는 뜻이다.\n\n예제 입력 1 \n3\n예제 출력 1 \n7\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n\n[SAMPLE INPUT]\n3\n\n[EXPECTED OUTPUT]\n7\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n#include <string>\n#include <sstream>\n\nvoid hanoi(int n, int start, int mid, int end, std::vector<std::pair<int, int>>& moves) {\n    if (n == 1) {\n        moves.push_back({start, end});\n        return;\n    }\n    hanoi(n - 1, start, end, mid, moves);\n    moves.push_back({start, end});\n    hanoi(n - 1, mid, start, end, moves);\n}\n\nint main() {\n    std::string input;\n    std::getline(std::cin, input);\n    std::istringstream iss(input);\n    int n;\n    iss >> n;\n    std::vector<std::pair<int, int>> moves;\n    hanoi(n, 1, 2, 3, moves);\n    std::cout << moves.size() << std::endl;\n    for (const auto& move : moves) {\n        std::cout << move.first << \" \" << move.second << std::endl;\n    }\n    return 0;\n}\n```"
+    }
+  ],
+  "temperature": 0,
+  "max_tokens": 4096,
+  "stream": false,
+  "top_p": 1,
+  "top_k": 0,
+  "repeat_penalty": 1,
+  "seed": 20260911
+}

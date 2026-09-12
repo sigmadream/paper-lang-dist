@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-ud8g19c9gmd06sf5sg97b",
+  "object": "chat.completion",
+  "created": 1789120595,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n    std::cout.tie(nullptr);\n\n    std::string s, bomb;\n    std::cin >> s >> bomb;\n\n    std::vector<char> res;\n    int b_len = bomb.length();\n\n    for (char c : s) {\n        res.push_back(c);\n        if (res.size() >= b_len) {\n            bool match = true;\n            for (int i = 0; i < b_len; ++i) {\n                if (res[res.size() - b_len + i] != bomb[i]) {\n                    match = false;\n                    break;\n                }\n            }\n            if (match) {\n                res.resize(res.size() - b_len);\n            }\n        }\n    }\n\n    if (res.empty()) {\n        std::cout << \"FRULA\" << std::endl;\n    } else {\n        for (char c : res) {\n            std::cout << c;\n        }\n        std::cout << std::endl;\n    }\n\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 729,
+    "completion_tokens": 240,
+    "total_tokens": 969,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

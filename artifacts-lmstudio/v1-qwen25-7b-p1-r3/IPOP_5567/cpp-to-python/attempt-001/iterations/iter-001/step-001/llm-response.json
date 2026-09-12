@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-2lfkn9kv5raudx920n11tp",
+  "object": "chat.completion",
+  "created": 1789119978,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```python\nfrom collections import deque\n\ndef main():\n    import sys\n    input = sys.stdin.read\n    data = input().split()\n\n    index = 0\n    n = int(data[index])\n    index += 1\n    m = int(data[index])\n    index += 1\n\n    adj = [[] for _ in range(n + 1)]\n    for _ in range(m):\n        u = int(data[index])\n        index += 1\n        v = int(data[index])\n        index += 1\n        adj[u].append(v)\n        adj[v].append(u)\n\n    dist = [-1] * (n + 1)\n    q = deque()\n    q.append(1)\n    dist[1] = 0\n\n    ans = 0\n\n    while q:\n        curr = q.popleft()\n\n        for next_node in adj[curr]:\n            if dist[next_node] == -1:\n                dist[next_node] = dist[curr] + 1\n                q.append(next_node)\n                if dist[next_node] <= 2:\n                    ans += 1\n\n    print(ans)\n\nif __name__ == \"__main__\":\n    main()\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 846,
+    "completion_tokens": 241,
+    "total_tokens": 1087,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

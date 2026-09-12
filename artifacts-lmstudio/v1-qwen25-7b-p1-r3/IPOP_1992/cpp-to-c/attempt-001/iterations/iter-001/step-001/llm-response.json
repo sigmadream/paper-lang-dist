@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-um6zujsshvq2q4v8f3vy4q",
+  "object": "chat.completion",
+  "created": 1789117970,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```c\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\nchar* solve(char** grid, int r, int c, int size) {\n    char first = grid[r][c];\n    int same = 1;\n    for (int i = r; i < r + size; i++) {\n        for (int j = c; j < c + size; j++) {\n            if (grid[i][j] != first) {\n                same = 0;\n                break;\n            }\n        }\n        if (!same) break;\n    }\n    \n    if (same) return (char*)malloc(2 * sizeof(char));\n    sprintf((char*)malloc(2 * sizeof(char)), \"%c\", first);\n    \n    int half = size / 2;\n    char* tl = solve(grid, r, c, half);\n    char* tr = solve(grid, r, c + half, half);\n    char* bl = solve(grid, r + half, c, half);\n    char* br = solve(grid, r + half, c + half, half);\n    \n    int len = 1 + strlen(tl) + strlen(tr) + strlen(bl) + strlen(br) + 1;\n    char* result = (char*)malloc(len * sizeof(char));\n    sprintf(result, \"(%s%s%s%s)\", tl, tr, bl, br);\n    \n    free(tl);\n    free(tr);\n    free(bl);\n    free(br);\n    \n    return result;\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    char** grid = (char**)malloc(n * sizeof(char*));\n    for (int i = 0; i < n; i++) {\n        grid[i] = (char*)malloc((n + 1) * sizeof(char));\n        scanf(\"%s\", grid[i]);\n    }\n    char* result = solve(grid, 0, 0, n);\n    printf(\"%s\\n\", result);\n    for (int i = 0; i < n; i++) free(grid[i]);\n    free(grid);\n    free(result);\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 1112,
+    "completion_tokens": 447,
+    "total_tokens": 1559,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

@@ -1,0 +1,28 @@
+{
+  "started_at": "2026-09-11T09:13:04.609944+00:00",
+  "seconds": 12.54837039999984,
+  "request": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+      },
+      {
+        "role": "user",
+        "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_1992\nTranslate from C++ to Java.\n\n[CONSTRAINTS]\n- Preserve exact input/output behavior for the provided sample.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n문제\n흑백 영상을 압축하여 표현하는 데이터 구조로 쿼드 트리(Quad Tree)라는 방법이 있다. 흰 점을 나타내는 0과 검은 점을 나타내는 1로만 이루어진 영상(2차원 배열)에서 같은 숫자의 점들이 한 곳에 많이 몰려있으면, 쿼드 트리에서는 이를 압축하여 간단히 표현할 수 있다.\n\n주어진 영상이 모두 0으로만 되어 있으면 압축 결과는 \"0\"이 되고, 모두 1로만 되어 있으면 압축 결과는 \"1\"이 된다. 만약 0과 1이 섞여 있으면 전체를 한 번에 나타내지를 못하고, 왼쪽 위, 오른쪽 위, 왼쪽 아래, 오른쪽 아래, 이렇게 4개의 영상으로 나누어 압축하게 되며, 이 4개의 영역을 압축한 결과를 차례대로 괄호 안에 묶어서 표현한다\n\n위 그림에서 왼쪽의 영상은 오른쪽의 배열과 같이 숫자로 주어지며, 이 영상을 쿼드 트리 구조를 이용하여 압축하면 \"(0(0011)(0(0111)01)1)\"로 표현된다.  N ×N 크기의 영상이 주어질 때, 이 영상을 압축한 결과를 출력하는 프로그램을 작성하시오.\n\n입력\n첫째 줄에는 영상의 크기를 나타내는 숫자 N 이 주어진다. N 은 언제나 2의 제곱수로 주어지며, 1 ≤ N ≤ 64의 범위를 가진다. 두 번째 줄부터는 길이 N의 문자열이 N개 들어온다. 각 문자열은 0 또는 1의 숫자로 이루어져 있으며, 영상의 각 점들을 나타낸다.\n\n출력\n영상을 압축한 결과를 출력한다.\n\n예제 입력 1\n8\n11110000\n11110000\n00011100\n00011100\n11110000\n11110000\n11110011\n11110011\n\n예제 출력 1\n((110(0101))(0010)1(0001))\n\n[SAMPLE INPUT]\n8\n11110000\n11110000\n00011100\n00011100\n11110000\n11110000\n11110011\n11110011\n\n[EXPECTED OUTPUT]\n((110(0101))(0010)1(0001))\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n#include <string>\n\nusing namespace std;\n\nstring solve(const vector<string>& grid, int r, int c, int size) {\n    char first = grid[r][c];\n    bool same = true;\n    for (int i = r; i < r + size; i++) {\n        for (int j = c; j < c + size; j++) {\n            if (grid[i][j] != first) {\n                same = false;\n                break;\n            }\n        }\n        if (!same) break;\n    }\n    \n    if (same) return string(1, first);\n    \n    int half = size / 2;\n    string tl = solve(grid, r, c, half);\n    string tr = solve(grid, r, c + half, half);\n    string bl = solve(grid, r + half, c, half);\n    string br = solve(grid, r + half, c + half, half);\n    \n    return \"(\" + tl + tr + bl + br + \")\";\n}\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int n;\n    if (!(cin >> n)) return 0;\n    vector<string> grid(n);\n    for (int i = 0; i < n; i++) cin >> grid[i];\n    cout << solve(grid, 0, 0, n) << \"\\n\";\n    return 0;\n}\n```"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "stream": false,
+    "top_p": 1,
+    "top_k": 0,
+    "repeat_penalty": 1,
+    "seed": 20260911
+  },
+  "http_status": 200,
+  "raw_response": "{\n  \"id\": \"chatcmpl-54wgluft7stm004yutwiv\",\n  \"object\": \"chat.completion\",\n  \"created\": 1789117986,\n  \"model\": \"qwen2.5-coder-7b-instruct\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"```java\\nimport java.util.Scanner;\\n\\npublic class QuadTreeCompression {\\n    public static void main(String[] args) {\\n        Scanner scanner = new Scanner(System.in);\\n        int n = scanner.nextInt();\\n        scanner.nextLine();\\n        String[] grid = new String[n];\\n        for (int i = 0; i < n; i++) {\\n            grid[i] = scanner.nextLine();\\n        }\\n        System.out.println(solve(grid, 0, 0, n));\\n    }\\n\\n    public static String solve(String[] grid, int r, int c, int size) {\\n        char first = grid[r].charAt(c);\\n        boolean same = true;\\n        for (int i = r; i < r + size; i++) {\\n            for (int j = c; j < c + size; j++) {\\n                if (grid[i].charAt(j) != first) {\\n                    same = false;\\n                    break;\\n                }\\n            }\\n            if (!same) break;\\n        }\\n\\n        if (same) return String.valueOf(first);\\n\\n        int half = size / 2;\\n        String tl = solve(grid, r, c, half);\\n        String tr = solve(grid, r, c + half, half);\\n        String bl = solve(grid, r + half, c, half);\\n        String br = solve(grid, r + half, c + half, half);\\n\\n        return \\\"(\\\" + tl + tr + bl + br + \\\")\\\";\\n    }\\n}\\n```\",\n        \"reasoning_content\": \"\",\n        \"tool_calls\": []\n      },\n      \"logprobs\": null,\n      \"finish_reason\": \"stop\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 1112,\n    \"completion_tokens\": 297,\n    \"total_tokens\": 1409,\n    \"completion_tokens_details\": {\n      \"reasoning_tokens\": 0\n    }\n  },\n  \"stats\": {},\n  \"system_fingerprint\": \"qwen2.5-coder-7b-instruct\"\n}",
+  "error": null,
+  "will_retry": false
+}

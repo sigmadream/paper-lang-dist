@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-jmzvzgi3j07u6rq7df1ob",
+  "object": "chat.completion",
+  "created": 1789116987,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```c\n#include <stdio.h>\n#include <string.h>\n#include <stdlib.h>\n\n#define MAX_NAME_LENGTH 21\n\ntypedef struct {\n    char name[MAX_NAME_LENGTH];\n    int id;\n} Pokemon;\n\nint main() {\n    int n, m;\n    scanf(\"%d %d\", &n, &m);\n    \n    Pokemon pokemons[n + 1];\n    for (int i = 1; i <= n; i++) {\n        scanf(\"%s\", pokemons[i].name);\n        pokemons[i].id = i;\n    }\n    \n    for (int i = 0; i < m; i++) {\n        char q[MAX_NAME_LENGTH];\n        scanf(\"%s\", q);\n        if (isdigit(q[0])) {\n            int id = atoi(q);\n            printf(\"%s\\n\", pokemons[id].name);\n        } else {\n            for (int j = 1; j <= n; j++) {\n                if (strcmp(q, pokemons[j].name) == 0) {\n                    printf(\"%d\\n\", pokemons[j].id);\n                    break;\n                }\n            }\n        }\n    }\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 2501,
+    "completion_tokens": 241,
+    "total_tokens": 2742,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

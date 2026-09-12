@@ -1,0 +1,28 @@
+{
+  "started_at": "2026-09-11T08:50:57.473314+00:00",
+  "seconds": 7.568994499997643,
+  "request": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+      },
+      {
+        "role": "user",
+        "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_14719\nTranslate from C++ to C.\n\n[CONSTRAINTS]\n- Preserve exact input/output behavior for the provided sample.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n문제\n2차원 세계에 블록이 쌓여있다. 비가 오면 블록 사이에 빗물이 고인다.\n비는 충분히 많이 온다. 고이는 빗물의 총량은 얼마일까?\n\n입력\n첫 번째 줄에는 2차원 세계의 세로 길이 H과 2차원 세계의 가로 길이 W가 주어진다. (1 ≤ H, W ≤ 500)\n두 번째 줄에는 블록이 쌓인 높이를 의미하는 0이상 H이하의 정수가 2차원 세계의 맨 왼쪽 위치부터 차례대로 W개 주어진다.\n따라서 블록 내부의 빈 공간이 생길 수 없다. 또 2차원 세계의 바닥은 항상 막혀있다고 가정하여도 좋다.\n\n출력\n2차원 세계에서는 한 칸의 용량은 1이다. 고이는 빗물의 총량을 출력하여라.\n빗물이 전혀 고이지 않을 경우 0을 출력하여라.\n\n예제 입력 1\n4 4\n3 0 1 4\n\n예제 출력 1\n5\n\n예제 입력 2\n4 8\n3 1 2 3 4 1 1 2\n\n예제 출력 2\n5\n\n예제 입력 3\n3 5\n0 0 0 2 0\n\n예제 출력 3\n0\n\n[SAMPLE INPUT]\n4 4\n3 0 1 4\n\n[EXPECTED OUTPUT]\n5\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    int h, w;\n    cin >> h >> w;\n    vector<int> a(w);\n    for (int i = 0; i < w; i++) cin >> a[i];\n    \n    int ans = 0;\n    for (int i = 1; i < w - 1; i++) {\n        int left_max = 0, right_max = 0;\n        for (int j = 0; j <= i; j++) left_max = (left_max < a[j]) ? a[j] : left_max;\n        for (int j = i; j < w; j++) right_max = (right_max < a[j]) ? a[j] : right_max;\n        int bound = (left_max < right_max) ? left_max : right_max;\n        if (bound > a[i]) ans += bound - a[i];\n    }\n    \n    cout << ans << endl;\n    return 0;\n}\n```"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "stream": false,
+    "top_p": 1,
+    "top_k": 0,
+    "repeat_penalty": 1,
+    "seed": 20260911
+  },
+  "http_status": 200,
+  "raw_response": "{\n  \"id\": \"chatcmpl-7i2sajzl4omra7bpr1iy\",\n  \"object\": \"chat.completion\",\n  \"created\": 1789116659,\n  \"model\": \"qwen2.5-coder-7b-instruct\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"```c\\n#include <stdio.h>\\n\\nint main() {\\n    int h, w;\\n    scanf(\\\"%d %d\\\", &h, &w);\\n    int a[w];\\n    for (int i = 0; i < w; i++) scanf(\\\"%d\\\", &a[i]);\\n    \\n    int ans = 0;\\n    for (int i = 1; i < w - 1; i++) {\\n        int left_max = 0, right_max = 0;\\n        for (int j = 0; j <= i; j++) left_max = (left_max < a[j]) ? a[j] : left_max;\\n        for (int j = i; j < w; j++) right_max = (right_max < a[j]) ? a[j] : right_max;\\n        int bound = (left_max < right_max) ? left_max : right_max;\\n        if (bound > a[i]) ans += bound - a[i];\\n    }\\n    \\n    printf(\\\"%d\\\\n\\\", ans);\\n    return 0;\\n}\\n```\",\n        \"reasoning_content\": \"\",\n        \"tool_calls\": []\n      },\n      \"logprobs\": null,\n      \"finish_reason\": \"stop\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 723,\n    \"completion_tokens\": 217,\n    \"total_tokens\": 940,\n    \"completion_tokens_details\": {\n      \"reasoning_tokens\": 0\n    }\n  },\n  \"stats\": {},\n  \"system_fingerprint\": \"qwen2.5-coder-7b-instruct\"\n}",
+  "error": null,
+  "will_retry": false
+}

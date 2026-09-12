@@ -1,0 +1,87 @@
+{
+  "manifest_version": 3,
+  "run_id": "v1-qwen25-7b-p1-r3",
+  "problem_id": "IPOP_10988",
+  "route": "cpp-to-c",
+  "target_language": "c",
+  "attempt_id": "attempt-001",
+  "condition_hash": "29e16350e2c777776f7ff61f106ded25f3d8d66401edf169916f885f1cc82349",
+  "validation_hash": "d6a73caf81a3c409125b2705e5654814dddc6f8ec3d3c38fb10e307634d78da2",
+  "distance_metrics": {
+    "schema_version": 2,
+    "stabilization": {
+      "tau_candidate": null,
+      "confirmation_cycles_run": 0,
+      "confirmations_held": 0,
+      "first_broken_confirmation": null,
+      "first_break_reason": null
+    },
+    "route_preservation": {
+      "candidate_phase_all_passed": null,
+      "first_failed_step": {
+        "iteration_index": 1,
+        "step_index": 1,
+        "target_language": "c",
+        "status": "compile_error"
+      },
+      "evaluated_step_count": 1,
+      "per_confirmation": []
+    },
+    "delta_0": {}
+  },
+  "iterations": [
+    {
+      "iteration_index": 1,
+      "phase": "candidate",
+      "confirmation_index": null,
+      "steps": [
+        {
+          "step_index": 1,
+          "source_language": "cpp",
+          "target_language": "c",
+          "status": "compile_error",
+          "truncated": false,
+          "source_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_10988\\cpp-to-c\\attempt-001\\iterations\\iter-001\\step-001\\source.c",
+          "execution": {
+            "language": "c",
+            "problem_id": "IPOP_10988",
+            "status": "compile_error",
+            "work_directory": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_10988\\cpp-to-c\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_10988\\c",
+            "compile_log_path": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_10988\\cpp-to-c\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_10988\\c\\compile.log",
+            "compile_result": {
+              "command": [
+                "gcc",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_10988\\cpp-to-c\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_10988\\c\\Main.c",
+                "-O2",
+                "-std=c11",
+                "-o",
+                "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_10988\\cpp-to-c\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_10988\\c\\program"
+              ],
+              "stdout": "",
+              "stderr": "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_10988\\cpp-to-c\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_10988\\c\\Main.c: In function 'main':\nD:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_10988\\cpp-to-c\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_10988\\c\\Main.c:9:5: error: unknown type name 'bool'\n    9 |     bool valid = true;\n      |     ^~~~\nD:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_10988\\cpp-to-c\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_10988\\c\\Main.c:3:1: note: 'bool' is defined in header '<stdbool.h>'; this is probably fixable by adding '#include <stdbool.h>'\n    2 | #include <string.h>\n  +++ |+#include <stdbool.h>\n    3 | \nD:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_10988\\cpp-to-c\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_10988\\c\\Main.c:9:18: error: 'true' undeclared (first use in this function)\n    9 |     bool valid = true;\n      |                  ^~~~\nD:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_10988\\cpp-to-c\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_10988\\c\\Main.c:9:18: note: 'true' is defined in header '<stdbool.h>'; this is probably fixable by adding '#include <stdbool.h>'\nD:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_10988\\cpp-to-c\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_10988\\c\\Main.c:9:18: note: each undeclared identifier is reported only once for each function it appears in\nD:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_10988\\cpp-to-c\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_10988\\c\\Main.c:12:21: error: 'false' undeclared (first use in this function)\n   12 |             valid = false;\n      |                     ^~~~~\nD:\\works\\paper-lang-dist\\artifacts-lmstudio\\v1-qwen25-7b-p1-r3\\IPOP_10988\\cpp-to-c\\attempt-001\\iterations\\iter-001\\step-001\\exec\\IPOP_10988\\c\\Main.c:12:21: note: 'false' is defined in header '<stdbool.h>'; this is probably fixable by adding '#include <stdbool.h>'\n",
+              "exit_code": 1,
+              "timed_out": false,
+              "duration_seconds": 0.07593570000244654
+            },
+            "fixture_results": [],
+            "message": "Compilation failed.",
+            "details": {}
+          },
+          "details": {}
+        }
+      ],
+      "status": "compile_error",
+      "hash_unchanged": null,
+      "all_steps_passed": false,
+      "roundtrip_hash": null
+    }
+  ],
+  "status": "compile_error",
+  "details": {
+    "confirmation_index": null
+  },
+  "hash_history": [
+    "30272af4e6bd430308fb5b344c83b3bd2bfe9fc167b5fd6b019513acc4db04e4"
+  ],
+  "finished_at": "2026-09-11T08:39:35.350865+00:00"
+}

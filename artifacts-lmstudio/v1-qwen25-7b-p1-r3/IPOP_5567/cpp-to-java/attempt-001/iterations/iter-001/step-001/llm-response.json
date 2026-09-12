@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-45mdlrmgvn7k54ag8z9oci",
+  "object": "chat.completion",
+  "created": 1789119820,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```java\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int m = scanner.nextInt();\n\n        List<List<Integer>> adj = new ArrayList<>();\n        for (int i = 0; i <= n; i++) {\n            adj.add(new ArrayList<>());\n        }\n\n        for (int i = 0; i < m; i++) {\n            int u = scanner.nextInt();\n            int v = scanner.nextInt();\n            adj.get(u).add(v);\n            adj.get(v).add(u);\n        }\n\n        int[] dist = new int[n + 1];\n        Arrays.fill(dist, -1);\n        Queue<Integer> q = new LinkedList<>();\n\n        q.add(1);\n        dist[1] = 0;\n\n        int ans = 0;\n\n        while (!q.isEmpty()) {\n            int curr = q.poll();\n\n            for (int nextNode : adj.get(curr)) {\n                if (dist[nextNode] == -1) {\n                    dist[nextNode] = dist[curr] + 1;\n                    q.add(nextNode);\n                    if (dist[nextNode] <= 2) {\n                        ans++;\n                    }\n                }\n            }\n        }\n\n        System.out.println(ans);\n    }\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 846,
+    "completion_tokens": 269,
+    "total_tokens": 1115,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

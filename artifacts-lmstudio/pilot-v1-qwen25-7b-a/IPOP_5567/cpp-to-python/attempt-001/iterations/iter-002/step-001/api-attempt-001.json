@@ -1,0 +1,28 @@
+{
+  "started_at": "2026-09-11T08:35:40.632710+00:00",
+  "seconds": 5.986853700000211,
+  "request": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+      },
+      {
+        "role": "user",
+        "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_5567\nTranslate from C++ to Python.\n\n[CONSTRAINTS]\n- Preserve exact input/output behavior for the provided sample.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n문제\n상근이는 자신의 결혼식에 학교 동기 중 자신의 친구와 친구의 친구를 초대하기로 했다. 상근이의 동기는 모두 N명이고, 이 학생들의 학번은 모두 1부터 N까지이다. 상근이의 학번은 1이다.\n\n상근이는 동기들의 친구 관계를 모두 조사한 리스트를 가지고 있다. 이 리스트를 바탕으로 결혼식에 초대할 사람의 수를 구하는 프로그램을 작성하시오.\n\n입력\n첫째 줄에 상근이의 동기의 수 n (2 ≤ n ≤ 500)이 주어진다. 둘째 줄에는 리스트의 길이 m (1 ≤ m ≤ 10000)이 주어진다. 다음 줄부터 m개 줄에는 친구 관계 ai bi가 주어진다. (1 ≤ ai < bi ≤ n) ai와 bi가 친구라는 뜻이며, bi와 ai도 친구관계이다. \n\n출력\n첫째 줄에 상근이의 결혼식에 초대하는 동기의 수를 출력한다.\n\n예제 입력 1 \n6\n5\n1 2\n1 3\n3 4\n2 3\n4 5\n예제 출력 1 \n3\n예제 입력 2 \n6\n5\n2 3\n3 4\n4 5\n5 6\n2 5\n예제 출력 2 \n0\n힌트\n예제 1의 경우 2와 3은 상근이의 친구이다. 또, 3과 4는 친구이기 때문에, 4는 상근이의 친구의 친구이다. 5와 6은 친구도 아니고, 친구의 친구도 아니다. 따라서 2, 3, 4 3명의 친구를 결혼식에 초대한다.\n\n[SAMPLE INPUT]\n1\n0\n\n[EXPECTED OUTPUT]\n0\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n#include <queue>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(0);\n    cout.tie(0);\n\n    int n, m;\n    cin >> n >> m;\n\n    vector<vector<int>> adj(n + 1);\n    for (int i = 0; i < m; ++i) {\n        int u, v;\n        cin >> u >> v;\n        adj[u].push_back(v);\n        adj[v].push_back(u);\n    }\n\n    vector<int> dist(n + 1, -1);\n    queue<int> q;\n    q.push(1);\n    dist[1] = 0;\n\n    int ans = 0;\n\n    while (!q.empty()) {\n        int curr = q.front();\n        q.pop();\n\n        for (int next_node : adj[curr]) {\n            if (dist[next_node] == -1) {\n                dist[next_node] = dist[curr] + 1;\n                q.push(next_node);\n                if (dist[next_node] <= 2) {\n                    ans += 1;\n                }\n            }\n        }\n    }\n\n    cout << ans << endl;\n\n    return 0;\n}\n```"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "stream": false,
+    "top_p": 1,
+    "top_k": 0,
+    "repeat_penalty": 1,
+    "seed": 20260911
+  },
+  "http_status": 200,
+  "raw_response": "{\n  \"id\": \"chatcmpl-2cht5x9o1son2glia1muf\",\n  \"object\": \"chat.completion\",\n  \"created\": 1789115742,\n  \"model\": \"qwen2.5-coder-7b-instruct\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"```python\\nfrom collections import deque\\n\\ndef main():\\n    n, m = map(int, input().split())\\n\\n    adj = [[] for _ in range(n + 1)]\\n    for _ in range(m):\\n        u, v = map(int, input().split())\\n        adj[u].append(v)\\n        adj[v].append(u)\\n\\n    dist = [-1] * (n + 1)\\n    q = deque([1])\\n    dist[1] = 0\\n\\n    ans = 0\\n\\n    while q:\\n        curr = q.popleft()\\n\\n        for next_node in adj[curr]:\\n            if dist[next_node] == -1:\\n                dist[next_node] = dist[curr] + 1\\n                q.append(next_node)\\n                if dist[next_node] <= 2:\\n                    ans += 1\\n\\n    print(ans)\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n```\",\n        \"reasoning_content\": \"\",\n        \"tool_calls\": []\n      },\n      \"logprobs\": null,\n      \"finish_reason\": \"stop\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 849,\n    \"completion_tokens\": 185,\n    \"total_tokens\": 1034,\n    \"completion_tokens_details\": {\n      \"reasoning_tokens\": 0\n    }\n  },\n  \"stats\": {},\n  \"system_fingerprint\": \"qwen2.5-coder-7b-instruct\"\n}",
+  "error": null,
+  "will_retry": false
+}

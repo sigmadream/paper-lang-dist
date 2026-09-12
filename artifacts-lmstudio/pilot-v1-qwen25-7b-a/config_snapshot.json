@@ -1,0 +1,50 @@
+{
+  "provider": "lmstudio",
+  "experiment_version": "v1.1-pilot-a",
+  "phase": "pilot",
+  "repeat_index": 1,
+  "problem_ids": [
+    "IPOP_1436",
+    "IPOP_2110",
+    "IPOP_2217",
+    "IPOP_2579",
+    "IPOP_5567"
+  ],
+  "seed_language": "cpp",
+  "target_languages": [
+    "c",
+    "java",
+    "python"
+  ],
+  "lmstudio": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "temperature": 0,
+    "host": "http://localhost:1234/v1",
+    "max_tokens": 4096
+  },
+  "decoding": {
+    "top_p": 1,
+    "top_k": 0,
+    "repeat_penalty": 1,
+    "seed": 20260911
+  },
+  "runtime": {
+    "max_iterations": 10,
+    "confirmation_cycles": 5,
+    "stop_on_intermediate_failure": true,
+    "timeout_seconds": 30
+  },
+  "ast": {
+    "node_limit": 5000,
+    "timeout": 30,
+    "memory_mb": 512
+  },
+  "recovery": {
+    "retries_per_call": 3,
+    "max_resumes_per_route": 2,
+    "max_wall_hours": 24
+  },
+  "output_root": "./artifacts-lmstudio",
+  "problem_root": "./problem",
+  "corpus_root": "./corpus/solutions"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-z4j732hklpjk5i0c4xo2kr",
+  "object": "chat.completion",
+  "created": 1789118457,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```python\ndef count_subarrays_with_sum(n, m, a):\n    ans = 0\n    sum = 0\n    end = 0\n    \n    for start in range(n):\n        while sum < m and end < n:\n            sum += a[end]\n            end += 1\n        if sum == m:\n            ans += 1\n        sum -= a[start]\n    \n    return ans\n\nn, m = map(int, input().split())\na = list(map(int, input().split()))\n\nprint(count_subarrays_with_sum(n, m, a))\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 616,
+    "completion_tokens": 120,
+    "total_tokens": 736,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

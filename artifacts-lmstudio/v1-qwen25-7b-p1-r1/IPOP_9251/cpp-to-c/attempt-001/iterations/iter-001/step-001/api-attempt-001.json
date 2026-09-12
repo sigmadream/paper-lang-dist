@@ -1,0 +1,28 @@
+{
+  "started_at": "2026-09-11T09:47:35.293505+00:00",
+  "seconds": 8.68666099999973,
+  "request": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+      },
+      {
+        "role": "user",
+        "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_9251\nTranslate from C++ to C.\n\n[CONSTRAINTS]\n- Preserve exact input/output behavior for the provided sample.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n문제\nLCS(Longest Common Subsequence, 최장 공통 부분 수열)문제는 두 수열이 주어졌을 때, 모두의 부분 수열이 되는 수열 중 가장 긴 것을 찾는 문제이다.\n\n예를 들어, ACAYKP와 CAPCAK의 LCS는 ACAK가 된다.\n\n입력\n첫째 줄과 둘째 줄에 두 문자열이 주어진다. 문자열은 알파벳 대문자로만 이루어져 있으며, 최대 1000글자로 이루어져 있다.\n\n출력\n첫째 줄에 입력으로 주어진 두 문자열의 LCS의 길이를 출력한다.\n\n예제 입력 1\nACAYKP\nCAPCAK\n\n예제 출력 1\n4\n\n[SAMPLE INPUT]\nACAYKP\nCAPCAK\n\n[EXPECTED OUTPUT]\n4\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    string a, b;\n    if (!(cin >> a >> b)) return 0;\n    \n    int n = a.length();\n    int m = b.length();\n    vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));\n    \n    for (int i = 1; i <= n; i++) {\n        for (int j = 1; j <= m; j++) {\n            if (a[i - 1] == b[j - 1]) dp[i][j] = dp[i - 1][j - 1] + 1;\n            else dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);\n        }\n    }\n    \n    cout << dp[n][m] << \"\\n\";\n    return 0;\n}\n```"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "stream": false,
+    "top_p": 1,
+    "top_k": 0,
+    "repeat_penalty": 1,
+    "seed": 20260911
+  },
+  "http_status": 200,
+  "raw_response": "{\n  \"id\": \"chatcmpl-y546pebnu7m9b72hj2oim\",\n  \"object\": \"chat.completion\",\n  \"created\": 1789120057,\n  \"model\": \"qwen2.5-coder-7b-instruct\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"```c\\n#include <stdio.h>\\n#include <string.h>\\n\\nint main() {\\n    char a[1001], b[1001];\\n    if (scanf(\\\"%s %s\\\", a, b) != 2) return 0;\\n    \\n    int n = strlen(a);\\n    int m = strlen(b);\\n    int dp[1001][1001] = {0};\\n    \\n    for (int i = 1; i <= n; i++) {\\n        for (int j = 1; j <= m; j++) {\\n            if (a[i - 1] == b[j - 1]) dp[i][j] = dp[i - 1][j - 1] + 1;\\n            else dp[i][j] = dp[i - 1][j] > dp[i][j - 1] ? dp[i - 1][j] : dp[i][j - 1];\\n        }\\n    }\\n    \\n    printf(\\\"%d\\\\n\\\", dp[n][m]);\\n    return 0;\\n}\\n```\",\n        \"reasoning_content\": \"\",\n        \"tool_calls\": []\n      },\n      \"logprobs\": null,\n      \"finish_reason\": \"stop\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 534,\n    \"completion_tokens\": 224,\n    \"total_tokens\": 758,\n    \"completion_tokens_details\": {\n      \"reasoning_tokens\": 0\n    }\n  },\n  \"stats\": {},\n  \"system_fingerprint\": \"qwen2.5-coder-7b-instruct\"\n}",
+  "error": null,
+  "will_retry": false
+}

@@ -1,0 +1,28 @@
+{
+  "started_at": "2026-09-11T08:32:32.942174+00:00",
+  "seconds": 5.689911800000118,
+  "request": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+      },
+      {
+        "role": "user",
+        "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_2579\nTranslate from C++ to Python.\n\n[CONSTRAINTS]\n- Preserve exact input/output behavior for the provided sample.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n계단 오르기\n시간 제한\t메모리 제한\t제출\t정답\t맞힌 사람\t정답 비율\n1 초\t128 MB\t248664\t89471\t64455\t35.198%\n문제\n계단 오르기 게임은 계단 아래 시작점부터 계단 꼭대기에 위치한 도착점까지 가는 게임이다. <그림 1>과 같이 각각의 계단에는 일정한 점수가 쓰여 있는데 계단을 밟으면 그 계단에 쓰여 있는 점수를 얻게 된다.\n\n\n\n<그림 1>\n\n예를 들어 <그림 2>와 같이 시작점에서부터 첫 번째, 두 번째, 네 번째, 여섯 번째 계단을 밟아 도착점에 도달하면 총 점수는 10 + 20 + 25 + 20 = 75점이 된다.\n\n\n\n<그림 2>\n\n계단 오르는 데는 다음과 같은 규칙이 있다.\n\n계단은 한 번에 한 계단씩 또는 두 계단씩 오를 수 있다. 즉, 한 계단을 밟으면서 이어서 다음 계단이나, 다음 다음 계단으로 오를 수 있다.\n연속된 세 개의 계단을 모두 밟아서는 안 된다. 단, 시작점은 계단에 포함되지 않는다.\n마지막 도착 계단은 반드시 밟아야 한다.\n따라서 첫 번째 계단을 밟고 이어 두 번째 계단이나, 세 번째 계단으로 오를 수 있다. 하지만, 첫 번째 계단을 밟고 이어 네 번째 계단으로 올라가거나, 첫 번째, 두 번째, 세 번째 계단을 연속해서 모두 밟을 수는 없다.\n\n각 계단에 쓰여 있는 점수가 주어질 때 이 게임에서 얻을 수 있는 총 점수의 최댓값을 구하는 프로그램을 작성하시오.\n\n입력\n입력의 첫째 줄에 계단의 개수가 주어진다.\n\n둘째 줄부터 한 줄에 하나씩 제일 아래에 놓인 계단부터 순서대로 각 계단에 쓰여 있는 점수가 주어진다. 계단의 개수는 300이하의 자연수이고, 계단에 쓰여 있는 점수는 10,000이하의 자연수이다.\n\n출력\n첫째 줄에 계단 오르기 게임에서 얻을 수 있는 총 점수의 최댓값을 출력한다.\n\n예제 입력 1 \n6\n10\n20\n15\n25\n10\n20\n예제 출력 1 \n75\n\n[SAMPLE INPUT]\n1\n10\n\n[EXPECTED OUTPUT]\n10\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n    std::cout.tie(nullptr);\n\n    int n;\n    std::cin >> n;\n\n    std::vector<int> score(n + 1);\n    std::vector<int> dp(n + 1);\n\n    for (int index = 1; index <= n; ++index) {\n        std::cin >> score[index];\n    }\n\n    if (n >= 1) {\n        dp[1] = score[1];\n    }\n    if (n >= 2) {\n        dp[2] = score[1] + score[2];\n    }\n    for (int index = 3; index <= n; ++index) {\n        dp[index] = std::max(dp[index - 2], dp[index - 3] + score[index - 1]) + score[index];\n    }\n\n    std::cout << dp[n] << std::endl;\n\n    return 0;\n}\n```"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 4096,
+    "stream": false,
+    "top_p": 1,
+    "top_k": 0,
+    "repeat_penalty": 1,
+    "seed": 20260911
+  },
+  "http_status": 200,
+  "raw_response": "{\n  \"id\": \"chatcmpl-o9wh18rpfdv2zpsvn27b8\",\n  \"object\": \"chat.completion\",\n  \"created\": 1789115554,\n  \"model\": \"qwen2.5-coder-7b-instruct\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"```python\\ndef main():\\n    import sys\\n    input = sys.stdin.read\\n    data = input().split()\\n\\n    n = int(data[0])\\n    score = [0] * (n + 1)\\n    dp = [0] * (n + 1)\\n\\n    for index in range(1, n + 1):\\n        score[index] = int(data[index])\\n\\n    if n >= 1:\\n        dp[1] = score[1]\\n    if n >= 2:\\n        dp[2] = score[1] + score[2]\\n    for index in range(3, n + 1):\\n        dp[index] = max(dp[index - 2], dp[index - 3] + score[index - 1]) + score[index]\\n\\n    print(dp[n])\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n```\",\n        \"reasoning_content\": \"\",\n        \"tool_calls\": []\n      },\n      \"logprobs\": null,\n      \"finish_reason\": \"stop\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 1020,\n    \"completion_tokens\": 179,\n    \"total_tokens\": 1199,\n    \"completion_tokens_details\": {\n      \"reasoning_tokens\": 0\n    }\n  },\n  \"stats\": {},\n  \"system_fingerprint\": \"qwen2.5-coder-7b-instruct\"\n}",
+  "error": null,
+  "will_retry": false
+}

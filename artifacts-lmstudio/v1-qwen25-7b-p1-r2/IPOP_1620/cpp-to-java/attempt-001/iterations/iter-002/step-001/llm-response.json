@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-p3f5tbi3tp59mxp8rxzi6",
+  "object": "chat.completion",
+  "created": 1789117208,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```java\nimport java.util.HashMap;\nimport java.util.Map;\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        int m = scanner.nextInt();\n        scanner.nextLine(); // Consume newline\n\n        Map<String, Integer> nameToId = new HashMap<>();\n        String[] idToName = new String[n + 1];\n\n        for (int i = 1; i <= n; i++) {\n            String name = scanner.nextLine();\n            nameToId.put(name, i);\n            idToName[i] = name;\n        }\n\n        for (int i = 0; i < m; i++) {\n            String q = scanner.nextLine();\n            if (Character.isDigit(q.charAt(0))) {\n                int id = Integer.parseInt(q);\n                System.out.println(idToName[id]);\n            } else {\n                System.out.println(nameToId.get(q));\n            }\n        }\n\n        scanner.close();\n    }\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 2507,
+    "completion_tokens": 213,
+    "total_tokens": 2720,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

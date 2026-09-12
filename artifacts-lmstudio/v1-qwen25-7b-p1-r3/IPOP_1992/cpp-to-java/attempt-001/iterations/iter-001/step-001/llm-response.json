@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-54wgluft7stm004yutwiv",
+  "object": "chat.completion",
+  "created": 1789117986,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```java\nimport java.util.Scanner;\n\npublic class QuadTreeCompression {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = scanner.nextInt();\n        scanner.nextLine();\n        String[] grid = new String[n];\n        for (int i = 0; i < n; i++) {\n            grid[i] = scanner.nextLine();\n        }\n        System.out.println(solve(grid, 0, 0, n));\n    }\n\n    public static String solve(String[] grid, int r, int c, int size) {\n        char first = grid[r].charAt(c);\n        boolean same = true;\n        for (int i = r; i < r + size; i++) {\n            for (int j = c; j < c + size; j++) {\n                if (grid[i].charAt(j) != first) {\n                    same = false;\n                    break;\n                }\n            }\n            if (!same) break;\n        }\n\n        if (same) return String.valueOf(first);\n\n        int half = size / 2;\n        String tl = solve(grid, r, c, half);\n        String tr = solve(grid, r, c + half, half);\n        String bl = solve(grid, r + half, c, half);\n        String br = solve(grid, r + half, c + half, half);\n\n        return \"(\" + tl + tr + bl + br + \")\";\n    }\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 1112,
+    "completion_tokens": 297,
+    "total_tokens": 1409,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}
