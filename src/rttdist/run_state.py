@@ -59,6 +59,8 @@ def compute_config_hash(config: ExperimentConfig) -> str:
         "problem_root": config.problem_root.as_posix(),
         "corpus_root": config.corpus_root.as_posix(),
     }
+    if config.dataset_index is not None:
+        payload["dataset_index"] = config.dataset_index.as_posix()
     encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
 
@@ -68,16 +70,20 @@ def build_manifest_checksums(
     config: ExperimentConfig,
     prompt_template_version: str,
     seed_source: str,
+    corpus_hash: str | None = None,
 ) -> dict[str, str]:
     normalized_prompt_version = prompt_template_version.strip()
     if not normalized_prompt_version:
         raise RunStateError("Prompt template version must be a non-empty string.")
-    return {
+    checksums = {
         "config_hash": compute_config_hash(config),
         "prompt_template_version": normalized_prompt_version,
         "prompt_template_hash": _sha256_text(normalized_prompt_version),
         "seed_source_hash": _sha256_text(seed_source),
     }
+    if corpus_hash is not None:
+        checksums["corpus_hash"] = corpus_hash
+    return checksums
 
 
 def plan_run_resume(
@@ -406,6 +412,8 @@ def _validate_resume_checksums(
         raise ResumeValidationError(
             "Unsafe resume rejected: seed source hash mismatch for existing run artifacts."
         )
+    if checksums.get("corpus_hash") != expected.get("corpus_hash"):
+        raise ResumeValidationError("Unsafe resume rejected: corpus hash mismatch.")
 
 
 def _normalize_manifest(

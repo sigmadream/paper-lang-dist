@@ -77,6 +77,7 @@ class ExperimentConfig:
     corpus_root: Path
     provider: str = "lmstudio"
     experiment_version: str | None = None
+    dataset_index: Path | None = None
 
 
 def load_experiment_config(config_path: Path) -> ExperimentConfig:
@@ -141,6 +142,10 @@ def _parse_config(raw_data: dict[str, Any], config_dir: Path) -> ExperimentConfi
         corpus_root=corpus_root,
         provider=provider,
         experiment_version=raw_data.get("experiment_version"),
+        dataset_index=(
+            _resolve_path(raw_data["dataset_index"], key="dataset_index", base_dir=config_dir)
+            if "dataset_index" in raw_data else None
+        ),
     )
 
 

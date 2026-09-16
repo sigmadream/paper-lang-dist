@@ -194,8 +194,8 @@ def run_route(config, problem, target, run_id, metadata, *, resume=False, new_at
                     prompt = build_translation_prompt(problem_id=problem.problem_id,
                         source_language=source_lang, target_language=language,
                         problem_statement=problem.statement_path.read_text(encoding="utf-8"),
-                        sample_input=problem.fixture_pairs[0].input_path.read_text(encoding="utf-8"),
-                        sample_output=problem.fixture_pairs[0].output_path.read_text(encoding="utf-8"),
+                        sample_input=problem.prompt_sample.input_path.read_text(encoding="utf-8"),
+                        sample_output=problem.prompt_sample.output_path.read_text(encoding="utf-8"),
                         source_code=working, direction="seed_to_target" if step_index == 1 else "target_to_seed")
                     payload = {"model": config.lmstudio.model, "messages": [m.to_dict() for m in prompt.messages],
                                "temperature": 0, "max_tokens": config.lmstudio.max_tokens, "stream": False,

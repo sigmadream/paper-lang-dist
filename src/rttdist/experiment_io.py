@@ -62,7 +62,8 @@ def environment():
 
 def corpus_hashes(entries):
     return {e.problem_id: {str(path.resolve()): digest(path.read_bytes()) for path in
-            [e.seed_path, e.statement_path, *[p for pair in e.fixture_pairs for p in (pair.input_path, pair.output_path)]]} for e in entries}
+            [e.seed_path, e.statement_path, *[p for pair in (*e.fixture_pairs, *(e.prompt_examples or ()))
+                                           for p in (pair.input_path, pair.output_path)]]} for e in entries}
 
 
 def validate_execute(config):

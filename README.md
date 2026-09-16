@@ -1,5 +1,18 @@
 # RTT Language Distance Experiment Tool
 
+새 평가 입력 40문제·400쌍은 `lmstudio_v2.yaml`로 실행한다. 이 설정의 `dataset_index: ./problem/dataset-index.json`이 평가 데이터 위치를 지정한다. 설정의 상대 경로는 YAML 파일 위치를 기준으로 해석하며, 색인 내부 경로는 색인 파일 위치를 기준으로 해석한다.
+
+IPOP 문제는 기존 `problem/IPOP_*.md`와 `problem/IPOP_*`의 예제를 프롬프트에 사용하고, `problem/evaluation-v2-a/IPOP_*`만 채점에 사용한다. LeetCode 문제는 해당 문제 폴더의 `statement.md`와 `prompt_examples`를 프롬프트에 사용하고, `evaluation`만 채점에 사용한다. 두 경우 모두 예제 중 파일명 순서상 첫 쌍을 기존 프롬프트 양식에 전달한다. 평가 입력·정답·README의 사례 설명·실패 진단은 프롬프트에 전달하지 않는다.
+
+```powershell
+$env:PATH = "$PWD/.tools/gcc/bin;$PWD/.tools/R/bin/x64;" + $env:PATH
+$env:PYTHONUTF8 = '1'
+uv run rttdist validate-corpus --config lmstudio_v2.yaml --execute
+uv run rttdist run --config lmstudio_v2.yaml --run-id v2-a-r1
+```
+
+`lmstudio_v2.yaml`은 기존 모델·실행 조건을 복사한 시작 설정이다. 실행 전에 실험에 맞게 확정한다. 검증 기록과 결과는 `artifacts-lmstudio/v2-a`에 저장한다. 색인에 없는 문제, 누락된 예제·평가 파일, 예제와 동일한 평가 입력은 오류로 처리한다. 예제와 평가 파일 모두 검증 해시에 포함되므로 변경하면 다시 검증하고 새 run-id로 시작해야 한다. `dataset_index`를 생략한 기존 설정은 v1 파일 배치와 동작을 유지한다.
+
 현재 SF 실험은 `experiment_version`이 있는 설정(`lmstudio_pilot_v1.yaml`, `lmstudio_v1.yaml`)으로 실행한다. 기존 설정과 아래 schema 1 설명은 구버전 실행/리포트에 해당한다. 1차 정의는 [계획](docs/PLAN_v1_metrics.md), 실제 실행 기록은 [실험 로그](docs/EXPERIMENT_v1_log.md)를 참고한다.
 
 SF의 첫 왕복은 t=1이고, tau_c는 최초 인접 정규화 토큰 해시 일치 시점이다. K=10은 후보 탐색에만 적용하며 확인 왕복은 tau_c+1부터 최대 tau_c+5까지 수행한다. `p_SF(c)`는 후보가 존재하고 후보까지 모든 단계가 통과하며 확인 1..c의 해시와 기능이 유지된 비율이다. parse_error를 분모에 포함하고 인프라 중단은 제외한다. tau와 Delta_0는 성공 조건부 통계다.

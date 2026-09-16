@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import hashlib
+import json
 from pathlib import Path
 
 from rttdist.config import ExperimentConfig, reference_filename_for_language
@@ -23,9 +25,20 @@ class ProblemCorpusEntry:
     fixture_directory: Path
     fixture_pairs: tuple[FixturePair, ...]
     seed_path: Path
+    prompt_examples: tuple[FixturePair, ...] | None = None
+
+    @property
+    def prompt_sample(self) -> FixturePair:
+        # Entries created by legacy callers use their original sample fixtures.
+        examples = self.fixture_pairs if self.prompt_examples is None else self.prompt_examples
+        if not examples:
+            raise CorpusValidationError(f"Missing prompt examples for problem `{self.problem_id}`")
+        return examples[0]
 
 
 def validate_corpus(config: ExperimentConfig) -> tuple[ProblemCorpusEntry, ...]:
+    if config.dataset_index is not None:
+        return _load_indexed_corpus(config)
     entries: list[ProblemCorpusEntry] = []
     for problem_id in config.problem_ids:
         statement_path = config.problem_root / f"{problem_id}.md"
@@ -60,6 +73,61 @@ def validate_corpus(config: ExperimentConfig) -> tuple[ProblemCorpusEntry, ...]:
             )
         )
 
+    return tuple(entries)
+
+
+def _load_indexed_corpus(config: ExperimentConfig) -> tuple[ProblemCorpusEntry, ...]:
+    """Load the prepared IPOP and LeetCode layouts with separate prompt inputs."""
+    index_path = config.dataset_index
+    assert index_path is not None
+    try:
+        index = json.loads(index_path.read_text(encoding="utf-8"))
+        if index["schema_version"] != 1:
+            raise ValueError("Unsupported dataset index schema")
+        directories: dict[str, Path] = {}
+        for dataset in index["datasets"]:
+            manifest_path = index_path.parent / dataset["manifest"]
+            if hashlib.sha256(manifest_path.read_bytes()).hexdigest() != dataset["manifest_sha256"]:
+                raise ValueError(f"Dataset manifest hash mismatch: {manifest_path}")
+            for item in dataset["problems"]:
+                problem_id = item["id"]
+                if problem_id in directories:
+                    raise ValueError(f"Duplicate problem ID: {problem_id}")
+                directories[problem_id] = (index_path.parent / item["directory"]).resolve()
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        raise CorpusValidationError(f"Invalid dataset index {index_path}: {exc}") from exc
+
+    entries = []
+    for problem_id in config.problem_ids:
+        if problem_id not in directories:
+            raise CorpusValidationError(f"Problem `{problem_id}` missing from dataset index {index_path}")
+        directory = directories[problem_id]
+        seed_filename = reference_filename_for_language(config.seed_language)
+        if problem_id.startswith("IPOP_"):
+            statement = config.problem_root / f"{problem_id}.md"
+            examples_dir = config.problem_root / problem_id
+            evaluation_dir = directory
+            seed = config.corpus_root / problem_id / seed_filename
+        elif problem_id.startswith("LC_"):
+            statement = directory / "statement.md"
+            examples_dir = directory / "prompt_examples"
+            evaluation_dir = directory / "evaluation"
+            seed = directory / seed_filename
+        else:
+            raise CorpusValidationError(f"Unsupported dataset layout for problem `{problem_id}`")
+        for label, path in (("statement file", statement), (f"seed {seed_filename}", seed)):
+            if not path.is_file():
+                raise CorpusValidationError(f"Missing {label} for problem `{problem_id}`: {path}")
+        examples = _discover_fixture_pairs(problem_id, examples_dir)
+        evaluation = _discover_fixture_pairs(problem_id, evaluation_dir)
+        example_inputs = {tuple(pair.input_path.read_text(encoding="utf-8").split()) for pair in examples}
+        if any(tuple(pair.input_path.read_text(encoding="utf-8").split()) in example_inputs for pair in evaluation):
+            raise CorpusValidationError(f"Evaluation input overlaps prompt examples for problem `{problem_id}`")
+        entries.append(ProblemCorpusEntry(
+            problem_id=problem_id, statement_path=statement,
+            fixture_directory=evaluation_dir, fixture_pairs=evaluation,
+            seed_path=seed, prompt_examples=examples,
+        ))
     return tuple(entries)
 
 

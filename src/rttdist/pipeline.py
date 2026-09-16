@@ -173,9 +173,13 @@ def run_rtt_loop(
     )
 
     statement = problem.statement_path.read_text(encoding="utf-8").strip()
-    sample_input = problem.fixture_pairs[0].input_path.read_text(encoding="utf-8").strip()
-    sample_output = problem.fixture_pairs[0].output_path.read_text(encoding="utf-8").strip()
+    sample_input = problem.prompt_sample.input_path.read_text(encoding="utf-8").strip()
+    sample_output = problem.prompt_sample.output_path.read_text(encoding="utf-8").strip()
     seed_source = problem.seed_path.read_text(encoding="utf-8").rstrip()
+    corpus_hash = None
+    if problem.prompt_examples is not None:
+        from rttdist.experiment_io import corpus_hashes, digest
+        corpus_hash = digest(corpus_hashes((problem,)))
 
     resume_plan = plan_run_resume(
         run_manifest_path=run_manifest_path,
@@ -186,6 +190,7 @@ def run_rtt_loop(
             config=config,
             prompt_template_version=PROMPT_TEMPLATE_VERSION,
             seed_source=seed_source,
+            corpus_hash=corpus_hash,
         ),
         seed_cpp_source=seed_source,
         created_at=_to_iso(now()),
@@ -904,7 +909,7 @@ def _fill_missing_payloads(payloads: dict[str, Any], message: str) -> dict[str, 
 def _build_curated_problem_reference(
     problem: ProblemCorpusEntry,
 ) -> CuratedProblemReference:
-    sample_pair = problem.fixture_pairs[0]
+    sample_pair = problem.prompt_sample
     return CuratedProblemReference(
         problem_id=problem.problem_id,
         statement_path=problem.statement_path.as_posix(),
