@@ -54,6 +54,7 @@ class LMStudioTranslationClient:
         temperature: float = 0.0,
         host: str = DEFAULT_LMSTUDIO_HOST,
         transport: LMStudioChatTransport | None = None,
+        prompt_template_version: str = "rtt.prompts.v1",
     ) -> None:
         if not isinstance(model, str) or not model.strip():
             raise LMStudioClientError("Model must be a non-empty string.")
@@ -65,6 +66,7 @@ class LMStudioTranslationClient:
             raise LMStudioClientError("Host must be a non-empty string.")
 
         self._model = model.strip()
+        self._prompt_template_version = prompt_template_version
         self._temperature = 0.0
         self._host = host.strip().rstrip("/")
         self._transport = transport or _build_default_transport(host=self._host)
@@ -130,6 +132,7 @@ class LMStudioTranslationClient:
     ) -> TranslationResult:
         try:
             prompt = build_translation_prompt(
+                template_version=self._prompt_template_version,
                 problem_id=problem_id,
                 source_language=source_language,
                 target_language=target_language,
@@ -150,6 +153,8 @@ class LMStudioTranslationClient:
             "iteration_index": iteration_index,
             "provider": "lmstudio",
         }
+        if self._prompt_template_version != "rtt.prompts.v1":
+            metadata["prompt_template_version"] = self._prompt_template_version
         request_payload = LLMRequest(
             model=self._model,
             temperature=self._temperature,

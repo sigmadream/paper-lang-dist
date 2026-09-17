@@ -13,10 +13,21 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 MINIMAL_CONFIG_PATH = REPO_ROOT / "tests" / "fixtures" / "config" / "minimal.yaml"
 
 
+def _local_problem_fixtures(config, tmp_path):
+    root = tmp_path / "problem"
+    for problem_id in config.problem_ids:
+        directory = root / problem_id
+        directory.mkdir(parents=True)
+        (root / f"{problem_id}.md").write_text("statement\n", encoding="utf-8")
+        (directory / "1.inp").write_text("1\n", encoding="utf-8")
+        (directory / "1.out").write_text("1\n", encoding="utf-8")
+    return replace(config, problem_root=root)
+
+
 def test_validation_reports_discovered_statement_fixture_pairs_and_seed(
     tmp_path: Path,
 ) -> None:
-    config = load_experiment_config(MINIMAL_CONFIG_PATH)
+    config = _local_problem_fixtures(load_experiment_config(MINIMAL_CONFIG_PATH), tmp_path)
 
     corpus_root = tmp_path / "corpus" / "solutions"
     seed_path_1436 = corpus_root / "IPOP_1436" / "reference.cpp"
@@ -128,7 +139,7 @@ def test_seed_language_selects_reference_filename(
     seed_language: str,
     seed_filename: str,
 ) -> None:
-    config = load_experiment_config(MINIMAL_CONFIG_PATH)
+    config = _local_problem_fixtures(load_experiment_config(MINIMAL_CONFIG_PATH), tmp_path)
     corpus_root = tmp_path / "corpus" / "solutions"
 
     for problem_id in config.problem_ids:

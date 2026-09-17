@@ -1,0 +1,49 @@
+{
+  "problem_id": "LC_0547",
+  "template": "rtt.prompts.v2",
+  "scope": "initial forward prompts; reverse source depends on model output",
+  "prompts": [
+    {
+      "target": "c",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: LC_0547\nTranslate from C++ to C.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# LC_0547: Number Of Provinces\n\n대칭 인접행렬로 주어진 무방향 그래프의 연결 성분 수를 구한다.\n\n## 제약\n\n정점 수 1..200; 행렬 값 0/1, 대칭, 대각선은 1.\n\n## 표준입출력 계약\n\n첫 줄 N, 이후 N줄에 N개의 0/1 정수.\n출력은 정수 하나 또는 공백으로 구분한 정수 배열이다. 참/거짓은 각각 1/0으로 출력한다. 인덱스는 0부터 시작한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[공식 명세](https://leetcode.com/problems/number-of-provinces/)\n\n[SAMPLE INPUT]\n3\n1 1 0\n1 1 0\n0 0 1\n\n\n[EXPECTED OUTPUT]\n2\n\n\n[SOURCE CODE - C++]\n```cpp\n// Locally authored C++17 reference for the documented stdin/stdout contract.\n#include <bits/stdc++.h>\nusing namespace std;\nusing ll = long long;\nvector<ll> read_values(int n) {\n    vector<ll> a(n); for (ll &x : a) cin >> x; return a;\n}\ntemplate<class T> void print_values(const vector<T>& a) {\n    for (size_t i=0; i<a.size(); ++i) cout << (i ? \" \" : \"\") << a[i];\n    cout << \"\\n\";\n}\nint main() {\n    ios::sync_with_stdio(false); cin.tie(nullptr);\n    int n;cin >> n;vector<vector<int>> g(n,vector<int>(n));for(auto &r:g) for(int &x:r) cin >> x;\n    vector<bool> seen(n,false);int components=0;\n    for(int i=0;i<n;++i) if(!seen[i]) {\n        ++components;vector<int> stack{i};seen[i]=true;\n        while(!stack.empty()) {int u=stack.back();stack.pop_back();for(int v=0;v<n;++v)\n            if(g[u][v] && !seen[v]) {seen[v]=true;stack.push_back(v);}}\n    }\n    cout << components << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "01f36a52b8061533655215fe99ea146b39e09a49d54cce0c8bcb09840f9bda03"
+    },
+    {
+      "target": "java",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: LC_0547\nTranslate from C++ to Java.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Use a public class Main with a static main entry point and no package declaration.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# LC_0547: Number Of Provinces\n\n대칭 인접행렬로 주어진 무방향 그래프의 연결 성분 수를 구한다.\n\n## 제약\n\n정점 수 1..200; 행렬 값 0/1, 대칭, 대각선은 1.\n\n## 표준입출력 계약\n\n첫 줄 N, 이후 N줄에 N개의 0/1 정수.\n출력은 정수 하나 또는 공백으로 구분한 정수 배열이다. 참/거짓은 각각 1/0으로 출력한다. 인덱스는 0부터 시작한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[공식 명세](https://leetcode.com/problems/number-of-provinces/)\n\n[SAMPLE INPUT]\n3\n1 1 0\n1 1 0\n0 0 1\n\n\n[EXPECTED OUTPUT]\n2\n\n\n[SOURCE CODE - C++]\n```cpp\n// Locally authored C++17 reference for the documented stdin/stdout contract.\n#include <bits/stdc++.h>\nusing namespace std;\nusing ll = long long;\nvector<ll> read_values(int n) {\n    vector<ll> a(n); for (ll &x : a) cin >> x; return a;\n}\ntemplate<class T> void print_values(const vector<T>& a) {\n    for (size_t i=0; i<a.size(); ++i) cout << (i ? \" \" : \"\") << a[i];\n    cout << \"\\n\";\n}\nint main() {\n    ios::sync_with_stdio(false); cin.tie(nullptr);\n    int n;cin >> n;vector<vector<int>> g(n,vector<int>(n));for(auto &r:g) for(int &x:r) cin >> x;\n    vector<bool> seen(n,false);int components=0;\n    for(int i=0;i<n;++i) if(!seen[i]) {\n        ++components;vector<int> stack{i};seen[i]=true;\n        while(!stack.empty()) {int u=stack.back();stack.pop_back();for(int v=0;v<n;++v)\n            if(g[u][v] && !seen[v]) {seen[v]=true;stack.push_back(v);}}\n    }\n    cout << components << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "b6cba1c167f594d8121d9724f9e95d4922135007df8bb3d109287a7fb695aa32"
+    },
+    {
+      "target": "python",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: LC_0547\nTranslate from C++ to Python.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# LC_0547: Number Of Provinces\n\n대칭 인접행렬로 주어진 무방향 그래프의 연결 성분 수를 구한다.\n\n## 제약\n\n정점 수 1..200; 행렬 값 0/1, 대칭, 대각선은 1.\n\n## 표준입출력 계약\n\n첫 줄 N, 이후 N줄에 N개의 0/1 정수.\n출력은 정수 하나 또는 공백으로 구분한 정수 배열이다. 참/거짓은 각각 1/0으로 출력한다. 인덱스는 0부터 시작한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[공식 명세](https://leetcode.com/problems/number-of-provinces/)\n\n[SAMPLE INPUT]\n3\n1 1 0\n1 1 0\n0 0 1\n\n\n[EXPECTED OUTPUT]\n2\n\n\n[SOURCE CODE - C++]\n```cpp\n// Locally authored C++17 reference for the documented stdin/stdout contract.\n#include <bits/stdc++.h>\nusing namespace std;\nusing ll = long long;\nvector<ll> read_values(int n) {\n    vector<ll> a(n); for (ll &x : a) cin >> x; return a;\n}\ntemplate<class T> void print_values(const vector<T>& a) {\n    for (size_t i=0; i<a.size(); ++i) cout << (i ? \" \" : \"\") << a[i];\n    cout << \"\\n\";\n}\nint main() {\n    ios::sync_with_stdio(false); cin.tie(nullptr);\n    int n;cin >> n;vector<vector<int>> g(n,vector<int>(n));for(auto &r:g) for(int &x:r) cin >> x;\n    vector<bool> seen(n,false);int components=0;\n    for(int i=0;i<n;++i) if(!seen[i]) {\n        ++components;vector<int> stack{i};seen[i]=true;\n        while(!stack.empty()) {int u=stack.back();stack.pop_back();for(int v=0;v<n;++v)\n            if(g[u][v] && !seen[v]) {seen[v]=true;stack.push_back(v);}}\n    }\n    cout << components << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "e859e9e0341ce06ddd1821de8e9b9ef07c6909b55ccbd658f4c3409ea2c24373"
+    }
+  ]
+}

@@ -16,13 +16,13 @@ from tests.integration.test_rtt_pipeline import RouteClient, SuccessEvaluator, _
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
-@pytest.fixture(params=["IPOP_TEST", "LC_TEST"])
+@pytest.fixture(params=[(1, "IPOP_TEST"), (1, "LC_TEST"), (2, "IPOP_TEST"), (2, "LC_TEST")])
 def separated_corpus(tmp_path, request):
     config = _config(tmp_path)
-    problem_id = request.param
+    schema_version, problem_id = request.param
     root = config.problem_root
     directory = root / "dataset" / problem_id
-    if problem_id.startswith("IPOP_"):
+    if schema_version == 1 and problem_id.startswith("IPOP_"):
         statement = root / f"{problem_id}.md"
         examples = root / problem_id
         evaluation = directory
@@ -46,25 +46,32 @@ def separated_corpus(tmp_path, request):
     manifest = root / "dataset" / "manifest.json"
     manifest.write_text("{}", encoding="utf-8")
     index = root / "dataset-index.json"
-    index.write_text(json.dumps({"schema_version": 1, "datasets": [{
+    index.write_text(json.dumps({"schema_version": schema_version, "datasets": [{
         "manifest": "dataset/manifest.json",
         "manifest_sha256": hashlib.sha256(manifest.read_bytes()).hexdigest(),
         "problems": [{"id": problem_id, "directory": f"dataset/{problem_id}"}],
     }]}), encoding="utf-8")
     config = replace(config, problem_ids=(problem_id,), dataset_index=index,
+                     prompt_template_version="rtt.prompts.v2" if schema_version == 2 else "rtt.prompts.v1",
                      runtime=replace(config.runtime, confirmation_cycles=0),
                      lmstudio=replace(config.lmstudio, max_tokens=100))
     return config, validate_corpus(config)[0]
 
 
-def test_prepared_dataset_loads_all_400_evaluation_cases():
+def test_prepared_dataset_loads_all_520_evaluation_cases():
     config = load_experiment_config(REPO_ROOT / "lmstudio_v2.yaml")
     assert config.dataset_index == REPO_ROOT / "problem/dataset-index.json"
     entries = validate_corpus(config)
     assert len(entries) == 40
-    assert sum(len(entry.fixture_pairs) for entry in entries) == 400
+    assert sum(len(entry.fixture_pairs) for entry in entries) == 520
     for entry in entries:
+        directory = config.problem_root / entry.problem_id
+        assert entry.statement_path == directory / "statement.md"
+        assert entry.seed_path == directory / "reference.cpp"
+        assert entry.fixture_directory == directory / "evaluation"
+        assert len(entry.fixture_pairs) == 13
         assert entry.prompt_examples
+        assert all(pair.input_path.parent == directory / "prompt_examples" for pair in entry.prompt_examples)
         assert entry.prompt_sample.input_path not in {p.input_path for p in entry.fixture_pairs}
         assert entry.statement_path.name != "README.md"
 
@@ -163,3 +170,24 @@ def test_invalid_dataset_index_config_is_rejected(tmp_path, value):
     path.write_text(yaml.safe_dump(raw), encoding="utf-8")
     with pytest.raises(ConfigValidationError, match="dataset_index"):
         load_experiment_config(path)
+
+
+def test_line_input_keeps_meaningful_spaces(separated_corpus):
+    config, problem = separated_corpus
+    index = json.loads(config.dataset_index.read_text(encoding="utf-8"))
+    index["datasets"][0]["problems"][0]["input_normalization"] = "line"
+    config.dataset_index.write_text(json.dumps(index), encoding="utf-8")
+    problem.prompt_sample.input_path.write_text(" a \n", encoding="utf-8")
+    problem.fixture_pairs[0].input_path.write_text("a\n", encoding="utf-8")
+    assert validate_corpus(config)
+    problem.fixture_pairs[0].input_path.write_text(" a \n", encoding="utf-8")
+    with pytest.raises(CorpusValidationError, match="overlaps prompt"):
+        validate_corpus(config)
+
+
+def test_prompt_profile_changes_resume_config_hash(tmp_path):
+    from rttdist.run_state import compute_config_hash
+    config = _config(tmp_path)
+    assert compute_config_hash(config) != compute_config_hash(
+        replace(config, prompt_template_version="rtt.prompts.v2")
+    )

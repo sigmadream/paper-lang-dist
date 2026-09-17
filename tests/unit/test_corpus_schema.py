@@ -33,7 +33,7 @@ def test_loads_minimal_yaml_schema() -> None:
     assert config.runtime.max_iterations == 20
     assert config.runtime.timeout_seconds == 30
     assert config.output_root == (MINIMAL_CONFIG_PATH.parent / "artifacts").resolve()
-    assert config.problem_root == (REPO_ROOT / "problem").resolve()
+    assert config.problem_root == (REPO_ROOT / "problem/archive/v1").resolve()
     assert config.corpus_root == (REPO_ROOT / "corpus" / "solutions").resolve()
 
 

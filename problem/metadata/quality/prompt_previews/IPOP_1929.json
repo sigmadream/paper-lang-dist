@@ -1,0 +1,49 @@
+{
+  "problem_id": "IPOP_1929",
+  "template": "rtt.prompts.v2",
+  "scope": "initial forward prompts; reverse source depends on model output",
+  "prompts": [
+    {
+      "target": "c",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_1929\nTranslate from C++ to C.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_1929: 소수 구하기\n\n폐구간 M..N에 있는 모든 소수를 오름차순으로 한 줄에 하나씩 출력한다.\n\n## 제약과 입력\n\n첫 줄 M N, 1<=M<=N<=1000000. 구간 안에 소수가 하나 이상 존재한다.\n\n## 출력\n\n닫힌 구간 [M,N]의 소수를 오름차순으로 한 줄씩 출력한다. 1은 소수가 아니다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/1929)\n\n[SAMPLE INPUT]\n3 16\n\n\n[EXPECTED OUTPUT]\n3\n5\n7\n11\n13\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int m, n;\n    if (!(cin >> m >> n)) return 0;\n    \n    vector<bool> is_prime(n + 1, true);\n    is_prime[0] = is_prime[1] = false;\n    \n    for (int i = 2; i * i <= n; i++) {\n        if (is_prime[i]) {\n            for (int j = i * i; j <= n; j += i) {\n                is_prime[j] = false;\n            }\n        }\n    }\n    \n    for (int i = m; i <= n; i++) {\n        if (is_prime[i]) cout << i << \"\\n\";\n    }\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "60a41d4323c2fd9bec3c077b0c65f2ca2a2b65433d636318c5ce9a748bc33f91"
+    },
+    {
+      "target": "java",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_1929\nTranslate from C++ to Java.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Use a public class Main with a static main entry point and no package declaration.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_1929: 소수 구하기\n\n폐구간 M..N에 있는 모든 소수를 오름차순으로 한 줄에 하나씩 출력한다.\n\n## 제약과 입력\n\n첫 줄 M N, 1<=M<=N<=1000000. 구간 안에 소수가 하나 이상 존재한다.\n\n## 출력\n\n닫힌 구간 [M,N]의 소수를 오름차순으로 한 줄씩 출력한다. 1은 소수가 아니다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/1929)\n\n[SAMPLE INPUT]\n3 16\n\n\n[EXPECTED OUTPUT]\n3\n5\n7\n11\n13\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int m, n;\n    if (!(cin >> m >> n)) return 0;\n    \n    vector<bool> is_prime(n + 1, true);\n    is_prime[0] = is_prime[1] = false;\n    \n    for (int i = 2; i * i <= n; i++) {\n        if (is_prime[i]) {\n            for (int j = i * i; j <= n; j += i) {\n                is_prime[j] = false;\n            }\n        }\n    }\n    \n    for (int i = m; i <= n; i++) {\n        if (is_prime[i]) cout << i << \"\\n\";\n    }\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "5e0a8818d515ed03687f88ca51bb681ad1fb6c4cd1f2c3d71822460b7ec9fea7"
+    },
+    {
+      "target": "python",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_1929\nTranslate from C++ to Python.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_1929: 소수 구하기\n\n폐구간 M..N에 있는 모든 소수를 오름차순으로 한 줄에 하나씩 출력한다.\n\n## 제약과 입력\n\n첫 줄 M N, 1<=M<=N<=1000000. 구간 안에 소수가 하나 이상 존재한다.\n\n## 출력\n\n닫힌 구간 [M,N]의 소수를 오름차순으로 한 줄씩 출력한다. 1은 소수가 아니다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/1929)\n\n[SAMPLE INPUT]\n3 16\n\n\n[EXPECTED OUTPUT]\n3\n5\n7\n11\n13\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int m, n;\n    if (!(cin >> m >> n)) return 0;\n    \n    vector<bool> is_prime(n + 1, true);\n    is_prime[0] = is_prime[1] = false;\n    \n    for (int i = 2; i * i <= n; i++) {\n        if (is_prime[i]) {\n            for (int j = i * i; j <= n; j += i) {\n                is_prime[j] = false;\n            }\n        }\n    }\n    \n    for (int i = m; i <= n; i++) {\n        if (is_prime[i]) cout << i << \"\\n\";\n    }\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "fe2cb3d9403c105c293ceba5c3b8b562c5c7d913a35bb897e16c1f1f9b7ede75"
+    }
+  ]
+}

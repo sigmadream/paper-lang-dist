@@ -78,6 +78,7 @@ class ExperimentConfig:
     provider: str = "lmstudio"
     experiment_version: str | None = None
     dataset_index: Path | None = None
+    prompt_template_version: str = "rtt.prompts.v1"
 
 
 def load_experiment_config(config_path: Path) -> ExperimentConfig:
@@ -116,6 +117,9 @@ def _parse_config(raw_data: dict[str, Any], config_dir: Path) -> ExperimentConfi
     )
     lmstudio = _parse_lmstudio_config(raw_data, provider=provider)
     runtime = _parse_runtime_config(raw_data)
+    prompt_version = raw_data.get("prompt_template_version", "rtt.prompts.v1")
+    if prompt_version not in ("rtt.prompts.v1", "rtt.prompts.v2"):
+        raise ConfigValidationError("Unsupported prompt_template_version; use rtt.prompts.v1 or rtt.prompts.v2.")
 
     output_root = _resolve_path(
         raw_data.get("output_root"), key="output_root", base_dir=config_dir
@@ -141,6 +145,7 @@ def _parse_config(raw_data: dict[str, Any], config_dir: Path) -> ExperimentConfi
         problem_root=problem_root,
         corpus_root=corpus_root,
         provider=provider,
+        prompt_template_version=prompt_version,
         experiment_version=raw_data.get("experiment_version"),
         dataset_index=(
             _resolve_path(raw_data["dataset_index"], key="dataset_index", base_dir=config_dir)

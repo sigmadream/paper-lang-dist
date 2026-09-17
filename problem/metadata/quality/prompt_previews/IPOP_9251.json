@@ -1,0 +1,49 @@
+{
+  "problem_id": "IPOP_9251",
+  "template": "rtt.prompts.v2",
+  "scope": "initial forward prompts; reverse source depends on model output",
+  "prompts": [
+    {
+      "target": "c",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_9251\nTranslate from C++ to C.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_9251: LCS\n\n두 대문자 문자열의 최장 공통 부분수열 길이를 출력한다.\n\n## 제약과 입력\n\n첫 줄과 둘째 줄에 영문 대문자 문자열 하나씩. 각각 길이 1..1000.\n\n## 출력\n\n두 문자열의 최장 공통 부분수열 길이를 출력한다. 연속한 부분문자열일 필요는 없다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/9251)\n\n[SAMPLE INPUT]\nACAYKP\nCAPCAK\n\n\n[EXPECTED OUTPUT]\n4\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    string a, b;\n    if (!(cin >> a >> b)) return 0;\n    \n    int n = a.length();\n    int m = b.length();\n    vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));\n    \n    for (int i = 1; i <= n; i++) {\n        for (int j = 1; j <= m; j++) {\n            if (a[i - 1] == b[j - 1]) dp[i][j] = dp[i - 1][j - 1] + 1;\n            else dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);\n        }\n    }\n    \n    cout << dp[n][m] << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "c1f6fac04d7681fc5f325bfabd20c38a48ce9be9a8352652999411e922a6f55e"
+    },
+    {
+      "target": "java",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_9251\nTranslate from C++ to Java.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Use a public class Main with a static main entry point and no package declaration.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_9251: LCS\n\n두 대문자 문자열의 최장 공통 부분수열 길이를 출력한다.\n\n## 제약과 입력\n\n첫 줄과 둘째 줄에 영문 대문자 문자열 하나씩. 각각 길이 1..1000.\n\n## 출력\n\n두 문자열의 최장 공통 부분수열 길이를 출력한다. 연속한 부분문자열일 필요는 없다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/9251)\n\n[SAMPLE INPUT]\nACAYKP\nCAPCAK\n\n\n[EXPECTED OUTPUT]\n4\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    string a, b;\n    if (!(cin >> a >> b)) return 0;\n    \n    int n = a.length();\n    int m = b.length();\n    vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));\n    \n    for (int i = 1; i <= n; i++) {\n        for (int j = 1; j <= m; j++) {\n            if (a[i - 1] == b[j - 1]) dp[i][j] = dp[i - 1][j - 1] + 1;\n            else dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);\n        }\n    }\n    \n    cout << dp[n][m] << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "4b1f36508efb1c149e118b08aa995812370d62764a9935679932eae7e0d6ff26"
+    },
+    {
+      "target": "python",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_9251\nTranslate from C++ to Python.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_9251: LCS\n\n두 대문자 문자열의 최장 공통 부분수열 길이를 출력한다.\n\n## 제약과 입력\n\n첫 줄과 둘째 줄에 영문 대문자 문자열 하나씩. 각각 길이 1..1000.\n\n## 출력\n\n두 문자열의 최장 공통 부분수열 길이를 출력한다. 연속한 부분문자열일 필요는 없다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/9251)\n\n[SAMPLE INPUT]\nACAYKP\nCAPCAK\n\n\n[EXPECTED OUTPUT]\n4\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    string a, b;\n    if (!(cin >> a >> b)) return 0;\n    \n    int n = a.length();\n    int m = b.length();\n    vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));\n    \n    for (int i = 1; i <= n; i++) {\n        for (int j = 1; j <= m; j++) {\n            if (a[i - 1] == b[j - 1]) dp[i][j] = dp[i - 1][j - 1] + 1;\n            else dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);\n        }\n    }\n    \n    cout << dp[n][m] << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "0c5f344cd5fac3ac0e89231e233ea33c50bdb784e8fad1b639a6b99886c53ff4"
+    }
+  ]
+}

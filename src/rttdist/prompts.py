@@ -78,7 +78,10 @@ def build_translation_prompt(
     sample_output: str,
     source_code: str,
     direction: str | None = None,
+    template_version: str = PROMPT_TEMPLATE_VERSION,
 ) -> PromptBundle:
+    if template_version not in ("rtt.prompts.v1", "rtt.prompts.v2"):
+        raise PromptTemplateError(f"Unsupported prompt template version: {template_version}")
     normalized_source_language = _normalize_language(
         source_language,
         field_name="source_language",
@@ -99,6 +102,7 @@ def build_translation_prompt(
     )
 
     return _build_prompt_bundle(
+        template_version=template_version,
         direction=normalized_direction,
         source_language=normalized_source_language,
         target_language=normalized_target_language,
@@ -112,6 +116,7 @@ def build_translation_prompt(
 
 def _build_prompt_bundle(
     *,
+    template_version: str,
     direction: str,
     source_language: str,
     target_language: str,
@@ -125,12 +130,28 @@ def _build_prompt_bundle(
     normalized_statement = _normalize_text(
         problem_statement, field_name="problem_statement"
     )
-    normalized_input = _normalize_text(sample_input, field_name="sample_input")
-    normalized_output = _normalize_text(sample_output, field_name="sample_output")
+    if template_version == "rtt.prompts.v2":
+        if not isinstance(sample_input, str) or not isinstance(sample_output, str):
+            raise PromptTemplateError("Sample input/output must be strings.")
+        normalized_input, normalized_output = sample_input, sample_output
+    else:
+        normalized_input = _normalize_text(sample_input, field_name="sample_input")
+        normalized_output = _normalize_text(sample_output, field_name="sample_output")
     normalized_source = _normalize_text(source_code, field_name="source_code")
 
     source_label = _language_label(source_language)
     target_label = _language_label(target_language)
+    behavior_constraint = "- Preserve exact input/output behavior for the provided sample.\n"
+    if template_version == "rtt.prompts.v2":
+        behavior_constraint = (
+            "- Preserve the source program's behavior for every valid input under the stated contract.\n"
+            "- Public examples illustrate the format; do not specialize the program to them.\n"
+            "- Read standard input and write standard output without prompts or diagnostics.\n"
+            "- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n"
+            "- Use only the target language's standard library.\n"
+        )
+        if target_language == "java":
+            behavior_constraint += "- Use a public class Main with a static main entry point and no package declaration.\n"
 
     system_message = LLMMessage(
         role="system",
@@ -147,7 +168,7 @@ def _build_prompt_bundle(
             f"Problem ID: {normalized_problem_id}\n"
             f"Translate from {source_label} to {target_label}.\n\n"
             "[CONSTRAINTS]\n"
-            "- Preserve exact input/output behavior for the provided sample.\n"
+            f"{behavior_constraint}"
             "- Produce exactly one compilable source file in the target language.\n"
             "- Do not include markdown fences, comments about the translation, or prose.\n"
             "- Output code only.\n\n"

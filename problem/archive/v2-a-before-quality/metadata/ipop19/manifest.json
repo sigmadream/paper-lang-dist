@@ -1,0 +1,3307 @@
+{
+  "schema_version": 1,
+  "dataset_id": "ipop19-evaluation-v2-a",
+  "date": "2026-09-16",
+  "input_origin": "locally_generated_from_existing_BOJ_specifications",
+  "upstream_repository": "https://github.com/DhanushNehru/Leetcode",
+  "upstream_commit": "b9d7d2c234c39b3b3c67eded0c125e2841685b29",
+  "evaluation_only": true,
+  "input_deduplication": "whitespace-token sequence within each problem",
+  "exclusion_scope": "all current problem/IPOP_*/prompt_examples/*.inp plus every statement input example",
+  "oracle_comparison": "whitespace-token exact equality; Hanoi additionally checks legality and minimality",
+  "problems": [
+    {
+      "problem_id": "IPOP_10988",
+      "title": "팰린드롬인지 확인하기",
+      "summary": "소문자 문자열 하나를 읽고 팰린드롬이면 1, 아니면 0을 출력한다.",
+      "specification": "../../IPOP_10988/statement.md",
+      "boj_url": "https://www.acmicpc.net/problem/10988",
+      "oracle_methods": [
+        "문자열 역순 비교",
+        "대칭 위치 전수 비교"
+      ],
+      "excluded_unique_inputs": 2,
+      "statement_example_count": 2,
+      "exclusion_sources": [
+        {
+          "path": "problem/IPOP_10988/statement.md",
+          "sha256": "4bc5b7732648cfa0105fe3113023312eacac5f525a2f6922be5bfefb3c4c1631"
+        },
+        {
+          "path": "problem/IPOP_10988/prompt_examples/1.inp",
+          "sha256": "881b2c853cafc55d8ef3c1170af249367695da3e5ec52640e2999fd69cdecbc1"
+        },
+        {
+          "path": "problem/IPOP_10988/prompt_examples/10.inp",
+          "sha256": "32b74ea76ce8dfb61cc2381b4b4d768b86c2756522878966a759d664af8ec00d"
+        },
+        {
+          "path": "problem/IPOP_10988/prompt_examples/2.inp",
+          "sha256": "32b74ea76ce8dfb61cc2381b4b4d768b86c2756522878966a759d664af8ec00d"
+        },
+        {
+          "path": "problem/IPOP_10988/prompt_examples/3.inp",
+          "sha256": "881b2c853cafc55d8ef3c1170af249367695da3e5ec52640e2999fd69cdecbc1"
+        },
+        {
+          "path": "problem/IPOP_10988/prompt_examples/4.inp",
+          "sha256": "32b74ea76ce8dfb61cc2381b4b4d768b86c2756522878966a759d664af8ec00d"
+        },
+        {
+          "path": "problem/IPOP_10988/prompt_examples/5.inp",
+          "sha256": "881b2c853cafc55d8ef3c1170af249367695da3e5ec52640e2999fd69cdecbc1"
+        },
+        {
+          "path": "problem/IPOP_10988/prompt_examples/6.inp",
+          "sha256": "32b74ea76ce8dfb61cc2381b4b4d768b86c2756522878966a759d664af8ec00d"
+        },
+        {
+          "path": "problem/IPOP_10988/prompt_examples/7.inp",
+          "sha256": "881b2c853cafc55d8ef3c1170af249367695da3e5ec52640e2999fd69cdecbc1"
+        },
+        {
+          "path": "problem/IPOP_10988/prompt_examples/8.inp",
+          "sha256": "32b74ea76ce8dfb61cc2381b4b4d768b86c2756522878966a759d664af8ec00d"
+        },
+        {
+          "path": "problem/IPOP_10988/prompt_examples/9.inp",
+          "sha256": "881b2c853cafc55d8ef3c1170af249367695da3e5ec52640e2999fd69cdecbc1"
+        }
+      ],
+      "upstream_mapping": {
+        "relationship": "adapted_algorithm_not_identical_problem",
+        "path": "problems/valid_palindrome/solution.js",
+        "url": "https://github.com/DhanushNehru/Leetcode/blob/b9d7d2c234c39b3b3c67eded0c125e2841685b29/problems/valid_palindrome/solution.js",
+        "sha256": "19b33aeff0264c922f7245cec41d9493e539a05afc81ef2124838a1034e1f04d",
+        "adaptation": "소문자 영문 입력에 한정하고 boolean을 0/1로 변환",
+        "role": "additional_checker_only; evaluation inputs generated locally"
+      },
+      "cases": [
+        {
+          "case_id": "case01",
+          "purpose": "최소 길이",
+          "origin": "generated",
+          "input": "../../IPOP_10988/evaluation/case01.inp",
+          "output": "../../IPOP_10988/evaluation/case01.out",
+          "input_sha256": "87428fc522803d31065e7bce3cf03fe475096631e5e07bbd7a0fde60c4cf25c7",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case02",
+          "purpose": "길이 2 대칭",
+          "origin": "generated",
+          "input": "../../IPOP_10988/evaluation/case02.inp",
+          "output": "../../IPOP_10988/evaluation/case02.out",
+          "input_sha256": "dc5e6f7cab235dd4b0f3882320de1d3c090a2ab202fc2514b86346a4681b0000",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "4a60bf7d4bc1e485744cf7e8d0860524752fca1ce42331be7c439fd23043f151",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case03",
+          "purpose": "길이 2 비대칭",
+          "origin": "generated",
+          "input": "../../IPOP_10988/evaluation/case03.inp",
+          "output": "../../IPOP_10988/evaluation/case03.out",
+          "input_sha256": "e2b02a2cf2e5c64515cb686e1d1a8cab62efd6af48b2ef6486ecafc7ffd35dff",
+          "output_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "canonical_input_sha256": "9c0ada37bf74aeefae949fdfc90db0cf6eaf90192eff67d65887771f0585e055",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case04",
+          "purpose": "홀수 대칭",
+          "origin": "generated",
+          "input": "../../IPOP_10988/evaluation/case04.inp",
+          "output": "../../IPOP_10988/evaluation/case04.out",
+          "input_sha256": "5481492c3c7ad434955eab95774c7ff40ce546fb68ac6dab96245ef13c355a5e",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "ff2e963ff6d0c33aae94a7f823b6e2bf7358004063f4275ba525539cb6ec6734",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case05",
+          "purpose": "짝수 대칭",
+          "origin": "generated",
+          "input": "../../IPOP_10988/evaluation/case05.inp",
+          "output": "../../IPOP_10988/evaluation/case05.out",
+          "input_sha256": "47cd2f62f849d41147da5493304454219b398736b1ff61b601be31af80370ccf",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "0cec8d5de9dfe54874b268720021014b972c3edcc053631c57c36821a9101e99",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case06",
+          "purpose": "중앙 근처 불일치",
+          "origin": "generated",
+          "input": "../../IPOP_10988/evaluation/case06.inp",
+          "output": "../../IPOP_10988/evaluation/case06.out",
+          "input_sha256": "e2fed5f06d8bf10eeb6398e515852043b543bcab77b748497cb754dc4e2401e6",
+          "output_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "canonical_input_sha256": "f6d1d374a4d4ab303051ee44fb263622ce62d947faa0ef1675b0c8869c664a3a",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case07",
+          "purpose": "같은 문자 반복",
+          "origin": "generated",
+          "input": "../../IPOP_10988/evaluation/case07.inp",
+          "output": "../../IPOP_10988/evaluation/case07.out",
+          "input_sha256": "f723461b1bd4f34bc89e02f05eacd24772d02f34451499ae30a60cfaa7c09a87",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "fccd916a1768effce5493b72696cbd6ce5fab7c173b342d0068fb5e4d56e430b",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case08",
+          "purpose": "최대 길이 대칭",
+          "origin": "generated",
+          "input": "../../IPOP_10988/evaluation/case08.inp",
+          "output": "../../IPOP_10988/evaluation/case08.out",
+          "input_sha256": "cb866aba0333f85565e1ccf27cbf2e0c3531feaa9f16b75e087841d76fdd5daf",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "2816597888e4a0d3a36b82b83316ab32680eb8f00f8cd3b904d681246d285a0e",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case09",
+          "purpose": "최대 길이 끝 불일치",
+          "origin": "generated",
+          "input": "../../IPOP_10988/evaluation/case09.inp",
+          "output": "../../IPOP_10988/evaluation/case09.out",
+          "input_sha256": "01c2b2a94766585deb90ace0eaab923e4bd5f6ea5fdda6357888ac4a06dc3211",
+          "output_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "canonical_input_sha256": "ec1a833c0333f32435095b8ede1a083ed113e9b993e8a929701bae9d6095a217",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case10",
+          "purpose": "긴 짝수 대칭",
+          "origin": "generated",
+          "input": "../../IPOP_10988/evaluation/case10.inp",
+          "output": "../../IPOP_10988/evaluation/case10.out",
+          "input_sha256": "d73621e2e2d7731adf5b486082cf334a305ca707dca283f4cd1cfec57a00c959",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "20f1fcdf919164c759825590df190fed6224d8daf1bc3b4fc65d9559e1955370",
+          "oracle_cross_check": "pass"
+        }
+      ]
+    },
+    {
+      "problem_id": "IPOP_1158",
+      "title": "요세푸스 문제",
+      "summary": "N명 중 K번째 사람을 반복 제거한 순서를 꺾쇠와 쉼표 형식으로 출력한다.",
+      "specification": "../../IPOP_1158/statement.md",
+      "boj_url": "https://www.acmicpc.net/problem/1158",
+      "oracle_methods": [
+        "리스트 인덱스 제거",
+        "deque 회전 시뮬레이션"
+      ],
+      "excluded_unique_inputs": 1,
+      "statement_example_count": 1,
+      "exclusion_sources": [
+        {
+          "path": "problem/IPOP_1158/statement.md",
+          "sha256": "a866384648b1a237a7b7dbc5147f65f3707a7547b4f7aba5696ea02151c37659"
+        },
+        {
+          "path": "problem/IPOP_1158/prompt_examples/1.inp",
+          "sha256": "fafc2f81c1839daf77e72513689f4227d063dc5d394795a3a386fb6f193897b7"
+        },
+        {
+          "path": "problem/IPOP_1158/prompt_examples/10.inp",
+          "sha256": "fafc2f81c1839daf77e72513689f4227d063dc5d394795a3a386fb6f193897b7"
+        },
+        {
+          "path": "problem/IPOP_1158/prompt_examples/2.inp",
+          "sha256": "fafc2f81c1839daf77e72513689f4227d063dc5d394795a3a386fb6f193897b7"
+        },
+        {
+          "path": "problem/IPOP_1158/prompt_examples/3.inp",
+          "sha256": "fafc2f81c1839daf77e72513689f4227d063dc5d394795a3a386fb6f193897b7"
+        },
+        {
+          "path": "problem/IPOP_1158/prompt_examples/4.inp",
+          "sha256": "fafc2f81c1839daf77e72513689f4227d063dc5d394795a3a386fb6f193897b7"
+        },
+        {
+          "path": "problem/IPOP_1158/prompt_examples/5.inp",
+          "sha256": "fafc2f81c1839daf77e72513689f4227d063dc5d394795a3a386fb6f193897b7"
+        },
+        {
+          "path": "problem/IPOP_1158/prompt_examples/6.inp",
+          "sha256": "fafc2f81c1839daf77e72513689f4227d063dc5d394795a3a386fb6f193897b7"
+        },
+        {
+          "path": "problem/IPOP_1158/prompt_examples/7.inp",
+          "sha256": "fafc2f81c1839daf77e72513689f4227d063dc5d394795a3a386fb6f193897b7"
+        },
+        {
+          "path": "problem/IPOP_1158/prompt_examples/8.inp",
+          "sha256": "fafc2f81c1839daf77e72513689f4227d063dc5d394795a3a386fb6f193897b7"
+        },
+        {
+          "path": "problem/IPOP_1158/prompt_examples/9.inp",
+          "sha256": "fafc2f81c1839daf77e72513689f4227d063dc5d394795a3a386fb6f193897b7"
+        }
+      ],
+      "upstream_mapping": null,
+      "cases": [
+        {
+          "case_id": "case01",
+          "purpose": "최소 N",
+          "origin": "generated",
+          "input": "../../IPOP_1158/evaluation/case01.inp",
+          "output": "../../IPOP_1158/evaluation/case01.out",
+          "input_sha256": "3f11ad6bbc7ecca0b2416b713dee77f1a635c00aaeaa946e14cde1c2bfae56d5",
+          "output_sha256": "ed82756223173fc80cd71d5bd2b469fcecc4d7f93472404330dec25e71c02513",
+          "canonical_input_sha256": "020a7c91e30725bb191818987340dec6040aff93923840de685e1e1d7b3d071a",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case02",
+          "purpose": "K=1",
+          "origin": "generated",
+          "input": "../../IPOP_1158/evaluation/case02.inp",
+          "output": "../../IPOP_1158/evaluation/case02.out",
+          "input_sha256": "dfac347cb71ae693ba8a54687f7112aff24ec67f88a3c66f69a7bf968fa2ac16",
+          "output_sha256": "70a76c05675e1b9c6f5327035666098b1cac4a124b16c32fdb847fc71c1e3430",
+          "canonical_input_sha256": "e57acc10f53c55bd65c8462f1402834edd30e4f41203988a0cac5aff6122a614",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case03",
+          "purpose": "K=N",
+          "origin": "generated",
+          "input": "../../IPOP_1158/evaluation/case03.inp",
+          "output": "../../IPOP_1158/evaluation/case03.out",
+          "input_sha256": "f65ceaae246de02135c1326ff5188bdd166c9749c021c91e49c0b9a79f9c7262",
+          "output_sha256": "7d3a04dc05421656f2471938958103578f33ef7f8b8907d54bc5ac877956f25c",
+          "canonical_input_sha256": "04412575067f0bdb6722e31a7ee45744cc1ecf2dfacec4cfbfa70cfd364bb7e2",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case04",
+          "purpose": "순서 그대로",
+          "origin": "generated",
+          "input": "../../IPOP_1158/evaluation/case04.inp",
+          "output": "../../IPOP_1158/evaluation/case04.out",
+          "input_sha256": "571dfa41f273d23922e62069dd623395f5ae1e9b8613e50f7212e0987176594e",
+          "output_sha256": "dccab87ebb7c8572c408f89d038d4c44ff99b2b3f9a7dfb33f72dfbd3468c3f8",
+          "canonical_input_sha256": "194fccc2a325736e71080e5531d3693de3b41e8e5426ebd607597051a15b3490",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case05",
+          "purpose": "모든 인원 수만큼 순환",
+          "origin": "generated",
+          "input": "../../IPOP_1158/evaluation/case05.inp",
+          "output": "../../IPOP_1158/evaluation/case05.out",
+          "input_sha256": "7ccdd490f6b3380bf5ef76529f8a33c3d0d324062b190d63706eaa7ffd0ce85a",
+          "output_sha256": "ab3ae156284849225f8e76dafb6fe1d96a3f4f77081d00fe19114e397a821047",
+          "canonical_input_sha256": "b1766f061523cc0d6619c0d86cf5b6781cfd51553de9f483940e611ce8b8591a",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case06",
+          "purpose": "공약수 있는 N,K",
+          "origin": "generated",
+          "input": "../../IPOP_1158/evaluation/case06.inp",
+          "output": "../../IPOP_1158/evaluation/case06.out",
+          "input_sha256": "76afe424e6daa1b5a886504758a483364122c2f5ccd4f5e4e3f02b69c8ad8c2e",
+          "output_sha256": "26a5e2e72e893310cb212242db5213ffdfe61e546bae79c72805cf307ee8eb62",
+          "canonical_input_sha256": "05344da066594a7766f67abb15329752852b41b66a23f08addab5169e627337a",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case07",
+          "purpose": "서로소 N,K",
+          "origin": "generated",
+          "input": "../../IPOP_1158/evaluation/case07.inp",
+          "output": "../../IPOP_1158/evaluation/case07.out",
+          "input_sha256": "a96b63af333446540818c0eacd2c408b6d6403d649c9c697e8c66ff162a4422b",
+          "output_sha256": "8a9aaad65a6fd94095b0b1e302a0f76bf630b64b5583c72222abe0029c874e33",
+          "canonical_input_sha256": "b8639833c36add3ebcef6ecca0d31a9c8eca48b9e6244dbb526ba28c51eec546",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case08",
+          "purpose": "홀수 인원",
+          "origin": "generated",
+          "input": "../../IPOP_1158/evaluation/case08.inp",
+          "output": "../../IPOP_1158/evaluation/case08.out",
+          "input_sha256": "3f217ac65c309a4ab4b9f5b3a4b4e636408e9d21f98a12f3c60f53c5870f154d",
+          "output_sha256": "74db3829ddd59c2927e0709e52ef8665767ccca1e76024470b399d5027c0b5d6",
+          "canonical_input_sha256": "313755c04f01a04c2a1fe574a99ce74269736b41f11d9fa3e2ce3823194655f9",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case09",
+          "purpose": "큰 K",
+          "origin": "generated",
+          "input": "../../IPOP_1158/evaluation/case09.inp",
+          "output": "../../IPOP_1158/evaluation/case09.out",
+          "input_sha256": "3de162185b6500ae9ba794220c829621dad1d61a45a2cf6fa141581e79d6293b",
+          "output_sha256": "0290e55b9399b535c8723e596c6769d0514ad4e222e0e8acc08f994fb95e2438",
+          "canonical_input_sha256": "5a48b14082a6aa4e65ab636765f26bb0a9e27a6059928cc5c8dafd764f93e077",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case10",
+          "purpose": "여러 차례 순환",
+          "origin": "generated",
+          "input": "../../IPOP_1158/evaluation/case10.inp",
+          "output": "../../IPOP_1158/evaluation/case10.out",
+          "input_sha256": "bb1ee04a22fb8114512900e132e851ceaabfb5df73877c29c9fd2b5995fb0f8f",
+          "output_sha256": "29a73897c7706f0afbc5eb9da65e68d43dca0a50fa0d7763486f4ecc63dbccad",
+          "canonical_input_sha256": "6ab940bed166130177ed272e4a1720dbf69036d46aacf8cb7136be2dd1e27bf7",
+          "oracle_cross_check": "pass"
+        }
+      ]
+    },
+    {
+      "problem_id": "IPOP_11729",
+      "title": "하노이 탑 이동 순서",
+      "summary": "N개 원판을 1번에서 3번 막대로 옮기는 최소 이동 횟수와 이동 목록을 출력한다.",
+      "specification": "../../IPOP_11729/statement.md",
+      "boj_url": "https://www.acmicpc.net/problem/11729",
+      "oracle_methods": [
+        "재귀 이동열 생성",
+        "모든 이동의 합법성·최종 상태·2^N-1 최소 이동 수 검사"
+      ],
+      "excluded_unique_inputs": 1,
+      "statement_example_count": 1,
+      "exclusion_sources": [
+        {
+          "path": "problem/IPOP_11729/statement.md",
+          "sha256": "8918883f6f9ebaf4302c1746f14ca1c5501f2ca408a8c0565bb6224ffdc6adbb"
+        },
+        {
+          "path": "problem/IPOP_11729/prompt_examples/1.inp",
+          "sha256": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed"
+        },
+        {
+          "path": "problem/IPOP_11729/prompt_examples/10.inp",
+          "sha256": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed"
+        },
+        {
+          "path": "problem/IPOP_11729/prompt_examples/2.inp",
+          "sha256": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed"
+        },
+        {
+          "path": "problem/IPOP_11729/prompt_examples/3.inp",
+          "sha256": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed"
+        },
+        {
+          "path": "problem/IPOP_11729/prompt_examples/4.inp",
+          "sha256": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed"
+        },
+        {
+          "path": "problem/IPOP_11729/prompt_examples/5.inp",
+          "sha256": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed"
+        },
+        {
+          "path": "problem/IPOP_11729/prompt_examples/6.inp",
+          "sha256": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed"
+        },
+        {
+          "path": "problem/IPOP_11729/prompt_examples/7.inp",
+          "sha256": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed"
+        },
+        {
+          "path": "problem/IPOP_11729/prompt_examples/8.inp",
+          "sha256": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed"
+        },
+        {
+          "path": "problem/IPOP_11729/prompt_examples/9.inp",
+          "sha256": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed"
+        }
+      ],
+      "upstream_mapping": null,
+      "cases": [
+        {
+          "case_id": "case01",
+          "purpose": "N=1, 최소 크기",
+          "origin": "generated",
+          "input": "../../IPOP_11729/evaluation/case01.inp",
+          "output": "../../IPOP_11729/evaluation/case01.out",
+          "input_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "output_sha256": "0880b9669fa6d82f7223ec67bc09b247ed598249020bd967e01c7f5dd42818aa",
+          "canonical_input_sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case02",
+          "purpose": "N=2, 홀수/짝수 재귀 이동",
+          "origin": "generated",
+          "input": "../../IPOP_11729/evaluation/case02.inp",
+          "output": "../../IPOP_11729/evaluation/case02.out",
+          "input_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+          "output_sha256": "a3e2f54f8a85f78d0d22820bc9acefd878cf4194c989e32d490b74a73c0d8472",
+          "canonical_input_sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case03",
+          "purpose": "N=4, 홀수/짝수 재귀 이동",
+          "origin": "generated",
+          "input": "../../IPOP_11729/evaluation/case03.inp",
+          "output": "../../IPOP_11729/evaluation/case03.out",
+          "input_sha256": "7de1555df0c2700329e815b93b32c571c3ea54dc967b89e81ab73b9972b72d1d",
+          "output_sha256": "889c3ec85c008ccabb93a2fe78d45778f7f6d01fe5203ca3bbd52eac33d63b8d",
+          "canonical_input_sha256": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case04",
+          "purpose": "N=5, 홀수/짝수 재귀 이동",
+          "origin": "generated",
+          "input": "../../IPOP_11729/evaluation/case04.inp",
+          "output": "../../IPOP_11729/evaluation/case04.out",
+          "input_sha256": "f0b5c2c2211c8d67ed15e75e656c7862d086e9245420892a7de62cd9ec582a06",
+          "output_sha256": "0b935416327a2eeb6ecceff43ca6f75376d52467bfb7ce6eb2f8c941bd51f4ad",
+          "canonical_input_sha256": "ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case05",
+          "purpose": "N=6, 홀수/짝수 재귀 이동",
+          "origin": "generated",
+          "input": "../../IPOP_11729/evaluation/case05.inp",
+          "output": "../../IPOP_11729/evaluation/case05.out",
+          "input_sha256": "06e9d52c1720fca412803e3b07c4b228ff113e303f4c7ab94665319d832bbfb7",
+          "output_sha256": "ebbced7034924b062c8beb9dd85ef9027bd87f80e5120a8bd53bb0614d43eb41",
+          "canonical_input_sha256": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case06",
+          "purpose": "N=7, 홀수/짝수 재귀 이동",
+          "origin": "generated",
+          "input": "../../IPOP_11729/evaluation/case06.inp",
+          "output": "../../IPOP_11729/evaluation/case06.out",
+          "input_sha256": "10159baf262b43a92d95db59dae1f72c645127301661e0a3ce4e38b295a97c58",
+          "output_sha256": "9dd0c6cfe990b1ab3db198c44cacb124cd2ab029bb189535f26b30559114cadb",
+          "canonical_input_sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case07",
+          "purpose": "N=8, 홀수/짝수 재귀 이동",
+          "origin": "generated",
+          "input": "../../IPOP_11729/evaluation/case07.inp",
+          "output": "../../IPOP_11729/evaluation/case07.out",
+          "input_sha256": "aa67a169b0bba217aa0aa88a65346920c84c42447c36ba5f7ea65f422c1fe5d8",
+          "output_sha256": "2e56238ecb8d8160f3b51aaffbbaa02c2a48b7f34b6bf6046559044c76042b0d",
+          "canonical_input_sha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case08",
+          "purpose": "N=9, 홀수/짝수 재귀 이동",
+          "origin": "generated",
+          "input": "../../IPOP_11729/evaluation/case08.inp",
+          "output": "../../IPOP_11729/evaluation/case08.out",
+          "input_sha256": "2e6d31a5983a91251bfae5aefa1c0a19d8ba3cf601d0e8a706b4cfa9661a6b8a",
+          "output_sha256": "40cfa9055da5b685b7bd771e3a6b89461f9d5af936a970578a771a19e3d33169",
+          "canonical_input_sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case09",
+          "purpose": "N=10, 홀수/짝수 재귀 이동",
+          "origin": "generated",
+          "input": "../../IPOP_11729/evaluation/case09.inp",
+          "output": "../../IPOP_11729/evaluation/case09.out",
+          "input_sha256": "917df3320d778ddbaa5c5c7742bc4046bf803c36ed2b050f30844ed206783469",
+          "output_sha256": "0ff1572b3450c5cf64b8a6c617cddd4f4deb282ae2e6b1c8fa57b8f2a1ad4362",
+          "canonical_input_sha256": "4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case10",
+          "purpose": "N=11, 홀수/짝수 재귀 이동",
+          "origin": "generated",
+          "input": "../../IPOP_11729/evaluation/case10.inp",
+          "output": "../../IPOP_11729/evaluation/case10.out",
+          "input_sha256": "25d4f2a86deb5e2574bb3210b67bb24fcc4afb19f93a7b65a057daa874a9d18e",
+          "output_sha256": "0f67e599fe066c44b56274f26f07cc2fe4935ec4198b1356cdfad082f91ddba5",
+          "canonical_input_sha256": "4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8",
+          "oracle_cross_check": "pass"
+        }
+      ]
+    },
+    {
+      "problem_id": "IPOP_1436",
+      "title": "영화감독 숌",
+      "summary": "십진 표현에 666을 포함하는 수 중 N번째 수를 출력한다.",
+      "specification": "../../IPOP_1436/statement.md",
+      "boj_url": "https://www.acmicpc.net/problem/1436",
+      "oracle_methods": [
+        "정수 순회와 문자열 검색",
+        "666의 자릿수 위치별 후보 생성·집합 중복 제거"
+      ],
+      "excluded_unique_inputs": 15,
+      "statement_example_count": 5,
+      "exclusion_sources": [
+        {
+          "path": "problem/IPOP_1436/statement.md",
+          "sha256": "79900e8a4c30bc7ce84127e64c2ba20d3aa2fce82ec2af768b7ebe2443895057"
+        },
+        {
+          "path": "problem/IPOP_1436/prompt_examples/1.inp",
+          "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+        },
+        {
+          "path": "problem/IPOP_1436/prompt_examples/10.inp",
+          "sha256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58"
+        },
+        {
+          "path": "problem/IPOP_1436/prompt_examples/2.inp",
+          "sha256": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a"
+        },
+        {
+          "path": "problem/IPOP_1436/prompt_examples/3.inp",
+          "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+        },
+        {
+          "path": "problem/IPOP_1436/prompt_examples/4.inp",
+          "sha256": "4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5"
+        },
+        {
+          "path": "problem/IPOP_1436/prompt_examples/5.inp",
+          "sha256": "4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8"
+        },
+        {
+          "path": "problem/IPOP_1436/prompt_examples/6.inp",
+          "sha256": "f5ca38f748a1d6eaf726b8a42fb575c3c71f1864a8143301782de13da2d9202b"
+        },
+        {
+          "path": "problem/IPOP_1436/prompt_examples/7.inp",
+          "sha256": "1a6562590ef19d1045d06c4055742d38288e9e6dcd71ccde5cee80f1d5a774eb"
+        },
+        {
+          "path": "problem/IPOP_1436/prompt_examples/8.inp",
+          "sha256": "ad57366865126e55649ecb23ae1d48887544976efea46a48eb5d85a6eeb4d306"
+        },
+        {
+          "path": "problem/IPOP_1436/prompt_examples/9.inp",
+          "sha256": "1e472b39b105d349bcd069c4a711b44a2fffb8e274714bb07ecfff69a9a7f67b"
+        }
+      ],
+      "upstream_mapping": null,
+      "cases": [
+        {
+          "case_id": "case01",
+          "purpose": "N=5, 666 위치 및 연속 출현",
+          "origin": "generated",
+          "input": "../../IPOP_1436/evaluation/case01.inp",
+          "output": "../../IPOP_1436/evaluation/case01.out",
+          "input_sha256": "f0b5c2c2211c8d67ed15e75e656c7862d086e9245420892a7de62cd9ec582a06",
+          "output_sha256": "9d6a24c530cd030af4dfa5d7acfe6db2bb0335508f5db94ae730ae1e60fc2570",
+          "canonical_input_sha256": "ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case02",
+          "purpose": "N=8, 666 위치 및 연속 출현",
+          "origin": "generated",
+          "input": "../../IPOP_1436/evaluation/case02.inp",
+          "output": "../../IPOP_1436/evaluation/case02.out",
+          "input_sha256": "aa67a169b0bba217aa0aa88a65346920c84c42447c36ba5f7ea65f422c1fe5d8",
+          "output_sha256": "cd39cdf8548b07211535ce3b21dc1ffb4a591c659c21db28db4763eb87f7f62a",
+          "canonical_input_sha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case03",
+          "purpose": "N=9, 666 위치 및 연속 출현",
+          "origin": "generated",
+          "input": "../../IPOP_1436/evaluation/case03.inp",
+          "output": "../../IPOP_1436/evaluation/case03.out",
+          "input_sha256": "2e6d31a5983a91251bfae5aefa1c0a19d8ba3cf601d0e8a706b4cfa9661a6b8a",
+          "output_sha256": "716aaed69af33ca0b66c9cf1ed0e5fc6eeef52475733bcd19c4a0802cc99f740",
+          "canonical_input_sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case04",
+          "purpose": "N=12, 666 위치 및 연속 출현",
+          "origin": "generated",
+          "input": "../../IPOP_1436/evaluation/case04.inp",
+          "output": "../../IPOP_1436/evaluation/case04.out",
+          "input_sha256": "a1fb50e6c86fae1679ef3351296fd6713411a08cf8dd1790a4fd05fae8688164",
+          "output_sha256": "154db6616673d1fb336a5bb1dd98e2e8df46c8927a699a6b431428b5c693ae72",
+          "canonical_input_sha256": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case05",
+          "purpose": "N=13, 666 위치 및 연속 출현",
+          "origin": "generated",
+          "input": "../../IPOP_1436/evaluation/case05.inp",
+          "output": "../../IPOP_1436/evaluation/case05.out",
+          "input_sha256": "1a252402972f6057fa53cc172b52b9ffca698e18311facd0f3b06ecaaef79e17",
+          "output_sha256": "b04b8f31a7affbeea979e0301f07e72d4c6efbeade6b15baa9710782e394b0a7",
+          "canonical_input_sha256": "3fdba35f04dc8c462986c992bcf875546257113072a909c162f7e470e581e278",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case06",
+          "purpose": "N=19, 666 위치 및 연속 출현",
+          "origin": "generated",
+          "input": "../../IPOP_1436/evaluation/case06.inp",
+          "output": "../../IPOP_1436/evaluation/case06.out",
+          "input_sha256": "a9742eb8ee320e006666aef25ae9aeed948247f3125c9cafa7cf97b7e7467dd5",
+          "output_sha256": "c76632eb9ac4e6e9ee379219e98b751b59a08fddb0b31fd63e09a1eb58c6baf5",
+          "canonical_input_sha256": "9400f1b21cb527d7fa3d3eabba93557a18ebe7a2ca4e471cfe5e4c5b4ca7f767",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case07",
+          "purpose": "N=21, 666 위치 및 연속 출현",
+          "origin": "generated",
+          "input": "../../IPOP_1436/evaluation/case07.inp",
+          "output": "../../IPOP_1436/evaluation/case07.out",
+          "input_sha256": "6e2ae11dad0616f66bbb2b6e6556f580bb987fd911d7132aa6bee2bfc7cc7b52",
+          "output_sha256": "8a544e3e91f20f7cb343444e5fcc0ce0ee15e6627df1fc14e6c59b38ea247d00",
+          "canonical_input_sha256": "6f4b6612125fb3a0daecd2799dfd6c9c299424fd920f9b308110a2c1fbd8f443",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case08",
+          "purpose": "N=66, 666 위치 및 연속 출현",
+          "origin": "generated",
+          "input": "../../IPOP_1436/evaluation/case08.inp",
+          "output": "../../IPOP_1436/evaluation/case08.out",
+          "input_sha256": "8e37bed9dff3949ffd23ae638260dff869f5cc26e551f2a9e5e289a8888949fa",
+          "output_sha256": "a67065dbaede78a0761c900af63910c062a9ef1d2e6433273b8e555a6e292ba4",
+          "canonical_input_sha256": "3ada92f28b4ceda38562ebf047c6ff05400d4c572352a1142eedfef67d21e662",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case09",
+          "purpose": "N=666, 666 위치 및 연속 출현",
+          "origin": "generated",
+          "input": "../../IPOP_1436/evaluation/case09.inp",
+          "output": "../../IPOP_1436/evaluation/case09.out",
+          "input_sha256": "8b51f72bbf8d852192e7a54a088cb18e1b5e654770231d5b7248b8fd0ead67ed",
+          "output_sha256": "5db98c2e3bcc389621499d1810c16632802c782f4e1186d18469b1b184359e4c",
+          "canonical_input_sha256": "c7e616822f366fb1b5e0756af498cc11d2c0862edcb32ca65882f622ff39de1b",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case10",
+          "purpose": "N=10000, 최대 순위",
+          "origin": "generated",
+          "input": "../../IPOP_1436/evaluation/case10.inp",
+          "output": "../../IPOP_1436/evaluation/case10.out",
+          "input_sha256": "876e13f4e07bb39705302c01f445ffd2d2c3b180a207e4d959d6b671c67da09b",
+          "output_sha256": "97440aac73616631978d35ffd4c9c6712d7f479990f4f48e2be03a70e6dace0c",
+          "canonical_input_sha256": "39e5b4830d4d9c14db7368a95b65d5463ea3d09520373723430c03a5a453b5df",
+          "oracle_cross_check": "pass"
+        }
+      ]
+    },
+    {
+      "problem_id": "IPOP_14719",
+      "title": "빗물",
+      "summary": "높이 H, 너비 W와 각 열의 높이를 읽고 갇히는 빗물의 총량을 출력한다.",
+      "specification": "../../IPOP_14719/statement.md",
+      "boj_url": "https://www.acmicpc.net/problem/14719",
+      "oracle_methods": [
+        "열별 좌우 최대 높이",
+        "높이별 수평 빈칸 계수"
+      ],
+      "excluded_unique_inputs": 3,
+      "statement_example_count": 3,
+      "exclusion_sources": [
+        {
+          "path": "problem/IPOP_14719/statement.md",
+          "sha256": "7a88c9ba0eb1e80349934f49397f522031787c0e9dcddf07a8950be9d4e8b98e"
+        },
+        {
+          "path": "problem/IPOP_14719/prompt_examples/1.inp",
+          "sha256": "aa2963967f9c74b54a195eabc306f4b3e52c0c18feca048ce1ccf8618558a722"
+        },
+        {
+          "path": "problem/IPOP_14719/prompt_examples/10.inp",
+          "sha256": "aa2963967f9c74b54a195eabc306f4b3e52c0c18feca048ce1ccf8618558a722"
+        },
+        {
+          "path": "problem/IPOP_14719/prompt_examples/2.inp",
+          "sha256": "d29687fd73896d22b9c5118108a8502738a8ce7984275ad95493bb008a1f06a0"
+        },
+        {
+          "path": "problem/IPOP_14719/prompt_examples/3.inp",
+          "sha256": "7387556ecc6ecb73a1d521a5d5417cc55961f7c045da0380a7b5c45b380d53ed"
+        },
+        {
+          "path": "problem/IPOP_14719/prompt_examples/4.inp",
+          "sha256": "aa2963967f9c74b54a195eabc306f4b3e52c0c18feca048ce1ccf8618558a722"
+        },
+        {
+          "path": "problem/IPOP_14719/prompt_examples/5.inp",
+          "sha256": "d29687fd73896d22b9c5118108a8502738a8ce7984275ad95493bb008a1f06a0"
+        },
+        {
+          "path": "problem/IPOP_14719/prompt_examples/6.inp",
+          "sha256": "7387556ecc6ecb73a1d521a5d5417cc55961f7c045da0380a7b5c45b380d53ed"
+        },
+        {
+          "path": "problem/IPOP_14719/prompt_examples/7.inp",
+          "sha256": "aa2963967f9c74b54a195eabc306f4b3e52c0c18feca048ce1ccf8618558a722"
+        },
+        {
+          "path": "problem/IPOP_14719/prompt_examples/8.inp",
+          "sha256": "d29687fd73896d22b9c5118108a8502738a8ce7984275ad95493bb008a1f06a0"
+        },
+        {
+          "path": "problem/IPOP_14719/prompt_examples/9.inp",
+          "sha256": "7387556ecc6ecb73a1d521a5d5417cc55961f7c045da0380a7b5c45b380d53ed"
+        }
+      ],
+      "upstream_mapping": null,
+      "cases": [
+        {
+          "case_id": "case01",
+          "purpose": "최소 너비",
+          "origin": "generated",
+          "input": "../../IPOP_14719/evaluation/case01.inp",
+          "output": "../../IPOP_14719/evaluation/case01.out",
+          "input_sha256": "908516a06a4532ef8c3708d1fb614131df17df5acd9dc1821abf7bb3b533af43",
+          "output_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "canonical_input_sha256": "b8d40bd75b3d39e965bd6bd5704d5453892ed155b447746ce4758e1f9aefda77",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case02",
+          "purpose": "최소 높이 물 고임",
+          "origin": "generated",
+          "input": "../../IPOP_14719/evaluation/case02.inp",
+          "output": "../../IPOP_14719/evaluation/case02.out",
+          "input_sha256": "15be9bdf0dc1cf7b67a0a05ae3ab7a97f3157f5af77dd5af541b3fca824a1c61",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "5b236128896207dae3634505e17f8785d8fedec10dd63e5da41062b36c28a018",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case03",
+          "purpose": "벽 없음",
+          "origin": "generated",
+          "input": "../../IPOP_14719/evaluation/case03.inp",
+          "output": "../../IPOP_14719/evaluation/case03.out",
+          "input_sha256": "742eaa387eb8195c008c28ec23bd6e21dfdaeebb5c99eebb8b990cb37d0c6a88",
+          "output_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "canonical_input_sha256": "eca6cf9fe1533fea1eb38dab8abaf4429eb794e07ee5417329d84d7ebb1438c5",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case04",
+          "purpose": "단조 증가",
+          "origin": "generated",
+          "input": "../../IPOP_14719/evaluation/case04.inp",
+          "output": "../../IPOP_14719/evaluation/case04.out",
+          "input_sha256": "02b921f501aa4d71c3bf9fcb02312767f68d5b6c3eb5f843356b0e52f15cb940",
+          "output_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "canonical_input_sha256": "db6f83312af055af3266c04b1a89456720c6064acbb82de6d224874af7e4702e",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case05",
+          "purpose": "단조 감소",
+          "origin": "generated",
+          "input": "../../IPOP_14719/evaluation/case05.inp",
+          "output": "../../IPOP_14719/evaluation/case05.out",
+          "input_sha256": "60b1a07533e86fc90b10da023a21342e97ff4bff15f2091475b436df5cd386b7",
+          "output_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "canonical_input_sha256": "750e639cfaba32ac5a3361e2b87917f1b6c17fe41116e55630ef3b23dfb5a708",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case06",
+          "purpose": "깊은 단일 분지",
+          "origin": "generated",
+          "input": "../../IPOP_14719/evaluation/case06.inp",
+          "output": "../../IPOP_14719/evaluation/case06.out",
+          "input_sha256": "8adcc795c499168a193d8514ec9f8228b67b36276b8999aae7e454efcc35b718",
+          "output_sha256": "917df3320d778ddbaa5c5c7742bc4046bf803c36ed2b050f30844ed206783469",
+          "canonical_input_sha256": "d204dada25f67c701db8287ee9287e8bb3029ef50ddf96058883f745e4b37324",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case07",
+          "purpose": "여러 분지",
+          "origin": "generated",
+          "input": "../../IPOP_14719/evaluation/case07.inp",
+          "output": "../../IPOP_14719/evaluation/case07.out",
+          "input_sha256": "1521d057631ac3664cde1f6a26e753502047916a3548be566013cc5358ae1902",
+          "output_sha256": "06e9d52c1720fca412803e3b07c4b228ff113e303f4c7ab94665319d832bbfb7",
+          "canonical_input_sha256": "7b656f5c9bcc55c58e4d52479f5446012900fe77910bc8dc21326a06c699cbff",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case08",
+          "purpose": "평탄한 벽",
+          "origin": "generated",
+          "input": "../../IPOP_14719/evaluation/case08.inp",
+          "output": "../../IPOP_14719/evaluation/case08.out",
+          "input_sha256": "439904704470504b5848ea5c3c4342c9579b59adbc3f675822dcc23dc2ea87ab",
+          "output_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "canonical_input_sha256": "658b44986668b0e92d554b2c26ea954fc69e98eb6333bba4f0c71327b7a3147b",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case09",
+          "purpose": "양끝 낮음",
+          "origin": "generated",
+          "input": "../../IPOP_14719/evaluation/case09.inp",
+          "output": "../../IPOP_14719/evaluation/case09.out",
+          "input_sha256": "0a7ae091fe59225381295e28bf5821543e743311b847bac9292c8fdfd0009c03",
+          "output_sha256": "917df3320d778ddbaa5c5c7742bc4046bf803c36ed2b050f30844ed206783469",
+          "canonical_input_sha256": "7a1ac70de65b15a266809f7d842028c8131b35db8a32a07d25daf726226285ab",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case10",
+          "purpose": "높이 상한",
+          "origin": "generated",
+          "input": "../../IPOP_14719/evaluation/case10.inp",
+          "output": "../../IPOP_14719/evaluation/case10.out",
+          "input_sha256": "547a4214262df80c906d48ce75ab9ed8f7d727202fd30460426e1ff46b16c6f3",
+          "output_sha256": "792376c209f338959be4cf00c54dbf82662b90516082e23106faec4c43c69e49",
+          "canonical_input_sha256": "3e4fec586379812f027b80f990871d0f31fb2196014c054003de2c2df2a141b1",
+          "oracle_cross_check": "pass"
+        }
+      ]
+    },
+    {
+      "problem_id": "IPOP_1620",
+      "title": "나는야 포켓몬 마스터 이다솜",
+      "summary": "서로 다른 이름 N개와 질의 M개를 읽고 이름과 1-based 번호를 상호 조회한다.",
+      "specification": "../../IPOP_1620/statement.md",
+      "boj_url": "https://www.acmicpc.net/problem/1620",
+      "oracle_methods": [
+        "양방향 사전",
+        "리스트 직접 탐색"
+      ],
+      "excluded_unique_inputs": 1,
+      "statement_example_count": 1,
+      "exclusion_sources": [
+        {
+          "path": "problem/IPOP_1620/statement.md",
+          "sha256": "a9ae1b8b3d0712347aef0207606c1f6c372d377dd8a5b7dbfdd33a2821322ca6"
+        },
+        {
+          "path": "problem/IPOP_1620/prompt_examples/1.inp",
+          "sha256": "a1b7a74923b25ec33d92d7ab583b9ef598901b65f92499094a1ceffdad1b28e9"
+        },
+        {
+          "path": "problem/IPOP_1620/prompt_examples/10.inp",
+          "sha256": "a1b7a74923b25ec33d92d7ab583b9ef598901b65f92499094a1ceffdad1b28e9"
+        },
+        {
+          "path": "problem/IPOP_1620/prompt_examples/2.inp",
+          "sha256": "a1b7a74923b25ec33d92d7ab583b9ef598901b65f92499094a1ceffdad1b28e9"
+        },
+        {
+          "path": "problem/IPOP_1620/prompt_examples/3.inp",
+          "sha256": "a1b7a74923b25ec33d92d7ab583b9ef598901b65f92499094a1ceffdad1b28e9"
+        },
+        {
+          "path": "problem/IPOP_1620/prompt_examples/4.inp",
+          "sha256": "a1b7a74923b25ec33d92d7ab583b9ef598901b65f92499094a1ceffdad1b28e9"
+        },
+        {
+          "path": "problem/IPOP_1620/prompt_examples/5.inp",
+          "sha256": "a1b7a74923b25ec33d92d7ab583b9ef598901b65f92499094a1ceffdad1b28e9"
+        },
+        {
+          "path": "problem/IPOP_1620/prompt_examples/6.inp",
+          "sha256": "a1b7a74923b25ec33d92d7ab583b9ef598901b65f92499094a1ceffdad1b28e9"
+        },
+        {
+          "path": "problem/IPOP_1620/prompt_examples/7.inp",
+          "sha256": "a1b7a74923b25ec33d92d7ab583b9ef598901b65f92499094a1ceffdad1b28e9"
+        },
+        {
+          "path": "problem/IPOP_1620/prompt_examples/8.inp",
+          "sha256": "a1b7a74923b25ec33d92d7ab583b9ef598901b65f92499094a1ceffdad1b28e9"
+        },
+        {
+          "path": "problem/IPOP_1620/prompt_examples/9.inp",
+          "sha256": "a1b7a74923b25ec33d92d7ab583b9ef598901b65f92499094a1ceffdad1b28e9"
+        }
+      ],
+      "upstream_mapping": null,
+      "cases": [
+        {
+          "case_id": "case01",
+          "purpose": "최소 사전 숫자 질의",
+          "origin": "generated",
+          "input": "../../IPOP_1620/evaluation/case01.inp",
+          "output": "../../IPOP_1620/evaluation/case01.out",
+          "input_sha256": "c601cf6a6fccc62ead8ae320b5a0202132f1d690eca8ed2afda80e7b40330888",
+          "output_sha256": "a44cfdd61e71e607b82df307c44b2d6c2914544ccb2482c1049394c092f10e2a",
+          "canonical_input_sha256": "f73e70c2013bd57247e8118f913e33abe3121397dc64aa6033bcee19c5d7c6fb",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case02",
+          "purpose": "최소 사전 이름 질의",
+          "origin": "generated",
+          "input": "../../IPOP_1620/evaluation/case02.inp",
+          "output": "../../IPOP_1620/evaluation/case02.out",
+          "input_sha256": "79aaa8d6a11d7185ff5d775271e4449fdd787c3174e5f98cc07e86528ea901f7",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "1cf5b8b6730b83f75cabf07cae1340a90ad6f7d6afcfb1aafde44d91b0511d3d",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case03",
+          "purpose": "양방향 조회",
+          "origin": "generated",
+          "input": "../../IPOP_1620/evaluation/case03.inp",
+          "output": "../../IPOP_1620/evaluation/case03.out",
+          "input_sha256": "c3bb80cc082ba7ad20bd532e3f8068ab2539618cf76c215cbd919d12165cb47a",
+          "output_sha256": "05a6db52e4a9c1e636399d8448fe70c332c70ec930ca361bbcc3ecef1e02d72f",
+          "canonical_input_sha256": "0ecbdbf5a22355f40ecff4abe61af6d8658c9b048fa886534aba9f8e689411d1",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case04",
+          "purpose": "처음과 마지막 항목",
+          "origin": "generated",
+          "input": "../../IPOP_1620/evaluation/case04.inp",
+          "output": "../../IPOP_1620/evaluation/case04.out",
+          "input_sha256": "f3c8881a089d1a9d58b4a131a34b2c09eaaa9193cac06ef522be7031d7956ad6",
+          "output_sha256": "51ce9ddf017563d055d814689ec1836f28f48a010c8994d1b4e889cad88f0794",
+          "canonical_input_sha256": "60bd74defb5e40adf5bdc3e2553949e798dd04f7785ac2b153bf337703d3c83a",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case05",
+          "purpose": "마지막 글자 대문자",
+          "origin": "generated",
+          "input": "../../IPOP_1620/evaluation/case05.inp",
+          "output": "../../IPOP_1620/evaluation/case05.out",
+          "input_sha256": "d39dba7d18c4d5888d83a850b9cac51270fb49bf82bb70ccbc98b88a16f5bc43",
+          "output_sha256": "e1d46e63073a8bbf972f94a54424e5136e3e96d549901ecb66d62a17f14bf45d",
+          "canonical_input_sha256": "6fa1752c0a5379b147e8a5c01bbf58599ea60e9be60f10f79b5682d16678273a",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case06",
+          "purpose": "동일 질의 반복",
+          "origin": "generated",
+          "input": "../../IPOP_1620/evaluation/case06.inp",
+          "output": "../../IPOP_1620/evaluation/case06.out",
+          "input_sha256": "f2bc222bfc0d850a3528d7057178f126cda7a48b42c05dd20de35606e0c538d1",
+          "output_sha256": "c004c4f792951501c08316ce2b49f15a2bdcd30781056ea562af6396153ce923",
+          "canonical_input_sha256": "7f1c6d117a6dd7fba9602e12e0d148d34e1847f525f78b8efa731d8f87621346",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case07",
+          "purpose": "유사 이름",
+          "origin": "generated",
+          "input": "../../IPOP_1620/evaluation/case07.inp",
+          "output": "../../IPOP_1620/evaluation/case07.out",
+          "input_sha256": "3e4b4de1e6b5b4dd7cb971881dc44835df92d7c37c121b1a863a504c95cdde15",
+          "output_sha256": "bd800f2a16b16e5abfb189b86918f230c434b197eebdef682b37c6b3211c34af",
+          "canonical_input_sha256": "16a0e4c2f44fb8bdb45d2653ecebe119d96ec99e5df55f9f8509b933013737f4",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case08",
+          "purpose": "이름 길이 상한",
+          "origin": "generated",
+          "input": "../../IPOP_1620/evaluation/case08.inp",
+          "output": "../../IPOP_1620/evaluation/case08.out",
+          "input_sha256": "0601cb4796d6b439f735346394db523188093ae3fa72e54dd74d835fb8b30fb9",
+          "output_sha256": "585ca9ace0e1bbf10bc1b4519eebbcff54df59aa36aeeb47ccd6dcabcea65a3d",
+          "canonical_input_sha256": "ff313f774193d6fd4bf1314915d01308b829ca05d02a1e5214cd736efc674b6b",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case09",
+          "purpose": "비정렬 조회",
+          "origin": "generated",
+          "input": "../../IPOP_1620/evaluation/case09.inp",
+          "output": "../../IPOP_1620/evaluation/case09.out",
+          "input_sha256": "e5ae3d2b0514e2ece0de068efe1a035e7f4b1bb3224121d303ddc226a67fd454",
+          "output_sha256": "ad6fed804ef668247e7bc2620923c60c3715c189762a20580a5ab2e808e82520",
+          "canonical_input_sha256": "4aa5e271d379783ef998c6430e029b11053eb62261fb8c40af36ffccb8a6e35c",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case10",
+          "purpose": "다양한 질의 순서",
+          "origin": "generated",
+          "input": "../../IPOP_1620/evaluation/case10.inp",
+          "output": "../../IPOP_1620/evaluation/case10.out",
+          "input_sha256": "624f8fc2117ef59e74fd1300b6e49ba0ecab9b36534e332597b7559e522ab0d5",
+          "output_sha256": "c69e9f4dc5d0809e598e0722a5c46804dc92d4adf327e1098aa98b46619582c5",
+          "canonical_input_sha256": "4af034b3a739778689e09c190b1b3b25e92ca95798449bf3b4d5eaf6357d4d2b",
+          "oracle_cross_check": "pass"
+        }
+      ]
+    },
+    {
+      "problem_id": "IPOP_18870",
+      "title": "좌표 압축",
+      "summary": "정수 배열의 각 값을 자신보다 작은 서로 다른 값의 개수로 바꿔 출력한다.",
+      "specification": "../../IPOP_18870/statement.md",
+      "boj_url": "https://www.acmicpc.net/problem/18870",
+      "oracle_methods": [
+        "정렬 고유값 순위",
+        "각 값보다 작은 고유값 완전 계수"
+      ],
+      "excluded_unique_inputs": 2,
+      "statement_example_count": 2,
+      "exclusion_sources": [
+        {
+          "path": "problem/IPOP_18870/statement.md",
+          "sha256": "1dae19efe1ee87fc56b7108bb9af870fe6a44ac4c2225785404a7eef7400b36a"
+        },
+        {
+          "path": "problem/IPOP_18870/prompt_examples/1.inp",
+          "sha256": "c321ff1dd140628b67137fa0621c4cb751f64488781784425a4f38eb8b7f4a93"
+        },
+        {
+          "path": "problem/IPOP_18870/prompt_examples/10.inp",
+          "sha256": "426ce3d29f5efda4aed89e8af9e5733c73a434fc6f1297e06497fc87d9ef29be"
+        },
+        {
+          "path": "problem/IPOP_18870/prompt_examples/2.inp",
+          "sha256": "426ce3d29f5efda4aed89e8af9e5733c73a434fc6f1297e06497fc87d9ef29be"
+        },
+        {
+          "path": "problem/IPOP_18870/prompt_examples/3.inp",
+          "sha256": "c321ff1dd140628b67137fa0621c4cb751f64488781784425a4f38eb8b7f4a93"
+        },
+        {
+          "path": "problem/IPOP_18870/prompt_examples/4.inp",
+          "sha256": "426ce3d29f5efda4aed89e8af9e5733c73a434fc6f1297e06497fc87d9ef29be"
+        },
+        {
+          "path": "problem/IPOP_18870/prompt_examples/5.inp",
+          "sha256": "c321ff1dd140628b67137fa0621c4cb751f64488781784425a4f38eb8b7f4a93"
+        },
+        {
+          "path": "problem/IPOP_18870/prompt_examples/6.inp",
+          "sha256": "426ce3d29f5efda4aed89e8af9e5733c73a434fc6f1297e06497fc87d9ef29be"
+        },
+        {
+          "path": "problem/IPOP_18870/prompt_examples/7.inp",
+          "sha256": "c321ff1dd140628b67137fa0621c4cb751f64488781784425a4f38eb8b7f4a93"
+        },
+        {
+          "path": "problem/IPOP_18870/prompt_examples/8.inp",
+          "sha256": "426ce3d29f5efda4aed89e8af9e5733c73a434fc6f1297e06497fc87d9ef29be"
+        },
+        {
+          "path": "problem/IPOP_18870/prompt_examples/9.inp",
+          "sha256": "c321ff1dd140628b67137fa0621c4cb751f64488781784425a4f38eb8b7f4a93"
+        }
+      ],
+      "upstream_mapping": null,
+      "cases": [
+        {
+          "case_id": "case01",
+          "purpose": "최소 크기",
+          "origin": "generated",
+          "input": "../../IPOP_18870/evaluation/case01.inp",
+          "output": "../../IPOP_18870/evaluation/case01.out",
+          "input_sha256": "5d90ef7fc0d040fd56a1e48697cfa99e0dfaf4fd803aefefc3b5053ec1d36aea",
+          "output_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "canonical_input_sha256": "8fad34bbb0c1ed095fbf1b50cb0e48785a030d5af68dc1a4957cbb583c3c1e5a",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case02",
+          "purpose": "모두 같은 값",
+          "origin": "generated",
+          "input": "../../IPOP_18870/evaluation/case02.inp",
+          "output": "../../IPOP_18870/evaluation/case02.out",
+          "input_sha256": "acd10be705021d9c124957e769590f47459de5b00f7682a4ec2f5f3be1990432",
+          "output_sha256": "a17138988e1387532b5cb0bd7a23f18a11d537123873e67154dada3c6359e53e",
+          "canonical_input_sha256": "4d7935b6c91d0330b48f0df1e3e40bcf6e2b2c5c7bd1637bd1ddd134b4e984e4",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case03",
+          "purpose": "음수만 포함",
+          "origin": "generated",
+          "input": "../../IPOP_18870/evaluation/case03.inp",
+          "output": "../../IPOP_18870/evaluation/case03.out",
+          "input_sha256": "6e9b42f34d63d990ea8eb7dd17630faea04cf23b3111a889eedb346d45ea35e3",
+          "output_sha256": "d9b1b02319c30c550d0f6888e485b8ebe0c9fd8863e2ef7678377a633573db2d",
+          "canonical_input_sha256": "01365fd918dee2364fbb255af9c37b2ac67e28b5da51910890f660b62739c8f1",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case04",
+          "purpose": "오름차순",
+          "origin": "generated",
+          "input": "../../IPOP_18870/evaluation/case04.inp",
+          "output": "../../IPOP_18870/evaluation/case04.out",
+          "input_sha256": "bad535dcd6186f60322ff36248da7b2db06197ef6f45bb201a067d619dc6ad3e",
+          "output_sha256": "3f31bc2191b8b55d447838e14cbce78ca44feba5b46c902ade4cc2eb7b68a041",
+          "canonical_input_sha256": "4eef62c1383ac1d665887d77075ad869a5baf68e137c3c169f3fc36fcf596f38",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case05",
+          "purpose": "내림차순",
+          "origin": "generated",
+          "input": "../../IPOP_18870/evaluation/case05.inp",
+          "output": "../../IPOP_18870/evaluation/case05.out",
+          "input_sha256": "c41c637c1d340f7d3037b06c334bf67c1138ae3f90fb87ae84b8296d36fce1e8",
+          "output_sha256": "80e44a1bb5df5590de0fba4b400f9ad6a779d14813e72f0a1ca77dbab3e1dd3c",
+          "canonical_input_sha256": "74c4fc1afa4da4da28d885a6980523eda19b97ee3718cb94b4bf60014f4c7521",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case06",
+          "purpose": "값 하한과 상한",
+          "origin": "generated",
+          "input": "../../IPOP_18870/evaluation/case06.inp",
+          "output": "../../IPOP_18870/evaluation/case06.out",
+          "input_sha256": "5885a143b972d1cde54c3e307df2ccb05b67fdf8372e0ee01d3f9fc1cb6fb9d8",
+          "output_sha256": "d9b1b02319c30c550d0f6888e485b8ebe0c9fd8863e2ef7678377a633573db2d",
+          "canonical_input_sha256": "11c6e36ca0683c234355a74cecbd97243d6124b8f0dd6ccaf9972b7a77b14594",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case07",
+          "purpose": "반복과 부호 혼합",
+          "origin": "generated",
+          "input": "../../IPOP_18870/evaluation/case07.inp",
+          "output": "../../IPOP_18870/evaluation/case07.out",
+          "input_sha256": "d1ea7162e6ca3a504a35ce8f487349c93e16a4f756882d17d236127a24c9ede6",
+          "output_sha256": "5b0d89db32ad25e5431c499a53e39abf28891c6ef200ff8979c02def261e6e87",
+          "canonical_input_sha256": "feb1c46af96343be87da68ef11f286ad2bc7b198b63d5d029a6dc2fcf41c7721",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case08",
+          "purpose": "0 반복",
+          "origin": "generated",
+          "input": "../../IPOP_18870/evaluation/case08.inp",
+          "output": "../../IPOP_18870/evaluation/case08.out",
+          "input_sha256": "bb00117a160cb12478e133e671e36431bf33e45d783b1225dffd98ec0655c873",
+          "output_sha256": "476722dda518ce251c816ff6e9667e8207b99ea25f9d1a2517ea890f944852db",
+          "canonical_input_sha256": "70fb726d20e369e1b45ef5d8aa2328f2ebc509bdf28ac2dbabc973d7ed9fb5ad",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case09",
+          "purpose": "인접 값",
+          "origin": "generated",
+          "input": "../../IPOP_18870/evaluation/case09.inp",
+          "output": "../../IPOP_18870/evaluation/case09.out",
+          "input_sha256": "28c83c5baea79202b60e428096261bf8c6ba7cf326c2e6d3f02a603f6f21bd8c",
+          "output_sha256": "65a086499bf991a323d7cffdd0a9c22dddf8b07c925e3c58df2608dd992afc7a",
+          "canonical_input_sha256": "08a058b31ca87e3d6f709cde2dbd1df40bdbb175c2afa1cadd7262305dc695a1",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case10",
+          "purpose": "큰 절댓값 혼합",
+          "origin": "generated",
+          "input": "../../IPOP_18870/evaluation/case10.inp",
+          "output": "../../IPOP_18870/evaluation/case10.out",
+          "input_sha256": "8ec795d8034b955e78a9d0f2a3c74f69494fe17902dcf7154001a96f1053b7fb",
+          "output_sha256": "2c78103e62a9949959936a3b39f6de134c5a63ad939c3646ace5a9fe7e91e91d",
+          "canonical_input_sha256": "bcd8f1c46b95ef0e8f156542c6f4b536b8ba3bbb3a8afe505b46f0925479f55a",
+          "oracle_cross_check": "pass"
+        }
+      ]
+    },
+    {
+      "problem_id": "IPOP_1929",
+      "title": "소수 구하기",
+      "summary": "폐구간 M..N에 있는 모든 소수를 오름차순으로 한 줄에 하나씩 출력한다.",
+      "specification": "../../IPOP_1929/statement.md",
+      "boj_url": "https://www.acmicpc.net/problem/1929",
+      "oracle_methods": [
+        "에라토스테네스 체",
+        "각 수의 제곱근까지 나눗셈 검사"
+      ],
+      "excluded_unique_inputs": 1,
+      "statement_example_count": 1,
+      "exclusion_sources": [
+        {
+          "path": "problem/IPOP_1929/statement.md",
+          "sha256": "cc3e01e23603bc2e46f5afd020e5a5b67a74ec9394d604019d50ade1887a8b66"
+        },
+        {
+          "path": "problem/IPOP_1929/prompt_examples/1.inp",
+          "sha256": "72c546a6644d488aa369f1ef9aaecc961ed11796069d2391e3551b46032c280d"
+        },
+        {
+          "path": "problem/IPOP_1929/prompt_examples/10.inp",
+          "sha256": "72c546a6644d488aa369f1ef9aaecc961ed11796069d2391e3551b46032c280d"
+        },
+        {
+          "path": "problem/IPOP_1929/prompt_examples/2.inp",
+          "sha256": "72c546a6644d488aa369f1ef9aaecc961ed11796069d2391e3551b46032c280d"
+        },
+        {
+          "path": "problem/IPOP_1929/prompt_examples/3.inp",
+          "sha256": "72c546a6644d488aa369f1ef9aaecc961ed11796069d2391e3551b46032c280d"
+        },
+        {
+          "path": "problem/IPOP_1929/prompt_examples/4.inp",
+          "sha256": "72c546a6644d488aa369f1ef9aaecc961ed11796069d2391e3551b46032c280d"
+        },
+        {
+          "path": "problem/IPOP_1929/prompt_examples/5.inp",
+          "sha256": "72c546a6644d488aa369f1ef9aaecc961ed11796069d2391e3551b46032c280d"
+        },
+        {
+          "path": "problem/IPOP_1929/prompt_examples/6.inp",
+          "sha256": "72c546a6644d488aa369f1ef9aaecc961ed11796069d2391e3551b46032c280d"
+        },
+        {
+          "path": "problem/IPOP_1929/prompt_examples/7.inp",
+          "sha256": "72c546a6644d488aa369f1ef9aaecc961ed11796069d2391e3551b46032c280d"
+        },
+        {
+          "path": "problem/IPOP_1929/prompt_examples/8.inp",
+          "sha256": "72c546a6644d488aa369f1ef9aaecc961ed11796069d2391e3551b46032c280d"
+        },
+        {
+          "path": "problem/IPOP_1929/prompt_examples/9.inp",
+          "sha256": "72c546a6644d488aa369f1ef9aaecc961ed11796069d2391e3551b46032c280d"
+        }
+      ],
+      "upstream_mapping": null,
+      "cases": [
+        {
+          "case_id": "case01",
+          "purpose": "하한 1",
+          "origin": "generated",
+          "input": "../../IPOP_1929/evaluation/case01.inp",
+          "output": "../../IPOP_1929/evaluation/case01.out",
+          "input_sha256": "f251ddc12234e0da8d3b778bd0f7463fb477f16f47757f5617dc8b4ff4d4f14a",
+          "output_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+          "canonical_input_sha256": "f71998fe363b9c29116c80b5eecf33a2fedca3b6159724384485804b71651029",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case02",
+          "purpose": "한 개 소수",
+          "origin": "generated",
+          "input": "../../IPOP_1929/evaluation/case02.inp",
+          "output": "../../IPOP_1929/evaluation/case02.out",
+          "input_sha256": "f65ceaae246de02135c1326ff5188bdd166c9749c021c91e49c0b9a79f9c7262",
+          "output_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+          "canonical_input_sha256": "04412575067f0bdb6722e31a7ee45744cc1ecf2dfacec4cfbfa70cfd364bb7e2",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case03",
+          "purpose": "동일 소수 경계",
+          "origin": "generated",
+          "input": "../../IPOP_1929/evaluation/case03.inp",
+          "output": "../../IPOP_1929/evaluation/case03.out",
+          "input_sha256": "b0e35de7ed8b81054f65be9a66d09f9c06b642e04df0a156871fdabbbeecddee",
+          "output_sha256": "54183f4323f377b737433a1e98229ead0fdc686f93bab057ecb612daa94002b5",
+          "canonical_input_sha256": "de918087f72ed43a1cb9ae6cdb02d1e30e63becb3c39429bececd195077f63c7",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case04",
+          "purpose": "1 제외",
+          "origin": "generated",
+          "input": "../../IPOP_1929/evaluation/case04.inp",
+          "output": "../../IPOP_1929/evaluation/case04.out",
+          "input_sha256": "a93f1571782f8417b59d54581630ad251043e1750a52bd5250ab5175fad576b4",
+          "output_sha256": "ae7e973cbc9276634e4649cb10f9ae5cc875c0c8ec2808dda6d2e13c511bd879",
+          "canonical_input_sha256": "f21c431104ba6de8b6045e9d7ae6d9af2fcadbaedcf97648229561f761a9a461",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case05",
+          "purpose": "합성수 시작",
+          "origin": "generated",
+          "input": "../../IPOP_1929/evaluation/case05.inp",
+          "output": "../../IPOP_1929/evaluation/case05.out",
+          "input_sha256": "07cc9e1878931edabc1c2af55742b8722666c28e35fc5acb603ffa67ea9d533e",
+          "output_sha256": "18b623819a06b1ab7204188465d222d3dba0c9404ab22104b9c5fa445e49a339",
+          "canonical_input_sha256": "e9f588745f26eecc6ee3e2f599e1881692809058b4698719fbb39c633a4d771a",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case06",
+          "purpose": "양끝 소수",
+          "origin": "generated",
+          "input": "../../IPOP_1929/evaluation/case06.inp",
+          "output": "../../IPOP_1929/evaluation/case06.out",
+          "input_sha256": "67c19910b5178c303b0f1ee9063e4f69960369afc7806a087d43171509a318b4",
+          "output_sha256": "492d5926af66014227a49d0142d3af198706f33835d7979e1997dd060c4f73dc",
+          "canonical_input_sha256": "2577686b0154ed0ab077576e71cab65639f422e93fdbe84a2599bf2c915c96fc",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case07",
+          "purpose": "제곱수 주변",
+          "origin": "generated",
+          "input": "../../IPOP_1929/evaluation/case07.inp",
+          "output": "../../IPOP_1929/evaluation/case07.out",
+          "input_sha256": "b117a3654b48b290b35dddf4caaf064073c2ae306803a1b6aa08ea0f0ce77f6a",
+          "output_sha256": "c8f7745cfd7f6457027e5dd451df1f0ff41d4f1bbec7972e4e0cae896fca3864",
+          "canonical_input_sha256": "992cbe1847b3991ae8aa54daff88f4655d72c2c443b8c6a4756f3baaf3d1e94d",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case08",
+          "purpose": "홀수 합성수 포함",
+          "origin": "generated",
+          "input": "../../IPOP_1929/evaluation/case08.inp",
+          "output": "../../IPOP_1929/evaluation/case08.out",
+          "input_sha256": "83f1a9ad08c82693c7b2a7f3e28a02299e9376de2d1b2ef97924c7db7d04df45",
+          "output_sha256": "614306421185b6a955db714ec529d0d78aa3c46497dddf26e0873b7b6de3e9ba",
+          "canonical_input_sha256": "085b98c0370d8c5c5d70ff25a4a32f5dc60d8958cd2063b17e66ce300e798b20",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case09",
+          "purpose": "천 단위 경계",
+          "origin": "generated",
+          "input": "../../IPOP_1929/evaluation/case09.inp",
+          "output": "../../IPOP_1929/evaluation/case09.out",
+          "input_sha256": "9e411e498ae0157b705d28469ca7572b2887bb84fdbe4830f01560f8cdfbe0d8",
+          "output_sha256": "4862c07a98b260de70850f7c508d296561cad99eb85e04f8c232cca6a8457e89",
+          "canonical_input_sha256": "7011dc02a65806ff8b2ac565c058e1184cc64a7418efc7cbbbb2bd2a35b063e3",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case10",
+          "purpose": "최대 상한",
+          "origin": "generated",
+          "input": "../../IPOP_1929/evaluation/case10.inp",
+          "output": "../../IPOP_1929/evaluation/case10.out",
+          "input_sha256": "06571509776abf8b9fa620323db52ddcc2f9e615d6c145cb19d08acf5cc0382d",
+          "output_sha256": "3fbca1dca7251230c4d96c4333dd71e09d96d41a8b413639e7a807e7f1b66d5f",
+          "canonical_input_sha256": "b554741ece3c35097619a925f2748804da4e55755d447b5909acf170d81661ae",
+          "oracle_cross_check": "pass"
+        }
+      ]
+    },
+    {
+      "problem_id": "IPOP_1992",
+      "title": "쿼드트리",
+      "summary": "이진 정사각 영상을 동일 값이면 압축하고 아니면 네 사분면을 재귀 인코딩한다.",
+      "specification": "../../IPOP_1992/statement.md",
+      "boj_url": "https://www.acmicpc.net/problem/1992",
+      "oracle_methods": [
+        "영역 재귀 분할",
+        "단일 픽셀에서 2x2 상향 병합"
+      ],
+      "excluded_unique_inputs": 1,
+      "statement_example_count": 1,
+      "exclusion_sources": [
+        {
+          "path": "problem/IPOP_1992/statement.md",
+          "sha256": "bc231f2c4e656bb28ca69a7ac683afcfb09544280d5d8d5efe1905c733a6f86f"
+        },
+        {
+          "path": "problem/IPOP_1992/prompt_examples/1.inp",
+          "sha256": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81"
+        },
+        {
+          "path": "problem/IPOP_1992/prompt_examples/10.inp",
+          "sha256": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81"
+        },
+        {
+          "path": "problem/IPOP_1992/prompt_examples/2.inp",
+          "sha256": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81"
+        },
+        {
+          "path": "problem/IPOP_1992/prompt_examples/3.inp",
+          "sha256": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81"
+        },
+        {
+          "path": "problem/IPOP_1992/prompt_examples/4.inp",
+          "sha256": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81"
+        },
+        {
+          "path": "problem/IPOP_1992/prompt_examples/5.inp",
+          "sha256": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81"
+        },
+        {
+          "path": "problem/IPOP_1992/prompt_examples/6.inp",
+          "sha256": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81"
+        },
+        {
+          "path": "problem/IPOP_1992/prompt_examples/7.inp",
+          "sha256": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81"
+        },
+        {
+          "path": "problem/IPOP_1992/prompt_examples/8.inp",
+          "sha256": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81"
+        },
+        {
+          "path": "problem/IPOP_1992/prompt_examples/9.inp",
+          "sha256": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81"
+        }
+      ],
+      "upstream_mapping": {
+        "relationship": "adapted_algorithm_not_identical_problem",
+        "path": "problems/construct_quad_tree/solution.js",
+        "url": "https://github.com/DhanushNehru/Leetcode/blob/b9d7d2c234c39b3b3c67eded0c125e2841685b29/problems/construct_quad_tree/solution.js",
+        "sha256": "b521cba764a40273af6483ed956176af33e33965068f74fd5f2496d1581b866a",
+        "adaptation": "Node 객체를 제공하고 TL/TR/BL/BR 순서의 BOJ 문자열로 직렬화",
+        "role": "additional_checker_only; evaluation inputs generated locally"
+      },
+      "cases": [
+        {
+          "case_id": "case01",
+          "purpose": "최소 흰색 픽셀",
+          "origin": "generated",
+          "input": "../../IPOP_1992/evaluation/case01.inp",
+          "output": "../../IPOP_1992/evaluation/case01.out",
+          "input_sha256": "5d90ef7fc0d040fd56a1e48697cfa99e0dfaf4fd803aefefc3b5053ec1d36aea",
+          "output_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "canonical_input_sha256": "8fad34bbb0c1ed095fbf1b50cb0e48785a030d5af68dc1a4957cbb583c3c1e5a",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case02",
+          "purpose": "최소 검정 픽셀",
+          "origin": "generated",
+          "input": "../../IPOP_1992/evaluation/case02.inp",
+          "output": "../../IPOP_1992/evaluation/case02.out",
+          "input_sha256": "ad0fadf63cc7cd779ce475e345bf4063565b63a3c2efef1eebc89790aaa6acba",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "020a7c91e30725bb191818987340dec6040aff93923840de685e1e1d7b3d071a",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case03",
+          "purpose": "동일 영역 0",
+          "origin": "generated",
+          "input": "../../IPOP_1992/evaluation/case03.inp",
+          "output": "../../IPOP_1992/evaluation/case03.out",
+          "input_sha256": "e44a44297c1fac388d52328ae2051a42a68033f3fcab2903d879b9d238f7e5d8",
+          "output_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "canonical_input_sha256": "445e643cf111f2e4bf6c1b12af3d528730ff416a0a9ced1b7d13ab3161009847",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case04",
+          "purpose": "동일 영역 1",
+          "origin": "generated",
+          "input": "../../IPOP_1992/evaluation/case04.inp",
+          "output": "../../IPOP_1992/evaluation/case04.out",
+          "input_sha256": "90d98b9f8983983f7b888b04c921c0b01fcd7b850bf236c97003865249dfd07e",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "3ec9335727c0a40d80b364748eac51a286adda0a31e64488c2fd39cdc0ba484c",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case05",
+          "purpose": "체커보드",
+          "origin": "generated",
+          "input": "../../IPOP_1992/evaluation/case05.inp",
+          "output": "../../IPOP_1992/evaluation/case05.out",
+          "input_sha256": "4d4a54b39758107edfc383924498b2109bb7a1b377f1496b7589892ba6b10438",
+          "output_sha256": "52e8e6c4375ff8ee4317b549040df78d0804540d4c5883b2d9e9229cdb8091f5",
+          "canonical_input_sha256": "7dc81e074109badde43f543b5c8701fa852e8bf8885cf87643af11839706021e",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case06",
+          "purpose": "상하 분할",
+          "origin": "generated",
+          "input": "../../IPOP_1992/evaluation/case06.inp",
+          "output": "../../IPOP_1992/evaluation/case06.out",
+          "input_sha256": "e1315bab7b18335bb9f7d44b85d6aee1f9941921a30255d66c0df41ba920ccc1",
+          "output_sha256": "b5eae297c6bf13b9539e3a0642e87ccd0777334f8fe7977a3627da4ac6ca5040",
+          "canonical_input_sha256": "0b1017ecab475374352cda7917767d9c94127c5cef76d686bcda529680cd1ced",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case07",
+          "purpose": "모두 분할",
+          "origin": "generated",
+          "input": "../../IPOP_1992/evaluation/case07.inp",
+          "output": "../../IPOP_1992/evaluation/case07.out",
+          "input_sha256": "535ea83b58a87b2ef3b7f39d008e97b724a2846633cb0d68de022b0be107a816",
+          "output_sha256": "a5745980c8edae7b7ebe50b751242c100598015cf36f3140664af3b2d30dd8a3",
+          "canonical_input_sha256": "dac26e21b7fd5b1da4e516c96dcce3cb257987a4caf01cd34a8b1dd42b2d9fa3",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case08",
+          "purpose": "한 픽셀만 다름",
+          "origin": "generated",
+          "input": "../../IPOP_1992/evaluation/case08.inp",
+          "output": "../../IPOP_1992/evaluation/case08.out",
+          "input_sha256": "d25ed2fba049bcef2ef999f24f4d387042f491a6239e04710fbcab1af2907397",
+          "output_sha256": "5fef27b377f079de324d34fc6915fc8913ac907046ba776f68659078f2e7454f",
+          "canonical_input_sha256": "79e8550e795319382e9b95f4391069c09a5d474b55b014c825c46fa6880831c2",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case09",
+          "purpose": "불균일 깊이",
+          "origin": "generated",
+          "input": "../../IPOP_1992/evaluation/case09.inp",
+          "output": "../../IPOP_1992/evaluation/case09.out",
+          "input_sha256": "60a22fb1476a1b99f025be870e966173f8c39c521b7147375255d11df9a568f7",
+          "output_sha256": "83c1e753ae32061cb0ccdf2587fb9e405229cde14ab47dd25642a405562ccd85",
+          "canonical_input_sha256": "db06da1c1f8912dd02317efa8e8bfadad2737b7e9251a6a4d9794fc0132521b6",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case10",
+          "purpose": "최대 변 길이",
+          "origin": "generated",
+          "input": "../../IPOP_1992/evaluation/case10.inp",
+          "output": "../../IPOP_1992/evaluation/case10.out",
+          "input_sha256": "8f252c88cfc6e6f35a39132e7544c09cfe50d69d6cdd47062024ed1859351e7b",
+          "output_sha256": "52e8e6c4375ff8ee4317b549040df78d0804540d4c5883b2d9e9229cdb8091f5",
+          "canonical_input_sha256": "78c21d0f0f26578a1c4188facd7af25442b300b3790420a3e604e8c6e1be8fff",
+          "oracle_cross_check": "pass"
+        }
+      ]
+    },
+    {
+      "problem_id": "IPOP_2003",
+      "title": "수들의 합 2",
+      "summary": "양의 정수 배열에서 합이 M인 비어 있지 않은 연속 구간의 개수를 출력한다.",
+      "specification": "../../IPOP_2003/statement.md",
+      "boj_url": "https://www.acmicpc.net/problem/2003",
+      "oracle_methods": [
+        "양수 배열 투 포인터",
+        "모든 연속 구간 완전탐색"
+      ],
+      "excluded_unique_inputs": 2,
+      "statement_example_count": 2,
+      "exclusion_sources": [
+        {
+          "path": "problem/IPOP_2003/statement.md",
+          "sha256": "d8c2f2877704e3f6461efdc1142acaa8c6dd1f83e63ced75fff45a75661cf366"
+        },
+        {
+          "path": "problem/IPOP_2003/prompt_examples/1.inp",
+          "sha256": "467bb71ec55117eec5bbfffebd757e0acbce8b6508ff34e8173643715f10699c"
+        },
+        {
+          "path": "problem/IPOP_2003/prompt_examples/10.inp",
+          "sha256": "b6ce2efc7dbd8c3d4c7b9a8d1aaa9509d4d9275fd7fcc1bded52b4b41b807c41"
+        },
+        {
+          "path": "problem/IPOP_2003/prompt_examples/2.inp",
+          "sha256": "b6ce2efc7dbd8c3d4c7b9a8d1aaa9509d4d9275fd7fcc1bded52b4b41b807c41"
+        },
+        {
+          "path": "problem/IPOP_2003/prompt_examples/3.inp",
+          "sha256": "467bb71ec55117eec5bbfffebd757e0acbce8b6508ff34e8173643715f10699c"
+        },
+        {
+          "path": "problem/IPOP_2003/prompt_examples/4.inp",
+          "sha256": "b6ce2efc7dbd8c3d4c7b9a8d1aaa9509d4d9275fd7fcc1bded52b4b41b807c41"
+        },
+        {
+          "path": "problem/IPOP_2003/prompt_examples/5.inp",
+          "sha256": "467bb71ec55117eec5bbfffebd757e0acbce8b6508ff34e8173643715f10699c"
+        },
+        {
+          "path": "problem/IPOP_2003/prompt_examples/6.inp",
+          "sha256": "b6ce2efc7dbd8c3d4c7b9a8d1aaa9509d4d9275fd7fcc1bded52b4b41b807c41"
+        },
+        {
+          "path": "problem/IPOP_2003/prompt_examples/7.inp",
+          "sha256": "467bb71ec55117eec5bbfffebd757e0acbce8b6508ff34e8173643715f10699c"
+        },
+        {
+          "path": "problem/IPOP_2003/prompt_examples/8.inp",
+          "sha256": "b6ce2efc7dbd8c3d4c7b9a8d1aaa9509d4d9275fd7fcc1bded52b4b41b807c41"
+        },
+        {
+          "path": "problem/IPOP_2003/prompt_examples/9.inp",
+          "sha256": "467bb71ec55117eec5bbfffebd757e0acbce8b6508ff34e8173643715f10699c"
+        }
+      ],
+      "upstream_mapping": null,
+      "cases": [
+        {
+          "case_id": "case01",
+          "purpose": "최소 배열 정답 1",
+          "origin": "generated",
+          "input": "../../IPOP_2003/evaluation/case01.inp",
+          "output": "../../IPOP_2003/evaluation/case01.out",
+          "input_sha256": "e10af96334f37d83e52216771db7343778fe8e8c49802a319595df3734903c32",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "c413f845fbe90b262337e1c7f973d9afd3b4816dd7cdb77c3e6c4abce0891a62",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case02",
+          "purpose": "최소 배열 정답 0",
+          "origin": "generated",
+          "input": "../../IPOP_2003/evaluation/case02.inp",
+          "output": "../../IPOP_2003/evaluation/case02.out",
+          "input_sha256": "c3a5d15cb5f8cbbc1686d3f02ce4e4aeb31e5141d4aeca6969048b2ef59d8676",
+          "output_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "canonical_input_sha256": "be417fad9f739c95814e8070079741ddef383326d830301c9287397217929dde",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case03",
+          "purpose": "구간 겹침",
+          "origin": "generated",
+          "input": "../../IPOP_2003/evaluation/case03.inp",
+          "output": "../../IPOP_2003/evaluation/case03.out",
+          "input_sha256": "d511c7e6a368a92bfa2f029e07234346deb9462e39c502a9685a0fd4373f082d",
+          "output_sha256": "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2",
+          "canonical_input_sha256": "58eb32979fb12dddbc623ae49fe77a6b088acb5bb636ab53da41a1021888bcc3",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case04",
+          "purpose": "배열 전체",
+          "origin": "generated",
+          "input": "../../IPOP_2003/evaluation/case04.inp",
+          "output": "../../IPOP_2003/evaluation/case04.out",
+          "input_sha256": "63a9e6e895276a892d92d44912b866cc27ad5362d2a835cae4f89dcef90bc36c",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "906851843f43a27e9e1d21b37107d702a47a51fff42d2be7976d3fa5f5287a82",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case05",
+          "purpose": "길이 1 구간",
+          "origin": "generated",
+          "input": "../../IPOP_2003/evaluation/case05.inp",
+          "output": "../../IPOP_2003/evaluation/case05.out",
+          "input_sha256": "1ce06c9b44fa75b58b4fc97fbcf0a481c624bbd83de863c47a27e65a966b6824",
+          "output_sha256": "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2",
+          "canonical_input_sha256": "363cf40f315c0735046d4bf1ed36cc4d3fc4e49062529deba1d23193ce16d05a",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case06",
+          "purpose": "서로 다른 구간 길이",
+          "origin": "generated",
+          "input": "../../IPOP_2003/evaluation/case06.inp",
+          "output": "../../IPOP_2003/evaluation/case06.out",
+          "input_sha256": "b6c8fcd0a9bd01a3a8c09ff9af6cd72ec75fbd99396c44ad19ca3c68c126c358",
+          "output_sha256": "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2",
+          "canonical_input_sha256": "2123e189cd04d71bcf4c76bf58d5e59ec46d9d0db885e273e063f31ecf4a2f1a",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case07",
+          "purpose": "반복 패턴",
+          "origin": "generated",
+          "input": "../../IPOP_2003/evaluation/case07.inp",
+          "output": "../../IPOP_2003/evaluation/case07.out",
+          "input_sha256": "09507c384d052612045b3fc446402f7ddae499e8875e989897b44c3da1ab2bd3",
+          "output_sha256": "f0b5c2c2211c8d67ed15e75e656c7862d086e9245420892a7de62cd9ec582a06",
+          "canonical_input_sha256": "51d0287f843e9d96bf8c601d1e03e53ffb84a93b6ea5e35e99872247f53c46ac",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case08",
+          "purpose": "큰 원소 건너뛰기",
+          "origin": "generated",
+          "input": "../../IPOP_2003/evaluation/case08.inp",
+          "output": "../../IPOP_2003/evaluation/case08.out",
+          "input_sha256": "f6a9311424dcc84aa6d36227d4c4890dba1c9c0f0c5b58e1e85b5631b70e0c22",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "71c7e3b80bbec239591610141daedc6a947f7d0647422e0f385c5b127622718a",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case09",
+          "purpose": "원소 상한",
+          "origin": "generated",
+          "input": "../../IPOP_2003/evaluation/case09.inp",
+          "output": "../../IPOP_2003/evaluation/case09.out",
+          "input_sha256": "c180f97491cc3f65eb61d442f24b8b9cef5d0d340355bac09f288139547d30c6",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "567fca354ee6537641c4e20647749e53508aa7c411ef39564df542cce985955b",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case10",
+          "purpose": "목표 합 상한",
+          "origin": "generated",
+          "input": "../../IPOP_2003/evaluation/case10.inp",
+          "output": "../../IPOP_2003/evaluation/case10.out",
+          "input_sha256": "7bce22c918bae498056cc3e07ecf4b909f9a4f6bfe2af4a4b45422a079ea7497",
+          "output_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "canonical_input_sha256": "ea5b320a099ef7c1d544eb800d832d91962cbf4e31b7076037ebd39e6d6945be",
+          "oracle_cross_check": "pass"
+        }
+      ]
+    },
+    {
+      "problem_id": "IPOP_2110",
+      "title": "공유기 설치",
+      "summary": "서로 다른 집 좌표 중 C곳을 골라 가장 가까운 공유기 간 거리를 최대화한다.",
+      "specification": "../../IPOP_2110/statement.md",
+      "boj_url": "https://www.acmicpc.net/problem/2110",
+      "oracle_methods": [
+        "최소 거리 이분탐색·탐욕 배치",
+        "공유기 위치 조합 완전탐색"
+      ],
+      "excluded_unique_inputs": 11,
+      "statement_example_count": 1,
+      "exclusion_sources": [
+        {
+          "path": "problem/IPOP_2110/statement.md",
+          "sha256": "b305af8e3aea1b0f43308cc977223e2d24fd8c5c7754458dd0a01d9db763c714"
+        },
+        {
+          "path": "problem/IPOP_2110/prompt_examples/1.inp",
+          "sha256": "4251bdefdfd2a6748622583d0f8eee248e2cbfd228f05ad43a09b2bade01ae8e"
+        },
+        {
+          "path": "problem/IPOP_2110/prompt_examples/10.inp",
+          "sha256": "5bcd9b97022bdb5261c54d3c433728a6a9e4de3812858cb99220afa65244e463"
+        },
+        {
+          "path": "problem/IPOP_2110/prompt_examples/2.inp",
+          "sha256": "dc7ea33954697da32d6cbf60ce9871374910e53089625e4a6da39fec9ad2cac4"
+        },
+        {
+          "path": "problem/IPOP_2110/prompt_examples/3.inp",
+          "sha256": "28e9de6e20584aafe7780f776273a7446f8b738e4614f001692e85c6046c39b0"
+        },
+        {
+          "path": "problem/IPOP_2110/prompt_examples/4.inp",
+          "sha256": "9a8c501f5d03f9aef16175774a5b4511ee24d43614a9bb7a0a238ab28fca7045"
+        },
+        {
+          "path": "problem/IPOP_2110/prompt_examples/5.inp",
+          "sha256": "fd0c62179732453335fe185bd7013b777360dfc72bc1ee65c216917dffeefecf"
+        },
+        {
+          "path": "problem/IPOP_2110/prompt_examples/6.inp",
+          "sha256": "be0f48b05a34b53cbd9cb915cdf2cfd54d97d025c67ce925048d6857cf671c63"
+        },
+        {
+          "path": "problem/IPOP_2110/prompt_examples/7.inp",
+          "sha256": "30efe4154de96ac8bfa12ee62b3b5b8f2fcabd3f2247e597c83f6408696f3c6f"
+        },
+        {
+          "path": "problem/IPOP_2110/prompt_examples/8.inp",
+          "sha256": "714091e7460f5050e77ff3bb8e96d57839fcb3367aadae06db959a308858e8de"
+        },
+        {
+          "path": "problem/IPOP_2110/prompt_examples/9.inp",
+          "sha256": "ea46adf6da2077f67cbd06d2b2583c9de4a560ed0fe6ad36072709b6f1197451"
+        }
+      ],
+      "upstream_mapping": null,
+      "cases": [
+        {
+          "case_id": "case01",
+          "purpose": "최소 좌표 간격",
+          "origin": "generated",
+          "input": "../../IPOP_2110/evaluation/case01.inp",
+          "output": "../../IPOP_2110/evaluation/case01.out",
+          "input_sha256": "b616f1a2f7cef689e710ee9188d36fb7ba87b16e97ba79615abb7c871695e09d",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "16c5bac26cba890c683e0301abc117df8e16bff492dbc95c5f1547247149febb",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case02",
+          "purpose": "좌표 범위 양끝",
+          "origin": "generated",
+          "input": "../../IPOP_2110/evaluation/case02.inp",
+          "output": "../../IPOP_2110/evaluation/case02.out",
+          "input_sha256": "5c84f56b0f296624335e743d3b70853f23c73ada4399f0151236345f64b9c837",
+          "output_sha256": "8bd5a23c3aef1243c78bac155b39b9d57a43d8c49665ccf6f42acf2992a94afa",
+          "canonical_input_sha256": "b736388fccb238c240b072704f924a85960558cc843574f9af3294cc023d8fa6",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case03",
+          "purpose": "모든 집 선택",
+          "origin": "generated",
+          "input": "../../IPOP_2110/evaluation/case03.inp",
+          "output": "../../IPOP_2110/evaluation/case03.out",
+          "input_sha256": "b243851f3fa17a7873c57ad356eab70b5aead073ca75561cbc00c0db1d518f46",
+          "output_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+          "canonical_input_sha256": "a9227382a3df8688705d9fe35dfc88c8c7e95955d1b659984719e9c4b65e6cf7",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case04",
+          "purpose": "정렬되지 않은 입력",
+          "origin": "generated",
+          "input": "../../IPOP_2110/evaluation/case04.inp",
+          "output": "../../IPOP_2110/evaluation/case04.out",
+          "input_sha256": "d730bd7865756328b1ed132bd1b43f021671fae082d83e856ef8e6dd7f09e417",
+          "output_sha256": "2e6d31a5983a91251bfae5aefa1c0a19d8ba3cf601d0e8a706b4cfa9661a6b8a",
+          "canonical_input_sha256": "fdb42b3ee72c0d796d6258cfee3706fcffd8b0d6c6477fe89a2324b2d4c9a314",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case05",
+          "purpose": "큰 공백",
+          "origin": "generated",
+          "input": "../../IPOP_2110/evaluation/case05.inp",
+          "output": "../../IPOP_2110/evaluation/case05.out",
+          "input_sha256": "66df15e4eb4405698bf0362fbdcda92362ffc0b8d6e515ed5c4ce0e62cf0d374",
+          "output_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+          "canonical_input_sha256": "00d59622fe421efe7e4fb7e00d881ff6a70e7e89225693d5535fe6f8b73255d5",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case06",
+          "purpose": "동일 간격",
+          "origin": "generated",
+          "input": "../../IPOP_2110/evaluation/case06.inp",
+          "output": "../../IPOP_2110/evaluation/case06.out",
+          "input_sha256": "e99a33eb117093223c3a5bb8517987e6a57fafee05e4f5cf711a43e01c11fbff",
+          "output_sha256": "06e9d52c1720fca412803e3b07c4b228ff113e303f4c7ab94665319d832bbfb7",
+          "canonical_input_sha256": "5a52e637389e4889301919d1f2259a1e6b85ec974db1faf03c2e0e8a4ef56109",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case07",
+          "purpose": "비균등 간격",
+          "origin": "generated",
+          "input": "../../IPOP_2110/evaluation/case07.inp",
+          "output": "../../IPOP_2110/evaluation/case07.out",
+          "input_sha256": "7a1500cc2901b562bbd9522a791cbea9c27ea48ef436e8180452f9647456a8c8",
+          "output_sha256": "10159baf262b43a92d95db59dae1f72c645127301661e0a3ce4e38b295a97c58",
+          "canonical_input_sha256": "a0d46b72c0c61fbb265d68f51fcf55d2d804f68a60927aae70c9751315c9ad53",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case08",
+          "purpose": "좌표 평행 이동",
+          "origin": "generated",
+          "input": "../../IPOP_2110/evaluation/case08.inp",
+          "output": "../../IPOP_2110/evaluation/case08.out",
+          "input_sha256": "10748bc4c4021d56473675ea44cfb143cd28103105948c1b89326bc7e42bef4e",
+          "output_sha256": "7de1555df0c2700329e815b93b32c571c3ea54dc967b89e81ab73b9972b72d1d",
+          "canonical_input_sha256": "4dd842041a4da23fa6a97f2c43b2a7628492aa94d2317c5efd8f22e1e863761c",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case09",
+          "purpose": "순서 혼합",
+          "origin": "generated",
+          "input": "../../IPOP_2110/evaluation/case09.inp",
+          "output": "../../IPOP_2110/evaluation/case09.out",
+          "input_sha256": "f1010393cd1fcd874773139ff737e8027e55ea413bbfd5214e63fce885b03bb5",
+          "output_sha256": "aa67a169b0bba217aa0aa88a65346920c84c42447c36ba5f7ea65f422c1fe5d8",
+          "canonical_input_sha256": "5a77f073fba0ae7fdf27a60bc8474a78fa34fdbd410134c6ee6089cbac569b04",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case10",
+          "purpose": "조합 선택",
+          "origin": "generated",
+          "input": "../../IPOP_2110/evaluation/case10.inp",
+          "output": "../../IPOP_2110/evaluation/case10.out",
+          "input_sha256": "4803435a940d84a990ccdcc1f4e4a9d78c4c4f89baa73cbb5cf0c45f5ffc50e0",
+          "output_sha256": "f0b5c2c2211c8d67ed15e75e656c7862d086e9245420892a7de62cd9ec582a06",
+          "canonical_input_sha256": "c1a5be4e3058f58b21f74c7e43bd8431fce84b3a36166d37933a92087326984e",
+          "oracle_cross_check": "pass"
+        }
+      ]
+    },
+    {
+      "problem_id": "IPOP_2217",
+      "title": "로프",
+      "summary": "선택한 로프의 최소 허용 하중과 로프 개수의 곱을 최대화한다.",
+      "specification": "../../IPOP_2217/statement.md",
+      "boj_url": "https://www.acmicpc.net/problem/2217",
+      "oracle_methods": [
+        "정렬 후 중량 임계값",
+        "모든 비어 있지 않은 로프 부분집합"
+      ],
+      "excluded_unique_inputs": 11,
+      "statement_example_count": 1,
+      "exclusion_sources": [
+        {
+          "path": "problem/IPOP_2217/statement.md",
+          "sha256": "d90485b6a47dad767957a610a3d6067435af637f3e798f40e9eff0e7dec17832"
+        },
+        {
+          "path": "problem/IPOP_2217/prompt_examples/1.inp",
+          "sha256": "3c0eede287acf580ea14645b72ecb9612d3af1442f2b828c63fcb4da8332a790"
+        },
+        {
+          "path": "problem/IPOP_2217/prompt_examples/10.inp",
+          "sha256": "e575bad8e445807d1f6511ebd3f65f3674ffe385b84568541f4821f10d57f7c9"
+        },
+        {
+          "path": "problem/IPOP_2217/prompt_examples/2.inp",
+          "sha256": "b562e62a999fe052700eb2fddc7fcf51dba932fee63c5f410500d50e94ea9a5c"
+        },
+        {
+          "path": "problem/IPOP_2217/prompt_examples/3.inp",
+          "sha256": "2ea211f868a095e5d8293eb4ad5d99fcaa4b1c344f00f1df946435faf74ee2bf"
+        },
+        {
+          "path": "problem/IPOP_2217/prompt_examples/4.inp",
+          "sha256": "4aaf5143e1c231e6b9e5cc745bcfd9d3679114b2f22a7d96c24eddce488468e9"
+        },
+        {
+          "path": "problem/IPOP_2217/prompt_examples/5.inp",
+          "sha256": "eb3e7f5161350b31b7e702337e89431a6882c4c7cb0d25e4c0f7f89e52b6e1e3"
+        },
+        {
+          "path": "problem/IPOP_2217/prompt_examples/6.inp",
+          "sha256": "0de9a008e0ddd343d38271feea8e0320e8706f33fbc1a4f9f67b790457ca1679"
+        },
+        {
+          "path": "problem/IPOP_2217/prompt_examples/7.inp",
+          "sha256": "42a9e7392b2d9ea8c5469b89f94cacb2def5547a98cac689c0c469fbf9273995"
+        },
+        {
+          "path": "problem/IPOP_2217/prompt_examples/8.inp",
+          "sha256": "2e084fecb639ad2324f8802b16757922d6c127edbb5a3c3acbb5af973a0e7796"
+        },
+        {
+          "path": "problem/IPOP_2217/prompt_examples/9.inp",
+          "sha256": "24a24c11562e2dc5f80ab432903f48f631223869a3f4a8858a47aafbb8fc7914"
+        }
+      ],
+      "upstream_mapping": null,
+      "cases": [
+        {
+          "case_id": "case01",
+          "purpose": "최소 크기와 하중",
+          "origin": "generated",
+          "input": "../../IPOP_2217/evaluation/case01.inp",
+          "output": "../../IPOP_2217/evaluation/case01.out",
+          "input_sha256": "ad0fadf63cc7cd779ce475e345bf4063565b63a3c2efef1eebc89790aaa6acba",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "020a7c91e30725bb191818987340dec6040aff93923840de685e1e1d7b3d071a",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case02",
+          "purpose": "하중 상한",
+          "origin": "generated",
+          "input": "../../IPOP_2217/evaluation/case02.inp",
+          "output": "../../IPOP_2217/evaluation/case02.out",
+          "input_sha256": "29c9eb9e82e1525a19a6c43edb201921c22cbaecf16b71b51d01c0e5c6c6584f",
+          "output_sha256": "876e13f4e07bb39705302c01f445ffd2d2c3b180a207e4d959d6b671c67da09b",
+          "canonical_input_sha256": "69ea91e287db11c521b31bdd551e23823dfffa504f6605a688ce92b4700ad4ea",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case03",
+          "purpose": "동일 로프",
+          "origin": "generated",
+          "input": "../../IPOP_2217/evaluation/case03.inp",
+          "output": "../../IPOP_2217/evaluation/case03.out",
+          "input_sha256": "4740e7dbe2cb3352dc899730445fa3e91373b2016d5d3c467de8f63cc6c4939f",
+          "output_sha256": "06e9d52c1720fca412803e3b07c4b228ff113e303f4c7ab94665319d832bbfb7",
+          "canonical_input_sha256": "5d149710d5b6ea3f0589bcc85662e60dbb2e78f80f2d0f008cf7917ca34eb725",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case04",
+          "purpose": "약한 로프 제외",
+          "origin": "generated",
+          "input": "../../IPOP_2217/evaluation/case04.inp",
+          "output": "../../IPOP_2217/evaluation/case04.out",
+          "input_sha256": "54256fc144aa419d1fab55b498dad05e13593271fca3952a51109c1932e991e7",
+          "output_sha256": "876e13f4e07bb39705302c01f445ffd2d2c3b180a207e4d959d6b671c67da09b",
+          "canonical_input_sha256": "39b7db11b2d2c8a9846edc6d3e5e2092ea28fd3776592ad42c10af6e99faf433",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case05",
+          "purpose": "기하급수 하중",
+          "origin": "generated",
+          "input": "../../IPOP_2217/evaluation/case05.inp",
+          "output": "../../IPOP_2217/evaluation/case05.out",
+          "input_sha256": "8f8c2780fec73ec8b3580da92d6368074bab8e4567542a3c579e77705fb81b96",
+          "output_sha256": "aa67a169b0bba217aa0aa88a65346920c84c42447c36ba5f7ea65f422c1fe5d8",
+          "canonical_input_sha256": "6ca9575e8542e32f8a83e9ccca1608ab368b5abbccb89ebd69b685c200b8f43c",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case06",
+          "purpose": "역순 하중",
+          "origin": "generated",
+          "input": "../../IPOP_2217/evaluation/case06.inp",
+          "output": "../../IPOP_2217/evaluation/case06.out",
+          "input_sha256": "7f18a16c88571d16da258c48d68fbdcbea14cffdc582c61030ca1cc9975b1acf",
+          "output_sha256": "a1fb50e6c86fae1679ef3351296fd6713411a08cf8dd1790a4fd05fae8688164",
+          "canonical_input_sha256": "94f2baa0f182df528c63240f0649b483ffbaa875eb46eb726b1c4adba768fcf5",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case07",
+          "purpose": "부분집합 최적",
+          "origin": "generated",
+          "input": "../../IPOP_2217/evaluation/case07.inp",
+          "output": "../../IPOP_2217/evaluation/case07.out",
+          "input_sha256": "263ab91adc8e99aa377e49d36feed8f6c4af5d9a79101ecdd5d05948cb64e0cf",
+          "output_sha256": "7ee29791fc17e986b97128845622b077fb45e349fdb80523fac9dba879b4ad60",
+          "canonical_input_sha256": "6f29270308df4d410755d9ccdb309ef5a005e8851c763be485221c2c5d84b90b",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case08",
+          "purpose": "전체 선택 최적",
+          "origin": "generated",
+          "input": "../../IPOP_2217/evaluation/case08.inp",
+          "output": "../../IPOP_2217/evaluation/case08.out",
+          "input_sha256": "fe61eaee0dc15618854bc222143446346b92828389976fa74fea88ef8f93d2cc",
+          "output_sha256": "2e6d31a5983a91251bfae5aefa1c0a19d8ba3cf601d0e8a706b4cfa9661a6b8a",
+          "canonical_input_sha256": "abed81d49a753b12791ee8412b5a0b7962835699664ea59ea9f957fb0cc20874",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case09",
+          "purpose": "반복과 이상치",
+          "origin": "generated",
+          "input": "../../IPOP_2217/evaluation/case09.inp",
+          "output": "../../IPOP_2217/evaluation/case09.out",
+          "input_sha256": "bfee216b705e70a2d2a9d8e7cdf40fa0dda9dedba8d9ffa47e9801aa2cb48368",
+          "output_sha256": "f4ccd05b3271c386ee55d9876c7450012a3b361e5065c09dc22075e38b3cc35c",
+          "canonical_input_sha256": "db02b267f1d7696aae182bb5866f6f3f392204b1fc7a3dcff6d6193cc9126063",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case10",
+          "purpose": "상한 근처",
+          "origin": "generated",
+          "input": "../../IPOP_2217/evaluation/case10.inp",
+          "output": "../../IPOP_2217/evaluation/case10.out",
+          "input_sha256": "f65c1c6a16485d6f109d9905b64411344de554f20df7b1275b7b876e824abd4d",
+          "output_sha256": "64a8a44a1c1808ae08117ab108b7d78acca1e626eb5f3d5222eefbcdc3686cf8",
+          "canonical_input_sha256": "4336af5889f25cee4b6cb69df7000cd1fbf39f211a40c8d21242d88301920065",
+          "oracle_cross_check": "pass"
+        }
+      ]
+    },
+    {
+      "problem_id": "IPOP_2579",
+      "title": "계단 오르기",
+      "summary": "1칸 또는 2칸씩 이동하고 세 계단 연속 방문을 금지하며 마지막 계단까지 점수를 최대화한다.",
+      "specification": "../../IPOP_2579/statement.md",
+      "boj_url": "https://www.acmicpc.net/problem/2579",
+      "oracle_methods": [
+        "점화식 DP",
+        "합법적인 계단 이동 경로 완전탐색"
+      ],
+      "excluded_unique_inputs": 11,
+      "statement_example_count": 1,
+      "exclusion_sources": [
+        {
+          "path": "problem/IPOP_2579/statement.md",
+          "sha256": "e132c9aded0ea9c65b192608742f221d327bde0ecfd954f54534da62b627e170"
+        },
+        {
+          "path": "problem/IPOP_2579/prompt_examples/1.inp",
+          "sha256": "7ca5c6038d1e4e4b50c3e11f0c9f65ccc2b29c653ca3bfa880c5f3b70a89bbc4"
+        },
+        {
+          "path": "problem/IPOP_2579/prompt_examples/10.inp",
+          "sha256": "cc098d8fc7443ccb28effa3c661d4f68ec1413b850fdcb0a6cb62ca8e84971be"
+        },
+        {
+          "path": "problem/IPOP_2579/prompt_examples/2.inp",
+          "sha256": "c152f0e3e2f1ed5cf603d7f395dca0143710b234213b2e6537d2284a74aa5aaf"
+        },
+        {
+          "path": "problem/IPOP_2579/prompt_examples/3.inp",
+          "sha256": "1501ee2e00dc4c3064985ca690b83db950966f1ad3c24f77ddb7d7821db10865"
+        },
+        {
+          "path": "problem/IPOP_2579/prompt_examples/4.inp",
+          "sha256": "d295a2f30856dba575d7a374612c5648b25214a390b9ec14695e3276ba1bf972"
+        },
+        {
+          "path": "problem/IPOP_2579/prompt_examples/5.inp",
+          "sha256": "91eeeb80811feedaf3cbefdf5c072bee4f5daf681b51476811a40d0bd0920573"
+        },
+        {
+          "path": "problem/IPOP_2579/prompt_examples/6.inp",
+          "sha256": "6376f8dead5c8b3b16dd0a43cca55b3a46e0746b000b16fd38bfcaf119a9a3fb"
+        },
+        {
+          "path": "problem/IPOP_2579/prompt_examples/7.inp",
+          "sha256": "dda620581ece29f9b6ff164e7b6bc38dfa4beda232efa64a59986955d3463c33"
+        },
+        {
+          "path": "problem/IPOP_2579/prompt_examples/8.inp",
+          "sha256": "3d360ca9f9784a42d8290529e5ed4cfbb05f7f0f8838260f0c82b54cfa107352"
+        },
+        {
+          "path": "problem/IPOP_2579/prompt_examples/9.inp",
+          "sha256": "13f82beb6aeaf40ce0abeed02ccd719b5b2224e5a537fb8edc81c7a481a7eed6"
+        }
+      ],
+      "upstream_mapping": null,
+      "cases": [
+        {
+          "case_id": "case01",
+          "purpose": "최소 계단과 점수",
+          "origin": "generated",
+          "input": "../../IPOP_2579/evaluation/case01.inp",
+          "output": "../../IPOP_2579/evaluation/case01.out",
+          "input_sha256": "ad0fadf63cc7cd779ce475e345bf4063565b63a3c2efef1eebc89790aaa6acba",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "020a7c91e30725bb191818987340dec6040aff93923840de685e1e1d7b3d071a",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case02",
+          "purpose": "점수 상한",
+          "origin": "generated",
+          "input": "../../IPOP_2579/evaluation/case02.inp",
+          "output": "../../IPOP_2579/evaluation/case02.out",
+          "input_sha256": "29c9eb9e82e1525a19a6c43edb201921c22cbaecf16b71b51d01c0e5c6c6584f",
+          "output_sha256": "876e13f4e07bb39705302c01f445ffd2d2c3b180a207e4d959d6b671c67da09b",
+          "canonical_input_sha256": "69ea91e287db11c521b31bdd551e23823dfffa504f6605a688ce92b4700ad4ea",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case03",
+          "purpose": "두 계단",
+          "origin": "generated",
+          "input": "../../IPOP_2579/evaluation/case03.inp",
+          "output": "../../IPOP_2579/evaluation/case03.out",
+          "input_sha256": "fdcb27265764b2a73c62380d364aa177b18028a2d6fffe621bac5a23affde265",
+          "output_sha256": "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2",
+          "canonical_input_sha256": "de2ad8e58ba769085b79c091820d7ffe70924e65a749a2ba74db31e165c1ec56",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case04",
+          "purpose": "세 계단 연속 금지",
+          "origin": "generated",
+          "input": "../../IPOP_2579/evaluation/case04.inp",
+          "output": "../../IPOP_2579/evaluation/case04.out",
+          "input_sha256": "0e52e4bf875940de9bb55c0f7a96f39e05a5b0ef0199e7c1d2376ddbfbaad8ec",
+          "output_sha256": "8d24a9f8aba50dda3f5b78568770b2adc16d910552906e7612627da253f79a2a",
+          "canonical_input_sha256": "3324a4cc1330bb05f32552c036724f63380378443e4a0f02ae678146e22c6b4d",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case05",
+          "purpose": "양끝 고득점",
+          "origin": "generated",
+          "input": "../../IPOP_2579/evaluation/case05.inp",
+          "output": "../../IPOP_2579/evaluation/case05.out",
+          "input_sha256": "def0505e8e0a12461f2fb6b83ab74cf18bdf5083fc9ca3c31be362d6d0199aee",
+          "output_sha256": "14993db977ff54ff86b0c447cbf330d1718c108468ea0f0fe2ec1fbfdb73af2b",
+          "canonical_input_sha256": "9fa75a133bf7d2ded125ddab72a4f113c98568b975cf828dbb23fa5434021739",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case06",
+          "purpose": "동일 점수",
+          "origin": "generated",
+          "input": "../../IPOP_2579/evaluation/case06.inp",
+          "output": "../../IPOP_2579/evaluation/case06.out",
+          "input_sha256": "03e88f85e009c10f6e3dceae7b7778307cd2e34682c013e2eefff3be6475a430",
+          "output_sha256": "9961d158a7e0e2f990765971a9e490af826c0743b7d603020f34cc8944319fcb",
+          "canonical_input_sha256": "82e86c29500f74ea077bcfddbbf824b9bce8931924962d0538c7cb72048ac643",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case07",
+          "purpose": "증가 점수",
+          "origin": "generated",
+          "input": "../../IPOP_2579/evaluation/case07.inp",
+          "output": "../../IPOP_2579/evaluation/case07.out",
+          "input_sha256": "33846158c2e4b26602b89c3f6a9d5be694fe1f70fe2b5624ad6599e201d9da83",
+          "output_sha256": "e6c21e8d260fe71882debdb339d2402a2ca7648529bc2303f48649bce0380017",
+          "canonical_input_sha256": "0ea3a7d951ecc06512197ca6a0401227bd5db046b0dfb515b251f60d1dd540f3",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case08",
+          "purpose": "감소 점수",
+          "origin": "generated",
+          "input": "../../IPOP_2579/evaluation/case08.inp",
+          "output": "../../IPOP_2579/evaluation/case08.out",
+          "input_sha256": "d2de1f0c154d57f6635cefcbd3cb8374fc15482f6abbb54f64b2a24f255c0785",
+          "output_sha256": "238903180cc104ec2c5d8b3f20c5bc61b389ec0a967df8cc208cdc7cd454174f",
+          "canonical_input_sha256": "7f37c98882451853c78304039bc0dbec0c51b5355cd6225b791c5be4f3fa6b59",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case09",
+          "purpose": "번갈아 고득점",
+          "origin": "generated",
+          "input": "../../IPOP_2579/evaluation/case09.inp",
+          "output": "../../IPOP_2579/evaluation/case09.out",
+          "input_sha256": "12e1138c189e3fa70b1a396b0a373091860e551e2c0632d168330f78828cce44",
+          "output_sha256": "32b3ce24b7c6d0da5bcededbf47646e98aa83d61196dc598c02e2404ae3f03a7",
+          "canonical_input_sha256": "4b61c82d4ed9e472c027695c08aceb3edca936263239a17e8f8d1c61b8feac65",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case10",
+          "purpose": "홀수 길이",
+          "origin": "generated",
+          "input": "../../IPOP_2579/evaluation/case10.inp",
+          "output": "../../IPOP_2579/evaluation/case10.out",
+          "input_sha256": "335762918a3dd9550a2c87ac773c557e29ce1b1ad53b949db595ccdb7d9f52b6",
+          "output_sha256": "7ea9844ae84eccbf55e8330640865e36c43521e45a1baec24233327aab7e6595",
+          "canonical_input_sha256": "37802c007dfee066af498713015f1b6ae3e3009759cb33b4593724652f59a5ed",
+          "oracle_cross_check": "pass"
+        }
+      ]
+    },
+    {
+      "problem_id": "IPOP_2609",
+      "title": "최대공약수와 최소공배수",
+      "summary": "두 양의 정수의 최대공약수와 최소공배수를 순서대로 출력한다.",
+      "specification": "../../IPOP_2609/statement.md",
+      "boj_url": "https://www.acmicpc.net/problem/2609",
+      "oracle_methods": [
+        "유클리드 GCD와 곱/GCD",
+        "약수·공배수 직접 순회"
+      ],
+      "excluded_unique_inputs": 1,
+      "statement_example_count": 1,
+      "exclusion_sources": [
+        {
+          "path": "problem/IPOP_2609/statement.md",
+          "sha256": "946da8faeaae914cfac56c2e2d74d7137ce89e7aa6bd415292ba876f871f57cc"
+        },
+        {
+          "path": "problem/IPOP_2609/prompt_examples/1.inp",
+          "sha256": "7d52d0cae20734646c517b72402dd145cacaa4d162f21d6a6ec85dc792138246"
+        },
+        {
+          "path": "problem/IPOP_2609/prompt_examples/10.inp",
+          "sha256": "7d52d0cae20734646c517b72402dd145cacaa4d162f21d6a6ec85dc792138246"
+        },
+        {
+          "path": "problem/IPOP_2609/prompt_examples/2.inp",
+          "sha256": "7d52d0cae20734646c517b72402dd145cacaa4d162f21d6a6ec85dc792138246"
+        },
+        {
+          "path": "problem/IPOP_2609/prompt_examples/3.inp",
+          "sha256": "7d52d0cae20734646c517b72402dd145cacaa4d162f21d6a6ec85dc792138246"
+        },
+        {
+          "path": "problem/IPOP_2609/prompt_examples/4.inp",
+          "sha256": "7d52d0cae20734646c517b72402dd145cacaa4d162f21d6a6ec85dc792138246"
+        },
+        {
+          "path": "problem/IPOP_2609/prompt_examples/5.inp",
+          "sha256": "7d52d0cae20734646c517b72402dd145cacaa4d162f21d6a6ec85dc792138246"
+        },
+        {
+          "path": "problem/IPOP_2609/prompt_examples/6.inp",
+          "sha256": "7d52d0cae20734646c517b72402dd145cacaa4d162f21d6a6ec85dc792138246"
+        },
+        {
+          "path": "problem/IPOP_2609/prompt_examples/7.inp",
+          "sha256": "7d52d0cae20734646c517b72402dd145cacaa4d162f21d6a6ec85dc792138246"
+        },
+        {
+          "path": "problem/IPOP_2609/prompt_examples/8.inp",
+          "sha256": "7d52d0cae20734646c517b72402dd145cacaa4d162f21d6a6ec85dc792138246"
+        },
+        {
+          "path": "problem/IPOP_2609/prompt_examples/9.inp",
+          "sha256": "7d52d0cae20734646c517b72402dd145cacaa4d162f21d6a6ec85dc792138246"
+        }
+      ],
+      "upstream_mapping": null,
+      "cases": [
+        {
+          "case_id": "case01",
+          "purpose": "두 수의 하한",
+          "origin": "generated",
+          "input": "../../IPOP_2609/evaluation/case01.inp",
+          "output": "../../IPOP_2609/evaluation/case01.out",
+          "input_sha256": "3f11ad6bbc7ecca0b2416b713dee77f1a635c00aaeaa946e14cde1c2bfae56d5",
+          "output_sha256": "ad0fadf63cc7cd779ce475e345bf4063565b63a3c2efef1eebc89790aaa6acba",
+          "canonical_input_sha256": "020a7c91e30725bb191818987340dec6040aff93923840de685e1e1d7b3d071a",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case02",
+          "purpose": "하한과 상한",
+          "origin": "generated",
+          "input": "../../IPOP_2609/evaluation/case02.inp",
+          "output": "../../IPOP_2609/evaluation/case02.out",
+          "input_sha256": "3d6bf5e37d5f614f8a9ba04929f1fb5ca8500e7e90f6f46eba38e0108bbfa219",
+          "output_sha256": "29c9eb9e82e1525a19a6c43edb201921c22cbaecf16b71b51d01c0e5c6c6584f",
+          "canonical_input_sha256": "69ea91e287db11c521b31bdd551e23823dfffa504f6605a688ce92b4700ad4ea",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case03",
+          "purpose": "동일 상한",
+          "origin": "generated",
+          "input": "../../IPOP_2609/evaluation/case03.inp",
+          "output": "../../IPOP_2609/evaluation/case03.out",
+          "input_sha256": "96bcc5a4522dbfd3902d3434c756e9436153fb4eed0ca2dc2e70c08a076dcc9c",
+          "output_sha256": "c052914a68ed57c15550fdf72fbdd210c45c5d6d45afc16e1e35d4bfa72f6b88",
+          "canonical_input_sha256": "7f85cf0f583b68b625d11cac8692e8d19d706b1f820c4bce0093e01e59a1bacd",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case04",
+          "purpose": "서로 다른 소수",
+          "origin": "generated",
+          "input": "../../IPOP_2609/evaluation/case04.inp",
+          "output": "../../IPOP_2609/evaluation/case04.out",
+          "input_sha256": "8891ce323afe60f2bc11d0a692ee0da47c1eb73c2e33248f1b10d513e0547fd7",
+          "output_sha256": "f04afe51f4de2613ca6c3e7dd0692c9760154f113c90e0c1f54a6f3dc478357b",
+          "canonical_input_sha256": "da1772214a56e1dd668b9621055ac1ae56e1d74aa3d661bd8d0fd6ec7a3315d0",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case05",
+          "purpose": "약수 관계",
+          "origin": "generated",
+          "input": "../../IPOP_2609/evaluation/case05.inp",
+          "output": "../../IPOP_2609/evaluation/case05.out",
+          "input_sha256": "293c3c4d86cd2f7ce4e9ccf878fb7f7c5ee778e4b2104817c88c10a403472232",
+          "output_sha256": "a8647df6e9d00391b571e78c0990c83b2f266751e14dd4ced45180987a76d7db",
+          "canonical_input_sha256": "54892c64406607c9c85af989a6d3c6e76b28e5efd535761824cb6f809f505320",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case06",
+          "purpose": "입력 순서 역전",
+          "origin": "generated",
+          "input": "../../IPOP_2609/evaluation/case06.inp",
+          "output": "../../IPOP_2609/evaluation/case06.out",
+          "input_sha256": "48566fdc8613a175ac06827092912a12e358a50a078d5348a50fea0c32620544",
+          "output_sha256": "a8647df6e9d00391b571e78c0990c83b2f266751e14dd4ced45180987a76d7db",
+          "canonical_input_sha256": "cc878ac3b8fe02b7a0bdc3a0b4838942866656a1f8a30b0391912e9353207bc2",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case07",
+          "purpose": "공통 인수",
+          "origin": "generated",
+          "input": "../../IPOP_2609/evaluation/case07.inp",
+          "output": "../../IPOP_2609/evaluation/case07.out",
+          "input_sha256": "49a93dbf403943a8cac1710dcd438f7aeed006872e3e36c4c731dec581f7d81e",
+          "output_sha256": "02cc7eb589ec243a5796ff610096fef7837e88d5b700809594a2274d024f2655",
+          "canonical_input_sha256": "56194177cc4fadfabc99e049d07d8163f47d227499f039063889eb809638fe44",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case08",
+          "purpose": "서로소 거듭제곱",
+          "origin": "generated",
+          "input": "../../IPOP_2609/evaluation/case08.inp",
+          "output": "../../IPOP_2609/evaluation/case08.out",
+          "input_sha256": "4893a167cd133b2bd2fe28d9a22e30129fd60c7e070c139d67c5290f5f380c56",
+          "output_sha256": "bd6f3832362680df60b0521404d90411b6c550fa2ad84b357cdb0f9b886fda29",
+          "canonical_input_sha256": "5d0261c9bccc2e5b48f69dbef7794af6eea2580d3a8f5183a23b7db5391bd9c8",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case09",
+          "purpose": "상한 근처 연속 수",
+          "origin": "generated",
+          "input": "../../IPOP_2609/evaluation/case09.inp",
+          "output": "../../IPOP_2609/evaluation/case09.out",
+          "input_sha256": "e57bc6e2b216d596ebe9000db1b5cbddd5fc2172abbc0cca9d64f452be78842f",
+          "output_sha256": "353f0410f491bfc8b7b824651a798c8a89174d146df75b57cb0c982d1abaf69d",
+          "canonical_input_sha256": "c5557e55fa984cb8d8f3c1921da4f45bf1252d254ea3e1c56874cc7fb7af38e8",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case10",
+          "purpose": "비자명 공약수",
+          "origin": "generated",
+          "input": "../../IPOP_2609/evaluation/case10.inp",
+          "output": "../../IPOP_2609/evaluation/case10.out",
+          "input_sha256": "7f6a14f2a1f984c03631227e2da4198096dbe9ceeca01940385c201dc3efa125",
+          "output_sha256": "97d13c52eeba3ccc3948fadfe78b7531753352964bf45e024bb59a60daa25f87",
+          "canonical_input_sha256": "965bcc8fffe101b5960c14751971936b608d6de38afbbfc4f2a442e40f29a897",
+          "oracle_cross_check": "pass"
+        }
+      ]
+    },
+    {
+      "problem_id": "IPOP_5567",
+      "title": "결혼식",
+      "summary": "무방향 친구 관계에서 1번 사람과 거리가 1 또는 2인 사람의 수를 출력한다.",
+      "specification": "../../IPOP_5567/statement.md",
+      "boj_url": "https://www.acmicpc.net/problem/5567",
+      "oracle_methods": [
+        "깊이 2 BFS",
+        "길이 1·2 경로 직접 검사"
+      ],
+      "excluded_unique_inputs": 11,
+      "statement_example_count": 2,
+      "exclusion_sources": [
+        {
+          "path": "problem/IPOP_5567/statement.md",
+          "sha256": "9d2b12f5c7621e3ab7d792cfcf1b8f78922c93642fac5c179e07d5123bbb8148"
+        },
+        {
+          "path": "problem/IPOP_5567/prompt_examples/1.inp",
+          "sha256": "9bf2e4c0408fcde39ebed7fbe4ecd2f0581e1f6ff3d49b665763325c768b6572"
+        },
+        {
+          "path": "problem/IPOP_5567/prompt_examples/10.inp",
+          "sha256": "1f6119492358ff9e9639adb4517601c2f6fe6785bcefec8dd285dde27d6b8c2f"
+        },
+        {
+          "path": "problem/IPOP_5567/prompt_examples/2.inp",
+          "sha256": "b31b97ee02aeb866e4117f390280fa055395f34e8f7cd375c0bd7b881a1c58bf"
+        },
+        {
+          "path": "problem/IPOP_5567/prompt_examples/3.inp",
+          "sha256": "126bb7975337b83933784013c50333ef1b97edb42ced84ed07c6c08cbd6c2a4b"
+        },
+        {
+          "path": "problem/IPOP_5567/prompt_examples/4.inp",
+          "sha256": "01b4db28f8d77b0fe69df1a4ffaf3ec632a166340f60efa9bbfb49441440538d"
+        },
+        {
+          "path": "problem/IPOP_5567/prompt_examples/5.inp",
+          "sha256": "01b4db28f8d77b0fe69df1a4ffaf3ec632a166340f60efa9bbfb49441440538d"
+        },
+        {
+          "path": "problem/IPOP_5567/prompt_examples/6.inp",
+          "sha256": "33b1b9e7ba81c7f0b9dc5ec0b8b23cb93498699ea84a1dd8f15f76888b96bcb5"
+        },
+        {
+          "path": "problem/IPOP_5567/prompt_examples/7.inp",
+          "sha256": "350178f90b8050908d22aaaa453cfb0feb9b714697cd274797094cbacc4c1a9f"
+        },
+        {
+          "path": "problem/IPOP_5567/prompt_examples/8.inp",
+          "sha256": "fee825e0cfd9b75441a3e5c2ce89b298b143f7c4b2f4a2a96603bf9206b578d4"
+        },
+        {
+          "path": "problem/IPOP_5567/prompt_examples/9.inp",
+          "sha256": "6113c08f7ff6876040066d5f08c46a4b05ffe08740d0a1d1ff1cde6affd5f537"
+        }
+      ],
+      "upstream_mapping": null,
+      "cases": [
+        {
+          "case_id": "case01",
+          "purpose": "본인 고립",
+          "origin": "generated",
+          "input": "../../IPOP_5567/evaluation/case01.inp",
+          "output": "../../IPOP_5567/evaluation/case01.out",
+          "input_sha256": "8c8d038a1f565318ba652ef90ed35033a83c5ac2a644634085b8dac66f579502",
+          "output_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "canonical_input_sha256": "3feb960877f0231e4bfddbddc3d220f1a2afe6d3eed3a52b41dc9633531e62d6",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case02",
+          "purpose": "직접 친구 한 명",
+          "origin": "generated",
+          "input": "../../IPOP_5567/evaluation/case02.inp",
+          "output": "../../IPOP_5567/evaluation/case02.out",
+          "input_sha256": "7e8a4fccfc820e5fda386b10d1ff090069ba4e8876f193fcdefac3a4b3b6c659",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "ad24f79ef9e55854d85ca3400a582615c9c8ab0104b50af5440c218176bd6437",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case03",
+          "purpose": "거리 2 포함",
+          "origin": "generated",
+          "input": "../../IPOP_5567/evaluation/case03.inp",
+          "output": "../../IPOP_5567/evaluation/case03.out",
+          "input_sha256": "18719e6d5d64c92dcd98561be467b2000716b930e603360525108a7e222cf741",
+          "output_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+          "canonical_input_sha256": "5807cf47835cc455f77cdf54dc02808bdc9d2c965b201ded94a8146182f389d0",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case04",
+          "purpose": "거리 3 이상 제외",
+          "origin": "generated",
+          "input": "../../IPOP_5567/evaluation/case04.inp",
+          "output": "../../IPOP_5567/evaluation/case04.out",
+          "input_sha256": "d4268a0294532f353cc4f9290b460a912e3b6d3efb5cf90ed4662ec0b5ae6ec2",
+          "output_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+          "canonical_input_sha256": "68b92e442d57f2bee81a0e87fb8616b5973b6829d0678981e14ae970c02cc06a",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case05",
+          "purpose": "삼각형 중복 경로",
+          "origin": "generated",
+          "input": "../../IPOP_5567/evaluation/case05.inp",
+          "output": "../../IPOP_5567/evaluation/case05.out",
+          "input_sha256": "1160b440544a39ab8df39854b988625478d87ce158faa0d70258498ee5e598e0",
+          "output_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+          "canonical_input_sha256": "958ceb7d270ec820b6fed7c73959607e7f928b291db9662dea4035ac59c3545c",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case06",
+          "purpose": "별 모양",
+          "origin": "generated",
+          "input": "../../IPOP_5567/evaluation/case06.inp",
+          "output": "../../IPOP_5567/evaluation/case06.out",
+          "input_sha256": "c4d479d7bf5b57e53e9afaa05373efc970545aa7909a1c9608c4c924286dd5c9",
+          "output_sha256": "f0b5c2c2211c8d67ed15e75e656c7862d086e9245420892a7de62cd9ec582a06",
+          "canonical_input_sha256": "ebcc17e10a734a93cede258c29e21066e591d6827ac2221c34e713295c027a1c",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case07",
+          "purpose": "완전 그래프",
+          "origin": "generated",
+          "input": "../../IPOP_5567/evaluation/case07.inp",
+          "output": "../../IPOP_5567/evaluation/case07.out",
+          "input_sha256": "be6c7c42fcc326c82c71863ba324e267812260972901cc61a9dac0c54ff83fe1",
+          "output_sha256": "7de1555df0c2700329e815b93b32c571c3ea54dc967b89e81ab73b9972b72d1d",
+          "canonical_input_sha256": "82e5425918a78cb115a7d93a095e1ff06491c1721c85e3cf564f5f73adc41054",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case08",
+          "purpose": "중복 도달 및 분리 성분",
+          "origin": "generated",
+          "input": "../../IPOP_5567/evaluation/case08.inp",
+          "output": "../../IPOP_5567/evaluation/case08.out",
+          "input_sha256": "49d08d9fd6f3b4cca19f69bef5afe9a6227707ccc69d5cc059e605c51ef648f9",
+          "output_sha256": "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2",
+          "canonical_input_sha256": "695e224a3e6b20d262e3c60db37f888b154e430a1caa5557757bf5b855cd341f",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case09",
+          "purpose": "사이클과 고립점",
+          "origin": "generated",
+          "input": "../../IPOP_5567/evaluation/case09.inp",
+          "output": "../../IPOP_5567/evaluation/case09.out",
+          "input_sha256": "a52b4d2647d52ecfa290026550595ceed906345d300d5059f6aee02430b7c8cc",
+          "output_sha256": "7de1555df0c2700329e815b93b32c571c3ea54dc967b89e81ab73b9972b72d1d",
+          "canonical_input_sha256": "868f00b2e054d295ead03cce11e78f99d0610cd486a46130aed4d600b6dd5db6",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case10",
+          "purpose": "정점 번호 상한",
+          "origin": "generated",
+          "input": "../../IPOP_5567/evaluation/case10.inp",
+          "output": "../../IPOP_5567/evaluation/case10.out",
+          "input_sha256": "4719ed3a114e1348d933e0865c33da44329638e62cc32fd783c4b019001b1c55",
+          "output_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+          "canonical_input_sha256": "a52e757bd2fbbb42013aef8ebf06121205e99eb6ae3814746dfbccd23dd10041",
+          "oracle_cross_check": "pass"
+        }
+      ]
+    },
+    {
+      "problem_id": "IPOP_9012",
+      "title": "괄호",
+      "summary": "T개 소괄호 문자열마다 올바른 괄호열이면 YES, 아니면 NO를 출력한다.",
+      "specification": "../../IPOP_9012/statement.md",
+      "boj_url": "https://www.acmicpc.net/problem/9012",
+      "oracle_methods": [
+        "접두 합과 최종 균형",
+        "인접 괄호 쌍 반복 제거"
+      ],
+      "excluded_unique_inputs": 2,
+      "statement_example_count": 2,
+      "exclusion_sources": [
+        {
+          "path": "problem/IPOP_9012/statement.md",
+          "sha256": "eb6a3fb345f855dacb2907eb4d149a47095c22b1fd96b3ba341cecea7027ea31"
+        },
+        {
+          "path": "problem/IPOP_9012/prompt_examples/1.inp",
+          "sha256": "6152d274854d1439adb2f636f34f55e0bcc2288f514e41a3ff495b4d82c17333"
+        },
+        {
+          "path": "problem/IPOP_9012/prompt_examples/10.inp",
+          "sha256": "007eac5452e3a052844e2765d7960d36aed8f368ca35235c5f543fb72936d2ae"
+        },
+        {
+          "path": "problem/IPOP_9012/prompt_examples/2.inp",
+          "sha256": "007eac5452e3a052844e2765d7960d36aed8f368ca35235c5f543fb72936d2ae"
+        },
+        {
+          "path": "problem/IPOP_9012/prompt_examples/3.inp",
+          "sha256": "6152d274854d1439adb2f636f34f55e0bcc2288f514e41a3ff495b4d82c17333"
+        },
+        {
+          "path": "problem/IPOP_9012/prompt_examples/4.inp",
+          "sha256": "007eac5452e3a052844e2765d7960d36aed8f368ca35235c5f543fb72936d2ae"
+        },
+        {
+          "path": "problem/IPOP_9012/prompt_examples/5.inp",
+          "sha256": "6152d274854d1439adb2f636f34f55e0bcc2288f514e41a3ff495b4d82c17333"
+        },
+        {
+          "path": "problem/IPOP_9012/prompt_examples/6.inp",
+          "sha256": "007eac5452e3a052844e2765d7960d36aed8f368ca35235c5f543fb72936d2ae"
+        },
+        {
+          "path": "problem/IPOP_9012/prompt_examples/7.inp",
+          "sha256": "6152d274854d1439adb2f636f34f55e0bcc2288f514e41a3ff495b4d82c17333"
+        },
+        {
+          "path": "problem/IPOP_9012/prompt_examples/8.inp",
+          "sha256": "007eac5452e3a052844e2765d7960d36aed8f368ca35235c5f543fb72936d2ae"
+        },
+        {
+          "path": "problem/IPOP_9012/prompt_examples/9.inp",
+          "sha256": "6152d274854d1439adb2f636f34f55e0bcc2288f514e41a3ff495b4d82c17333"
+        }
+      ],
+      "upstream_mapping": {
+        "relationship": "adapted_algorithm_not_identical_problem",
+        "path": "problems/valid_parentheses/solution.js",
+        "url": "https://github.com/DhanushNehru/Leetcode/blob/b9d7d2c234c39b3b3c67eded0c125e2841685b29/problems/valid_parentheses/solution.js",
+        "sha256": "dd3f3e27df72083c1ce11110c67dc8890b970afdb8670620fa62e3ecd86a856d",
+        "adaptation": "소괄호 입력에 한정하고 각 문자열의 boolean을 YES/NO로 변환",
+        "role": "additional_checker_only; evaluation inputs generated locally"
+      },
+      "cases": [
+        {
+          "case_id": "case01",
+          "purpose": "최소 올바른 괄호",
+          "origin": "generated",
+          "input": "../../IPOP_9012/evaluation/case01.inp",
+          "output": "../../IPOP_9012/evaluation/case01.out",
+          "input_sha256": "97b6ad12c3c1d86dc896228cba6361c80924c101c553d78cdd4db083946bb1ba",
+          "output_sha256": "a115e91c2e84c3078fa06914eff28d07590ddfaa47a55fb4f31dd7c5b3566194",
+          "canonical_input_sha256": "dcb9620fdab61ffe4814075d5cda95a21698624cccadbc4f8a61f153911b4001",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case02",
+          "purpose": "최소 잘못된 접두사",
+          "origin": "generated",
+          "input": "../../IPOP_9012/evaluation/case02.inp",
+          "output": "../../IPOP_9012/evaluation/case02.out",
+          "input_sha256": "b2ae6ff122794665b9c0c34b94950815b55d225420d3054efa6b0866d258a84a",
+          "output_sha256": "cfe72034a9f298fb79a6c1f2302673bb449c826d446b3efafdde95e6c48dc3ca",
+          "canonical_input_sha256": "0f879576bbb2004f0ed40e202593a3fd6a73ca0e7c3740c0d92442dd7fff24d2",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case03",
+          "purpose": "중첩",
+          "origin": "generated",
+          "input": "../../IPOP_9012/evaluation/case03.inp",
+          "output": "../../IPOP_9012/evaluation/case03.out",
+          "input_sha256": "0c302e793e9db86915c6163fbabb9d0a9976859eb54448cb12f96c3a4ff52328",
+          "output_sha256": "a115e91c2e84c3078fa06914eff28d07590ddfaa47a55fb4f31dd7c5b3566194",
+          "canonical_input_sha256": "c0a838605e25f1e1fd29a688d45c7028bb4cfbe8fa00ee6155af55824b5c270b",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case04",
+          "purpose": "연속 쌍",
+          "origin": "generated",
+          "input": "../../IPOP_9012/evaluation/case04.inp",
+          "output": "../../IPOP_9012/evaluation/case04.out",
+          "input_sha256": "afb9e1afa3786f36964799eafa9c6631ae147ce526878fecf713f1de7ed1a073",
+          "output_sha256": "a115e91c2e84c3078fa06914eff28d07590ddfaa47a55fb4f31dd7c5b3566194",
+          "canonical_input_sha256": "9abdca9343906e1673a0c934d318cc89371cd248510c89407db6bab45ede249b",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case05",
+          "purpose": "닫는 괄호 부족",
+          "origin": "generated",
+          "input": "../../IPOP_9012/evaluation/case05.inp",
+          "output": "../../IPOP_9012/evaluation/case05.out",
+          "input_sha256": "d1d5747d136dc5eae2eaf67827f2f28247a69d6ad845874892d2ab9e89b9b9eb",
+          "output_sha256": "cfe72034a9f298fb79a6c1f2302673bb449c826d446b3efafdde95e6c48dc3ca",
+          "canonical_input_sha256": "3d5e03459f68147f9cc8b4290f78ec87ac12123f2a16d49a4682df0493158f7e",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case06",
+          "purpose": "여는 괄호 부족",
+          "origin": "generated",
+          "input": "../../IPOP_9012/evaluation/case06.inp",
+          "output": "../../IPOP_9012/evaluation/case06.out",
+          "input_sha256": "9fce8c954dfdc130630a1e734efee0b32daa73376570785f5b8d48343178feb2",
+          "output_sha256": "cfe72034a9f298fb79a6c1f2302673bb449c826d446b3efafdde95e6c48dc3ca",
+          "canonical_input_sha256": "83cf7785fc96b16fac5b8d9834394de98c462e3d7d652e43f5879bd163168d86",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case07",
+          "purpose": "길이 상한 중첩",
+          "origin": "generated",
+          "input": "../../IPOP_9012/evaluation/case07.inp",
+          "output": "../../IPOP_9012/evaluation/case07.out",
+          "input_sha256": "1923305ecc820bb092877f8d33c389863e3e69c34fa4bc366636d35f5aec6152",
+          "output_sha256": "a115e91c2e84c3078fa06914eff28d07590ddfaa47a55fb4f31dd7c5b3566194",
+          "canonical_input_sha256": "4021ccb8343044b4e85ab9cf0fa47bb7ae6468d309ac138ea23b720fad0135e2",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case08",
+          "purpose": "균형만 맞고 접두사 오류",
+          "origin": "generated",
+          "input": "../../IPOP_9012/evaluation/case08.inp",
+          "output": "../../IPOP_9012/evaluation/case08.out",
+          "input_sha256": "0a4863b9b073c8613b60f1ff0a9804001a17decce352577303b2ad259999179f",
+          "output_sha256": "cfe72034a9f298fb79a6c1f2302673bb449c826d446b3efafdde95e6c48dc3ca",
+          "canonical_input_sha256": "70ad8e61d71aa49b28e3ba462c0aeabf58de9ab73c50975e9a9dc4af221f7f3f",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case09",
+          "purpose": "길이 상한 반복",
+          "origin": "generated",
+          "input": "../../IPOP_9012/evaluation/case09.inp",
+          "output": "../../IPOP_9012/evaluation/case09.out",
+          "input_sha256": "0850bce44cad628459077e37a5ebf735899ac862c5f38f1927dd9844e8bbfd99",
+          "output_sha256": "a115e91c2e84c3078fa06914eff28d07590ddfaa47a55fb4f31dd7c5b3566194",
+          "canonical_input_sha256": "40ee234221a6d0c1f01d54645999c0c27cab83c286aab5a2dbe1dab4f4087a3b",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case10",
+          "purpose": "여러 질의 혼합",
+          "origin": "generated",
+          "input": "../../IPOP_9012/evaluation/case10.inp",
+          "output": "../../IPOP_9012/evaluation/case10.out",
+          "input_sha256": "8d1f6e3115f95d7cc8010e6e3b2325addc07a738047b0d75ec5d6235709a565d",
+          "output_sha256": "df29db347b3c08a6f76574ac59352cf464c1922d8881839ed58a4a079811d568",
+          "canonical_input_sha256": "378a44efc2f09b6f384f68105c5c07d3346a348e6b6e2e009f45e0eab19275f4",
+          "oracle_cross_check": "pass"
+        }
+      ]
+    },
+    {
+      "problem_id": "IPOP_9251",
+      "title": "LCS",
+      "summary": "두 대문자 문자열의 최장 공통 부분수열 길이를 출력한다.",
+      "specification": "../../IPOP_9251/statement.md",
+      "boj_url": "https://www.acmicpc.net/problem/9251",
+      "oracle_methods": [
+        "행 단위 LCS DP",
+        "짧은 문자열의 모든 부분수열 검사"
+      ],
+      "excluded_unique_inputs": 1,
+      "statement_example_count": 1,
+      "exclusion_sources": [
+        {
+          "path": "problem/IPOP_9251/statement.md",
+          "sha256": "8d51062a04316dd199255e40bd7652857a3f965dd9cdf386d3b6f8a079822e98"
+        },
+        {
+          "path": "problem/IPOP_9251/prompt_examples/1.inp",
+          "sha256": "a0cb7f79d799ef364962dcdbbf0afa450f92d803d7cd97d8a2133abfa9178dea"
+        },
+        {
+          "path": "problem/IPOP_9251/prompt_examples/10.inp",
+          "sha256": "a0cb7f79d799ef364962dcdbbf0afa450f92d803d7cd97d8a2133abfa9178dea"
+        },
+        {
+          "path": "problem/IPOP_9251/prompt_examples/2.inp",
+          "sha256": "a0cb7f79d799ef364962dcdbbf0afa450f92d803d7cd97d8a2133abfa9178dea"
+        },
+        {
+          "path": "problem/IPOP_9251/prompt_examples/3.inp",
+          "sha256": "a0cb7f79d799ef364962dcdbbf0afa450f92d803d7cd97d8a2133abfa9178dea"
+        },
+        {
+          "path": "problem/IPOP_9251/prompt_examples/4.inp",
+          "sha256": "a0cb7f79d799ef364962dcdbbf0afa450f92d803d7cd97d8a2133abfa9178dea"
+        },
+        {
+          "path": "problem/IPOP_9251/prompt_examples/5.inp",
+          "sha256": "a0cb7f79d799ef364962dcdbbf0afa450f92d803d7cd97d8a2133abfa9178dea"
+        },
+        {
+          "path": "problem/IPOP_9251/prompt_examples/6.inp",
+          "sha256": "a0cb7f79d799ef364962dcdbbf0afa450f92d803d7cd97d8a2133abfa9178dea"
+        },
+        {
+          "path": "problem/IPOP_9251/prompt_examples/7.inp",
+          "sha256": "a0cb7f79d799ef364962dcdbbf0afa450f92d803d7cd97d8a2133abfa9178dea"
+        },
+        {
+          "path": "problem/IPOP_9251/prompt_examples/8.inp",
+          "sha256": "a0cb7f79d799ef364962dcdbbf0afa450f92d803d7cd97d8a2133abfa9178dea"
+        },
+        {
+          "path": "problem/IPOP_9251/prompt_examples/9.inp",
+          "sha256": "a0cb7f79d799ef364962dcdbbf0afa450f92d803d7cd97d8a2133abfa9178dea"
+        }
+      ],
+      "upstream_mapping": null,
+      "cases": [
+        {
+          "case_id": "case01",
+          "purpose": "최소 일치",
+          "origin": "generated",
+          "input": "../../IPOP_9251/evaluation/case01.inp",
+          "output": "../../IPOP_9251/evaluation/case01.out",
+          "input_sha256": "f2c7d522ec2c8f6b74a46a6b60af0e857b7f20ccc216a8d073071e734841356c",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "e704cbac81f1ae504c626c4482e413e92959b3f03457baf3c4558fe3fd2b4391",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case02",
+          "purpose": "공통 문자 없음",
+          "origin": "generated",
+          "input": "../../IPOP_9251/evaluation/case02.inp",
+          "output": "../../IPOP_9251/evaluation/case02.out",
+          "input_sha256": "daee1cd25194ae952d046ad9b9c81d3c07dc5332440b58d6d7461b248be56712",
+          "output_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "canonical_input_sha256": "fea4c5ce720c1d6a1cbc47c1607cc4ea172a69de8948e76d67910120597950fc",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case03",
+          "purpose": "전체 동일",
+          "origin": "generated",
+          "input": "../../IPOP_9251/evaluation/case03.inp",
+          "output": "../../IPOP_9251/evaluation/case03.out",
+          "input_sha256": "fccedf207934d7781a074336d5b95adb0feb6d93468ca84db039e300e26df997",
+          "output_sha256": "f0b5c2c2211c8d67ed15e75e656c7862d086e9245420892a7de62cd9ec582a06",
+          "canonical_input_sha256": "335e3d0679d9678176d57f116178446529e881e297dddf4cc8c4c41c54e26a49",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case04",
+          "purpose": "역순",
+          "origin": "generated",
+          "input": "../../IPOP_9251/evaluation/case04.inp",
+          "output": "../../IPOP_9251/evaluation/case04.out",
+          "input_sha256": "6dd4a87cc9275a2b80f45dbc8f2185529d4baa0a21f3cffefc244d77b69f20c9",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "0beeb192b3d31167fef41b61c1c074f93f199d652a64171fdc433153a5fac1f4",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case05",
+          "purpose": "반복 문자",
+          "origin": "generated",
+          "input": "../../IPOP_9251/evaluation/case05.inp",
+          "output": "../../IPOP_9251/evaluation/case05.out",
+          "input_sha256": "d9cd86fdc4e8c9f03c6612462dfa9c496109ec7ad42c89ef3267e56a39d3c37a",
+          "output_sha256": "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2",
+          "canonical_input_sha256": "6764854e9df24e93d3b7a9d9b98b834b5e12e2a7cb06fc98fe39b82ebf0d8b57",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case06",
+          "purpose": "부분수열과 부분문자열 구분",
+          "origin": "generated",
+          "input": "../../IPOP_9251/evaluation/case06.inp",
+          "output": "../../IPOP_9251/evaluation/case06.out",
+          "input_sha256": "394d9491c12332877cc654af53fb8db59d290835323d200f1d5173599720f53b",
+          "output_sha256": "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2",
+          "canonical_input_sha256": "6feed7a075bd68bafd2b754eb87cb6d7eca4dcf3b97c4b340b4f6114c7dc78c9",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case07",
+          "purpose": "여러 최적해",
+          "origin": "generated",
+          "input": "../../IPOP_9251/evaluation/case07.inp",
+          "output": "../../IPOP_9251/evaluation/case07.out",
+          "input_sha256": "dd6287b703c89f5ce930aab900643c9fd60e42b7869c632ab01f88cb2e1ad235",
+          "output_sha256": "7de1555df0c2700329e815b93b32c571c3ea54dc967b89e81ab73b9972b72d1d",
+          "canonical_input_sha256": "8a1f2b0547ff8c637ff165b043a6fe9ad1aea5b53d9f5e74293222f8a4c6c638",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case08",
+          "purpose": "교대 반복",
+          "origin": "generated",
+          "input": "../../IPOP_9251/evaluation/case08.inp",
+          "output": "../../IPOP_9251/evaluation/case08.out",
+          "input_sha256": "a6031b779195918ae988654ea9e173e806a65562f4d9a6541dcae560a8ab2db7",
+          "output_sha256": "f0b5c2c2211c8d67ed15e75e656c7862d086e9245420892a7de62cd9ec582a06",
+          "canonical_input_sha256": "d9e62d9db1149351af2894c505a8f8e24273d538a0d96730811f0cb9bc1eb057",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case09",
+          "purpose": "분리 알파벳",
+          "origin": "generated",
+          "input": "../../IPOP_9251/evaluation/case09.inp",
+          "output": "../../IPOP_9251/evaluation/case09.out",
+          "input_sha256": "39a4e96db8856fee266f2ab19b937a48262c94cf543d7aa330ff0bfbbc8dd427",
+          "output_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "canonical_input_sha256": "0b8931755972a58a0256c537d26841f729af5864abf187774300d60fc050e2fe",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case10",
+          "purpose": "한쪽 길이 상한",
+          "origin": "generated",
+          "input": "../../IPOP_9251/evaluation/case10.inp",
+          "output": "../../IPOP_9251/evaluation/case10.out",
+          "input_sha256": "b192c0017375078bfbcd98bb4d4b339b8d88b8a9a4471a32fb6049ae37f5905a",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "086b69749eef0d5cb948e916c60f6a7249be8d727bd239bf8d8ded6aec0b0d6d",
+          "oracle_cross_check": "pass"
+        }
+      ]
+    },
+    {
+      "problem_id": "IPOP_9663",
+      "title": "N-Queen",
+      "summary": "N×N 체스판에서 N개의 퀸이 서로 공격하지 않는 배치 수를 출력한다.",
+      "specification": "../../IPOP_9663/statement.md",
+      "boj_url": "https://www.acmicpc.net/problem/9663",
+      "oracle_methods": [
+        "비트마스크 배치 탐색",
+        "열·대각선 집합을 이용한 배치 탐색"
+      ],
+      "excluded_unique_inputs": 1,
+      "statement_example_count": 1,
+      "exclusion_sources": [
+        {
+          "path": "problem/IPOP_9663/statement.md",
+          "sha256": "2ae631796adc79f23ad51b435575337c54bfd981800f0c4493aeec55c151d7af"
+        },
+        {
+          "path": "problem/IPOP_9663/prompt_examples/1.inp",
+          "sha256": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f"
+        },
+        {
+          "path": "problem/IPOP_9663/prompt_examples/10.inp",
+          "sha256": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f"
+        },
+        {
+          "path": "problem/IPOP_9663/prompt_examples/2.inp",
+          "sha256": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f"
+        },
+        {
+          "path": "problem/IPOP_9663/prompt_examples/3.inp",
+          "sha256": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f"
+        },
+        {
+          "path": "problem/IPOP_9663/prompt_examples/4.inp",
+          "sha256": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f"
+        },
+        {
+          "path": "problem/IPOP_9663/prompt_examples/5.inp",
+          "sha256": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f"
+        },
+        {
+          "path": "problem/IPOP_9663/prompt_examples/6.inp",
+          "sha256": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f"
+        },
+        {
+          "path": "problem/IPOP_9663/prompt_examples/7.inp",
+          "sha256": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f"
+        },
+        {
+          "path": "problem/IPOP_9663/prompt_examples/8.inp",
+          "sha256": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f"
+        },
+        {
+          "path": "problem/IPOP_9663/prompt_examples/9.inp",
+          "sha256": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f"
+        }
+      ],
+      "upstream_mapping": null,
+      "cases": [
+        {
+          "case_id": "case01",
+          "purpose": "N=1, 보드 크기별 해 개수",
+          "origin": "generated",
+          "input": "../../IPOP_9663/evaluation/case01.inp",
+          "output": "../../IPOP_9663/evaluation/case01.out",
+          "input_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "output_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "canonical_input_sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case02",
+          "purpose": "N=2, 해 없음",
+          "origin": "generated",
+          "input": "../../IPOP_9663/evaluation/case02.inp",
+          "output": "../../IPOP_9663/evaluation/case02.out",
+          "input_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+          "output_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "canonical_input_sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case03",
+          "purpose": "N=3, 해 없음",
+          "origin": "generated",
+          "input": "../../IPOP_9663/evaluation/case03.inp",
+          "output": "../../IPOP_9663/evaluation/case03.out",
+          "input_sha256": "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2",
+          "output_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "canonical_input_sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case04",
+          "purpose": "N=4, 보드 크기별 해 개수",
+          "origin": "generated",
+          "input": "../../IPOP_9663/evaluation/case04.inp",
+          "output": "../../IPOP_9663/evaluation/case04.out",
+          "input_sha256": "7de1555df0c2700329e815b93b32c571c3ea54dc967b89e81ab73b9972b72d1d",
+          "output_sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+          "canonical_input_sha256": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case05",
+          "purpose": "N=5, 보드 크기별 해 개수",
+          "origin": "generated",
+          "input": "../../IPOP_9663/evaluation/case05.inp",
+          "output": "../../IPOP_9663/evaluation/case05.out",
+          "input_sha256": "f0b5c2c2211c8d67ed15e75e656c7862d086e9245420892a7de62cd9ec582a06",
+          "output_sha256": "917df3320d778ddbaa5c5c7742bc4046bf803c36ed2b050f30844ed206783469",
+          "canonical_input_sha256": "ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case06",
+          "purpose": "N=6, 보드 크기별 해 개수",
+          "origin": "generated",
+          "input": "../../IPOP_9663/evaluation/case06.inp",
+          "output": "../../IPOP_9663/evaluation/case06.out",
+          "input_sha256": "06e9d52c1720fca412803e3b07c4b228ff113e303f4c7ab94665319d832bbfb7",
+          "output_sha256": "7de1555df0c2700329e815b93b32c571c3ea54dc967b89e81ab73b9972b72d1d",
+          "canonical_input_sha256": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case07",
+          "purpose": "N=7, 보드 크기별 해 개수",
+          "origin": "generated",
+          "input": "../../IPOP_9663/evaluation/case07.inp",
+          "output": "../../IPOP_9663/evaluation/case07.out",
+          "input_sha256": "10159baf262b43a92d95db59dae1f72c645127301661e0a3ce4e38b295a97c58",
+          "output_sha256": "673650f936cb3b0a2f93ce09d81be10748b1b203c19e8176b4eefc1964a0cf3a",
+          "canonical_input_sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case08",
+          "purpose": "N=9, 보드 크기별 해 개수",
+          "origin": "generated",
+          "input": "../../IPOP_9663/evaluation/case08.inp",
+          "output": "../../IPOP_9663/evaluation/case08.out",
+          "input_sha256": "2e6d31a5983a91251bfae5aefa1c0a19d8ba3cf601d0e8a706b4cfa9661a6b8a",
+          "output_sha256": "e76a6aa700839b90bfaa40900a8b74ec5cc9d9b3eecf5bf8d780b6376b8f63c2",
+          "canonical_input_sha256": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case09",
+          "purpose": "N=10, 보드 크기별 해 개수",
+          "origin": "generated",
+          "input": "../../IPOP_9663/evaluation/case09.inp",
+          "output": "../../IPOP_9663/evaluation/case09.out",
+          "input_sha256": "917df3320d778ddbaa5c5c7742bc4046bf803c36ed2b050f30844ed206783469",
+          "output_sha256": "816869656b553b0a39b93c11652f301bd233cd81e2bc80a866c3825c9ceb58e3",
+          "canonical_input_sha256": "4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case10",
+          "purpose": "N=11, 보드 크기별 해 개수",
+          "origin": "generated",
+          "input": "../../IPOP_9663/evaluation/case10.inp",
+          "output": "../../IPOP_9663/evaluation/case10.out",
+          "input_sha256": "25d4f2a86deb5e2574bb3210b67bb24fcc4afb19f93a7b65a057daa874a9d18e",
+          "output_sha256": "5d189a3ab9da52439b7bac98293a097e0f0a4885151d12773b92eb7e2b61cbdd",
+          "canonical_input_sha256": "4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8",
+          "oracle_cross_check": "pass"
+        }
+      ]
+    },
+    {
+      "problem_id": "IPOP_9935",
+      "title": "문자열 폭발",
+      "summary": "폭발 문자열을 반복 제거한 최종 문자열을 출력하고 비었으면 FRULA를 출력한다.",
+      "specification": "../../IPOP_9935/statement.md",
+      "boj_url": "https://www.acmicpc.net/problem/9935",
+      "oracle_methods": [
+        "스택 접미사 제거",
+        "문자열 전체 치환 반복"
+      ],
+      "excluded_unique_inputs": 2,
+      "statement_example_count": 2,
+      "exclusion_sources": [
+        {
+          "path": "problem/IPOP_9935/statement.md",
+          "sha256": "223a1d3e6a38501c9a71199384b36f16bb83aec2b03c2505fbadabdc13bccfd1"
+        },
+        {
+          "path": "problem/IPOP_9935/prompt_examples/1.inp",
+          "sha256": "d6925514f39db0c3fa4e3ecb4a0f15230d8fde6001538e86c6a2d70cf213c39d"
+        },
+        {
+          "path": "problem/IPOP_9935/prompt_examples/10.inp",
+          "sha256": "325b0a407539e6ebde5701d8de3d322636c41b65089538414a5881e3b426f480"
+        },
+        {
+          "path": "problem/IPOP_9935/prompt_examples/2.inp",
+          "sha256": "325b0a407539e6ebde5701d8de3d322636c41b65089538414a5881e3b426f480"
+        },
+        {
+          "path": "problem/IPOP_9935/prompt_examples/3.inp",
+          "sha256": "d6925514f39db0c3fa4e3ecb4a0f15230d8fde6001538e86c6a2d70cf213c39d"
+        },
+        {
+          "path": "problem/IPOP_9935/prompt_examples/4.inp",
+          "sha256": "325b0a407539e6ebde5701d8de3d322636c41b65089538414a5881e3b426f480"
+        },
+        {
+          "path": "problem/IPOP_9935/prompt_examples/5.inp",
+          "sha256": "d6925514f39db0c3fa4e3ecb4a0f15230d8fde6001538e86c6a2d70cf213c39d"
+        },
+        {
+          "path": "problem/IPOP_9935/prompt_examples/6.inp",
+          "sha256": "325b0a407539e6ebde5701d8de3d322636c41b65089538414a5881e3b426f480"
+        },
+        {
+          "path": "problem/IPOP_9935/prompt_examples/7.inp",
+          "sha256": "d6925514f39db0c3fa4e3ecb4a0f15230d8fde6001538e86c6a2d70cf213c39d"
+        },
+        {
+          "path": "problem/IPOP_9935/prompt_examples/8.inp",
+          "sha256": "325b0a407539e6ebde5701d8de3d322636c41b65089538414a5881e3b426f480"
+        },
+        {
+          "path": "problem/IPOP_9935/prompt_examples/9.inp",
+          "sha256": "d6925514f39db0c3fa4e3ecb4a0f15230d8fde6001538e86c6a2d70cf213c39d"
+        }
+      ],
+      "upstream_mapping": null,
+      "cases": [
+        {
+          "case_id": "case01",
+          "purpose": "최소 입력 완전 소거",
+          "origin": "generated",
+          "input": "../../IPOP_9935/evaluation/case01.inp",
+          "output": "../../IPOP_9935/evaluation/case01.out",
+          "input_sha256": "7da0810372718aaba44c608981aa81247cee8c3fc0ece1f7f7dd0e3152b41715",
+          "output_sha256": "0bfabcc09dcdc2a92a0df07026c9c9f853ecf6ea68274df2dd60e1968d815ab2",
+          "canonical_input_sha256": "3d5fd6b1cde48def66c78708431808b9e2abb1363140a3c9f564a554f1ee9621",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case02",
+          "purpose": "최소 입력 변화 없음",
+          "origin": "generated",
+          "input": "../../IPOP_9935/evaluation/case02.inp",
+          "output": "../../IPOP_9935/evaluation/case02.out",
+          "input_sha256": "911169ddaaf146aff539f58c26c489af3b892dff0fe283c1c264c65ae5aa59a2",
+          "output_sha256": "87428fc522803d31065e7bce3cf03fe475096631e5e07bbd7a0fde60c4cf25c7",
+          "canonical_input_sha256": "c8687a08aa5d6ed2044328fa6a697ab8e96dc34291e8c2034ae8c38e6fcc6d65",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case03",
+          "purpose": "전체 일치",
+          "origin": "generated",
+          "input": "../../IPOP_9935/evaluation/case03.inp",
+          "output": "../../IPOP_9935/evaluation/case03.out",
+          "input_sha256": "efbaea14f77d3395edd863ea7f247511362a2574db213338ae5c3a6027ff1341",
+          "output_sha256": "0bfabcc09dcdc2a92a0df07026c9c9f853ecf6ea68274df2dd60e1968d815ab2",
+          "canonical_input_sha256": "f5497b5bef7e1dd5985b5641e54239821b88cb2150a44774d8f0f8bdd251983a",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case04",
+          "purpose": "폭발 문자열이 더 김",
+          "origin": "generated",
+          "input": "../../IPOP_9935/evaluation/case04.inp",
+          "output": "../../IPOP_9935/evaluation/case04.out",
+          "input_sha256": "c6476d9fb6b38674720e0684c057ff78e2becb47a964645f25035e9fafcbbfc9",
+          "output_sha256": "a63d8014dba891345b30174df2b2a57efbb65b4f9f09b98f245d1b3192277ece",
+          "canonical_input_sha256": "04e69d18da295d66c925e981460f171722e15f1d8a9d0d662c44bff7203fac27",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case05",
+          "purpose": "연속 소거",
+          "origin": "generated",
+          "input": "../../IPOP_9935/evaluation/case05.inp",
+          "output": "../../IPOP_9935/evaluation/case05.out",
+          "input_sha256": "931901cbb0f1a7310a354f20ecf024a859e5a2849a3c9918e6659bd7ffe9d3fd",
+          "output_sha256": "0bfabcc09dcdc2a92a0df07026c9c9f853ecf6ea68274df2dd60e1968d815ab2",
+          "canonical_input_sha256": "3795c340335ad3031fa3bf842247206d6b4fa3868daae8b842ac3d772b53ddf3",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case06",
+          "purpose": "연쇄 소거",
+          "origin": "generated",
+          "input": "../../IPOP_9935/evaluation/case06.inp",
+          "output": "../../IPOP_9935/evaluation/case06.out",
+          "input_sha256": "cfcefb6c91eab1e7b8c0c16c9aa133991e0abcde773366c45596db561a0556f7",
+          "output_sha256": "0bfabcc09dcdc2a92a0df07026c9c9f853ecf6ea68274df2dd60e1968d815ab2",
+          "canonical_input_sha256": "98b6ebad61d79301164640033336413534fbd9ddcfc51389c555e57c055ce998",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case07",
+          "purpose": "양끝과 내부 잔여",
+          "origin": "generated",
+          "input": "../../IPOP_9935/evaluation/case07.inp",
+          "output": "../../IPOP_9935/evaluation/case07.out",
+          "input_sha256": "efbe99a1ed7df7894a9f0bbc57109c7c378d19534429e10e6357053b4a963e88",
+          "output_sha256": "867553ee97b256b099a68edd476ecd3f3f19fd492ddedddaedd54607e1fec90f",
+          "canonical_input_sha256": "0479afcb26088b4f19db3cf46b680b98d25d6dfdba86de28cc58d474493aca65",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case08",
+          "purpose": "대소문자 구분",
+          "origin": "generated",
+          "input": "../../IPOP_9935/evaluation/case08.inp",
+          "output": "../../IPOP_9935/evaluation/case08.out",
+          "input_sha256": "45869b877791e58d74dacf6f474a88634a15f035e013b45ea5ce88de3f2d7fe5",
+          "output_sha256": "0bfabcc09dcdc2a92a0df07026c9c9f853ecf6ea68274df2dd60e1968d815ab2",
+          "canonical_input_sha256": "0dd073262ce091dc0f1d3f20b95a01aa6852fb5f5fb816005c67c942fb06fe9f",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case09",
+          "purpose": "숫자 패턴",
+          "origin": "generated",
+          "input": "../../IPOP_9935/evaluation/case09.inp",
+          "output": "../../IPOP_9935/evaluation/case09.out",
+          "input_sha256": "4631d5c7d5e1dee9ef8101fd377c6bfb9c6d65795dccc132f86607c433e89251",
+          "output_sha256": "73cb3858a687a8494ca3323053016282f3dad39d42cf62ca4e79dda2aac7d9ac",
+          "canonical_input_sha256": "16b8cb3f2974c8c42895f29e94bb8461953521a66d99ba5c86768941a90cd465",
+          "oracle_cross_check": "pass"
+        },
+        {
+          "case_id": "case10",
+          "purpose": "폭발 문자열 길이 상한",
+          "origin": "generated",
+          "input": "../../IPOP_9935/evaluation/case10.inp",
+          "output": "../../IPOP_9935/evaluation/case10.out",
+          "input_sha256": "b45a9e1bdd5e4d4c57154720b057f4781136f33a7ebee241da8c03a27ceee4d0",
+          "output_sha256": "a7c1c1af2d4710d1dd08f1254b709ea7b58ee6f0800bea1a8dea930bc8e83257",
+          "canonical_input_sha256": "fc1c6bbce1e8074a8e90794a72b193b4a64a77ff81130d44ae336c0201e473a7",
+          "oracle_cross_check": "pass"
+        }
+      ]
+    }
+  ],
+  "problem_count": 19,
+  "case_count": 190,
+  "generator_sha256": "7553d47fb93b7eceb4ffe3fb9eceebdc87a40518107bf7552f31fa8d0b5cb30d",
+  "oracle_sha256": "89c3f4925b7032ec7663df1e279cd17d65ae896c124ddd5b8b5361e1b6427e1c"
+}

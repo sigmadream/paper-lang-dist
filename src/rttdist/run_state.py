@@ -61,6 +61,8 @@ def compute_config_hash(config: ExperimentConfig) -> str:
     }
     if config.dataset_index is not None:
         payload["dataset_index"] = config.dataset_index.as_posix()
+    if config.prompt_template_version != "rtt.prompts.v1":
+        payload["prompt_template_version"] = config.prompt_template_version
     encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
 
@@ -83,6 +85,11 @@ def build_manifest_checksums(
     }
     if corpus_hash is not None:
         checksums["corpus_hash"] = corpus_hash
+    if normalized_prompt_version == "rtt.prompts.v2":
+        from rttdist import prompts
+        checksums["prompt_template_hash"] = hashlib.sha256(
+            Path(prompts.__file__).read_bytes()
+        ).hexdigest()
     return checksums
 
 

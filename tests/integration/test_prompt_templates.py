@@ -12,6 +12,30 @@ from rttdist.lmstudio_client import SourceExtractionError, extract_single_file_s
 from rttdist.prompts import build_translation_prompt
 
 
+@pytest.mark.parametrize("sample", ["", "\n", " ab \n", "a  b\n"])
+def test_v2_prompt_preserves_empty_and_whitespace_inputs(sample):
+    bundle = build_translation_prompt(
+        problem_id="LC_0003", source_language="cpp", target_language="java",
+        problem_statement="Read a line including spaces.", sample_input=sample,
+        sample_output="0\n", source_code="int main(){}", template_version="rtt.prompts.v2",
+    )
+    text = bundle.messages[1].content
+    assert f"[SAMPLE INPUT]\n{sample}\n\n[EXPECTED OUTPUT]" in text
+    assert "every valid input" in text
+    assert "public class Main" in text
+    assert "for the provided sample" not in text
+
+
+def test_legacy_prompt_stays_sample_based_by_default():
+    bundle = build_translation_prompt(
+        problem_id="P", source_language="cpp", target_language="c",
+        problem_statement="Statement", sample_input=" 1\n", sample_output="1",
+        source_code="int main(){}",
+    )
+    assert "for the provided sample" in bundle.messages[1].content
+    assert "[SAMPLE INPUT]\n1\n\n" in bundle.messages[1].content
+
+
 def test_generic_translation_prompt_is_deterministic_and_explicit() -> None:
     bundle = build_translation_prompt(
         problem_id="IPOP_1436",

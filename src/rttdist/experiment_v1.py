@@ -15,7 +15,7 @@ from rttdist.experiment_io import (code_provenance, digest, read_json, server_me
 from rttdist.exec.adapters import evaluate_source
 from rttdist.extract import SourceExtractionError, extract_single_file_source_text
 from rttdist.normalize import hash_normalized_cpp_tokens
-from rttdist.prompts import build_translation_prompt, PROMPT_TEMPLATE_VERSION
+from rttdist.prompts import build_translation_prompt
 from rttdist.similarity import token_deltas
 
 MANIFEST_VERSION = 3
@@ -192,6 +192,7 @@ def run_route(config, problem, target, run_id, metadata, *, resume=False, new_at
                     if elapsed > metadata["recovery"]["max_wall_hours"]*3600:
                         raise ValueError("Run wall-clock recovery deadline reached")
                     prompt = build_translation_prompt(problem_id=problem.problem_id,
+                        template_version=config.prompt_template_version,
                         source_language=source_lang, target_language=language,
                         problem_statement=problem.statement_path.read_text(encoding="utf-8"),
                         sample_input=problem.prompt_sample.input_path.read_text(encoding="utf-8"),
@@ -278,6 +279,7 @@ def run_experiment(config, raw, run_id, *, resume=False, new_attempt=False):
     server = server_metadata(config.lmstudio.host, config.lmstudio.model)
     provenance = code_provenance()
     conditions = {"experiment_version": raw["experiment_version"], "problem_ids": config.problem_ids,
+                  "prompt_template_version": config.prompt_template_version,
                   "target_languages": config.target_languages, "runtime": asdict(config.runtime),
                   "lmstudio": asdict(config.lmstudio), "server": server["effective"],
                   "decoding": raw.get("decoding", {}), "validation_hash": validation["validation_hash"],
@@ -286,7 +288,7 @@ def run_experiment(config, raw, run_id, *, resume=False, new_attempt=False):
     metadata = {**conditions, "condition_hash": digest(conditions), "phase": raw["phase"],
                 "run_id": run_id, "repeat_index": raw.get("repeat_index"), "started_at": timestamp(),
                 "server_snapshot": server, "validation_snapshot": validation,
-                "prompt_template_version": PROMPT_TEMPLATE_VERSION}
+                "prompt_template_version": config.prompt_template_version}
     path = config.output_root / run_id / "run_metadata.json"
     if path.exists():
         old = read_json(path)

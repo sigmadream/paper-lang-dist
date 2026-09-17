@@ -1,0 +1,49 @@
+{
+  "problem_id": "IPOP_2110",
+  "template": "rtt.prompts.v2",
+  "scope": "initial forward prompts; reverse source depends on model output",
+  "prompts": [
+    {
+      "target": "c",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_2110\nTranslate from C++ to C.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_2110: 공유기 설치\n\n서로 다른 집 좌표 중 C곳을 골라 가장 가까운 공유기 간 거리를 최대화한다.\n\n## 제약과 입력\n\n첫 줄 N C, 2<=C<=N<=200000. 이후 N줄의 집 좌표는 서로 다르며 0..10^9이고 정렬되어 있지 않을 수 있다.\n\n## 출력\n\n서로 다른 C개 집에 공유기를 설치할 때 가장 가까운 두 공유기 사이 거리의 최댓값을 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/2110)\n\n[SAMPLE INPUT]\n2 2\n1\n100\n\n[EXPECTED OUTPUT]\n99\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n, c;\n    if (!(cin >> n >> c)) return 0;\n\n    vector<int> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    sort(a.begin(), a.end());\n\n    int left = 1;\n    int right = a.back() - a.front();\n    int ans = 0;\n\n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        int count = 1;\n        int prev = a[0];\n\n        for (int i = 1; i < n; i++) {\n            if (a[i] - prev >= mid) {\n                count++;\n                prev = a[i];\n            }\n        }\n\n        if (count >= c) {\n            ans = mid;\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n\n    cout << ans << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "618ec97b0712655e2fd5855b5782623d5b538f1d49547d010c77f7e310203efb"
+    },
+    {
+      "target": "java",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_2110\nTranslate from C++ to Java.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Use a public class Main with a static main entry point and no package declaration.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_2110: 공유기 설치\n\n서로 다른 집 좌표 중 C곳을 골라 가장 가까운 공유기 간 거리를 최대화한다.\n\n## 제약과 입력\n\n첫 줄 N C, 2<=C<=N<=200000. 이후 N줄의 집 좌표는 서로 다르며 0..10^9이고 정렬되어 있지 않을 수 있다.\n\n## 출력\n\n서로 다른 C개 집에 공유기를 설치할 때 가장 가까운 두 공유기 사이 거리의 최댓값을 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/2110)\n\n[SAMPLE INPUT]\n2 2\n1\n100\n\n[EXPECTED OUTPUT]\n99\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n, c;\n    if (!(cin >> n >> c)) return 0;\n\n    vector<int> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    sort(a.begin(), a.end());\n\n    int left = 1;\n    int right = a.back() - a.front();\n    int ans = 0;\n\n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        int count = 1;\n        int prev = a[0];\n\n        for (int i = 1; i < n; i++) {\n            if (a[i] - prev >= mid) {\n                count++;\n                prev = a[i];\n            }\n        }\n\n        if (count >= c) {\n            ans = mid;\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n\n    cout << ans << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "a2c41a3a9f534135f33299aeb268ebc0b262e6f403ea7edd92624d7ce7fdc114"
+    },
+    {
+      "target": "python",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_2110\nTranslate from C++ to Python.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_2110: 공유기 설치\n\n서로 다른 집 좌표 중 C곳을 골라 가장 가까운 공유기 간 거리를 최대화한다.\n\n## 제약과 입력\n\n첫 줄 N C, 2<=C<=N<=200000. 이후 N줄의 집 좌표는 서로 다르며 0..10^9이고 정렬되어 있지 않을 수 있다.\n\n## 출력\n\n서로 다른 C개 집에 공유기를 설치할 때 가장 가까운 두 공유기 사이 거리의 최댓값을 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/2110)\n\n[SAMPLE INPUT]\n2 2\n1\n100\n\n[EXPECTED OUTPUT]\n99\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n, c;\n    if (!(cin >> n >> c)) return 0;\n\n    vector<int> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    sort(a.begin(), a.end());\n\n    int left = 1;\n    int right = a.back() - a.front();\n    int ans = 0;\n\n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        int count = 1;\n        int prev = a[0];\n\n        for (int i = 1; i < n; i++) {\n            if (a[i] - prev >= mid) {\n                count++;\n                prev = a[i];\n            }\n        }\n\n        if (count >= c) {\n            ans = mid;\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n\n    cout << ans << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "0c7a382694baef190e42ab582716e4d9c8dce81abb2a31448134ac99eba844c7"
+    }
+  ]
+}

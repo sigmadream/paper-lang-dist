@@ -20,9 +20,9 @@
 | IPOP_9012 | [valid_parentheses/solution.js](https://github.com/DhanushNehru/Leetcode/blob/b9d7d2c234c39b3b3c67eded0c125e2841685b29/problems/valid_parentheses/solution.js) | 소괄호만 입력; 문자열별 boolean → YES/NO |
 | IPOP_1992 | [construct_quad_tree/solution.js](https://github.com/DhanushNehru/Leetcode/blob/b9d7d2c234c39b3b3c67eded0c125e2841685b29/problems/construct_quad_tree/solution.js) | Node 제공; TL/TR/BL/BR 순서로 BOJ 출력 직렬화 |
 
-각 풀이를 새 입력 10개에 적용한 결과 30/30이 독립 정답과 일치했다. 대응 방법·소스 해시는 [평가 manifest](../evaluation-v2-a/manifest.json), 실행 결과는 [검증 보고서](../evaluation-v2-a/validation_report.json)에 있다. 나머지 16문제에는 이 묶음에서 채택한 대응 풀이가 없다.
+각 풀이를 현재 입력 13개에 적용한 결과 39/39이 독립 정답과 일치했다. 대응 방법·소스 해시는 [평가 manifest](../metadata/ipop19/manifest.json), 실행 결과는 [검증 보고서](../metadata/ipop19/validation_report.json)에 있다. 나머지 16문제에는 이 묶음에서 채택한 대응 풀이가 없다.
 
-입력 생성과 기본 정답 검증은 저장소 풀이와 분리되어 있다. [190개 평가 입력](../evaluation-v2-a/README.md)은 로컬 BOJ 명세에 따라 자체 생성했으며 저장소에서 내려받은 공식 테스트로 표시하지 않는다.
+입력 생성과 기본 정답 검증은 저장소 풀이와 분리되어 있다. [247개 평가 입력](../metadata/ipop19/README.md)은 로컬 BOJ 명세에 따라 자체 생성했으며 저장소에서 내려받은 공식 테스트로 표시하지 않는다.
 
 ## 재수집
 
@@ -34,7 +34,7 @@
 git clone -c core.autocrlf=true https://github.com/DhanushNehru/Leetcode.git .tools/leetcode-source
 git -C .tools/leetcode-source checkout b9d7d2c234c39b3b3c67eded0c125e2841685b29
 python problem/leetcode-source/collect_source.py .tools/leetcode-source
-python problem/evaluation-v2-a/tools/validate_dataset.py
+python problem/metadata/ipop19/tools/validate_dataset.py
 ```
 
 이번 수집은 Windows의 CRLF 체크아웃 기준이다. 위 clone 명령의 설정은 같은 파일 바이트를 재현하기 위한 것이며, 다른 줄바꿈 정책의 체크아웃은 동일 커밋이어도 SHA-256이 달라질 수 있다. 체크아웃의 파일 바이트가 기록한 SHA-256과 일치해야 한다. 외부 풀이 검증기는 검토한 3개 파일에만 적용하며 해시가 다른 코드를 실행하지 않는다.

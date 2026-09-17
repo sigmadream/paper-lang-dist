@@ -1,17 +1,17 @@
 # RTT Language Distance Experiment Tool
 
-새 평가 입력 40문제·400쌍은 `lmstudio_v2.yaml`로 실행한다. 이 설정의 `dataset_index: ./problem/dataset-index.json`이 평가 데이터 위치를 지정한다. 설정의 상대 경로는 YAML 파일 위치를 기준으로 해석하며, 색인 내부 경로는 색인 파일 위치를 기준으로 해석한다.
+새 평가 입력 40문제·520쌍은 `lmstudio_v2.yaml`로 실행한다. 이 설정의 `dataset_index: ./problem/dataset-index.json`이 평가 데이터 위치를 지정한다. 설정의 상대 경로는 YAML 파일 위치를 기준으로 해석하며, 색인 내부 경로는 색인 파일 위치를 기준으로 해석한다.
 
-IPOP 문제는 기존 `problem/IPOP_*.md`와 `problem/IPOP_*`의 예제를 프롬프트에 사용하고, `problem/evaluation-v2-a/IPOP_*`만 채점에 사용한다. LeetCode 문제는 해당 문제 폴더의 `statement.md`와 `prompt_examples`를 프롬프트에 사용하고, `evaluation`만 채점에 사용한다. 두 경우 모두 예제 중 파일명 순서상 첫 쌍을 기존 프롬프트 양식에 전달한다. 평가 입력·정답·README의 사례 설명·실패 진단은 프롬프트에 전달하지 않는다.
+40문제는 모두 `problem/<문제 ID>/` 아래에 `statement.md`, `prompt_examples/`, `evaluation/`, `reference.cpp`를 두는 구조다. 색인 schema 2가 이 배치를 지정한다. 명세와 예제 중 파일명 순서상 첫 쌍을 프롬프트에 사용하고 `evaluation`만 채점에 사용한다. 평가 입력·정답·README의 사례 설명·실패 진단은 프롬프트에 전달하지 않는다. 문제 목록과 검증 도구는 [데이터 안내](problem/README.md)를 참고한다.
 
 ```powershell
 $env:PATH = "$PWD/.tools/gcc/bin;$PWD/.tools/R/bin/x64;" + $env:PATH
 $env:PYTHONUTF8 = '1'
 uv run rttdist validate-corpus --config lmstudio_v2.yaml --execute
-uv run rttdist run --config lmstudio_v2.yaml --run-id v2-a-r1
+uv run rttdist run --config lmstudio_v2.yaml --run-id v2-a-quality-1-r1
 ```
 
-`lmstudio_v2.yaml`은 기존 모델·실행 조건을 복사한 시작 설정이다. 실행 전에 실험에 맞게 확정한다. 검증 기록과 결과는 `artifacts-lmstudio/v2-a`에 저장한다. 색인에 없는 문제, 누락된 예제·평가 파일, 예제와 동일한 평가 입력은 오류로 처리한다. 예제와 평가 파일 모두 검증 해시에 포함되므로 변경하면 다시 검증하고 새 run-id로 시작해야 한다. `dataset_index`를 생략한 기존 설정은 v1 파일 배치와 동작을 유지한다.
+`lmstudio_v2.yaml`은 `v2-a-quality-1` 데이터와 P2 프롬프트를 사용하는 설정이다. 데이터 및 난이도 점검 결과는 [검토 보고서](docs/DATASET_QUALITY_v2.md)에 있다. 실행 전에 실험에 맞게 확정한다. 검증 기록과 결과는 `artifacts-lmstudio/v2-a-quality-1`에 저장한다. 색인에 없는 문제, 누락된 예제·평가 파일, 예제와 동일한 평가 입력은 오류로 처리한다. 예제와 평가 파일 모두 검증 해시에 포함되므로 변경하면 다시 검증하고 새 run-id로 시작해야 한다. `dataset_index`를 생략한 기존 설정은 `problem/archive/v1`의 원본 배치와 동작을 유지한다. 경로 정리 전 실행 기록을 이어 쓰려 하지 말고 새 경로로 다시 검증한 뒤 새 run-id를 사용한다.
 
 현재 SF 실험은 `experiment_version`이 있는 설정(`lmstudio_pilot_v1.yaml`, `lmstudio_v1.yaml`)으로 실행한다. 기존 설정과 아래 schema 1 설명은 구버전 실행/리포트에 해당한다. 1차 정의는 [계획](docs/PLAN_v1_metrics.md), 실제 실행 기록은 [실험 로그](docs/EXPERIMENT_v1_log.md)를 참고한다.
 
@@ -99,7 +99,7 @@ runtime:
   max_iterations: 10
   timeout_seconds: 30
 output_root: ./artifacts-lmstudio
-problem_root: ./problem
+problem_root: ./problem/archive/v1
 corpus_root: ./corpus/solutions
 ```
 

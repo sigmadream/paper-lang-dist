@@ -31,7 +31,6 @@ from rttdist.metrics import (
     build_distance_metrics,
     build_unavailable_rtt_distance,
 )
-from rttdist.prompts import PROMPT_TEMPLATE_VERSION
 from rttdist.run_state import build_manifest_checksums, plan_run_resume
 
 
@@ -173,8 +172,8 @@ def run_rtt_loop(
     )
 
     statement = problem.statement_path.read_text(encoding="utf-8").strip()
-    sample_input = problem.prompt_sample.input_path.read_text(encoding="utf-8").strip()
-    sample_output = problem.prompt_sample.output_path.read_text(encoding="utf-8").strip()
+    sample_input = problem.prompt_sample.input_path.read_text(encoding="utf-8")
+    sample_output = problem.prompt_sample.output_path.read_text(encoding="utf-8")
     seed_source = problem.seed_path.read_text(encoding="utf-8").rstrip()
     corpus_hash = None
     if problem.prompt_examples is not None:
@@ -188,7 +187,7 @@ def run_rtt_loop(
         metadata=metadata,
         checksums=build_manifest_checksums(
             config=config,
-            prompt_template_version=PROMPT_TEMPLATE_VERSION,
+            prompt_template_version=config.prompt_template_version,
             seed_source=seed_source,
             corpus_hash=corpus_hash,
         ),
@@ -824,6 +823,7 @@ def _emit_progress(
 def _build_translation_client(config: ExperimentConfig) -> TranslationClientProtocol:
     if config.provider == "lmstudio":
         return LMStudioTranslationClient(
+            prompt_template_version=config.prompt_template_version,
             model=config.lmstudio.model,
             temperature=config.lmstudio.temperature,
             host=config.lmstudio.host,

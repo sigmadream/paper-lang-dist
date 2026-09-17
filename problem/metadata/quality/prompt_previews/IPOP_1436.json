@@ -1,0 +1,49 @@
+{
+  "problem_id": "IPOP_1436",
+  "template": "rtt.prompts.v2",
+  "scope": "initial forward prompts; reverse source depends on model output",
+  "prompts": [
+    {
+      "target": "c",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_1436\nTranslate from C++ to C.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_1436: 영화감독 숌\n\n십진 표현에 666을 포함하는 수 중 N번째 수를 출력한다.\n\n## 제약과 입력\n\n첫 줄 N, 1<=N<=10000.\n\n## 출력\n\n십진 표현에 연속한 666이 포함된 양의 정수 중 N번째로 작은 수를 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/1436)\n\n[SAMPLE INPUT]\n1\n\n[EXPECTED OUTPUT]\n666\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <string>\n\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    cin >> n;\n\n    int count = 0;\n    int value = 665;\n    while (count < n) {\n        ++value;\n        if (to_string(value).find(\"666\") != string::npos) {\n            ++count;\n        }\n    }\n\n    cout << value << '\\n';\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "9cfdca699d487f2c7042fe3836558df6d41d2ce280b1a55837e602a9e525c8eb"
+    },
+    {
+      "target": "java",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_1436\nTranslate from C++ to Java.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Use a public class Main with a static main entry point and no package declaration.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_1436: 영화감독 숌\n\n십진 표현에 666을 포함하는 수 중 N번째 수를 출력한다.\n\n## 제약과 입력\n\n첫 줄 N, 1<=N<=10000.\n\n## 출력\n\n십진 표현에 연속한 666이 포함된 양의 정수 중 N번째로 작은 수를 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/1436)\n\n[SAMPLE INPUT]\n1\n\n[EXPECTED OUTPUT]\n666\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <string>\n\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    cin >> n;\n\n    int count = 0;\n    int value = 665;\n    while (count < n) {\n        ++value;\n        if (to_string(value).find(\"666\") != string::npos) {\n            ++count;\n        }\n    }\n\n    cout << value << '\\n';\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "5b0106f5d061ce03a187214c298093a8c7892546fb17850ec5ba10e064b98132"
+    },
+    {
+      "target": "python",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_1436\nTranslate from C++ to Python.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_1436: 영화감독 숌\n\n십진 표현에 666을 포함하는 수 중 N번째 수를 출력한다.\n\n## 제약과 입력\n\n첫 줄 N, 1<=N<=10000.\n\n## 출력\n\n십진 표현에 연속한 666이 포함된 양의 정수 중 N번째로 작은 수를 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/1436)\n\n[SAMPLE INPUT]\n1\n\n[EXPECTED OUTPUT]\n666\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <string>\n\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    cin >> n;\n\n    int count = 0;\n    int value = 665;\n    while (count < n) {\n        ++value;\n        if (to_string(value).find(\"666\") != string::npos) {\n            ++count;\n        }\n    }\n\n    cout << value << '\\n';\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "d4e93bf195ada5964171bf4cec23053adfec180f927ded1a7581a3bf051823ad"
+    }
+  ]
+}
