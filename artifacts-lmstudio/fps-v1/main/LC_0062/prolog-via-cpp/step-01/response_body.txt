@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-r33d1pqau5ac1jvxgflfuj",
+  "object": "chat.completion",
+  "created": 1789723200,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    int M, N;\n    std::cin >> M >> N;\n\n    std::vector<std::vector<int>> dp(M, std::vector<int>(N, 0));\n    for (int i = 0; i < M; ++i) {\n        dp[i][0] = 1;\n    }\n    for (int j = 0; j < N; ++j) {\n        dp[0][j] = 1;\n    }\n\n    for (int i = 1; i < M; ++i) {\n        for (int j = 1; j < N; ++j) {\n            dp[i][j] = dp[i-1][j] + dp[i][j-1];\n        }\n    }\n\n    std::cout << dp[M-1][N-1] << std::endl;\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 563,
+    "completion_tokens": 198,
+    "total_tokens": 761,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

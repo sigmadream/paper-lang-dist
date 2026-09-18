@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-68worb4pybmjgy9cw3p9ck",
+    "object": "chat.completion",
+    "created": 1789722590,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nuniquePaths :: Int -> Int -> Int\nuniquePaths m n = table !! (m-1) !! (n-1)\n  where\n    table = [[if i == 0 || j == 0 then 1 else table !! (i-1) !! j + table !! i !! (j-1) | j <- [0..n-1]] | i <- [0..m-1]]\n\nmain :: IO ()\nmain = do\n  m <- readLn :: IO Int\n  n <- readLn :: IO Int\n  print $ uniquePaths m n\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 534,
+      "completion_tokens": 131,
+      "total_tokens": 665,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 4.736107400007313,
+  "received_at": "2026-09-18T09:09:52.877873+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 534,
+    "completion_tokens": 131,
+    "total_tokens": 665,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

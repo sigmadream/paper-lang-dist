@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-x2y6yoatf9pzx7pbkj34m",
+    "object": "chat.completion",
+    "created": 1789722828,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint main() {\n    int n;\n    std::cin >> n;\n    std::vector<int> arr(n);\n    for (int i = 0; i < n; ++i) {\n        std::cin >> arr[i];\n    }\n    std::sort(arr.begin(), arr.end());\n    for (int i = 0; i < n; ++i) {\n        if (i > 0) std::cout << \" \";\n        std::cout << arr[i];\n    }\n    std::cout << std::endl;\n    return 0;\n}\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 428,
+      "completion_tokens": 134,
+      "total_tokens": 562,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 4.846528399997624,
+  "received_at": "2026-09-18T09:13:51.599545+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 428,
+    "completion_tokens": 134,
+    "total_tokens": 562,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-8jia8soce94crlbks2kby9",
+  "object": "chat.completion",
+  "created": 1789722910,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    n <- readLn :: IO Int\n    scores <- replicateM n readLn :: IO [Int]\n    let dp = calculateDP scores\n    print $ dp !! (n - 1)\n\ncalculateDP :: [Int] -> [Int]\ncalculateDP scores = dp\n  where\n    n = length scores\n    dp = foldl' updateDP (replicate n 0) [1..n]\n    updateDP dp' i\n      | i == 1 = take (i + 1) $ zipWith (+) dp' scores\n      | i == 2 = take (i + 1) $ zipWith (+) (zipWith (+) dp' scores) (tail scores)\n      | otherwise = take (i + 1) $ zipWith (+) (zipWith max (drop 2 dp') (zipWith (+) (drop 3 dp') (init scores))) (drop i scores)\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 629,
+    "completion_tokens": 212,
+    "total_tokens": 841,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

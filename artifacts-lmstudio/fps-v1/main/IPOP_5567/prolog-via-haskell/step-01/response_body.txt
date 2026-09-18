@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-v0soz5ockza19cm4beg449",
+  "object": "chat.completion",
+  "created": 1789722924,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nimport Data.List (sort, nub, delete)\n\nmain :: IO ()\nmain = do\n    [n, m] <- map read . words <$> getLine\n    edges <- replicateM m $ do\n        [a, b] <- map read . words <$> getLine\n        return (a, b)\n    let direct = [b | (1, b) <- edges]\n    let second = nub [c | (a, c) <- edges, a `elem` direct]\n    let allInvited = sort $ direct ++ second\n    let invited = delete 1 allInvited\n    print $ length invited\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 592,
+    "completion_tokens": 138,
+    "total_tokens": 730,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

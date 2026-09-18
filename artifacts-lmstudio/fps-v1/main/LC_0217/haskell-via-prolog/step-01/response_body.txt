@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-ezs6l8ffgdfipaccaovnnk",
+  "object": "chat.completion",
+  "created": 1789723828,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```prolog\nduplicate([H|T], H, _).\nduplicate([H|T], _, Rest) :-\n    member(H, T),\n    duplicate(T, H, Rest).\nduplicate([_|T], X, Rest) :-\n    duplicate(T, X, Rest).\n\nmain :-\n    read_line(Input),\n    split_string(Input, ' ', '', Parts),\n    maplist(atom_number, Parts, Numbers),\n    length(Numbers, N),\n    take(N, Numbers, SubList),\n    (duplicate(SubList, _, _) -> write(1); write(0)),\n    nl.\n\ntake(0, _, []).\ntake(N, [H|T], [H|Rest]) :-\n    N > 0,\n    M is N - 1,\n    take(M, T, Rest).\n\nsplit_string(String, Delimiter, '', Result) :-\n    string_chars(String, Chars),\n    split_string(Chars, Delimiter, [], Result).\nsplit_string([], _, Current, [Current]).\nsplit_string([H|T], Delimiter, Current, Result) :-\n    H = Delimiter,\n    !,\n    append(Current, [''], NewCurrent),\n    split_string(T, Delimiter, NewCurrent, Result).\nsplit_string([H|T], Delimiter, Current, Result) :-\n    append(Current, [H], NewCurrent),\n    split_string(T, Delimiter, NewCurrent, Result).\n\natom_number(A, N) :-\n    atom_chars(A, Chars),\n    number_chars(N, Chars).\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 442,
+    "completion_tokens": 311,
+    "total_tokens": 753,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

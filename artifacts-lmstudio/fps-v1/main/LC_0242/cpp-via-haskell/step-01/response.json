@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-t9zvc7bhfvcnvdkw01zh",
+    "object": "chat.completion",
+    "created": 1789723561,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nimport Data.List (all)\n\nmain :: IO ()\nmain = do\n    s <- getLine\n    t <- getLine\n    let counts = [sum $ map ((==) i . snd) [(i, count c t) | c <- ['a'..'z']]) | i <- ['a'..'z']]\n    print $ if all (== 0) counts then 1 else 0\n\ncount :: Char -> String -> Int\ncount c = length . filter (== c)\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 564,
+      "completion_tokens": 109,
+      "total_tokens": 673,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 4.648891999997431,
+  "received_at": "2026-09-18T09:26:03.983785+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 564,
+    "completion_tokens": 109,
+    "total_tokens": 673,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

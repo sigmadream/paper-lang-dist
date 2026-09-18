@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-2028inouyk3cwi8p6zp1x8",
+    "object": "chat.completion",
+    "created": 1789722999,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\n:- use_module(library(lists)).\n\nmain :-\n    read_line_to_string(_, Input),\n    string_split(Input, ' ', Parts),\n    maplist(string_to_integer, Parts, [N, M | Edges]),\n    findall((A, B), (nth0(I, Edges, A), nth0(J, Edges, B), I < J), EdgeList),\n    direct_friends(EdgeList, 1, Direct),\n    two_friends(EdgeList, Direct, Two),\n    subtract(Two, [1], Result),\n    length(Result, Output),\n    write(Output).\n\ndirect_friends([], _, []).\ndirect_friends([(A, B) | Rest], 1, [B | Direct]) :-\n    direct_friends(Rest, 1, Direct).\ndirect_friends([(_, A) | Rest], A, [B | Direct]) :-\n    direct_friends(Rest, A, Direct).\ndirect_friends([_ | Rest], _, Direct) :-\n    direct_friends(Rest, _, Direct).\n\ntwo_friends([], _, []).\ntwo_friends([(A, B) | Rest], Direct, [C | Two]) :-\n    member(A, Direct), \\+ member(B, Direct), !,\n    two_friends(Rest, Direct, Two).\ntwo_friends([(A, B) | Rest], Direct, [C | Two]) :-\n    member(B, Direct), \\+ member(A, Direct), !,\n    two_friends(Rest, Direct, Two).\ntwo_friends([_ | Rest], Direct, Two) :-\n    two_friends(Rest, Direct, Two).\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 536,
+      "completion_tokens": 324,
+      "total_tokens": 860,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 8.682438399991952,
+  "received_at": "2026-09-18T09:16:46.077384+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 536,
+    "completion_tokens": 324,
+    "total_tokens": 860,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

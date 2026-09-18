@@ -1,0 +1,33 @@
+{
+  "provider": {
+    "provider": "lmstudio",
+    "endpoint": "http://localhost:1234/v1",
+    "model": "qwen2.5-coder-7b-instruct",
+    "api_key_env": null,
+    "generation": {
+      "temperature": 0,
+      "top_p": 1,
+      "max_tokens": 4096,
+      "seed": 20260918
+    },
+    "request_timeout": 300,
+    "retries": 2
+  },
+  "payload": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Translate the supplied program to the requested language, preserving its complete stdin/stdout behavior for every valid input in the specification. Return exactly one complete source file in one fenced code block, with no explanation. Use only the standard libraries shipped with the specified toolchain. C++: C++17 with main(). Haskell: GHC, module Main and main :: IO (). Prolog: SWI-Prolog, define main/0; the evaluator invokes main; do not add initialization directives. Preserve required algorithmic constraints and output ordering. Do not hard-code examples."
+      },
+      {
+        "role": "user",
+        "content": "Source language: cpp\nTarget language: haskell\nSpecification:\n# IPOP_2609: 최대공약수와 최소공배수\n\n두 양의 정수의 최대공약수와 최소공배수를 순서대로 출력한다.\n\n## 제약과 입력\n\n첫 줄 두 자연수 A B, 각각 1..10000.\n\n## 출력\n\n첫 줄 최대공약수, 둘째 줄 최소공배수를 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/2609)\n\nPublic examples:\n[{\"input\": \"24 18\\n\", \"output\": \"6\\n72\\n\"}]\nSource code:\n#include <iostream>\n\nusing namespace std;\n\nint gcd(int a, int b) {\n    while (b != 0) {\n        int r = a % b;\n        a = b;\n        b = r;\n    }\n    return a;\n}\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int a, b;\n    if (!(cin >> a >> b)) return 0;\n    int g = gcd(a, b);\n    cout << g << \"\\n\" << (a / g) * b << \"\\n\";\n    return 0;\n}\n"
+      }
+    ],
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  }
+}

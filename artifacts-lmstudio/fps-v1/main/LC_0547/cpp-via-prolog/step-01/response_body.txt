@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-pzrv0vy7fw1kogiqm2sfk",
+  "object": "chat.completion",
+  "created": 1789723183,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```prolog\n:- use_module(library(readutil)).\n:- use_module(library(write)).\n\nmain :-\n    read_line_to_codes(user_input, Line1),\n    atom_number(Line1, N),\n    findall(Row, (between(1, N, _), read_line_to_codes(user_input, Row)), Rows),\n    maplist(string_codes, Rows, Matrix),\n    count_provinces(N, Matrix, Components),\n    write(Components).\n\ncount_provinces(_, [], 0) :- !.\ncount_provinces(N, [Row|Rows], Components) :-\n    findall(Col, (between(1, N, Col), nth0(Col-1, Row, 1)), Connected),\n    length(Connected, Count),\n    count_provinces(N, Rows, Remaining),\n    Components is Count + Remaining.\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 658,
+    "completion_tokens": 169,
+    "total_tokens": 827,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

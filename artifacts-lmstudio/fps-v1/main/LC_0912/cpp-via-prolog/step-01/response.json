@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-zqqcd4z6y3nyi1fppo3tw9",
+    "object": "chat.completion",
+    "created": 1789722682,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\n:- use_module(library(lists)).\n\nsort_array(N, A) :-\n    merge_sort(A, N, Sorted),\n    print_list(Sorted).\n\nmerge_sort([], _, []).\nmerge_sort([X], _, [X]).\nmerge_sort(L, N, Sorted) :-\n    split(L, N, Left, Right),\n    merge_sort(Left, N1, SortedLeft),\n    merge_sort(Right, N2, SortedRight),\n    merge(SortedLeft, SortedRight, Sorted).\n\nsplit([], _, [], []).\nsplit([H|T], N, [H|Left], Right) :-\n    N1 is N - 1,\n    split(T, N1, Left, Right).\n\nmerge([], R, R).\nmerge(L, [], L).\nmerge([H1|T1], [H2|T2], [H1|Sorted]) :-\n    H1 =< H2,\n    merge(T1, [H2|T2], Sorted).\nmerge([H1|T1], [H2|T2], [H2|Sorted]) :-\n    H1 > H2,\n    merge([H1|T1], T2, Sorted).\n\nprint_list([]).\nprint_list([H|T]) :-\n    write(H),\n    (   T = [] -> true ; write(' '), print_list(T) ).\n\nmain :-\n    read_line_to_string(_, Input),\n    string_to_list(Input, Chars),\n    split_string(Chars, \"\\n\", \"\", [NStr, AStr]),\n    number_string(N, NStr),\n    atom_codes(AAtom, AStr),\n    atomic_list_concat(AAtoms, ' ', AAtom),\n    maplist(atom_number, AAtoms, AList),\n    length(AList, N),\n    sort_array(N, AList),\n    !.\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 671,
+      "completion_tokens": 374,
+      "total_tokens": 1045,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 9.487312200013548,
+  "received_at": "2026-09-18T09:11:29.542565+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 671,
+    "completion_tokens": 374,
+    "total_tokens": 1045,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

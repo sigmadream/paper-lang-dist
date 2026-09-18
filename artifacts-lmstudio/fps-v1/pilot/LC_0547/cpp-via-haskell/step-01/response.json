@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-g2gtzuf6kr6qvuyx0akw8",
+    "object": "chat.completion",
+    "created": 1789722318,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nimport Data.List (findIndex)\n\nmain :: IO ()\nmain = do\n    n <- readLn :: IO Int\n    g <- replicateM n (readLine n) :: IO [[Int]]\n    let components = countComponents g\n    print components\n\ncountComponents :: [[Int]] -> Int\ncountComponents g = go g (replicate (length g) False)\n  where\n    go [] _ = 0\n    go (r:rs) seen\n      | any (`notElem` seen) r = 1 + go rs (markSeen r seen)\n      | otherwise = go rs seen\n\nmarkSeen :: [Int] -> [Bool] -> [Bool]\nmarkSeen row seen = zipWith (\\x s -> if x == 1 then True else s) row seen\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 659,
+      "completion_tokens": 170,
+      "total_tokens": 829,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 5.538995699986117,
+  "received_at": "2026-09-18T09:05:21.660680+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 659,
+    "completion_tokens": 170,
+    "total_tokens": 829,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

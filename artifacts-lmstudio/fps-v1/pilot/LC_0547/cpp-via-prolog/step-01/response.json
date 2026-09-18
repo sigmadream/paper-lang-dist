@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-gd4xs5pah1a1dgb94vzsu",
+    "object": "chat.completion",
+    "created": 1789722230,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\n:- use_module(library(lists)).\n\nread_values(N, A) :-\n    length(A, N),\n    maplist(read_line, A).\n\nread_line(L) :-\n    read_line_to_codes(user_input, Codes),\n    atom_codes(Line, Codes),\n    split_string(Line, ' ', '', L).\n\nprint_values(A) :-\n    maplist(print_value, A),\n    nl.\n\nprint_value(X) :-\n    write(X),\n    write(' ').\n\nmain :-\n    read_line([N|_]),\n    length(G, N),\n    maplist(read_values(N), G),\n    findall(I, (between(0, N-1, I), \\+ memberchk(I, Seen)), Seen),\n    length(Seen, Components),\n    print_value(Components).\n\nfindall(X, P, L) :-\n    findall(X, P, L, []).\n\nfindall(_, [], _, Acc) :-\n    !,\n    reverse(Acc, L).\nfindall(X, (P, Q), L, Acc) :-\n    call(P, X),\n    !,\n    findall(Q, X, L, [X|Acc]).\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 658,
+      "completion_tokens": 236,
+      "total_tokens": 894,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 7.045468600001186,
+  "received_at": "2026-09-18T09:03:55.589789+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 658,
+    "completion_tokens": 236,
+    "total_tokens": 894,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

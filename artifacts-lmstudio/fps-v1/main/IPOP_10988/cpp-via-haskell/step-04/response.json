@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-3bn82sjtezeajt7ro3e2kr",
+    "object": "chat.completion",
+    "created": 1789722532,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\n#include <algorithm>\n\nint main() {\n    std::string input;\n    std::cin >> input;\n    std::string reversedInput = input;\n    std::reverse(reversedInput.begin(), reversedInput.end());\n    if (input == reversedInput) {\n        std::cout << \"1\" << std::endl;\n    } else {\n        std::cout << \"0\" << std::endl;\n    }\n    return 0;\n}\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 367,
+      "completion_tokens": 103,
+      "total_tokens": 470,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 4.253698300017277,
+  "received_at": "2026-09-18T09:08:54.641580+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 367,
+    "completion_tokens": 103,
+    "total_tokens": 470,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-54oi95vg5usr01wokgpsu",
+    "object": "chat.completion",
+    "created": 1789722990,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nimport System.IO\n\ngcd' :: Int -> Int -> Int\ngcd' a b\n  | b == 0    = a\n  | otherwise = gcd' b (a `mod` b)\n\nmain :: IO ()\nmain = do\n  hSetBuffering stdin NoBuffering\n  hSetBuffering stdout NoBuffering\n\n  [a, b] <- map read . words <$> getLine\n  let g = gcd' a b\n  putStrLn $ show g\n  putStrLn $ show ((a `div` g) * b)\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 451,
+      "completion_tokens": 120,
+      "total_tokens": 571,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 4.5931906000187155,
+  "received_at": "2026-09-18T09:16:33.274625+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 451,
+    "completion_tokens": 120,
+    "total_tokens": 571,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

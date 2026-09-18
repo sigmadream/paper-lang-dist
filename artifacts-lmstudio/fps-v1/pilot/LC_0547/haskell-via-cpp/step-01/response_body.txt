@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-q9vtri1tx8fl2d7tirnd5l",
+  "object": "chat.completion",
+  "created": 1789722214,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <queue>\nusing namespace std;\n\nint components(const vector<vector<int>>& graph, int n) {\n    vector<bool> seen(n, false);\n    int count = 0;\n    for (int i = 0; i < n; ++i) {\n        if (!seen[i]) {\n            queue<int> q;\n            q.push(i);\n            while (!q.empty()) {\n                int v = q.front();\n                q.pop();\n                if (!seen[v]) {\n                    seen[v] = true;\n                    for (int j = 0; j < n; ++j) {\n                        if (graph[v][j] == 1 && !seen[j]) {\n                            q.push(j);\n                        }\n                    }\n                }\n            }\n            count++;\n        }\n    }\n    return count;\n}\n\nint main() {\n    int n;\n    cin >> n;\n    vector<vector<int>> graph(n, vector<int>(n));\n    for (int i = 0; i < n; ++i) {\n        for (int j = 0; j < n; ++j) {\n            cin >> graph[i][j];\n        }\n    }\n    cout << components(graph, n) << endl;\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 591,
+    "completion_tokens": 265,
+    "total_tokens": 856,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

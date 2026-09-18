@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-lastly5k8az1wk0axd0m",
+    "object": "chat.completion",
+    "created": 1789722676,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\n:- use_module(library(readutil)).\n\npalindrome(S) :-\n    reverse(S, S).\n\nmain :-\n    read_line_to_string(CurrentLine),\n    atom_chars(CurrentLine, Chars),\n    palindrome(Chars),\n    write('1'), nl.\nmain :-\n    read_line_to_string(CurrentLine),\n    atom_chars(CurrentLine, Chars),\n    \\+ palindrome(Chars),\n    write('0'), nl.\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 392,
+      "completion_tokens": 89,
+      "total_tokens": 481,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 3.9244644999853335,
+  "received_at": "2026-09-18T09:11:18.747991+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 392,
+    "completion_tokens": 89,
+    "total_tokens": 481,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

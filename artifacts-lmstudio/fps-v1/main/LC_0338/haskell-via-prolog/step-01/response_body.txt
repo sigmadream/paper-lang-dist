@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-o7hug5uztg08s1rouzqkpv",
+  "object": "chat.completion",
+  "created": 1789723624,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```prolog\n:- use_module(library(readutil)).\n\nones(0, 0).\nones(N, Result) :-\n    N > 0,\n    N1 is N // 2,\n    N mod 2 =:= 1,\n    ones(N1, R),\n    Result is R + 1.\nones(N, Result) :-\n    N > 0,\n    N1 is N // 2,\n    N mod 2 =:= 0,\n    ones(N1, R),\n    Result is R.\n\nmain :-\n    read_line_to_string(CurrentLine),\n    atom_number(CurrentLine, N),\n    findall(Result, (between(0, N, I), ones(I, Result)), Results),\n    maplist(write, Results),\n    write('\\n').\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 407,
+    "completion_tokens": 161,
+    "total_tokens": 568,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

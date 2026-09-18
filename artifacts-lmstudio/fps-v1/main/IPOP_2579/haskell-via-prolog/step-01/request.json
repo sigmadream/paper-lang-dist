@@ -1,0 +1,33 @@
+{
+  "provider": {
+    "provider": "lmstudio",
+    "endpoint": "http://localhost:1234/v1",
+    "model": "qwen2.5-coder-7b-instruct",
+    "api_key_env": null,
+    "generation": {
+      "temperature": 0,
+      "top_p": 1,
+      "max_tokens": 4096,
+      "seed": 20260918
+    },
+    "request_timeout": 300,
+    "retries": 2
+  },
+  "payload": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Translate the supplied program to the requested language, preserving its complete stdin/stdout behavior for every valid input in the specification. Return exactly one complete source file in one fenced code block, with no explanation. Use only the standard libraries shipped with the specified toolchain. C++: C++17 with main(). Haskell: GHC, module Main and main :: IO (). Prolog: SWI-Prolog, define main/0; the evaluator invokes main; do not add initialization directives. Preserve required algorithmic constraints and output ordering. Do not hard-code examples."
+      },
+      {
+        "role": "user",
+        "content": "Source language: haskell\nTarget language: prolog\nSpecification:\n# IPOP_2579: 계단 오르기\n\n1칸 또는 2칸씩 이동하고 세 계단 연속 방문을 금지하며 마지막 계단까지 점수를 최대화한다.\n\n## 제약과 입력\n\n첫 줄 N, 1<=N<=300. 이후 N줄에 각 계단의 점수, 각각 1..10000. 바닥에서 시작해 한 번에 1칸 또는 2칸 올라간다.\n\n## 출력\n\n마지막 계단을 반드시 밟고 연속한 세 계단을 모두 밟지 않을 때의 최대 점수 합을 출력한다. 바닥은 계단 수에 포함하지 않는다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/2579)\n\nPublic examples:\n[{\"input\": \"1\\n10\", \"output\": \"10\\n\"}, {\"input\": \"8\\n10\\n30\\n10\\n50\\n10\\n30\\n10\\n50\", \"output\": \"170\\n\"}]\nSource code:\nimport Data.Array\nmain = do\n  values <- fmap (map read . words) getContents :: IO [Int]\n  let n = head values\n      score = listArray (1,n) (tail values)\n      best = listArray (0,n) [value i | i <- [0..n]]\n      value 0 = 0\n      value 1 = score!1\n      value 2 = score!1 + score!2\n      value i = max (best!(i-2)) (best!(i-3) + score!(i-1)) + score!i\n  print (best!n)\n"
+      }
+    ],
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  }
+}

@@ -1,0 +1,72 @@
+experiment_version: fps-text-v1
+repeats: 1
+problem_ids:
+- IPOP_2609
+- IPOP_1929
+- LC_0338
+- IPOP_10988
+- IPOP_9012
+- LC_0242
+- LC_0217
+- LC_0283
+- LC_0912
+- IPOP_2579
+- LC_0062
+- LC_0053
+- LC_0547
+- LC_0704
+- IPOP_5567
+pilot_problem_ids:
+- IPOP_2609
+- IPOP_9012
+- LC_0547
+corpus_root: data/fps-v1
+output_root: artifacts-lmstudio/fps-v1
+validation: artifacts-lmstudio/fps-v1/preflight-authorized/validation.json
+llm:
+  provider: lmstudio
+  endpoint: http://localhost:1234/v1
+  model: qwen2.5-coder-7b-instruct
+  api_key_env: null
+  generation:
+    temperature: 0
+    top_p: 1
+    max_tokens: 4096
+    seed: 20260918
+  request_timeout: 300
+  retries: 2
+threshold: 0.85
+max_fps_size: 10
+max_translation_steps: 20
+state_identity: language + SHA256(extracted source, CRLF/CR to LF only)
+similarity:
+  java: C:/Users/sigma/scoop/apps/openjdk/current/bin/java.exe
+  jar: D:\works\paper-lang-dist\jplag-6.3.0-jar-with-dependencies.jar
+  jar_sha256: 5f2c21e8b88ed77134effcb3a5a3ab13d188f6a3e16d401387f7479e92db9aa2
+  language: text
+  minimum_tokens: 9
+  normalize: false
+  similarity_field: averageSimilarity
+  scale:
+  - 0
+  - 1
+  threshold: 0
+  cluster: false
+  match_merging: false
+runtime:
+  tools:
+    cpp: D:\works\paper-lang-dist\.tools\mingw64\bin\g++.exe
+    haskell: C:\Users\sigma\scoop\apps\ghcup\current\ghcup\bin\ghc.EXE
+    prolog: C:\Users\sigma\scoop\shims\swipl.EXE
+  compile_timeout: 90
+  fixture_timeout: 30
+observation_wall_seconds: 14400
+schedule_seed: 20260918
+analysis:
+  bootstrap_replicates: 2000
+  bootstrap_seed: 20260918
+  comparisons: three reverse-direction pairs; Bonferroni family of 3 for each metric
+  pilot_exclusion_sensitivity: true
+  threshold_sensitivity: not registered; cannot infer unobserved high-threshold trajectories
+scope_amendment: 2026-09-18 user requested LM Studio only; second model and live external-provider
+  comparison deferred

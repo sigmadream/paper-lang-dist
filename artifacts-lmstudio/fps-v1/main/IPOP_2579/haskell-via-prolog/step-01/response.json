@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-j9lkfz512jxmfia18qyc",
+    "object": "chat.completion",
+    "created": 1789723024,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\n:- dynamic best/2.\n\nmain :-\n    read_line_to_string(Input),\n    string_splitter(Input, ' ', Values),\n    maplist(string_number, Values, Numbers),\n    nth0(0, Numbers, N),\n    nth1(N, Numbers, Scores),\n    initialize_best(N),\n    calculate_best(Scores, N, BestScore),\n    write(BestScore),\n    nl.\n\nstring_number(String, Number) :-\n    number_string(Number, String).\n\ninitialize_best(N) :-\n    between(0, N, I),\n    assertz(best(I, 0)).\n\ncalculate_best([], _, _).\ncalculate_best([S|Scores], N, BestScore) :-\n    I is length(Scores) + 1,\n    (I =:= 1 -> NewBest is S;\n     I =:= 2 -> NewBest is S + nth0(0, Scores);\n     true -> \n         best(I-2, Prev2),\n         best(I-3, Prev3),\n         NewBest is max(Prev2, Prev3 + nth0(I-2, Scores)) + S\n    ),\n    assertz(best(I, NewBest)),\n    calculate_best(Scores, N, BestScore).\n\nstring_splitter([], _, []).\nstring_splitter([H|T], Delimiter, [Head|Tail]) :-\n    H = Delimiter,\n    string_splitter(T, Delimiter, Tail).\nstring_splitter([H|T], Delimiter, [Head|Tail]) :-\n    not(H = Delimiter),\n    append(Head, [H], NewHead),\n    string_splitter(T, Delimiter, Tail).\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 559,
+      "completion_tokens": 339,
+      "total_tokens": 898,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 9.269993599998998,
+  "received_at": "2026-09-18T09:17:11.369088+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 559,
+    "completion_tokens": 339,
+    "total_tokens": 898,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

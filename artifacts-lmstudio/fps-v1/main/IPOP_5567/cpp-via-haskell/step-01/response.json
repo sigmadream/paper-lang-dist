@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-tzvfnbdythe8hqcb4im3ue",
+    "object": "chat.completion",
+    "created": 1789722644,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nimport Data.List (findIndex)\nimport Data.Maybe (fromJust)\n\nmain :: IO ()\nmain = do\n    [n, m] <- map read . words <$> getLine\n    edges <- replicateM m $ map read . words <$> getLine\n    let adj = buildAdjList n edges\n    print $ bfsCount adj 1\n\nbuildAdjList :: Int -> [(Int, Int)] -> [[Int]]\nbuildAdjList n edges = [neighbors i | i <- [1..n]]\n  where\n    neighbors i = [j | (a, b) <- edges, a == i || b == i]\n\nbfsCount :: [[Int]] -> Int -> Int\nbfsCount adj start = length $ filter (\\x -> x > 0 && x <= 2) distances\n  where\n    (distances, _) = bfs adj [start] []\n    bfs _ [] visited = ([], visited)\n    bfs adj (node:queue) visited =\n        let newVisited = node : visited\n            newQueue = queue ++ filter (`notElem` newVisited) (adj !! (node - 1))\n            newDistances = updateDistances distances node (length newVisited)\n        in bfs adj newQueue newDistances\n\nupdateDistances :: [Int] -> Int -> Int -> [Int]\nupdateDistances ds node dist = take (length ds) $ zipWith (\\d x -> if d == -1 && x == node then dist else d) ds (repeat (-1))\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 655,
+      "completion_tokens": 318,
+      "total_tokens": 973,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 8.450476300000446,
+  "received_at": "2026-09-18T09:10:50.693880+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 655,
+    "completion_tokens": 318,
+    "total_tokens": 973,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

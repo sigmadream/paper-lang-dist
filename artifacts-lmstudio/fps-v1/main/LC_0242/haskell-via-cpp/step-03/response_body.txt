@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-4f627h6qjcvbgm2ge4u6jb",
+  "object": "chat.completion",
+  "created": 1789723241,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <map>\n#include <string>\n\nint main() {\n    std::string s, t;\n    std::cin >> s >> t;\n\n    std::map<char, int> freq_s, freq_t;\n\n    for (char c : s) {\n        freq_s[c]++;\n    }\n\n    for (char c : t) {\n        freq_t[c]++;\n    }\n\n    if (freq_s == freq_t) {\n        std::cout << \"1\" << std::endl;\n    } else {\n        std::cout << \"0\" << std::endl;\n    }\n\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 461,
+    "completion_tokens": 132,
+    "total_tokens": 593,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

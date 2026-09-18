@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-c3lqirr1e56bqh53edrr4s",
+  "object": "chat.completion",
+  "created": 1789722803,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint main() {\n    int N;\n    std::cin >> N;\n    std::vector<int> nums(N);\n    for (int i = 0; i < N; ++i) {\n        std::cin >> nums[i];\n    }\n\n    int ending_here = nums[0], best_so_far = nums[0];\n    for (size_t i = 1; i < N; ++i) {\n        ending_here = std::max(nums[i], ending_here + nums[i]);\n        best_so_far = std::max(best_so_far, ending_here);\n    }\n\n    std::cout << best_so_far << std::endl;\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 456,
+    "completion_tokens": 155,
+    "total_tokens": 611,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

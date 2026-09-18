@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-a7k8ljxox2b9iz4xv9duw",
+    "object": "chat.completion",
+    "created": 1789722929,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\n:- use_module(library(readutil)).\n:- use_module(library(write)).\n\nmain :-\n    read_line_to_codes(user_input, Input),\n    string_to_list(Input, InputList),\n    split_string(InputList, ' ', '', [MStr, NStr]),\n    number_string(M, MStr),\n    number_string(N, NStr),\n    unique_paths(M, N, Result),\n    write(Result),\n    nl.\n\nunique_paths(1, _, 1) :- !.\nunique_paths(_, 1, 1) :- !.\nunique_paths(M, N, Result) :-\n    M > 1,\n    N > 1,\n    M1 is M - 1,\n    N1 is N - 1,\n    unique_paths(M1, N, PathsUp),\n    unique_paths(M, N1, PathsLeft),\n    Result is PathsUp + PathsLeft.\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 546,
+      "completion_tokens": 183,
+      "total_tokens": 729,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 5.947407800005749,
+  "received_at": "2026-09-18T09:15:33.384526+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 546,
+    "completion_tokens": 183,
+    "total_tokens": 729,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-uqynga89ffn5h85kw628y5",
+    "object": "chat.completion",
+    "created": 1789723034,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nimport Data.List (foldl')\n\nmaxPoints :: [Int] -> Int\nmaxPoints xs = go 0 0 0 xs\n  where\n    go prevBest prevScore one two [] = max one two\n    go prevBest prevScore one two (x:xs) =\n      let newOne = prevBest + x\n          newTwo = one + x\n          current = max one two\n      in go current prevScore newOne newTwo xs\n\nmain :: IO ()\nmain = do\n  n <- readLn :: IO Int\n  scores <- replicateM n readLn :: IO [Int]\n  print $ maxPoints scores\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 619,
+      "completion_tokens": 140,
+      "total_tokens": 759,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 4.980094500002451,
+  "received_at": "2026-09-18T09:17:17.648295+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 619,
+    "completion_tokens": 140,
+    "total_tokens": 759,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

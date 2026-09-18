@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-ftuexiq3a4pthb0gfgjct",
+  "object": "chat.completion",
+  "created": 1789723631,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nimport Data.List\n\nmain :: IO ()\nmain = do\n  n <- readLn :: IO Int\n  xs <- replicateM n readLn :: IO [Int]\n  let (kept, zeroes) = partition (/= 0) xs\n      out = kept ++ replicate (n - length kept) 0\n  mapM_ print out\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 570,
+    "completion_tokens": 78,
+    "total_tokens": 648,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-h0igtxacx3c7xyb9kk205r",
+    "object": "chat.completion",
+    "created": 1789723039,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nimport Data.Bits (popCount)\nimport System.IO\n\nmain :: IO ()\nmain = do\n    n <- readLn :: IO Int\n    let counts = map popCount [0..n]\n    putStrLn $ unwords $ map show counts\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 487,
+      "completion_tokens": 57,
+      "total_tokens": 544,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 3.4231532999838237,
+  "received_at": "2026-09-18T09:17:21.264269+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 487,
+    "completion_tokens": 57,
+    "total_tokens": 544,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

@@ -55,6 +55,7 @@ class LMStudioTranslationClient:
         host: str = DEFAULT_LMSTUDIO_HOST,
         transport: LMStudioChatTransport | None = None,
         prompt_template_version: str = "rtt.prompts.v1",
+        provider_name: str = 'lmstudio',
     ) -> None:
         if not isinstance(model, str) or not model.strip():
             raise LMStudioClientError("Model must be a non-empty string.")
@@ -66,6 +67,7 @@ class LMStudioTranslationClient:
             raise LMStudioClientError("Host must be a non-empty string.")
 
         self._model = model.strip()
+        self._provider_name = provider_name
         self._prompt_template_version = prompt_template_version
         self._temperature = 0.0
         self._host = host.strip().rstrip("/")
@@ -151,7 +153,7 @@ class LMStudioTranslationClient:
             "source_language": prompt.source_language,
             "target_language": prompt.target_language,
             "iteration_index": iteration_index,
-            "provider": "lmstudio",
+            "provider": self._provider_name,
         }
         if self._prompt_template_version != "rtt.prompts.v1":
             metadata["prompt_template_version"] = self._prompt_template_version
@@ -186,7 +188,11 @@ class LMStudioTranslationClient:
             raise
 
         try:
-            extracted_source = extract_single_file_source(response)
+            if request_payload.metadata.get('target_language') in ('haskell','prolog'):
+                from rttdist.extract import extract_single_file_source_text
+                extracted_source = extract_single_file_source_text(response.choices[0].message.content,preserve_unfenced=True)
+            else:
+                extracted_source = extract_single_file_source(response)
         except SourceExtractionError as exc:
             _attach_translation_debug_payloads(
                 exc,
@@ -272,9 +278,6 @@ def parse_lmstudio_response(raw_response: dict[str, Any]) -> LLMResponse:
     completion_tokens = _parse_usage_token(raw_usage, field_name="completion_tokens")
     total_tokens = _parse_usage_token(raw_usage, field_name="total_tokens")
 
-    if total_tokens == 0 and (prompt_tokens > 0 or completion_tokens > 0):
-        total_tokens = prompt_tokens + completion_tokens
-
     return LLMResponse(
         response_id=response_id.strip(),
         model=model.strip(),
@@ -294,14 +297,14 @@ def extract_single_file_source(response: LLMResponse | str) -> str:
         raise SourceExtractionError(str(exc)) from exc
 
 
-def _parse_usage_token(raw_usage: dict[str, Any], *, field_name: str) -> int:
+def _parse_usage_token(raw_usage: dict[str, Any], *, field_name: str) -> int | None:
     value = raw_usage.get(field_name)
     if value is None:
-        return 0
+        return None
     if not isinstance(value, int) or isinstance(value, bool):
-        return 0
+        return None
     if value < 0:
-        return 0
+        return None
     return value
 
 

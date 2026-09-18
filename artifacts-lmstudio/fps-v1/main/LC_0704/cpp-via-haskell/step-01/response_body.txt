@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-purl9wib1qljmy8bs78e",
+  "object": "chat.completion",
+  "created": 1789722692,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nimport System.IO\n\nmain :: IO ()\nmain = do\n    hSetBuffering stdin NoBuffering\n    hSetBuffering stdout NoBuffering\n    [n, target] <- map read . words <$> getLine\n    a <- map read . words <$> getLine\n    let result = binarySearch 0 n target a\n    print result\n\nbinarySearch :: Int -> Int -> Int -> [Int] -> Int\nbinarySearch lo hi target a\n    | lo >= hi    = -1\n    | otherwise   = case mid of\n        m | a !! m < target -> binarySearch (m + 1) hi target a\n          | a !! m > target -> binarySearch lo m target a\n          | otherwise       -> m\n    where\n        mid = lo + (hi - lo) `div` 2\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 608,
+    "completion_tokens": 183,
+    "total_tokens": 791,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

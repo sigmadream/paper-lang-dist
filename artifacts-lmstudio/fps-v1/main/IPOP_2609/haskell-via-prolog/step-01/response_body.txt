@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-egvukl66pgg5awnezf99ja",
+  "object": "chat.completion",
+  "created": 1789723050,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```prolog\ngcd(A, 0, A).\ngcd(A, B, GCD) :-\n    R is A mod B,\n    gcd(B, R, GCD).\n\nlcm(A, B, LCM) :-\n    GCD is gcd(A, B),\n    LCM is (A * B) div GCD.\n\nmain :-\n    read_line(Input),\n    split_string(Input, ' ', _, [A, B]),\n    number_string(A1, A),\n    number_string(B1, B),\n    atom_number(A2, A1),\n    atom_number(B2, B1),\n    gcd(A2, B2, GCD),\n    format('~d\\n', [GCD]),\n    lcm(A2, B2, LCM),\n    format('~d\\n', [LCM]).\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 400,
+    "completion_tokens": 167,
+    "total_tokens": 567,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

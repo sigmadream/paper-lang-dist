@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-r2xeu3w5cujzgve7msqu",
+  "object": "chat.completion",
+  "created": 1789722606,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nbool hasDuplicate(const std::vector<int>& nums) {\n    if (nums.size() <= 1) return false;\n    std::vector<int> sortedNums(nums);\n    std::sort(sortedNums.begin(), sortedNums.end());\n    for (size_t i = 0; i < sortedNums.size() - 1; ++i) {\n        if (sortedNums[i] == sortedNums[i + 1]) return true;\n    }\n    return false;\n}\n\nint main() {\n    int n;\n    std::cin >> n;\n    std::vector<int> nums(n);\n    for (int i = 0; i < n; ++i) {\n        std::cin >> nums[i];\n    }\n    if (hasDuplicate(nums)) {\n        std::cout << 1 << std::endl;\n    } else {\n        std::cout << 0 << std::endl;\n    }\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 489,
+    "completion_tokens": 214,
+    "total_tokens": 703,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

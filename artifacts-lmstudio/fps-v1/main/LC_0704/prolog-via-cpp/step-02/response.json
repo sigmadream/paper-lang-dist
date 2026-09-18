@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-177wcd9y6dqpjw27kod5j9",
+    "object": "chat.completion",
+    "created": 1789722558,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\nbinary_search(N, Target, Arr, Result) :-\n    binary_search_helper(0, N-1, Arr, Target, Result).\n\nbinary_search_helper(L, R, _, Target, Index) :-\n    L > R,\n    Index = -1.\nbinary_search_helper(L, R, Arr, Target, Index) :-\n    Mid is (L + R) // 2,\n    nth0(Mid, Arr, MidValue),\n    MidValue =:= Target,\n    Index = Mid.\nbinary_search_helper(L, R, Arr, Target, Index) :-\n    Mid is (L + R) // 2,\n    nth0(Mid, Arr, MidValue),\n    MidValue < Target,\n    NewL is Mid + 1,\n    binary_search_helper(NewL, R, Arr, Target, Index).\nbinary_search_helper(L, R, Arr, Target, Index) :-\n    Mid is (L + R) // 2,\n    nth0(Mid, Arr, MidValue),\n    MidValue > Target,\n    NewR is Mid - 1,\n    binary_search_helper(L, NewR, Arr, Target, Index).\n\nmain :-\n    read_line_to_string(_, Input),\n    split_string(Input, ' ', '', Parts),\n    maplist(atom_number, Parts, [N, T | Arr]),\n    length(Arr, N),\n    binary_search(N, T, Arr, Result),\n    write(Result), nl.\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 581,
+      "completion_tokens": 300,
+      "total_tokens": 881,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 8.105147599999327,
+  "received_at": "2026-09-18T09:09:24.584325+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 581,
+    "completion_tokens": 300,
+    "total_tokens": 881,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

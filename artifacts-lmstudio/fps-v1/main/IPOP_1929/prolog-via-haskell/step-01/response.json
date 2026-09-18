@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-oruprljj8ylrwv9sfcd6dq",
+    "object": "chat.completion",
+    "created": 1789722661,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nimport Data.List\n\nisPrime :: Int -> Bool\nisPrime n | n < 2     = False\n          | otherwise = all (\\d -> n `mod` d /= 0) [2..(floor . sqrt $ fromIntegral n)]\n\nmain :: IO ()\nmain = do\n    [l, h] <- map read . words <$> getLine\n    mapM_ print [n | n <- [l..h], isPrime n]\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 492,
+      "completion_tokens": 100,
+      "total_tokens": 592,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 4.155903500010027,
+  "received_at": "2026-09-18T09:11:03.833196+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 492,
+    "completion_tokens": 100,
+    "total_tokens": 592,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

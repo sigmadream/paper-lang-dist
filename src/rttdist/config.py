@@ -6,15 +6,17 @@ from typing import Any
 
 import yaml
 
-SUPPORTED_EXPERIMENT_LANGUAGES = frozenset({"cpp", "c", "java", "python"})
+SUPPORTED_EXPERIMENT_LANGUAGES = frozenset({"cpp", "c", "java", "python", "haskell", "prolog"})
 SUPPORTED_TARGET_LANGUAGES = frozenset({"cpp", "c", "java", "python", "scala", "haskell", "prolog"})
 REFERENCE_EXTENSION_BY_LANGUAGE = {
     "cpp": "cpp",
     "c": "c",
     "java": "java",
     "python": "py",
+    "haskell": "hs",
+    "prolog": "pl",
 }
-SUPPORTED_TRANSLATION_PROVIDERS = frozenset({"lmstudio"})
+SUPPORTED_TRANSLATION_PROVIDERS = frozenset({"lmstudio", "openai_compatible"})
 DEFAULT_LMSTUDIO_HOST = "http://localhost:1234/v1"
 DEFAULT_LMSTUDIO_MODEL = "unspecified"
 
@@ -79,6 +81,7 @@ class ExperimentConfig:
     experiment_version: str | None = None
     dataset_index: Path | None = None
     prompt_template_version: str = "rtt.prompts.v1"
+    llm: dict[str, Any] | None = None
 
 
 def load_experiment_config(config_path: Path) -> ExperimentConfig:
@@ -151,6 +154,7 @@ def _parse_config(raw_data: dict[str, Any], config_dir: Path) -> ExperimentConfi
             _resolve_path(raw_data["dataset_index"], key="dataset_index", base_dir=config_dir)
             if "dataset_index" in raw_data else None
         ),
+        llm=raw_data.get('llm'),
     )
 
 
@@ -271,6 +275,17 @@ def reference_filename_for_language(language: str) -> str:
 
 def _parse_lmstudio_config(raw_data: dict[str, Any], *, provider: str) -> LMStudioConfig:
     value = raw_data.get("lmstudio")
+    common = raw_data.get('llm')
+    if common is not None:
+        if not isinstance(common, dict) or not common.get('model') or not common.get('endpoint'):
+            raise ConfigValidationError('`llm` requires model and endpoint.')
+        generation = common.get('generation', {})
+        if not isinstance(generation, dict):
+            raise ConfigValidationError('`llm.generation` must be a mapping.')
+        value = {'model':common['model'], 'host':common['endpoint'],
+                 'temperature':generation.get('temperature',0), 'max_tokens':generation.get('max_tokens')}
+    elif provider == 'openai_compatible':
+        raise ConfigValidationError('`openai_compatible` requires the common `llm` block.')
     if value is None:
         if provider == "lmstudio":
             raise ConfigValidationError(

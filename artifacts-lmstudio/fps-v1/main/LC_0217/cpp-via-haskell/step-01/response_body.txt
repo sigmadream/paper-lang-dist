@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-tyya0u1yxjm8zdo4ut238",
+  "object": "chat.completion",
+  "created": 1789722749,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nimport Data.Set (Set, empty, insert, member)\n\nmain :: IO ()\nmain = do\n    n <- readLn :: IO Int\n    a <- replicateM n readLn :: IO [Int]\n    let seen = go empty a\n    print $ if null seen then 0 else 1\n  where\n    go :: Set Int -> [Int] -> Set Int\n    go s [] = s\n    go s (x:xs)\n        | x `member` s = s\n        | otherwise     = go (insert x s) xs\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 544,
+    "completion_tokens": 123,
+    "total_tokens": 667,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

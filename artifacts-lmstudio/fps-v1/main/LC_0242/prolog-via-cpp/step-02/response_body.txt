@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-onh2mhtu8wz7vbg1frb5p",
+  "object": "chat.completion",
+  "created": 1789723266,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```prolog\n:- use_module(library(assoc)).\n\nfrequencies(S, F) :-\n    string_to_list(S, L),\n    frequencies(L, F).\n\nfrequencies([], []).\nfrequencies([H|T], F) :-\n    (   get_assoc(H, F, C)\n    ->  put_assoc(H, F, C+1, F1)\n    ;   put_assoc(H, F, 1, F1)\n    ),\n    frequencies(T, F1).\n\nmain :-\n    read_string(user_input, _, S),\n    read_string(user_input, _, T),\n    string_to_list(S, L1),\n    string_to_list(T, L2),\n    frequencies(L1, F1),\n    frequencies(L2, F2),\n    (   F1 = F2\n    ->  write(1), nl\n    ;   write(0), nl\n    ).\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 497,
+    "completion_tokens": 184,
+    "total_tokens": 681,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

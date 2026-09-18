@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-7wd1vt8onluyfk6j5do7q9",
+  "object": "chat.completion",
+  "created": 1789723776,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nimport Data.List\n\nmain :: IO ()\nmain = do\n    [m, n] <- map read . words <$> getLine\n    let primes = sieveOfEratosthenes n\n    putStr $ unlines $ show <$> filter (>= m) primes\n\nsieveOfEratosthenes :: Int -> [Int]\nsieveOfEratosthenes n = go [2..n] []\n  where\n    go [] _ = []\n    go (p:xs) ps = p : go (filter (\\x -> x `mod` p /= 0) xs) (p:ps)\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 522,
+    "completion_tokens": 135,
+    "total_tokens": 657,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

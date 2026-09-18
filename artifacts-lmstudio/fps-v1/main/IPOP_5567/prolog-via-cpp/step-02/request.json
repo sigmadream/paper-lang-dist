@@ -1,0 +1,33 @@
+{
+  "provider": {
+    "provider": "lmstudio",
+    "endpoint": "http://localhost:1234/v1",
+    "model": "qwen2.5-coder-7b-instruct",
+    "api_key_env": null,
+    "generation": {
+      "temperature": 0,
+      "top_p": 1,
+      "max_tokens": 4096,
+      "seed": 20260918
+    },
+    "request_timeout": 300,
+    "retries": 2
+  },
+  "payload": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Translate the supplied program to the requested language, preserving its complete stdin/stdout behavior for every valid input in the specification. Return exactly one complete source file in one fenced code block, with no explanation. Use only the standard libraries shipped with the specified toolchain. C++: C++17 with main(). Haskell: GHC, module Main and main :: IO (). Prolog: SWI-Prolog, define main/0; the evaluator invokes main; do not add initialization directives. Preserve required algorithmic constraints and output ordering. Do not hard-code examples."
+      },
+      {
+        "role": "user",
+        "content": "Source language: cpp\nTarget language: prolog\nSpecification:\n# IPOP_5567: 결혼식\n\n무방향 친구 관계에서 1번 사람과 거리가 1 또는 2인 사람의 수를 출력한다.\n\n## 제약과 입력\n\n첫 줄 정점 수 N, 2<=N<=500. 둘째 줄 간선 수 M, 1<=M<=10000. 이후 M줄에 서로 다른 무방향 간선 a b, 1<=a<b<=N.\n\n## 출력\n\n1번 정점과 거리가 1 또는 2인 서로 다른 정점 수를 출력한다. 본인은 제외한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/5567)\n\nPublic examples:\n[{\"input\": \"1\\n0\", \"output\": \"0\\n\"}, {\"input\": \"7\\n6\\n1 2\\n2 3\\n3 4\\n2 5\\n5 6\\n6 7\", \"output\": \"3\\n\"}]\nSource code:\n#include <iostream>\n#include <vector>\n#include <queue>\n#include <algorithm>\n\nint main() {\n    int N, M;\n    std::cin >> N >> M;\n\n    std::vector<std::vector<int>> adj(N + 1);\n    for (int i = 0; i < M; ++i) {\n        int a, b;\n        std::cin >> a >> b;\n        adj[a].push_back(b);\n        adj[b].push_back(a);\n    }\n\n    std::queue<int> q;\n    std::vector<bool> visited(N + 1, false);\n    std::vector<int> distance(N + 1, -1);\n\n    q.push(1);\n    visited[1] = true;\n    distance[1] = 0;\n\n    while (!q.empty()) {\n        int u = q.front();\n        q.pop();\n\n        for (int v : adj[u]) {\n            if (!visited[v]) {\n                visited[v] = true;\n                distance[v] = distance[u] + 1;\n                q.push(v);\n            }\n        }\n    }\n\n    int count = 0;\n    for (int i = 2; i <= N; ++i) {\n        if (distance[i] == 1 || distance[i] == 2) {\n            ++count;\n        }\n    }\n\n    std::cout << count << std::endl;\n\n    return 0;\n}"
+      }
+    ],
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  }
+}

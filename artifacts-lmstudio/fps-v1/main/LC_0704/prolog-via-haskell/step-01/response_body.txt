@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-vywdbvm5vnfgrzefzbwyyo",
+  "object": "chat.completion",
+  "created": 1789723672,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nimport Data.List (splitAt)\nimport System.IO\n\nbinarySearch :: Ord a => a -> [a] -> Int\nbinarySearch target xs = go 0 (length xs - 1)\n  where\n    go l h | l > h     = -1\n    go l h = let m = l + (h - l) `div` 2\n              in case compare (xs !! m) target of\n                   EQ -> m\n                   LT -> go (m + 1) h\n                   GT -> go l (m - 1)\n\nmain :: IO ()\nmain = do\n  [n, t] <- map read . words <$> getLine\n  xs <- map read . words <$> getLine\n  print $ binarySearch t xs\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 586,
+    "completion_tokens": 165,
+    "total_tokens": 751,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

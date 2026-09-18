@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-vdt0j0ul2qwetbtqs9mki",
+  "object": "chat.completion",
+  "created": 1789722276,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\nusing namespace std;\n\nint gcd(int a, int b) {\n    return (b == 0) ? a : gcd(b, a % b);\n}\n\nint main() {\n    int a, b;\n    cin >> a >> b;\n    int g = gcd(a, b);\n    cout << g << endl;\n    cout << (a / g) * b << endl;\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 399,
+    "completion_tokens": 93,
+    "total_tokens": 492,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

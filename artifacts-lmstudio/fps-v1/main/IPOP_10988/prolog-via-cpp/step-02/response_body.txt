@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-vj80nimoclnwj1d2r3krui",
+  "object": "chat.completion",
+  "created": 1789722601,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```prolog\nmain :-\n    read_line_to_string(Input),\n    reverse_string(Input, Reversed),\n    (Input = Reversed -> write(1); write(0)),\n    nl.\n\nreverse_string(String, Reversed) :-\n    string_chars(String, Chars),\n    reverse(Chars, Reversed).\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 424,
+    "completion_tokens": 65,
+    "total_tokens": 489,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

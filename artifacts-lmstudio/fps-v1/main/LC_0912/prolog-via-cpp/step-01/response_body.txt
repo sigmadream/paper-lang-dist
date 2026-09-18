@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-0byshysva04qgo556memtc",
+  "object": "chat.completion",
+  "created": 1789722935,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nvoid merge(std::vector<int>& arr, int l, int m, int r) {\n    int n1 = m - l + 1;\n    int n2 = r - m;\n\n    std::vector<int> L(n1), R(n2);\n\n    for (int i = 0; i < n1; ++i)\n        L[i] = arr[l + i];\n    for (int j = 0; j < n2; ++j)\n        R[j] = arr[m + 1 + j];\n\n    int i = 0, j = 0, k = l;\n\n    while (i < n1 && j < n2) {\n        if (L[i] <= R[j]) {\n            arr[k] = L[i];\n            ++i;\n        } else {\n            arr[k] = R[j];\n            ++j;\n        }\n        ++k;\n    }\n\n    while (i < n1) {\n        arr[k] = L[i];\n        ++i;\n        ++k;\n    }\n\n    while (j < n2) {\n        arr[k] = R[j];\n        ++j;\n        ++k;\n    }\n}\n\nvoid mergeSort(std::vector<int>& arr, int l, int r) {\n    if (l < r) {\n        int m = l + (r - l) / 2;\n\n        mergeSort(arr, l, m);\n        mergeSort(arr, m + 1, r);\n\n        merge(arr, l, m, r);\n    }\n}\n\nint main() {\n    int N;\n    std::cin >> N;\n    std::vector<int> arr(N);\n    for (int i = 0; i < N; ++i)\n        std::cin >> arr[i];\n\n    mergeSort(arr, 0, N - 1);\n\n    for (int i = 0; i < N; ++i)\n        std::cout << arr[i] << \" \";\n    std::cout << std::endl;\n\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 617,
+    "completion_tokens": 437,
+    "total_tokens": 1054,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-co3qn5xdots834e802ceh2",
+    "object": "chat.completion",
+    "created": 1789722352,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmain :: IO ()\nmain = do\n    t <- readLn :: IO Int\n    replicateM_ t $ do\n        s <- getLine\n        let bal = foldl (\\acc c -> if c == '(' then acc + 1 else acc - 1) 0 s\n        putStrLn $ if bal == 0 && all (`elem` \"()\") s then \"YES\" else \"NO\"\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 569,
+      "completion_tokens": 90,
+      "total_tokens": 659,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 3.9353561000025366,
+  "received_at": "2026-09-18T09:05:54.851596+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 569,
+    "completion_tokens": 90,
+    "total_tokens": 659,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

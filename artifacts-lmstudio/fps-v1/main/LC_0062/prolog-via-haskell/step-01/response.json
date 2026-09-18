@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-wibxp3u1qfwfbr0sao7n",
+    "object": "chat.completion",
+    "created": 1789722638,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nimport Control.Monad\n\nmain :: IO ()\nmain = do\n    [m, n] <- map read . words <$> getLine\n    let row = replicate n 1\n        rows k r = if k == 0 then r else rows (k - 1) (zipWith (+) r (tail r))\n        answer = last $ rows (m - 1) row\n    print answer\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 565,
+      "completion_tokens": 90,
+      "total_tokens": 655,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 4.019028899987461,
+  "received_at": "2026-09-18T09:10:40.449938+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 565,
+    "completion_tokens": 90,
+    "total_tokens": 655,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-8ewexnvr2hb4v6xzkpv3ww",
+    "object": "chat.completion",
+    "created": 1789722157,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\nmain :-\n    read_line_to_string(Input),\n    string_to_list(Input, Chars),\n    maplist(process_line, Chars).\n\nprocess_line(Line) :-\n    string_to_list(Line, Chars),\n    check_balance(Chars, 0, Valid),\n    (   Valid -> write('YES'), nl ; write('NO'), nl ).\n\ncheck_balance([], _, true).\ncheck_balance([H|T], Bal, Valid) :-\n    (   H = '(' -> NewBal is Bal + 1 ;\n        H = ')' -> NewBal is Bal - 1\n    ),\n    (   NewBal < 0 -> Valid = false ; true ),\n    check_balance(T, NewBal, Valid).\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 568,
+      "completion_tokens": 148,
+      "total_tokens": 716,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 5.470369899994694,
+  "received_at": "2026-09-18T09:02:41.065675+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 568,
+    "completion_tokens": 148,
+    "total_tokens": 716,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

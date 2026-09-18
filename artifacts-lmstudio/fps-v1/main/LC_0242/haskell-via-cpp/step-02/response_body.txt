@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-a80w8nzqzbix7fj7i2rbz",
+  "object": "chat.completion",
+  "created": 1789723232,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nimport Data.Map (Map, empty, insertWith, fromListWith, toList)\nimport qualified Data.Map as Map\n\nmain :: IO ()\nmain = do\n    s <- getLine\n    t <- getLine\n    let freq_s = fromListWith (+) [(c, 1) | c <- s]\n        freq_t = fromListWith (+) [(c, 1) | c <- t]\n    if freq_s == freq_t then putStrLn \"1\" else putStrLn \"0\"\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 489,
+    "completion_tokens": 109,
+    "total_tokens": 598,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

@@ -821,14 +821,8 @@ def _emit_progress(
 
 
 def _build_translation_client(config: ExperimentConfig) -> TranslationClientProtocol:
-    if config.provider == "lmstudio":
-        return LMStudioTranslationClient(
-            prompt_template_version=config.prompt_template_version,
-            model=config.lmstudio.model,
-            temperature=config.lmstudio.temperature,
-            host=config.lmstudio.host,
-        )
-    raise RTTLoopError(f"Unsupported translation provider: {config.provider}")
+    from rttdist.translation_factory import create_translation_client
+    return create_translation_client(config)
 
 
 def _build_language_route(

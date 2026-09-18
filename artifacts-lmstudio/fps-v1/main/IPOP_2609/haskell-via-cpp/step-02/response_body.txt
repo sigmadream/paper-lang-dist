@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-nxy3teo4pv9zgbbu5552a",
+  "object": "chat.completion",
+  "created": 1789722962,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nimport System.IO\n\nmain :: IO ()\nmain = do\n    hSetBuffering stdin LineBuffering\n    hSetBuffering stdout NoBuffering\n    [a, b] <- map read . words <$> getLine\n    let g = gcd a b\n    putStrLn $ show g\n    putStrLn $ show ((a `div` g) * b)\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 415,
+    "completion_tokens": 81,
+    "total_tokens": 496,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

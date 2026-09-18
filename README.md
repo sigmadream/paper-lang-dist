@@ -1,5 +1,7 @@
 # RTT Language Distance Experiment Tool
 
+2026-09-18의 새 FPS 실험은 [계획](docs/01_PLAN.md)과 [체크리스트](docs/02_TODO.md)에 따라 C++·Haskell·Prolog의 공통 15문제·6방향·LM Studio 단일 모델로 예비 18관측과 본 90관측을 완료했다. [결과 및 거리 해설](docs/RESULT_FPS.md), [Word 초록](docs/abs/33rd_abstract_sample.docx), [PDF 초록](docs/abs/33rd_abstract_sample.pdf), [재현 명령](docs/FPS_LIBRARY.md)을 참고한다. 이 실험의 d_n은 출발 코드를 포함한 서로 다른 언어·소스 상태 수이며, 아래 과거 해시 실험의 왕복 횟수 n과 구분한다. 과거 자료 중 현재 작업 트리에 없는 경로는 이번 결과의 근거로 사용하지 않았다.
+
 현재 ABS 지표의 단위와 선행연구의 차이는 [FPS 거리와 완료 왕복 횟수 n](docs/abs/metric_definition.md)을 따른다. n을 FPS 크기나 편도 번역 수와 혼용하지 않는다.
 
 [ABS 실험 자료](docs/abs/README.md)는 C++ → X → C++의 6개 대상 언어 실험을 다룬다. 후속 [Haskell·Prolog 출발 실험](docs/abs/seed_extensions/README.md)은 같은 40문제와 K=10/c=5로 예비 60관측과 본 480관측을 완료했다. 본 실험의 SF(5) 성공은 Haskell 17/240, Prolog 0/240이다. [세 출발 언어 비교](docs/abs/seed_extensions/results/comparison.md)와 [결과 해석](docs/abs/seed_extensions/results/discussion.md)에 조건·불확실성·실패 사례를 기록했다. 추가 실험의 JPlag text 보조 유사도는 기존 C++의 Sym과 별도로 보고한다.

@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-azguj53kfr9m22xq5nzn8h",
+    "object": "chat.completion",
+    "created": 1789722497,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint main() {\n    int N;\n    std::cin >> N;\n    std::vector<int> scores(N);\n    for (int i = 0; i < N; ++i) {\n        std::cin >> scores[i];\n    }\n\n    if (N == 1) {\n        std::cout << scores[0] << std::endl;\n        return 0;\n    }\n\n    int prevBest = 0, prevScore = 0, one = scores[0], two = scores[1];\n    for (int i = 2; i < N; ++i) {\n        int newOne = prevBest + scores[i];\n        int newTwo = one + scores[i];\n        int current = std::max(one, two);\n        prevBest = current;\n        prevScore = one;\n        one = newOne;\n        two = newTwo;\n    }\n\n    std::cout << std::max(one, two) << std::endl;\n    return 0;\n}\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 617,
+      "completion_tokens": 222,
+      "total_tokens": 839,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 6.561785600002622,
+  "received_at": "2026-09-18T09:08:21.608010+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 617,
+    "completion_tokens": 222,
+    "total_tokens": 839,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

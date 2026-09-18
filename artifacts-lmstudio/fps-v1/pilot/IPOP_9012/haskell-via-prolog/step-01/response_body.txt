@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-qeik0ru2rtus2mgro6g5n",
+  "object": "chat.completion",
+  "created": 1789722384,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```prolog\nbalanced([], Depth, 0).\nbalanced([C|Cs], Depth, Acc) :-\n    (   C == '(' ->\n        NewDepth is Depth + 1,\n        balanced(Cs, NewDepth, Acc)\n    ;   C == ')' ->\n        NewDepth is Depth - 1,\n        NewAcc is Acc + 1,\n        balanced(Cs, NewDepth, NewAcc)\n    ),\n    NewDepth >= 0.\n\nmain :-\n    read_line(Input),\n    length(Input, N),\n    maplist(balanced(N), Input, Results),\n    maplist(print_result, Results).\n\nbalanced(_, [], 0).\nbalanced(_, [C|_], _) :-\n    C == ')', !, fail.\nbalanced(N, [_|Cs], Acc) :-\n    Acc < N,\n    balanced(N, Cs, Acc + 1).\n\nprint_result(true) :- write('YES'), nl.\nprint_result(false) :- write('NO'), nl.\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 521,
+    "completion_tokens": 198,
+    "total_tokens": 719,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

@@ -1,0 +1,53 @@
+{
+  "contract": {
+    "seed_sha256": "652106026e523a3578033aae9286611f459a84d6f365d4f85ff1b02ea14335c6",
+    "candidate_sha256": "2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881",
+    "config": {
+      "java": "C:/Users/sigma/scoop/apps/openjdk/current/bin/java.exe",
+      "jar": "D:\\works\\paper-lang-dist\\jplag-6.3.0-jar-with-dependencies.jar",
+      "jar_sha256": "5f2c21e8b88ed77134effcb3a5a3ab13d188f6a3e16d401387f7479e92db9aa2",
+      "language": "text",
+      "minimum_tokens": 9,
+      "normalize": false,
+      "similarity_field": "averageSimilarity",
+      "scale": [
+        0,
+        1
+      ],
+      "threshold": 0,
+      "cluster": false,
+      "match_merging": false
+    }
+  },
+  "command": [
+    "C:/Users/sigma/scoop/apps/openjdk/current/bin/java.exe",
+    "-jar",
+    "D:\\works\\paper-lang-dist\\jplag-6.3.0-jar-with-dependencies.jar",
+    "-M",
+    "RUN",
+    "-l",
+    "text",
+    "-t",
+    "9",
+    "-m",
+    "0",
+    "-n",
+    "-1",
+    "--cluster-skip",
+    "--csv-export",
+    "--encoding",
+    "UTF-8",
+    "--overwrite",
+    "-r",
+    "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\fps-v1\\calibration\\haskell\\short\\result",
+    "D:\\works\\paper-lang-dist\\artifacts-lmstudio\\fps-v1\\calibration\\haskell\\short\\submissions"
+  ],
+  "status": "unavailable",
+  "value": null,
+  "reason": "jplag_error",
+  "reference": "seed_source",
+  "candidate": "stabilized_source",
+  "exit_code": 1,
+  "stdout": "2026-09-18-05:59:30_936 [INFO] JPlagVersionChecker - Unable to fetch version information. New version notification will not work.\n2026-09-18-05:59:31_294 [INFO] Submission - Summary of all errors:\n2026-09-18-05:59:31_289 [ERROR] Submission - Submission candidate contains 1 tokens, which is below the minimum match length 9!\n2026-09-18-05:59:31_295 [INFO] CLI - Summary of all errors:\n2026-09-18-05:59:31_294 [ERROR] CLI - Not enough valid submissions! (found 1 valid submissions)\n",
+  "stderr": "WARNING: A restricted method in java.lang.System has been called\nWARNING: java.lang.System::load has been called by org.jline.nativ.JLineNativeLoader in an unnamed module (file:/D:/works/paper-lang-dist/jplag-6.3.0-jar-with-dependencies.jar)\nWARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module\nWARNING: Restricted methods will be blocked in a future release unless native access is enabled\n\n\nLoading Submissions   0% [=================================] 0/2 (0:00:00 / ?) \nLoading Submissions 100% [===========================] 2/2 (0:00:00 / 0:00:00) \n\nParsing Submissions   0% [                                 ] 0/2 (0:00:00 / ?) \nParsing Submissions 100% [===========================] 2/2 (0:00:00 / 0:00:00) \nParsing Submissions 100% [===========================] 2/2 (0:00:00 / 0:00:00) \n"
+}

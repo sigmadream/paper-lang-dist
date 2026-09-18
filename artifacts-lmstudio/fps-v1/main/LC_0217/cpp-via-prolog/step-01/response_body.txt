@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-l8tvlgz096kzy5gxs1kzup",
+  "object": "chat.completion",
+  "created": 1789723566,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```prolog\n:- use_module(library(apply)).\n:- use_module(library(lists)).\n\nmain :-\n    read_line_to_string(_, Input),\n    string_to_list(Input, Chars),\n    split_string(Chars, \" \", \"\", Parts),\n    maplist(atom_number, Parts, Numbers),\n    length(Numbers, N),\n    contains_duplicate(N, Numbers, Result),\n    write(Result), nl.\n\ncontains_duplicate(_, [], false).\ncontains_duplicate(N, [H|T], Result) :-\n    member(H, T), !,\n    Result = true.\ncontains_duplicate(N, [_|T], Result) :-\n    contains_duplicate(N, T, Result).\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 543,
+    "completion_tokens": 134,
+    "total_tokens": 677,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

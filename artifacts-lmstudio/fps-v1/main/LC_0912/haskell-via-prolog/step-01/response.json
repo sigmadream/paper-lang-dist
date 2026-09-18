@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-qjgnzkq5nweabv2s9g03b",
+    "object": "chat.completion",
+    "created": 1789722814,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\n:- use_module(library(lists)).\n\nmerge([], Ys, Ys).\nmerge(Xs, [], Xs).\nmerge([X|Xs], [Y|Ys], [X|Z]) :-\n    X =< Y,\n    merge(Xs, [Y|Ys], Z).\nmerge([X|Xs], [Y|Ys], [Y|Z]) :-\n    X > Y,\n    merge([X|Xs], Ys, Z).\n\nmergesort([], []).\nmergesort([X], [X]).\nmergesort(Xs, Z) :-\n    length(Xs, N),\n    N2 is N // 2,\n    split_at(N2, Xs, A, B),\n    mergesort(A, LA),\n    mergesort(B, LB),\n    merge(LA, LB, Z).\n\nmain :-\n    read_line_to_string(_, Input),\n    string_split(Input, ' ', Values),\n    maplist(atom_number, Values, Integers),\n    length(Integers, N),\n    take(N, Integers, SubList),\n    mergesort(SubList, Sorted),\n    maplist(write, Sorted),\n    nl.\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 523,
+      "completion_tokens": 246,
+      "total_tokens": 769,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 7.089982700010296,
+  "received_at": "2026-09-18T09:13:39.791734+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 523,
+    "completion_tokens": 246,
+    "total_tokens": 769,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

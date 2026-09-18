@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-igvng39smrtp6zy7ki6pxr",
+  "object": "chat.completion",
+  "created": 1789722323,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n\nbool balanced(const std::string& s) {\n    int depth = 0;\n    for (char c : s) {\n        if (c == '(') {\n            depth++;\n        } else if (c == ')') {\n            if (depth == 0) return false;\n            depth--;\n        }\n    }\n    return depth == 0;\n}\n\nint main() {\n    int T;\n    std::cin >> T;\n    std::string s;\n    for (int i = 0; i < T; ++i) {\n        std::cin >> s;\n        if (balanced(s)) {\n            std::cout << \"YES\" << std::endl;\n        } else {\n            std::cout << \"NO\" << std::endl;\n        }\n    }\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 582,
+    "completion_tokens": 182,
+    "total_tokens": 764,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

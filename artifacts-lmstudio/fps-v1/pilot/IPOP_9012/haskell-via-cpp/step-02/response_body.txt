@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-bdn7j93mmjw5dq2tch0oq",
+  "object": "chat.completion",
+  "created": 1789722171,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nmain :: IO ()\nmain = do\n    n <- readLn :: IO Int\n    strings <- replicateM n getLine\n    mapM_ (putStrLn . checkBalance) strings\n\ncheckBalance :: String -> String\ncheckBalance s = if isBalanced s then \"YES\" else \"NO\"\n\nisBalanced :: String -> Bool\nisBalanced = go 0\n  where\n    go depth [] = depth == 0\n    go depth (c:cs)\n        | c == '(' = go (depth + 1) cs\n        | c == ')' = if depth > 0 then go (depth - 1) cs else False\n        | otherwise = False\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 588,
+    "completion_tokens": 150,
+    "total_tokens": 738,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

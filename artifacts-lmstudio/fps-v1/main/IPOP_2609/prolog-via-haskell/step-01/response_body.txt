@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-7fzi4vpyfx6ek53svubjeu",
+  "object": "chat.completion",
+  "created": 1789723591,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nimport System.IO\n\ngcdValue :: Int -> Int -> Int\ngcdValue a 0 = a\ngcdValue a b = gcdValue b (a `mod` b)\n\nmain :: IO ()\nmain = do\n    [a, b] <- map read . words <$> getLine\n    let g = gcdValue a b\n        l = (a `div` g) * b\n    print g\n    print l\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 470,
+    "completion_tokens": 95,
+    "total_tokens": 565,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

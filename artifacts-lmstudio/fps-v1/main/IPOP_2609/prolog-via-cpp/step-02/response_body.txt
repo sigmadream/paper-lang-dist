@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-zdm6g5adq8mytn4mrsug",
+  "object": "chat.completion",
+  "created": 1789723219,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```prolog\ngcd(X, Y, GCD) :-\n    X mod Y =:= 0,\n    GCD = Y.\ngcd(X, Y, GCD) :-\n    X mod Y \\= 0,\n    Z is X mod Y,\n    gcd(Y, Z, GCD).\n\nlcm(X, Y, LCM) :-\n    GCD is gcd(X, Y),\n    LCM is (X / GCD) * Y.\n\nmain :-\n    read_line_to_string(_, Input),\n    split_string(Input, \" \", \"\", Parts),\n    maplist(string_to_integer, Parts, [A, B]),\n    gcd(A, B, GCD),\n    lcm(A, B, LCM),\n    write(GCD), nl,\n    write(LCM), nl.\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 432,
+    "completion_tokens": 162,
+    "total_tokens": 594,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

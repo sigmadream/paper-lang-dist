@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-jxto2doyxmosih3b1pmjw",
+  "object": "chat.completion",
+  "created": 1789722574,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    [m, n] <- map read . words <$> getLine\n    let result = uniquePaths m n\n    print result\n\nuniquePaths :: Int -> Int -> Int\nuniquePaths m n = table !! (m-1) !! (n-1)\n  where\n    table = [[if i == 0 || j == 0 then 1 else table !! (i-1) !! j + table !! i !! (j-1) | j <- [0..n]] | i <- [0..m]]\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 512,
+    "completion_tokens": 129,
+    "total_tokens": 641,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

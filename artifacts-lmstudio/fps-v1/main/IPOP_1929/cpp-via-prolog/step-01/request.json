@@ -1,0 +1,33 @@
+{
+  "provider": {
+    "provider": "lmstudio",
+    "endpoint": "http://localhost:1234/v1",
+    "model": "qwen2.5-coder-7b-instruct",
+    "api_key_env": null,
+    "generation": {
+      "temperature": 0,
+      "top_p": 1,
+      "max_tokens": 4096,
+      "seed": 20260918
+    },
+    "request_timeout": 300,
+    "retries": 2
+  },
+  "payload": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Translate the supplied program to the requested language, preserving its complete stdin/stdout behavior for every valid input in the specification. Return exactly one complete source file in one fenced code block, with no explanation. Use only the standard libraries shipped with the specified toolchain. C++: C++17 with main(). Haskell: GHC, module Main and main :: IO (). Prolog: SWI-Prolog, define main/0; the evaluator invokes main; do not add initialization directives. Preserve required algorithmic constraints and output ordering. Do not hard-code examples."
+      },
+      {
+        "role": "user",
+        "content": "Source language: cpp\nTarget language: prolog\nSpecification:\n# IPOP_1929: 소수 구하기\n\n폐구간 M..N에 있는 모든 소수를 오름차순으로 한 줄에 하나씩 출력한다.\n\n## 제약과 입력\n\n첫 줄 M N, 1<=M<=N<=1000000. 구간 안에 소수가 하나 이상 존재한다.\n\n## 출력\n\n닫힌 구간 [M,N]의 소수를 오름차순으로 한 줄씩 출력한다. 1은 소수가 아니다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/1929)\n\nPublic examples:\n[{\"input\": \"3 16\\n\", \"output\": \"3\\n5\\n7\\n11\\n13\\n\"}]\nSource code:\n#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int m, n;\n    if (!(cin >> m >> n)) return 0;\n    \n    vector<bool> is_prime(n + 1, true);\n    is_prime[0] = is_prime[1] = false;\n    \n    for (int i = 2; i * i <= n; i++) {\n        if (is_prime[i]) {\n            for (int j = i * i; j <= n; j += i) {\n                is_prime[j] = false;\n            }\n        }\n    }\n    \n    for (int i = m; i <= n; i++) {\n        if (is_prime[i]) cout << i << \"\\n\";\n    }\n    return 0;\n}\n"
+      }
+    ],
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  }
+}

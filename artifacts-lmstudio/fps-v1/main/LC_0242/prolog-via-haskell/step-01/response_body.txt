@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-uzvv35a8d6zrlz68z62j8",
+  "object": "chat.completion",
+  "created": 1789723511,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nimport Data.List (sort)\nimport System.IO\n\nreadWords :: IO [String]\nreadWords = do\n  s <- getLine\n  t <- getLine\n  return [s, t]\n\nfrequencies :: String -> [(Char, Int)]\nfrequencies s = map (\\c -> (c, length $ filter (== c) s)) ['a'..'z']\n\nmain :: IO ()\nmain = do\n  words <- readWords\n  let (s:t:_) = words\n  let fa = frequencies s\n  let fb = frequencies t\n  if fa == fb then putStrLn \"1\" else putStrLn \"0\"\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 492,
+    "completion_tokens": 136,
+    "total_tokens": 628,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

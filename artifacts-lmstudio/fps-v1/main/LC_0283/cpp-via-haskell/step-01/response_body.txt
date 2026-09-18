@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-e2lrcu1r6sevi31tm3pja",
+  "object": "chat.completion",
+  "created": 1789723490,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nimport System.IO\n\nmain :: IO ()\nmain = do\n    hSetBuffering stdin LineBuffering\n    n <- readLn :: IO Int\n    a <- map read . words <$> getLine :: IO [Int]\n    let write = go 0 a where\n            go i [] = []\n            go i (x:xs)\n                | x /= 0    = x : go (i+1) xs\n                | otherwise = go i xs\n    print $ write ++ replicate (n - length write) 0\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 607,
+    "completion_tokens": 117,
+    "total_tokens": 724,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

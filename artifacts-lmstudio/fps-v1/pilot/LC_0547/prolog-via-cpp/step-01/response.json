@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-dlu29ru1u78c54t9cnm4jl",
+    "object": "chat.completion",
+    "created": 1789722237,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <queue>\nusing namespace std;\n\nvoid visit(const vector<vector<int>>& rows, int v, vector<bool>& seen) {\n    if (seen[v]) return;\n    seen[v] = true;\n    for (int j = 0; j < rows.size(); ++j) {\n        if (rows[v][j] == 1 && !seen[j]) {\n            visit(rows, j, seen);\n        }\n    }\n}\n\nint components(const vector<vector<int>>& rows) {\n    int n = rows.size();\n    vector<bool> seen(n, false);\n    int count = 0;\n    for (int i = 0; i < n; ++i) {\n        if (!seen[i]) {\n            visit(rows, i, seen);\n            ++count;\n        }\n    }\n    return count;\n}\n\nint main() {\n    int n;\n    cin >> n;\n    vector<vector<int>> rows(n, vector<int>(n));\n    for (int i = 0; i < n; ++i) {\n        for (int j = 0; j < n; ++j) {\n            cin >> rows[i][j];\n        }\n    }\n    cout << components(rows) << endl;\n    return 0;\n}\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 703,
+      "completion_tokens": 267,
+      "total_tokens": 970,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 7.640438700007508,
+  "received_at": "2026-09-18T09:04:03.480857+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 703,
+    "completion_tokens": 267,
+    "total_tokens": 970,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

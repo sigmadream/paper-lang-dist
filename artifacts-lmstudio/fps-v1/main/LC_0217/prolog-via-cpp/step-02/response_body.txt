@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-9t6mr5jpbqte6e90gzo8t",
+  "object": "chat.completion",
+  "created": 1789722613,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```prolog\n:- use_module(library(lists)).\n\nhas_duplicate([H|T], Seen) :-\n    member(H, Seen), !.\nhas_duplicate([H|T], Seen) :-\n    has_duplicate(T, [H|Seen]).\n\nmain :-\n    read_line_to_string(_, Input),\n    string_to_list(Input, NumbersStrList),\n    maplist(string_to_number, NumbersStrList, Numbers),\n    nth0(1, Numbers, N),\n    nth0(2, Numbers, NumList),\n    has_duplicate(NumList, []),\n    write(1), nl.\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 564,
+    "completion_tokens": 122,
+    "total_tokens": 686,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-0z9fibwz7vftbpotp0sdf",
+    "object": "chat.completion",
+    "created": 1789722504,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\n:- use_module(library(readutil)).\n:- use_module(library(lists)).\n\nmax_subarray_sum(N, Xs) :-\n    nth0(0, Xs, First),\n    foldl'(step, Xs, (First, First), (_, Best)),\n    print(Best).\n\nstep((Ending, Best), X, (Next, NewBest)) :-\n    Next is max(X, Ending + X),\n    NewBest is max(Best, Next).\n\nmain :-\n    read_line_to_codes(user_input, Input),\n    string_to_list(Input, StrList),\n    maplist(atom_number, StrList, NumList),\n    nth0(0, NumList, N),\n    nth1(N, NumList, Xs),\n    max_subarray_sum(N, Xs).\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 457,
+      "completion_tokens": 164,
+      "total_tokens": 621,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 5.523498700000346,
+  "received_at": "2026-09-18T09:08:27.880652+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 457,
+    "completion_tokens": 164,
+    "total_tokens": 621,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

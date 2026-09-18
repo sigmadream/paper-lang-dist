@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-p08url3qw8lpir1e5qtu",
+  "object": "chat.completion",
+  "created": 1789723169,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <cmath>\nusing namespace std;\n\nbool isPrime(int n) {\n    if (n < 2) return false;\n    for (int d = 2; d <= sqrt(n); ++d) {\n        if (n % d == 0) return false;\n    }\n    return true;\n}\n\nint main() {\n    int lo, hi;\n    cin >> lo >> hi;\n    for (int i = lo; i <= hi; ++i) {\n        if (isPrime(i)) cout << i << endl;\n    }\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 438,
+    "completion_tokens": 127,
+    "total_tokens": 565,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

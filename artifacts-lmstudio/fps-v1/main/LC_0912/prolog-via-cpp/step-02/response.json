@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-7mzxh8jr3vx8inf3m7etui",
+    "object": "chat.completion",
+    "created": 1789722947,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\nmerge([], [], []).\nmerge([H1|T1], [], [H1|T]) :- merge(T1, [], T).\nmerge([], [H2|T2], [H2|T]) :- merge([], T2, T).\nmerge([H1|T1], [H2|T2], [H1|T]) :-\n    H1 =< H2,\n    merge(T1, [H2|T2], T).\nmerge([H1|T1], [H2|T2], [H2|T]) :-\n    H1 > H2,\n    merge([H1|T1], T2, T).\n\nmergeSort([], []).\nmergeSort([X], [X]).\nmergeSort(List, Sorted) :-\n    split(List, Left, Right),\n    mergeSort(Left, SortedLeft),\n    mergeSort(Right, SortedRight),\n    merge(SortedLeft, SortedRight, Sorted).\n\nsplit([], [], []).\nsplit([H|T], [H|Left], Right) :- split(T, Right, Left).\n\nmain :-\n    read_line_to_string(_, Input),\n    string_to_list(Input, Chars),\n    maplist(char_code, Chars, Codes),\n    append([N|Numbers], _, Codes),\n    number_codes(N, NInt),\n    length(Numbers, Length),\n    number_codes(Length, LengthInt),\n    sub_string(Numbers, 0, LengthInt, _, NumberCodes),\n    maplist(number_codes, NumberCodes, NumbersInts),\n    mergeSort(NumbersInts, SortedNumbers),\n    maplist(number_codes, SortedNumbers, SortedNumberCodes),\n    string_concat(SortedNumberCodes, Output),\n    write(Output), nl.\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 803,
+      "completion_tokens": 360,
+      "total_tokens": 1163,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 9.512742899998557,
+  "received_at": "2026-09-18T09:15:54.717645+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 803,
+    "completion_tokens": 360,
+    "total_tokens": 1163,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

@@ -1,0 +1,33 @@
+{
+  "provider": {
+    "provider": "lmstudio",
+    "endpoint": "http://localhost:1234/v1",
+    "model": "qwen2.5-coder-7b-instruct",
+    "api_key_env": null,
+    "generation": {
+      "temperature": 0,
+      "top_p": 1,
+      "max_tokens": 4096,
+      "seed": 20260918
+    },
+    "request_timeout": 300,
+    "retries": 2
+  },
+  "payload": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Translate the supplied program to the requested language, preserving its complete stdin/stdout behavior for every valid input in the specification. Return exactly one complete source file in one fenced code block, with no explanation. Use only the standard libraries shipped with the specified toolchain. C++: C++17 with main(). Haskell: GHC, module Main and main :: IO (). Prolog: SWI-Prolog, define main/0; the evaluator invokes main; do not add initialization directives. Preserve required algorithmic constraints and output ordering. Do not hard-code examples."
+      },
+      {
+        "role": "user",
+        "content": "Source language: cpp\nTarget language: haskell\nSpecification:\n# LC_0242: Valid Anagram\n\n두 소문자 문자열의 문자별 개수가 모두 같으면 1, 아니면 0을 출력한다.\n\n## 제약\n\n각 문자열 길이 1..50000; 영문 소문자.\n\n## 표준입출력 계약\n\n첫 줄 s, 다음 줄 t. 각 줄은 문자열 하나다.\n출력은 정수 하나 또는 공백으로 구분한 정수 배열이다. 참/거짓은 각각 1/0으로 출력한다. 인덱스는 0부터 시작한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[공식 명세](https://leetcode.com/problems/valid-anagram/)\n\nPublic examples:\n[{\"input\": \"anagram\\nnagaram\\n\", \"output\": \"1\\n\"}]\nSource code:\n#include <iostream>\n#include <map>\n#include <string>\n\nint main() {\n    std::string s, t;\n    std::cin >> s >> t;\n\n    std::map<char, int> freq_s, freq_t;\n\n    for (char c : s) {\n        freq_s[c]++;\n    }\n\n    for (char c : t) {\n        freq_t[c]++;\n    }\n\n    if (freq_s == freq_t) {\n        std::cout << \"1\" << std::endl;\n    } else {\n        std::cout << \"0\" << std::endl;\n    }\n\n    return 0;\n}"
+      }
+    ],
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-azkml4ahshl0xrk0zckqct",
+  "object": "chat.completion",
+  "created": 1789723255,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```prolog\n:- use_module(library(io)).\n:- use_module(library(lists)).\n\nmain :-\n    read_string(user_input, S),\n    read_string(user_input, T),\n    string_to_list(S, SList),\n    string_to_list(T, TList),\n    sort(SList, SortedS),\n    sort(TList, SortedT),\n    (SortedS = SortedT -> write(1); write(0)),\n    nl.\n\nstring_to_list(String, List) :-\n    atom_codes(String, Codes),\n    maplist(char_code, Codes, List).\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 563,
+    "completion_tokens": 116,
+    "total_tokens": 679,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

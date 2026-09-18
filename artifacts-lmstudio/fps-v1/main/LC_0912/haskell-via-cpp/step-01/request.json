@@ -1,0 +1,33 @@
+{
+  "provider": {
+    "provider": "lmstudio",
+    "endpoint": "http://localhost:1234/v1",
+    "model": "qwen2.5-coder-7b-instruct",
+    "api_key_env": null,
+    "generation": {
+      "temperature": 0,
+      "top_p": 1,
+      "max_tokens": 4096,
+      "seed": 20260918
+    },
+    "request_timeout": 300,
+    "retries": 2
+  },
+  "payload": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Translate the supplied program to the requested language, preserving its complete stdin/stdout behavior for every valid input in the specification. Return exactly one complete source file in one fenced code block, with no explanation. Use only the standard libraries shipped with the specified toolchain. C++: C++17 with main(). Haskell: GHC, module Main and main :: IO (). Prolog: SWI-Prolog, define main/0; the evaluator invokes main; do not add initialization directives. Preserve required algorithmic constraints and output ordering. Do not hard-code examples."
+      },
+      {
+        "role": "user",
+        "content": "Source language: haskell\nTarget language: cpp\nSpecification:\n# LC_0912: Sort An Array\n\n정수 배열을 오름차순으로 정렬해 출력한다.\n\n## 제약\n\n1<=N<=50000; 원소 -50000..50000. 원 명세의 요구는 내장 정렬 없이 O(N log N).\n\n## 표준입출력 계약\n\n첫 줄 N, 다음 줄 N개 정수.\n출력은 정수 하나 또는 공백으로 구분한 정수 배열이다. 참/거짓은 각각 1/0으로 출력한다. 인덱스는 0부터 시작한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[공식 명세](https://leetcode.com/problems/sort-an-array/)\n\nPublic examples:\n[{\"input\": \"4\\n5 2 3 1\\n\", \"output\": \"1 2 3 5\\n\"}]\nSource code:\nmerge [] ys = ys\nmerge xs [] = xs\nmerge (x:xs) (y:ys)\n  | x <= y = x : merge xs (y:ys)\n  | otherwise = y : merge (x:xs) ys\nmergesort [] = []\nmergesort [x] = [x]\nmergesort xs = let (a,b) = splitAt (length xs `div` 2) xs\n               in merge (mergesort a) (mergesort b)\nmain = do\n  values <- fmap (map read . words) getContents :: IO [Int]\n  putStrLn (unwords (map show (mergesort (take (head values) (tail values)))))\n"
+      }
+    ],
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  }
+}

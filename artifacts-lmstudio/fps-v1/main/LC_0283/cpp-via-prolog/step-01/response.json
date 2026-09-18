@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-a7y8swifmx8f87c12tc3xc",
+    "object": "chat.completion",
+    "created": 1789723583,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\n:- use_module(library(readutil)).\n:- set_prolog_flag(double_quotes, chars).\n\nmain :-\n    read_line_to_codes(user_input, Input),\n    string_to_list(Input, InputList),\n    split_string(InputList, \" \", \"\", InputParts),\n    maplist(atom_number, InputParts, Numbers),\n    length(Numbers, N),\n    move_zeroes(N, Numbers, Result),\n    print_result(Result).\n\nmove_zeroes(_, [], []).\nmove_zeroes(N, [H|T], Result) :-\n    H =\\= 0,\n    move_zeroes(N-1, T, Tail),\n    append([H], Tail, Result).\nmove_zeroes(N, [0|T], Result) :-\n    N > 0,\n    move_zeroes(N-1, T, Tail),\n    append([0], Tail, Result).\n\nprint_result([]).\nprint_result([H|T]) :-\n    write(H),\n    (   T = []\n    ->  true\n    ;   write(' '),\n        print_result(T)\n    ),\n    nl.\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 606,
+      "completion_tokens": 222,
+      "total_tokens": 828,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 6.703879799984861,
+  "received_at": "2026-09-18T09:26:27.745085+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 606,
+    "completion_tokens": 222,
+    "total_tokens": 828,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-cdwnaueifqbmmwun77oycp",
+    "object": "chat.completion",
+    "created": 1789723742,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nsearch :: [Int] -> Int -> Int -> Int -> Int\nsearch array target lo hi\n  | lo > hi     = -1\n  | otherwise   = let mid = (lo + hi) `div` 2\n                  in if array !! mid == target then mid\n                     else if array !! mid < target then search array target (mid + 1) hi\n                     else search array target lo (mid - 1)\n\nmain :: IO ()\nmain = do\n  [n, target] <- map read . words <$> getLine\n  xs <- map read . words <$> getLine\n  print $ search xs target 0 (n - 1)\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 569,
+      "completion_tokens": 150,
+      "total_tokens": 719,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 5.169314499973552,
+  "received_at": "2026-09-18T09:29:06.008213+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 569,
+    "completion_tokens": 150,
+    "total_tokens": 719,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

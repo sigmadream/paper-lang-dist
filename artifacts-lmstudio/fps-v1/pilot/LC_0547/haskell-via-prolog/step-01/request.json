@@ -1,0 +1,33 @@
+{
+  "provider": {
+    "provider": "lmstudio",
+    "endpoint": "http://localhost:1234/v1",
+    "model": "qwen2.5-coder-7b-instruct",
+    "api_key_env": null,
+    "generation": {
+      "temperature": 0,
+      "top_p": 1,
+      "max_tokens": 4096,
+      "seed": 20260918
+    },
+    "request_timeout": 300,
+    "retries": 2
+  },
+  "payload": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Translate the supplied program to the requested language, preserving its complete stdin/stdout behavior for every valid input in the specification. Return exactly one complete source file in one fenced code block, with no explanation. Use only the standard libraries shipped with the specified toolchain. C++: C++17 with main(). Haskell: GHC, module Main and main :: IO (). Prolog: SWI-Prolog, define main/0; the evaluator invokes main; do not add initialization directives. Preserve required algorithmic constraints and output ordering. Do not hard-code examples."
+      },
+      {
+        "role": "user",
+        "content": "Source language: haskell\nTarget language: prolog\nSpecification:\n# LC_0547: Number Of Provinces\n\n대칭 인접행렬로 주어진 무방향 그래프의 연결 성분 수를 구한다.\n\n## 제약\n\n정점 수 1..200; 행렬 값 0/1, 대칭, 대각선은 1.\n\n## 표준입출력 계약\n\n첫 줄 N, 이후 N줄에 N개의 0/1 정수.\n출력은 정수 하나 또는 공백으로 구분한 정수 배열이다. 참/거짓은 각각 1/0으로 출력한다. 인덱스는 0부터 시작한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[공식 명세](https://leetcode.com/problems/number-of-provinces/)\n\nPublic examples:\n[{\"input\": \"3\\n1 1 0\\n1 1 0\\n0 0 1\\n\", \"output\": \"2\\n\"}]\nSource code:\nimport Data.Array\nimport qualified Data.IntSet as S\nvisit graph [] seen = seen\nvisit graph (v:todo) seen\n  | S.member v seen = visit graph todo seen\n  | otherwise = visit graph (graph!v ++ todo) (S.insert v seen)\ncomponents graph [] seen = 0\ncomponents graph (v:vs) seen\n  | S.member v seen = components graph vs seen\n  | otherwise = 1 + components graph vs (visit graph [v] seen)\nmain = do\n  values <- fmap (map read . words) getContents :: IO [Int]\n  let n = head values\n      matrix = listArray ((0,0),(n-1,n-1)) (tail values)\n      graph = listArray (0,n-1) [[j | j <- [0..n-1], matrix!(i,j)==1] | i <- [0..n-1]]\n  print (components graph [0..n-1] S.empty :: Int)\n"
+      }
+    ],
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-daval2eh9ykwuikazt3uhi",
+  "object": "chat.completion",
+  "created": 1789722725,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nmodule Main where\n\nbinarySearch :: Int -> Int -> Int -> [Int] -> Int\nbinarySearch lo hi target a = go lo hi\n  where\n    go l h\n      | l < h     = let mid = l + (h - l) `div` 2\n                    in if a !! mid < target then go (mid + 1) h else go l mid\n      | otherwise = if l == length a || a !! l /= target then -1 else l\n\nmain :: IO ()\nmain = do\n  [n, target] <- map read . words <$> getLine\n  a <- map read . words <$> getLine\n  print $ binarySearch 0 n target a\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 574,
+    "completion_tokens": 155,
+    "total_tokens": 729,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

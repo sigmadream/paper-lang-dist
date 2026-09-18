@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-q769a21t0xs5go421rudn",
+  "object": "chat.completion",
+  "created": 1789723094,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```prolog\n:- use_module(library(readutil)).\n\ncount_ones(N, Count) :-\n    N =< 0 -> Count = 0;\n    N mod 2 =:= 1 -> count_ones(N // 2, Temp), Count is Temp + 1;\n    N mod 2 =:= 0 -> count_ones(N // 2, Count).\n\nmain :-\n    read_line_to_string(_, Input),\n    string_to_integer(Input, N),\n    findall(Count, (between(0, N, I), count_ones(I, Count)), Counts),\n    maplist(write, Counts),\n    nl.\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 514,
+    "completion_tokens": 133,
+    "total_tokens": 647,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

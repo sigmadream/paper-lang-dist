@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-jgbjk68qvb3s2h7a5a49f",
+  "object": "chat.completion",
+  "created": 1789723065,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```prolog\n:- use_module(library(lists)).\n\nvisit(_, [], _).\nvisit(Rows, [H|T], Seen) :-\n    \\+ member(H, Seen),\n    mark_visited(Rows, H, Seen, NewSeen),\n    visit(Rows, T, NewSeen).\n\nmark_visited([], _, Seen, Seen).\nmark_visited([Row|Rows], V, Seen, NewSeen) :-\n    (   Row[V] = 1\n    ->  \\+ member(V, Seen),\n        append(Seen, [V], NewSeen)\n    ;   true\n    ),\n    mark_visited(Rows, V, Seen, NewSeen).\n\ncomponents(Rows, N, Count) :-\n    length(Rows, N),\n    init_seen(N, Seen),\n    count_components(Rows, N, 0, Seen, Count).\n\ninit_seen(N, Seen) :-\n    length(Seen, N),\n    maplist(=(false), Seen).\n\ncount_components(_, 0, Count, _, Count).\ncount_components(Rows, N, Acc, Seen, Count) :-\n    \\+ member(false, Seen),\n    count_components(Rows, N, Acc + 1, Seen, Count).\ncount_components(Rows, N, Acc, Seen, Count) :-\n    find_false(Seen, V),\n    visit(Rows, [V], Seen, NewSeen),\n    count_components(Rows, N, Acc, NewSeen, Count).\n\nfind_false([false|_], 0).\nfind_false([_|T], I) :-\n    find_false(T, J),\n    I is J + 1.\n\nmain :-\n    read_line_to_string(_, Input),\n    string_to_list(Input, Numbers),\n    split_string(Numbers, \"\\n\", \"\", Lines),\n    length(Lines, N),\n    maplist(string_to_list, Lines, Rows),\n    components(Rows, N, Count),\n    write(Count), nl.\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 640,
+    "completion_tokens": 395,
+    "total_tokens": 1035,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

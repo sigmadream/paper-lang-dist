@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-0hrdupyo6arbj70tk97aq",
+    "object": "chat.completion",
+    "created": 1789722667,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\nis_prime(N) :-\n    N < 2, !, fail.\nis_prime(N) :-\n    findall(D, (between(2, FloorSqrtN, D), N mod D =:= 0), Divisors),\n    length(Divisors, 0).\nis_prime(N) :-\n    sqrt(N, FloorSqrtN).\n\nmain :-\n    read_line(Input),\n    split_string(Input, ' ', _, [MStr, HStr]),\n    string_to_integer(MStr, M),\n    string_to_integer(HStr, H),\n    between(M, H, N),\n    is_prime(N),\n    write(N), nl,\n    fail.\nmain.\n\nread_line(Line) :-\n    read_line(_, Line).\n\nread_line(Stream, []) :-\n    at_end_of_stream(Stream).\nread_line(Stream, [H|T]) :-\n    get_code(Stream, C),\n    (   C =:= 10 -> T = [];\n        true -> H is C, read_line(Stream, T)\n    ).\n\nsplit_string([], _, _, []).\nsplit_string([H|T], Delimiter, CurrentWord, Result) :-\n    H = Delimiter,\n    !,\n    split_string(T, Delimiter, [], [CurrentWord|Result]).\nsplit_string([H|T], Delimiter, CurrentWord, Result) :-\n    append(CurrentWord, [H], NewWord),\n    split_string(T, Delimiter, NewWord, Result).\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 441,
+      "completion_tokens": 297,
+      "total_tokens": 738,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 7.911103999998886,
+  "received_at": "2026-09-18T09:11:13.556553+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 441,
+    "completion_tokens": 297,
+    "total_tokens": 738,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

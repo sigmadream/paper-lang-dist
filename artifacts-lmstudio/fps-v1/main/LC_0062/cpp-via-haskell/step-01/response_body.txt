@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-allabbqyy8bxge6szwmkxc",
+  "object": "chat.completion",
+  "created": 1789722776,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nmain :: IO ()\nmain = do\n    [m, n] <- map read . words <$> getLine\n    let dp = take n (iterate (\\row -> zipWith (+) row (tail row)) (replicate n 1))\n    print $ last (dp !! (m-1))\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 547,
+    "completion_tokens": 68,
+    "total_tokens": 615,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

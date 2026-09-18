@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-0enkkw3dshveqefr1hx58uk",
+    "object": "chat.completion",
+    "created": 1789722794,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\n:- use_module(library(lists)).\n\nfrequencies([], []).\nfrequencies([X|XS], [(X, Count)|Freqs]) :-\n    findall(X, member(X, XS), Same),\n    length(Same, Count),\n    remove_all(Same, XS, Remaining),\n    frequencies(Remaining, Freqs).\n\nremove_all(_, [], []) :- !.\nremove_all(Elem, [Elem|Tail], Tail) :- !.\nremove_all(Elem, [Head|Tail], [Head|NewTail]) :-\n    remove_all(Elem, Tail, NewTail).\n\nsort_string(S, Sorted) :-\n    string_to_list(S, L),\n    sort(L, SortedList),\n    list_to_string(SortedList, Sorted).\n\nmain :-\n    read_line_to_codes(user_input, Input1),\n    string_to_atom(Input1, A),\n    read_line_to_codes(user_input, Input2),\n    string_to_atom(Input2, B),\n    sort_string(A, SA),\n    sort_string(B, SB),\n    (frequencies(SA, FreqsA), frequencies(SB, FreqsB), FreqsA = FreqsB -> write(1); write(0)),\n    nl.\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 446,
+      "completion_tokens": 255,
+      "total_tokens": 701,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 7.404196799994679,
+  "received_at": "2026-09-18T09:13:19.820424+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 446,
+    "completion_tokens": 255,
+    "total_tokens": 701,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

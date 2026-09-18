@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-wkaslfqcqt5s33y37mvo",
+    "object": "chat.completion",
+    "created": 1789722653,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <queue>\n#include <set>\n\nint main() {\n    int n, m;\n    std::cin >> n >> m;\n    std::vector<std::vector<int>> adj(n + 1);\n    for (int i = 0; i < m; ++i) {\n        int a, b;\n        std::cin >> a >> b;\n        adj[a].push_back(b);\n        adj[b].push_back(a);\n    }\n\n    std::set<int> direct, two;\n    std::queue<int> q;\n\n    // Find all nodes directly connected to node 1\n    for (int neighbor : adj[1]) {\n        direct.insert(neighbor);\n        q.push(neighbor);\n    }\n\n    // Find all nodes that are at distance 2 from node 1\n    while (!q.empty()) {\n        int current = q.front();\n        q.pop();\n        for (int neighbor : adj[current]) {\n            if (direct.find(neighbor) == direct.end() && two.find(neighbor) == two.end()) {\n                two.insert(neighbor);\n                q.push(neighbor);\n            }\n        }\n    }\n\n    // Output the number of nodes at distance 1 or 2 from node 1, excluding node 1 itself\n    std::cout << (direct.size() + two.size()) << std::endl;\n\n    return 0;\n}\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 535,
+      "completion_tokens": 294,
+      "total_tokens": 829,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 7.8472903999791015,
+  "received_at": "2026-09-18T09:10:58.785291+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 535,
+    "completion_tokens": 294,
+    "total_tokens": 829,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

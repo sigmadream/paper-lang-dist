@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-wibxp3u1qfwfbr0sao7n",
+  "object": "chat.completion",
+  "created": 1789722638,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nimport Control.Monad\n\nmain :: IO ()\nmain = do\n    [m, n] <- map read . words <$> getLine\n    let row = replicate n 1\n        rows k r = if k == 0 then r else rows (k - 1) (zipWith (+) r (tail r))\n        answer = last $ rows (m - 1) row\n    print answer\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 565,
+    "completion_tokens": 90,
+    "total_tokens": 655,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

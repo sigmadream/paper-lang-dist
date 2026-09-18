@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-ofp53czkr5p4wh304rsebh",
+  "object": "chat.completion",
+  "created": 1789722567,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    int m, n;\n    std::cin >> m >> n;\n\n    std::vector<std::vector<int>> table(m, std::vector<int>(n));\n\n    for (int i = 0; i < m; ++i) {\n        for (int j = 0; j < n; ++j) {\n            if (i == 0 || j == 0) {\n                table[i][j] = 1;\n            } else {\n                table[i][j] = table[i-1][j] + table[i][j-1];\n            }\n        }\n    }\n\n    std::cout << table[m-1][n-1] << std::endl;\n\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 464,
+    "completion_tokens": 166,
+    "total_tokens": 630,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

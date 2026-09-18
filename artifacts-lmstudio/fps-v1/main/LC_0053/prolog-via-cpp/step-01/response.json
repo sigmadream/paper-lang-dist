@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-xiyt5m4ttpo7muwm0ue8d",
+    "object": "chat.completion",
+    "created": 1789723649,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint kadane(const std::vector<int>& nums) {\n    int max_current = nums[0];\n    int max_global = nums[0];\n    for (size_t i = 1; i < nums.size(); ++i) {\n        max_current = std::max(nums[i], max_current + nums[i]);\n        if (max_current > max_global) {\n            max_global = max_current;\n        }\n    }\n    return max_global;\n}\n\nint main() {\n    int n;\n    std::cin >> n;\n    std::vector<int> nums(n);\n    for (int i = 0; i < n; ++i) {\n        std::cin >> nums[i];\n    }\n    std::cout << kadane(nums) << std::endl;\n    return 0;\n}\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 516,
+      "completion_tokens": 180,
+      "total_tokens": 696,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 5.943576799996663,
+  "received_at": "2026-09-18T09:27:33.871168+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 516,
+    "completion_tokens": 180,
+    "total_tokens": 696,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

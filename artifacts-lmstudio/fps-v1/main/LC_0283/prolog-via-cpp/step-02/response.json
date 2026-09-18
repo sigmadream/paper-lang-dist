@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-m0z1lnvb6drj6nc6f4col",
+    "object": "chat.completion",
+    "created": 1789722631,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\n:- use_module(library(readutil)).\n\nmain :-\n    read_line_to_string(STDIN),\n    string_to_list(STDIN, Input),\n    parse_input(Input, N, NumList),\n    move_zeroes(N, NumList, Result),\n    format('~w~n', [Result]).\n\nparse_input(Input, N, NumList) :-\n    split_string(Input, ' ', '', Parts),\n    maplist(string_to_integer, Parts, [N | NumList]).\n\nmove_zeroes(_, [], []).\nmove_zeroes(N, [0 | Rest], Result) :-\n    move_zeroes(N, Rest, Tail),\n    append(Tail, [0], Result).\nmove_zeroes(N, [H | Rest], [H | Tail]) :-\n    move_zeroes(N, Rest, Tail).\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 546,
+      "completion_tokens": 167,
+      "total_tokens": 713,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 5.537380199995823,
+  "received_at": "2026-09-18T09:10:35.125220+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 546,
+    "completion_tokens": 167,
+    "total_tokens": 713,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-igxvyr86ad8vm43j0wwl5",
+    "object": "chat.completion",
+    "created": 1789723130,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\n:- use_module(library(readutil)).\n\nbinary_search(N, Target, List, Index) :-\n    binary_search(List, Target, 0, N-1, Index).\n\nbinary_search(_, _, Lo, Hi, Index) :-\n    Lo > Hi,\n    Index = -1.\nbinary_search(List, Target, Lo, Hi, Index) :-\n    Mid is (Lo + Hi) // 2,\n    nth0(Mid, List, Element),\n    (   Element =:= Target\n    ->  Index = Mid\n    ;   Element < Target\n    ->  binary_search(List, Target, Mid+1, Hi, Index)\n    ;   binary_search(List, Target, Lo, Mid-1, Index)\n    ).\n\nmain :-\n    read_line_to_codes(user_input, Input),\n    string_to_list(Input, Tokens),\n    tokens_to_integers(Tokens, [N, Target | List]),\n    binary_search(N, Target, List, Index),\n    write(Index), nl.\n\ntokens_to_integers([], []).\ntokens_to_integers([H|T], [I|Is]) :-\n    number_string(I, H),\n    tokens_to_integers(T, Is).\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 512,
+      "completion_tokens": 246,
+      "total_tokens": 758,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 7.199990299995989,
+  "received_at": "2026-09-18T09:18:56.005524+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 512,
+    "completion_tokens": 246,
+    "total_tokens": 758,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

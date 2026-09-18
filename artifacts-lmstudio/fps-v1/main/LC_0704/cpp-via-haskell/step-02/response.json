@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-y1vlv0z4i4dr55q32h756",
+    "object": "chat.completion",
+    "created": 1789722700,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\nusing namespace std;\n\nint binarySearch(int lo, int hi, int target, const vector<int>& a) {\n    while (lo < hi) {\n        int mid = lo + (hi - lo) / 2;\n        if (a[mid] < target)\n            lo = mid + 1;\n        else\n            hi = mid;\n    }\n    return (lo == a.size() || a[lo] != target) ? -1 : lo;\n}\n\nint main() {\n    int n, target;\n    cin >> n >> target;\n    vector<int> a(n);\n    for (int i = 0; i < n; ++i)\n        cin >> a[i];\n    \n    int result = binarySearch(0, n, target, a);\n    cout << result << endl;\n\n    return 0;\n}\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 562,
+      "completion_tokens": 184,
+      "total_tokens": 746,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 5.766566999984207,
+  "received_at": "2026-09-18T09:11:44.258279+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 562,
+    "completion_tokens": 184,
+    "total_tokens": 746,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

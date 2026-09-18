@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-t8femz4kqhg67q752rhy1c",
+    "object": "chat.completion",
+    "created": 1789722763,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\nmain :-\n    read_line_to_string(Input),\n    string_split(Input, ' ', Parts),\n    maplist(string_to_integer, Parts, [N, M]),\n    findall(Edge, (between(1, M, I), read_line_to_string(Line), string_split(Line, ' ', EdgeParts), maplist(string_to_integer, EdgeParts, Edge)), Edges),\n    build_graph(N, Edges, Graph),\n    bfs(Graph, 1, Distance),\n    count_distance(Distance, 2, Count),\n    write(Count).\n\nbuild_graph(N, Edges, Graph) :-\n    length(Graph, N+1),\n    maplist(init_list, Graph),\n    maplist(add_edges(Edges), Graph).\n\ninit_list([], []).\n\nadd_edges(Edges, List) :-\n    member([A, B], Edges),\n    (   A =:= List -> add_edge(B, List)\n    ;   B =:= List -> add_edge(A, List)\n    ).\n\nadd_edge(X, List) :-\n    append(List, [X], NewList).\n\nbfs(Graph, Start, Distance) :-\n    length(Distance, N+1),\n    maplist(init_distance, Distance),\n    bfs_helper(Graph, Start, 0, Distance).\n\ninit_distance(_, -1).\n\nbfs_helper(Graph, Node, Dist, Distance) :-\n    nth0(Node, Graph, Neighbors),\n    update_distances(Neighbors, Dist, Distance, NewDistance),\n    findall(NewNode, (between(1, N, NewNode), nth0(NewNode, NewDistance, D), D =:= -1), NextNodes),\n    (   NextNodes = [] -> true\n    ;   maplist(bfs_helper(Graph, _, Dist+1), NextNodes)\n    ).\n\nupdate_distances(Neighbors, OldDist, Distance, NewDistance) :-\n    length(Distance, N+1),\n    maplist(update_distance(OldDist), Neighbors, Distance, NewDistance).\n\nupdate_distance(_, Node, Distance, NewDistance) :-\n    nth0(Node, Distance, D),\n    (   D =:= -1 -> nth0(Node, NewDistance, OldDist + 1)\n    ;   true\n    ).\n\ncount_distance(Distance, MaxDist, Count) :-\n    length(Distance, N+1),\n    findall(Node, (between(2, N, Node), nth0(Node, Distance, D), D =:= MaxDist), Nodes),\n    length(Nodes, Count).\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 697,
+      "completion_tokens": 515,
+      "total_tokens": 1212,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 11.957257800007937,
+  "received_at": "2026-09-18T09:12:53.341591+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 697,
+    "completion_tokens": 515,
+    "total_tokens": 1212,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-11f5uwtuh4ekf2vd3ogph",
+  "object": "chat.completion",
+  "created": 1789723814,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```prolog\n:- use_module(library(readutil)).\n\nbinary_search(N, Target, A, Index) :-\n    binary_search(0, N, Target, A, Index).\n\nbinary_search(Low, High, Target, A, Index) :-\n    Low < High,\n    Mid is (Low + High) // 2,\n    nth1(Mid, A, Element),\n    (   Element =< Target\n    ->  binary_search(Mid, High, Target, A, Index)\n    ;   binary_search(Low, Mid, Target, A, Index)\n    ).\n\nbinary_search(_, _, _, _, -1).\n\nmain :-\n    read_line_to_codes(user_input, Input),\n    string_to_list(Input, Tokens),\n    split_string(Tokens, ' ', '', [NStr, TargetStr | Rest]),\n    number_string(N, NStr),\n    number_string(Target, TargetStr),\n    maplist(number_string, Rest, AList),\n    list_to_array(AList, A),\n    binary_search(N, Target, A, Index),\n    write(Index), nl.\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 607,
+    "completion_tokens": 222,
+    "total_tokens": 829,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

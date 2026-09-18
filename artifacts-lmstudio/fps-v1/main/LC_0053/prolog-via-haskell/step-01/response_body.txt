@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-vulixdqxveav1k7ri85fnq",
+  "object": "chat.completion",
+  "created": 1789723100,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nimport Data.List (foldl')\n\nkadane :: [Int] -> Int\nkadane xs = snd $ foldl' (\\(maxSoFar, maxEndingHere) x -> \n    let maxEndingHere' = max x (maxEndingHere + x)\n        maxSoFar' = max maxSoFar maxEndingHere'\n    in (maxSoFar', maxEndingHere')) (0, 0) xs\n\nmain :: IO ()\nmain = do\n    n <- readLn :: IO Int\n    nums <- map read . words <$> getLine :: IO [Int]\n    print $ kadane (drop 1 nums)\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 518,
+    "completion_tokens": 136,
+    "total_tokens": 654,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

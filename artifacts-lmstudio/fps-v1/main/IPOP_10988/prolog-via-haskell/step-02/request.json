@@ -1,0 +1,33 @@
+{
+  "provider": {
+    "provider": "lmstudio",
+    "endpoint": "http://localhost:1234/v1",
+    "model": "qwen2.5-coder-7b-instruct",
+    "api_key_env": null,
+    "generation": {
+      "temperature": 0,
+      "top_p": 1,
+      "max_tokens": 4096,
+      "seed": 20260918
+    },
+    "request_timeout": 300,
+    "retries": 2
+  },
+  "payload": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Translate the supplied program to the requested language, preserving its complete stdin/stdout behavior for every valid input in the specification. Return exactly one complete source file in one fenced code block, with no explanation. Use only the standard libraries shipped with the specified toolchain. C++: C++17 with main(). Haskell: GHC, module Main and main :: IO (). Prolog: SWI-Prolog, define main/0; the evaluator invokes main; do not add initialization directives. Preserve required algorithmic constraints and output ordering. Do not hard-code examples."
+      },
+      {
+        "role": "user",
+        "content": "Source language: haskell\nTarget language: prolog\nSpecification:\n# IPOP_10988: 팰린드롬인지 확인하기\n\n소문자 문자열 하나를 읽고 팰린드롬이면 1, 아니면 0을 출력한다.\n\n## 제약과 입력\n\n소문자 문자열 하나, 길이 1..100.\n\n## 출력\n\n팰린드롬이면 1, 아니면 0을 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/10988)\n\nPublic examples:\n[{\"input\": \"level\\n\", \"output\": \"1\\n\"}, {\"input\": \"baekjoon\\n\", \"output\": \"0\\n\"}]\nSource code:\nimport Data.List\n\nisPalindrome :: String -> Bool\nisPalindrome s = s == reverse s\n\nmain :: IO ()\nmain = do\n  word <- getLine\n  if isPalindrome word then putStrLn \"1\" else putStrLn \"0\""
+      }
+    ],
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  }
+}

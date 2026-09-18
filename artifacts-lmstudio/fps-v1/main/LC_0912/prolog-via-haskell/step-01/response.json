@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-sz4tufoawipdxd9yc98z",
+    "object": "chat.completion",
+    "created": 1789723018,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nimport Data.List (sort)\n\nmain :: IO ()\nmain = do\n  n <- readLn :: IO Int\n  xs <- map read . words <$> getLine :: IO [Int]\n  print $ sort xs\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 619,
+      "completion_tokens": 50,
+      "total_tokens": 669,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 3.2286271000048146,
+  "received_at": "2026-09-18T09:17:00.179556+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 619,
+    "completion_tokens": 50,
+    "total_tokens": 669,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

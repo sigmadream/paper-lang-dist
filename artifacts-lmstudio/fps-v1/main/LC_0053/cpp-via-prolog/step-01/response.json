@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-d7hagxuerb63io030wkwe",
+    "object": "chat.completion",
+    "created": 1789722488,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\n:- use_module(library(readutil)).\n:- set_prolog_flag(double_quotes, chars).\n\nmain :-\n    read_line_to_codes(user_input, Input),\n    string_to_list(Input, InputList),\n    split_string(InputList, \" \", \"\", InputParts),\n    maplist(string_to_integer, InputParts, Numbers),\n    nth0(1, Numbers, N),\n    nth0(2, Numbers, A),\n    find_max_subarray(N, A, Result),\n    write(Result),\n    nl.\n\nfind_max_subarray(_, [], 0).\nfind_max_subarray(N, [H|T], Result) :-\n    find_max_subarray_helper(H, T, H, H, N, Result).\n\nfind_max_subarray_helper(CurrentMax, [], CurrentMax, BestSoFar, _, BestSoFar).\nfind_max_subarray_helper(CurrentMax, [H|T], NewCurrentMax, BestSoFar, N, Result) :-\n    NewCurrentMax is max(H, CurrentMax + H),\n    BestSoFar1 is max(BestSoFar, NewCurrentMax),\n    find_max_subarray_helper(NewCurrentMax, T, NewCurrentMax, BestSoFar1, N, Result).\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 564,
+      "completion_tokens": 248,
+      "total_tokens": 812,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 6.985000499989837,
+  "received_at": "2026-09-18T09:08:13.602934+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 564,
+    "completion_tokens": 248,
+    "total_tokens": 812,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

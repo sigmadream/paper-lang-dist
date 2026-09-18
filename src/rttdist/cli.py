@@ -113,7 +113,23 @@ def build_parser() -> argparse.ArgumentParser:
     )
     report_parser.set_defaults(func=_cmd_report)
 
+    fps_parser = subparsers.add_parser('fps', help='Run/resume the versioned similarity/FPS campaign')
+    fps_parser.add_argument('--config', required=True)
+    fps_parser.add_argument('--phase', choices=['pilot','main'], required=True)
+    fps_parser.add_argument('--action', choices=['run','resume','report'], default='run')
+    fps_parser.set_defaults(func=_cmd_fps)
+
     return parser
+
+
+def _cmd_fps(args):
+    from rttdist.fps_experiment import load_config, run_campaign
+    if args.action == 'report':
+        from rttdist.fps_reporting import report
+        summary = report(load_config(args.config), args.phase)
+        return EXIT_SUCCESS if summary['complete'] else EXIT_RUNTIME_ERROR
+    records = run_campaign(load_config(args.config), args.phase)
+    return EXIT_SUCCESS if all(r['evaluable'] for r in records) else EXIT_RUNTIME_ERROR
 
 
 def _setup_logging(verbose: bool) -> None:

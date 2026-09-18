@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-vdohludcjbc7l2bavrxzn9",
+    "object": "chat.completion",
+    "created": 1789722164,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n\nbool isBalanced(const std::string& s, int depth = 0) {\n    for (char c : s) {\n        if (depth < 0) return false;\n        if (c == '(') ++depth;\n        else --depth;\n    }\n    return depth == 0;\n}\n\nint main() {\n    int n;\n    std::cin >> n;\n    std::vector<std::string> strings(n);\n    for (std::string& s : strings) {\n        std::cin >> s;\n    }\n    for (const std::string& s : strings) {\n        if (isBalanced(s)) {\n            std::cout << \"YES\\n\";\n        } else {\n            std::cout << \"NO\\n\";\n        }\n    }\n    return 0;\n}\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 520,
+      "completion_tokens": 181,
+      "total_tokens": 701,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 5.684761400014395,
+  "received_at": "2026-09-18T09:02:48.214599+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 520,
+    "completion_tokens": 181,
+    "total_tokens": 701,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

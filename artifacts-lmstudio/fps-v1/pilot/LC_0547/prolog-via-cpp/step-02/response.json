@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-px858gf5akeromhe4hbgs",
+    "object": "chat.completion",
+    "created": 1789722246,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\n:- use_module(library(lists)).\n\nvisit(Rows, V, Seen) :-\n    nth1(V, Seen, SeenV),\n    SeenV = true,\n    !.\nvisit(Rows, V, Seen) :-\n    nth1(V, Seen, false),\n    nth1(V, Rows, Row),\n    maplist((J, RowJ) -> (RowJ = 1, J \\= V -> visit(Rows, J, Seen), fail ; true), Row).\n\ncomponents(Rows, Count) :-\n    length(Rows, N),\n    init_list(N, false, Seen),\n    count_components(Rows, Seen, 0, Count).\n\ncount_components(_, [], Count, Count).\ncount_components(Rows, Seen, Acc, Count) :-\n    nth1(I, Seen, false),\n    visit(Rows, I, Seen),\n    NewAcc is Acc + 1,\n    count_components(Rows, Seen, NewAcc, Count).\n\ninit_list(0, _, []).\ninit_list(N, Value, [Value | Rest]) :-\n    N > 0,\n    M is N - 1,\n    init_list(M, Value, Rest).\n\nmain :-\n    read_line_to_string(_, Input),\n    string_to_list(Input, Numbers),\n    split_string(Numbers, \"\\n\", \"\", Lines),\n    length(Lines, N),\n    maplist(string_to_list, Lines, Rows),\n    components(Rows, Count),\n    write(Count), nl.\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 640,
+      "completion_tokens": 306,
+      "total_tokens": 946,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 8.451619700004812,
+  "received_at": "2026-09-18T09:04:12.781562+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 640,
+    "completion_tokens": 306,
+    "total_tokens": 946,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

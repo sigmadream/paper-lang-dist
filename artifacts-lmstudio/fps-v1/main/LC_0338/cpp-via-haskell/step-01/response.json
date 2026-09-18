@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-e4qz8z0mahg0g8og0qtdknl",
+    "object": "chat.completion",
+    "created": 1789723618,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmain :: IO ()\nmain = do\n    n <- readLn :: IO Int\n    let counts = [countBits x | x <- [0..n]]\n    mapM_ print counts\n\ncountBits :: Int -> Int\ncountBits x = go x 0\n  where\n    go 0 acc = acc\n    go n acc = go (n `div` 2) (acc + n `mod` 2)\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 534,
+      "completion_tokens": 97,
+      "total_tokens": 631,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 4.310588899999857,
+  "received_at": "2026-09-18T09:27:00.571658+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 534,
+    "completion_tokens": 97,
+    "total_tokens": 631,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

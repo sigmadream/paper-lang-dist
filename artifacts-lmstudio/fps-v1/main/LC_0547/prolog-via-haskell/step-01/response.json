@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-t0ies2jzxbax30ezjwepo",
+    "object": "chat.completion",
+    "created": 1789723767,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nimport Data.List (findIndex, isInfixOf)\nimport Data.Set (Set, empty, insert, member)\n\nreadNumbers :: IO [Int]\nreadNumbers = do\n  line <- getLine\n  return $ map read . words $ line\n\nmatrixRows :: Int -> [[Int]] -> [[Int]]\nmatrixRows n xs = take n (dropWhile null (iterate tail xs))\n\nvisit :: Set Int -> [[Int]] -> Set Int -> Set Int\nvisit seen rows todo =\n  case findIndex (`member` seen) todo of\n    Just i -> visit seen rows (todo \\\\ [i])\n    Nothing ->\n      let neighbors = concatMap (\\(j, x) -> if x == 1 then [j] else []) (zip [0..] (rows !! head todo))\n          newTodo = todo ++ filter (`notElem` seen) neighbors\n      in visit (insert (head todo) seen) rows newTodo\n\ncomponents :: Int -> [[Int]] -> Set Int -> Int\ncomponents n rows seen = go 1\n  where\n    go i | i > n     = 0\n         | member i seen = go (i + 1)\n         | otherwise     = 1 + go (i + 1) `max` components' (i + 1)\n    components' j | j > n     = 0\n                  | member j seen = components' (j + 1)\n                  | otherwise     = 1 + components' (j + 1)\n\nmain :: IO ()\nmain = do\n  n <- length . head <$> readNumbers\n  rows <- matrixRows n <$> replicateM n readNumbers\n  let count = components n rows empty\n  print count\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 705,
+      "completion_tokens": 362,
+      "total_tokens": 1067,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 9.63494969997555,
+  "received_at": "2026-09-18T09:29:34.628929+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 705,
+    "completion_tokens": 362,
+    "total_tokens": 1067,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

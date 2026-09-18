@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-qmgmc2fip9c6od1jwjcpm",
+    "object": "chat.completion",
+    "created": 1789723518,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\n:- use_module(library(io)).\n\nfrequencies(S, F) :-\n    string_to_list(S, L),\n    findall((C, N), (member(C, L), count_char(L, C, N)), F).\n\ncount_char([], _, 0).\ncount_char([H|T], C, N) :-\n    (   H = C -> N1 is N + 1 ; N1 = N ),\n    count_char(T, C, N1).\n\nmain :-\n    read_line_to_string(S),\n    read_line_to_string(T),\n    frequencies(S, FA),\n    frequencies(T, FB),\n    (   FA = FB -> write(1) ; write(0) ),\n    nl.\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 489,
+      "completion_tokens": 149,
+      "total_tokens": 638,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 5.404924700007541,
+  "received_at": "2026-09-18T09:25:21.936823+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 489,
+    "completion_tokens": 149,
+    "total_tokens": 638,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

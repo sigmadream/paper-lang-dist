@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-rjmwm63mkfw48zdf4ww",
+    "object": "chat.completion",
+    "created": 1789723596,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\ngcd(0, A, A).\ngcd(A, 0, A).\ngcd(A, B, GCD) :-\n    A > B,\n    R is A mod B,\n    gcd(B, R, GCD).\ngcd(A, B, GCD) :-\n    A < B,\n    R is B mod A,\n    gcd(A, R, GCD).\n\nlcm(A, B, LCM) :-\n    GCD is gcd(A, B),\n    LCM is (A * B) div GCD.\n\nmain :-\n    read_line(Input),\n    split_string(Input, ' ', _, [A, B]),\n    number_string(A1, A),\n    number_string(B1, B),\n    atom_number(A2, A1),\n    atom_number(B2, B1),\n    gcd(A2, B2, GCD),\n    lcm(A2, B2, LCM),\n    write(GCD), nl,\n    write(LCM), nl.\n\nread_line(Input) :-\n    read_string(user_input, \"\\n\", Input).\n\nsplit_string(String, Delimiter, _, [Head|Tail]) :-\n    string_concat(Head, Delimiter, Concatenated),\n    string_concat(Concatenated, Tail, String).\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 416,
+      "completion_tokens": 259,
+      "total_tokens": 675,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 7.194530800014036,
+  "received_at": "2026-09-18T09:26:42.137059+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 416,
+    "completion_tokens": 259,
+    "total_tokens": 675,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-kb2ji7vqa3x82yl7g1y5l",
+  "object": "chat.completion",
+  "created": 1789722823,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nimport Data.List (sort)\n\nmain :: IO ()\nmain = do\n    n <- readLn :: IO Int\n    arr <- map read . words <$> getLine :: IO [Int]\n    let sortedArr = sort arr\n    putStrLn $ unwords $ map show sortedArr\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 672,
+    "completion_tokens": 63,
+    "total_tokens": 735,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-qjz79sqszedgk2y1f470pr",
+  "object": "chat.completion",
+  "created": 1789722786,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nimport System.IO\n\nmain :: IO ()\nmain = do\n    hSetBuffering stdin LineBuffering\n    n <- readLn :: IO Int\n    a <- map read . words <$> getLine :: IO [Int]\n    let cur = maximum $ scanl (+) 0 (zipWith max a (drop 1 a))\n        best = maximum $ scanl (+) 0 (zipWith max a (drop 1 a))\n    print best\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 565,
+    "completion_tokens": 101,
+    "total_tokens": 666,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

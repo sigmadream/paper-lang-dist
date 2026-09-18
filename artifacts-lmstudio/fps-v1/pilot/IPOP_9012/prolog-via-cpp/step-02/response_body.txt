@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-txkl3gdyvaykb2yctdoo",
+  "object": "chat.completion",
+  "created": 1789722330,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```prolog\n:- use_module(library(readutil)).\n\nmain :-\n    read_line_to_string(_, T),\n    string_to_integer(T, N),\n    process(N).\n\nprocess(0) :- !.\nprocess(N) :-\n    read_line_to_string(_, S),\n    is_balanced(S),\n    write('YES'), nl,\n    M is N - 1,\n    process(M).\n\nis_balanced([]) :- !.\nis_balanced([')'|T]) :- !, fail.\nis_balanced(['('|T]) :-\n    count_balance(T, 1, 0).\n\ncount_balance([], 0, _) :- !.\ncount_balance([')'|T], Depth, Count) :-\n    Depth > 0,\n    NewCount is Count - 1,\n    NewDepth is Depth - 1,\n    count_balance(T, NewDepth, NewCount).\ncount_balance(['('|T], Depth, Count) :-\n    NewDepth is Depth + 1,\n    NewCount is Count + 1,\n    count_balance(T, NewDepth, NewCount).\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 588,
+    "completion_tokens": 217,
+    "total_tokens": 805,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

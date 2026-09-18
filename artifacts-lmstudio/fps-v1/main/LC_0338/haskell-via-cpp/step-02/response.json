@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-qx5h0e0q6aqhzxrjd5ngcq",
+    "object": "chat.completion",
+    "created": 1789723668,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\ncountOnes :: Int -> Int\ncountOnes n = length $ filter (== '1') $ showIntAtBase 2 intToDigit n \"\"\n\nmain :: IO ()\nmain = do\n    n <- readLn :: IO Int\n    mapM_ print $ map countOnes [0..n]\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 477,
+      "completion_tokens": 71,
+      "total_tokens": 548,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 3.719794799981173,
+  "received_at": "2026-09-18T09:27:50.352019+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 477,
+    "completion_tokens": 71,
+    "total_tokens": 548,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

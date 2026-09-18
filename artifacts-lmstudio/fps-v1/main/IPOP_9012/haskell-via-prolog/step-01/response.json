@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-hzwonrfihevndxh69xje",
+    "object": "chat.completion",
+    "created": 1789723610,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\nbalanced([], Depth, 0).\nbalanced([C|Cs], Depth, Acc) :-\n    (   C == '(' ->\n        NewDepth is Depth + 1,\n        balanced(Cs, NewDepth, Acc)\n    ;   C == ')' ->\n        NewDepth is Depth - 1,\n        NewAcc is Acc + 1,\n        balanced(Cs, NewDepth, NewAcc)\n    ),\n    NewDepth >= 0.\n\nmain :-\n    read_line(Input),\n    length(Input, N),\n    maplist(balanced(N), Input, Results),\n    maplist(print_result, Results).\n\nbalanced(_, [], 0).\nbalanced(_, [C|Cs], Acc) :-\n    (   C == '(' ->\n        NewAcc is Acc + 1,\n        balanced(_, Cs, NewAcc)\n    ;   C == ')' ->\n        NewAcc is Acc - 1,\n        balanced(_, Cs, NewAcc)\n    ),\n    NewAcc >= 0.\n\nprint_result(true) :- write('YES'), nl.\nprint_result(false) :- write('NO'), nl.\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 521,
+      "completion_tokens": 221,
+      "total_tokens": 742,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 6.736308699997608,
+  "received_at": "2026-09-18T09:26:54.786407+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 521,
+    "completion_tokens": 221,
+    "total_tokens": 742,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-sio0fv0y1hse5ictbkhpm",
+  "object": "chat.completion",
+  "created": 1789722357,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nimport Data.List (findIndex, isInfixOf)\nimport Data.Set (Set, empty, insert, member)\n\nreadNumbers :: IO [Int]\nreadNumbers = do\n  line <- getLine\n  return $ map read $ words line\n\nmatrixRows :: Int -> [[Int]] -> [[Int]]\nmatrixRows n xs = take n $ iterate (drop n) xs\n\nvisit :: Set Int -> [[Int]] -> Set Int -> Set Int\nvisit seen rows todo =\n  case findIndex (`member` seen) todo of\n    Just i -> visit seen rows (todo \\\\ [i])\n    Nothing ->\n      let neighbors = concatMap (\\(j, x) -> if x == 1 then [j] else []) $ zip [0..] (rows !! head todo)\n          newTodo = todo ++ filter (`notElem` seen) neighbors\n      in visit (insert (head todo) seen) rows newTodo\n\ncomponents :: Int -> [[Int]] -> Set Int -> Int\ncomponents n rows seen = go 1\n  where\n    go i | i > n     = 0\n         | member i seen = go (i + 1)\n         | otherwise     = let newSeen = visit (insert i seen) rows [i]\n                           in 1 + go (i + 1)\n\nmain :: IO ()\nmain = do\n  n <- length . head <$> readNumbers\n  rows <- matrixRows n <$> replicateM n readNumbers\n  let count = components n rows empty\n  print count\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 705,
+    "completion_tokens": 322,
+    "total_tokens": 1027,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

@@ -80,43 +80,38 @@ def apply_iteration(metrics, iteration, hashes, cmax):
     return "oscillation" if state == "oscillation" else None
 
 
-def request_translation(payload, host, folder, *, retries=3, timeout=300):
-    """Persist the exact wire request/response and every transient retry."""
+def request_translation(payload, host, folder, *, retries=3, timeout=300, provider_settings=None):
+    """Use the common provider, retaining the legacy response/attempt filenames."""
+    from rttdist.providers import create_provider
     folder.mkdir(parents=True, exist_ok=True)
-    write_json(folder / "llm-request.json", payload)
-    cached = folder / "llm-response.json"
-    if cached.exists():
-        return read_json(cached)
-    start_index = len(list(folder.glob("api-attempt-*.json"))) + 1
-    for offset in range(retries + 1):
-        started, tick = timestamp(), time.perf_counter()
-        raw, http_status, retry = None, None, False
-        failure = None
-        try:
-            req = request.Request(host.rstrip("/") + "/chat/completions", data=json.dumps(payload).encode("utf-8"), headers={"Content-Type": "application/json"})
-            with request.urlopen(req, timeout=timeout) as response:
-                http_status = response.status
-                raw = response.read().decode("utf-8")
-            parsed = json.loads(raw)
-        except error.HTTPError as exc:
-            http_status = exc.code
-            raw = exc.read().decode("utf-8", errors="replace")
-            retry = exc.code >= 500
-            failure = str(exc)
-        except (error.URLError, OSError, TimeoutError) as exc:
-            retry, failure = True, str(exc)
-        except (ValueError, TypeError) as exc:
-            failure = str(exc)
-        write_json(folder / f"api-attempt-{start_index+offset:03d}.json",
-                   {"started_at": started, "seconds": time.perf_counter()-tick,
-                    "request": payload, "http_status": http_status, "raw_response": raw,
-                    "error": failure, "will_retry": bool(failure and retry and offset < retries)})
-        if failure is None:
-            write_json(cached, parsed)
-            return parsed
-        if not retry or offset == retries:
-            raise RuntimeError(failure)
-        time.sleep(2**offset)
+    request_path=folder/'llm-request.json'
+    if request_path.exists() and read_json(request_path)!=payload:
+        raise ValueError('Legacy checkpoint request changed')
+    write_json(request_path,payload)
+    cached=folder/'llm-response.json'
+    if cached.exists():return read_json(cached)
+    settings=provider_settings or {'provider':'lmstudio','endpoint':host,'model':payload['model'],
+                                  'generation':{},'api_key_env':None,'request_timeout':timeout,'retries':retries}
+    checkpoint=folder/'provider'
+    response=None
+    try:
+        response=create_provider(settings).complete(payload,checkpoint)
+    finally:
+        error_path=checkpoint/'api_errors.json'
+        errors=read_json(error_path) if error_path.exists() else []
+        for index,item in enumerate(errors,1):
+            write_json(folder/f'api-attempt-{index:03d}.json',
+                {'started_at':item['at'],'seconds':None,'request':payload,
+                 'http_status':item.get('http_status'),'raw_response':None,
+                 'error':f'HTTP {item["http_status"]}' if 'http_status' in item else item['type'],
+                 'will_retry':index<len(errors) or response is not None})
+        if response is not None:
+            write_json(folder/f'api-attempt-{len(errors)+1:03d}.json',
+                {'started_at':response['received_at'],'seconds':response['latency_seconds'],
+                 'request':payload,'http_status':200,'raw_response':json.dumps(response['body']),
+                 'error':None,'will_retry':False})
+    write_json(cached,response['body'])
+    return response['body']
 
 
 def run_route(config, problem, target, run_id, metadata, *, resume=False, new_attempt=False):
@@ -206,7 +201,12 @@ def run_route(config, problem, target, run_id, metadata, *, resume=False, new_at
                             "target_language": language, "status": "success"}
                     print(f"{run_id} {problem.problem_id}/{target} t={t} c={ci or 0} step={step_index}", flush=True)
                     try:
-                        response = request_translation(payload, config.lmstudio.host, step_dir)
+                        if config.llm or config.provider != 'lmstudio':
+                            from rttdist.translation_factory import provider_config
+                            response = request_translation(payload, config.lmstudio.host, step_dir,
+                                                           provider_settings=provider_config(config))
+                        else:
+                            response = request_translation(payload, config.lmstudio.host, step_dir)
                     except RuntimeError as exc:
                         # No terminal iteration is written: completed step checkpoints survive resume.
                         manifest.update(status="api_error", details={"error": str(exc), "iteration_index": t, "step_index": step_index})
@@ -293,7 +293,9 @@ def run_experiment(config, raw, run_id, *, resume=False, new_attempt=False):
     if config.lmstudio.max_tokens is None or not config.runtime.stop_on_intermediate_failure:
         raise ValueError("SF experiments require explicit max_tokens and stop_on_intermediate_failure=true")
     entries, validation = validation_gate(config)
-    server = server_metadata(config.lmstudio.host, config.lmstudio.model)
+    server = (server_metadata(config.lmstudio.host, config.lmstudio.model) if config.provider == 'lmstudio' else
+              {'effective':{'provider':config.provider,'model':config.lmstudio.model,'details':None},
+               'unavailable_reason':'Provider does not expose LM Studio metadata'})
     provenance = code_provenance()
     conditions = {"experiment_version": raw["experiment_version"], "problem_ids": config.problem_ids,
                   "prompt_template_version": config.prompt_template_version,
@@ -302,6 +304,8 @@ def run_experiment(config, raw, run_id, *, resume=False, new_attempt=False):
                   "decoding": raw.get("decoding", {}), "validation_hash": validation["validation_hash"],
                   "execution_schedule": raw.get("execution_schedule", {"parallel_runs": 1, "parallel_routes_per_run": 1}),
                   "code": provenance, "ast": raw["ast"], "recovery": raw["recovery"]}
+    if config.llm or config.provider != 'lmstudio':
+        conditions.update(provider=config.provider,llm=config.llm)
     if "additional_conditions" in raw:
         conditions["additional_conditions"] = raw["additional_conditions"]
     metadata = {**conditions, "condition_hash": digest(conditions), "phase": raw["phase"],

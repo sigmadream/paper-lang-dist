@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-qx5h0e0q6aqhzxrjd5ngcq",
+  "object": "chat.completion",
+  "created": 1789723668,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\ncountOnes :: Int -> Int\ncountOnes n = length $ filter (== '1') $ showIntAtBase 2 intToDigit n \"\"\n\nmain :: IO ()\nmain = do\n    n <- readLn :: IO Int\n    mapM_ print $ map countOnes [0..n]\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 477,
+    "completion_tokens": 71,
+    "total_tokens": 548,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

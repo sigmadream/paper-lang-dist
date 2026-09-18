@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-upqts7wk9l9s5apj4dvpus",
+  "object": "chat.completion",
+  "created": 1789722850,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```prolog\n:- use_module(library(readutil)).\n:- use_module(library(lists)).\n\nmain :-\n    read_line_to_string(_, Input),\n    string_split(Input, ' ', Numbers),\n    maplist(string_to_integer, Numbers, [N, M|_]),\n    findall([A, B], (between(1, M, I), read_line_to_string(_, Line), string_split(Line, ' ', [A0, B0]), A is min(A0, B0), B is max(A0, B0)), Edges),\n    build_graph(N, Edges, Graph),\n    bfs(Graph, 1, Distances),\n    count_nodes(Distances, 2, Count),\n    write(Count), nl.\n\nbuild_graph(N, Edges, Graph) :-\n    length(Graph, N+1),\n    maplist(init_list, Graph),\n    maplist(add_edges(Edges), Graph).\n\ninit_list([], []).\n\nadd_edges(Edges, List) :-\n    member([A, B], Edges),\n    (   A =:= List -> add_edge(B, List)\n    ;   B =:= List -> add_edge(A, List)\n    ).\n\nadd_edge(Node, List) :-\n    append(List, [Node], NewList).\n\nbfs(Graph, Start, Distances) :-\n    length(Distances, N+1),\n    maplist(init_dist, Distances),\n    bfs_helper(Graph, Start, 0, Distances).\n\ninit_dist(_, -1).\n\nbfs_helper(Graph, Node, Dist, Distances) :-\n    nth0(Node, Graph, Neighbors),\n    maplist(update_dist(Neighbors, Dist), Distances),\n    findall(NewNode, (between(1, N, NewNode), nth0(NewNode, Distances, D), D =:= -1), NextNodes),\n    maplist(bfs_helper(Graph, _, Dist+1), NextNodes).\n\nupdate_dist(Neighbors, OldDist, [_, NewDist|_]) :-\n    member(Node, Neighbors),\n    nth0(Node, Distances, CurrentDist),\n    (   CurrentDist =:= -1 -> nth0(Node, Distances, OldDist + 1)\n    ;   CurrentDist > OldDist + 1 -> nth0(Node, Distances, OldDist + 1)\n    ).\n\ncount_nodes(Distances, MaxDist, Count) :-\n    findall(Node, (between(2, N, Node), nth0(Node, Distances, D), D =< MaxDist), Nodes),\n    length(Nodes, Count).\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 654,
+    "completion_tokens": 530,
+    "total_tokens": 1184,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

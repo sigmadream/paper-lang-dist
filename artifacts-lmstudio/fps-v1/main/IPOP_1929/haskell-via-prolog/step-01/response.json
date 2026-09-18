@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-oovfohcf03c1gkbfl9i8l3",
+    "object": "chat.completion",
+    "created": 1789722741,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\nprime(N) :-\n    N >= 2,\n    trial(2).\n\ntrial(D, N) :-\n    D * D > N.\ntrial(D, N) :-\n    N mod D == 0,\n    !, fail.\ntrial(D, N) :-\n    D1 is D + 1,\n    trial(D1, N).\n\nmain :-\n    read_line(Input),\n    split_string(Input, \" \", \"\", [MStr, NStr]),\n    M = MStr,\n    N = NStr,\n    between(M, N, X),\n    prime(X),\n    write(X), nl.\n\nread_line(Line) :-\n    get_code(Char),\n    read_line(Char, Line).\n\nread_line(-1, []) :- !.\nread_line(10, []) :- !.\nread_line(Char, [Char|Line]) :-\n    get_code(NewChar),\n    read_line(NewChar, Line).\n\nsplit_string([], _, _, []).\nsplit_string([H|T], Delimiter, CurrentWord, Result) :-\n    H == Delimiter,\n    !,\n    split_string(T, Delimiter, [], [CurrentWord|Result]).\nsplit_string([H|T], Delimiter, CurrentWord, Result) :-\n    append(CurrentWord, [H], NewWord),\n    split_string(T, Delimiter, NewWord, Result).\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 434,
+      "completion_tokens": 274,
+      "total_tokens": 708,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 7.45185599999968,
+  "received_at": "2026-09-18T09:12:26.529263+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 434,
+    "completion_tokens": 274,
+    "total_tokens": 708,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

@@ -1,0 +1,33 @@
+{
+  "provider": {
+    "provider": "lmstudio",
+    "endpoint": "http://localhost:1234/v1",
+    "model": "qwen2.5-coder-7b-instruct",
+    "api_key_env": null,
+    "generation": {
+      "temperature": 0,
+      "top_p": 1,
+      "max_tokens": 4096,
+      "seed": 20260918
+    },
+    "request_timeout": 300,
+    "retries": 2
+  },
+  "payload": {
+    "model": "qwen2.5-coder-7b-instruct",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Translate the supplied program to the requested language, preserving its complete stdin/stdout behavior for every valid input in the specification. Return exactly one complete source file in one fenced code block, with no explanation. Use only the standard libraries shipped with the specified toolchain. C++: C++17 with main(). Haskell: GHC, module Main and main :: IO (). Prolog: SWI-Prolog, define main/0; the evaluator invokes main; do not add initialization directives. Preserve required algorithmic constraints and output ordering. Do not hard-code examples."
+      },
+      {
+        "role": "user",
+        "content": "Source language: prolog\nTarget language: cpp\nSpecification:\n# LC_0547: Number Of Provinces\n\n대칭 인접행렬로 주어진 무방향 그래프의 연결 성분 수를 구한다.\n\n## 제약\n\n정점 수 1..200; 행렬 값 0/1, 대칭, 대각선은 1.\n\n## 표준입출력 계약\n\n첫 줄 N, 이후 N줄에 N개의 0/1 정수.\n출력은 정수 하나 또는 공백으로 구분한 정수 배열이다. 참/거짓은 각각 1/0으로 출력한다. 인덱스는 0부터 시작한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[공식 명세](https://leetcode.com/problems/number-of-provinces/)\n\nPublic examples:\n[{\"input\": \"3\\n1 1 0\\n1 1 0\\n0 0 1\\n\", \"output\": \"2\\n\"}]\nSource code:\n:- use_module(library(readutil)).\nread_words(Words) :- read_string(user_input, _, Text), split_string(Text, \" \\n\\r\\t\", \" \\n\\r\\t\", Words).\nread_numbers(Numbers) :- read_words(Words), maplist(number_string, Numbers, Words).\nwrite_numbers(Numbers) :- atomic_list_concat(Numbers, ' ', Text), writeln(Text).\n:- use_module(library(ordsets)).\nmatrix_rows([],_,[]).\nmatrix_rows(Xs,N,[Row|Rows]) :- length(Row,N), append(Row,Rest,Xs), matrix_rows(Rest,N,Rows).\nvisit([],_,Seen,Seen).\nvisit([V|Todo],Rows,Seen,Out) :-\n    (ord_memberchk(V,Seen) -> visit(Todo,Rows,Seen,Out)\n    ; nth1(V,Rows,Row), findall(J,nth1(J,Row,1),Neighbors), append(Neighbors,Todo,Next),\n      ord_add_element(Seen,V,Added), visit(Next,Rows,Added,Out)).\ncomponents(I,N,_,_,0) :- I > N, !.\ncomponents(I,N,Rows,Seen,Count) :- J is I+1,\n    (ord_memberchk(I,Seen) -> components(J,N,Rows,Seen,Count)\n    ; visit([I],Rows,Seen,Next), components(J,N,Rows,Next,C), Count is C+1).\nmain :- read_numbers([N|Xs]), matrix_rows(Xs,N,Rows), components(1,N,Rows,[],C), writeln(C).\n"
+      }
+    ],
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-hx4qw19loyicmre5ra25d",
+    "object": "chat.completion",
+    "created": 1789722904,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nimport System.IO\n\nmain :: IO ()\nmain = do\n    hSetBuffering stdin LineBuffering\n    hSetBuffering stdout NoBuffering\n    n <- readLn :: IO Int\n    xs <- replicateM n (readLn :: IO Int)\n    let result = moveZeroes xs\n    mapM_ print result\n\nmoveZeroes :: [Int] -> [Int]\nmoveZeroes xs = go 0 xs []\n  where\n    go _ [] acc = reverse acc\n    go i (x:xs) acc\n        | x /= 0    = go (i + 1) xs (x : acc)\n        | otherwise = go (i + 1) xs acc\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 594,
+      "completion_tokens": 154,
+      "total_tokens": 748,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 5.323139400017681,
+  "received_at": "2026-09-18T09:15:08.270101+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 594,
+    "completion_tokens": 154,
+    "total_tokens": 748,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

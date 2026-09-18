@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-iv178hl7yehyh5oaf4tlqo",
+    "object": "chat.completion",
+    "created": 1789723656,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\n:- use_module(library(readutil)).\n\nmain :-\n    read_line_to_string(STDIN),\n    string_to_list(STDIN, Input),\n    split_string(Input, \"\\n\", \"\", [N|Nums]),\n    maplist(string_to_number, Nums, NumList),\n    kadane(NumList, Result),\n    write(Result),\n    nl.\n\nkadane([], 0).\nkadane([H|T], Result) :-\n    kadane(T, Temp),\n    Current is max(H, H + Temp),\n    Global is max(Current, Temp),\n    Result is Global.\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 541,
+      "completion_tokens": 123,
+      "total_tokens": 664,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 4.804643499985104,
+  "received_at": "2026-09-18T09:27:39.477618+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 541,
+    "completion_tokens": 123,
+    "total_tokens": 664,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

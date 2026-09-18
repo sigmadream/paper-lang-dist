@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-z6ahpvvnur3hfkaxmk9k3",
+  "object": "chat.completion",
+  "created": 1789723057,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <queue>\nusing namespace std;\n\nvoid visit(const vector<vector<int>>& rows, int v, vector<bool>& seen) {\n    if (seen[v]) return;\n    seen[v] = true;\n    for (int j = 0; j < rows.size(); ++j) {\n        if (rows[v][j] == 1 && !seen[j]) {\n            visit(rows, j, seen);\n        }\n    }\n}\n\nint components(const vector<vector<int>>& rows) {\n    int n = rows.size();\n    vector<bool> seen(n, false);\n    int count = 0;\n    for (int i = 0; i < n; ++i) {\n        if (!seen[i]) {\n            visit(rows, i, seen);\n            ++count;\n        }\n    }\n    return count;\n}\n\nint main() {\n    int n;\n    cin >> n;\n    vector<vector<int>> rows(n, vector<int>(n));\n    for (int i = 0; i < n; ++i) {\n        for (int j = 0; j < n; ++j) {\n            cin >> rows[i][j];\n        }\n    }\n    cout << components(rows) << endl;\n    return 0;\n}\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 703,
+    "completion_tokens": 267,
+    "total_tokens": 970,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

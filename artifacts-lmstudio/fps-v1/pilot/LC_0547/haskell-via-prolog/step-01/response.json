@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-2twj3y5eamxlw6mhohgbmo",
+    "object": "chat.completion",
+    "created": 1789722256,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\n:- use_module(library(lists)).\n\nvisit(Graph, [], Seen) :- !.\nvisit(Graph, [V|Todo], Seen) :-\n    memberchk(V, Seen), !,\n    visit(Graph, Todo, Seen).\nvisit(Graph, [V|Todo], Seen) :-\n    NewSeen = [V | Seen],\n    Adjacent = Graph.V,\n    append(Adjacent, Todo, NewTodo),\n    visit(Graph, NewTodo, NewSeen).\n\ncomponents(Graph, [], Seen, Count) :- !, Count is 0.\ncomponents(Graph, [V|Vs], Seen, Count) :-\n    memberchk(V, Seen), !,\n    components(Graph, Vs, Seen, Count).\ncomponents(Graph, [V|Vs], Seen, Count) :-\n    NewSeen = [V | Seen],\n    Adjacent = Graph.V,\n    append(Adjacent, [V], NewTodo),\n    visit(Graph, NewTodo, NewSeen),\n    NextCount is Count + 1,\n    components(Graph, Vs, NewSeen, NextCount).\n\nmain :-\n    read_line_to_string(Input),\n    split_string(Input, \"\\n\", \"\", Lines),\n    length(Lines, N),\n    maplist(read_list, Lines, Matrix),\n    build_graph(N, Matrix, Graph),\n    findall(V, between(0, N-1, V), Vertices),\n    components(Graph, Vertices, [], Count),\n    write(Count).\n\nread_list(Line, List) :-\n    split_string(Line, \" \", \"\", Tokens),\n    maplist(atom_number, Tokens, List).\n\nbuild_graph(N, Matrix, Graph) :-\n    build_graph(N, Matrix, 0, Graph).\n\nbuild_graph(_, _, N, _) :- N >= 200, !.\nbuild_graph(N, Matrix, I, Graph) :-\n    nth1(I+1, Matrix, Row),\n    build_row(Row, I, Graph, NewGraph),\n    I1 is I + 1,\n    build_graph(N, Matrix, I1, NewGraph).\n\nbuild_row([], _, Graph, Graph).\nbuild_row([0|Row], I, Graph, NewGraph) :-\n    build_row(Row, I+1, Graph, NewGraph).\nbuild_row([1|Row], I, Graph, NewGraph) :-\n    update_graph(Graph, I, I, NewGraph),\n    build_row(Row, I+1, NewGraph, NewGraph).\n\nupdate_graph(Graph, I, J, NewGraph) :-\n    put_dict(I-J, Graph, 1, NewGraph).\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 592,
+      "completion_tokens": 525,
+      "total_tokens": 1117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 12.777228999999352,
+  "received_at": "2026-09-18T09:04:27.077082+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 592,
+    "completion_tokens": 525,
+    "total_tokens": 1117,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

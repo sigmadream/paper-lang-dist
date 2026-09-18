@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-zlrqvs62ek81uf4e6fbn5b",
+    "object": "chat.completion",
+    "created": 1789723678,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\nusing namespace std;\n\nbool isPalindrome(const string& s, int left, int right) {\n    while (left < right) {\n        if (s[left] != s[right]) return false;\n        ++left;\n        --right;\n    }\n    return true;\n}\n\nint main() {\n    string s;\n    cin >> s;\n    cout << (isPalindrome(s, 0, s.size() - 1) ? 1 : 0) << endl;\n    return 0;\n}\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 391,
+      "completion_tokens": 115,
+      "total_tokens": 506,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 4.677489399997285,
+  "received_at": "2026-09-18T09:28:01.208304+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 391,
+    "completion_tokens": 115,
+    "total_tokens": 506,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

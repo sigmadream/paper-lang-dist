@@ -1,0 +1,39 @@
+{
+  "at": "2026-09-18T09:07:58.874963+00:00",
+  "approved_for_main": true,
+  "approval_basis": "User-authorized experiment; pilot reviewed by executing agent",
+  "config_sha256": "11cc1eaf91c56a0c99f96c03365787d8353d810da99086d99274824d99977db2",
+  "pilot_audit_sha256": "71dad46823291a5986d073ef7bcd196b7a9d1c0b1a48471c5b4a8d8fa58a3498",
+  "main_observations": 90,
+  "pilot_observations": 18,
+  "models": 1,
+  "repeats": 1,
+  "pilot_statuses": {
+    "runtime_error": 9,
+    "compile_error": 7,
+    "success": 2
+  },
+  "pilot_logical_calls": 32,
+  "pilot_completion_tokens": 5776,
+  "pilot_prompt_tokens": 16684,
+  "pilot_api_seconds": 188.02818389996537,
+  "pilot_similarity_measurements": 10,
+  "pilot_similarity_measured": 10,
+  "main_max_logical_calls": 1800,
+  "main_max_http_attempts": 5400,
+  "main_completion_token_cap": 7372800,
+  "main_projected_calls_at_pilot_rate": 160,
+  "main_projected_output_tokens_at_pilot_rate": 28880,
+  "main_projected_api_seconds_at_pilot_rate": 940.1409194998269,
+  "local_api_charge": 0,
+  "electricity_cost": null,
+  "stop_rules": "First generated-code failure; FPS >10; 20 one-way steps; request 300s; observation wall 4h; no retries of code failures",
+  "decisions": [
+    "Keep all 15 prospectively selected problems and unchanged prompts despite pilot code failures",
+    "Retain theta=.85 as operational text-stability threshold, not semantic equivalence",
+    "No threshold sensitivity registered; do not infer unobserved .90 results",
+    "R=1; no between-run variance claim; Wilson plus problem bootstrap, paired family-wise Bonferroni intervals",
+    "Main results exclude pilot observations; separately exclude three pilot-used problems in sensitivity analysis"
+  ],
+  "case_selection": "For success, generated-code failure, distance-limit: lexicographically first problem/route; disclose when absent"
+}

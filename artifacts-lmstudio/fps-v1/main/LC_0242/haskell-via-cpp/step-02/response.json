@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-a80w8nzqzbix7fj7i2rbz",
+    "object": "chat.completion",
+    "created": 1789723232,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nimport Data.Map (Map, empty, insertWith, fromListWith, toList)\nimport qualified Data.Map as Map\n\nmain :: IO ()\nmain = do\n    s <- getLine\n    t <- getLine\n    let freq_s = fromListWith (+) [(c, 1) | c <- s]\n        freq_t = fromListWith (+) [(c, 1) | c <- t]\n    if freq_s == freq_t then putStrLn \"1\" else putStrLn \"0\"\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 489,
+      "completion_tokens": 109,
+      "total_tokens": 598,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 4.370805900020059,
+  "received_at": "2026-09-18T09:20:34.643548+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 489,
+    "completion_tokens": 109,
+    "total_tokens": 598,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

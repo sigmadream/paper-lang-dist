@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-6ug6x6nz99go6a82hr1rpm",
+    "object": "chat.completion",
+    "created": 1789723009,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nstd::vector<int> merge(const std::vector<int>& xs, const std::vector<int>& ys) {\n    if (xs.empty()) return ys;\n    if (ys.empty()) return xs;\n    if (xs.front() <= ys.front()) {\n        std::vector<int> result = xs;\n        result.push_back(ys.front());\n        result.insert(result.end(), ys.begin() + 1, ys.end());\n        return result;\n    } else {\n        std::vector<int> result = ys;\n        result.push_back(xs.front());\n        result.insert(result.end(), xs.begin() + 1, xs.end());\n        return result;\n    }\n}\n\nstd::vector<int> mergesort(const std::vector<int>& xs) {\n    if (xs.size() <= 1) return xs;\n    size_t mid = xs.size() / 2;\n    std::vector<int> a(xs.begin(), xs.begin() + mid);\n    std::vector<int> b(xs.begin() + mid, xs.end());\n    return merge(mergesort(a), mergesort(b));\n}\n\nint main() {\n    int n;\n    std::cin >> n;\n    std::vector<int> values(n);\n    for (int i = 0; i < n; ++i) {\n        std::cin >> values[i];\n    }\n    std::vector<int> sorted_values = mergesort(values);\n    for (const auto& value : sorted_values) {\n        std::cout << value << \" \";\n    }\n    return 0;\n}\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 522,
+      "completion_tokens": 331,
+      "total_tokens": 853,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 8.68005070000072,
+  "received_at": "2026-09-18T09:16:56.090578+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 522,
+    "completion_tokens": 331,
+    "total_tokens": 853,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}

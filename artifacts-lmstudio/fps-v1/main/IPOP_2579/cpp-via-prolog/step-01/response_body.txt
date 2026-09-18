@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-cmu98qxvybuellb1dgu1lu",
+  "object": "chat.completion",
+  "created": 1789723759,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```prolog\nmain :-\n    read_line_to_string(Input),\n    string_to_list(Input, InputList),\n    maplist(string_to_integer, InputList, Numbers),\n    nth1(2, Numbers, N),\n    nth1(N+2, Numbers, Scores),\n    find_max_score(Scores, 0, 0, Result),\n    write(Result), nl.\n\nfind_max_score([], _, _, 0).\nfind_max_score([_], _, _, 0).\nfind_max_score([_, _], _, _, 0).\nfind_max_score([S1, S2, S3 | Rest], Prev1, Prev2, Result) :-\n    MaxPrev2 is max(Prev1, Prev2 + S1),\n    NewResult is max(MaxPrev2 + S2, Prev2 + S3 + S2),\n    find_max_score(Rest, Prev2, MaxPrev2, NewResult).\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 628,
+    "completion_tokens": 188,
+    "total_tokens": 816,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

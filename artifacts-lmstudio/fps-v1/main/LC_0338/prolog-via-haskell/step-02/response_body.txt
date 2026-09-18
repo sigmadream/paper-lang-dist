@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-1rroh00vs9hjpmdf1zvbgn",
+  "object": "chat.completion",
+  "created": 1789723045,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(io)).\n\ncount_bits(N, Counts) :-\n    findall(C, (between(0, N, I), C is bit_count(I)), Counts).\n\nbit_count(X) :-\n    X < 2, !,\n    X.\nbit_count(X) :-\n    Y is X // 2,\n    Z is X mod 2,\n    bit_count(Y, YZ),\n    Z =:= 1 -> YZ + 1; YZ.\n\nmain :-\n    read_line_to_string(_, Input),\n    atom_number(Input, N),\n    count_bits(N, Counts),\n    maplist(write, Counts),\n    write('\\n').\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 399,
+    "completion_tokens": 148,
+    "total_tokens": 547,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

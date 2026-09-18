@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-lh5cuuffq1ww9hp58z1r",
+  "object": "chat.completion",
+  "created": 1789722809,
+  "model": "qwen2.5-coder-7b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "```haskell\nimport System.IO\n\nmain :: IO ()\nmain = do\n    hSetBuffering stdin LineBuffering\n    hSetBuffering stdout NoBuffering\n    n <- readLn :: IO Int\n    nums <- replicateM n (readLn :: IO Int)\n    let bestSoFar = go 0 0 nums\n    print bestSoFar\n  where\n    go endingHere bestSoFar [] = bestSoFar\n    go endingHere bestSoFar (x:xs) =\n        let newEndingHere = max x (endingHere + x)\n            newBestSoFar = max bestSoFar newEndingHere\n        in go newEndingHere newBestSoFar xs\n```",
+        "reasoning_content": "",
+        "tool_calls": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 517,
+    "completion_tokens": 148,
+    "total_tokens": 665,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "stats": {},
+  "system_fingerprint": "qwen2.5-coder-7b-instruct"
+}

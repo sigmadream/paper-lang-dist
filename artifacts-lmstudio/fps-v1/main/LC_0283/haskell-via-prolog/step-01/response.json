@@ -1,0 +1,50 @@
+{
+  "body": {
+    "id": "chatcmpl-968jnuoojn7wwwi0jsm2e9",
+    "object": "chat.completion",
+    "created": 1789723752,
+    "model": "qwen2.5-coder-7b-instruct",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\n:- use_module(library(readutil)).\n\nmain :-\n    read_line_to_string(In),\n    string_split(In, ' ', Parts),\n    maplist(string_to_integer, Parts, Numbers),\n    length(Numbers, N),\n    take(N, Numbers, Xs),\n    filter(nonzero, Xs, NonZero),\n    length(NonZero, Len),\n    Zeros is N - Len,\n    append(NonZero, Zeros times 0, Answer),\n    maplist(integer_to_string, Answer, Strings),\n    write(Strings),\n    nl.\n\nnonzero(X) :-\n    X \\= 0.\n\ntake(_, [], []).\ntake(N, [H|T], [H|R]) :-\n    N > 0,\n    M is N - 1,\n    take(M, T, R).\n\nfilter(_, [], []).\nfilter(Pred, [H|T], [H|R]) :-\n    Pred(H),\n    filter(Pred, T, R).\nfilter(Pred, [_|T], R) :-\n    \\+ Pred(_),\n    filter(Pred, T, R).\n\nZeros times 0 is Zeros.\n```",
+          "reasoning_content": "",
+          "tool_calls": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 493,
+      "completion_tokens": 238,
+      "total_tokens": 731,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "stats": {},
+    "system_fingerprint": "qwen2.5-coder-7b-instruct"
+  },
+  "latency_seconds": 7.091210000013234,
+  "received_at": "2026-09-18T09:29:17.194869+00:00",
+  "actual_model": "qwen2.5-coder-7b-instruct",
+  "usage": {
+    "prompt_tokens": 493,
+    "completion_tokens": 238,
+    "total_tokens": 731,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  },
+  "requested_generation": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": 4096,
+    "seed": 20260918
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "API does not echo effective decoding options"
+}
