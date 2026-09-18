@@ -70,7 +70,7 @@ def audit(summary_path, allow_partial=False):
     output_root = Path(summary_path).resolve().parent.parent
     for metadata in meta:
         condition_keys = ("experiment_version", "problem_ids", "target_languages", "runtime", "lmstudio", "server",
-                          "decoding", "validation_hash", "code", "ast", "recovery", "execution_schedule")
+                          "decoding", "validation_hash", "code", "ast", "recovery", "execution_schedule", "prompt_template_version")
         conditions = {key: metadata[key] for key in condition_keys if key in metadata}
         assert digest(conditions) == metadata["condition_hash"]
         assert digest(metadata["code"]["file_hashes"]) == metadata["code"]["source_hash"]

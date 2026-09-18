@@ -20,7 +20,7 @@ def extract_single_file_source(response: LLMResponse | str) -> str:
     return extract_single_file_source_text(response.choices[0].message.content)
 
 
-def extract_single_file_source_text(text: str) -> str:
+def extract_single_file_source_text(text: str, *, preserve_unfenced: bool = False) -> str:
     if not isinstance(text, str):
         raise SourceExtractionError(
             "Model response must be a string to extract source."
@@ -45,6 +45,10 @@ def extract_single_file_source_text(text: str) -> str:
             )
         return candidate
 
+    # ABS supports layout-sensitive Haskell and Prolog facts: never drop lines
+    # using the legacy C-like heuristic. The language compiler validates source.
+    if preserve_unfenced:
+        return stripped_text
     recovered = _recover_unfenced_code(stripped_text)
     if recovered is None:
         raise SourceExtractionError(

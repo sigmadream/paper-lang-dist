@@ -10,7 +10,7 @@ import time
 
 from rttdist.corpus import ProblemCorpusEntry
 
-SUPPORTED_EXEC_LANGUAGES = frozenset({"c", "cpp", "java", "python"})
+SUPPORTED_EXEC_LANGUAGES = frozenset({"c", "cpp", "java", "python", "scala", "haskell", "prolog"})
 
 
 class ExecutionAdapterError(ValueError):
@@ -408,6 +408,9 @@ def get_execution_adapter(language: str) -> ExecutionAdapter:
         return CppExecutionAdapter()
     if normalized_language == "java":
         return JavaExecutionAdapter()
+    if normalized_language in {"scala", "haskell", "prolog"}:
+        from rttdist.exec.extended import ExtendedExecutionAdapter
+        return ExtendedExecutionAdapter(normalized_language)
     return PythonExecutionAdapter()
 
 

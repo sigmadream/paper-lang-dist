@@ -1,6 +1,14 @@
 # RTT Language Distance Experiment Tool
 
+현재 ABS 지표의 단위와 선행연구의 차이는 [FPS 거리와 완료 왕복 횟수 n](docs/abs/metric_definition.md)을 따른다. n을 FPS 크기나 편도 번역 수와 혼용하지 않는다.
+
+[ABS 실험 자료](docs/abs/README.md)는 C++ → X → C++의 6개 대상 언어 실험을 다룬다. 후속 [Haskell·Prolog 출발 실험](docs/abs/seed_extensions/README.md)은 같은 40문제와 K=10/c=5로 예비 60관측과 본 480관측을 완료했다. 본 실험의 SF(5) 성공은 Haskell 17/240, Prolog 0/240이다. [세 출발 언어 비교](docs/abs/seed_extensions/results/comparison.md)와 [결과 해석](docs/abs/seed_extensions/results/discussion.md)에 조건·불확실성·실패 사례를 기록했다. 추가 실험의 JPlag text 보조 유사도는 기존 C++의 Sym과 별도로 보고한다.
+
+v2 단일 반복 실험 120건이 완료 감사를 통과했다. [논문과 전체 자료](docs/v2/README.md), [논문 PDF](docs/v2/paper_v2.pdf), [결과 요약](docs/v2/short_v2.md)을 참고한다. 아래 실행 명령과 중간 상태 설명은 실험 이력이며 완료된 실험을 다시 시작할 필요는 없다.
+
 새 평가 입력 40문제·520쌍은 `lmstudio_v2.yaml`로 실행한다. 이 설정의 `dataset_index: ./problem/dataset-index.json`이 평가 데이터 위치를 지정한다. 설정의 상대 경로는 YAML 파일 위치를 기준으로 해석하며, 색인 내부 경로는 색인 파일 위치를 기준으로 해석한다.
+
+2026-09-17 동결 실행과 후속 개정은 [v2 실행 기록](docs/EXPERIMENT_v2_log.md)을 따른다. 사용자 요청으로 본 실험을 3회에서 1회, 총 120건으로 축소했다. 기존 r1의 완료 결과를 보존하고 `scripts/run_v2_single.py`가 나머지 경로와 완료 감사를 실행한다. 현재 실행 상태는 `./.venv/Scripts/python.exe scripts/v2_status.py`, 빠른 잠정 집계는 `./.venv/Scripts/python.exe -X utf8 scripts/v2_quick_report.py`로 확인한다. 실행이 중단된 경우에만 `./.venv/Scripts/python.exe -X utf8 scripts/run_v2_single.py`로 재개한다. 기존 `run_v2.py --stage all`은 개정 전 3회 실행용이다.
 
 40문제는 모두 `problem/<문제 ID>/` 아래에 `statement.md`, `prompt_examples/`, `evaluation/`, `reference.cpp`를 두는 구조다. 색인 schema 2가 이 배치를 지정한다. 명세와 예제 중 파일명 순서상 첫 쌍을 프롬프트에 사용하고 `evaluation`만 채점에 사용한다. 평가 입력·정답·README의 사례 설명·실패 진단은 프롬프트에 전달하지 않는다. 문제 목록과 검증 도구는 [데이터 안내](problem/README.md)를 참고한다.
 
@@ -13,7 +21,7 @@ uv run rttdist run --config lmstudio_v2.yaml --run-id v2-a-quality-1-r1
 
 `lmstudio_v2.yaml`은 `v2-a-quality-1` 데이터와 P2 프롬프트를 사용하는 설정이다. 데이터 및 난이도 점검 결과는 [검토 보고서](docs/DATASET_QUALITY_v2.md)에 있다. 실행 전에 실험에 맞게 확정한다. 검증 기록과 결과는 `artifacts-lmstudio/v2-a-quality-1`에 저장한다. 색인에 없는 문제, 누락된 예제·평가 파일, 예제와 동일한 평가 입력은 오류로 처리한다. 예제와 평가 파일 모두 검증 해시에 포함되므로 변경하면 다시 검증하고 새 run-id로 시작해야 한다. `dataset_index`를 생략한 기존 설정은 `problem/archive/v1`의 원본 배치와 동작을 유지한다. 경로 정리 전 실행 기록을 이어 쓰려 하지 말고 새 경로로 다시 검증한 뒤 새 run-id를 사용한다.
 
-현재 SF 실험은 `experiment_version`이 있는 설정(`lmstudio_pilot_v1.yaml`, `lmstudio_v1.yaml`)으로 실행한다. 기존 설정과 아래 schema 1 설명은 구버전 실행/리포트에 해당한다. 1차 정의는 [계획](docs/PLAN_v1_metrics.md), 실제 실행 기록은 [실험 로그](docs/EXPERIMENT_v1_log.md)를 참고한다.
+현재 SF 실험은 `experiment_version`이 있는 설정(`lmstudio_pilot_v1.yaml`, `lmstudio_v1.yaml`)으로 실행한다. 기존 설정과 아래 schema 1 설명은 구버전 실행/리포트에 해당한다. 1차 정의는 [계획](docs/v1/PLAN_v1_metrics.md), 실제 실행 기록은 [실험 로그](docs/v1/EXPERIMENT_v1_log.md)를 참고한다.
 
 SF의 첫 왕복은 t=1이고, tau_c는 최초 인접 정규화 토큰 해시 일치 시점이다. K=10은 후보 탐색에만 적용하며 확인 왕복은 tau_c+1부터 최대 tau_c+5까지 수행한다. `p_SF(c)`는 후보가 존재하고 후보까지 모든 단계가 통과하며 확인 1..c의 해시와 기능이 유지된 비율이다. parse_error를 분모에 포함하고 인프라 중단은 제외한다. tau와 Delta_0는 성공 조건부 통계다.
 

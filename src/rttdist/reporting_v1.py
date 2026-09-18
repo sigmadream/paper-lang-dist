@@ -228,7 +228,8 @@ def report_runs(output_root, runs):
     output_root = Path(output_root)
     metadata, rows, exclusions = load_selected(output_root, runs)
     aggregates, differences = aggregate(rows, metadata, exclusions)
-    directory = output_root / (runs[0] if len(runs) == 1 else "v1-combined")
+    combined = "v2-combined" if metadata[0]["experiment_version"].startswith("v2") else "v1-combined"
+    directory = output_root / (runs[0] if len(runs) == 1 else combined)
     summary = {"schema_version": 2, "run_metadata": metadata, "observations": rows,
                "rtt_route_aggregates": aggregates, "paired_route_differences": differences,
                "exclusions": exclusions, "complete": not exclusions,

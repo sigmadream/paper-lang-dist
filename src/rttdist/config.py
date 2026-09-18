@@ -7,7 +7,7 @@ from typing import Any
 import yaml
 
 SUPPORTED_EXPERIMENT_LANGUAGES = frozenset({"cpp", "c", "java", "python"})
-SUPPORTED_TARGET_LANGUAGES = frozenset({"cpp", "c", "java", "python"})
+SUPPORTED_TARGET_LANGUAGES = frozenset({"cpp", "c", "java", "python", "scala", "haskell", "prolog"})
 REFERENCE_EXTENSION_BY_LANGUAGE = {
     "cpp": "cpp",
     "c": "c",
@@ -118,8 +118,8 @@ def _parse_config(raw_data: dict[str, Any], config_dir: Path) -> ExperimentConfi
     lmstudio = _parse_lmstudio_config(raw_data, provider=provider)
     runtime = _parse_runtime_config(raw_data)
     prompt_version = raw_data.get("prompt_template_version", "rtt.prompts.v1")
-    if prompt_version not in ("rtt.prompts.v1", "rtt.prompts.v2"):
-        raise ConfigValidationError("Unsupported prompt_template_version; use rtt.prompts.v1 or rtt.prompts.v2.")
+    if prompt_version not in ("rtt.prompts.v1", "rtt.prompts.v2", "rtt.prompts.abs.v1"):
+        raise ConfigValidationError("Unsupported prompt_template_version.")
 
     output_root = _resolve_path(
         raw_data.get("output_root"), key="output_root", base_dir=config_dir

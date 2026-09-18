@@ -2,6 +2,7 @@ provider: lmstudio
 experiment_version: v2-a-quality-1
 prompt_template_version: rtt.prompts.v2
 phase: main
+main_repetitions: 1
 problem_ids:
 - IPOP_10988
 - IPOP_1158
@@ -75,6 +76,8 @@ output_root: ./artifacts-lmstudio/v2-a-quality-1
 problem_root: ./problem
 corpus_root: ./problem
 execution_schedule:
-  parallel_runs: 3
+  parallel_runs: 1
   parallel_routes_per_run: 1
+  order: balanced_seeded
+  seed: 20260911
 dataset_index: ./problem/dataset-index.json

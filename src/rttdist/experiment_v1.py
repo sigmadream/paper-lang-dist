@@ -6,6 +6,7 @@ Only the first evaluable attempt is selected, regardless of its outcome.
 from dataclasses import asdict
 from datetime import datetime, timezone
 import json
+import random
 from pathlib import Path
 import time
 from urllib import error, request
@@ -188,7 +189,7 @@ def run_route(config, problem, target, run_id, metadata, *, resume=False, new_at
                 if step_path.exists():
                     step = read_json(step_path)
                 else:
-                    elapsed = (datetime.now(timezone.utc) - datetime.fromisoformat(metadata["started_at"])).total_seconds()
+                    elapsed = (datetime.now(timezone.utc) - datetime.fromisoformat(metadata.get("campaign_started_at", metadata["started_at"]))).total_seconds()
                     if elapsed > metadata["recovery"]["max_wall_hours"]*3600:
                         raise ValueError("Run wall-clock recovery deadline reached")
                     prompt = build_translation_prompt(problem_id=problem.problem_id,
@@ -215,11 +216,13 @@ def run_route(config, problem, target, run_id, metadata, *, resume=False, new_at
                         return manifest
                     step["truncated"] = any(ch.get("finish_reason") == "length" for ch in response.get("choices", []))
                     try:
-                        translated = extract_single_file_source_text(response["choices"][0]["message"]["content"])
+                        translated = extract_single_file_source_text(response["choices"][0]["message"]["content"],
+                            preserve_unfenced=config.prompt_template_version == "rtt.prompts.abs.v1")
                     except (SourceExtractionError, KeyError, IndexError, TypeError) as exc:
                         step.update(status="parse_error", error=str(exc))
                     else:
-                        extension = {"cpp": "cpp", "c": "c", "java": "java", "python": "py"}[language]
+                        extension = {"cpp": "cpp", "c": "c", "java": "java", "python": "py",
+                                     "scala": "scala", "haskell": "hs", "prolog": "pl"}[language]
                         source_path = step_dir / ("source." + extension)
                         source_path.write_text(translated.rstrip()+"\n", encoding="utf-8")
                         step["source_path"] = str(source_path.resolve())
@@ -272,6 +275,20 @@ def run_route(config, problem, target, run_id, metadata, *, resume=False, new_at
     return manifest
 
 
+def execution_order(problem_ids, targets, schedule, repeat_index):
+    """Freeze route order; each problem gets every route position over three repeats."""
+    problems = list(problem_ids)
+    if schedule.get("order") == "balanced_seeded":
+        random.Random(schedule["seed"]).shuffle(problems)
+        pairs = []
+        for index, problem in enumerate(problems):
+            offset = (index + (repeat_index or 1) - 1) % len(targets)
+            rotated = list(targets[offset:]) + list(targets[:offset])
+            pairs.extend((problem, target) for target in rotated)
+        return pairs
+    return [(problem, target) for problem in problems for target in targets]
+
+
 def run_experiment(config, raw, run_id, *, resume=False, new_attempt=False):
     if config.lmstudio.max_tokens is None or not config.runtime.stop_on_intermediate_failure:
         raise ValueError("SF experiments require explicit max_tokens and stop_on_intermediate_failure=true")
@@ -285,10 +302,16 @@ def run_experiment(config, raw, run_id, *, resume=False, new_attempt=False):
                   "decoding": raw.get("decoding", {}), "validation_hash": validation["validation_hash"],
                   "execution_schedule": raw.get("execution_schedule", {"parallel_runs": 1, "parallel_routes_per_run": 1}),
                   "code": provenance, "ast": raw["ast"], "recovery": raw["recovery"]}
+    if "additional_conditions" in raw:
+        conditions["additional_conditions"] = raw["additional_conditions"]
     metadata = {**conditions, "condition_hash": digest(conditions), "phase": raw["phase"],
                 "run_id": run_id, "repeat_index": raw.get("repeat_index"), "started_at": timestamp(),
                 "server_snapshot": server, "validation_snapshot": validation,
                 "prompt_template_version": config.prompt_template_version}
+    if raw.get("campaign_started_at"):
+        metadata["campaign_started_at"] = raw["campaign_started_at"]
+    metadata["planned_order"] = execution_order(config.problem_ids, config.target_languages,
+                                               conditions["execution_schedule"], raw.get("repeat_index"))
     path = config.output_root / run_id / "run_metadata.json"
     if path.exists():
         old = read_json(path)
@@ -304,7 +327,11 @@ def run_experiment(config, raw, run_id, *, resume=False, new_attempt=False):
             snapshot.write_bytes((source_root / relative).read_bytes())
         write_json(path.parent / "config_snapshot.json", raw)
     results = []
-    for entry in entries:
-        for target in config.target_languages:
-            results.append(run_route(config, entry, target, run_id, metadata, resume=resume, new_attempt=new_attempt))
+    by_id = {entry.problem_id: entry for entry in entries}
+    order = metadata.get("planned_order") or execution_order(config.problem_ids, config.target_languages, {}, None)
+    for problem_id, target in order:
+        result = run_route(config, by_id[problem_id], target, run_id, metadata, resume=resume, new_attempt=new_attempt)
+        results.append(result)
+        if result["status"] == "api_error" or result["details"].get("missing_toolchain"):
+            break
     return results

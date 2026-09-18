@@ -128,9 +128,10 @@ def server_metadata(host, model):
 def code_provenance():
     root = Path(__file__).resolve().parents[2]
     paths = sorted((root / "src/rttdist").rglob("*.py")) + [root / "pyproject.toml", root / "uv.lock"]
-    driver = root / "scripts/run_v1_main.py"
-    if driver.exists():
-        paths.append(driver)
+    for name in ("run_v1_main.py", "run_v2.py", "v1_checks.py"):
+        driver = root / "scripts" / name
+        if driver.exists():
+            paths.append(driver)
     hashes = {p.relative_to(root).as_posix(): digest(p.read_bytes()) for p in paths}
     commit = subprocess.run(["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=True).stdout.strip()
     return {"commit": commit, "file_hashes": hashes, "source_hash": digest(hashes),

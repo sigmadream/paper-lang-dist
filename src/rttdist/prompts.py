@@ -11,6 +11,9 @@ LANGUAGE_LABELS = {
     "c": "C",
     "java": "Java",
     "python": "Python",
+    "scala": "Scala 2.13",
+    "haskell": "Haskell (GHC)",
+    "prolog": "SWI-Prolog",
 }
 
 
@@ -80,7 +83,7 @@ def build_translation_prompt(
     direction: str | None = None,
     template_version: str = PROMPT_TEMPLATE_VERSION,
 ) -> PromptBundle:
-    if template_version not in ("rtt.prompts.v1", "rtt.prompts.v2"):
+    if template_version not in ("rtt.prompts.v1", "rtt.prompts.v2", "rtt.prompts.abs.v1"):
         raise PromptTemplateError(f"Unsupported prompt template version: {template_version}")
     normalized_source_language = _normalize_language(
         source_language,
@@ -130,7 +133,7 @@ def _build_prompt_bundle(
     normalized_statement = _normalize_text(
         problem_statement, field_name="problem_statement"
     )
-    if template_version == "rtt.prompts.v2":
+    if template_version in ("rtt.prompts.v2", "rtt.prompts.abs.v1"):
         if not isinstance(sample_input, str) or not isinstance(sample_output, str):
             raise PromptTemplateError("Sample input/output must be strings.")
         normalized_input, normalized_output = sample_input, sample_output
@@ -142,7 +145,7 @@ def _build_prompt_bundle(
     source_label = _language_label(source_language)
     target_label = _language_label(target_language)
     behavior_constraint = "- Preserve exact input/output behavior for the provided sample.\n"
-    if template_version == "rtt.prompts.v2":
+    if template_version in ("rtt.prompts.v2", "rtt.prompts.abs.v1"):
         behavior_constraint = (
             "- Preserve the source program's behavior for every valid input under the stated contract.\n"
             "- Public examples illustrate the format; do not specialize the program to them.\n"
@@ -152,6 +155,12 @@ def _build_prompt_bundle(
         )
         if target_language == "java":
             behavior_constraint += "- Use a public class Main with a static main entry point and no package declaration.\n"
+        if target_language == "scala":
+            behavior_constraint += "- Use Scala 2.13 syntax, object Main with def main(args: Array[String]): Unit, and no package declaration.\n"
+        if target_language == "haskell":
+            behavior_constraint += "- Use module Main (or omit the module declaration) and main :: IO (). Only GHC bundled libraries are available.\n"
+        if target_language == "prolog":
+            behavior_constraint += "- Use SWI-Prolog and define main/0. The runner invokes main once; do not add initialization directives or a module declaration. Read raw standard input as specified, not Prolog terms unless the input contract requires them.\n"
 
     system_message = LLMMessage(
         role="system",
