@@ -1,0 +1,49 @@
+{
+  "problem_id": "IPOP_2609",
+  "template": "rtt.prompts.v2",
+  "scope": "initial forward prompts; reverse source depends on model output",
+  "prompts": [
+    {
+      "target": "c",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_2609\nTranslate from C++ to C.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_2609: 최대공약수와 최소공배수\n\n두 양의 정수의 최대공약수와 최소공배수를 순서대로 출력한다.\n\n## 제약과 입력\n\n첫 줄 두 자연수 A B, 각각 1..10000.\n\n## 출력\n\n첫 줄 최대공약수, 둘째 줄 최소공배수를 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/2609)\n\n[SAMPLE INPUT]\n24 18\n\n\n[EXPECTED OUTPUT]\n6\n72\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n\nusing namespace std;\n\nint gcd(int a, int b) {\n    while (b != 0) {\n        int r = a % b;\n        a = b;\n        b = r;\n    }\n    return a;\n}\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int a, b;\n    if (!(cin >> a >> b)) return 0;\n    int g = gcd(a, b);\n    cout << g << \"\\n\" << (a / g) * b << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "56fd47b4402fdcf8cd58659d8111a26520b789c4ee4c3d83cf34ae0a841336b8"
+    },
+    {
+      "target": "java",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_2609\nTranslate from C++ to Java.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Use a public class Main with a static main entry point and no package declaration.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_2609: 최대공약수와 최소공배수\n\n두 양의 정수의 최대공약수와 최소공배수를 순서대로 출력한다.\n\n## 제약과 입력\n\n첫 줄 두 자연수 A B, 각각 1..10000.\n\n## 출력\n\n첫 줄 최대공약수, 둘째 줄 최소공배수를 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/2609)\n\n[SAMPLE INPUT]\n24 18\n\n\n[EXPECTED OUTPUT]\n6\n72\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n\nusing namespace std;\n\nint gcd(int a, int b) {\n    while (b != 0) {\n        int r = a % b;\n        a = b;\n        b = r;\n    }\n    return a;\n}\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int a, b;\n    if (!(cin >> a >> b)) return 0;\n    int g = gcd(a, b);\n    cout << g << \"\\n\" << (a / g) * b << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "15e87bc549da3b664dd1f2906081e7818e8986c91c610586084f6d55028f244f"
+    },
+    {
+      "target": "python",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_2609\nTranslate from C++ to Python.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_2609: 최대공약수와 최소공배수\n\n두 양의 정수의 최대공약수와 최소공배수를 순서대로 출력한다.\n\n## 제약과 입력\n\n첫 줄 두 자연수 A B, 각각 1..10000.\n\n## 출력\n\n첫 줄 최대공약수, 둘째 줄 최소공배수를 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/2609)\n\n[SAMPLE INPUT]\n24 18\n\n\n[EXPECTED OUTPUT]\n6\n72\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n\nusing namespace std;\n\nint gcd(int a, int b) {\n    while (b != 0) {\n        int r = a % b;\n        a = b;\n        b = r;\n    }\n    return a;\n}\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int a, b;\n    if (!(cin >> a >> b)) return 0;\n    int g = gcd(a, b);\n    cout << g << \"\\n\" << (a / g) * b << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "75afb8c03ddddfae5c4ec6181a1ce373b4865b763347898a31e6f91ed752d890"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "problem_id": "IPOP_9012",
+  "template": "rtt.prompts.v2",
+  "scope": "initial forward prompts; reverse source depends on model output",
+  "prompts": [
+    {
+      "target": "c",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_9012\nTranslate from C++ to C.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_9012: 괄호\n\nT개 소괄호 문자열마다 올바른 괄호열이면 YES, 아니면 NO를 출력한다.\n\n## 제약과 입력\n\n첫 줄 양의 정수 T. 이후 T줄에 소괄호 문자열 하나씩, 각 길이는 2..50이다.\n\n## 출력\n\n각 문자열이 올바른 괄호열이면 YES, 아니면 NO를 한 줄씩 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/9012)\n\n[SAMPLE INPUT]\n6\n(())())\n(((()())()\n(()())((()))\n((()()(()))(((())))()\n()()()()(()()())()\n(()((())()(\n\n\n[EXPECTED OUTPUT]\nNO\nNO\nYES\nNO\nYES\nNO\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int t;\n    if (!(cin >> t)) return 0;\n    while (t--) {\n        string s;\n        cin >> s;\n        int bal = 0;\n        bool valid = true;\n        for (char c : s) {\n            if (c == '(') bal++;\n            else bal--;\n            if (bal < 0) {\n                valid = false;\n                break;\n            }\n        }\n        if (bal != 0) valid = false;\n        cout << (valid ? \"YES\" : \"NO\") << \"\\n\";\n    }\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "2eb53b4b97ad33e5084574d5cc5ded468e8e7e3318717f1e69aa78772a932b24"
+    },
+    {
+      "target": "java",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_9012\nTranslate from C++ to Java.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Use a public class Main with a static main entry point and no package declaration.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_9012: 괄호\n\nT개 소괄호 문자열마다 올바른 괄호열이면 YES, 아니면 NO를 출력한다.\n\n## 제약과 입력\n\n첫 줄 양의 정수 T. 이후 T줄에 소괄호 문자열 하나씩, 각 길이는 2..50이다.\n\n## 출력\n\n각 문자열이 올바른 괄호열이면 YES, 아니면 NO를 한 줄씩 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/9012)\n\n[SAMPLE INPUT]\n6\n(())())\n(((()())()\n(()())((()))\n((()()(()))(((())))()\n()()()()(()()())()\n(()((())()(\n\n\n[EXPECTED OUTPUT]\nNO\nNO\nYES\nNO\nYES\nNO\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int t;\n    if (!(cin >> t)) return 0;\n    while (t--) {\n        string s;\n        cin >> s;\n        int bal = 0;\n        bool valid = true;\n        for (char c : s) {\n            if (c == '(') bal++;\n            else bal--;\n            if (bal < 0) {\n                valid = false;\n                break;\n            }\n        }\n        if (bal != 0) valid = false;\n        cout << (valid ? \"YES\" : \"NO\") << \"\\n\";\n    }\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "6a88d829b65f83a371ba07ffd9d3f1d7e648fbd51dddcea34c67610b6b71a4c5"
+    },
+    {
+      "target": "python",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_9012\nTranslate from C++ to Python.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_9012: 괄호\n\nT개 소괄호 문자열마다 올바른 괄호열이면 YES, 아니면 NO를 출력한다.\n\n## 제약과 입력\n\n첫 줄 양의 정수 T. 이후 T줄에 소괄호 문자열 하나씩, 각 길이는 2..50이다.\n\n## 출력\n\n각 문자열이 올바른 괄호열이면 YES, 아니면 NO를 한 줄씩 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/9012)\n\n[SAMPLE INPUT]\n6\n(())())\n(((()())()\n(()())((()))\n((()()(()))(((())))()\n()()()()(()()())()\n(()((())()(\n\n\n[EXPECTED OUTPUT]\nNO\nNO\nYES\nNO\nYES\nNO\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int t;\n    if (!(cin >> t)) return 0;\n    while (t--) {\n        string s;\n        cin >> s;\n        int bal = 0;\n        bool valid = true;\n        for (char c : s) {\n            if (c == '(') bal++;\n            else bal--;\n            if (bal < 0) {\n                valid = false;\n                break;\n            }\n        }\n        if (bal != 0) valid = false;\n        cout << (valid ? \"YES\" : \"NO\") << \"\\n\";\n    }\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "1d7d03ec9218b9e5044fd85d1b596246ea75d1041965578dcba3bf9bdd2083e4"
+    }
+  ]
+}

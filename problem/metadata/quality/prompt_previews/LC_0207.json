@@ -1,0 +1,49 @@
+{
+  "problem_id": "LC_0207",
+  "template": "rtt.prompts.v2",
+  "scope": "initial forward prompts; reverse source depends on model output",
+  "prompts": [
+    {
+      "target": "c",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: LC_0207\nTranslate from C++ to C.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# LC_0207: Course Schedule\n\n선수과목 관계 [a,b]는 b를 먼저 이수해야 a를 들을 수 있다는 뜻이다. 모든 과목을 이수할 수 있으면 1이다.\n\n## 제약\n\n과목 수 1..2000; 관계 수 0..5000; 과목 번호 0..N-1; 관계 쌍 중복 없음.\n\n## 표준입출력 계약\n\n첫 줄 과목 수 N과 관계 수 E, 이후 E줄에 a b.\n출력은 정수 하나 또는 공백으로 구분한 정수 배열이다. 참/거짓은 각각 1/0으로 출력한다. 인덱스는 0부터 시작한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[공식 명세](https://leetcode.com/problems/course-schedule/)\n\n[SAMPLE INPUT]\n2 1\n1 0\n\n\n[EXPECTED OUTPUT]\n1\n\n\n[SOURCE CODE - C++]\n```cpp\n// Locally authored C++17 reference for the documented stdin/stdout contract.\n#include <bits/stdc++.h>\nusing namespace std;\nusing ll = long long;\nvector<ll> read_values(int n) {\n    vector<ll> a(n); for (ll &x : a) cin >> x; return a;\n}\ntemplate<class T> void print_values(const vector<T>& a) {\n    for (size_t i=0; i<a.size(); ++i) cout << (i ? \" \" : \"\") << a[i];\n    cout << \"\\n\";\n}\nint main() {\n    ios::sync_with_stdio(false); cin.tie(nullptr);\n    int n,e;cin >> n >> e;vector<vector<int>> adj(n);vector<int> indeg(n,0);\n    while(e--) {int a,b;cin >> a >> b;adj[b].push_back(a);++indeg[a];}\n    queue<int> q;for(int i=0;i<n;++i) if(!indeg[i]) q.push(i);int count=0;\n    while(!q.empty()) {int u=q.front();q.pop();++count;for(int v:adj[u]) if(!--indeg[v]) q.push(v);}\n    cout << (count==n) << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "3dddb3c613ca86e4be8b48f95fe3103a8ae12244da81a39d74688528ce12751e"
+    },
+    {
+      "target": "java",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: LC_0207\nTranslate from C++ to Java.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Use a public class Main with a static main entry point and no package declaration.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# LC_0207: Course Schedule\n\n선수과목 관계 [a,b]는 b를 먼저 이수해야 a를 들을 수 있다는 뜻이다. 모든 과목을 이수할 수 있으면 1이다.\n\n## 제약\n\n과목 수 1..2000; 관계 수 0..5000; 과목 번호 0..N-1; 관계 쌍 중복 없음.\n\n## 표준입출력 계약\n\n첫 줄 과목 수 N과 관계 수 E, 이후 E줄에 a b.\n출력은 정수 하나 또는 공백으로 구분한 정수 배열이다. 참/거짓은 각각 1/0으로 출력한다. 인덱스는 0부터 시작한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[공식 명세](https://leetcode.com/problems/course-schedule/)\n\n[SAMPLE INPUT]\n2 1\n1 0\n\n\n[EXPECTED OUTPUT]\n1\n\n\n[SOURCE CODE - C++]\n```cpp\n// Locally authored C++17 reference for the documented stdin/stdout contract.\n#include <bits/stdc++.h>\nusing namespace std;\nusing ll = long long;\nvector<ll> read_values(int n) {\n    vector<ll> a(n); for (ll &x : a) cin >> x; return a;\n}\ntemplate<class T> void print_values(const vector<T>& a) {\n    for (size_t i=0; i<a.size(); ++i) cout << (i ? \" \" : \"\") << a[i];\n    cout << \"\\n\";\n}\nint main() {\n    ios::sync_with_stdio(false); cin.tie(nullptr);\n    int n,e;cin >> n >> e;vector<vector<int>> adj(n);vector<int> indeg(n,0);\n    while(e--) {int a,b;cin >> a >> b;adj[b].push_back(a);++indeg[a];}\n    queue<int> q;for(int i=0;i<n;++i) if(!indeg[i]) q.push(i);int count=0;\n    while(!q.empty()) {int u=q.front();q.pop();++count;for(int v:adj[u]) if(!--indeg[v]) q.push(v);}\n    cout << (count==n) << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "829bd7d0c5c042cdd32128e096a64a5e202581780bb21cef5320ec500f436c8c"
+    },
+    {
+      "target": "python",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: LC_0207\nTranslate from C++ to Python.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# LC_0207: Course Schedule\n\n선수과목 관계 [a,b]는 b를 먼저 이수해야 a를 들을 수 있다는 뜻이다. 모든 과목을 이수할 수 있으면 1이다.\n\n## 제약\n\n과목 수 1..2000; 관계 수 0..5000; 과목 번호 0..N-1; 관계 쌍 중복 없음.\n\n## 표준입출력 계약\n\n첫 줄 과목 수 N과 관계 수 E, 이후 E줄에 a b.\n출력은 정수 하나 또는 공백으로 구분한 정수 배열이다. 참/거짓은 각각 1/0으로 출력한다. 인덱스는 0부터 시작한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[공식 명세](https://leetcode.com/problems/course-schedule/)\n\n[SAMPLE INPUT]\n2 1\n1 0\n\n\n[EXPECTED OUTPUT]\n1\n\n\n[SOURCE CODE - C++]\n```cpp\n// Locally authored C++17 reference for the documented stdin/stdout contract.\n#include <bits/stdc++.h>\nusing namespace std;\nusing ll = long long;\nvector<ll> read_values(int n) {\n    vector<ll> a(n); for (ll &x : a) cin >> x; return a;\n}\ntemplate<class T> void print_values(const vector<T>& a) {\n    for (size_t i=0; i<a.size(); ++i) cout << (i ? \" \" : \"\") << a[i];\n    cout << \"\\n\";\n}\nint main() {\n    ios::sync_with_stdio(false); cin.tie(nullptr);\n    int n,e;cin >> n >> e;vector<vector<int>> adj(n);vector<int> indeg(n,0);\n    while(e--) {int a,b;cin >> a >> b;adj[b].push_back(a);++indeg[a];}\n    queue<int> q;for(int i=0;i<n;++i) if(!indeg[i]) q.push(i);int count=0;\n    while(!q.empty()) {int u=q.front();q.pop();++count;for(int v:adj[u]) if(!--indeg[v]) q.push(v);}\n    cout << (count==n) << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "df3dc4050e00d918cde891c32d5aad9970ea18f5a08289343d13fc81ca255303"
+    }
+  ]
+}

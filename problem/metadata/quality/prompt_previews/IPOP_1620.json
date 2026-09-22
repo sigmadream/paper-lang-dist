@@ -1,0 +1,49 @@
+{
+  "problem_id": "IPOP_1620",
+  "template": "rtt.prompts.v2",
+  "scope": "initial forward prompts; reverse source depends on model output",
+  "prompts": [
+    {
+      "target": "c",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_1620\nTranslate from C++ to C.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_1620: 나는야 포켓몬 마스터 이다솜\n\n서로 다른 이름 N개와 질의 M개를 읽고 이름과 1-based 번호를 상호 조회한다.\n\n## 제약과 입력\n\n첫 줄 N M, 각각 1..100000. 이후 N줄에 서로 다른 이름, 이후 M줄에 질의 하나씩. 이름은 길이 2..20의 영문자로 첫 글자만 대문자이거나 마지막 글자만 대문자다. 이름 질의는 사전에 존재하고 숫자 질의는 1..N이다.\n\n## 출력\n\n이름 질의에는 입력 순서의 1-based 번호, 번호 질의에는 해당 이름을 질의 순서대로 한 줄씩 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/1620)\n\n[SAMPLE INPUT]\n26 5\nBulbasaur\nIvysaur\nVenusaur\nCharmander\nCharmeleon\nCharizard\nSquirtle\nWartortle\nBlastoise\nCaterpie\nMetapod\nButterfree\nWeedle\nKakuna\nBeedrill\nPidgey\nPidgeotto\nPidgeot\nRattata\nRaticate\nSpearow\nFearow\nEkans\nArbok\nPikachu\nRaichu\n25\nRaichu\n3\nPidgey\nKakuna\n\n\n[EXPECTED OUTPUT]\nPikachu\n26\nVenusaur\n16\n14\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <string>\n#include <unordered_map>\n#include <vector>\n#include <cctype>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int n, m;\n    if (!(cin >> n >> m)) return 0;\n    \n    unordered_map<string, int> name_to_id;\n    vector<string> id_to_name(n + 1);\n    \n    for (int i = 1; i <= n; i++) {\n        string name;\n        cin >> name;\n        name_to_id[name] = i;\n        id_to_name[i] = name;\n    }\n    \n    for (int i = 0; i < m; i++) {\n        string q;\n        cin >> q;\n        if (isdigit(q[0])) {\n            cout << id_to_name[stoi(q)] << \"\\n\";\n        } else {\n            cout << name_to_id[q] << \"\\n\";\n        }\n    }\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "ddb156ac58f7144c06d1088455df5b7272e96f553952db1641c5341cf56ffd5f"
+    },
+    {
+      "target": "java",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_1620\nTranslate from C++ to Java.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Use a public class Main with a static main entry point and no package declaration.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_1620: 나는야 포켓몬 마스터 이다솜\n\n서로 다른 이름 N개와 질의 M개를 읽고 이름과 1-based 번호를 상호 조회한다.\n\n## 제약과 입력\n\n첫 줄 N M, 각각 1..100000. 이후 N줄에 서로 다른 이름, 이후 M줄에 질의 하나씩. 이름은 길이 2..20의 영문자로 첫 글자만 대문자이거나 마지막 글자만 대문자다. 이름 질의는 사전에 존재하고 숫자 질의는 1..N이다.\n\n## 출력\n\n이름 질의에는 입력 순서의 1-based 번호, 번호 질의에는 해당 이름을 질의 순서대로 한 줄씩 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/1620)\n\n[SAMPLE INPUT]\n26 5\nBulbasaur\nIvysaur\nVenusaur\nCharmander\nCharmeleon\nCharizard\nSquirtle\nWartortle\nBlastoise\nCaterpie\nMetapod\nButterfree\nWeedle\nKakuna\nBeedrill\nPidgey\nPidgeotto\nPidgeot\nRattata\nRaticate\nSpearow\nFearow\nEkans\nArbok\nPikachu\nRaichu\n25\nRaichu\n3\nPidgey\nKakuna\n\n\n[EXPECTED OUTPUT]\nPikachu\n26\nVenusaur\n16\n14\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <string>\n#include <unordered_map>\n#include <vector>\n#include <cctype>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int n, m;\n    if (!(cin >> n >> m)) return 0;\n    \n    unordered_map<string, int> name_to_id;\n    vector<string> id_to_name(n + 1);\n    \n    for (int i = 1; i <= n; i++) {\n        string name;\n        cin >> name;\n        name_to_id[name] = i;\n        id_to_name[i] = name;\n    }\n    \n    for (int i = 0; i < m; i++) {\n        string q;\n        cin >> q;\n        if (isdigit(q[0])) {\n            cout << id_to_name[stoi(q)] << \"\\n\";\n        } else {\n            cout << name_to_id[q] << \"\\n\";\n        }\n    }\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "ffad2ff95df94555c520a3d1515dbfa495e7f48d4466d3419323ed5b634700b1"
+    },
+    {
+      "target": "python",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_1620\nTranslate from C++ to Python.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_1620: 나는야 포켓몬 마스터 이다솜\n\n서로 다른 이름 N개와 질의 M개를 읽고 이름과 1-based 번호를 상호 조회한다.\n\n## 제약과 입력\n\n첫 줄 N M, 각각 1..100000. 이후 N줄에 서로 다른 이름, 이후 M줄에 질의 하나씩. 이름은 길이 2..20의 영문자로 첫 글자만 대문자이거나 마지막 글자만 대문자다. 이름 질의는 사전에 존재하고 숫자 질의는 1..N이다.\n\n## 출력\n\n이름 질의에는 입력 순서의 1-based 번호, 번호 질의에는 해당 이름을 질의 순서대로 한 줄씩 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/1620)\n\n[SAMPLE INPUT]\n26 5\nBulbasaur\nIvysaur\nVenusaur\nCharmander\nCharmeleon\nCharizard\nSquirtle\nWartortle\nBlastoise\nCaterpie\nMetapod\nButterfree\nWeedle\nKakuna\nBeedrill\nPidgey\nPidgeotto\nPidgeot\nRattata\nRaticate\nSpearow\nFearow\nEkans\nArbok\nPikachu\nRaichu\n25\nRaichu\n3\nPidgey\nKakuna\n\n\n[EXPECTED OUTPUT]\nPikachu\n26\nVenusaur\n16\n14\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <string>\n#include <unordered_map>\n#include <vector>\n#include <cctype>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int n, m;\n    if (!(cin >> n >> m)) return 0;\n    \n    unordered_map<string, int> name_to_id;\n    vector<string> id_to_name(n + 1);\n    \n    for (int i = 1; i <= n; i++) {\n        string name;\n        cin >> name;\n        name_to_id[name] = i;\n        id_to_name[i] = name;\n    }\n    \n    for (int i = 0; i < m; i++) {\n        string q;\n        cin >> q;\n        if (isdigit(q[0])) {\n            cout << id_to_name[stoi(q)] << \"\\n\";\n        } else {\n            cout << name_to_id[q] << \"\\n\";\n        }\n    }\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "a2f231089ea3b6a231b4e9727659a854f7c886faf5d378d6951b2f0433ebf49f"
+    }
+  ]
+}

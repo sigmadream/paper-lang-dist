@@ -1,0 +1,49 @@
+{
+  "problem_id": "IPOP_14719",
+  "template": "rtt.prompts.v2",
+  "scope": "initial forward prompts; reverse source depends on model output",
+  "prompts": [
+    {
+      "target": "c",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_14719\nTranslate from C++ to C.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_14719: 빗물\n\n높이 H, 너비 W와 각 열의 높이를 읽고 갇히는 빗물의 총량을 출력한다.\n\n## 제약과 입력\n\n첫 줄 H W, 1<=H,W<=500. 다음 줄 W개의 높이, 각각 0..H.\n\n## 출력\n\n블록 사이에 고인 빗물의 총량을 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/14719)\n\n[SAMPLE INPUT]\n4 4\n3 0 1 4\n\n\n[EXPECTED OUTPUT]\n5\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int h, w;\n    if (!(cin >> h >> w)) return 0;\n    \n    vector<int> a(w);\n    for (int i = 0; i < w; i++) cin >> a[i];\n    \n    int ans = 0;\n    for (int i = 1; i < w - 1; i++) {\n        int left_max = 0, right_max = 0;\n        for (int j = 0; j <= i; j++) left_max = max(left_max, a[j]);\n        for (int j = i; j < w; j++) right_max = max(right_max, a[j]);\n        int bound = min(left_max, right_max);\n        if (bound > a[i]) ans += bound - a[i];\n    }\n    \n    cout << ans << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "5e1112f286ac2268e67c51b35e3b84a623b75643947dafaa4990546f0eec3965"
+    },
+    {
+      "target": "java",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_14719\nTranslate from C++ to Java.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Use a public class Main with a static main entry point and no package declaration.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_14719: 빗물\n\n높이 H, 너비 W와 각 열의 높이를 읽고 갇히는 빗물의 총량을 출력한다.\n\n## 제약과 입력\n\n첫 줄 H W, 1<=H,W<=500. 다음 줄 W개의 높이, 각각 0..H.\n\n## 출력\n\n블록 사이에 고인 빗물의 총량을 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/14719)\n\n[SAMPLE INPUT]\n4 4\n3 0 1 4\n\n\n[EXPECTED OUTPUT]\n5\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int h, w;\n    if (!(cin >> h >> w)) return 0;\n    \n    vector<int> a(w);\n    for (int i = 0; i < w; i++) cin >> a[i];\n    \n    int ans = 0;\n    for (int i = 1; i < w - 1; i++) {\n        int left_max = 0, right_max = 0;\n        for (int j = 0; j <= i; j++) left_max = max(left_max, a[j]);\n        for (int j = i; j < w; j++) right_max = max(right_max, a[j]);\n        int bound = min(left_max, right_max);\n        if (bound > a[i]) ans += bound - a[i];\n    }\n    \n    cout << ans << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "e25fe5eecb279ede91b4b39eaa54808cb47521c24420664cf1bce9ced341bf21"
+    },
+    {
+      "target": "python",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_14719\nTranslate from C++ to Python.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_14719: 빗물\n\n높이 H, 너비 W와 각 열의 높이를 읽고 갇히는 빗물의 총량을 출력한다.\n\n## 제약과 입력\n\n첫 줄 H W, 1<=H,W<=500. 다음 줄 W개의 높이, 각각 0..H.\n\n## 출력\n\n블록 사이에 고인 빗물의 총량을 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/14719)\n\n[SAMPLE INPUT]\n4 4\n3 0 1 4\n\n\n[EXPECTED OUTPUT]\n5\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int h, w;\n    if (!(cin >> h >> w)) return 0;\n    \n    vector<int> a(w);\n    for (int i = 0; i < w; i++) cin >> a[i];\n    \n    int ans = 0;\n    for (int i = 1; i < w - 1; i++) {\n        int left_max = 0, right_max = 0;\n        for (int j = 0; j <= i; j++) left_max = max(left_max, a[j]);\n        for (int j = i; j < w; j++) right_max = max(right_max, a[j]);\n        int bound = min(left_max, right_max);\n        if (bound > a[i]) ans += bound - a[i];\n    }\n    \n    cout << ans << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "decc07735eb7aee4e6021774f066a259eba07fd967c214905de1b753aa3f1005"
+    }
+  ]
+}

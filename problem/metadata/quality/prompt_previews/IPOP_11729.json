@@ -1,0 +1,49 @@
+{
+  "problem_id": "IPOP_11729",
+  "template": "rtt.prompts.v2",
+  "scope": "initial forward prompts; reverse source depends on model output",
+  "prompts": [
+    {
+      "target": "c",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_11729\nTranslate from C++ to C.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_11729: 하노이 탑 이동 순서\n\nN개 원판을 1번에서 3번 막대로 옮기는 최소 이동 횟수와 이동 목록을 출력한다.\n\n## 제약과 입력\n\n첫 줄 원판 수 N, 1<=N<=20. 모든 원판은 크기 내림차순으로 1번 막대에 있다.\n\n## 출력\n\n첫 줄 최소 이동 수, 이후 각 줄에 출발 막대와 도착 막대를 출력한다. 막대 번호는 1..3이며 3번으로 옮긴다. 한 번에 한 원판만 옮기며 큰 원판을 작은 원판 위에 놓을 수 없다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/11729)\n\n[SAMPLE INPUT]\n3\n\n\n[EXPECTED OUTPUT]\n7\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nvoid hanoi(int n, int start, int mid, int end, vector<pair<int, int>>& moves) {\n    if (n == 1) {\n        moves.push_back({start, end});\n        return;\n    }\n    hanoi(n - 1, start, end, mid, moves);\n    moves.push_back({start, end});\n    hanoi(n - 1, mid, start, end, moves);\n}\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int n;\n    if (!(cin >> n)) return 0;\n    vector<pair<int, int>> moves;\n    hanoi(n, 1, 2, 3, moves);\n    cout << moves.size() << \"\\n\";\n    for (auto& p : moves) {\n        cout << p.first << \" \" << p.second << \"\\n\";\n    }\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "cebc5304a7e9a6725309827ec902982b0d546f1f7d33381468c87dcbb0ed41b4"
+    },
+    {
+      "target": "java",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_11729\nTranslate from C++ to Java.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Use a public class Main with a static main entry point and no package declaration.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_11729: 하노이 탑 이동 순서\n\nN개 원판을 1번에서 3번 막대로 옮기는 최소 이동 횟수와 이동 목록을 출력한다.\n\n## 제약과 입력\n\n첫 줄 원판 수 N, 1<=N<=20. 모든 원판은 크기 내림차순으로 1번 막대에 있다.\n\n## 출력\n\n첫 줄 최소 이동 수, 이후 각 줄에 출발 막대와 도착 막대를 출력한다. 막대 번호는 1..3이며 3번으로 옮긴다. 한 번에 한 원판만 옮기며 큰 원판을 작은 원판 위에 놓을 수 없다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/11729)\n\n[SAMPLE INPUT]\n3\n\n\n[EXPECTED OUTPUT]\n7\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nvoid hanoi(int n, int start, int mid, int end, vector<pair<int, int>>& moves) {\n    if (n == 1) {\n        moves.push_back({start, end});\n        return;\n    }\n    hanoi(n - 1, start, end, mid, moves);\n    moves.push_back({start, end});\n    hanoi(n - 1, mid, start, end, moves);\n}\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int n;\n    if (!(cin >> n)) return 0;\n    vector<pair<int, int>> moves;\n    hanoi(n, 1, 2, 3, moves);\n    cout << moves.size() << \"\\n\";\n    for (auto& p : moves) {\n        cout << p.first << \" \" << p.second << \"\\n\";\n    }\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "0054600bbf9df6303e4603f862e294e07899b592970fe04524bff35ad0a5f96d"
+    },
+    {
+      "target": "python",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_11729\nTranslate from C++ to Python.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_11729: 하노이 탑 이동 순서\n\nN개 원판을 1번에서 3번 막대로 옮기는 최소 이동 횟수와 이동 목록을 출력한다.\n\n## 제약과 입력\n\n첫 줄 원판 수 N, 1<=N<=20. 모든 원판은 크기 내림차순으로 1번 막대에 있다.\n\n## 출력\n\n첫 줄 최소 이동 수, 이후 각 줄에 출발 막대와 도착 막대를 출력한다. 막대 번호는 1..3이며 3번으로 옮긴다. 한 번에 한 원판만 옮기며 큰 원판을 작은 원판 위에 놓을 수 없다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/11729)\n\n[SAMPLE INPUT]\n3\n\n\n[EXPECTED OUTPUT]\n7\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nvoid hanoi(int n, int start, int mid, int end, vector<pair<int, int>>& moves) {\n    if (n == 1) {\n        moves.push_back({start, end});\n        return;\n    }\n    hanoi(n - 1, start, end, mid, moves);\n    moves.push_back({start, end});\n    hanoi(n - 1, mid, start, end, moves);\n}\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    int n;\n    if (!(cin >> n)) return 0;\n    vector<pair<int, int>> moves;\n    hanoi(n, 1, 2, 3, moves);\n    cout << moves.size() << \"\\n\";\n    for (auto& p : moves) {\n        cout << p.first << \" \" << p.second << \"\\n\";\n    }\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "abd47b2167006ddbf3b6b4b56986793f9395f23c49bd7235b4a731337f4d6b5e"
+    }
+  ]
+}

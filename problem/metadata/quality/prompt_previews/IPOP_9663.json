@@ -1,0 +1,49 @@
+{
+  "problem_id": "IPOP_9663",
+  "template": "rtt.prompts.v2",
+  "scope": "initial forward prompts; reverse source depends on model output",
+  "prompts": [
+    {
+      "target": "c",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_9663\nTranslate from C++ to C.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_9663: N-Queen\n\nN×N 체스판에서 N개의 퀸이 서로 공격하지 않는 배치 수를 출력한다.\n\n## 제약과 입력\n\n첫 줄 N, 1<=N<15.\n\n## 출력\n\nN×N 보드에 N개의 퀸을 서로 공격하지 않게 놓는 배치 수를 출력한다. 회전·반사한 배치도 별개로 센다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/9663)\n\n[SAMPLE INPUT]\n8\n\n\n[EXPECTED OUTPUT]\n92\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint ans = 0;\nint n;\nvector<bool> col, diag1, diag2;\n\nvoid solve(int r) {\n    if (r == n) {\n        ans++;\n        return;\n    }\n    for (int c = 0; c < n; c++) {\n        if (col[c] || diag1[r + c] || diag2[r - c + n - 1]) continue;\n        col[c] = diag1[r + c] = diag2[r - c + n - 1] = true;\n        solve(r + 1);\n        col[c] = diag1[r + c] = diag2[r - c + n - 1] = false;\n    }\n}\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    if (!(cin >> n)) return 0;\n    \n    col.assign(n, false);\n    diag1.assign(2 * n - 1, false);\n    diag2.assign(2 * n - 1, false);\n    solve(0);\n    \n    cout << ans << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "de2f702430cc36e212e001d52347205097f081660721a0dd482f755a924418bb"
+    },
+    {
+      "target": "java",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_9663\nTranslate from C++ to Java.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Use a public class Main with a static main entry point and no package declaration.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_9663: N-Queen\n\nN×N 체스판에서 N개의 퀸이 서로 공격하지 않는 배치 수를 출력한다.\n\n## 제약과 입력\n\n첫 줄 N, 1<=N<15.\n\n## 출력\n\nN×N 보드에 N개의 퀸을 서로 공격하지 않게 놓는 배치 수를 출력한다. 회전·반사한 배치도 별개로 센다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/9663)\n\n[SAMPLE INPUT]\n8\n\n\n[EXPECTED OUTPUT]\n92\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint ans = 0;\nint n;\nvector<bool> col, diag1, diag2;\n\nvoid solve(int r) {\n    if (r == n) {\n        ans++;\n        return;\n    }\n    for (int c = 0; c < n; c++) {\n        if (col[c] || diag1[r + c] || diag2[r - c + n - 1]) continue;\n        col[c] = diag1[r + c] = diag2[r - c + n - 1] = true;\n        solve(r + 1);\n        col[c] = diag1[r + c] = diag2[r - c + n - 1] = false;\n    }\n}\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    if (!(cin >> n)) return 0;\n    \n    col.assign(n, false);\n    diag1.assign(2 * n - 1, false);\n    diag2.assign(2 * n - 1, false);\n    solve(0);\n    \n    cout << ans << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "31eba047cf8f330930c99848268bce67dc6aad985eb027ac1e61a0f84f8a876c"
+    },
+    {
+      "target": "python",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_9663\nTranslate from C++ to Python.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_9663: N-Queen\n\nN×N 체스판에서 N개의 퀸이 서로 공격하지 않는 배치 수를 출력한다.\n\n## 제약과 입력\n\n첫 줄 N, 1<=N<15.\n\n## 출력\n\nN×N 보드에 N개의 퀸을 서로 공격하지 않게 놓는 배치 수를 출력한다. 회전·반사한 배치도 별개로 센다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/9663)\n\n[SAMPLE INPUT]\n8\n\n\n[EXPECTED OUTPUT]\n92\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint ans = 0;\nint n;\nvector<bool> col, diag1, diag2;\n\nvoid solve(int r) {\n    if (r == n) {\n        ans++;\n        return;\n    }\n    for (int c = 0; c < n; c++) {\n        if (col[c] || diag1[r + c] || diag2[r - c + n - 1]) continue;\n        col[c] = diag1[r + c] = diag2[r - c + n - 1] = true;\n        solve(r + 1);\n        col[c] = diag1[r + c] = diag2[r - c + n - 1] = false;\n    }\n}\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n    if (!(cin >> n)) return 0;\n    \n    col.assign(n, false);\n    diag1.assign(2 * n - 1, false);\n    diag2.assign(2 * n - 1, false);\n    solve(0);\n    \n    cout << ans << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "bf51d03476a04e52cef9c3414636fa6eaf61381c302ceec652bba8ddda1b5f36"
+    }
+  ]
+}

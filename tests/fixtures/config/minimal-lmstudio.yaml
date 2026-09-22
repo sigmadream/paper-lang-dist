@@ -1,0 +1,19 @@
+provider: lmstudio
+problem_ids:
+  - IPOP_1436
+  - IPOP_2579
+seed_language: cpp
+target_languages:
+  - c
+  - java
+  - python
+lmstudio:
+  model: qwen2.5-coder:7b
+  temperature: 0
+  host: http://localhost:1234/v1
+runtime:
+  max_iterations: 20
+  timeout_seconds: 30
+output_root: ../../../artifacts-lmstudio
+problem_root: ../../../problem/archive/v1
+corpus_root: ../../../corpus/solutions

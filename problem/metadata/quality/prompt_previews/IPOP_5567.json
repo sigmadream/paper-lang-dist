@@ -1,0 +1,49 @@
+{
+  "problem_id": "IPOP_5567",
+  "template": "rtt.prompts.v2",
+  "scope": "initial forward prompts; reverse source depends on model output",
+  "prompts": [
+    {
+      "target": "c",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_5567\nTranslate from C++ to C.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_5567: 결혼식\n\n무방향 친구 관계에서 1번 사람과 거리가 1 또는 2인 사람의 수를 출력한다.\n\n## 제약과 입력\n\n첫 줄 정점 수 N, 2<=N<=500. 둘째 줄 간선 수 M, 1<=M<=10000. 이후 M줄에 서로 다른 무방향 간선 a b, 1<=a<b<=N.\n\n## 출력\n\n1번 정점과 거리가 1 또는 2인 서로 다른 정점 수를 출력한다. 본인은 제외한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/5567)\n\n[SAMPLE INPUT]\n1\n0\n\n[EXPECTED OUTPUT]\n0\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n#include <queue>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n, m;\n    if (!(cin >> n >> m)) return 0;\n\n    vector<vector<int>> adj(n + 1);\n    for (int i = 0; i < m; i++) {\n        int u, v;\n        cin >> u >> v;\n        adj[u].push_back(v);\n        adj[v].push_back(u);\n    }\n\n    vector<int> dist(n + 1, -1);\n    queue<int> q;\n\n    q.push(1);\n    dist[1] = 0;\n\n    int ans = 0;\n\n    while (!q.empty()) {\n        int curr = q.front();\n        q.pop();\n\n        for (int next_node : adj[curr]) {\n            if (dist[next_node] == -1) {\n                dist[next_node] = dist[curr] + 1;\n                q.push(next_node);\n                if (dist[next_node] <= 2) {\n                    ans++;\n                }\n            }\n        }\n    }\n\n    cout << ans << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "39f8f3459c01609f7875d7535197992ba9af100a969e1cbb03c1e8c7c69d25cb"
+    },
+    {
+      "target": "java",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_5567\nTranslate from C++ to Java.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Use a public class Main with a static main entry point and no package declaration.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_5567: 결혼식\n\n무방향 친구 관계에서 1번 사람과 거리가 1 또는 2인 사람의 수를 출력한다.\n\n## 제약과 입력\n\n첫 줄 정점 수 N, 2<=N<=500. 둘째 줄 간선 수 M, 1<=M<=10000. 이후 M줄에 서로 다른 무방향 간선 a b, 1<=a<b<=N.\n\n## 출력\n\n1번 정점과 거리가 1 또는 2인 서로 다른 정점 수를 출력한다. 본인은 제외한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/5567)\n\n[SAMPLE INPUT]\n1\n0\n\n[EXPECTED OUTPUT]\n0\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n#include <queue>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n, m;\n    if (!(cin >> n >> m)) return 0;\n\n    vector<vector<int>> adj(n + 1);\n    for (int i = 0; i < m; i++) {\n        int u, v;\n        cin >> u >> v;\n        adj[u].push_back(v);\n        adj[v].push_back(u);\n    }\n\n    vector<int> dist(n + 1, -1);\n    queue<int> q;\n\n    q.push(1);\n    dist[1] = 0;\n\n    int ans = 0;\n\n    while (!q.empty()) {\n        int curr = q.front();\n        q.pop();\n\n        for (int next_node : adj[curr]) {\n            if (dist[next_node] == -1) {\n                dist[next_node] = dist[curr] + 1;\n                q.push(next_node);\n                if (dist[next_node] <= 2) {\n                    ans++;\n                }\n            }\n        }\n    }\n\n    cout << ans << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "0d05a7604340eef0131342be9f7337be154a0f9de242bc46e8f56dd0fb4d0470"
+    },
+    {
+      "target": "python",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_5567\nTranslate from C++ to Python.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_5567: 결혼식\n\n무방향 친구 관계에서 1번 사람과 거리가 1 또는 2인 사람의 수를 출력한다.\n\n## 제약과 입력\n\n첫 줄 정점 수 N, 2<=N<=500. 둘째 줄 간선 수 M, 1<=M<=10000. 이후 M줄에 서로 다른 무방향 간선 a b, 1<=a<b<=N.\n\n## 출력\n\n1번 정점과 거리가 1 또는 2인 서로 다른 정점 수를 출력한다. 본인은 제외한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/5567)\n\n[SAMPLE INPUT]\n1\n0\n\n[EXPECTED OUTPUT]\n0\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n#include <queue>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n, m;\n    if (!(cin >> n >> m)) return 0;\n\n    vector<vector<int>> adj(n + 1);\n    for (int i = 0; i < m; i++) {\n        int u, v;\n        cin >> u >> v;\n        adj[u].push_back(v);\n        adj[v].push_back(u);\n    }\n\n    vector<int> dist(n + 1, -1);\n    queue<int> q;\n\n    q.push(1);\n    dist[1] = 0;\n\n    int ans = 0;\n\n    while (!q.empty()) {\n        int curr = q.front();\n        q.pop();\n\n        for (int next_node : adj[curr]) {\n            if (dist[next_node] == -1) {\n                dist[next_node] = dist[curr] + 1;\n                q.push(next_node);\n                if (dist[next_node] <= 2) {\n                    ans++;\n                }\n            }\n        }\n    }\n\n    cout << ans << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "b232e0b85b494b8f0a877427e751b8a34607240407a431a8281600ff9e8e7b36"
+    }
+  ]
+}

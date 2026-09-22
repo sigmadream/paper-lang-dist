@@ -1,0 +1,134 @@
+provider: lmstudio
+experiment_version: abs-rtt-1
+prompt_template_version: rtt.prompts.abs.v1
+phase: main
+main_repetitions: 1
+problem_ids:
+- IPOP_10988
+- IPOP_1158
+- IPOP_11729
+- IPOP_1436
+- IPOP_14719
+- IPOP_1620
+- IPOP_18870
+- IPOP_1929
+- IPOP_1992
+- IPOP_2003
+- IPOP_2110
+- IPOP_2217
+- IPOP_2579
+- IPOP_2609
+- IPOP_5567
+- IPOP_9012
+- IPOP_9251
+- IPOP_9663
+- IPOP_9935
+- LC_0001
+- LC_0121
+- LC_0217
+- LC_0053
+- LC_0704
+- LC_0035
+- LC_0283
+- LC_0242
+- LC_0387
+- LC_0003
+- LC_0139
+- LC_0518
+- LC_0062
+- LC_0063
+- LC_0064
+- LC_0739
+- LC_0496
+- LC_0547
+- LC_0207
+- LC_0338
+- LC_0912
+seed_language: cpp
+target_languages:
+- c
+- python
+- java
+- scala
+- haskell
+- prolog
+lmstudio:
+  model: qwen2.5-coder-7b-instruct
+  temperature: 0
+  host: http://localhost:1234/v1
+  max_tokens: 4096
+decoding:
+  top_p: 1
+  top_k: 0
+  repeat_penalty: 1
+  seed: 20260911
+runtime:
+  max_iterations: 10
+  confirmation_cycles: 5
+  stop_on_intermediate_failure: true
+  timeout_seconds: 30
+ast:
+  node_limit: 5000
+  timeout: 30
+  memory_mb: 512
+recovery:
+  retries_per_call: 3
+  max_resumes_per_route: 2
+  max_wall_hours: 72
+output_root: ./artifacts-lmstudio/abs-rtt-1
+problem_root: ./docs/abs/data/problem
+corpus_root: ./docs/abs/data/problem
+execution_schedule:
+  parallel_runs: 1
+  parallel_routes_per_run: 1
+  order: balanced_seeded
+  seed: 20260911
+dataset_index: ./docs/abs/data/problem/dataset-index.json
+additional_conditions:
+  extended_toolchains:
+    ghc:
+      path: C:\Users\sigma\scoop\apps\ghcup\current\ghcup\bin\ghc.EXE
+      version: The Glorious Glasgow Haskell Compilation System, version 9.10.3
+      exit_code: 0
+    swipl:
+      path: C:\Users\sigma\scoop\shims\swipl.EXE
+      version: SWI-Prolog version 10.0.2 for x64-win64
+      exit_code: 0
+    scala:
+      path: C:\Users\sigma\scoop\apps\temurin21-jdk\current\bin\java.EXE
+      version: Scala compiler version 2.13.16 -- Copyright 2002-2025, LAMP/EPFL and
+        Lightbend, Inc. dba Akka
+      exit_code: 0
+    jplag_java:
+      path: D:\works\paper-lang-dist\docs\abs\tools\jdk-25.0.4.1+1-jre\bin\java.exe
+      version: 'openjdk version "25.0.4.1" 2026-08-18 LTS
+
+        OpenJDK Runtime Environment Temurin-25.0.4.1+1 (build 25.0.4.1+1-LTS)
+
+        OpenJDK 64-Bit Server VM Temurin-25.0.4.1+1 (build 25.0.4.1+1-LTS, mixed mode,
+        sharing)'
+      exit_code: 0
+  scala_jars:
+    tools/scala-2.13.16/lib/java-diff-utils-4.15.jar: 964c69e3a23a892db2778ae6806aa1d42f81230032bd8e4982dc8620582ee6b7
+    tools/scala-2.13.16/lib/jline-3.27.1.jar: 9d165aff3d714a455de2e711dc90df09fdb0a0969a1cd4d52aa72a44cb545db0
+    tools/scala-2.13.16/lib/scala-compiler.jar: f59982714591e321ba9c087af2c8666e2f5fb92b11a0cef72c2c5e9b342152d3
+    tools/scala-2.13.16/lib/scala-library.jar: 1ebb2b6f9e4eb4022497c19b1e1e825019c08514f962aaac197145f88ed730f1
+    tools/scala-2.13.16/lib/scala-reflect.jar: fb49ccd9cac7464486ab993cda20a3c1569d8ef26f052e897577ad2a4970fb1d
+    tools/scala-2.13.16/lib/scalap-2.13.16.jar: 7963c72c4c74d52278e42b0108ae8ae866d4d1c4579e20209a2f9617e6aacfca
+  jplag:
+    java: D:\works\paper-lang-dist\docs\abs\tools\jdk-25.0.4.1+1-jre\bin\java.exe
+    jar: D:\works\paper-lang-dist\docs\abs\tools\jplag-6.3.0-jar-with-dependencies.jar
+    jar_sha256: 5f2c21e8b88ed77134effcb3a5a3ab13d188f6a3e16d401387f7479e92db9aa2
+    language: cpp
+    minimum_tokens: 9
+    normalize: false
+    similarity_field: averageSimilarity
+    scale:
+    - 0
+    - 1
+    threshold: 0
+    cluster: false
+    match_merging: false
+  n_definition: first_adjacent_cpp_hash_equal_roundtrip_index
+  runner_sha256: 1c4ab32a9c992a57c18582db99d478cf989efd4960dd60c448409f93b2a07f36
+  preflight_sha256: 9f8b81d8c6015045fc3f474d178f12bdd05e051f8d7b2d2343ae1470cd59ae78

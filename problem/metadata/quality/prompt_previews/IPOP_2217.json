@@ -1,0 +1,49 @@
+{
+  "problem_id": "IPOP_2217",
+  "template": "rtt.prompts.v2",
+  "scope": "initial forward prompts; reverse source depends on model output",
+  "prompts": [
+    {
+      "target": "c",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_2217\nTranslate from C++ to C.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_2217: 로프\n\n선택한 로프의 최소 허용 하중과 로프 개수의 곱을 최대화한다.\n\n## 제약과 입력\n\n첫 줄 N, 1<=N<=100000. 이후 N줄의 로프 허용 중량은 각각 1..10000.\n\n## 출력\n\n하나 이상의 로프를 골라 중량을 균등하게 나눌 때 버틸 수 있는 최대 총중량을 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/2217)\n\n[SAMPLE INPUT]\n3\n10\n20\n30\n\n[EXPECTED OUTPUT]\n40\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<int> ropes(n);\n    for (int i = 0; i < n; i++) {\n        cin >> ropes[i];\n    }\n\n    sort(ropes.begin(), ropes.end(), greater<int>());\n\n    long long max_weight = 0;\n    for (int i = 0; i < n; i++) {\n        long long current_weight = 1LL * ropes[i] * (i + 1);\n        if (current_weight > max_weight) {\n            max_weight = current_weight;\n        }\n    }\n\n    cout << max_weight << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "00801339348a662f58da163371446b9366252e172976c84b7a591cc2f45435bd"
+    },
+    {
+      "target": "java",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_2217\nTranslate from C++ to Java.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Use a public class Main with a static main entry point and no package declaration.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_2217: 로프\n\n선택한 로프의 최소 허용 하중과 로프 개수의 곱을 최대화한다.\n\n## 제약과 입력\n\n첫 줄 N, 1<=N<=100000. 이후 N줄의 로프 허용 중량은 각각 1..10000.\n\n## 출력\n\n하나 이상의 로프를 골라 중량을 균등하게 나눌 때 버틸 수 있는 최대 총중량을 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/2217)\n\n[SAMPLE INPUT]\n3\n10\n20\n30\n\n[EXPECTED OUTPUT]\n40\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<int> ropes(n);\n    for (int i = 0; i < n; i++) {\n        cin >> ropes[i];\n    }\n\n    sort(ropes.begin(), ropes.end(), greater<int>());\n\n    long long max_weight = 0;\n    for (int i = 0; i < n; i++) {\n        long long current_weight = 1LL * ropes[i] * (i + 1);\n        if (current_weight > max_weight) {\n            max_weight = current_weight;\n        }\n    }\n\n    cout << max_weight << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "c3be4b3c36af721e5fd284862d61dda5481fdafbf5ba9ab70eae51feaae8776a"
+    },
+    {
+      "target": "python",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a deterministic code translator for round-trip translation experiments. Preserve behavior exactly. Return only one source file with no explanation."
+        },
+        {
+          "role": "user",
+          "content": "[TASK]\nDirection: seed_to_target\nProblem ID: IPOP_2217\nTranslate from C++ to Python.\n\n[CONSTRAINTS]\n- Preserve the source program's behavior for every valid input under the stated contract.\n- Public examples illustrate the format; do not specialize the program to them.\n- Read standard input and write standard output without prompts or diagnostics.\n- Preserve meaningful string whitespace, numeric ranges, indexing and output ordering.\n- Use only the target language's standard library.\n- Produce exactly one compilable source file in the target language.\n- Do not include markdown fences, comments about the translation, or prose.\n- Output code only.\n\n[PROBLEM STATEMENT]\n# IPOP_2217: 로프\n\n선택한 로프의 최소 허용 하중과 로프 개수의 곱을 최대화한다.\n\n## 제약과 입력\n\n첫 줄 N, 1<=N<=100000. 이후 N줄의 로프 허용 중량은 각각 1..10000.\n\n## 출력\n\n하나 이상의 로프를 골라 중량을 균등하게 나눌 때 버틸 수 있는 최대 총중량을 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/2217)\n\n[SAMPLE INPUT]\n3\n10\n20\n30\n\n[EXPECTED OUTPUT]\n40\n\n\n[SOURCE CODE - C++]\n```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    ios_base::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<int> ropes(n);\n    for (int i = 0; i < n; i++) {\n        cin >> ropes[i];\n    }\n\n    sort(ropes.begin(), ropes.end(), greater<int>());\n\n    long long max_weight = 0;\n    for (int i = 0; i < n; i++) {\n        long long current_weight = 1LL * ropes[i] * (i + 1);\n        if (current_weight > max_weight) {\n            max_weight = current_weight;\n        }\n    }\n\n    cout << max_weight << \"\\n\";\n    return 0;\n}\n```"
+        }
+      ],
+      "sha256": "756ea224329e3ae337b529d9aadec642979786acc345795f244c09736542f7c2"
+    }
+  ]
+}
