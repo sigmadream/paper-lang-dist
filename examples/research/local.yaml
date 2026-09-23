@@ -1,0 +1,35 @@
+schema_version: 1
+id: local-demo
+corpus_root: corpus
+output_root: ../../artifacts/research
+problem_ids: [sum]
+routes: [[cpp, python]]
+repeats: 2
+schedule_seed: 42
+models:
+  local:
+    model: replace-with-loaded-model-id
+    generation:
+      temperature: 0.6
+      top_p: 0.95
+      max_tokens: 16384
+profile:
+  extends: paper-abstract-v1
+  id: token-demo-v1
+  execution:
+    max_steps: 10
+    metrics:
+      - id: adjacent
+        metric: token_dice
+  analysis:
+    metrics:
+      - id: origin
+        metric: token_dice
+        reference: origin
+      - id: latency
+        metric: llm_latency
+        scope: step
+    bootstrap_samples: 1000
+runtime:
+  compile_timeout: 60
+  fixture_timeout: 5

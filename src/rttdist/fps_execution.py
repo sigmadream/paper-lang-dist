@@ -9,12 +9,12 @@ from rttdist.experiment_io import digest, read_json, write_json
 
 # Python and Java are intermediate-only control languages (v1/abs_EXPERIMENT.md 1장);
 # their runtime tool is the interpreter, respectively the javac compiler.
-EXTENSIONS = {'cpp':'cpp', 'haskell':'hs', 'prolog':'pl', 'python':'py', 'java':'java'}
+EXTENSIONS = {'cpp':'cpp', 'c':'c', 'haskell':'hs', 'prolog':'pl', 'python':'py', 'java':'java'}
 
-def process(command, cwd, timeout, input_text=None):
+def process(command, cwd, timeout, input_text=None, tool_directory=None):
     start = time.monotonic()
     env = os.environ.copy()
-    env['PATH'] = str(Path(command[0]).parent) + os.pathsep + env.get('PATH','')
+    env['PATH'] = str(tool_directory or Path(command[0]).parent) + os.pathsep + env.get('PATH','')
     try:
         p = subprocess.run(command, cwd=cwd, input=input_text, capture_output=True,
                            text=True, encoding='utf-8', errors='replace', timeout=timeout, env=env)
@@ -31,8 +31,9 @@ def canonical_output(s):
 def evaluate(source, language, problem, folder, runtime):
     problem, folder = Path(problem).resolve(), Path(folder).resolve()
     pairs = [(p,p.with_suffix('.out')) for p in sorted((problem/'evaluation').glob('*.inp'))]
-    if len(pairs) < 10 or any(not o.is_file() for _,o in pairs):
-        raise ValueError('At least ten complete evaluation pairs required')
+    minimum = runtime.get('minimum_evaluation_cases', 10)
+    if len(pairs) < minimum or any(not o.is_file() for _,o in pairs):
+        raise ValueError(f'At least {minimum} complete evaluation pairs required')
     contract = {'source':digest(source.encode()), 'language':language, 'runtime':runtime,
                 'inputs':{str(p):digest(p.read_bytes()) for pair in pairs for p in pair}}
     record = folder/'evaluation.json'
@@ -45,8 +46,8 @@ def evaluate(source, language, problem, folder, runtime):
     path.write_text(source,encoding='utf-8',newline='')
     executable = str(folder/('program.exe' if os.name=='nt' else 'program'))
     tool = runtime['tools'][language]
-    if language == 'cpp':
-        compile_cmd = [tool,'-O2','-std=c++17',str(path),'-o',executable]
+    if language in ('cpp', 'c'):
+        compile_cmd = [tool,'-O2','-std=c++17' if language == 'cpp' else '-std=c11',str(path),'-o',executable]
         run_cmd = [executable]
     elif language == 'haskell':
         compile_cmd = [tool,'-O2','-outputdir',str(folder),'-o',executable,str(path)]
@@ -63,22 +64,18 @@ def evaluate(source, language, problem, folder, runtime):
         run_cmd = [java,'-cp',str(folder),'Main']
     else:
         raise ValueError(f'Unsupported evaluation language {language}')
-    # DLL lookup also needs the compiler directory when executing C++ output.
-    original = os.environ.get('PATH','')
-    os.environ['PATH'] = str(Path(tool).parent)+os.pathsep+original
-    try:
-        compiled = process(compile_cmd,folder,runtime['compile_timeout'])
-        result = {'contract':contract,'compile':compiled,'cases':[], 'status':'success'}
-        if compiled['timed_out']: result['status']='compile_timeout'
-        elif compiled['exit_code'] != 0: result['status']='compile_error'
-        if result['status']=='success':
-            for inp,out in pairs:
-                p = process(run_cmd,folder,runtime['fixture_timeout'],inp.read_text(encoding='utf-8'))
-                status = ('timeout' if p['timed_out'] else 'runtime_error' if p['exit_code'] != 0 else
-                          'success' if canonical_output(p['stdout']) == canonical_output(out.read_text(encoding='utf-8')) else 'wrong_answer')
-                result['cases'].append({'case':inp.stem,'status':status,**p})
-                if status!='success' and result['status']=='success': result['status']=status
-        write_json(record,result)
-        return result
-    finally:
-        os.environ['PATH']=original
+    # Pass an isolated environment to each child. Parallel model workers must
+    # never mutate the process-wide PATH, including compiler DLL lookup.
+    compiled = process(compile_cmd,folder,runtime['compile_timeout'],tool_directory=Path(tool).parent)
+    result = {'contract':contract,'compile':compiled,'cases':[], 'status':'success'}
+    if compiled['timed_out']: result['status']='compile_timeout'
+    elif compiled['exit_code'] != 0: result['status']='compile_error'
+    if result['status']=='success':
+        for inp,out in pairs:
+            p = process(run_cmd,folder,runtime['fixture_timeout'],inp.read_text(encoding='utf-8'),tool_directory=Path(tool).parent)
+            status = ('timeout' if p['timed_out'] else 'runtime_error' if p['exit_code'] != 0 else
+                      'success' if canonical_output(p['stdout']) == canonical_output(out.read_text(encoding='utf-8')) else 'wrong_answer')
+            result['cases'].append({'case':inp.stem,'status':status,**p})
+            if status!='success' and result['status']=='success': result['status']=status
+    write_json(record,result)
+    return result

@@ -120,6 +120,9 @@ def build_parser() -> argparse.ArgumentParser:
     fps_parser.add_argument('--shard', default=None, help='Run only jobs i, i+k, ... of the shuffled schedule, as i/k')
     fps_parser.set_defaults(func=_cmd_fps)
 
+    from rttdist.research.cli import add_parser
+    add_parser(subparsers)
+
     return parser
 
 

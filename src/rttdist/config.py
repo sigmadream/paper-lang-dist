@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
+import math
 
 import yaml
 
@@ -316,9 +317,9 @@ def _parse_lmstudio_config(raw_data: dict[str, Any], *, provider: str) -> LMStud
     temperature = value.get("temperature", 0)
     if not isinstance(temperature, (int, float)):
         raise ConfigValidationError("`lmstudio.temperature` must be a numeric value.")
-    if float(temperature) != 0.0:
+    if isinstance(temperature, bool) or not math.isfinite(temperature) or temperature < 0:
         raise ConfigValidationError(
-            "`lmstudio.temperature` must be 0 for deterministic translations."
+            "`lmstudio.temperature` must be finite and nonnegative."
         )
 
     max_tokens = value.get("max_tokens")
@@ -327,7 +328,7 @@ def _parse_lmstudio_config(raw_data: dict[str, Any], *, provider: str) -> LMStud
     return LMStudioConfig(
         model=model_raw.strip(),
         max_tokens=max_tokens,
-        temperature=0.0,
+        temperature=float(temperature),
         host=host_raw.strip(),
     )
 

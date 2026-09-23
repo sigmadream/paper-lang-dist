@@ -1,0 +1,20 @@
+analysis:
+  metrics:
+    - id: origin_ast
+      metric: ast_similarity
+      reference: origin
+      options:
+        timeout: 30
+        node_limit: 5000
+        memory_mb: 512
+    - id: code_size
+      metric: source_bytes_delta
+      reference: origin
+    - id: input_tokens
+      metric: prompt_tokens
+      scope: step
+    - id: output_tokens
+      metric: completion_tokens
+      scope: step
+  bootstrap_samples: 2000
+  seed: 42

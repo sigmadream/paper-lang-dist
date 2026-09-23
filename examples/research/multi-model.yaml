@@ -1,0 +1,41 @@
+schema_version: 1
+id: model-comparison
+corpus_root: corpus
+output_root: ../../artifacts/research
+problem_ids: [sum]
+routes: [[cpp, python]]
+repeats: 5
+schedule_seed: 42
+parallel_models: 1
+models:
+  local:
+    model: replace-with-loaded-model-id
+    generation: {temperature: 0.6, top_p: 0.95, max_tokens: 16384}
+  remote:
+    provider: openai_compatible
+    endpoint: https://your-provider.example/v1
+    model: replace-with-api-model-id
+    api_key_env: RTT_API_KEY
+    generation: {temperature: 0.6, top_p: 0.95, max_tokens: 16384}
+    retries: 2
+    request_timeout: 300
+    min_interval_seconds: 1
+profile:
+  extends: paper-abstract-v1
+  id: token-model-comparison-v1
+  execution:
+    max_steps: 20
+    metrics:
+      - id: adjacent
+        metric: token_dice
+  analysis:
+    metrics:
+      - id: origin
+        metric: token_dice
+        reference: origin
+      - id: latency
+        metric: llm_latency
+        scope: step
+runtime:
+  compile_timeout: 60
+  fixture_timeout: 5

@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 import re
 import time
+from typing import Protocol
 from urllib import request, error, parse
 
 from rttdist.experiment_io import digest, read_json, write_json, timestamp
@@ -34,6 +35,25 @@ USER_AGENT='rttdist/2.0'
 # 520-524 are Cloudflare origin-connection errors: transient, no response was generated.
 RETRYABLE_STATUS=(408,429,500,502,503,504,520,521,522,523,524)
 ACCOUNTING_KEYS=('pricing','cost_cap_usd','expected_model')
+
+
+class Provider(Protocol):
+    """Provider adapters return body, actual_model, usage and latency_seconds.
+
+    The folder identifies a logical call, not a prompt hash. Implementations
+    must replay a durable response there and must not persist credentials.
+    """
+    def complete(self, payload: dict, folder: Path) -> dict: ...
+
+
+PROVIDER_FACTORIES = {}
+
+
+def register_provider(name, factory):
+    """Register an adapter factory(config, ledger=None) without editing runners."""
+    if name in PROVIDER_FACTORIES:
+        raise ValueError(f'Provider already registered: {name}')
+    PROVIDER_FACTORIES[name] = factory
 
 def usage_cost(usage, pricing):
     """USD for one response, or None when usage or pricing is unavailable."""
@@ -82,25 +102,40 @@ class CompatibleProvider:
             raise ValueError('pricing requires input_per_million and output_per_million')
         self.ledger=Path(ledger) if ledger else None
         self.total_cost=0.0;self.calls=0
+        self.charges={}
+        self.ledger_entries=[]
         if self.ledger and self.ledger.exists():
             for line in self.ledger.read_text(encoding='utf-8').splitlines():
                 if line.strip():
-                    entry=json.loads(line);self.total_cost+=entry['cost_usd'];self.calls+=1
+                    entry=json.loads(line)
+                    call_id=entry.get('call_id') or digest(str(Path(entry['folder']).resolve()))
+                    if call_id in self.charges: continue
+                    self.ledger_entries.append(entry)
+                    self.charges[call_id]=entry['cost_usd']
+                    self.total_cost+=entry['cost_usd'];self.calls+=1
 
     @property
     def cap_reached(self):
         return self.cost_cap is not None and self.total_cost>=self.cost_cap
 
     def _record_cost(self, folder, result):
-        cost=usage_cost(result.get('usage'),self.pricing)
+        call_id=digest(str(Path(folder).resolve()))
+        if call_id in self.charges:
+            result['cost_usd']=self.charges[call_id]
+            return
+        cost=result.get('cost_usd')
+        if cost is None:cost=usage_cost(result.get('usage'),self.pricing)
         result['cost_usd']=cost
         if cost is None: return
+        self.charges[call_id]=cost
         self.total_cost+=cost;self.calls+=1
         if self.ledger:
             self.ledger.parent.mkdir(parents=True,exist_ok=True)
-            with self.ledger.open('a',encoding='utf-8') as stream:
-                stream.write(json.dumps({'folder':str(folder),'usage':result['usage'],'cost_usd':cost,
-                                         'total_cost_usd':self.total_cost,'at':timestamp()},ensure_ascii=False)+'\n')
+            self.ledger_entries.append({'call_id':call_id,'folder':str(folder),'usage':result['usage'],'cost_usd':cost,
+                                         'total_cost_usd':self.total_cost,'at':timestamp()})
+            temporary=self.ledger.with_suffix('.jsonl.tmp')
+            temporary.write_text(''.join(json.dumps(entry,ensure_ascii=False)+'\n' for entry in self.ledger_entries),encoding='utf-8')
+            os.replace(temporary,self.ledger)
 
     def complete(self, payload, folder):
         folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)
@@ -110,11 +145,18 @@ class CompatibleProvider:
             raise ValueError('Stored model request changed; use a new run')
         write_json(reqpath,contract)
         target=folder/'response.json'
-        if target.exists(): return read_json(target)
+        if target.exists():
+            result=read_json(target)
+            before=dict(result)
+            self._record_cost(folder,result)
+            if result!=before:write_json(target,result)
+            return result
         if (folder/'response_body.txt').exists():
             # A crash after receiving a response must not cause another generation.
             raw=(folder/'response_body.txt').read_text(encoding='utf-8')
-            try: body=json.loads(raw)
+            try:
+                body=json.loads(raw)
+                if not isinstance(body,dict):raise ValueError('Response must be an object')
             except ValueError: raise ProviderError('Malformed response preserved; no regeneration') from None
             result={'body':body,'latency_seconds':None,'received_at':None,
                     'actual_model':body.get('model'),'usage':body.get('usage'),
@@ -144,6 +186,7 @@ class CompatibleProvider:
                 # Preserve received bytes before parsing: malformed output is not regenerated.
                 (folder/'response_body.txt').write_text(raw,encoding='utf-8')
                 body=json.loads(raw)
+                if not isinstance(body,dict):raise ValueError('Response must be an object')
                 result={'body':body,'latency_seconds':time.monotonic()-start,'received_at':timestamp(),
                         'actual_model':body.get('model'),'usage':body.get('usage'),
                         'requested_generation':self.config.get('generation',{}),
@@ -167,6 +210,11 @@ class CompatibleProvider:
             time.sleep(min(2**attempt,8))
 
 def create_provider(config, ledger=None):
-    if config['provider'] not in ('lmstudio','openai_compatible'):
-        raise ValueError('Provider must be lmstudio or openai_compatible')
-    return CompatibleProvider(config,ledger)
+    factory = PROVIDER_FACTORIES.get(config['provider'])
+    if factory is None:
+        raise ValueError(f"Unknown provider: {config['provider']}")
+    return factory(config, ledger=ledger)
+
+
+register_provider('lmstudio', CompatibleProvider)
+register_provider('openai_compatible', CompatibleProvider)
