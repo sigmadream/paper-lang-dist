@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import json
+import math
 from typing import Any, Protocol
 from urllib import error, request
 
@@ -59,9 +60,9 @@ class LMStudioTranslationClient:
     ) -> None:
         if not isinstance(model, str) or not model.strip():
             raise LMStudioClientError("Model must be a non-empty string.")
-        if float(temperature) != 0.0:
+        if isinstance(temperature, bool) or not isinstance(temperature, (int, float)) or not math.isfinite(temperature) or temperature < 0:
             raise LMStudioClientError(
-                "Temperature must be 0 for deterministic translations."
+                "Temperature must be finite and nonnegative."
             )
         if not isinstance(host, str) or not host.strip():
             raise LMStudioClientError("Host must be a non-empty string.")
@@ -69,7 +70,7 @@ class LMStudioTranslationClient:
         self._model = model.strip()
         self._provider_name = provider_name
         self._prompt_template_version = prompt_template_version
-        self._temperature = 0.0
+        self._temperature = float(temperature)
         self._host = host.strip().rstrip("/")
         self._transport = transport or _build_default_transport(host=self._host)
 

@@ -98,8 +98,13 @@ def test_client_rejects_invalid_model_or_temperature() -> None:
     assert "Model must be a non-empty string" in str(model_excinfo.value)
 
     with pytest.raises(LMStudioClientError) as temperature_excinfo:
-        LMStudioTranslationClient(model="test", temperature=0.5)
-    assert "Temperature must be 0" in str(temperature_excinfo.value)
+        LMStudioTranslationClient(model="test", temperature=float("nan"))
+    assert "finite and nonnegative" in str(temperature_excinfo.value)
+
+
+def test_client_accepts_research_sampling_temperature():
+    client = LMStudioTranslationClient(model="test", temperature=0.6)
+    assert client._temperature == 0.6
 
 
 def test_client_recovers_longest_unfenced_code_span_with_surrounding_prose() -> None:

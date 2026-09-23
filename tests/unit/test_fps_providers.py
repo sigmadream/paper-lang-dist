@@ -108,6 +108,20 @@ def test_pasted_secret_in_api_key_env_is_rejected_without_echo():
     c['api_key_env']=secret
     with pytest.raises(ValueError) as info:create_provider(c)
     assert secret not in str(info.value) and 'NAME of an environment variable' in str(info.value)
+
+
+def test_cost_recovery_is_idempotent_after_crash_between_response_and_ledger(tmp_path, monkeypatch):
+    c=config();c['pricing']={'input_per_million':1, 'output_per_million':2}
+    folder=tmp_path/'call';folder.mkdir()
+    response={'body':{'model':'test'},'usage':{'prompt_tokens':100,'completion_tokens':50}}
+    (folder/'response.json').write_text(json.dumps(response))
+    monkeypatch.setattr('rttdist.providers.request.urlopen',lambda *a,**kw:pytest.fail('Unexpected network'))
+    ledger=tmp_path/'ledger.jsonl'
+    one=create_provider(c,ledger);first=one.complete({},folder)
+    two=create_provider(c,ledger);second=two.complete({},folder)
+    assert first==second and first['cost_usd']==pytest.approx(.0002)
+    assert two.total_cost==pytest.approx(.0002) and two.calls==1
+    assert len(ledger.read_text().splitlines())==1
     c['api_key_env']='CMD_API_KEY';create_provider(c)
 
 def test_cap_requires_pricing():

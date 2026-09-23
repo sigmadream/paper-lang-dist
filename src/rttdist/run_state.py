@@ -63,6 +63,14 @@ def compute_config_hash(config: ExperimentConfig) -> str:
         payload["dataset_index"] = config.dataset_index.as_posix()
     if config.prompt_template_version != "rtt.prompts.v1":
         payload["prompt_template_version"] = config.prompt_template_version
+    # Preserve the original hash for original default configurations, while
+    # refusing reuse when newly supported decoding settings change.
+    if config.lmstudio.max_tokens is not None:
+        payload["lmstudio"]["max_tokens"] = config.lmstudio.max_tokens
+    if config.llm is not None:
+        payload["llm"] = config.llm
+    if not config.runtime.stop_on_intermediate_failure:
+        payload["runtime"]["stop_on_intermediate_failure"] = False
     encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
 

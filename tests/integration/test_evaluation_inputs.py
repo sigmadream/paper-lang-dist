@@ -58,8 +58,12 @@ def separated_corpus(tmp_path, request):
     return config, validate_corpus(config)[0]
 
 
-def test_prepared_dataset_loads_all_520_evaluation_cases():
-    config = load_experiment_config(REPO_ROOT / "lmstudio_v2.yaml")
+def test_prepared_dataset_loads_all_520_evaluation_cases(tmp_path):
+    # The historical launch YAML was removed; the index remains authoritative.
+    index_path = REPO_ROOT / "problem/dataset-index.json"
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    ids = tuple(p["id"] for dataset in index["datasets"] for p in dataset["problems"])
+    config = replace(_config(tmp_path), problem_ids=ids, problem_root=REPO_ROOT / "problem", dataset_index=index_path)
     assert config.dataset_index == REPO_ROOT / "problem/dataset-index.json"
     entries = validate_corpus(config)
     assert len(entries) == 40
@@ -164,7 +168,7 @@ def test_resume_and_provenance_detect_input_changes(separated_corpus, source):
 @pytest.mark.parametrize("value", [None, "", 123])
 def test_invalid_dataset_index_config_is_rejected(tmp_path, value):
     import yaml
-    raw = yaml.safe_load((REPO_ROOT / "lmstudio_v2.yaml").read_text(encoding="utf-8"))
+    raw = yaml.safe_load((REPO_ROOT / "tests/fixtures/config/minimal.yaml").read_text(encoding="utf-8"))
     raw["dataset_index"] = value
     path = tmp_path / "invalid.yaml"
     path.write_text(yaml.safe_dump(raw), encoding="utf-8")
@@ -191,3 +195,13 @@ def test_prompt_profile_changes_resume_config_hash(tmp_path):
     assert compute_config_hash(config) != compute_config_hash(
         replace(config, prompt_template_version="rtt.prompts.v2")
     )
+
+
+def test_generation_options_change_resume_config_hash(tmp_path):
+    from rttdist.run_state import compute_config_hash
+    config = _config(tmp_path)
+    assert compute_config_hash(config) != compute_config_hash(
+        replace(config, lmstudio=replace(config.lmstudio, max_tokens=1024)))
+    one = replace(config, llm={'generation': {'top_p': .8}})
+    two = replace(config, llm={'generation': {'top_p': .95}})
+    assert compute_config_hash(one) != compute_config_hash(two)
