@@ -1,18 +1,12 @@
-# problem_v1: 프로그래밍 언어 간 의미 거리 측정을 위한 5대 선별 문제 세트
+# 프로그래밍 언어 간 의미 거리 측정을 위한 선별 문제
 
-## 1. 개요 및 선별 배경
-
-본 문제 세트는 C++을 기준(reference) 언어로 설정하고, 6개 대상 언어(C, Java, Python, Haskell, OCaml, Elixir) 간의 의미 거리를 왕복 번역(Round-Trip Translation, RTT)을 통해 측정하기 위해 구성된 5개 문제 축소 코퍼스입니다.
+> 본 문제 세트는 C++을 기준(reference) 언어로 설정하고, 6개 대상 언어(C, Java, Python, Haskell, OCaml, Elixir) 간의 의미 거리를 왕복 번역(Round-Trip Translation, RTT)을 통해 측정하기 위해 구성된 5개 문제 입니다.
 
 다양한 언어 패러다임(절차형, 클래스 기반 객체지향, 동적 스크립트, 순수 함수형, 강타입 함수형, 액터/동시성 함수형)과 다수의 LLM(Qwen 3, GLM-5 및 향후 대형 모델)을 조합할 때 발생하는 기하급수적인 토큰 소모와 실행 비용을 통제하면서도, 언어 간 계산 모델의 본질적 차이를 극명하게 포착할 수 있도록 5개의 상호 직교하는(orthogonal) 계산 축에서 1문제씩 엄선하였습니다.
 
-모든 문제는 기존 [problem](file:///D:/works/paper-lang-dist/problem) 데이터셋에서 검증된 표준 입출력 계약(stdin/stdout)과 13쌍의 정밀 평가 케이스(총 65개 평가 케이스)를 완전히 계승합니다.
+## 5대 선별 문제
 
----
-
-## 2. 5대 선별 문제 요약
-
-| 문제 ID | 문제명 | 계산 및 패러다임 축 | C++ 기준 구현 방식 | 언어 간 핵심 대조 포인트 | 상세 경로 |
+| 문제 ID | 문제명 | 계산 및 패러다임 축 | C++ 기준 구현 방식 | 특징 | 상세 경로 |
 |---|---|---|---|---|---|
 | LC_0338 | Counting Bits | 수치 연산 및 비트 점화식 | 비트 시프트 연산, 1차원 점화식 | 재귀적 비트 분해 vs 점화식 매핑 | [LC_0338](file:///D:/works/paper-lang-dist/problem_v1/LC_0338/statement.md) |
 | IPOP_9012 | 괄호 | 상태 머신 및 순차 파싱 | 루프, 가변 균형 카운터, 조기 종료 | 가변 루프 카운터 vs 불변 꼬리 재귀 누적기 | [IPOP_9012](file:///D:/works/paper-lang-dist/problem_v1/IPOP_9012/statement.md) |
@@ -20,11 +14,10 @@
 | LC_0053 | Maximum Subarray | 동적 계획법 및 누적 최적화 | 카데인(Kadane) 알고리즘, 스칼라 갱신 | 명령형 상태 갱신 vs 고차 함수 foldl/reduce | [LC_0053](file:///D:/works/paper-lang-dist/problem_v1/LC_0053/statement.md) |
 | LC_0547 | Number of Provinces | 관계형 그래프 탐색 및 도달성 | 인접행렬, 가변 boolean 방문 배열 DFS | 가변 방문 배열 vs 불변 Set 전달 재귀 | [LC_0547](file:///D:/works/paper-lang-dist/problem_v1/LC_0547/statement.md) |
 
----
-
-## 3. 문제별 상세 분석 및 언어별 대조 포인트
+## 문제별 상세 분석
 
 ### 문제 1. LC_0338: Counting Bits
+
 - 공식 명세: [LC_0338/statement.md](file:///D:/works/paper-lang-dist/problem_v1/LC_0338/statement.md)
 - C++ 기준 코드: [LC_0338/reference.cpp](file:///D:/works/paper-lang-dist/problem_v1/LC_0338/reference.cpp)
 - 문제 설명: 0부터 N까지 각 정수의 2진수 표현에 포함된 1의 개수를 순서대로 배열로 출력합니다.
@@ -42,6 +35,7 @@
   - 함수형 언어 변환 시 C 스타일 DP 배열을 그대로 흉내 내려고 가변 배열을 무리하게 도입하는지, 아니면 언어 고유의 map/스트림 재귀로 재구성하는지 평가합니다.
 
 ### 문제 2. IPOP_9012: 괄호
+
 - 공식 명세: [IPOP_9012/statement.md](file:///D:/works/paper-lang-dist/problem_v1/IPOP_9012/statement.md)
 - C++ 기준 코드: [IPOP_9012/reference.cpp](file:///D:/works/paper-lang-dist/problem_v1/IPOP_9012/reference.cpp)
 - 문제 설명: T개의 괄호 문자열이 주어질 때, 열린 괄호와 닫힌 괄호의 짝이 올바르게 닫힌 VPS(Valid PS)인지 판별하여 YES 또는 NO를 출력합니다.
@@ -59,6 +53,7 @@
   - C++의 break 구문과 명령형 플래그(valid = false)가 함수형 언어로 옮겨갈 때 꼬리 재귀(tail recursion) 상태 전이 함수로 올바르게 추상화되는지 측정합니다.
 
 ### 문제 3. LC_0283: Move Zeroes
+
 - 공식 명세: [LC_0283/statement.md](file:///D:/works/paper-lang-dist/problem_v1/LC_0283/statement.md)
 - C++ 기준 코드: [LC_0283/reference.cpp](file:///D:/works/paper-lang-dist/problem_v1/LC_0283/reference.cpp)
 - 문제 설명: 배열에서 0이 아닌 원소들의 상대적인 순서를 보존하면서 모든 0을 배열의 뒷부분으로 이동시킵니다.
@@ -76,6 +71,7 @@
   - 명령형 언어의 핵심인 제자리 메모리 변경(in-place mutation)이 순수 함수형 언어로 번역될 때, 그리고 다시 C++로 역번역될 때 원본의 투 포인터 swap 구조가 유지되는지 혹은 vector 재할당 구조로 변질되는지 관찰하는 핵심 문제입니다.
 
 ### 문제 4. LC_0053: Maximum Subarray
+
 - 공식 명세: [LC_0053/statement.md](file:///D:/works/paper-lang-dist/problem_v1/LC_0053/statement.md)
 - C++ 기준 코드: [LC_0053/reference.cpp](file:///D:/works/paper-lang-dist/problem_v1/LC_0053/reference.cpp)
 - 문제 설명: 연속된 부분 배열의 합 중 최댓값을 구합니다.
@@ -92,6 +88,7 @@
   - 루프 내부의 가변 변수 2개가 함수형 고차 축약 함수(fold/reduce)의 어큐뮬레이터 튜플로 매핑되는 과정에서 수렴성과 안정성을 평가합니다.
 
 ### 문제 5. LC_0547: Number of Provinces
+
 - 공식 명세: [LC_0547/statement.md](file:///D:/works/paper-lang-dist/problem_v1/LC_0547/statement.md)
 - C++ 기준 코드: [LC_0547/reference.cpp](file:///D:/works/paper-lang-dist/problem_v1/LC_0547/reference.cpp)
 - 문제 설명: N x N 인접 행렬로 표현된 무방향 연결 그래프에서 서로 연결된 독립적인 연결 요소(컴포넌트)의 총개수를 구합니다.
@@ -107,52 +104,6 @@
   - Elixir: MapSet.put 및 MapSet.member를 활용한 꼬리 재귀 그래프 순회.
 - LLM(Qwen 3, GLM-5) 관찰 포인트:
   - 복잡한 관계형 데이터 구조(그래프)와 전역 상태(방문 목록)를 다룰 때, 객체지향/명령형의 가변 참조 vs 함수형의 불변 Set 상태 전달이 가장 큰 의미 거리를 만들어내는 벤치마크입니다.
-
----
-
-## 4. 디렉토리 구조
-
-```text
-problem_v1/
-  dataset-index.json             # 5개 문제 메타데이터 및 설정 파일
-  README.md                      # 코퍼스 선정 배경 및 상세 분석 보고서
-  LC_0338/                       # 문제 1: 수치/비트 점화식
-    statement.md
-    reference.cpp
-    README.md
-    public_examples.json
-    prompt_examples/
-    evaluation/                  # case01..13.inp, case01..13.out
-  IPOP_9012/                     # 문제 2: 상태 머신/순차 파싱
-    statement.md
-    reference.cpp
-    README.md
-    prompt_examples/
-    evaluation/                  # case01..13.inp, case01..13.out
-  LC_0283/                       # 문제 3: 가변 배열 조작 vs 불변 필터링
-    statement.md
-    reference.cpp
-    README.md
-    public_examples.json
-    prompt_examples/
-    evaluation/                  # case01..13.inp, case01..13.out
-  LC_0053/                       # 문제 4: 동적 계획법/카데인 최적화
-    statement.md
-    reference.cpp
-    README.md
-    public_examples.json
-    prompt_examples/
-    evaluation/                  # case01..13.inp, case01..13.out
-  LC_0547/                       # 문제 5: 관계형 그래프 탐색
-    statement.md
-    reference.cpp
-    README.md
-    public_examples.json
-    prompt_examples/
-    evaluation/                  # case01..13.inp, case01..13.out
-```
-
----
 
 ## 5. 실험 설정 및 실행 예시
 
