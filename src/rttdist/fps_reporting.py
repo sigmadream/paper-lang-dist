@@ -268,8 +268,9 @@ def report(cfg,phase):
     root=Path(cfg['output_root'])/phase
     records=[read_json(p) for p in sorted(root.glob('*/*/attempt-*/observation.json'))]
     ids=cfg['pilot_problem_ids'] if phase=='pilot' else cfg['problem_ids']
-    args=cfg['analysis'];pairs=args.get('comparison_pairs')
-    def run(subset):return summarize(records,subset,args['bootstrap_replicates'],args['bootstrap_seed'],cfg['routes'],cfg['repeats'],cfg['thresholds'],cfg['threshold'],pairs)
+    args=cfg.get('analysis') or {};pairs=args.get('comparison_pairs')
+    replicates=args.get('bootstrap_replicates',2000);seed=args.get('bootstrap_seed',cfg['schedule_seed'])
+    def run(subset):return summarize(records,subset,replicates,seed,cfg['routes'],cfg['repeats'],cfg['thresholds'],cfg['threshold'],pairs)
     summary=run(ids)
     if phase=='main':
         summary['excluding_pilot_problems']=run([i for i in ids if i not in cfg.get('pilot_problem_ids',[])])

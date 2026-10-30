@@ -87,9 +87,9 @@ def _load_indexed_corpus(config: ExperimentConfig) -> tuple[ProblemCorpusEntry, 
             raise ValueError("Unsupported dataset index schema")
         directories: dict[str, Path] = {}
         normalizations: dict[str, str] = {}
-        for dataset in index["datasets"]:
-            manifest_path = index_path.parent / dataset["manifest"]
-            if hashlib.sha256(manifest_path.read_bytes()).hexdigest() != dataset["manifest_sha256"]:
+        for dataset in index.get("datasets") or [{"problems": index["problems"]}]:
+            manifest_path = index_path.parent / dataset["manifest"] if "manifest" in dataset else None
+            if manifest_path is not None and hashlib.sha256(manifest_path.read_bytes()).hexdigest() != dataset["manifest_sha256"]:
                 raise ValueError(f"Dataset manifest hash mismatch: {manifest_path}")
             for item in dataset["problems"]:
                 problem_id = item["id"]

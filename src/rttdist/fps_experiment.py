@@ -53,9 +53,10 @@ def load_config(path):
     if type(cfg['repeats']) is not int or cfg['repeats']<1: raise ValueError('repeats must be a positive integer')
     if not 10<=len(cfg['problem_ids'])<=20: raise ValueError('Need 10 to 20 common problems')
     if any(p not in cfg['problem_ids'] for p in cfg.get('pilot_problem_ids',[])): raise ValueError('Pilot problems must be in problem_ids')
+    allow_identity=bool(cfg.get('allow_identity_routes',False))
     routes=[parse_route(r) for r in (cfg.get('routes') or [list(p) for p in permutations(DEFAULT_LANGUAGES,2)])]
     for a,b in routes:
-        if a==b or a not in EXTENSIONS or b not in EXTENSIONS: raise ValueError(f'Invalid route {a}->{b}')
+        if (a==b and not allow_identity) or a not in EXTENSIONS or b not in EXTENSIONS: raise ValueError(f'Invalid route {a}->{b}')
         if a not in cfg['runtime']['tools'] or b not in cfg['runtime']['tools']: raise ValueError(f'Route {a}->{b} needs runtime tools for both languages')
     if len({tuple(r) for r in routes})!=len(routes): raise ValueError('Duplicate routes')
     cfg['routes']=routes

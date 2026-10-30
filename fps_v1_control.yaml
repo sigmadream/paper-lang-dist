@@ -1,0 +1,87 @@
+# Control C1: same-language rewrite (cpp -> cpp -> cpp).
+# Purpose: separate "the model rewrites code while translating" from "the two
+# languages are far apart". compare with the cpp-via-<L> routes in fps_v2.yaml.
+#
+# python scripts/validate_fps_corpus.py fps_v2_control.yaml
+# python -m rttdist fps --config fps_v2_control.yaml --phase pilot --action run
+# python -m rttdist fps --config fps_v2_control.yaml --phase main --action run
+
+experiment_version: fps-text-v1
+
+corpus_root: data/fps-v1
+output_root: artifacts-fps-v1-control
+validation: artifacts-fps-v1/validation.json
+
+problem_ids:
+  - IPOP_1436
+  - IPOP_2110
+  - IPOP_2217
+  - IPOP_2579
+  - IPOP_5567
+  - IPOP_10988
+  - IPOP_1929
+  - IPOP_2609
+  - IPOP_9012
+  - LC_0053
+  - LC_0062
+  - LC_0217
+  - LC_0242
+  - LC_0283
+  - LC_0338
+
+pilot_problem_ids:
+  - IPOP_2609
+  - IPOP_9012
+  - LC_0053
+
+allow_identity_routes: true
+routes:
+  - [cpp, cpp]
+
+repeats: 5
+threshold: 0.85
+thresholds: [0.80, 0.85, 0.90]
+max_fps_size: 10
+max_translation_steps: 10
+schedule_seed: 20260919
+observation_wall_seconds: 900
+
+runtime:
+  tools:
+    cpp: C:\Users\sigma\scoop\apps\perl\5.42.3.1\c\bin\g++.exe
+    c: C:\Users\sigma\scoop\apps\perl\5.42.3.1\c\bin\gcc.exe
+    java: C:\Users\sigma\scoop\apps\openjdk\current\bin\javac.exe
+    python: C:\Users\sigma\works\paper-lang-dist\.venv\Scripts\python.exe
+    haskell: C:\Users\sigma\scoop\apps\ghcup\current\ghcup\bin\ghc.exe
+    prolog: C:\Users\sigma\scoop\shims\swipl.exe
+  compile_timeout: 180
+  fixture_timeout: 5.0
+  minimum_evaluation_cases: 10
+
+similarity:
+  java: C:\Users\sigma\scoop\apps\openjdk\current\bin\java.exe
+  jar: jplag-6.3.0-jar-with-dependencies.jar
+  jar_sha256: 5f2c21e8b88ed77134effcb3a5a3ab13d188f6a3e16d401387f7479e92db9aa2
+  language: cpp
+  minimum_tokens: 9
+  normalize: false
+  similarity_field: averageSimilarity
+  scale: [0, 1]
+  threshold: 0
+  cluster: false
+  match_merging: false
+
+llm:
+  provider: openai_compatible
+  endpoint: https://your-provider.example/v1
+  model: GLM-5.3-Flash
+  expected_model: GLM-5.3-Flash
+  api_key_env: RTT_API_KEY
+  generation:
+    temperature: 0.6
+    top_p: 0.95
+    max_tokens: 16384
+    reasoning_effort: low
+    seed: 20260919
+  request_timeout: 300
+  retries: 2

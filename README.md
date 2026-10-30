@@ -32,5 +32,3 @@ uv run rttdist research resume --config examples/research/local.yaml
 ```
 
 새 조건으로 실행할 때는 설정의 `id`도 변경합니다.
-
-[자세한 사용법](docs/RESEARCH_LIBRARY.md) · [여러 모델 비교 설정](examples/research/multi-model.yaml) · [추가 분석 프로파일](examples/research/analysis.yaml)

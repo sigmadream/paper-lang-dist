@@ -1,5 +1,6 @@
 """Execute real toolchains: preserve source layout and classify failure modes."""
 from pathlib import Path
+import shutil
 import pytest
 
 from rttdist.exec.adapters import evaluate_source
@@ -15,6 +16,9 @@ SOURCES = {
 @pytest.mark.parametrize('language', SOURCES)
 @pytest.mark.parametrize('case', ['success', 'wrong_answer', 'compile_error', 'runtime_error', 'timeout'])
 def test_extended_real_execution(tmp_path, language, case):
+    binary = {'haskell': 'ghc', 'prolog': 'swipl'}[language]
+    if shutil.which(binary) is None:
+        pytest.skip(f"Missing toolchain executable: {binary}")
     source = SOURCES[language]
     if case == 'compile_error':
         source = {'haskell': 'main = do\n  let =', 'prolog': 'main :- (.'}[language]

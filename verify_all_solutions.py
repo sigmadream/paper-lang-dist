@@ -3,8 +3,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-WORKSPACE = Path(r"D:\works\paper-lang-dist")
-SOLUTIONS_DIR = WORKSPACE / "solutions_v1.5"
+WORKSPACE = Path(__file__).resolve().parent
+SOLUTIONS_DIR = WORKSPACE / "papers" / "v1.5" / "solutions_v1.5" if (WORKSPACE / "papers" / "v1.5" / "solutions_v1.5").is_dir() else WORKSPACE / "solutions_v1.5"
 PROBLEMS_DIR = WORKSPACE / "problem_v1.5"
 
 PROBLEMS = ["LC_0338", "IPOP_9012", "LC_0283", "LC_0053", "LC_0547"]

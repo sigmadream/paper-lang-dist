@@ -1,19 +1,26 @@
 """Isolated two-submission C++ comparison, retaining every tool output."""
 import csv
+import os
+import shutil
 from pathlib import Path
 import subprocess
 
 from rttdist.experiment_io import digest, read_json, write_json
 
-ABS = Path(__file__).resolve().parents[2] / 'docs/abs'
-JAR = ABS / 'tools/jplag-6.3.0-jar-with-dependencies.jar'
+REPO = Path(__file__).resolve().parents[2]
+JAR = REPO / 'jplag-6.3.0-jar-with-dependencies.jar'
+LEGACY_ABS = REPO / 'docs/abs'
 
 
 def tool_config():
-    java = list((ABS / 'tools').glob('jdk-25*/bin/java.exe'))
-    if len(java) != 1 or not JAR.is_file():
-        raise RuntimeError('Expected exactly one local Java 25 and the specified JPlag JAR')
-    return {'java': str(java[0].resolve()), 'jar': str(JAR.resolve()), 'jar_sha256': digest(JAR.read_bytes()),
+    jar = Path(os.environ.get('RTT_JPLAG_JAR') or JAR)
+    java = os.environ.get('RTT_JAVA') or shutil.which('java')
+    if not java:
+        bundled = list((LEGACY_ABS / 'tools').glob('jdk-*/bin/java.exe'))
+        java = str(bundled[0]) if bundled else None
+    if not java or not jar.is_file():
+        raise RuntimeError('Expected a Java 21+ runtime and the JPlag JAR (set RTT_JAVA and RTT_JPLAG_JAR)')
+    return {'java': str(Path(java).resolve()), 'jar': str(jar.resolve()), 'jar_sha256': digest(jar.read_bytes()),
             'language': 'cpp', 'minimum_tokens': 9, 'normalize': False, 'similarity_field': 'averageSimilarity',
             'scale': [0, 1], 'threshold': 0, 'cluster': False, 'match_merging': False}
 
