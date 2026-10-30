@@ -60,11 +60,11 @@ def separated_corpus(tmp_path, request):
 
 def test_prepared_dataset_loads_all_520_evaluation_cases(tmp_path):
     # The historical launch YAML was removed; the index remains authoritative.
-    index_path = REPO_ROOT / "problem/dataset-index.json"
+    index_path = REPO_ROOT / "problem_v1/dataset-index.json"
     index = json.loads(index_path.read_text(encoding="utf-8"))
     ids = tuple(p["id"] for dataset in index["datasets"] for p in dataset["problems"])
-    config = replace(_config(tmp_path), problem_ids=ids, problem_root=REPO_ROOT / "problem", dataset_index=index_path)
-    assert config.dataset_index == REPO_ROOT / "problem/dataset-index.json"
+    config = replace(_config(tmp_path), problem_ids=ids, problem_root=REPO_ROOT / "problem_v1", dataset_index=index_path)
+    assert config.dataset_index == REPO_ROOT / "problem_v1/dataset-index.json"
     entries = validate_corpus(config)
     assert len(entries) == 40
     assert sum(len(entry.fixture_pairs) for entry in entries) == 520
@@ -78,6 +78,25 @@ def test_prepared_dataset_loads_all_520_evaluation_cases(tmp_path):
         assert all(pair.input_path.parent == directory / "prompt_examples" for pair in entry.prompt_examples)
         assert entry.prompt_sample.input_path not in {p.input_path for p in entry.fixture_pairs}
         assert entry.statement_path.name != "README.md"
+
+
+def test_prepared_v1_5_dataset_loads_all_65_evaluation_cases(tmp_path):
+    index_path = REPO_ROOT / "problem_v1.5/dataset-index.json"
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    ids = tuple(p["id"] for p in index["problems"])
+    config = replace(_config(tmp_path), problem_ids=ids, problem_root=REPO_ROOT / "problem_v1.5", dataset_index=index_path)
+    entries = validate_corpus(config)
+    assert len(entries) == 5
+    assert sum(len(entry.fixture_pairs) for entry in entries) == 65
+    for entry in entries:
+        directory = config.problem_root / entry.problem_id
+        assert entry.statement_path == directory / "statement.md"
+        assert entry.seed_path == directory / "reference.cpp"
+        assert entry.fixture_directory == directory / "evaluation"
+        assert len(entry.fixture_pairs) == 13
+        assert entry.prompt_examples
+        assert all(pair.input_path.parent == directory / "prompt_examples" for pair in entry.prompt_examples)
+        assert entry.prompt_sample.input_path not in {p.input_path for p in entry.fixture_pairs}
 
 
 @pytest.mark.parametrize("runner", ["pipeline", "versioned"])

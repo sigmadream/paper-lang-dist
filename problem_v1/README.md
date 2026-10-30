@@ -5,7 +5,7 @@
 ## 형식
 
 ```text
-problem/
+problem_v1/
   IPOP_<id>/ 또는 LC_<id>/
     statement.md              # 문제 요약, 제약, 입출력 계약
     prompt_examples/          # 공개 예제, 첫 쌍만 프롬프트에 전달
@@ -70,8 +70,8 @@ problem/
 ## 검증과 실행
 
 ```powershell
-uv run problem/metadata/ipop19/tools/validate_dataset.py
-uv run problem/metadata/leetcode21/tools/validate_dataset.py
-uv run problem/metadata/quality/tools/audit_dataset.py
+uv run problem_v1/metadata/ipop19/tools/validate_dataset.py
+uv run problem_v1/metadata/leetcode21/tools/validate_dataset.py
+uv run problem_v1/metadata/quality/tools/audit_dataset.py
 uv run rttdist validate-corpus --config lmstudio_v2.yaml --execute
 ```
