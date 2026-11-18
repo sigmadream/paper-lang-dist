@@ -1,0 +1,94 @@
+{
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.List (intercalate)\n\nmain :: IO ()\nmain = do\n  inp <- getContents\n  case words inp of\n    (tok:_) -> do\n      let n = read tok :: Int\n          arr = 0 : [ (arr !! (i `div` 2)) + (i `mod` 2) | i <- [1..n] ]\n      putStrLn (unwords (map show arr))\n    _ -> return ()\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 110,
+    "prompt_tokens": 532,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 642
+  },
+  "usage_raw": {
+    "completion_tokens": 110,
+    "prompt_tokens": 532,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 642
+  },
+  "cost_usd": 0.0010828799999999998,
+  "cost_source": "estimated",
+  "request_id": "29d882e2-1136-4379-b4aa-09201a9f97e9",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0338\\cpp-via-haskell\\attempt-01\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.List (intercalate)\n\nmain :: IO ()\nmain = do\n  inp <- getContents\n  case words inp of\n    (tok:_) -> do\n      let n = read tok :: Int\n          arr = 0 : [ (arr !! (i `div` 2)) + (i `mod` 2) | i <- [1..n] ]\n      putStrLn (unwords (map show arr))\n    _ -> return ()\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794897210,
+    "id": "29d882e2-1136-4379-b4aa-09201a9f97e9",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 110,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_2930d460f3514637acde16eaaa3a3ea9",
+      "trace_id": "4d9d79a2afc4421db4049fcd71d16e7d"
+    },
+    "usage": {
+      "completion_tokens": 110,
+      "prompt_tokens": 532,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 642
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.4495677999802865,
+  "received_at": "2026-11-17T06:33:29.977833+00:00",
+  "logical_request_id": "4e5bf312d5d6a379423814ba26d687833437bf1555bc7af903644119117ed611",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<int> a(n);\n    for (int i = 0; i < n; ++i) {\n        cin >> a[i];\n    }\n\n    int write = 0;\n    for (int read = 0; read < n; ++read) {\n        if (a[read] != 0) {\n            swap(a[write], a[read]);\n            ++write;\n        }\n    }\n\n    for (int i = 0; i < n; ++i) {\n        if (i > 0) cout << ' ';\n        cout << a[i];\n    }\n    cout << '\\n';\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 585,
+    "total_tokens": 839,
+    "completion_tokens": 254,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 69
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 585,
+    "total_tokens": 839,
+    "completion_tokens": 254,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 69
+    }
+  },
+  "cost_usd": 0.0004803,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-a34ffcc4c88a94804ba8647b87d451d1",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-python\\attempt-05\\step-04\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-a34ffcc4c88a94804ba8647b87d451d1",
+    "object": "chat.completion",
+    "created": 1794991417,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<int> a(n);\n    for (int i = 0; i < n; ++i) {\n        cin >> a[i];\n    }\n\n    int write = 0;\n    for (int read = 0; read < n; ++read) {\n        if (a[read] != 0) {\n            swap(a[write], a[read]);\n            ++write;\n        }\n    }\n\n    for (int i = 0; i < n; ++i) {\n        if (i > 0) cout << ' ';\n        cout << a[i];\n    }\n    cout << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block cpp. Need translate. Need ensure input parse, output. Straightforward. Include bits/stdc++.h, main. Use long long? signed 32-bit fits int. N up to 10000. Output exactly. If no data return. Should preserve. Provide one fenced code block. No explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 585,
+      "total_tokens": 839,
+      "completion_tokens": 254,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.4020635000197217,
+  "received_at": "2026-11-18T08:43:38.093777+00:00",
+  "logical_request_id": "a0405c2e48c7ef1d0e41d5d442f1c902a466a36a7a4b2e3d0641889e9143d81e",
+  "execution_class": "direct_api"
+}

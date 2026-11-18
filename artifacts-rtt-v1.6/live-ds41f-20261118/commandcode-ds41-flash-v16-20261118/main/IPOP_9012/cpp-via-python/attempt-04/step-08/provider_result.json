@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int t;\n    if (!(std::cin >> t)) return 0;\n\n    std::vector<std::string> answers;\n    for (int i = 0; i < t; ++i) {\n        std::string s;\n        std::cin >> s;\n\n        int bal = 0;\n        bool valid = true;\n\n        for (char ch : s) {\n            if (ch == '(') {\n                ++bal;\n            } else {\n                --bal;\n            }\n\n            if (bal < 0) {\n                valid = false;\n                break;\n            }\n        }\n\n        if (bal != 0) valid = false;\n\n        answers.push_back(valid ? \"YES\" : \"NO\");\n    }\n\n    for (size_t i = 0; i < answers.size(); ++i) {\n        if (i > 0) std::cout << '\\n';\n        std::cout << answers[i];\n    }\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 609,
+    "total_tokens": 917,
+    "completion_tokens": 308,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 68
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 609,
+    "total_tokens": 917,
+    "completion_tokens": 308,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 68
+    }
+  },
+  "cost_usd": 0.0005522999999999999,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-5961a91846469e166e62c201f2b25c8d",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-python\\attempt-04\\step-08\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-5961a91846469e166e62c201f2b25c8d",
+    "object": "chat.completion",
+    "created": 1794980310,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int t;\n    if (!(std::cin >> t)) return 0;\n\n    std::vector<std::string> answers;\n    for (int i = 0; i < t; ++i) {\n        std::string s;\n        std::cin >> s;\n\n        int bal = 0;\n        bool valid = true;\n\n        for (char ch : s) {\n            if (ch == '(') {\n                ++bal;\n            } else {\n                --bal;\n            }\n\n            if (bal < 0) {\n                valid = false;\n                break;\n            }\n        }\n\n        if (bal != 0) valid = false;\n\n        answers.push_back(valid ? \"YES\" : \"NO\");\n    }\n\n    for (size_t i = 0; i < answers.size(); ++i) {\n        if (i > 0) std::cout << '\\n';\n        std::cout << answers[i];\n    }\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer with cpp code only fenced. Need preserve behavior. Straight translation. Could just provide. Note spec exact. Use C++17 main. Read T, then strings via cin. Output YES/NO newline. Source uses split, so handles whitespace. Fine. Ensure exactly one fenced code block no explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 609,
+      "total_tokens": 917,
+      "completion_tokens": 308,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 68
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.151625300059095,
+  "received_at": "2026-11-18T05:38:32.138862+00:00",
+  "logical_request_id": "91afdce6591228dc7ec58fbadd8f8b3187587ac01b4b968a8c10dab2bf3f1e02",
+  "execution_class": "direct_api"
+}

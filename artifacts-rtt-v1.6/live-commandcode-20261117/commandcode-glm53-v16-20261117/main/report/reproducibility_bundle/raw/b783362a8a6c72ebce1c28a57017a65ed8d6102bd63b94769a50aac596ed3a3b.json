@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StreamTokenizer st = new StreamTokenizer(br);\n        st.nextToken();\n        int n = (int) st.nval;\n        long[] a = new long[n];\n        for (int i = 0; i < n; i++) {\n            st.nextToken();\n            a[i] = (long) st.nval;\n        }\n        long cur = a[0], best = a[0];\n        for (int i = 1; i < n; i++) {\n            cur = Math.max(a[i], cur + a[i]);\n            best = Math.max(best, cur);\n        }\n        System.out.println(best);\n    }\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794901939,
+    "id": "d20214e0-2361-4517-9b03-a3645b57da97",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 172,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_8c4c4c53de054a93a0791b8fadc80ccc",
+      "trace_id": "6b23c6325eaa46598a09759af201dfea"
+    },
+    "usage": {
+      "completion_tokens": 172,
+      "prompt_tokens": 601,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 773
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00116044,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.2729379000375047,
+  "logical_request_id": "bcfb892b4e60d97f3a276d5f9655a055cef13328cafa8e953060270a20cb2fad",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0053\\cpp-via-java\\attempt-02\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T07:52:19.084380+00:00",
+  "request_id": "d20214e0-2361-4517-9b03-a3645b57da97",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StreamTokenizer st = new StreamTokenizer(br);\n        st.nextToken();\n        int n = (int) st.nval;\n        long[] a = new long[n];\n        for (int i = 0; i < n; i++) {\n            st.nextToken();\n            a[i] = (long) st.nval;\n        }\n        long cur = a[0], best = a[0];\n        for (int i = 1; i < n; i++) {\n            cur = Math.max(a[i], cur + a[i]);\n            best = Math.max(best, cur);\n        }\n        System.out.println(best);\n    }\n}\n```",
+  "usage": {
+    "completion_tokens": 172,
+    "prompt_tokens": 601,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 773
+  },
+  "usage_raw": {
+    "completion_tokens": 172,
+    "prompt_tokens": 601,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 773
+  }
+}

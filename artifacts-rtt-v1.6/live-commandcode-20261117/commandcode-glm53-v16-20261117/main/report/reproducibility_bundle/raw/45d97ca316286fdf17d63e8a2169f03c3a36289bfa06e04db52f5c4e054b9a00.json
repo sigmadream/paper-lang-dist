@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.Char (ord)\nimport qualified Data.Map.Strict as M\n\nmain :: IO ()\nmain = do\n  ms <- getLine\n  mt <- getLine\n  case (ms, mt) of\n    (s, t) -> do\n      let count = M.fromListWith (+) . map (\\c -> (ord c - ord 'a', 1 :: Int))\n          ok = length s == length t && count s == count t\n      putStrLn (if ok then \"1\" else \"0\")\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794896871,
+    "id": "e01ec484-a53a-4301-a64b-98eb0ec218c7",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 122,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_0ec0e963234b4d5288d72ce2c2b55d33",
+      "trace_id": "c8a0fffa411e43178a87698a4bb53d72"
+    },
+    "usage": {
+      "completion_tokens": 122,
+      "prompt_tokens": 536,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 658
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00084944,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.5549499000189826,
+  "logical_request_id": "7370517ded33dccc2d4536aeddebf48b2bb5d77eed50de79613c1fed45f6ba79",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0242\\cpp-via-haskell\\attempt-05\\step-03\\response_body.txt",
+  "received_at": "2026-11-17T06:27:50.471787+00:00",
+  "request_id": "e01ec484-a53a-4301-a64b-98eb0ec218c7",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.Char (ord)\nimport qualified Data.Map.Strict as M\n\nmain :: IO ()\nmain = do\n  ms <- getLine\n  mt <- getLine\n  case (ms, mt) of\n    (s, t) -> do\n      let count = M.fromListWith (+) . map (\\c -> (ord c - ord 'a', 1 :: Int))\n          ok = length s == length t && count s == count t\n      putStrLn (if ok then \"1\" else \"0\")\n```",
+  "usage": {
+    "completion_tokens": 122,
+    "prompt_tokens": 536,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 658
+  },
+  "usage_raw": {
+    "completion_tokens": 122,
+    "prompt_tokens": 536,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 658
+  }
+}

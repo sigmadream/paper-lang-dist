@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nchoose :: Integer -> Integer -> Integer\nchoose n k\n    | k < 0 || k > n = 0\n    | otherwise = go 1 1\n  where\n    kk = min k (n - k)\n    go i res\n        | i > kk = res\n        | otherwise = go (i + 1) (res * (n - kk + i) `div` i)\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    case map read (words input) :: [Integer] of\n        (m:n:_) -> print (choose (m + n - 2) (min (m - 1) (n - 1)))\n        _ -> return ()\n```",
+          "reasoning_content": "We need answer only complete Haskell source file fenced. Need translate. Need preserve stdin stdout. Input M N. Output choose(M+N-2, min(M-1,N-1)) as integer. Haskell. Need handle up to 100, answer <=2e9. Use Integer. Read two ints. If missing? source only outputs if read success. We can implement main = do xs <- getLine? Need robust whitespace. getContents, words. If at least two parse. Output. Need exactly one source file code block.\n\nNeed consider module Main main :: IO (). Could use readMaybe? only standard. Simpler:\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case map read (words input) :: [Integer] of\n    (m:n:_) -> print (choose ...)\n    _ -> return ()\n\nchoose n k = if k<0 || k>n then 0 else let kk=min k (n-k) in product? To avoid division issue with Integer exact. Use recursive loop.\n\nchoose :: Integer -> Integer -> Integer\nchoose n k\n | k < 0 || k > n = 0\n | otherwise = go 1 1\n where kk = min k (n-k)\n       go i res | i > kk = res\n                | otherwise = go (i+1) (res * (n - kk + i) `div` i)\n\nMain args. Need if more tokens ignore. print adds newline. Good.\n\nNeed final only code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794995729,
+    "id": "chatcmpl-aa28145accebfe34498d4a7bed1346b9",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 487,
+      "completion_tokens_details": {
+        "reasoning_tokens": 320
+      },
+      "prompt_tokens": 562,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1049
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.000753,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 4.725271199946292,
+  "logical_request_id": "2e67f13722a9fea7c2f617363b31e4d62d480859a8de18da05dcbba1c61e7c1e",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-haskell\\attempt-02\\step-09\\response_body.txt",
+  "received_at": "2026-11-18T09:55:32.310053+00:00",
+  "request_id": "chatcmpl-aa28145accebfe34498d4a7bed1346b9",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nchoose :: Integer -> Integer -> Integer\nchoose n k\n    | k < 0 || k > n = 0\n    | otherwise = go 1 1\n  where\n    kk = min k (n - k)\n    go i res\n        | i > kk = res\n        | otherwise = go (i + 1) (res * (n - kk + i) `div` i)\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    case map read (words input) :: [Integer] of\n        (m:n:_) -> print (choose (m + n - 2) (min (m - 1) (n - 1)))\n        _ -> return ()\n```",
+  "usage": {
+    "completion_tokens": 487,
+    "completion_tokens_details": {
+      "reasoning_tokens": 320
+    },
+    "prompt_tokens": 562,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1049
+  },
+  "usage_raw": {
+    "completion_tokens": 487,
+    "completion_tokens_details": {
+      "reasoning_tokens": 320
+    },
+    "prompt_tokens": 562,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1049
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "text": "```prolog\n:- module(main, [main/0]).\n\nmain :-\n    read_line_to_codes(user_input, L1),\n    ( L1 == end_of_file -> true\n    ; parse_ints(L1, [N|_]),\n      read_line_to_codes(user_input, L2),\n      parse_ints(L2, Nums0),\n      length(Nums0, N),\n      partition_nonzero(Nums0, NonZero),\n      length(NonZero, K),\n      length(Zeros, K), maplist(=(0), Zeros),\n      append(NonZero, Zeros, Result),\n      format_result(Result)\n    ).\n\npartition_nonzero([], []).\npartition_nonzero([X|Xs], Ys) :-\n    ( X =\\= 0 -> Ys = [X|Rest] ; Ys = Rest ),\n    partition_nonzero(Xs, Rest).\n\nformat_result([]) :- nl.\nformat_result([X]) :- !, format(\"~d~n\", [X]).\nformat_result([X|Xs]) :-\n    format(\"~d \", [X]),\n    format_result(Xs).\n\nparse_ints(Codes, Nums) :-\n    parse_tokens(Codes, Tokens),\n    maplist(number_codes, Nums, Tokens).\n\nparse_tokens([], []).\nparse_tokens(Codes, [T|Ts]) :-\n    skip_ws(Codes, Rest),\n    ( Rest == [] -> T = [], Ts = []\n    ; take_token(Rest, T, Remainder),\n      parse_tokens(Remainder, Ts)\n    ).\n\nskip_ws([C|Cs], Rest) :-\n    ( C == 32 ; C == 9 ; C == 10 ; C == 13 ),\n    !, skip_ws(Cs, Rest).\nskip_ws(Cs, Cs).\n\ntake_token(Codes, Token, Rest) :-\n    take_nonws(Codes, Token, Rest).\n\ntake_nonws([], [], []).\ntake_nonws([C|Cs], Tok, Rest) :-\n    ( C == 32 ; C == 9 ; C == 10 ; C == 13 ),\n    !, Tok = [], Rest = [C|Cs].\ntake_nonws([C|Cs], [C|Tok], Rest) :-\n    take_nonws(Cs, Tok, Rest).\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 474,
+    "prompt_tokens": 636,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "total_tokens": 1110
+  },
+  "usage_raw": {
+    "completion_tokens": 474,
+    "prompt_tokens": 636,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "total_tokens": 1110
+  },
+  "cost_usd": 0.0023923200000000007,
+  "cost_source": "estimated",
+  "request_id": "1b3fde12-f46e-4086-b5cd-922b5141ce93",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0283\\cpp-via-prolog\\attempt-05\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n\nmain :-\n    read_line_to_codes(user_input, L1),\n    ( L1 == end_of_file -> true\n    ; parse_ints(L1, [N|_]),\n      read_line_to_codes(user_input, L2),\n      parse_ints(L2, Nums0),\n      length(Nums0, N),\n      partition_nonzero(Nums0, NonZero),\n      length(NonZero, K),\n      length(Zeros, K), maplist(=(0), Zeros),\n      append(NonZero, Zeros, Result),\n      format_result(Result)\n    ).\n\npartition_nonzero([], []).\npartition_nonzero([X|Xs], Ys) :-\n    ( X =\\= 0 -> Ys = [X|Rest] ; Ys = Rest ),\n    partition_nonzero(Xs, Rest).\n\nformat_result([]) :- nl.\nformat_result([X]) :- !, format(\"~d~n\", [X]).\nformat_result([X|Xs]) :-\n    format(\"~d \", [X]),\n    format_result(Xs).\n\nparse_ints(Codes, Nums) :-\n    parse_tokens(Codes, Tokens),\n    maplist(number_codes, Nums, Tokens).\n\nparse_tokens([], []).\nparse_tokens(Codes, [T|Ts]) :-\n    skip_ws(Codes, Rest),\n    ( Rest == [] -> T = [], Ts = []\n    ; take_token(Rest, T, Remainder),\n      parse_tokens(Remainder, Ts)\n    ).\n\nskip_ws([C|Cs], Rest) :-\n    ( C == 32 ; C == 9 ; C == 10 ; C == 13 ),\n    !, skip_ws(Cs, Rest).\nskip_ws(Cs, Cs).\n\ntake_token(Codes, Token, Rest) :-\n    take_nonws(Codes, Token, Rest).\n\ntake_nonws([], [], []).\ntake_nonws([C|Cs], Tok, Rest) :-\n    ( C == 32 ; C == 9 ; C == 10 ; C == 13 ),\n    !, Tok = [], Rest = [C|Cs].\ntake_nonws([C|Cs], [C|Tok], Rest) :-\n    take_nonws(Cs, Tok, Rest).\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794902187,
+    "id": "1b3fde12-f46e-4086-b5cd-922b5141ce93",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 474,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_7bf8d83f9e074144b111f22627d2fbd9",
+      "trace_id": "41c4b4ec29884a398faee01daecb2ea7"
+    },
+    "usage": {
+      "completion_tokens": 474,
+      "prompt_tokens": 636,
+      "prompt_tokens_details": {
+        "cached_tokens": 512
+      },
+      "total_tokens": 1110
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 5.819394799997099,
+  "received_at": "2026-11-17T07:56:26.601427+00:00",
+  "logical_request_id": "c7b3ccf25d2d1260706da1230c1a0ce9feda97e4f9cc5f5794b8c26fb1ce37a2",
+  "execution_class": "direct_api"
+}

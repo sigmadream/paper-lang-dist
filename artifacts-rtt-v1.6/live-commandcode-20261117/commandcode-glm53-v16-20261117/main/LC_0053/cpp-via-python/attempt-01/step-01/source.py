@@ -1,0 +1,13 @@
+import sys
+
+def main():
+    data = sys.stdin.read().split()
+    n = int(data[0])
+    a = list(map(int, data[1:1+n]))
+    cur = best = a[0]
+    for i in range(1, n):
+        cur = max(a[i], cur + a[i])
+        best = max(best, cur)
+    print(best)
+
+main()

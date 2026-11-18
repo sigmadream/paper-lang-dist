@@ -1,0 +1,95 @@
+{
+  "text": "```haskell\nmodule Main (main) where\n\nimport System.IO\n\nmain :: IO ()\nmain = do\n  contents <- getContents\n  let (tLine : rest) = lines contents\n      t = read tLine :: Int\n      results = map check (take t rest)\n  mapM_ putStrLn results\n\ncheck :: String -> String\ncheck s = if go 0 s then \"YES\" else \"NO\"\n  where\n    go _ [] = True\n    go bal (c:cs)\n      | bal < 0 = False\n      | c == '(' = go (bal + 1) cs\n      | otherwise = go (bal - 1) cs\n    -- final balance must be zero\n```\n\nWait, I need to also require final balance zero. Let me fix:\n\n```haskell\nmodule Main (main) where\n\nmain :: IO ()\nmain = do\n  contents <- getContents\n  let allLines = lines contents\n  case allLines of\n    (tLine : rest) -> do\n      let t = read tLine :: Int\n          results = map check (take t rest)\n      mapM_ putStrLn results\n    [] -> return ()\n\ncheck :: String -> String\ncheck s\n  | go 0 s == Just 0 = \"YES\"\n  | otherwise = \"NO\"\n  where\n    go bal [] = if bal >= 0 then Just bal else Nothing\n    go bal (c:cs)\n      | bal < 0 = Nothing\n      | c == '(' = go (bal + 1) cs\n      | otherwise = go (bal - 1) cs\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 368,
+    "prompt_tokens": 613,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 981
+  },
+  "usage_raw": {
+    "completion_tokens": 368,
+    "prompt_tokens": 613,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 981
+  },
+  "cost_usd": 0.00196668,
+  "cost_source": "estimated",
+  "request_id": "844d5d51-b788-4682-9c79-9980eba93135",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_9012\\cpp-via-haskell\\attempt-04\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport System.IO\n\nmain :: IO ()\nmain = do\n  contents <- getContents\n  let (tLine : rest) = lines contents\n      t = read tLine :: Int\n      results = map check (take t rest)\n  mapM_ putStrLn results\n\ncheck :: String -> String\ncheck s = if go 0 s then \"YES\" else \"NO\"\n  where\n    go _ [] = True\n    go bal (c:cs)\n      | bal < 0 = False\n      | c == '(' = go (bal + 1) cs\n      | otherwise = go (bal - 1) cs\n    -- final balance must be zero\n```\n\nWait, I need to also require final balance zero. Let me fix:\n\n```haskell\nmodule Main (main) where\n\nmain :: IO ()\nmain = do\n  contents <- getContents\n  let allLines = lines contents\n  case allLines of\n    (tLine : rest) -> do\n      let t = read tLine :: Int\n          results = map check (take t rest)\n      mapM_ putStrLn results\n    [] -> return ()\n\ncheck :: String -> String\ncheck s\n  | go 0 s == Just 0 = \"YES\"\n  | otherwise = \"NO\"\n  where\n    go bal [] = if bal >= 0 then Just bal else Nothing\n    go bal (c:cs)\n      | bal < 0 = Nothing\n      | c == '(' = go (bal + 1) cs\n      | otherwise = go (bal - 1) cs\n```",
+          "reasoning_content": "Note: original counts any non-'(' as ')'. Length 2..50, only parens.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794896686,
+    "id": "844d5d51-b788-4682-9c79-9980eba93135",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 368,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_25cb0c0c1fa14d95bc7926c00540dcaa",
+      "trace_id": "b8b9874e74ac4c2882781f6ff6cb933c"
+    },
+    "usage": {
+      "completion_tokens": 368,
+      "prompt_tokens": 613,
+      "prompt_tokens_details": {
+        "cached_tokens": 448
+      },
+      "total_tokens": 981
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 6.592702399997506,
+  "received_at": "2026-11-17T06:24:45.813076+00:00",
+  "logical_request_id": "9e9b94825498a9fa3982529c88e8f76d2363584e9b8d2d6450407faadc24cdc1",
+  "execution_class": "direct_api"
+}

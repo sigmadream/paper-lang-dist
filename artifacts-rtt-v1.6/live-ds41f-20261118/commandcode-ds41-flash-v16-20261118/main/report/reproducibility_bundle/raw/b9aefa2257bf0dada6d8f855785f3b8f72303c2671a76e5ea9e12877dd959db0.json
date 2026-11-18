@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <string>\n\nusing namespace std;\n\nstatic bool isWs(char c) {\n    return c == '\\t' || c == '\\n' || c == '\\v' ||\n           c == '\\f' || c == '\\r' || c == ' ';\n}\n\nstatic string trim(const string& s) {\n    size_t left = 0;\n    size_t right = s.size();\n\n    while (left < right && isWs(s[left])) {\n        ++left;\n    }\n    while (right > left && isWs(s[right - 1])) {\n        --right;\n    }\n\n    return s.substr(left, right - left);\n}\n\nstatic bool validParens(const string& s) {\n    int balance = 0;\n\n    for (char c : s) {\n        if (c == '(') {\n            ++balance;\n        } else if (c == ')') {\n            if (balance <= 0) {\n                return false;\n            }\n            --balance;\n        }\n    }\n\n    return balance == 0;\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    string line;\n    if (!getline(cin, line)) {\n        return 0;\n    }\n\n    string first = trim(line);\n    int t = 0;\n\n    try {\n        t = stoi(first);\n    } catch (...) {\n        return 0;\n    }\n\n    for (int i = 0; i < t; ++i) {\n        if (!getline(cin, line)) {\n            return 0;\n        }\n\n        string trimmed = trim(line);\n        cout << (validParens(trimmed) ? \"YES\" : \"NO\") << '\\n';\n    }\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer with C++17 source file only, fenced code block, no explanation. Need translate Prolog behavior. Need understand exact behavior of source. It reads first line, trims whitespace both ends, number_codes(T, FirstTrim), process_lines. process_lines for T. For each line reads, if EOF true else trims line whitespace, valid_parens on trimmed. Prints YES if valid_parens true else NO. valid_parens accepts non-parenthesis chars as neutral? It checks code not 40/41 then continue same balance. So for valid input only parentheses, length 2..50. T positive. Need preserve. C++ read T then loop T lines. Need consider whitespace trimming. Input spec: first line T, then T lines strings. Could use getline. Need mimic trim whitespace of codes (tabs,newline,vertical tab,form feed,carriage return,space) at both ends. Since reading lines via getline will strip newline; may include \\r if Windows. We should trim whitespace from both ends. The Prolog read_line_to_codes splits on newline, includes? In SWI read_line_to_codes reads line excluding newline? Let's recall: read_line_to_codes(Stream, Codes) reads a line, codes include no newline? It reads up to newline, newline not included. Trim still handles CR. valid_parens ignores non-parens. Need implement exactly.\n\nPotential nuance: Prolog first line trim, number_codes(T, FirstTrim). If first line has leading/trailing spaces, number_codes parses integer. If invalid true. C++ simplest: read T via cin >> T. This skips whitespace. Then need read rest line for newline. Then for i 0..T-1 getline. If getline fails? The source on EOF returns true (stops processing remaining; no output for remaining lines). But valid inputs have enough lines. We can just getline.\n\nNeed output YES/NO.\n\nNeed ensure empty line: valid_parens([]) balance 0 => YES. Source: trim empty, valid_parens([],0) true -> YES. In spec lengths 2..50, but preserving valid input maybe no empty. Our implementation should handle.\n\nvalid_parens: balance never negative; at end zero. Non parens ignored. So implement trim function removing isspace? Prolog is_ws codes [9,10,11,12,13,32], same C++ std::isspace includes maybe others depending locale but ASCII. Use explicit.\n\nRead T: Could mimic Prolog: read first line, trim, parse integer. If invalid no output. But input guaranteed. Use getline first, trim, stoi. Then loop. Need be careful if first line may have BOM? Not needed. If using getline after stoi? We read first line fully. Good.\n\nPseudo:\n#include <bits/stdc++.h>\nusing namespace std;\nbool isWs(char c){ unsigned char u=c; return c=='\\t'||c=='\\n'||c=='\\v'||c=='\\f'||c=='\\r'||c==' '; }\nstring trim(const string& s){ size_t a=0,b=s.size(); while(a<b && isWs(s[a])) a++; while(b>a && isWs(s[b-1])) b--; return s.substr(a,b-a); }\nbool valid(const string& s){ int bal=0; for(char c: s){ if(c=='(') bal++; else if(c==')'){ if(bal<=0) return false; bal--; } } return bal==0; }\nint main(){ ios...; string line; if(!getline(cin,line)) return 0; string ft=trim(line); int T; try { T=stoi(ft); } catch(...) { return 0; } for(int i=0;i<T;i++){ if(!getline(cin,line)) return 0; string t=trim(line); cout << (valid(t)?\"YES\":\"NO\") << '\\n'; } return 0; }\n\nNeed consider number_codes accepts leading +/-? Positive T. stoi okay. If line empty? no. If trim empty? no. If first line contains trailing \\r, trim removes.\n\nPotential subtle: Prolog process_lines recurses N. If T=0? Spec positive. But process_lines(_,0) :- !. no output. Our loop 0 no output.\n\nPotential subtle: valid_parens for ')' when balance=0: Prolog first clause valid_parens([41|Rest],Balance) requires Balance>0; if not, third clause Code =\\=40, Code =\\=41 fails for 41, so invalid false immediately -> NO. Our returns false. Good.\n\nNeed \"Return exactly one complete source file in one fenced code block, with no explanation.\" So final just code block. Ensure no extra text.\n\nNeed maybe include <iostream>, <string>, <cctype>? Use explicit isWs. <bits/stdc++.h> allowed? Standard libraries shipped with C++17, but bits/stdc++.h is GNU extension not standard. Safer use standard headers. C++17. Use <iostream>, <string>. We don't need stoi? <string> includes stoi? Actually std::stoi declared in <string>. Good. Use no exceptions? Need include <exception>? no.\n\nNeed avoid hard-code examples. Good.\n\nLet's produce. ",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794976987,
+    "id": "chatcmpl-fcf5aad2aa4ec7af2408815f49cadf5d",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 1538,
+      "completion_tokens_details": {
+        "reasoning_tokens": 1167
+      },
+      "prompt_tokens": 922,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 2460
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0021222,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 10.342376100015827,
+  "logical_request_id": "4f15859b64d653e8d3312f3868a6d001fa4c58cb139a2d1907f7a0a05e0efeab",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-prolog\\attempt-04\\step-08\\response_body.txt",
+  "received_at": "2026-11-18T04:43:15.332883+00:00",
+  "request_id": "chatcmpl-fcf5aad2aa4ec7af2408815f49cadf5d",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <string>\n\nusing namespace std;\n\nstatic bool isWs(char c) {\n    return c == '\\t' || c == '\\n' || c == '\\v' ||\n           c == '\\f' || c == '\\r' || c == ' ';\n}\n\nstatic string trim(const string& s) {\n    size_t left = 0;\n    size_t right = s.size();\n\n    while (left < right && isWs(s[left])) {\n        ++left;\n    }\n    while (right > left && isWs(s[right - 1])) {\n        --right;\n    }\n\n    return s.substr(left, right - left);\n}\n\nstatic bool validParens(const string& s) {\n    int balance = 0;\n\n    for (char c : s) {\n        if (c == '(') {\n            ++balance;\n        } else if (c == ')') {\n            if (balance <= 0) {\n                return false;\n            }\n            --balance;\n        }\n    }\n\n    return balance == 0;\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    string line;\n    if (!getline(cin, line)) {\n        return 0;\n    }\n\n    string first = trim(line);\n    int t = 0;\n\n    try {\n        t = stoi(first);\n    } catch (...) {\n        return 0;\n    }\n\n    for (int i = 0; i < t; ++i) {\n        if (!getline(cin, line)) {\n            return 0;\n        }\n\n        string trimmed = trim(line);\n        cout << (validParens(trimmed) ? \"YES\" : \"NO\") << '\\n';\n    }\n\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 1538,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1167
+    },
+    "prompt_tokens": 922,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 2460
+  },
+  "usage_raw": {
+    "completion_tokens": 1538,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1167
+    },
+    "prompt_tokens": 922,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 2460
+  }
+}

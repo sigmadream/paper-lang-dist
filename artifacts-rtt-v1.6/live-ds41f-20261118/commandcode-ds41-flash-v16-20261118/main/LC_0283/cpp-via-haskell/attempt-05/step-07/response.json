@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Data.List (partition)\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let nums = map read (words input) :: [Int]\n    case nums of\n        [] -> return ()\n        (n:rest) ->\n            let arr = take n rest\n                (zeros, nonZeros) = partition (== 0) arr\n            in putStrLn (unwords (map show (nonZeros ++ zeros)))\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 651,
+    "total_tokens": 974,
+    "completion_tokens": 323,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 218
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 651,
+    "total_tokens": 974,
+    "completion_tokens": 323,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 218
+    }
+  },
+  "cost_usd": 0.0005829,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-ebd3009439fd1b05a442e7a7ae22ca95",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-haskell\\attempt-05\\step-07\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-ebd3009439fd1b05a442e7a7ae22ca95",
+    "object": "chat.completion",
+    "created": 1794991265,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Data.List (partition)\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let nums = map read (words input) :: [Int]\n    case nums of\n        [] -> return ()\n        (n:rest) ->\n            let arr = take n rest\n                (zeros, nonZeros) = partition (== 0) arr\n            in putStrLn (unwords (map show (nonZeros ++ zeros)))\n```",
+          "reasoning_content": "We need answer exact one complete source file in fenced code block, no explanation. Need Haskell module Main main. Preserve behavior. Read n then n ints. Output nonzeros then zeros space-separated newline. Edge N>=1. If n maybe missing? not needed. Need standard libs. Implement read all ints. main = do input <- getContents; let xs = map read (words input) :: [Int]; case xs of (n:rest) -> ... Use take n rest. partition (/=0) but preserves order. output unwords. Need handle first? simple unwords nonzeros ++ zeros. If N >=1, output not empty. But if n 0? constraint 1, but maybe handle. unwords [] -> \"\", then putStrLn -> newline. C++ would output newline. Good.\n\nPotential issue input may have no n: C++ returns 0 no output. Haskell if empty do nothing. Need match: if not null xs. Code. Use Data.List partition.\n\nNeed only code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 651,
+      "total_tokens": 974,
+      "completion_tokens": 323,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 218
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.456458200002089,
+  "received_at": "2026-11-18T08:41:05.903866+00:00",
+  "logical_request_id": "dfe740287a78308c7a114c1c4fe393f1f63395b9aaf0f6d02a9836c2f86871f9",
+  "execution_class": "direct_api"
+}

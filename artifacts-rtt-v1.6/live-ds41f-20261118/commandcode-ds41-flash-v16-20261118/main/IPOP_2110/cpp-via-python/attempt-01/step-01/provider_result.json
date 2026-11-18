@@ -1,0 +1,86 @@
+{
+  "text": "```python\nimport sys\n\n\ndef main():\n    data = list(map(int, sys.stdin.buffer.read().split()))\n    if not data:\n        return\n\n    n, c = data[0], data[1]\n    a = data[2:2 + n]\n    a.sort()\n\n    left = 1\n    right = a[-1] - a[0]\n    ans = 0\n\n    while left <= right:\n        mid = left + (right - left) // 2\n        count = 1\n        prev = a[0]\n\n        for i in range(1, n):\n            if a[i] - prev >= mid:\n                count += 1\n                prev = a[i]\n\n        if count >= c:\n            ans = mid\n            left = mid + 1\n        else:\n            right = mid - 1\n\n    sys.stdout.write(str(ans) + \"\\n\")\n\n\nif __name__ == \"__main__\":\n    main()\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 685,
+    "total_tokens": 975,
+    "completion_tokens": 290,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 86
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 685,
+    "total_tokens": 975,
+    "completion_tokens": 290,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 86
+    }
+  },
+  "cost_usd": 0.000515868,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-55588650a7007bca3befece253694716",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2110\\cpp-via-python\\attempt-01\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-55588650a7007bca3befece253694716",
+    "object": "chat.completion",
+    "created": 1794985662,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\nimport sys\n\n\ndef main():\n    data = list(map(int, sys.stdin.buffer.read().split()))\n    if not data:\n        return\n\n    n, c = data[0], data[1]\n    a = data[2:2 + n]\n    a.sort()\n\n    left = 1\n    right = a[-1] - a[0]\n    ans = 0\n\n    while left <= right:\n        mid = left + (right - left) // 2\n        count = 1\n        prev = a[0]\n\n        for i in range(1, n):\n            if a[i] - prev >= mid:\n                count += 1\n                prev = a[i]\n\n        if count >= c:\n            ans = mid\n            left = mid + 1\n        else:\n            right = mid - 1\n\n    sys.stdout.write(str(ans) + \"\\n\")\n\n\nif __name__ == \"__main__\":\n    main()\n```",
+          "reasoning_content": "We need answer translate to Python. Need only complete source in fenced code block, no explanation. Need preserve behavior. Source simple. Provide Python 3 script reads stdin writes stdout. Need maybe if no input return. Use sys.stdin.buffer.read split. Sort. Binary search. Output ans newline. Ensure algorithm. Let's craft.\n\nNeed return exactly one complete source file in one fenced code block. No explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 685,
+      "total_tokens": 975,
+      "completion_tokens": 290,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.596012800000608,
+  "received_at": "2026-11-18T07:07:42.841053+00:00",
+  "logical_request_id": "6523b9ca99abc1414ba5761eb98986e266af95b8e6817406478ecf3ba6f3acb2",
+  "execution_class": "direct_api"
+}

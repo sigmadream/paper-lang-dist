@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```prolog\nmain :-\n    read_line_to_string(user_input, L0),\n    (   L0 == end_of_file\n    ->  true\n    ;   atom_string(A0, L0),\n        atom_number(A0, T),\n        process(T)\n    ).\n\nprocess(0) :- !.\nprocess(N) :-\n    N > 0,\n    read_line_to_string(user_input, L),\n    (   L == end_of_file\n    ->  true\n    ;   valid_braces(L, Ans),\n        write(Ans), nl,\n        N1 is N - 1,\n        process(N1)\n    ).\n\nvalid_braces(Line, 'YES') :-\n    string_codes(Line, Cs),\n    Cs \\= [],\n    valid_codes(Cs, 0),\n    !.\nvalid_braces(_, 'NO').\n\nvalid_codes([], Bal) :-\n    Bal =:= 0.\nvalid_codes([C|Cs], Bal) :-\n    C =:= 40,\n    Bal1 is Bal + 1,\n    valid_codes(Cs, Bal1).\nvalid_codes([C|Cs], Bal) :-\n    C =:= 41,\n    Bal > 0,\n    Bal1 is Bal - 1,\n    valid_codes(Cs, Bal1).\n```",
+          "reasoning_content": "We need answer only code block Prolog. Need translate. Need preserve stdin stdout. Implement main/0 reads T then T lines, validate balanced parentheses. SWI-Prolog. Need careful reading lines can be read_string? Use read_line_to_string(user_input, Line). First line may have T. Need skip blank? Spec valid no blank. Code: read T via read_line_to_string, atom_number. Then loop T times read_line. For each string chars codes check.\n\nNeed avoid initialization directives. main/0 defined. Evaluator invokes main. Need output lines.\n\nImplement predicate check_balanced(String) with codes. SWI: string_codes. Iterate bal. If '(' increment; ')' decrement; if negative fail. End bal=0. Use range? We can implement recursive.\n\nread T: read_line_to_string(user_input, L), atom_number(L,T). The line string maybe \"6\". atom_number works on atom? In SWI atom_number(?Atom, ?Number). If L is string, atom_number may accept text? SWI's atom_number works atom or string? It has text? Safer: number_string(T, L) but if L string and T var. number_string(+Number, -String) or (-Number, +String)? SWI number_string(?Number, ?String) I think bidirectional. Use number_string(T, L). If newline stripped. read_line_to_string removes newline. It returns string or atom end_of_file. Could use read_line_to_string then number_string.\n\nLoop: process(T) :- T > 0, read_line_to_string(user_input, L), (L == end_of_file -> true ; check(L, R), writeln(R), T1 is T-1, process(T1)). Need output \"YES\"/\"NO\". Could use format(\"~w~n\", [R]) with atom YES.\n\nChecker on string: string_codes(S, Cs), check_codes(Cs, 0). check_codes([], Bal) :- Bal =:= 0. check_codes([C|Cs], Bal) :- (C =:= 0'( -> Bal1 is Bal+1 ; Bal1 is Bal-1), Bal1 >= 0, check_codes(Cs, Bal1). Need syntax for char code. In SWI, 0'( works? Use C =:= 40 for '(' else. Since string only parentheses. So:\n\ncheck_codes([], 0).\ncheck_codes([40|Cs], Bal) :- Bal1 is Bal+1, check_codes(Cs, Bal1).\ncheck_codes([41|Cs], Bal) :- Bal > 0, Bal1 is Bal-1, check_codes(Cs, Bal1).\n\nBut check_codes([], Bal) must accept any Bal? Better check_codes([], Bal) :- Bal =:= 0. But first clause [ ] with exact 0 works when final balance zero. If nonempty.\n\nNeed handle empty line? Strings length >=2. read_line_to_string returns \"\" if blank. Not valid. Not worry.\n\nPotential issue with first line / input possibly no T. Use catch? Not needed.\n\nDefine main :- read_line_to_string(user_input, L0), (L0 == end_of_file -> true ; number_string(T,L0), process(T)). Note number_string(T, L0) with L0 string \"6\" yields T=6? Let's verify SWI number_string/2: number_string(?Number, ?String) is true if String is text representation. Both args can be var? Docs: number_string(?Number, ?String). At least one instantiated. So with String instantiated, returns Number. Yes.\n\nAlternative use atom_number(Atom, T). But line string. Convert atom_string(A,L0), atom_number(A,T). More compatible: atom_string(A, L0), atom_number(A, T). Use this.\n\nOutput atoms: writeln(YES) prints yes? In Prolog, writeln(YES) with uppercase variable? Wait YES is variable in clause! Need quote atoms 'YES', 'NO'. Or use format(\"YES~n\"). Better format(\"~w~n\", [Answer]) where Answer atom 'YES'. Define result.\n\nProcess:\n\nprocess(0) :- !.\nprocess(N) :- N > 0,\n    read_line_to_string(user_input, Line),\n    ( Line == end_of_file -> true\n    ; (valid_braces(Line) -> write('YES'), nl ; write('NO'), nl),\n      N1 is N - 1,\n      process(N1)\n    ).\n\nvalid_braces(Line) :- string_codes(Line, Cs), valid_codes(Cs, 0). Need maybe Line may be atom if read_line_to_string returns string always. SWI 7 returns string. In older maybe atom? Spec SWI-Prolog. Use read_line_to_string.\n\nvalid_codes([], Bal) :- Bal =:= 0.\nvalid_codes([C|Cs], Bal) :- C =:= 40, !, Bal1 is Bal+1, valid_codes(Cs, Bal1).\nvalid_codes([C|Cs], Bal) :- C =:= 41, Bal > 0, Bal1 is Bal-1, valid_codes(Cs, Bal1).\nBut if C not 40/41, fail. Good.\n\nNeed ensure valid_codes([], Bal) works with variable Bal? Bal always int. In query valid_codes([],0) true. If Bal=0.\n\nPotential issue with cut in 40 clause? valid_codes([C|Cs],Bal), C=:=40, Bal1..., valid_codes. If fails, could backtrack to second clause C=:=41 false. Fine. No cut needed. But if C=40, second C=:=41 false. Fine.\n\nNow final should be exactly one code block. No explanation.\n\nNeed include module? \"module Main and main/0\"? For Prolog spec: define main/0; evaluator invokes main; do not add initialization directives. We can just define main/0, no module? They said Prolog: SWI-Prolog, define main/0. No module required. To be safe :- module not needed. If include module('Main', [main/0])? Might interfere? They said no initialization directives, module directive okay? But \"exactly source file\". SWI can run. Simplest no module. But if evaluator consults and calls main, fine.\n\nNeed perhaps handle CRLF: read_line_to_string strips \\n but leaves \\r? In SWI on Linux, if input has CRLF, read_line_to_string maybe includes \\r? Actually SWI stream newline handling? Could strip trailing \\r to be safe. The public examples in JSON use \\n only. Problem typical. Could implement trim_cr? Not necessary but robust.\n\nPotential issue first line: if there is leading/trailing whitespace? Valid spec no. Could trim. But no.\n\nLet's craft final.\n\nNeed consider number_string with atom_string. Use:\nmain :-\n    read_line_to_string(user_input, L0),\n    ( L0 == end_of_file -> true\n    ; atom_string(A0, L0),\n      atom_number(A0, T),\n      process(T)\n    ).\n\natom_string(A0,L0) where L0 string. Good.\n\nprocess:\nprocess(0) :- !.\nprocess(N) :-\n    N > 0,\n    read_line_to_string(user_input, L),\n    ( L == end_of_file -> true\n    ; valid(L, Ans),\n      write(Ans), nl,\n      N1 is N - 1,\n      process(N1)\n    ).\n\nvalid(Line, Ans) :- string_codes(Line, Cs), valid_codes(Cs,0), !, Ans='YES'. Wait if valid_codes fails, valid fails, not produce NO. Better:\n\nvalid(Line, 'YES') :- string_codes(Line, Cs), valid_codes(Cs,0), !.\nvalid(_, 'NO').\n\nBut if string_codes Line, valid_codes succeeds, cut prevents second. If fails, second. Good. But cut in valid(Line,'YES') after valid codes only. If Line weird string_codes error? no.\n\nNeed ensure valid_codes([], Bal) :- Bal =:= 0. For \"()\" works. For \"\" would valid_codes([],0) true, so empty -> YES, but spec length >=2. If blank line due to input? Not valid. Could require nonempty but not necessary. But if there is blank line unexpectedly, would output YES incorrectly maybe. Spec no blank. Could enforce at least one char: valid(Line,'YES') :- string_codes(Line,Cs), Cs \\= [], valid_codes(Cs,0), !. However string \"()\" length. For empty not valid. Good to include.\n\nActually if T line read and then exactly T lines. If there is trailing empty line not processed. Fine.\n\nPotential issue write(Ans), nl writes atom. Good.\n\nLet's final code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1795000933,
+    "id": "chatcmpl-468876a6168f12a505ce956f156cc501",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 2195,
+      "completion_tokens_details": {
+        "reasoning_tokens": 1911
+      },
+      "prompt_tokens": 615,
+      "prompt_tokens_details": {
+        "cached_tokens": 512
+      },
+      "total_tokens": 2810
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0026679720000000002,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 13.159567399998195,
+  "logical_request_id": "b822f0fd36b936d6cfb48ef726ca2a9a9fd7e751aa72aedb0683404632620065",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-prolog\\attempt-01\\step-01\\response_body.txt",
+  "received_at": "2026-11-18T11:22:26.030419+00:00",
+  "request_id": "chatcmpl-468876a6168f12a505ce956f156cc501",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```prolog\nmain :-\n    read_line_to_string(user_input, L0),\n    (   L0 == end_of_file\n    ->  true\n    ;   atom_string(A0, L0),\n        atom_number(A0, T),\n        process(T)\n    ).\n\nprocess(0) :- !.\nprocess(N) :-\n    N > 0,\n    read_line_to_string(user_input, L),\n    (   L == end_of_file\n    ->  true\n    ;   valid_braces(L, Ans),\n        write(Ans), nl,\n        N1 is N - 1,\n        process(N1)\n    ).\n\nvalid_braces(Line, 'YES') :-\n    string_codes(Line, Cs),\n    Cs \\= [],\n    valid_codes(Cs, 0),\n    !.\nvalid_braces(_, 'NO').\n\nvalid_codes([], Bal) :-\n    Bal =:= 0.\nvalid_codes([C|Cs], Bal) :-\n    C =:= 40,\n    Bal1 is Bal + 1,\n    valid_codes(Cs, Bal1).\nvalid_codes([C|Cs], Bal) :-\n    C =:= 41,\n    Bal > 0,\n    Bal1 is Bal - 1,\n    valid_codes(Cs, Bal1).\n```",
+  "usage": {
+    "completion_tokens": 2195,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1911
+    },
+    "prompt_tokens": 615,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "total_tokens": 2810
+  },
+  "usage_raw": {
+    "completion_tokens": 2195,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1911
+    },
+    "prompt_tokens": 615,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "total_tokens": 2810
+  }
+}

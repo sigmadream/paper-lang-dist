@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nimport Data.List (sort)\n\ncountPlacements :: Integer -> [Integer] -> Integer\ncountPlacements _ [] = 0\ncountPlacements d (x:xs) = go 1 x xs\n  where\n    go cnt _ [] = cnt\n    go cnt prev (y:ys)\n      | y - prev >= d = go (cnt + 1) y ys\n      | otherwise = go cnt prev ys\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    [] -> return ()\n    (_n:cStr:rest) -> do\n      let c = read cStr :: Integer\n          homes = sort (map read rest :: [Integer])\n          firstHome = head homes\n          lastHome = last homes\n          solve lo hi best\n            | lo > hi = best\n            | otherwise =\n                let mid = lo + (hi - lo) `div` 2\n                in if countPlacements mid homes >= c\n                     then solve (mid + 1) hi mid\n                     else solve lo (mid - 1) best\n      print (solve 1 (lastHome - firstHome) 0)\n```",
+          "reasoning_content": "We need answer only Haskell source in code block. Need translate. Need preserve behavior. Let's reason.\n\nProgram reads N C, then N coordinates. Sorts. Binary search max minimum distance. Edge cases? C>=2, N>=2, coords distinct. hi = last-first. lo=1. best 0. If all? fine. Need Haskell efficient for 200k. Use ByteString? Standard libraries shipped GHC includes bytestring? The prompt says standard libraries shipped with toolchain. GHC includes base, containers, bytestring, etc. Usually okay. Could use Data.List sort. Reading via words from stdin using getContents is fine for 200k (maybe okay). Need output Int/Integer? coords up to 1e9 difference fits Int on 64-bit, but Haskell Int likely 64-bit. To be safe Integer or Int. Use Integer for simplicity; sort Integers. 200k sort okay. Binary search with count.\n\nNeed define main :: IO (). We can parse all input as [Integer]. Read n c rest. sort. Define can d = count >= c. countPlacements d xs = fold? Need avoid foldl? We can write recursion. Since sorted.\n\nPotential issue with getContents lazy and words. Fine.\n\nNeed source exactly code block. No explanation. Could include module Main where.\n\nImplementation:\n\nmodule Main where\n\nimport Data.List (sort)\n\ncountPlacements :: Integer -> [Integer] -> Integer\ncountPlacements d [] = 0\ncountPlacements d (x:xs) = go 1 x xs\n  where\n    go cnt _ [] = cnt\n    go cnt prev (y:ys)\n      | y - prev >= d = go (cnt+1) y ys\n      | otherwise = go cnt prev ys\n\nmain :: IO ()\nmain = do\n  s <- getContents\n  let ws = words s\n  case ws of\n    [] -> return ()\n    (_n:c':rest) -> do\n       let c = read c' :: Integer\n           homes = sort (map read rest :: [Integer])\n       ... Need use n? not necessary. In case use all rest may include exact n. Good.\n       let first = head homes; last=last homes -- N>=2.\n           solve lo hi best\n             | lo > hi = best\n             | otherwise = let mid = lo + (hi-lo) `div` 2\n                           in if countPlacements mid homes >= c\n                              then solve (mid+1) hi mid\n                              else solve lo (mid-1) best\n       print (solve 1 (last homes - head homes) 0)\n\nNeed ensure read type. In case, n' unused. Pattern can use _n. Because no empty. c. If rest empty? N>=2. okay.\n\nNeed parse if no input return. Use print adds newline.\n\nPotential performance: countPlacements uses Integer. Fine. But getContents String and words creates list. 200k coordinates, about strings memory okay. Could be ~ maybe 2M chars. Fine.\n\nOne nuance: In original if c maybe 0? constraints c>=2. fine.\n\nNeed output exactly. Use putStrLn (show best) or print. print Integer includes newline.\n\nCould optimize binary search range if hi=0? coords distinct and N>=2, hi>0.\n\nHaskell code:\n\nmodule Main where\n\nimport Data.List (sort)\n\ncountPlacements :: Integer -> [Integer] -> Integer\ncountPlacements d [] = 0\ncountPlacements d (x:xs) = go 1 x xs\n  where\n    go cnt _ [] = cnt\n    go cnt prev (y:ys)\n      | y - prev >= d = go (cnt + 1) y ys\n      | otherwise = go cnt prev ys\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    [] -> return ()\n    (_n:cStr:rest) -> do\n      let c = read cStr :: Integer\n          homes = sort (map read rest :: [Integer])\n      let firstHome = head homes\n          lastHome = last homes\n          solve lo hi best\n            | lo > hi = best\n            | otherwise =\n                let mid = lo + (hi - lo) `div` 2\n                in if countPlacements mid homes >= c\n                     then solve (mid + 1) hi mid\n                     else solve lo (mid - 1) best\n      print (solve 1 (lastHome - firstHome) 0)\n\nNeed pattern maybe use n but okay.\n\nCould there be trailing newline? fine.\n\nReturn one fenced code block. Ensure no explanation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794984446,
+    "id": "chatcmpl-39e0b6bd996bcd8794a10145ddff2922",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 1247,
+      "completion_tokens_details": {
+        "reasoning_tokens": 988
+      },
+      "prompt_tokens": 739,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1986
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0017181,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 7.22521680011414,
+  "logical_request_id": "0404c81040e1e68f359a0dcce54ce22ed637be42921ca91ab187c411ea70cce8",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2110\\cpp-via-haskell\\attempt-05\\step-09\\response_body.txt",
+  "received_at": "2026-11-18T06:47:32.049666+00:00",
+  "request_id": "chatcmpl-39e0b6bd996bcd8794a10145ddff2922",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nimport Data.List (sort)\n\ncountPlacements :: Integer -> [Integer] -> Integer\ncountPlacements _ [] = 0\ncountPlacements d (x:xs) = go 1 x xs\n  where\n    go cnt _ [] = cnt\n    go cnt prev (y:ys)\n      | y - prev >= d = go (cnt + 1) y ys\n      | otherwise = go cnt prev ys\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    [] -> return ()\n    (_n:cStr:rest) -> do\n      let c = read cStr :: Integer\n          homes = sort (map read rest :: [Integer])\n          firstHome = head homes\n          lastHome = last homes\n          solve lo hi best\n            | lo > hi = best\n            | otherwise =\n                let mid = lo + (hi - lo) `div` 2\n                in if countPlacements mid homes >= c\n                     then solve (mid + 1) hi mid\n                     else solve lo (mid - 1) best\n      print (solve 1 (lastHome - firstHome) 0)\n```",
+  "usage": {
+    "completion_tokens": 1247,
+    "completion_tokens_details": {
+      "reasoning_tokens": 988
+    },
+    "prompt_tokens": 739,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1986
+  },
+  "usage_raw": {
+    "completion_tokens": 1247,
+    "completion_tokens_details": {
+      "reasoning_tokens": 988
+    },
+    "prompt_tokens": 739,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1986
+  }
+}

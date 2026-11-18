@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    int n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    std::vector<int> counts(n + 1, 0);\n    for (int i = 1; i <= n; ++i) {\n        counts[i] = counts[i >> 1] + (i & 1);\n    }\n\n    for (int i = 0; i <= n; ++i) {\n        if (i > 0) {\n            std::cout << ' ';\n        }\n        std::cout << counts[i];\n    }\n    std::cout << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block C++17. Need translate. Preserve stdin/stdout. Output \"0 1 1\\n\". Use no builtin popcount per constraints. Source DP counts[i>>1]+(i&1). C++.\n\nNeed consider empty input return. Output joined with spaces and newline. Use long? N <=100000 int fine. main. Exactly one source file fenced. No explanation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794987852,
+    "id": "chatcmpl-ddc2b31d419314ae7e7e696214a97a00",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 239,
+      "completion_tokens_details": {
+        "reasoning_tokens": 88
+      },
+      "prompt_tokens": 487,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 726
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00043289999999999995,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.3638325000647455,
+  "logical_request_id": "daa993c3d18a4bfbdaece4c995476ec0e6c024f180aa91da234f169efb292129",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0338\\cpp-via-python\\attempt-02\\step-04\\response_body.txt",
+  "received_at": "2026-11-18T07:44:12.481658+00:00",
+  "request_id": "chatcmpl-ddc2b31d419314ae7e7e696214a97a00",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    int n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    std::vector<int> counts(n + 1, 0);\n    for (int i = 1; i <= n; ++i) {\n        counts[i] = counts[i >> 1] + (i & 1);\n    }\n\n    for (int i = 0; i <= n; ++i) {\n        if (i > 0) {\n            std::cout << ' ';\n        }\n        std::cout << counts[i];\n    }\n    std::cout << '\\n';\n\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 239,
+    "completion_tokens_details": {
+      "reasoning_tokens": 88
+    },
+    "prompt_tokens": 487,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 726
+  },
+  "usage_raw": {
+    "completion_tokens": 239,
+    "completion_tokens_details": {
+      "reasoning_tokens": 88
+    },
+    "prompt_tokens": 487,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 726
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int T;\n    if (!(cin >> T)) return 0;\n\n    string line;\n    getline(cin, line);\n\n    while (T--) {\n        string s;\n        getline(cin, s);\n\n        int balance = 0;\n        bool ok = true;\n\n        for (char c : s) {\n            if (c == '(') {\n                ++balance;\n            } else if (c == ')') {\n                if (balance <= 0) {\n                    ok = false;\n                    break;\n                }\n                --balance;\n            }\n        }\n\n        if (ok && balance == 0) {\n            cout << \"YES\\n\";\n        } else {\n            cout << \"NO\\n\";\n        }\n    }\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need translate Prolog to C++17. Read T, then lines. Handle possibly blank lines? Strings length 2..50. Use getline after reading T, skip potential empty? Prolog read_line_to_string reads each line. Just implement.\n\nImportant: T lines each parentheses string. Match examples.\n\nWrite C++.\n\nEdge: first line T, then for each read line. Since strings non-empty, just getline. Need to consume newline after T. If line could be empty, but spec says length>=2, so fine.\n\nLet's write.\n\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n    int T;\n    if(!(cin>>T)) return 0;\n    string line;\n    getline(cin,line);\n    while(T--){\n        string s;\n        getline(cin,s);\n        int bal=0;\n        bool ok=true;\n        for(char c:s){\n            if(c=='(') bal++;\n            else if(c==')'){\n                if(bal<=0){ok=false;break;}\n                bal--;\n            }\n        }\n        if(ok && bal==0) cout<<\"YES\\n\";\n        else cout<<\"NO\\n\";\n    }\n    return 0;\n}\n```\n\nWait: If input ends without trailing newline, getline still reads last line. Good.\n\nPotential issue: T line may have trailing spaces; getline after cin>>T captures rest of first line (may be empty or spaces) but we discard. Then each subsequent getline reads string. Fine.\n\nBut if the leftover after T contains something? Not in spec.\n\nCould there be blank lines? Spec says T lines each string. No.\n\nOutput. Done.\n\nNeed exactly one code block, no explanation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794993931,
+    "id": "chatcmpl-f308cab286cafa4abcdd06e14380c1fb",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 562,
+      "completion_tokens_details": {
+        "reasoning_tokens": 372
+      },
+      "prompt_tokens": 684,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 1246
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.000766704,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.3581191999837756,
+  "logical_request_id": "378f7902194e69ed7ad224fcf76164580863740706c1e743807ffac620be77ac",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-prolog\\attempt-05\\step-04\\response_body.txt",
+  "received_at": "2026-11-18T09:25:33.334716+00:00",
+  "request_id": "chatcmpl-f308cab286cafa4abcdd06e14380c1fb",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int T;\n    if (!(cin >> T)) return 0;\n\n    string line;\n    getline(cin, line);\n\n    while (T--) {\n        string s;\n        getline(cin, s);\n\n        int balance = 0;\n        bool ok = true;\n\n        for (char c : s) {\n            if (c == '(') {\n                ++balance;\n            } else if (c == ')') {\n                if (balance <= 0) {\n                    ok = false;\n                    break;\n                }\n                --balance;\n            }\n        }\n\n        if (ok && balance == 0) {\n            cout << \"YES\\n\";\n        } else {\n            cout << \"NO\\n\";\n        }\n    }\n\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 562,
+    "completion_tokens_details": {
+      "reasoning_tokens": 372
+    },
+    "prompt_tokens": 684,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1246
+  },
+  "usage_raw": {
+    "completion_tokens": 562,
+    "completion_tokens_details": {
+      "reasoning_tokens": 372
+    },
+    "prompt_tokens": 684,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1246
+  }
+}

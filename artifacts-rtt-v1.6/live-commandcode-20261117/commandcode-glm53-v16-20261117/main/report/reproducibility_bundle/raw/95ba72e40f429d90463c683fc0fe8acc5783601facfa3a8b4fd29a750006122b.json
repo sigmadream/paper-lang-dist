@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```python\nimport sys\nfrom collections import deque\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    it = iter(data)\n    n = int(next(it))\n    m = int(next(it))\n    adj = [[] for _ in range(n + 1)]\n    for _ in range(m):\n        u = int(next(it))\n        v = int(next(it))\n        adj[u].append(v)\n        adj[v].append(u)\n    dist = [-1] * (n + 1)\n    dist[1] = 0\n    q = deque([1])\n    ans = 0\n    while q:\n        curr = q.popleft()\n        for nxt in adj[curr]:\n            if dist[nxt] == -1:\n                dist[nxt] = dist[curr] + 1\n                q.append(nxt)\n                if dist[nxt] <= 2:\n                    ans += 1\n    print(ans)\n\nif __name__ == \"__main__\":\n    main()\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794895957,
+    "id": "b67bbc8c-d013-4772-b77a-cd3a27278cac",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 215,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_2ecd3174404b4293a32b7dc7fe3efc72",
+      "trace_id": "6bcdb4007df54845959aee6c3a5ee96c"
+    },
+    "usage": {
+      "completion_tokens": 215,
+      "prompt_tokens": 694,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 909
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00177168,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.367353199981153,
+  "logical_request_id": "10a44b00715ffdfa0b8f5ecb9548e2ef4ba4623571bed35ca344e9c567898ea6",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_5567\\cpp-via-python\\attempt-04\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T06:12:36.865732+00:00",
+  "request_id": "b67bbc8c-d013-4772-b77a-cd3a27278cac",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```python\nimport sys\nfrom collections import deque\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    it = iter(data)\n    n = int(next(it))\n    m = int(next(it))\n    adj = [[] for _ in range(n + 1)]\n    for _ in range(m):\n        u = int(next(it))\n        v = int(next(it))\n        adj[u].append(v)\n        adj[v].append(u)\n    dist = [-1] * (n + 1)\n    dist[1] = 0\n    q = deque([1])\n    ans = 0\n    while q:\n        curr = q.popleft()\n        for nxt in adj[curr]:\n            if dist[nxt] == -1:\n                dist[nxt] = dist[curr] + 1\n                q.append(nxt)\n                if dist[nxt] <= 2:\n                    ans += 1\n    print(ans)\n\nif __name__ == \"__main__\":\n    main()\n```",
+  "usage": {
+    "completion_tokens": 215,
+    "prompt_tokens": 694,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 909
+  },
+  "usage_raw": {
+    "completion_tokens": 215,
+    "prompt_tokens": 694,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 909
+  }
+}

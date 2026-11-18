@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <string>\n#include <algorithm>\n\nint main() {\n    std::string s;\n    std::getline(std::cin, s);\n\n    // Strip whitespace (mirror Python's .strip())\n    const std::string ws = \" \\t\\n\\r\\f\\v\";\n    size_t start = s.find_first_not_of(ws);\n    if (start == std::string::npos) {\n        s.clear();\n    } else {\n        size_t end = s.find_last_not_of(ws);\n        s = s.substr(start, end - start + 1);\n    }\n\n    std::string rev(s.rbegin(), s.rend());\n    std::cout << (s == rev ? 1 : 0) << '\\n';\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 397,
+    "total_tokens": 580,
+    "completion_tokens": 183,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 12
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 397,
+    "total_tokens": 580,
+    "completion_tokens": 183,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 12
+    }
+  },
+  "cost_usd": 0.0003387,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-29764e6222375579356d0c23851f8151",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-python\\attempt-02\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-29764e6222375579356d0c23851f8151",
+    "object": "chat.completion",
+    "created": 1794978660,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\n#include <algorithm>\n\nint main() {\n    std::string s;\n    std::getline(std::cin, s);\n\n    // Strip whitespace (mirror Python's .strip())\n    const std::string ws = \" \\t\\n\\r\\f\\v\";\n    size_t start = s.find_first_not_of(ws);\n    if (start == std::string::npos) {\n        s.clear();\n    } else {\n        size_t end = s.find_last_not_of(ws);\n        s = s.substr(start, end - start + 1);\n    }\n\n    std::string rev(s.rbegin(), s.rend());\n    std::cout << (s == rev ? 1 : 0) << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "Simple translation. Read a line, strip, check palindrome."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 397,
+      "total_tokens": 580,
+      "completion_tokens": 183,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 12
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.1365101999836043,
+  "received_at": "2026-11-18T05:11:00.471730+00:00",
+  "logical_request_id": "794996e08a0723873bd564ba5c4bad376fbd11a6fbe5c490863b62c773aa5f4e",
+  "execution_class": "direct_api"
+}

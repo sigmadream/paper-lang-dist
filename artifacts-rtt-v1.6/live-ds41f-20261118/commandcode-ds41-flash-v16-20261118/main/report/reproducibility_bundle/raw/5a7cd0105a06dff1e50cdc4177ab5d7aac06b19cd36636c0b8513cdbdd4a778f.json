@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (nStr : rest) ->\n      let n = read nStr :: Int\n          xs = map read (take n rest) :: [Integer]\n      in print (maxSubarray xs)\n\nmaxSubarray :: [Integer] -> Integer\nmaxSubarray [] = 0\nmaxSubarray (x:xs) = go xs x x\n  where\n    go [] _ best = best\n    go (y:ys) cur best =\n      let cur' = max y (cur + y)\n          best' = max best cur'\n      in go ys cur' best'\n```",
+          "reasoning_content": "We need answer exactly one fenced code block Haskell. Need translate preserving stdin/stdout. Main reads N then N ints, computes Kadane, prints best. Need handle whitespace. Haskell with standard libs. Provide module Main and main :: IO (). Should read all tokens. Output integer newline. Ensure Int? elements up to 10000, N 100000 sum up to 1e9, Int 64-bit on GHC; use Int or Integer. Use Integer safe. Need parse tokens. Simplicity:\n\nmodule Main where\nimport Control.Monad (replicateM)\nmain :: IO ()\nmain = do\n  input <- getContents\n  let ws = words input\n  case ws of\n    [] -> return ()\n    (nStr:_)-> let n=read nStr::Int; xs=map read (take n (drop 1 ws))::[Integer]\n              in print (solve xs)\nsolve :: [Integer] -> Integer\nsolve [] = 0\nsolve (x:xs) = go xs x x where go [] cur best=best; go (a:as) cur best = let cur'=max a (cur+a); best'=max best cur' in go as cur' best'\n\nNeed ensure no hard-code. Return only code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794995062,
+    "id": "chatcmpl-b03cf9420ef804813e9c205a023040aa",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 433,
+      "completion_tokens_details": {
+        "reasoning_tokens": 269
+      },
+      "prompt_tokens": 610,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 1043
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.000664968,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 5.462655500043184,
+  "logical_request_id": "781ab75ad2ed4be38c03ec8946ae095e6a20453a10e21eafcce15dccf336fdef",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-haskell\\attempt-04\\step-01\\response_body.txt",
+  "received_at": "2026-11-18T09:44:25.228400+00:00",
+  "request_id": "chatcmpl-b03cf9420ef804813e9c205a023040aa",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (nStr : rest) ->\n      let n = read nStr :: Int\n          xs = map read (take n rest) :: [Integer]\n      in print (maxSubarray xs)\n\nmaxSubarray :: [Integer] -> Integer\nmaxSubarray [] = 0\nmaxSubarray (x:xs) = go xs x x\n  where\n    go [] _ best = best\n    go (y:ys) cur best =\n      let cur' = max y (cur + y)\n          best' = max best cur'\n      in go ys cur' best'\n```",
+  "usage": {
+    "completion_tokens": 433,
+    "completion_tokens_details": {
+      "reasoning_tokens": 269
+    },
+    "prompt_tokens": 610,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1043
+  },
+  "usage_raw": {
+    "completion_tokens": 433,
+    "completion_tokens_details": {
+      "reasoning_tokens": 269
+    },
+    "prompt_tokens": 610,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1043
+  }
+}

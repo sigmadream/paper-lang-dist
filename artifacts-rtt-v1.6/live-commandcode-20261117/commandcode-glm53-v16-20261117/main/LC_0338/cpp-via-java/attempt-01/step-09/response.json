@@ -1,0 +1,94 @@
+{
+  "text": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        if (line == null) return;\n        String t = line.trim();\n        if (t.isEmpty()) return;\n        int n = Integer.parseInt(t);\n        int[] counts = new int[n + 1];\n        for (int i = 1; i <= n; ++i) counts[i] = counts[i / 2] + (i % 2);\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i <= n; ++i) {\n            if (i > 0) sb.append(' ');\n            sb.append(counts[i]);\n        }\n        sb.append('\\n');\n        System.out.print(sb);\n    }\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 185,
+    "prompt_tokens": 599,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 784
+  },
+  "usage_raw": {
+    "completion_tokens": 185,
+    "prompt_tokens": 599,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 784
+  },
+  "cost_usd": 0.0012148400000000002,
+  "cost_source": "estimated",
+  "request_id": "dcbacbaf-20aa-4db4-ba46-645e625660db",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0338\\cpp-via-java\\attempt-01\\step-09\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        if (line == null) return;\n        String t = line.trim();\n        if (t.isEmpty()) return;\n        int n = Integer.parseInt(t);\n        int[] counts = new int[n + 1];\n        for (int i = 1; i <= n; ++i) counts[i] = counts[i / 2] + (i % 2);\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i <= n; ++i) {\n            if (i > 0) sb.append(' ');\n            sb.append(counts[i]);\n        }\n        sb.append('\\n');\n        System.out.print(sb);\n    }\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794901597,
+    "id": "dcbacbaf-20aa-4db4-ba46-645e625660db",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 185,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_fda272241ee0432d9479ae97e68f7a0d",
+      "trace_id": "b0f17c24543042c099befa7336b125cb"
+    },
+    "usage": {
+      "completion_tokens": 185,
+      "prompt_tokens": 599,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 784
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.3972651999793015,
+  "received_at": "2026-11-17T07:46:36.512273+00:00",
+  "logical_request_id": "f129c9adde087341c413ca7f360e9b1f3f5ff519ece234336051a63d66f81441",
+  "execution_class": "direct_api"
+}

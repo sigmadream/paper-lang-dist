@@ -1,0 +1,86 @@
+{
+  "text": "```java\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\n\npublic class Main {\n    static int n;\n    static int ans = 0;\n    static boolean[] col;\n    static boolean[] diag1;\n    static boolean[] diag2;\n\n    static void solve(int r) {\n        if (r == n) {\n            ans++;\n            return;\n        }\n        for (int c = 0; c < n; c++) {\n            if (col[c] || diag1[r + c] || diag2[r - c + n - 1]) continue;\n            col[c] = true;\n            diag1[r + c] = true;\n            diag2[r - c + n - 1] = true;\n\n            solve(r + 1);\n\n            col[c] = false;\n            diag1[r + c] = false;\n            diag2[r - c + n - 1] = false;\n        }\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        if (line == null) return;\n\n        n = Integer.parseInt(line.trim());\n\n        col = new boolean[n];\n        diag1 = new boolean[2 * n - 1];\n        diag2 = new boolean[2 * n - 1];\n\n        solve(0);\n\n        System.out.println(ans);\n    }\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 628,
+    "total_tokens": 1031,
+    "completion_tokens": 403,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 96
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 628,
+    "total_tokens": 1031,
+    "completion_tokens": 403,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 96
+    }
+  },
+  "cost_usd": 0.0005214719999999999,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-7658af1b237e6442efbdb186a9f76f2e",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9663\\cpp-via-java\\attempt-02\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-7658af1b237e6442efbdb186a9f76f2e",
+    "object": "chat.completion",
+    "created": 1794992233,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```java\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\n\npublic class Main {\n    static int n;\n    static int ans = 0;\n    static boolean[] col;\n    static boolean[] diag1;\n    static boolean[] diag2;\n\n    static void solve(int r) {\n        if (r == n) {\n            ans++;\n            return;\n        }\n        for (int c = 0; c < n; c++) {\n            if (col[c] || diag1[r + c] || diag2[r - c + n - 1]) continue;\n            col[c] = true;\n            diag1[r + c] = true;\n            diag2[r - c + n - 1] = true;\n\n            solve(r + 1);\n\n            col[c] = false;\n            diag1[r + c] = false;\n            diag2[r - c + n - 1] = false;\n        }\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        if (line == null) return;\n\n        n = Integer.parseInt(line.trim());\n\n        col = new boolean[n];\n        diag1 = new boolean[2 * n - 1];\n        diag2 = new boolean[2 * n - 1];\n\n        solve(0);\n\n        System.out.println(ans);\n    }\n}\n```",
+          "reasoning_content": "We need answer with Java 17 source only one fenced block. Need translate. Need ensure algorithm constraints N<15, simple backtracking fine. Need public class Main main. Read stdin. Output count. Use boolean arrays. For N=1 works. Need no explanation. Could just provide.\n\nNeed be careful Java IO. Print newline. For n maybe absent? Spec valid. Use BufferedReader or Scanner. Simple.\n\nNeed exactly one fenced code block. final only.\n\n"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 628,
+      "total_tokens": 1031,
+      "completion_tokens": 403,
+      "prompt_tokens_details": {
+        "cached_tokens": 512
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.5947650999296457,
+  "received_at": "2026-11-18T08:57:14.964571+00:00",
+  "logical_request_id": "6392c08644f9a7b31811f259ec734ee33dcf4e29bdd2a397e4da5800c075970a",
+  "execution_class": "direct_api"
+}

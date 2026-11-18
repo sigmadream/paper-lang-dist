@@ -1,0 +1,18 @@
+# 공식 SDK와 Copilot CLI, 해당 모델 접근이 필요합니다.
+# https://github.com/github/copilot-sdk/tree/v0.1.32/python
+# SDK 내부 호출·컨텍스트는 미확인이므로 탐색 실행으로만 분류합니다.
+provider: copilot
+protocol: copilot_sdk
+auth:
+  type: sdk
+  api_key_env: COPILOT_GITHUB_TOKEN
+model: null
+allowed_response_models: []
+generation_profile:
+  name: copilot-sdk-exploratory
+  supported_options: [reasoning_effort]
+generation: {}
+request_timeout: 120
+retries: 0
+max_calls: 3600
+max_transport_attempts: 3600

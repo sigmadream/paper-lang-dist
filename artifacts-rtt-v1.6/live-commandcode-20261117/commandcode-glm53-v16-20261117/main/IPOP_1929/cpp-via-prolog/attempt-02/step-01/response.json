@@ -1,0 +1,95 @@
+{
+  "text": "```prolog\n:- module(main, [main/0]).\n\nmain :-\n    read_line_to_codes(user_input, Codes),\n    ( Codes == end_of_file ->\n        true\n    ;\n        phrase(numbers(Codes), [M, N]),\n        sieve(N, IsPrime),\n        print_primes(M, N, IsPrime)\n    ).\n\nnumbers(Codes) --> ws, num(M), ws, num(N), ws, { [M, N] }.\nws --> [C], { C =< 32 }, !, ws.\nws --> [].\nnum(X) --> digits(Ds), { number_codes(X, Ds) }, !.\ndigits([D|Ds]) --> [C], { C >= 48, C =< 57 }, !, digits(Ds), { D = [C] }.\ndigits([]) --> [].\n\nsieve(N, IsPrime) :-\n    Size is N + 1,\n    functor(IsPrime, arr, Size),\n    ( for(I, 1, Size), param(IsPrime) do\n        arg(I, IsPrime, true)\n    ),\n    ( I is 1, arg(1, IsPrime, V1), V1 = false, true ; true ),\n    setarg(1, IsPrime, false),\n    ( N >= 1 ->\n        ( arg(2, IsPrime, _), setarg(2, IsPrime, true) )\n    ; true ),\n    MaxI is floor(sqrt(N)),\n    ( for(I, 2, MaxI), param(IsPrime, N) do\n        arg(I, IsPrime, true) ->\n            Start is I * I,\n            ( for(J, Start, N, I), param(IsPrime) do\n                setarg(J, IsPrime, false)\n            )\n        ; true\n    ).\n\nprint_primes(M, N, IsPrime) :-\n    ( for(I, M, N), param(IsPrime) do\n        arg(I, IsPrime, true) ->\n            write(I), nl\n        ; true\n    ).\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 458,
+    "prompt_tokens": 562,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "total_tokens": 1020
+  },
+  "usage_raw": {
+    "completion_tokens": 458,
+    "prompt_tokens": 562,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "total_tokens": 1020
+  },
+  "cost_usd": 0.00221832,
+  "cost_source": "estimated",
+  "request_id": "0a5c2085-b6be-4984-9818-6a5bd8cfe512",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_1929\\cpp-via-prolog\\attempt-02\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n\nmain :-\n    read_line_to_codes(user_input, Codes),\n    ( Codes == end_of_file ->\n        true\n    ;\n        phrase(numbers(Codes), [M, N]),\n        sieve(N, IsPrime),\n        print_primes(M, N, IsPrime)\n    ).\n\nnumbers(Codes) --> ws, num(M), ws, num(N), ws, { [M, N] }.\nws --> [C], { C =< 32 }, !, ws.\nws --> [].\nnum(X) --> digits(Ds), { number_codes(X, Ds) }, !.\ndigits([D|Ds]) --> [C], { C >= 48, C =< 57 }, !, digits(Ds), { D = [C] }.\ndigits([]) --> [].\n\nsieve(N, IsPrime) :-\n    Size is N + 1,\n    functor(IsPrime, arr, Size),\n    ( for(I, 1, Size), param(IsPrime) do\n        arg(I, IsPrime, true)\n    ),\n    ( I is 1, arg(1, IsPrime, V1), V1 = false, true ; true ),\n    setarg(1, IsPrime, false),\n    ( N >= 1 ->\n        ( arg(2, IsPrime, _), setarg(2, IsPrime, true) )\n    ; true ),\n    MaxI is floor(sqrt(N)),\n    ( for(I, 2, MaxI), param(IsPrime, N) do\n        arg(I, IsPrime, true) ->\n            Start is I * I,\n            ( for(J, Start, N, I), param(IsPrime) do\n                setarg(J, IsPrime, false)\n            )\n        ; true\n    ).\n\nprint_primes(M, N, IsPrime) :-\n    ( for(I, M, N), param(IsPrime) do\n        arg(I, IsPrime, true) ->\n            write(I), nl\n        ; true\n    ).\n```",
+          "reasoning_content": "Prolog sieve with SWI. Use main/0, read line, parse two ints, sieve up to N, print primes M..N.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794897605,
+    "id": "0a5c2085-b6be-4984-9818-6a5bd8cfe512",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 458,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_8821a874aa5b4478b5c614e15ff41eac",
+      "trace_id": "e0a4039890bd4121b8b94f874a74a56f"
+    },
+    "usage": {
+      "completion_tokens": 458,
+      "prompt_tokens": 562,
+      "prompt_tokens_details": {
+        "cached_tokens": 512
+      },
+      "total_tokens": 1020
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 7.0615545000182465,
+  "received_at": "2026-11-17T06:40:04.769928+00:00",
+  "logical_request_id": "ec5b31ea328793d9a0c355674e09b87ea448eac93d937d8fa360f3931d008ed6",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+#include <utility>
+
+using namespace std;
+
+void hanoi(int n, int start, int mid, int end, vector<pair<int,int>>& moves) {
+    if (n == 1) {
+        moves.push_back({start, end});
+        return;
+    }
+    hanoi(n - 1, start, end, mid, moves);
+    moves.push_back({start, end});
+    hanoi(n - 1, mid, start, end, moves);
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    if (!(cin >> n)) {
+        return 0;
+    }
+
+    vector<pair<int,int>> moves;
+    hanoi(n, 1, 2, 3, moves);
+
+    cout << moves.size() << '\n';
+    for (const auto& mv : moves) {
+        cout << mv.first << " " << mv.second << '\n';
+    }
+
+    return 0;
+}

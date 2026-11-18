@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    int n;\n    if (!(std::cin >> n)) {\n        std::cout << '\\n';\n        return 0;\n    }\n\n    std::vector<int> nums(n);\n    for (int i = 0; i < n; ++i) {\n        std::cin >> nums[i];\n    }\n\n    std::vector<int> result;\n    result.reserve(n);\n\n    int zeroCount = 0;\n    for (int x : nums) {\n        if (x == 0) {\n            ++zeroCount;\n        } else {\n            result.push_back(x);\n        }\n    }\n\n    for (int i = 0; i < zeroCount; ++i) {\n        result.push_back(0);\n    }\n\n    for (std::size_t i = 0; i < result.size(); ++i) {\n        if (i > 0) std::cout << ' ';\n        std::cout << result[i];\n    }\n    std::cout << '\\n';\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 1015,
+    "total_tokens": 1388,
+    "completion_tokens": 373,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 144
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 1015,
+    "total_tokens": 1388,
+    "completion_tokens": 373,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 144
+    }
+  },
+  "cost_usd": 0.0007520999999999999,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-840b1f388f97954b480774c2adbf66df",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-prolog\\attempt-02\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-840b1f388f97954b480774c2adbf66df",
+    "object": "chat.completion",
+    "created": 1794981573,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    int n;\n    if (!(std::cin >> n)) {\n        std::cout << '\\n';\n        return 0;\n    }\n\n    std::vector<int> nums(n);\n    for (int i = 0; i < n; ++i) {\n        std::cin >> nums[i];\n    }\n\n    std::vector<int> result;\n    result.reserve(n);\n\n    int zeroCount = 0;\n    for (int x : nums) {\n        if (x == 0) {\n            ++zeroCount;\n        } else {\n            result.push_back(x);\n        }\n    }\n\n    for (int i = 0; i < zeroCount; ++i) {\n        result.push_back(0);\n    }\n\n    for (std::size_t i = 0; i < result.size(); ++i) {\n        if (i > 0) std::cout << ' ';\n        std::cout << result[i];\n    }\n    std::cout << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer exactly one fenced code block C++ source, no explanation. Need translate. Need preserve behavior. Input N then N ints. Output array space separated. Edge cases N? constraints >=1 but maybe zero. Source Prolog read tokens, N, take N, move zeros maintaining nonzero order, zeros count, print. C++ straightforward. Need maybe trailing newline. Print values: for empty nl; for nonempty write X then for each rest; output uses spaces between, final newline. So implement.\n\nNeed be careful if no tokens? spec valid. Use long long/int signed 32-bit. N up to 10000. C++17 main.\n\nReturn fenced block only."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 1015,
+      "total_tokens": 1388,
+      "completion_tokens": 373,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 144
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 5.458117499947548,
+  "received_at": "2026-11-18T05:59:36.112592+00:00",
+  "logical_request_id": "36bc637eecd35b93c7d670f1c5f7874bde1eaac2aebebce8d475704029ca43a6",
+  "execution_class": "direct_api"
+}

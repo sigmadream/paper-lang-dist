@@ -1,0 +1,25 @@
+﻿독립 코드·실험 준비 검토 Task입니다. 사용자 요청은 기존 DeepSeek v4 Pro를 정확 모델 deepseek/deepseek-v4.1-flash로 변경하여 동일 설계로 다시 실험하는 것입니다. 구현 작업자와 분리된 실제 검토자로서 신규 Flash 캠페인 준비를 검토하고, 적합하면 신규 실제 독립 검토 JSON을 작성해 조정자에게 반환해 주십시오. 유료 실험이나 인증값 접근은 금지입니다. 조정자가 검토 통과를 실행 작업자에게 전달합니다.
+
+작업 경로 C:/Users/sigma/orca/workspaces/paper-lang-dist/stickleback, 새 출력 루트 artifacts-rtt-v1.6/live-ds41f-20261118입니다. 읽어야 할 요구 명세는 .test-tmp/v16-orchestration/deepseek-v41-flash-task-20261118.txt이며, 구현된 계획·근거는 새 루트의 실행계획.md, 준비보고서.md, 준비검증.json, 공식문서-조회.json입니다. 기존 비교 기준은 scripts/run_deepseek_v16_20261118.py와 기존 Pro 두 설정, 기존 최종 검토 .test-tmp/v16-orchestration/deepseek-restart-final-review.md입니다. 변경들은 작업 공간의 신규 미추적 파일이므로 git 커밋 범위만 보지 말고 실제 신규 파일과 기존 기준을 직접 비교하십시오.
+
+검토 주요 파일:
+scripts/run_deepseek_v41_flash_20261118.py
+configs/v1.6/providers/commandcode_deepseek_v41_flash_20261118.yaml
+configs/v1.6/campaigns/commandcode_deepseek_v41_flash_20261118.yaml
+tests/integration/test_deepseek_flash_runner.py
+신규 source-manifest.json, 동결 사본 execution-sources, 기존-보존기준.json, 기존-불변검증.json, 오프라인-관문검증.json과 관련 테스트/관문 원출력·종료코드입니다.
+
+검토 기준:
+정확 요청 모델 및 응답 일치; Command Code endpoint 유지; max_tokens16384/reasoning_effortlow 및 temperature/top_p/seed 미추가; 공식 모델별 옵션·피크 단가0.30/1.20/0.006의 근거; 실제 core의 동일 문제·평가·프롬프트·시드·12/300스케줄·임계치·중단 규칙; 새 모델별 계약·단계 관문·보고·재현 연결; Windows 경로 길이; 기존 검증된 core/provider/helper 무변경; 기존 Pro/GLM/불명 요청/예약/관측과 완전 분리; 새 실행 잠금·인증 비상속·비밀정보 감사·소스/사본/기존근거 가드·unknown 차단입니다. HTTP524는 단일 전송 뒤 unknown 보존하고 재생성을 차단해야 합니다. 이전 Pro 검토나 구현자 자체 검토를 새 독립 근거로 수용하지 않아야 합니다.
+
+예산은 이전 사용·예약을 실제 원장으로 차감한 새 상한 preflight0.23/pilot49.28/main48.62, 합계98.13 USD이며 보수적 기존 전체 포함200.465729120<=200.50입니다. 예약0.12/0.25/0.25가 최대 입력32768/출력16384 및 Flash 피크단가 상계0.0294912 USD를 덮어야 합니다. 단계 한도 논리/전송1/1,144/432,3600/10800, 재시도0/2/2입니다. 20261118 Pro 결과불명0.25와 기존20261117불명0.50은 보존됩니다.
+
+구현 작업자 보고: 관련 회귀150개 통과, black/diff/offline prepare/offline gates 종료0; 소스/설정/사본67개, 중요기존근거389개; 원자료 등58079개 변경0. 현재 manifest 파일 SHA256 c3879f86b318f5765778cc730bddc073e2b804d94ed13f55935a5d474677e26b, 제안 계약25b30ad92ae6d7481dde8f1281fbe87d5c6ef059ed5b5e312e2834d4d994eca5. 이를 독립적으로 대조하고 구현자의 주장을 단순 복사하지 마십시오. 기존 원출력 근거를 확인하고 위험에 맞는 독립 검사/재현을 실시하십시오. 이미 검증된 범위를 이유 없이 반복하지 않되 검토 공백은 직접 확인해 주십시오. 외부 공식 문서 검증이 필요하면 primary source만 사용하십시오. 네트워크 금지 모의 경로 및 임시 별도 검사 폴더를 사용하고 새 실제 캠페인·유료 원장·main_design을 만들지 마십시오. prepare는 frozen manifest를 다시 쓰므로 실제 새 루트에서 재실행하지 마십시오.
+
+소스/설정/manifest/기존자료는 검토 중 읽기 전용입니다. 허용 쓰기는 새 루트의 독립-검토보고서.md, independent-review.json, 독립-검토검증.json 및 별도 검토 로그/임시 검증 산출물입니다. 구현 수정이 필요하면 파일:행·실패 근거·중요도를 제시하고 통과 JSON을 만들지 않은 채 조정자에게 보고하십시오. 조정자가 구현자에게 수정을 전달할 것입니다. 하위 작업자/체크아웃/커밋을 만들지 마십시오. 문서·설명은 한국어 높임말이며 강조 기호는 쓰지 않습니다. Python 도구는 uv 사용, 생성 보조코드는 타입힌트 없이 black 포맷입니다.
+
+검토 결과에 요구 충족 여부, 실행 차단 critical/important/minor 발견, 검사 범위와 실제 종료코드, 범위에서 제외한 동작이 있다면 이유, 남은 실제 실행 범위를 명확히 써 주십시오. 무해한 문체·최적화 제안을 실행 차단으로 과장하지 마십시오.
+
+적합하면 실제 본인의 식별자로 새 루트 independent-review.json을 직접 작성하십시오. 신규 래퍼 require_review의 실제 요구를 읽고 만족시켜야 합니다. 주요 필드 passed=true, reviewer, reviewer_session_id(본인의 실제 Orca 세션 ID, 구현자 orca_session_id:c31b6f22-31ba-4537-96bb-7e5799e46a0f 와 다름), campaign_id=commandcode-ds41-flash-v16-20261118, model_id=deepseek/deepseek-v4.1-flash, 실제 독립 보고서 report_path와 파일 바이트 report_sha256, prepared_manifest_path와 실제 manifest 파일 바이트 prepared_manifest_sha256, 새 manifest.files 전체67개 현재 해시를 포함하는 source_hashes입니다. 소스와 스냅샷 해시가 실제로 일치함을 확인하십시오. 과거 JSON을 복사하거나 미래 유료 실행을 통과한 것으로 쓰지 마십시오. 작성 후 신규 require_review를 인증값·네트워크 없이 호출하여 실제 수락 여부와 검사 전후 소스·manifest 불변을 검증해 주십시오. 검토 JSON과 보고서에 수행한 검사·공백·미실행 유료 단계도 명시하십시오.
+
+worker_done에는 판정, 실제 검토 근거 JSON·보고서·검증 경로, manifest 해시, 현재 소스 가드/require_review 수락 결과, 미해결 실행 차단 결함 여부를 조정자에게 전달해 주십시오. 검토자는 유료 실행을 시작하지 않습니다.

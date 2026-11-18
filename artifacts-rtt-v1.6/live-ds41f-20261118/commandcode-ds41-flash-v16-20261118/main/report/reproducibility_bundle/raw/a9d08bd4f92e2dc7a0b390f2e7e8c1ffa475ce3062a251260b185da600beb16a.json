@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    if len(data) < 2:\n        return\n\n    m = int(data[0])\n    n = int(data[1])\n\n    dp = [1] * n\n\n    for _ in range(1, m):\n        for j in range(1, n):\n            dp[j] += dp[j - 1]\n\n    print(dp[n - 1])\n\nif __name__ == \"__main__\":\n    main()\n```",
+          "reasoning_content": "We need answer exactly one fenced code block, no explanation. Translate C++ to Python preserving. Need produce Python script. Need consider valid M,N <=100 answer <=2e9. Source reads m,n, dp length n=1, loops i=1..m-1, j=1..n-1 dp[j]+=dp[j-1], print dp[n-1]. Equivalent. Need output. Need not handle missing? Could. Return code only. Ensure fenced.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794999890,
+    "id": "chatcmpl-0d9ae8a15cfb1ace7bae366c4ceff7cd",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 208,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 540,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 748
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00041160000000000003,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.012265200028196,
+  "logical_request_id": "0d43e2a48d549f53075671c2670a960ad540ce6d1ac61df05e0a931ca7682739",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-05\\step-03\\response_body.txt",
+  "received_at": "2026-11-18T11:04:52.904080+00:00",
+  "request_id": "chatcmpl-0d9ae8a15cfb1ace7bae366c4ceff7cd",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    if len(data) < 2:\n        return\n\n    m = int(data[0])\n    n = int(data[1])\n\n    dp = [1] * n\n\n    for _ in range(1, m):\n        for j in range(1, n):\n            dp[j] += dp[j - 1]\n\n    print(dp[n - 1])\n\nif __name__ == \"__main__\":\n    main()\n```",
+  "usage": {
+    "completion_tokens": 208,
+    "completion_tokens_details": {
+      "reasoning_tokens": 100
+    },
+    "prompt_tokens": 540,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 748
+  },
+  "usage_raw": {
+    "completion_tokens": 208,
+    "completion_tokens_details": {
+      "reasoning_tokens": 100
+    },
+    "prompt_tokens": 540,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 748
+  }
+}

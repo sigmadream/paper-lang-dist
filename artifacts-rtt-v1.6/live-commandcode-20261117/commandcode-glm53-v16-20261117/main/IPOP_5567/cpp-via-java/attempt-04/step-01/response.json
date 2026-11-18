@@ -1,0 +1,94 @@
+{
+  "text": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StreamTokenizer st = new StreamTokenizer(br);\n        st.nextToken(); int n = (int) st.nval;\n        st.nextToken(); int m = (int) st.nval;\n\n        List<List<Integer>> adj = new ArrayList<>();\n        for (int i = 0; i <= n; i++) adj.add(new ArrayList<>());\n        for (int i = 0; i < m; i++) {\n            st.nextToken(); int u = (int) st.nval;\n            st.nextToken(); int v = (int) st.nval;\n            adj.get(u).add(v);\n            adj.get(v).add(u);\n        }\n\n        int[] dist = new int[n + 1];\n        Arrays.fill(dist, -1);\n        Queue<Integer> q = new ArrayDeque<>();\n        q.add(1);\n        dist[1] = 0;\n\n        int ans = 0;\n        while (!q.isEmpty()) {\n            int curr = q.poll();\n            for (int next : adj.get(curr)) {\n                if (dist[next] == -1) {\n                    dist[next] = dist[curr] + 1;\n                    q.add(next);\n                    if (dist[next] <= 2) ans++;\n                }\n            }\n        }\n\n        System.out.println(ans);\n    }\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 304,
+    "prompt_tokens": 694,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 998
+  },
+  "usage_raw": {
+    "completion_tokens": 304,
+    "prompt_tokens": 694,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 998
+  },
+  "cost_usd": 0.00187144,
+  "cost_source": "estimated",
+  "request_id": "f935141f-8619-440f-9490-19911eb9b867",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_5567\\cpp-via-java\\attempt-04\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StreamTokenizer st = new StreamTokenizer(br);\n        st.nextToken(); int n = (int) st.nval;\n        st.nextToken(); int m = (int) st.nval;\n\n        List<List<Integer>> adj = new ArrayList<>();\n        for (int i = 0; i <= n; i++) adj.add(new ArrayList<>());\n        for (int i = 0; i < m; i++) {\n            st.nextToken(); int u = (int) st.nval;\n            st.nextToken(); int v = (int) st.nval;\n            adj.get(u).add(v);\n            adj.get(v).add(u);\n        }\n\n        int[] dist = new int[n + 1];\n        Arrays.fill(dist, -1);\n        Queue<Integer> q = new ArrayDeque<>();\n        q.add(1);\n        dist[1] = 0;\n\n        int ans = 0;\n        while (!q.isEmpty()) {\n            int curr = q.poll();\n            for (int next : adj.get(curr)) {\n                if (dist[next] == -1) {\n                    dist[next] = dist[curr] + 1;\n                    q.add(next);\n                    if (dist[next] <= 2) ans++;\n                }\n            }\n        }\n\n        System.out.println(ans);\n    }\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794902775,
+    "id": "f935141f-8619-440f-9490-19911eb9b867",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 304,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_ad814156c8864c718c6a5edefd7d64a4",
+      "trace_id": "f8481d904a3242c0bdfed40af82aea9e"
+    },
+    "usage": {
+      "completion_tokens": 304,
+      "prompt_tokens": 694,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 998
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.7035307999467477,
+  "received_at": "2026-11-17T08:06:15.421667+00:00",
+  "logical_request_id": "ff8692fe4f8b89ba15dc9bcbda66196e93b5f3107fb6e67af25b1038653e3509",
+  "execution_class": "direct_api"
+}

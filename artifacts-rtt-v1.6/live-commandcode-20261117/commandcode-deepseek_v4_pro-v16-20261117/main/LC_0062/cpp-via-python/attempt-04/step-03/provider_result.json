@@ -1,0 +1,107 @@
+{
+  "text": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    m, n = map(int, data[:2])\n\n    dp = [1] * n\n    for i in range(1, m):\n        for j in range(1, n):\n            dp[j] += dp[j - 1]\n\n    print(dp[n - 1])\n\nif __name__ == \"__main__\":\n    main()\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4-pro",
+  "actual_model": "deepseek/deepseek-v4-pro",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4-pro",
+    "actual": "deepseek/deepseek-v4-pro",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 494,
+    "completion_tokens": 334,
+    "total_tokens": 828,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 235,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "usage_raw": {
+    "prompt_tokens": 494,
+    "completion_tokens": 334,
+    "total_tokens": 828,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 235,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "cost_usd": 0.00197472,
+  "cost_source": "estimated",
+  "request_id": "gen_01M7MDDCVYA7JSMBMPE4NZM80B",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-deepseek_v4_pro-v16-20261117\\main\\LC_0062\\cpp-via-python\\attempt-04\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "gen_01M7MDDCVYA7JSMBMPE4NZM80B",
+    "object": "chat.completion",
+    "created": 1794907755,
+    "model": "deepseek/deepseek-v4-pro",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    m, n = map(int, data[:2])\n\n    dp = [1] * n\n    for i in range(1, m):\n        for j in range(1, n):\n            dp[j] += dp[j - 1]\n\n    print(dp[n - 1])\n\nif __name__ == \"__main__\":\n    main()\n```",
+          "reasoning": "We need to translate the C++ program to Python. The C++ reads two integers m and n, computes unique paths in an m x n grid moving right/down, and outputs the result. The program uses a DP with a 1D array of size n initialized to 1, then iterates over rows and columns updating dp[j] += dp[j-1]. That computes binomial coefficient C(m+n-2, m-1) but with DP. The Python translation should be similar. The output is just the number as integer, no trailing spaces? C++ outputs newline after number. So Python should print(dp[-1]) and that adds newline by default. Need to handle potential missing input: if no input, return/exit. Use sys.stdin.read().split() to parse. The input is two integers on first line, but can handle any whitespace. We'll implement similarly.\n\nAlso, C++ uses long long but constraints say answer <= 2e9, so Python int fine.\n\nSo the translation is straightforward.\n\nWe must output exactly one complete Python script in a fenced code block. No explanation.\n\nLet's write it.",
+          "reasoning_details": [
+            {
+              "type": "reasoning.text",
+              "text": "We need to translate the C++ program to Python. The C++ reads two integers m and n, computes unique paths in an m x n grid moving right/down, and outputs the result. The program uses a DP with a 1D array of size n initialized to 1, then iterates over rows and columns updating dp[j] += dp[j-1]. That computes binomial coefficient C(m+n-2, m-1) but with DP. The Python translation should be similar. The output is just the number as integer, no trailing spaces? C++ outputs newline after number. So Python should print(dp[-1]) and that adds newline by default. Need to handle potential missing input: if no input, return/exit. Use sys.stdin.read().split() to parse. The input is two integers on first line, but can handle any whitespace. We'll implement similarly.\n\nAlso, C++ uses long long but constraints say answer <= 2e9, so Python int fine.\n\nSo the translation is straightforward.\n\nWe must output exactly one complete Python script in a fenced code block. No explanation.\n\nLet's write it.",
+              "format": "unknown",
+              "index": 0
+            }
+          ]
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 494,
+      "completion_tokens": 334,
+      "total_tokens": 828,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 235,
+        "image_tokens": 0
+      },
+      "cache_creation_input_tokens": 0
+    },
+    "system_fingerprint": "fp_8p4h5d49re"
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 8.466383799968753,
+  "received_at": "2026-11-17T09:29:14.550089+00:00",
+  "logical_request_id": "8db938a2736ecd1bb6852c0d9adfd2e526d7cf139b3dece3b3b48e3f6d623503",
+  "execution_class": "direct_api"
+}

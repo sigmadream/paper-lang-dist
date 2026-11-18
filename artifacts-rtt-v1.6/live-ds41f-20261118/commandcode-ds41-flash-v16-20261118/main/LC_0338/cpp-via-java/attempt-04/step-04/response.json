@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n#include <string>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::string line;\n    if (!std::getline(std::cin, line)) return 0;\n\n    // trim\n    size_t start = line.find_first_not_of(\" \\t\\r\\n\");\n    if (start == std::string::npos) return 0;\n    size_t end = line.find_last_not_of(\" \\t\\r\\n\");\n    int n = std::stoi(line.substr(start, end - start + 1));\n\n    std::vector<int> counts(n + 1, 0);\n    for (int i = 1; i <= n; ++i) {\n        counts[i] = counts[i / 2] + (i % 2);\n    }\n\n    std::string out;\n    for (int i = 0; i <= n; ++i) {\n        if (i > 0) out.push_back(' ');\n        out += std::to_string(counts[i]);\n    }\n    out.push_back('\\n');\n    std::cout << out;\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 569,
+    "total_tokens": 830,
+    "completion_tokens": 261,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 7
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 569,
+    "total_tokens": 830,
+    "completion_tokens": 261,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 7
+    }
+  },
+  "cost_usd": 0.0004839,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-bc00abefd1372f842b738fa41ea2829c",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0338\\cpp-via-java\\attempt-04\\step-04\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-bc00abefd1372f842b738fa41ea2829c",
+    "object": "chat.completion",
+    "created": 1794988694,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <string>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::string line;\n    if (!std::getline(std::cin, line)) return 0;\n\n    // trim\n    size_t start = line.find_first_not_of(\" \\t\\r\\n\");\n    if (start == std::string::npos) return 0;\n    size_t end = line.find_last_not_of(\" \\t\\r\\n\");\n    int n = std::stoi(line.substr(start, end - start + 1));\n\n    std::vector<int> counts(n + 1, 0);\n    for (int i = 1; i <= n; ++i) {\n        counts[i] = counts[i / 2] + (i % 2);\n    }\n\n    std::string out;\n    for (int i = 0; i <= n; ++i) {\n        if (i > 0) out.push_back(' ');\n        out += std::to_string(counts[i]);\n    }\n    out.push_back('\\n');\n    std::cout << out;\n    return 0;\n}\n```",
+          "reasoning_content": "Translate to C++ preserving behavior."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 569,
+      "total_tokens": 830,
+      "completion_tokens": 261,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 7
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.545153900049627,
+  "received_at": "2026-11-18T07:58:14.913574+00:00",
+  "logical_request_id": "277c5b24ed3c31469bb83f95ed038543387a119dbc0fbaaba8075e7eb6c61f7b",
+  "execution_class": "direct_api"
+}

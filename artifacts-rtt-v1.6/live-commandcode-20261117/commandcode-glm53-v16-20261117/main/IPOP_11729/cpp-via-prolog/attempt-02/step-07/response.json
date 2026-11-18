@@ -1,0 +1,94 @@
+{
+  "text": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(charsio)).\n:- use_module(library(lists)).\n:- use_module(library(pipes)).\n\nmain :-\n    current_input(In),\n    read_line_to_chars(In, Line0),\n    ( Line0 == end_of_file -> true\n    ; atom_number(Line0, N0)\n    ->  ( N0 < 1 -> true\n        ;  M is (1 << N0) - 1,\n           format(\"~d~n\", [M]),\n           hanoi(N0, 1, 2, 3)\n        )\n    ;   true\n    ).\n\nhanoi(1, A, _, C) :- !, format(\"~d ~d~n\", [A, C]).\nhanoi(N, A, B, C) :-\n    N > 1,\n    N1 is N - 1,\n    hanoi(N1, A, C, B),\n    format(\"~d ~d~n\", [A, C]),\n    hanoi(N1, B, A, C).\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 227,
+    "prompt_tokens": 691,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 918
+  },
+  "usage_raw": {
+    "completion_tokens": 227,
+    "prompt_tokens": 691,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 918
+  },
+  "cost_usd": 0.00145548,
+  "cost_source": "estimated",
+  "request_id": "902519ec-e170-42a7-aa20-5e093b3acbb9",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_11729\\cpp-via-prolog\\attempt-02\\step-07\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(charsio)).\n:- use_module(library(lists)).\n:- use_module(library(pipes)).\n\nmain :-\n    current_input(In),\n    read_line_to_chars(In, Line0),\n    ( Line0 == end_of_file -> true\n    ; atom_number(Line0, N0)\n    ->  ( N0 < 1 -> true\n        ;  M is (1 << N0) - 1,\n           format(\"~d~n\", [M]),\n           hanoi(N0, 1, 2, 3)\n        )\n    ;   true\n    ).\n\nhanoi(1, A, _, C) :- !, format(\"~d ~d~n\", [A, C]).\nhanoi(N, A, B, C) :-\n    N > 1,\n    N1 is N - 1,\n    hanoi(N1, A, C, B),\n    format(\"~d ~d~n\", [A, C]),\n    hanoi(N1, B, A, C).\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794896925,
+    "id": "902519ec-e170-42a7-aa20-5e093b3acbb9",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 227,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_86074aa7ef704110a5d42ee9a1fe8121",
+      "trace_id": "0070fa16e9a44288adc3e98391d63229"
+    },
+    "usage": {
+      "completion_tokens": 227,
+      "prompt_tokens": 691,
+      "prompt_tokens_details": {
+        "cached_tokens": 448
+      },
+      "total_tokens": 918
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.5662574999732897,
+  "received_at": "2026-11-17T06:28:45.122699+00:00",
+  "logical_request_id": "7e58d8db7d5d1d9f865584a4d7841ade2ea950358ae58c6efc557147f5667865",
+  "execution_class": "direct_api"
+}

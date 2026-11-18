@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <algorithm>\n\nint main() {\n    long long m, n;\n    if (!(std::cin >> m >> n)) {\n        return 0;\n    }\n\n    long long total = m + n - 2;\n    long long k = std::min(m - 1, n - 1);\n\n    long long result = 1;\n    for (long long i = 1; i <= k; ++i) {\n        result = result * (total - k + i) / i;\n    }\n\n    std::cout << result << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer exact one complete source file in fenced code block, no explanation. Need translate to C++17 with main. Preserve stdin stdout. Need likely simple. Need ensure integer range: answer <=2e9 but intermediate in binomial computation maybe? Let's analyze source: result = result * (total - k + i) // i. In C++ using long long to avoid overflow. total <=198, k<=99, result <=2e9. Multiply result * up to maybe 198 => 4e11 fits long long. Good.\n\nNeed output integer newline. Read m n. If missing return. Use ios. Code. Only fenced code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794986181,
+    "id": "chatcmpl-355d726f6d34dd4949dcc665eac503a0",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 273,
+      "completion_tokens_details": {
+        "reasoning_tokens": 139
+      },
+      "prompt_tokens": 514,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 787
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00048179999999999995,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.2138645000522956,
+  "logical_request_id": "e48da3d1084afb15dc33f23ef0a9ecc2aa3ed8c3bfc848138256d96c763b224f",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-03\\step-04\\response_body.txt",
+  "received_at": "2026-11-18T07:16:22.503467+00:00",
+  "request_id": "chatcmpl-355d726f6d34dd4949dcc665eac503a0",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <algorithm>\n\nint main() {\n    long long m, n;\n    if (!(std::cin >> m >> n)) {\n        return 0;\n    }\n\n    long long total = m + n - 2;\n    long long k = std::min(m - 1, n - 1);\n\n    long long result = 1;\n    for (long long i = 1; i <= k; ++i) {\n        result = result * (total - k + i) / i;\n    }\n\n    std::cout << result << '\\n';\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 273,
+    "completion_tokens_details": {
+      "reasoning_tokens": 139
+    },
+    "prompt_tokens": 514,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 787
+  },
+  "usage_raw": {
+    "completion_tokens": 273,
+    "completion_tokens_details": {
+      "reasoning_tokens": 139
+    },
+    "prompt_tokens": 514,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 787
+  }
+}

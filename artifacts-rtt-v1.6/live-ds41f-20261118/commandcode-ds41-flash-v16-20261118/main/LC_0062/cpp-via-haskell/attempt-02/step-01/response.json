@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let (m:n:_) = map read (words input) :: [Integer]\n      dp = foldl (\\row _ -> scanl1 (+) row) (replicate (fromIntegral n) 1) [2..m]\n  print (last dp)\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 596,
+    "total_tokens": 1083,
+    "completion_tokens": 487,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 406
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 596,
+    "total_tokens": 1083,
+    "completion_tokens": 487,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 406
+    }
+  },
+  "cost_usd": 0.000725568,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-4375441992436ffae68b637326d5009e",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-haskell\\attempt-02\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-4375441992436ffae68b637326d5009e",
+    "object": "chat.completion",
+    "created": 1794995633,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let (m:n:_) = map read (words input) :: [Integer]\n      dp = foldl (\\row _ -> scanl1 (+) row) (replicate (fromIntegral n) 1) [2..m]\n  print (last dp)\n```",
+          "reasoning_content": "We need answer with Haskell source only fenced. Need preserve behavior. Compute unique paths m n up to 100 answer <=2e9. Could replicate DP or combin formula. Need read first line M N. Output integer newline. Need handle valid inputs.\n\nNeed provide module Main main. Use getLine, words, read. Compute dp maybe Int. Answer <=2e9 exceeds Int32 but Haskell Int 64. Could use Integer. Simpler replicate fold: dp = iterate row? For m rows. Could compute binomial. But preserve exact for valid inputs. Both. Need no explanation. Return one code block.\n\nNeed be careful if input may span lines? Contract first line M N likely. Could read all tokens robust. Use getContents, words, reads. Output.\n\nHaskell code:\n\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let (m:n:_) = map read (words input) :: [Integer] -- but if no? valid. However pattern warning? fine.\n  let dp = foldl (\\row _ -> scanl1 (+) row) (replicate (fromIntegral n) 1) [2..m]\n  print (last dp)\n\nBut types: m n Integer. replicate needs Int, fromIntegral n. [2..m] if m Integer. This dp row length n. scanl1 (+) row. If n>=1. fold for i=2..m? Original for i=1;i<m. Starting dp ones, repeat (m-1) times. [2..m] has m-1 elements for m>=2. Good. m=1 [2..1]=[]. last dp. If n maybe >=1. Works.\n\nPotential issue scanl1 (+) on list of Integer. Good.\n\nAlternatively combin formula using product. DP fine O(mn) <=10000.\n\nNeed output exactly. print outputs newline. Good.\n\nNeed only source in fenced code."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 596,
+      "total_tokens": 1083,
+      "completion_tokens": 487,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 406
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 6.313471800065599,
+  "received_at": "2026-11-18T09:53:56.822080+00:00",
+  "logical_request_id": "2cd9803fd6c59441d35db3779d62c5ea16339bee9b3c3c53e50ab683ff8cbe18",
+  "execution_class": "direct_api"
+}

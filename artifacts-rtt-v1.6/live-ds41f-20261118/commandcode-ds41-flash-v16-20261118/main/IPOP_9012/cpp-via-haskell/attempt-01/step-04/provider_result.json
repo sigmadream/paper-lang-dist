@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nbool valid(const string& s) {\n    int balance = 0;\n    for (char c : s) {\n        if (c == '(') {\n            ++balance;\n        } else if (c == ')') {\n            if (balance == 0) return false;\n            --balance;\n        } else {\n            return false;\n        }\n    }\n    return balance == 0;\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int T;\n    if (!(cin >> T)) return 0;\n\n    while (T--) {\n        string s;\n        cin >> s;\n        cout << (valid(s) ? \"YES\" : \"NO\") << '\\n';\n    }\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 636,
+    "total_tokens": 1012,
+    "completion_tokens": 376,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 203
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 636,
+    "total_tokens": 1012,
+    "completion_tokens": 376,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 203
+    }
+  },
+  "cost_usd": 0.0005291040000000001,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-4c37704b9708d8f1a3d1e53bafa622bb",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-haskell\\attempt-01\\step-04\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-4c37704b9708d8f1a3d1e53bafa622bb",
+    "object": "chat.completion",
+    "created": 1794994807,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nbool valid(const string& s) {\n    int balance = 0;\n    for (char c : s) {\n        if (c == '(') {\n            ++balance;\n        } else if (c == ')') {\n            if (balance == 0) return false;\n            --balance;\n        } else {\n            return false;\n        }\n    }\n    return balance == 0;\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int T;\n    if (!(cin >> T)) return 0;\n\n    while (T--) {\n        string s;\n        cin >> s;\n        cout << (valid(s) ? \"YES\" : \"NO\") << '\\n';\n    }\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer with C++17 code only, fenced. Need preserve behavior. Translate. Consider input words. T first, then T strings. Output YES/NO. Need handle possibly empty input. Use standard. Provide main.\n\nNeed no explanation. Code:\n\n#include <bits/stdc++.h>\nusing namespace std;\nbool valid(const string& s){int bal=0; for(char c:s){ if(c=='(') bal++; else if(c==')'){ if(bal==0) return false; bal--;} else return false;} return bal==0;}\nint main(){ ios::sync_with_stdio(false); cin.tie(nullptr); string tStr; if(!(cin>>tStr)) return 0; int t=stoi(tStr); for(int i=0;i<t;i++){ string s; cin>>s; cout<<(valid(s)?\"YES\":\"NO\")<<'\\n'; } return 0;}\n\nNeed exactly one complete source file in fenced block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 636,
+      "total_tokens": 1012,
+      "completion_tokens": 376,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 203
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.3582520000636578,
+  "received_at": "2026-11-18T09:40:08.781466+00:00",
+  "logical_request_id": "065bd41b2637d2f47077274afdfb5da8df94a47e92a149bc87bd6aaa652e9a7b",
+  "execution_class": "direct_api"
+}

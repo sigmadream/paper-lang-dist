@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport qualified Data.IntMap.Strict as IM\nimport qualified Data.Sequence as Seq\nimport Data.Sequence (ViewL(..))\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let xs = map read (words input) :: [Int]\n  case xs of\n    [] -> return ()\n    (n:rest) -> do\n      let m = case rest of\n                (x:_) -> x\n                [] -> 0\n          edgeVals = case rest of\n                       (_:es) -> es\n                       [] -> []\n          pairs = take m (pairUp edgeVals)\n          validPairs =\n            [ (a, b)\n            | (a, b) <- pairs\n            , a >= 1, a <= n\n            , b >= 1, b <= n\n            ]\n      if n <= 0\n        then putStrLn \"0\"\n        else do\n          let adj = buildAdj validPairs\n              dist = bfs adj\n              ans = length\n                [ i\n                | i <- [2 .. n]\n                , isNear (IM.lookup i dist)\n                ]\n          putStrLn (show ans)\n\npairUp :: [Int] -> [(Int, Int)]\npairUp (a:b:ts) = (a, b) : pairUp ts\npairUp _ = []\n\nbuildAdj :: [(Int, Int)] -> IM.IntMap [Int]\nbuildAdj edges = foldl' add IM.empty edges\n  where\n    add graph (a, b) =\n      IM.insertWith (++) b [a] (IM.insertWith (++) a [b] graph)\n\nbfs :: IM.IntMap [Int] -> IM.IntMap Int\nbfs adj = go (Seq.singleton 1) (IM.singleton 1 0)\n  where\n    go queue dist =\n      case Seq.viewl queue of\n        EmptyL -> dist\n        u :< rest ->\n          let d = dist IM.! u\n              vs = IM.findWithDefault [] u adj\n              (dist', queue') = foldl' addNeighbor (dist, rest) vs\n              addNeighbor (dm, qq) v =\n                if IM.member v dm\n                  then (dm, qq)\n                  else (IM.insert v (d + 1) dm, qq Seq.|> v)\n          in go queue' dist'\n\nisNear :: Maybe Int -> Bool\nisNear (Just 1) = True\nisNear (Just 2) = True\nisNear _ = False\n```",
+          "reasoning_content": "We need answer with one Haskell source file, code block only. Need translate preserving behavior for valid inputs. Need consider source quirks: reads all ints, n=xs[0], m second or 0, loops m edges if available, only adds valid vertices, BFS from 1, counts dist 1 or 2 for i=2..n. For valid spec N>=2 M>=1, edges. But public example \"1\\n0\" violates N>=? n=1 m=0, output 0. Need handle possibly n=1, m=0. Also if n<=0 source outputs 0. Need match all possible inputs? \"every valid input in specification\" but public has n=1. We can handle.\n\nHaskell: module Main, main IO. Read all ints. Need avoid crash if empty. Parse n if none return. Use Data.List, Data.Array? N up to 500, M up to 10000. Simple adjacency list via IntMap or Array of lists. We can use vector? standard. Simpler: build list of pairs, BFS using Set/Map. n small. Use Data.Array with accumArray? Need standard libs. \n\nImplementation:\nmain = do\n  input <- getContents\n  let xs = map read (words input) :: [Int]\n  case xs of\n    [] -> return ()\n    (n:rest) ->\n      let m = if null rest then 0 else head rest\n          edgeVals = drop 1 rest? Wait rest after n. If rest nonempty, m=head rest, then edgeVals=drop 1 rest. Source uses xs[1] as m, edges start idx 2. So yes.\n          validEdges = take m pairs from edgeVals, filter endpoints 1..n, but source loop: for i < m && idx+1 < size. It consumes pairs sequentially. If invalid edge, source skips adding but still consumes. So take m pairs and filter valid.\n          adj = foldl add empty (valid pairs)\n      if n <= 0 then putStrLn \"0\" else ...\nBFS.\n\nCould use Data.IntMap.Strict for adjacency, Data.Set for visited, Data.Sequence for queue. Need only standard. Simpler for n<=500: use Array Int [Int], BFS with list queue and array dist. Haskell arrays mutable? Can use Data.Array (immutable) and BFS with distances in IntMap, queue list. Complexity fine.\n\nNeed compute distances from 1 up to 2. BFS:\nadj :: IntMap [Int]\ndist :: IntMap Int\nbfs queue dist\n  case queue of []\n    [] -> dist\n    (u:us) ->\n      let d = dist ! u\n          neighbors = IntMap.findWithDefault [] u adj\n          (dist', new) = foldl ... \n      but avoid cycles. If new neighbor not in dist, add with d+1, append queue. We only need up to dist 2? Could BFS full but no matter. n<=500. Need avoid O(n^2) but fine. Use Data.Sequence for efficient queue maybe.\n\nSimpler: Use IntMap distances, Data.Sequence queue with viewl. \nimport qualified Data.IntMap.Strict as IM\nimport qualified Data.Sequence as Seq\nimport Data.Sequence (ViewL(..), (|>))\nimport Data.Foldable (toList)\nimport Data.Maybe\n\nbfs :: IM.IntMap [Int] -> IM.IntMap Int\nbfs adj = go (Seq.singleton 1) (IM.singleton 1 0)\n where\n  go q dist = case Seq.viewl q of\n    EmptyL -> dist\n    u :< rest ->\n      let d = dist IM.! u\n          vs = IM.findWithDefault [] u adj\n          (dist', q') = foldl add (dist, rest) vs\n          add (dm, qq) v = if IM.member v dm then (dm, qq) else (IM.insert v (d+1) dm, qq Seq.|> v)\n      in go q' dist'\n\nThen count for i 2..n if dist lookup i in {1,2}. Use list comprehension length.\n\nNeed careful parse: xs list. If n present. m = case rest of (x:_) -> x; [] -> 0. edgeVals = case rest of (_:es) -> es; [] -> []. Then pairs = take m (toPairs edgeVals), where toPairs (a:b:ts) = (a,b):toPairs ts; toPairs _ = []. Filter valid.\n\nAdd edges: build IntMap. Use foldl' to insert. For each (a,b): IM.insertWith (++) a [b] , same b [a]. Need import Data.List foldl'.\n\nPotential issue if n=1, adj has 1. BFS starts at 1 dist 0. Count i=2..1 empty =>0. Good.\n\nn<=0 source outputs 0 after reading xs; no BFS. We do if n <= 0 putStrLn \"0\".\n\nIf xs empty, source returns 0 with no output. In Haskell main return (). Good. Note if input empty, getContents empty, no output. Public example \"1\\n0\" output \"0\\n\". We print.\n\nNeed ensure stdout exactly ans newline. putStrLn (show ans). No extra.\n\nNow, since only valid inputs spec N>=2, M>=1. But robust.\n\nNeed produce exactly code block with no explanation.\n\nLet's craft Haskell code. Use reads? words map read can fail if invalid; inputs ints. okay.\n\nPotential laziness issues? Fine.\n\nCode:\n\nmodule Main (main) where\n\nimport qualified Data.IntMap.Strict as IM\nimport qualified Data.Sequence as Seq\nimport Data.Sequence (ViewL(..), (|>))\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  s <- getContents\n  let xs = map read (words s) :: [Int]\n  case xs of\n    [] -> return ()\n    (n:rest) -> do\n      let m = case rest of\n                (x:_) -> x\n                [] -> 0\n          edgeVals = case rest of\n                       (_:es) -> es\n                       [] -> []\n          pairs = take m (pairUp edgeVals)\n          validPairs = [ (a,b) | (a,b) <- pairs, a >= 1, a <= n, b >= 1, b <= n ]\n      if n <= 0\n        then putStrLn \"0\"\n        else do\n          let adj = buildAdj validPairs\n              dist = bfs adj\n              ans = length [ () | i <- [2..n], case IM.lookup i dist of Just 1 -> True; Just 2 -> True; _ -> False ]\n          putStrLn (show ans)\n\npairUp :: [Int] -> [(Int,Int)]\npairUp (a:b:ts) = (a,b) : pairUp ts\npairUp _ = []\n\nbuildAdj :: [(Int,Int)] -> IM.IntMap [Int]\nbuildAdj edges = foldl' add IM.empty edges\n  where\n    add m (a,b) = IM.insertWith (++) b [a] (IM.insertWith (++) a [b] m)\n\nbfs :: IM.IntMap [Int] -> IM.IntMap Int\nbfs adj = go (Seq.singleton 1) (IM.singleton 1 0)\n  where\n    go q dist =\n      case Seq.viewl q of\n        EmptyL -> dist\n        u :< rest ->\n          let d = dist IM.! u\n              vs = IM.findWithDefault [] u adj\n              (dist', q') = foldl' add (dist, rest) vs\n              add (dm, qq) v =\n                if IM.member v dm\n                  then (dm, qq)\n                  else (IM.insert v (d + 1) dm, qq Seq.|> v)\n          in go q' dist'\n\nNeed check syntax case in list comprehension: case expression in guard? In Haskell list comprehension can use let or boolean expression:\nans = length [ i | i <- [2..n], isOneOrTwo (IM.lookup i dist) ]\nwhere isOneOrTwo (Just 1)=True etc. Better avoid weird semicolon. Define:\n              ans = length [ i | i <- [2..n], let d = IM.lookup i dist, d == Just 1 || d == Just 2 ]\nEq (Maybe Int) yes. But d maybe. Use case:\n              ans = length [ i | i <- [2..n], case IM.lookup i dist of Just 1 -> True; Just 2 -> True; _ -> False ]\nThis is valid? In list comprehension, after comma a case expression can be boolean. Syntax: [ i | i <- [2..n], case IM.lookup i dist of { Just 1 -> True; Just 2 -> True; _ -> False } ]. Semicolons maybe in layout. Could use helper:\nisNear :: Maybe Int -> Bool\nisNear (Just 1) = True\nisNear (Just 2) = True\nisNear _ = False\nThen ans = length [ i | i <- [2..n], isNear (IM.lookup i dist) ].\nAdd helper. Good.\n\nNeed ensure module exports main only okay.\n\nPotential issue viewl pattern `u :< rest` requires ViewL(..) imported. We imported Data.Sequence (ViewL(..), (|>)) but also qualified Seq. Does `:<` constructor exported by ViewL(..)? Yes.\n\nAlternatively use Seq.viewl q of u Seq.:< rest? But imported unqualified ViewL(..) gives :<. Good.\n\nOne subtlety: In `go q dist`, `go q' dist'` but where does q' bound? In let `(dist', q') = foldl' add (dist, rest) vs`; then `in go q' dist'`. Actually queue should be q' after adding neighbors, yes. But initial q is current queue. We removed u and use rest, add new to rest. Good.\n\nNeed maybe `Seq.|>` used as qq Seq.|> v; we imported (|>) unqualified but using qualified okay. `Seq.|>` works if imported qualified Data.Sequence as Seq includes `|>` operator? Qualified operators can be used as `Seq.|>` if module exports. Yes. Since we imported Data.Sequence (|>) unqualified but not need. Actually with qualified import, `Seq.|>` is valid if `|>` exported. yes.\n\nPotential ambiguity: `(<|)`? no.\n\nLet's final with code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794995322,
+    "id": "chatcmpl-d20e7f80a6763c72157d3b1d9fda8ebb",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 2879,
+      "completion_tokens_details": {
+        "reasoning_tokens": 2315
+      },
+      "prompt_tokens": 819,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 3698
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0037004999999999994,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 15.486002800054848,
+  "logical_request_id": "a822d217fe32937a8e431a60bcb645a88426979ce7c75c95587010686d482635",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_5567\\cpp-via-haskell\\attempt-05\\step-05\\response_body.txt",
+  "received_at": "2026-11-18T09:48:56.147048+00:00",
+  "request_id": "chatcmpl-d20e7f80a6763c72157d3b1d9fda8ebb",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main (main) where\n\nimport qualified Data.IntMap.Strict as IM\nimport qualified Data.Sequence as Seq\nimport Data.Sequence (ViewL(..))\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let xs = map read (words input) :: [Int]\n  case xs of\n    [] -> return ()\n    (n:rest) -> do\n      let m = case rest of\n                (x:_) -> x\n                [] -> 0\n          edgeVals = case rest of\n                       (_:es) -> es\n                       [] -> []\n          pairs = take m (pairUp edgeVals)\n          validPairs =\n            [ (a, b)\n            | (a, b) <- pairs\n            , a >= 1, a <= n\n            , b >= 1, b <= n\n            ]\n      if n <= 0\n        then putStrLn \"0\"\n        else do\n          let adj = buildAdj validPairs\n              dist = bfs adj\n              ans = length\n                [ i\n                | i <- [2 .. n]\n                , isNear (IM.lookup i dist)\n                ]\n          putStrLn (show ans)\n\npairUp :: [Int] -> [(Int, Int)]\npairUp (a:b:ts) = (a, b) : pairUp ts\npairUp _ = []\n\nbuildAdj :: [(Int, Int)] -> IM.IntMap [Int]\nbuildAdj edges = foldl' add IM.empty edges\n  where\n    add graph (a, b) =\n      IM.insertWith (++) b [a] (IM.insertWith (++) a [b] graph)\n\nbfs :: IM.IntMap [Int] -> IM.IntMap Int\nbfs adj = go (Seq.singleton 1) (IM.singleton 1 0)\n  where\n    go queue dist =\n      case Seq.viewl queue of\n        EmptyL -> dist\n        u :< rest ->\n          let d = dist IM.! u\n              vs = IM.findWithDefault [] u adj\n              (dist', queue') = foldl' addNeighbor (dist, rest) vs\n              addNeighbor (dm, qq) v =\n                if IM.member v dm\n                  then (dm, qq)\n                  else (IM.insert v (d + 1) dm, qq Seq.|> v)\n          in go queue' dist'\n\nisNear :: Maybe Int -> Bool\nisNear (Just 1) = True\nisNear (Just 2) = True\nisNear _ = False\n```",
+  "usage": {
+    "completion_tokens": 2879,
+    "completion_tokens_details": {
+      "reasoning_tokens": 2315
+    },
+    "prompt_tokens": 819,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 3698
+  },
+  "usage_raw": {
+    "completion_tokens": 2879,
+    "completion_tokens_details": {
+      "reasoning_tokens": 2315
+    },
+    "prompt_tokens": 819,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 3698
+  }
+}

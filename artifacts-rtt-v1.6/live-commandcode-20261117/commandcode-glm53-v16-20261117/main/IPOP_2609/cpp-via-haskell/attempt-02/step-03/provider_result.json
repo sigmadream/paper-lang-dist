@@ -1,0 +1,94 @@
+{
+  "text": "```haskell\nmodule Main (main) where\n\nmain :: IO ()\nmain = do\n  line <- getLine\n  case map read (words line) :: [Integer] of\n    [a, b] -> do\n      let g = gcd a b\n      putStrLn (show g)\n      putStrLn (show ((a `div` g) * b))\n    _ -> return ()\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 84,
+    "prompt_tokens": 492,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 576
+  },
+  "usage_raw": {
+    "completion_tokens": 84,
+    "prompt_tokens": 492,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 576
+  },
+  "cost_usd": 0.00091248,
+  "cost_source": "estimated",
+  "request_id": "82d547b7-7f02-430c-af1e-bce18b2db899",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_2609\\cpp-via-haskell\\attempt-02\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nmain :: IO ()\nmain = do\n  line <- getLine\n  case map read (words line) :: [Integer] of\n    [a, b] -> do\n      let g = gcd a b\n      putStrLn (show g)\n      putStrLn (show ((a `div` g) * b))\n    _ -> return ()\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794902352,
+    "id": "82d547b7-7f02-430c-af1e-bce18b2db899",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 84,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_5d1d5dc528db4caeabd51a06fc5d63a5",
+      "trace_id": "9dc23eda412a41e78fdfc3871b7e589b"
+    },
+    "usage": {
+      "completion_tokens": 84,
+      "prompt_tokens": 492,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 576
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.093852500023786,
+  "received_at": "2026-11-17T07:59:12.140103+00:00",
+  "logical_request_id": "afd59fee21d570f8e467e408cd69f67cff10b88cc8d8634b78b220f875eae3ac",
+  "execution_class": "direct_api"
+}

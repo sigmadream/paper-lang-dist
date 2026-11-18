@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint main() {\n    std::vector<int> data;\n    int x;\n    while (std::cin >> x) {\n        data.push_back(x);\n    }\n\n    if (data.empty()) {\n        return 0;\n    }\n\n    int n = data[0];\n    std::vector<int> score(n + 1, 0);\n    std::vector<int> dp(n + 1, 0);\n\n    for (int i = 1; i <= n; ++i) {\n        if (i < static_cast<int>(data.size())) {\n            score[i] = data[i];\n        }\n    }\n\n    if (n >= 1) {\n        dp[1] = score[1];\n    }\n    if (n >= 2) {\n        dp[2] = score[1] + score[2];\n    }\n\n    for (int i = 3; i <= n; ++i) {\n        dp[i] = std::max(dp[i - 2], dp[i - 3] + score[i - 1]) + score[i];\n    }\n\n    std::cout << dp[n] << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer exactly one fenced code block with C++ source. Need translate. Check edge cases n=1,2. C++17 main. Need preserve stdin read all. Use long long? scores max 10000*300=3e6 int fine. But use int. Need handle no data return. Read all ints. n maybe data size. Implement.\n\nNeed no explanation. Fenced code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794986405,
+    "id": "chatcmpl-52194bbde1e8983309906906b1ae6ab6",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 347,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 647,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 994
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0006105,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 4.718315200065263,
+  "logical_request_id": "e03ae490397cde47468838550c7f81b6c51d63d774e2430bcc16a77175f26562",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2579\\cpp-via-python\\attempt-04\\step-12\\response_body.txt",
+  "received_at": "2026-11-18T07:20:06.115458+00:00",
+  "request_id": "chatcmpl-52194bbde1e8983309906906b1ae6ab6",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint main() {\n    std::vector<int> data;\n    int x;\n    while (std::cin >> x) {\n        data.push_back(x);\n    }\n\n    if (data.empty()) {\n        return 0;\n    }\n\n    int n = data[0];\n    std::vector<int> score(n + 1, 0);\n    std::vector<int> dp(n + 1, 0);\n\n    for (int i = 1; i <= n; ++i) {\n        if (i < static_cast<int>(data.size())) {\n            score[i] = data[i];\n        }\n    }\n\n    if (n >= 1) {\n        dp[1] = score[1];\n    }\n    if (n >= 2) {\n        dp[2] = score[1] + score[2];\n    }\n\n    for (int i = 3; i <= n; ++i) {\n        dp[i] = std::max(dp[i - 2], dp[i - 3] + score[i - 1]) + score[i];\n    }\n\n    std::cout << dp[n] << '\\n';\n\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 347,
+    "completion_tokens_details": {
+      "reasoning_tokens": 86
+    },
+    "prompt_tokens": 647,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 994
+  },
+  "usage_raw": {
+    "completion_tokens": 347,
+    "completion_tokens_details": {
+      "reasoning_tokens": 86
+    },
+    "prompt_tokens": 647,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 994
+  }
+}

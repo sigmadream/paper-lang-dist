@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.Char (isDigit)\n\nmain :: IO ()\nmain = do\n  inp <- getContents\n  case words inp of\n    (tok:_) | all isDigit tok && not (null tok) ->\n      let n = read tok :: Integer\n      in when' (n >= 0) $\n           putStrLn (unwords (map (show . f) [0 .. n]))\n    _ -> return ()\n  where\n    f 0 = 0\n    f i = f (i `div` 2) + fromIntegral (i `mod` 2)\n    when' c a = if c then a else return ()\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794897817,
+    "id": "94e1ced3-36ae-45ab-b107-e7b8bf4e913b",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 148,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_1a2b7ca76b7644379e40f50017e5eb7d",
+      "trace_id": "68e4344db33c4ac28a37057aa7a6afb6"
+    },
+    "usage": {
+      "completion_tokens": 148,
+      "prompt_tokens": 543,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 691
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0009736400000000001,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.4502063999534585,
+  "logical_request_id": "95b22972f84ac37846b2c4e9f1ef7dad6c9e72ac24525cd3dd7b08042be68bba",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0338\\cpp-via-haskell\\attempt-03\\step-05\\response_body.txt",
+  "received_at": "2026-11-17T06:43:36.966802+00:00",
+  "request_id": "94e1ced3-36ae-45ab-b107-e7b8bf4e913b",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.Char (isDigit)\n\nmain :: IO ()\nmain = do\n  inp <- getContents\n  case words inp of\n    (tok:_) | all isDigit tok && not (null tok) ->\n      let n = read tok :: Integer\n      in when' (n >= 0) $\n           putStrLn (unwords (map (show . f) [0 .. n]))\n    _ -> return ()\n  where\n    f 0 = 0\n    f i = f (i `div` 2) + fromIntegral (i `mod` 2)\n    when' c a = if c then a else return ()\n```",
+  "usage": {
+    "completion_tokens": 148,
+    "prompt_tokens": 543,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 691
+  },
+  "usage_raw": {
+    "completion_tokens": 148,
+    "prompt_tokens": 543,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 691
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport qualified Data.Set as Set\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let nums = map read (words input) :: [Int]\n    case nums of\n        (n:m:rest) ->\n            if n <= 0\n                then putStrLn \"0\"\n                else do\n                    let edges = take m rest\n                    let adj = buildAdj n edges\n                    let d1 = Set.fromList (adj !! 0)\n                    let d2 = Set.fromList\n                            [ w\n                            | v <- Set.toList d1\n                            , w <- adj !! v\n                            , w /= 0\n                            , not (Set.member w d1)\n                            ]\n                    print (Set.size d1 + Set.size d2)\n        _ -> return ()\n\nbuildAdj :: Int -> [Int] -> [[Int]]\nbuildAdj n xs = go (replicate n []) xs\n  where\n    go adj (a:b:rest) =\n        let a' = a - 1\n            b' = b - 1\n            adj1 = update adj a' b'\n            adj2 = update adj1 b' a'\n        in go adj2 rest\n    go adj _ = adj\n\n    update adj i v =\n        [ if j == i then v : adj !! j else adj !! j\n        | j <- [0 .. length adj - 1]\n        ]\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 693,
+    "total_tokens": 1685,
+    "completion_tokens": 992,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 676
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 693,
+    "total_tokens": 1685,
+    "completion_tokens": 992,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 676
+    }
+  },
+  "cost_usd": 0.0013982999999999999,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-819078a4d3a15d865ff5ae032b7e1dbd",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_5567\\cpp-via-haskell\\attempt-01\\step-07\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-819078a4d3a15d865ff5ae032b7e1dbd",
+    "object": "chat.completion",
+    "created": 1794994947,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport qualified Data.Set as Set\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let nums = map read (words input) :: [Int]\n    case nums of\n        (n:m:rest) ->\n            if n <= 0\n                then putStrLn \"0\"\n                else do\n                    let edges = take m rest\n                    let adj = buildAdj n edges\n                    let d1 = Set.fromList (adj !! 0)\n                    let d2 = Set.fromList\n                            [ w\n                            | v <- Set.toList d1\n                            , w <- adj !! v\n                            , w /= 0\n                            , not (Set.member w d1)\n                            ]\n                    print (Set.size d1 + Set.size d2)\n        _ -> return ()\n\nbuildAdj :: Int -> [Int] -> [[Int]]\nbuildAdj n xs = go (replicate n []) xs\n  where\n    go adj (a:b:rest) =\n        let a' = a - 1\n            b' = b - 1\n            adj1 = update adj a' b'\n            adj2 = update adj1 b' a'\n        in go adj2 rest\n    go adj _ = adj\n\n    update adj i v =\n        [ if j == i then v : adj !! j else adj !! j\n        | j <- [0 .. length adj - 1]\n        ]\n```",
+          "reasoning_content": "We need answer exact code block Haskell. Need translate. Need consider input example N=1 M=0 though spec N>=2. Source handles. Haskell parse ints. If no input return. Build adjacency. Compute distance 1 or 2 from vertex 1 (index 0). Output count distinct excluding 0. Use Data.List, Data.Set maybe containers shipped with GHC? Containers is standard library shipped. Could use list nub to avoid? N<=500 fine. Simpler.\n\nNeed module Main and main. Read all ints. Parse n,m then pairs. Build adjacency as [[Int]] maybe with lists. Need handle if n<=0? source outputs 0. If missing m? source returns 0 no output. We can mimic reasonably.\n\nHaskell code:\n\nmodule Main where\nimport qualified Data.Set as S\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  s <- getContents\n  let xs = map read (words s) :: [Int]\n  case xs of\n    (n:m:rest) ->\n      if n <= 0 then putStrLn \"0\" else do\n        let pairs = take m rest\n        let adj = buildAdj n pairs\n        let d1 = S.fromList (adj !! 0) -- adjacency index 0 for vertex 1\n        let d2 = S.fromList [ w | v <- S.toList d1, w <- adj !! v, w /= 0, not (S.member w d1)]\n        print (S.size d1 + S.size d2)\n    _ -> return ()\n\nbuildAdj n ps = foldl' add (replicate n []) ps\n  where add g [a,b] = update (update g (a-1) (b-1)) (b-1) (a-1)\n        add g _ = g\n        update xs i v = [ if j == i then v:xs!!j else xs!!j | j <- [0..length xs-1] ] -- O(n) okay\nBut pattern [a,b] in add with ps pairs each two. Fine. However buildAdj type? Need no type signature necessary. But add pattern perhaps non-exhaustive? with fallback.\n\nNeed ensure if M lines but rest maybe. take m rest. If pair lists only valid.\n\nPotential issue source uses d1 includes if there are self? No a<b. d2 excludes d1 and 0. d1 includes only adj0 neighbor. If vertex distance 1. Count union. Good.\n\nCould optimize update with list comprehension; okay N=500 M=10000.\n\nBut Haskell code with `adj !! v`, v valid. Fine.\n\nNeed output exactly. Use putStrLn show? print. For \"0\" newline. print 0.\n\nPotential missing input source: if cin>>n fails return 0 no output; if cin>>m fails return 0. Our case with xs (n:m:rest) requires at least two ints. If only n, no output. Good. If n<=0 output after reading m? Source reads m then checks n <=0. Our requires n:m. Good.\n\nNeed maybe parsing negative? Fine.\n\nNeed final only fenced code."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 693,
+      "total_tokens": 1685,
+      "completion_tokens": 992,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 676
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 9.417766599915922,
+  "received_at": "2026-11-18T09:42:34.619292+00:00",
+  "logical_request_id": "148e7b32ca75b1a12e9086f7efb90ae5f876159d09bab8f0677e3fd6a6701ce9",
+  "execution_class": "direct_api"
+}

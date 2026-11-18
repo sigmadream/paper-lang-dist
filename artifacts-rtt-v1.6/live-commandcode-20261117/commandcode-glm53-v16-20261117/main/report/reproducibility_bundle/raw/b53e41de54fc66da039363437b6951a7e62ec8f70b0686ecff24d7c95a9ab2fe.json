@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <string>\n#include <algorithm>\n\nint main() {\n    std::string s;\n    std::getline(std::cin, s);\n    if (!s.empty() && s.back() == '\\r') s.pop_back();\n    bool valid = true;\n    for (size_t i = 0; i < s.size() / 2; i++) {\n        if (s[i] != s[s.size() - 1 - i]) {\n            valid = false;\n            break;\n        }\n    }\n    std::cout << (valid ? 1 : 0) << std::endl;\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794896329,
+    "id": "e125b362-a66a-4607-be90-56f5c6a4f453",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 139,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_a4ca14cf9aee43e9a3a155325c04ffc2",
+      "trace_id": "30cf6fddb17b4df1b3dd59a2b432c4df"
+    },
+    "usage": {
+      "completion_tokens": 139,
+      "prompt_tokens": 493,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 632
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0011558800000000002,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.1704659999813884,
+  "logical_request_id": "606b38062924c4503e778f0e0331cb4ce3ffeb39be0a80724d519c1b9a63da04",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_10988\\cpp-via-java\\attempt-02\\step-02\\response_body.txt",
+  "received_at": "2026-11-17T06:18:49.219616+00:00",
+  "request_id": "e125b362-a66a-4607-be90-56f5c6a4f453",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```cpp\n#include <iostream>\n#include <string>\n#include <algorithm>\n\nint main() {\n    std::string s;\n    std::getline(std::cin, s);\n    if (!s.empty() && s.back() == '\\r') s.pop_back();\n    bool valid = true;\n    for (size_t i = 0; i < s.size() / 2; i++) {\n        if (s[i] != s[s.size() - 1 - i]) {\n            valid = false;\n            break;\n        }\n    }\n    std::cout << (valid ? 1 : 0) << std::endl;\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 139,
+    "prompt_tokens": 493,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 632
+  },
+  "usage_raw": {
+    "completion_tokens": 139,
+    "prompt_tokens": 493,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 632
+  }
+}

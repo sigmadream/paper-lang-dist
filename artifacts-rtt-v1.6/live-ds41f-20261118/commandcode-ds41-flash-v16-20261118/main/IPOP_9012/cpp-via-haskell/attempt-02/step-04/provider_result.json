@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <string>\nusing namespace std;\n\nbool valid(const string& s) {\n    int balance = 0;\n    for (char c : s) {\n        if (c == '(') {\n            ++balance;\n        } else {\n            if (balance == 0) return false;\n            --balance;\n        }\n    }\n    return balance == 0;\n}\n\nint main() {\n    int t;\n    if (!(cin >> t)) return 0;\n    while (t--) {\n        string s;\n        cin >> s;\n        cout << (valid(s) ? \"YES\" : \"NO\") << '\\n';\n    }\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 601,
+    "total_tokens": 797,
+    "completion_tokens": 196,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 49
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 601,
+    "total_tokens": 797,
+    "completion_tokens": 196,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 49
+    }
+  },
+  "cost_usd": 0.0004155,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-585bb71826d493d887b59f54c441824a",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-haskell\\attempt-02\\step-04\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-585bb71826d493d887b59f54c441824a",
+    "object": "chat.completion",
+    "created": 1794977070,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\nusing namespace std;\n\nbool valid(const string& s) {\n    int balance = 0;\n    for (char c : s) {\n        if (c == '(') {\n            ++balance;\n        } else {\n            if (balance == 0) return false;\n            --balance;\n        }\n    }\n    return balance == 0;\n}\n\nint main() {\n    int t;\n    if (!(cin >> t)) return 0;\n    while (t--) {\n        string s;\n        cin >> s;\n        cout << (valid(s) ? \"YES\" : \"NO\") << '\\n';\n    }\n    return 0;\n}\n```",
+          "reasoning_content": "We need translate Haskell to C++17. Simple. Read T then strings, output YES/NO.\n\nNeed handle potentially parentheses only, using words is fine since strings contain no spaces. Use cin >>.\n\nWrite exact one fenced code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 601,
+      "total_tokens": 797,
+      "completion_tokens": 196,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.5049069999950007,
+  "received_at": "2026-11-18T04:44:30.554996+00:00",
+  "logical_request_id": "10ab21f9f75e0b97b8374caf509d7963f1b4cb24ec349273ed55528a5174536e",
+  "execution_class": "direct_api"
+}

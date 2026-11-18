@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nimport Data.Bits (complement, (.&.), (.|.), shiftL, shiftR)\nimport System.IO\n\ndfs :: Int -> Int -> Int -> Int -> Int -> Int -> Int\ndfs n fullMask row cols diag1 diag2\n    | row == n = 1\n    | otherwise = go available 0\n  where\n    available = fullMask .&. complement (cols .|. diag1 .|. diag2)\n\n    go 0 total = total\n    go bits total =\n        let bit = bits .&. negate bits\n            next = bits .&. (bits - 1)\n            total' = total + dfs\n                n\n                fullMask\n                (row + 1)\n                (cols .|. bit)\n                ((diag1 .|. bit) `shiftL` 1)\n                ((diag2 .|. bit) `shiftR` 1)\n        in go next total'\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let values = map read (words input) :: [Int]\n    case values of\n        (n:_) -> do\n            let fullMask = (1 `shiftL` n) - 1\n            print (dfs n fullMask 0 0 0 0)\n        _ -> return ()\n```",
+          "reasoning_content": "We need answer only Haskell source fenced. Need translate. Need ensure behavior N<15 count. Use bit masks. Haskell Int maybe 64-bit, counts up to N=14? N-queens count for 14 = 365596, N=13 73712. small. Use Int.\n\nNeed preserve stdin parse. main read. Implement dfs row cols diag1 diag2 fullMask. Need shift semantics: in C++ unsigned, diag1<<1 may overflow unsigned 32 bit, but N<15, diag masks can have bits beyond N; when masking with fullMask in available only matters. However diag1 shifted could grow beyond 32 bits over recursion? row max14, shifted repeatedly but bits only from original OR; it can reach bit up to N+row maybe >31 no. N<15, max bit ~28, fine. Use Int bit operations. available = fullMask .&. complement (cols .|. diag1 .|. diag2). Need Data.Bits. Iterate bits. lowbit = available .&. negate available. available' = available .&. (available - 1). Recursion.\n\nRead all input, first integer. Output.\n\nNeed be careful complement on Int infinite signed but & fullMask trims. Shifts left/right. In C++ diag2 right shift unsigned logical; Int right shift arithmetic, but diag2 contains nonnegative bits only; right shift positive is fine. Could shift beyond? no.\n\nImplement:\n\nmodule Main where\nimport Data.Bits\nimport Control.Monad (forM_)\nimport System.IO\n\ndfs :: Int -> Int -> Int -> Int -> Int -> Int -> Int\ndfs n full row cols d1 d2\n | row == n = 1\n | otherwise = go available 0\n where\n  available = full .&. complement (cols .|. d1 .|. d2)\n  go 0 acc = acc\n  go a acc = let bit = a .&. negate a\n                 rest = a .&. (a - 1)\n             in go rest (acc + dfs n full (row+1) (cols .|. bit) ((d1 .|. bit) `shiftL` 1) ((d2 .|. bit) `shiftR` 1))\n\nNeed avoid recomputing full in recursive passes? fine. Could closure.\n\nmain = do\n  input <- getContents\n  let nums = map read (words input) :: [Int]\n  case nums of\n    (n:_) -> print (dfs n ((1 `shiftL` n) - 1) 0 0 0 0)\n    _ -> return ()\n\nBut print adds newline. If n=0 not valid. For n maybe full (1<<n)-1. For n=1 returns? row0 avail bit0, recurse row1 cols bit -> 1. Good.\n\nPotential performance Haskell naive might be okay for N=14? Need consider. N=14 count 365596 leaves but search nodes ~? Could be millions, okay. However using Int and no optimization maybe okay. Need provide robust. Could optimize with unboxed? Standard enough. N<15. Haskell list based? Our loop recursion. Should pass.\n\nNeed exact one fenced code block no explanation. Ensure no initialization directives Prolog not relevant. Use module Main and main. Good.\n\nCould use Data.Bits.\n\nLet's consider semantics of diag shifting and masking: C++ available = fullMask & ~(cols|diag1|diag2). diag1 may carry bits beyond full due to previous shift, but & full only. In Haskell complement infinite and & full works. However d1 may have negative? no. complement creates negative but & full positive. Fine.\n\nPotential issue bit = a .&. negate a works with Int. yes.\n\nNeed maybe use Integer? Counts small. Int is fine. Reading invalid? Spec valid.\n\nLet's produce final.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794980521,
+    "id": "chatcmpl-8c940e76c86fe9d77f962521d6a16d34",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 1138,
+      "completion_tokens_details": {
+        "reasoning_tokens": 842
+      },
+      "prompt_tokens": 593,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "total_tokens": 1731
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.001468236,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 9.724137799930759,
+  "logical_request_id": "c75e390fe508810247400833142cefd0c57c3214d2608875ed967fd7dbe73f44",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9663\\cpp-via-haskell\\attempt-05\\step-09\\response_body.txt",
+  "received_at": "2026-11-18T05:42:09.477074+00:00",
+  "request_id": "chatcmpl-8c940e76c86fe9d77f962521d6a16d34",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nimport Data.Bits (complement, (.&.), (.|.), shiftL, shiftR)\nimport System.IO\n\ndfs :: Int -> Int -> Int -> Int -> Int -> Int -> Int\ndfs n fullMask row cols diag1 diag2\n    | row == n = 1\n    | otherwise = go available 0\n  where\n    available = fullMask .&. complement (cols .|. diag1 .|. diag2)\n\n    go 0 total = total\n    go bits total =\n        let bit = bits .&. negate bits\n            next = bits .&. (bits - 1)\n            total' = total + dfs\n                n\n                fullMask\n                (row + 1)\n                (cols .|. bit)\n                ((diag1 .|. bit) `shiftL` 1)\n                ((diag2 .|. bit) `shiftR` 1)\n        in go next total'\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let values = map read (words input) :: [Int]\n    case values of\n        (n:_) -> do\n            let fullMask = (1 `shiftL` n) - 1\n            print (dfs n fullMask 0 0 0 0)\n        _ -> return ()\n```",
+  "usage": {
+    "completion_tokens": 1138,
+    "completion_tokens_details": {
+      "reasoning_tokens": 842
+    },
+    "prompt_tokens": 593,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 1731
+  },
+  "usage_raw": {
+    "completion_tokens": 1138,
+    "completion_tokens_details": {
+      "reasoning_tokens": 842
+    },
+    "prompt_tokens": 593,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 1731
+  }
+}

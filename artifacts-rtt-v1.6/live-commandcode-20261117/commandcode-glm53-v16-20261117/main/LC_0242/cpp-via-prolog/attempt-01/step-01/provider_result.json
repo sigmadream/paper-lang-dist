@@ -1,0 +1,95 @@
+{
+  "text": "```prolog\n:- module(main, []).\n:- use_module(library(dcg/basics)).\n\nmain :-\n    current_input(In),\n    read_line_to_codes(In, S),\n    read_line_to_codes(In, T),\n    ( S \\== end_of_file, T \\== end_of_file ->\n        msort(S, SS),\n        msort(T, TS),\n        ( SS == TS -> R = 1 ; R = 0 ),\n        format(\"~d~n\", [R])\n    ; true ).\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 119,
+    "prompt_tokens": 605,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 724
+  },
+  "usage_raw": {
+    "completion_tokens": 119,
+    "prompt_tokens": 605,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 724
+  },
+  "cost_usd": 0.00071396,
+  "cost_source": "estimated",
+  "request_id": "f8673dd5-6333-472f-be5a-f4db76fc291e",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0242\\cpp-via-prolog\\attempt-01\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, []).\n:- use_module(library(dcg/basics)).\n\nmain :-\n    current_input(In),\n    read_line_to_codes(In, S),\n    read_line_to_codes(In, T),\n    ( S \\== end_of_file, T \\== end_of_file ->\n        msort(S, SS),\n        msort(T, TS),\n        ( SS == TS -> R = 1 ; R = 0 ),\n        format(\"~d~n\", [R])\n    ; true ).\n```",
+          "reasoning_content": "Prolog: read two lines, compare multisets.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794899236,
+    "id": "f8673dd5-6333-472f-be5a-f4db76fc291e",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 119,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_9fe1a5570944432196bb7d9b00c05b2c",
+      "trace_id": "18a3df26bff24938b07c2a62a8545303"
+    },
+    "usage": {
+      "completion_tokens": 119,
+      "prompt_tokens": 605,
+      "prompt_tokens_details": {
+        "cached_tokens": 576
+      },
+      "total_tokens": 724
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.6823545999941416,
+  "received_at": "2026-11-17T07:07:15.535198+00:00",
+  "logical_request_id": "f893928b5bfd422b41019f8f7ab50cac0c86817a461e4c2a2ff697ecac5d8d53",
+  "execution_class": "direct_api"
+}

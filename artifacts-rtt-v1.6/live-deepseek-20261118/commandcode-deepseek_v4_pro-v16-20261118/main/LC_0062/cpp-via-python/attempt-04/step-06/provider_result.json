@@ -1,0 +1,107 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    int m, n;\n    if (!(std::cin >> m >> n)) {\n        return 0;\n    }\n\n    std::vector<long long> dp(n, 1);\n\n    for (int i = 1; i < m; ++i) {\n        for (int j = 1; j < n; ++j) {\n            dp[j] += dp[j - 1];\n        }\n    }\n\n    std::cout << dp[n - 1] << \"\\n\";\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4-pro",
+  "actual_model": "deepseek/deepseek-v4-pro",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4-pro",
+    "actual": "deepseek/deepseek-v4-pro",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 466,
+    "completion_tokens": 682,
+    "total_tokens": 1148,
+    "prompt_tokens_details": {
+      "cached_tokens": 384,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 555,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "usage_raw": {
+    "prompt_tokens": 466,
+    "completion_tokens": 682,
+    "total_tokens": 1148,
+    "prompt_tokens_details": {
+      "cached_tokens": 384,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 555,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "cost_usd": 0.002825856,
+  "cost_source": "estimated",
+  "request_id": "gen_01M7P7DGY5ZWGVWVE3K0VT8202",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-deepseek-20261118\\commandcode-deepseek_v4_pro-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-04\\step-06\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "gen_01M7P7DGY5ZWGVWVE3K0VT8202",
+    "object": "chat.completion",
+    "created": 1794968578,
+    "model": "deepseek/deepseek-v4-pro",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    int m, n;\n    if (!(std::cin >> m >> n)) {\n        return 0;\n    }\n\n    std::vector<long long> dp(n, 1);\n\n    for (int i = 1; i < m; ++i) {\n        for (int j = 1; j < n; ++j) {\n            dp[j] += dp[j - 1];\n        }\n    }\n\n    std::cout << dp[n - 1] << \"\\n\";\n    return 0;\n}\n```",
+          "reasoning": "We need translate Python to C++17, preserve stdin/stdout behavior. Need output one complete source file in fenced code block. We should implement main. The algorithm: read M, N from first line, maybe ignore extra? Contract says first line M N; output integer. Use C++17. Use standard library. Need handle 1<=M,N<=100, answer <=2e9, but internal dp can fit long long? Final <=2e9, but intermediate combinations maybe fit in int? C(198,99) ~ 2e58? Wait constraints final answer <=2e9 but with M,N<=100 possible answer huge >2e9? Leetcode says answer <=2e9? Actually unique paths for 100x100 is astronomical, but input may be limited? The spec says final answer is 2e9 or less, implying test cases only with small answer. But safe use long long for dp, final cast? Output integer. Use vector<long long>. If m=100,n=100, combos >2e9, but spec guarantees final answer <=2e9. But long long safe.\n\nNeed read m,n. Since input may have newline; using cin >> m >> n. If no data, return? The Python reads strip().split() if not data return; with cin if fail return. We'll implement:\nint main() {\n    int m, n;\n    if (!(std::cin >> m >> n)) return 0;\n    std::vector<long long> dp(n, 1);\n    for (int i = 1; i < m; ++i) {\n        for (int j = 1; j < n; ++j) {\n            dp[j] += dp[j-1];\n        }\n    }\n    std::cout << dp[n-1] << \"\\n\";\n    return 0;\n}\nThat preserves output. Could be dp[0] also initialized 1, inner loop starts j=1, okay. If n=1, dp size 1, loops no inner, prints dp[0]=1. If m=1, for loop skipped, prints dp[n-1]=1 for all n? dp all 1, yes.\n\nDo we need include <vector> <iostream>. Good.\n\nNeed output exactly one fenced code block, no explanation. Use \"```cpp\". In final response only code block. No extra text. Use main.\n\nWill final include? No explanation. Use language cpp. But the instruction says \"Return exactly one complete source file in one fenced code block\". so we just provide.\n\nMake sure standard C++17. Use vector<long long>. Include.",
+          "reasoning_details": [
+            {
+              "type": "reasoning.text",
+              "text": "We need translate Python to C++17, preserve stdin/stdout behavior. Need output one complete source file in fenced code block. We should implement main. The algorithm: read M, N from first line, maybe ignore extra? Contract says first line M N; output integer. Use C++17. Use standard library. Need handle 1<=M,N<=100, answer <=2e9, but internal dp can fit long long? Final <=2e9, but intermediate combinations maybe fit in int? C(198,99) ~ 2e58? Wait constraints final answer <=2e9 but with M,N<=100 possible answer huge >2e9? Leetcode says answer <=2e9? Actually unique paths for 100x100 is astronomical, but input may be limited? The spec says final answer is 2e9 or less, implying test cases only with small answer. But safe use long long for dp, final cast? Output integer. Use vector<long long>. If m=100,n=100, combos >2e9, but spec guarantees final answer <=2e9. But long long safe.\n\nNeed read m,n. Since input may have newline; using cin >> m >> n. If no data, return? The Python reads strip().split() if not data return; with cin if fail return. We'll implement:\nint main() {\n    int m, n;\n    if (!(std::cin >> m >> n)) return 0;\n    std::vector<long long> dp(n, 1);\n    for (int i = 1; i < m; ++i) {\n        for (int j = 1; j < n; ++j) {\n            dp[j] += dp[j-1];\n        }\n    }\n    std::cout << dp[n-1] << \"\\n\";\n    return 0;\n}\nThat preserves output. Could be dp[0] also initialized 1, inner loop starts j=1, okay. If n=1, dp size 1, loops no inner, prints dp[0]=1. If m=1, for loop skipped, prints dp[n-1]=1 for all n? dp all 1, yes.\n\nDo we need include <vector> <iostream>. Good.\n\nNeed output exactly one fenced code block, no explanation. Use \"```cpp\". In final response only code block. No extra text. Use main.\n\nWill final include? No explanation. Use language cpp. But the instruction says \"Return exactly one complete source file in one fenced code block\". so we just provide.\n\nMake sure standard C++17. Use vector<long long>. Include.",
+              "format": "unknown",
+              "index": 0
+            }
+          ]
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 466,
+      "completion_tokens": 682,
+      "total_tokens": 1148,
+      "prompt_tokens_details": {
+        "cached_tokens": 384,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 555,
+        "image_tokens": 0
+      },
+      "cache_creation_input_tokens": 0
+    },
+    "system_fingerprint": "fp_lcq5g9w0i4"
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 9.995816500042565,
+  "received_at": "2026-11-18T02:22:57.263400+00:00",
+  "logical_request_id": "dd6c5cad7865eb5d459e20b1919f9d819e125135298b98ede93e7ed7e08ea174",
+  "execution_class": "direct_api"
+}

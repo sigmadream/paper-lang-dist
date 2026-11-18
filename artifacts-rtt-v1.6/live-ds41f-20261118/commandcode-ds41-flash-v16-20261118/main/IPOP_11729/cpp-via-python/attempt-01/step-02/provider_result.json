@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n\nvoid hanoi(int n, int start, int mid, int end) {\n    if (n == 1) {\n        std::cout << start << ' ' << end << '\\n';\n        return;\n    }\n\n    hanoi(n - 1, start, end, mid);\n    std::cout << start << ' ' << end << '\\n';\n    hanoi(n - 1, mid, start, end);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    std::cout << ((1 << n) - 1) << '\\n';\n    hanoi(n, 1, 2, 3);\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 631,
+    "total_tokens": 1079,
+    "completion_tokens": 448,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 272
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 631,
+    "total_tokens": 1079,
+    "completion_tokens": 448,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 272
+    }
+  },
+  "cost_usd": 0.0007268999999999999,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-dc7b0441581acb8a68522245f5742edd",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_11729\\cpp-via-python\\attempt-01\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-dc7b0441581acb8a68522245f5742edd",
+    "object": "chat.completion",
+    "created": 1794994370,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n\nvoid hanoi(int n, int start, int mid, int end) {\n    if (n == 1) {\n        std::cout << start << ' ' << end << '\\n';\n        return;\n    }\n\n    hanoi(n - 1, start, end, mid);\n    std::cout << start << ' ' << end << '\\n';\n    hanoi(n - 1, mid, start, end);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    std::cout << ((1 << n) - 1) << '\\n';\n    hanoi(n, 1, 2, 3);\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code fenced, C++17. Need translate. Need consider N up to 20, moves 2^20-1 ~1,048,575 lines. Build string may be memory ~? ~4MB or more 6MB fine. Preserve behavior valid input. Could output count then recursive print. Need avoid huge stack? recursion depth 20 fine. Use ios. Could compute (1<<n)-1. Need output moves same order. Implement hanoi writing to cout directly. But output flushing? Fine. Use '\\n'. Preserve if no input. C++ main. Need exact one source file fenced. No explanation.\n\nNeed be cautious output performance. Use ostringstream? Direct cout with sync off fine about million lines ~ fine. We'll implement recursive void hanoi(int n,int start,int mid,int end) { if(n==1){ cout<<start<<\" \"<<end<<\"\\n\"; return;} ... } main read n; if fail return 0; cout << ((1<<n)-1) << '\\n'; hanoi. N<=20 fits int. Use uint32? int fine. Ensure order: hanoi(n-1,start,end,mid); move start->end; hanoi(n-1,mid,start,end). Matches.\n\nReturn fenced code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 631,
+      "total_tokens": 1079,
+      "completion_tokens": 448,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 272
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.488155499915592,
+  "received_at": "2026-11-18T09:32:52.446389+00:00",
+  "logical_request_id": "fa7dac1e5124e7f2396caeae17e26d867fb2e0076d37b24d4c384a7249664400",
+  "execution_class": "direct_api"
+}

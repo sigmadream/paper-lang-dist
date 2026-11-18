@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    n, c = int(data[0]), int(data[1])\n    a = sorted(map(int, data[2:2+n]))\n    left, right = 1, a[-1] - a[0]\n    ans = 0\n    while left <= right:\n        mid = (left + right) // 2\n        count = 1\n        prev = a[0]\n        for x in a[1:]:\n            if x - prev >= mid:\n                count += 1\n                prev = x\n        if count >= c:\n            ans = mid\n            left = mid + 1\n        else:\n            right = mid - 1\n    print(ans)\n\nmain()\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794897113,
+    "id": "1522e57c-ec60-4abb-a9bb-269ce894f365",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 167,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_e375df1dd51545bdb59b15df2288875a",
+      "trace_id": "1d20b4c00c644fcd9be99b5763529a59"
+    },
+    "usage": {
+      "completion_tokens": 167,
+      "prompt_tokens": 676,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 843
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00124344,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.298849800019525,
+  "logical_request_id": "ca8cedcf93b6114b3ad02448144520cfcd101907bcc5c4154539fc2f98a3517d",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_2110\\cpp-via-python\\attempt-05\\step-03\\response_body.txt",
+  "received_at": "2026-11-17T06:31:52.672137+00:00",
+  "request_id": "1522e57c-ec60-4abb-a9bb-269ce894f365",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    n, c = int(data[0]), int(data[1])\n    a = sorted(map(int, data[2:2+n]))\n    left, right = 1, a[-1] - a[0]\n    ans = 0\n    while left <= right:\n        mid = (left + right) // 2\n        count = 1\n        prev = a[0]\n        for x in a[1:]:\n            if x - prev >= mid:\n                count += 1\n                prev = x\n        if count >= c:\n            ans = mid\n            left = mid + 1\n        else:\n            right = mid - 1\n    print(ans)\n\nmain()\n```",
+  "usage": {
+    "completion_tokens": 167,
+    "prompt_tokens": 676,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 843
+  },
+  "usage_raw": {
+    "completion_tokens": 167,
+    "prompt_tokens": 676,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 843
+  }
+}

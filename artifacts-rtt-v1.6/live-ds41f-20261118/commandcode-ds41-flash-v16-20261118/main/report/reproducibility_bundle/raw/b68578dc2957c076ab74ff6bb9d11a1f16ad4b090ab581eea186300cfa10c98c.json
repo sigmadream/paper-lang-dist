@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\ncheck :: String -> String\ncheck s = go 0 s\n  where\n    go balance [] = if balance == 0 then \"YES\" else \"NO\"\n    go balance ('(':xs) = go (balance + 1) xs\n    go balance (')':xs)\n      | balance == 0 = \"NO\"\n      | otherwise = go (balance - 1) xs\n    go balance (_:xs) = go balance xs\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (t:rest) ->\n      let n = read t :: Int\n      in putStr $ unlines $ map check $ take n rest\n```",
+          "reasoning_content": "We need answer translate to Haskell, one fenced code block, no explanation. Need preserve behavior. Haskell program reading all input, T then strings, output YES/NO. Need handle strings length, maybe whitespace. Use lines? The input T first line, then T lines strings. Could use words to parse tokens; parentheses no spaces. Output each.\n\nImplement main = do input <- getContents; let (t:rest)=words input; print for take t rest. Need avoid partial if empty? Valid input specified. Could write robust.\n\ncheck s = go 0 s where go b [] = if b==0 then \"YES\" else \"NO\"; go b ('(':xs)=go (b+1) xs; go b (')':xs)= if b==0 then \"NO\" else go (b-1) xs; go b (_:xs)=go b xs (only parens but maybe).\n\nNeed return exactly one source file. Haskell module Main main :: IO (). Use Control.Monad for forM_. Could avoid.\n\nmain = interact? Need output lines. interact $ \\input -> let (t:xs)=words input in unlines $ map check $ take (read t) xs. This is pure. If invalid empty would fail but valid. Use module Main where.\n\nNeed one fenced code block. Ensure no explanation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794981028,
+    "id": "chatcmpl-65ac91fafb0f4b67523b06f834a46fc5",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 445,
+      "completion_tokens_details": {
+        "reasoning_tokens": 277
+      },
+      "prompt_tokens": 640,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1085
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.000726,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 4.850794700090773,
+  "logical_request_id": "079ffe970d5a78e9346d9b4a16bcac016e1cb9dc257ff97f685ad157348831a1",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-haskell\\attempt-04\\step-07\\response_body.txt",
+  "received_at": "2026-11-18T05:50:30.852837+00:00",
+  "request_id": "chatcmpl-65ac91fafb0f4b67523b06f834a46fc5",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\ncheck :: String -> String\ncheck s = go 0 s\n  where\n    go balance [] = if balance == 0 then \"YES\" else \"NO\"\n    go balance ('(':xs) = go (balance + 1) xs\n    go balance (')':xs)\n      | balance == 0 = \"NO\"\n      | otherwise = go (balance - 1) xs\n    go balance (_:xs) = go balance xs\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (t:rest) ->\n      let n = read t :: Int\n      in putStr $ unlines $ map check $ take n rest\n```",
+  "usage": {
+    "completion_tokens": 445,
+    "completion_tokens_details": {
+      "reasoning_tokens": 277
+    },
+    "prompt_tokens": 640,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1085
+  },
+  "usage_raw": {
+    "completion_tokens": 445,
+    "completion_tokens_details": {
+      "reasoning_tokens": 277
+    },
+    "prompt_tokens": 640,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1085
+  }
+}

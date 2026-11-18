@@ -1,0 +1,107 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Control.Monad (forM_)\n\nisBalanced :: String -> Bool\nisBalanced = check 0\n  where\n    check bal [] = bal == 0\n    check bal (c:cs)\n      | c == '(' = check (bal + 1) cs\n      | c == ')' = if bal > 0 then check (bal - 1) cs else False\n      | otherwise = False\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    (tStr : rest) -> do\n      let t = read tStr :: Int\n      forM_ (take t rest) $ \\s ->\n        putStrLn (if isBalanced s then \"YES\" else \"NO\")\n    _ -> return ()\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4-pro",
+  "actual_model": "deepseek/deepseek-v4-pro",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4-pro",
+    "actual": "deepseek/deepseek-v4-pro",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 605,
+    "completion_tokens": 792,
+    "total_tokens": 1397,
+    "prompt_tokens_details": {
+      "cached_tokens": 384,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 608,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "usage_raw": {
+    "prompt_tokens": 605,
+    "completion_tokens": 792,
+    "total_tokens": 1397,
+    "prompt_tokens_details": {
+      "cached_tokens": 384,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 608,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "cost_usd": 0.003444936,
+  "cost_source": "estimated",
+  "request_id": "gen_01M7P781WQ3PFW1KX78K2WWAZM",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-deepseek-20261118\\commandcode-deepseek_v4_pro-v16-20261118\\main\\IPOP_9012\\cpp-via-haskell\\attempt-02\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "gen_01M7P781WQ3PFW1KX78K2WWAZM",
+    "object": "chat.completion",
+    "created": 1794968401,
+    "model": "deepseek/deepseek-v4-pro",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Control.Monad (forM_)\n\nisBalanced :: String -> Bool\nisBalanced = check 0\n  where\n    check bal [] = bal == 0\n    check bal (c:cs)\n      | c == '(' = check (bal + 1) cs\n      | c == ')' = if bal > 0 then check (bal - 1) cs else False\n      | otherwise = False\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    (tStr : rest) -> do\n      let t = read tStr :: Int\n      forM_ (take t rest) $ \\s ->\n        putStrLn (if isBalanced s then \"YES\" else \"NO\")\n    _ -> return ()\n```",
+          "reasoning": "We need to translate C++ to Haskell. The program reads T, then for each line, reads a string of parentheses, checks if balanced, prints YES or NO. Must preserve exact stdin/stdout. The C++ uses std::cin >> T, then loops, reading strings with std::cin >> s. This reads tokens separated by whitespace (including newlines). So each string is a token. In Haskell, we can read all tokens from stdin (words), first token is T, then next T tokens are strings. Output each line with YES/NO. Need to handle potential spaces? The input specification says each string is a sequence of '(' and ')' only, length 2..50, one per line. But using words should be fine; it will split on any whitespace and get the tokens. Ensure we read exactly T strings and ignore any extra? The original reads T strings via >>, so it stops after T. If there are extra tokens beyond T, they are ignored. So we can read all tokens, take T+1, discard rest? Actually using getContents, words, then pattern match first as T, then take T. Print result. Use mapM_ over the list. Good.\n\nisBalanced: use left fold with counter, early exit on negative or invalid char. But input only parens, but spec says only '(' and ')' so invalid char not an issue, but we can keep same logic. We can implement with recursion.\n\nHaskell module Main, main :: IO (). Use standard library only.\n\nWe'll write:\n\nmodule Main where\n\nimport Control.Monad (forM_)\n\nisBalanced :: String -> Bool\nisBalanced = go 0\n  where\n    go _ [] = ??? Actually need to return balance == 0 at end. So we can have function with balance. Let's do:\n\nisBalanced s = check 0 s\n  where\n    check bal [] = bal == 0\n    check bal (c:cs)\n      | c == '(' = check (bal+1) cs\n      | c == ')' = if bal > 0 then check (bal-1) cs else False\n      | otherwise = False\n\nmain :: IO ()\nmain = do\n  allInput <- getContents\n  let tokens = words allInput\n  case tokens of\n    (tStr:rest) -> do\n      let t = read tStr :: Int\n      let strings = take t rest\n      forM_ strings $ \\s -> putStrLn (if isBalanced s then \"YES\" else \"NO\")\n    _ -> return ()\n\nNeed to be careful with forM_ import: from Control.Monad. Alternatively use mapM_. Both okay.\n\nCheck: if T is positive, tokens is at least T+1. If input has fewer, take gives fewer; but spec ensures valid input. Could ignore.\n\nNow output exactly one fenced code block.",
+          "reasoning_details": [
+            {
+              "type": "reasoning.text",
+              "text": "We need to translate C++ to Haskell. The program reads T, then for each line, reads a string of parentheses, checks if balanced, prints YES or NO. Must preserve exact stdin/stdout. The C++ uses std::cin >> T, then loops, reading strings with std::cin >> s. This reads tokens separated by whitespace (including newlines). So each string is a token. In Haskell, we can read all tokens from stdin (words), first token is T, then next T tokens are strings. Output each line with YES/NO. Need to handle potential spaces? The input specification says each string is a sequence of '(' and ')' only, length 2..50, one per line. But using words should be fine; it will split on any whitespace and get the tokens. Ensure we read exactly T strings and ignore any extra? The original reads T strings via >>, so it stops after T. If there are extra tokens beyond T, they are ignored. So we can read all tokens, take T+1, discard rest? Actually using getContents, words, then pattern match first as T, then take T. Print result. Use mapM_ over the list. Good.\n\nisBalanced: use left fold with counter, early exit on negative or invalid char. But input only parens, but spec says only '(' and ')' so invalid char not an issue, but we can keep same logic. We can implement with recursion.\n\nHaskell module Main, main :: IO (). Use standard library only.\n\nWe'll write:\n\nmodule Main where\n\nimport Control.Monad (forM_)\n\nisBalanced :: String -> Bool\nisBalanced = go 0\n  where\n    go _ [] = ??? Actually need to return balance == 0 at end. So we can have function with balance. Let's do:\n\nisBalanced s = check 0 s\n  where\n    check bal [] = bal == 0\n    check bal (c:cs)\n      | c == '(' = check (bal+1) cs\n      | c == ')' = if bal > 0 then check (bal-1) cs else False\n      | otherwise = False\n\nmain :: IO ()\nmain = do\n  allInput <- getContents\n  let tokens = words allInput\n  case tokens of\n    (tStr:rest) -> do\n      let t = read tStr :: Int\n      let strings = take t rest\n      forM_ strings $ \\s -> putStrLn (if isBalanced s then \"YES\" else \"NO\")\n    _ -> return ()\n\nNeed to be careful with forM_ import: from Control.Monad. Alternatively use mapM_. Both okay.\n\nCheck: if T is positive, tokens is at least T+1. If input has fewer, take gives fewer; but spec ensures valid input. Could ignore.\n\nNow output exactly one fenced code block.",
+              "format": "unknown",
+              "index": 0
+            }
+          ]
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 605,
+      "completion_tokens": 792,
+      "total_tokens": 1397,
+      "prompt_tokens_details": {
+        "cached_tokens": 384,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 608,
+        "image_tokens": 0
+      },
+      "cache_creation_input_tokens": 0
+    },
+    "system_fingerprint": "fp_wccifbi7h2"
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 12.445475499960594,
+  "received_at": "2026-11-18T02:20:00.463027+00:00",
+  "logical_request_id": "ebd373755305d304aee18f6111d105d6dea49299260a90f9d047cc3d83c84419",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <string>\n#include <algorithm>\n\nint main() {\n    std::string s;\n    std::cin >> s;\n    std::string r = s;\n    std::reverse(r.begin(), r.end());\n    std::cout << (s == r ? 1 : 0) << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block cpp. Need translate. Simple read string, check palindrome. Preserve stdin behavior. Input one lowercase string, possibly newline. Use cin >> s. Output 1 or 0 newline. C++17 main. Need exactly one complete source file fenced. No explanation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794994592,
+    "id": "chatcmpl-2a5dec6f9c31282e3e7a56d533afde9f",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 143,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 426,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 569
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00029939999999999996,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.324791799997911,
+  "logical_request_id": "f83841670067bd0503746a8e065e6a1e58fb64352709bcb6a292645e55a1d073",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-prolog\\attempt-01\\step-06\\response_body.txt",
+  "received_at": "2026-11-18T09:36:32.863493+00:00",
+  "request_id": "chatcmpl-2a5dec6f9c31282e3e7a56d533afde9f",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <string>\n#include <algorithm>\n\nint main() {\n    std::string s;\n    std::cin >> s;\n    std::string r = s;\n    std::reverse(r.begin(), r.end());\n    std::cout << (s == r ? 1 : 0) << '\\n';\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 143,
+    "completion_tokens_details": {
+      "reasoning_tokens": 64
+    },
+    "prompt_tokens": 426,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 569
+  },
+  "usage_raw": {
+    "completion_tokens": 143,
+    "completion_tokens_details": {
+      "reasoning_tokens": 64
+    },
+    "prompt_tokens": 426,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 569
+  }
+}

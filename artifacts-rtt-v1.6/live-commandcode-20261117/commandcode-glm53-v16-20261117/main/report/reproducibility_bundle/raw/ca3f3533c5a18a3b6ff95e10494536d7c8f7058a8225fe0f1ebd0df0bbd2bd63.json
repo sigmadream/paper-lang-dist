@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.List (intercalate)\nimport Data.Maybe (fromMaybe)\n\nmain :: IO ()\nmain = do\n  first <- getLine\n  let n = read first :: Int\n  rest <- getContents\n  let nums = take n (map read (words rest) :: [Integer])\n      nonZeros = filter (/= 0) nums\n      zeros = replicate (n - length nonZeros) 0\n  putStrLn (intercalate \" \" (map show (nonZeros ++ zeros)))\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794899862,
+    "id": "ca79c262-617f-4280-9341-7549db4d61fc",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 121,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_446498a2440a4eafa8277bc72f25ef6f",
+      "trace_id": "3b3bd8947c5a4a73a7b9c1b1b67e904e"
+    },
+    "usage": {
+      "completion_tokens": 121,
+      "prompt_tokens": 654,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 775
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00130208,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.4476931999670342,
+  "logical_request_id": "a99cf00c3dbf2629a6310487c2e2580c68f711819479d33961fa0f9a7bf54add",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0283\\cpp-via-haskell\\attempt-05\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T07:17:42.401174+00:00",
+  "request_id": "ca79c262-617f-4280-9341-7549db4d61fc",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.List (intercalate)\nimport Data.Maybe (fromMaybe)\n\nmain :: IO ()\nmain = do\n  first <- getLine\n  let n = read first :: Int\n  rest <- getContents\n  let nums = take n (map read (words rest) :: [Integer])\n      nonZeros = filter (/= 0) nums\n      zeros = replicate (n - length nonZeros) 0\n  putStrLn (intercalate \" \" (map show (nonZeros ++ zeros)))\n```",
+  "usage": {
+    "completion_tokens": 121,
+    "prompt_tokens": 654,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 775
+  },
+  "usage_raw": {
+    "completion_tokens": 121,
+    "prompt_tokens": 654,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 775
+  }
+}

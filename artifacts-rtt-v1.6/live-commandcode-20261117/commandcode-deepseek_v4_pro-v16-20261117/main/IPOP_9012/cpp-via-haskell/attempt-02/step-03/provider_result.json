@@ -1,0 +1,107 @@
+{
+  "text": "```haskell\nmodule Main where\n\nisValid :: String -> Bool\nisValid = go 0\n  where\n    go :: Int -> String -> Bool\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '(' = go (bal + 1) cs\n      | c == ')' = bal > 0 && go (bal - 1) cs\n      | otherwise = go bal cs\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let tokens = words input\n    case tokens of\n      [] -> return ()\n      (tStr:rest) -> do\n        let t = read tStr :: Int\n        mapM_ (\\s -> putStrLn (if isValid s then \"YES\" else \"NO\")) (take t rest)\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4-pro",
+  "actual_model": "deepseek/deepseek-v4-pro",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4-pro",
+    "actual": "deepseek/deepseek-v4-pro",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 619,
+    "completion_tokens": 972,
+    "total_tokens": 1591,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 796,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "usage_raw": {
+    "prompt_tokens": 619,
+    "completion_tokens": 972,
+    "total_tokens": 1591,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 796,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "cost_usd": 0.0046662,
+  "cost_source": "estimated",
+  "request_id": "gen_01M7MD5QZ2HG5ZMA8QE55FJ4KW",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-deepseek_v4_pro-v16-20261117\\main\\IPOP_9012\\cpp-via-haskell\\attempt-02\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "gen_01M7MD5QZ2HG5ZMA8QE55FJ4KW",
+    "object": "chat.completion",
+    "created": 1794907519,
+    "model": "deepseek/deepseek-v4-pro",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nisValid :: String -> Bool\nisValid = go 0\n  where\n    go :: Int -> String -> Bool\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '(' = go (bal + 1) cs\n      | c == ')' = bal > 0 && go (bal - 1) cs\n      | otherwise = go bal cs\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let tokens = words input\n    case tokens of\n      [] -> return ()\n      (tStr:rest) -> do\n        let t = read tStr :: Int\n        mapM_ (\\s -> putStrLn (if isValid s then \"YES\" else \"NO\")) (take t rest)\n```",
+          "reasoning": "We need to translate C++ code to Haskell, following spec. The source code reads T, then T lines of parentheses strings, prints YES/NO for each based on whether it's a valid parenthesis sequence. Haskell: module Main with main :: IO (). Use standard I/O. We need to preserve exact stdin/stdout behavior for all valid inputs. Implementation: read all lines (or use getLine). Read first line T (integer), then T lines (but input may have blank lines? Strings consist only parentheses, no spaces inside, length 2..50; lines won't be empty. But could there be extra whitespace? The C++ reads with >> (string) so it treats each string as a token separated by whitespace, not necessarily each on its own line? Problem says each on its own line, but example includes newlines. So using getLine is fine but we might need to handle possible leading/trailing whitespace? Typically online judges use lines. We can read all lines via getContents, split lines, drop empty? But there could be empty lines? No; strings only parentheses and length >=2, so no empty lines. The first line may have T. So we can do:\n\nmain = do\n    input <- getContents\n    let ls = lines input\n    case ls of\n      [] -> return ()\n      (tStr:rest) -> let T = read tStr :: Int\n                     in mapM_ (\\s -> putStrLn (if isValid s then \"YES\" else \"NO\")) (take T rest)\n\nBut we need to be careful if there are extra blank lines? The C++ cin >> T, then for i < T reads strings. It would ignore whitespace including blank lines. So if input has blank lines between strings, the lines approach would fail because blank line would be treated as a string of length 0, and isValid would evaluate balance=0 (true) causing YES incorrectly. So better to use words on input to match token-based reading. The C++ reads tokens: first token T, then next T tokens (strings). So using words is better: input tokens separated by whitespace, ignoring blank lines. So:\n\nmain = do\n    input <- getContents\n    let tokens = words input\n    case tokens of\n      [] -> return ()\n      (tStr:rest) -> let t = read tStr :: Int\n                     in mapM_ (\\s -> putStrLn (if isValid s then \"YES\" else \"NO\")) (take t rest)\n\nThis matches C++ behavior of cin >> reading tokens ignoring whitespace. However the spec says \"이후 T줄에 소괄호 문자열 하나씩\" but in programming contest inputs always newline separated; using words is safe and handles whitespace robustly. Should be fine.\n\nDefine isValid: traverse characters, maintain balance. Use foldl' with State or just recursion.\n\nWe'll write:\n\nisValid :: String -> Bool\nisValid = go 0\n  where go bal [] = bal == 0\n        go bal (c:cs)\n          | c == '(' = go (bal+1) cs\n          | c == ')' = bal > 0 && go (bal-1) cs\n          | otherwise = go bal cs  -- though only parentheses\n\nBut ensure if balance becomes negative, we short-circuit false. Alternatively use fold and maybe early exit. Simpler: go bal (c:cs) with condition: if c == '(' then go (bal+1) cs; else if c == ')' then if bal <= 0 then False else go (bal-1) cs; else go bal cs. Good.\n\nNeed to import Data.Char? Not needed; chars are literal.\n\nFinally output exactly as expected: lines of YES/NO. We use putStrLn.\n\nNow produce final answer with code block.",
+          "reasoning_details": [
+            {
+              "type": "reasoning.text",
+              "text": "We need to translate C++ code to Haskell, following spec. The source code reads T, then T lines of parentheses strings, prints YES/NO for each based on whether it's a valid parenthesis sequence. Haskell: module Main with main :: IO (). Use standard I/O. We need to preserve exact stdin/stdout behavior for all valid inputs. Implementation: read all lines (or use getLine). Read first line T (integer), then T lines (but input may have blank lines? Strings consist only parentheses, no spaces inside, length 2..50; lines won't be empty. But could there be extra whitespace? The C++ reads with >> (string) so it treats each string as a token separated by whitespace, not necessarily each on its own line? Problem says each on its own line, but example includes newlines. So using getLine is fine but we might need to handle possible leading/trailing whitespace? Typically online judges use lines. We can read all lines via getContents, split lines, drop empty? But there could be empty lines? No; strings only parentheses and length >=2, so no empty lines. The first line may have T. So we can do:\n\nmain = do\n    input <- getContents\n    let ls = lines input\n    case ls of\n      [] -> return ()\n      (tStr:rest) -> let T = read tStr :: Int\n                     in mapM_ (\\s -> putStrLn (if isValid s then \"YES\" else \"NO\")) (take T rest)\n\nBut we need to be careful if there are extra blank lines? The C++ cin >> T, then for i < T reads strings. It would ignore whitespace including blank lines. So if input has blank lines between strings, the lines approach would fail because blank line would be treated as a string of length 0, and isValid would evaluate balance=0 (true) causing YES incorrectly. So better to use words on input to match token-based reading. The C++ reads tokens: first token T, then next T tokens (strings). So using words is better: input tokens separated by whitespace, ignoring blank lines. So:\n\nmain = do\n    input <- getContents\n    let tokens = words input\n    case tokens of\n      [] -> return ()\n      (tStr:rest) -> let t = read tStr :: Int\n                     in mapM_ (\\s -> putStrLn (if isValid s then \"YES\" else \"NO\")) (take t rest)\n\nThis matches C++ behavior of cin >> reading tokens ignoring whitespace. However the spec says \"이후 T줄에 소괄호 문자열 하나씩\" but in programming contest inputs always newline separated; using words is safe and handles whitespace robustly. Should be fine.\n\nDefine isValid: traverse characters, maintain balance. Use foldl' with State or just recursion.\n\nWe'll write:\n\nisValid :: String -> Bool\nisValid = go 0\n  where go bal [] = bal == 0\n        go bal (c:cs)\n          | c == '(' = go (bal+1) cs\n          | c == ')' = bal > 0 && go (bal-1) cs\n          | otherwise = go bal cs  -- though only parentheses\n\nBut ensure if balance becomes negative, we short-circuit false. Alternatively use fold and maybe early exit. Simpler: go bal (c:cs) with condition: if c == '(' then go (bal+1) cs; else if c == ')' then if bal <= 0 then False else go (bal-1) cs; else go bal cs. Good.\n\nNeed to import Data.Char? Not needed; chars are literal.\n\nFinally output exactly as expected: lines of YES/NO. We use putStrLn.\n\nNow produce final answer with code block.",
+              "format": "unknown",
+              "index": 0
+            }
+          ]
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 619,
+      "completion_tokens": 972,
+      "total_tokens": 1591,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 796,
+        "image_tokens": 0
+      },
+      "cache_creation_input_tokens": 0
+    },
+    "system_fingerprint": "fp_h2cefpsyxn"
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 23.539933799998835,
+  "received_at": "2026-11-17T09:25:18.643616+00:00",
+  "logical_request_id": "8b7ac663b3de9c909c5877aa2e7c55e7ae311bbd57855ae706d37b20caee58e0",
+  "execution_class": "direct_api"
+}

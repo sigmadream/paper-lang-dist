@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```python\nimport sys\n\ndef hanoi(n, start, mid, end, moves):\n    if n == 1:\n        moves.append((start, end))\n        return\n    hanoi(n - 1, start, end, mid, moves)\n    moves.append((start, end))\n    hanoi(n - 1, mid, start, end, moves)\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    n = int(data[0])\n    moves = []\n    hanoi(n, 1, 2, 3, moves)\n    out = [str(len(moves))]\n    out.extend(f\"{a} {b}\" for a, b in moves)\n    sys.stdout.write(\"\\n\".join(out) + \"\\n\")\n\nmain()\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794899336,
+    "id": "62bdc662-d64f-4ba0-9824-ffc9faca2fe7",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 170,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_d2e7724ee2094c069e676f38c566f824",
+      "trace_id": "f8ba9274fb794367981e65f6ac9bde6e"
+    },
+    "usage": {
+      "completion_tokens": 170,
+      "prompt_tokens": 650,
+      "prompt_tokens_details": {
+        "cached_tokens": 640
+      },
+      "total_tokens": 820
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0009284000000000001,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.2603008999722078,
+  "logical_request_id": "8108f35a2cb1219dd863e7d47764f5b3a8f4a8a4e26d4f3dee3b2a7adf301f26",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_11729\\cpp-via-python\\attempt-03\\step-05\\response_body.txt",
+  "received_at": "2026-11-17T07:08:55.869814+00:00",
+  "request_id": "62bdc662-d64f-4ba0-9824-ffc9faca2fe7",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```python\nimport sys\n\ndef hanoi(n, start, mid, end, moves):\n    if n == 1:\n        moves.append((start, end))\n        return\n    hanoi(n - 1, start, end, mid, moves)\n    moves.append((start, end))\n    hanoi(n - 1, mid, start, end, moves)\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    n = int(data[0])\n    moves = []\n    hanoi(n, 1, 2, 3, moves)\n    out = [str(len(moves))]\n    out.extend(f\"{a} {b}\" for a, b in moves)\n    sys.stdout.write(\"\\n\".join(out) + \"\\n\")\n\nmain()\n```",
+  "usage": {
+    "completion_tokens": 170,
+    "prompt_tokens": 650,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 820
+  },
+  "usage_raw": {
+    "completion_tokens": 170,
+    "prompt_tokens": 650,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 820
+  }
+}

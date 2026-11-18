@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```python\nimport sys\n\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n\n    t = int(data[0])\n    answers = []\n\n    for i in range(1, t + 1):\n        s = data[i]\n        balance = 0\n        valid = True\n\n        for ch in s:\n            if ch == '(':\n                balance += 1\n            else:\n                balance -= 1\n\n            if balance < 0:\n                valid = False\n                break\n\n        if balance != 0:\n            valid = False\n\n        answers.append(\"YES\" if valid else \"NO\")\n\n    sys.stdout.write(\"\\n\".join(answers))\n\n\nif __name__ == \"__main__\":\n    main()\n```",
+          "reasoning_content": "We need answer translate to Python. Need provide exactly one complete source file in fenced code block, no explanation. Need preserve behavior. The C++ reads whitespace tokens, first T, then T strings. Python can read sys.stdin.read().split(). If empty return. t=int(data[0]); iterate data[1:1+t]? Source loops i=1..t inclusive, assumes data[i] exists. For valid input specification yes T strings. Should match. Output newline separated no trailing newline? C++ outputs no final newline. Python print would add final newline. Need preserve? Usually accepted. \"complete stdin/stdout behavior\" maybe exact. We can join answers with '\\n' and sys.stdout.write, no trailing newline. If no answers? T positive. If data empty return. Need handle t maybe 0? Constraint positive. We can emulate.\n\nNeed fence code block. Only source. Ensure no explanation. Python 3.\n\nPotential issue reading tokens: If string could be empty? length 2..50 no. split works.\n\nCode:\n\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    t = int(data[0])\n    answers=[]\n    for i in range(1, t+1):\n        s = data[i]\n        balance=0\n        valid=True\n        for ch in s:\n            if ch == '(':\n                balance +=1\n            else:\n                balance -=1\n            if balance < 0:\n                valid=False\n                break\n        if balance != 0:\n            valid=False\n        answers.append(\"YES\" if valid else \"NO\")\n    sys.stdout.write(\"\\n\".join(answers))\n\nif __name__ == \"__main__\":\n    main()\n\nNeed exact one fenced block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794987990,
+    "id": "chatcmpl-224a56071bce5015eb324a130856900d",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 532,
+      "completion_tokens_details": {
+        "reasoning_tokens": 373
+      },
+      "prompt_tokens": 687,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 1219
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.000731604,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 4.5241204999620095,
+  "logical_request_id": "dde93f73022f6639e69367807d66a3e936bcf1ed292f2126688133b17a4fbb04",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-python\\attempt-01\\step-09\\response_body.txt",
+  "received_at": "2026-11-18T07:46:32.771353+00:00",
+  "request_id": "chatcmpl-224a56071bce5015eb324a130856900d",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```python\nimport sys\n\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n\n    t = int(data[0])\n    answers = []\n\n    for i in range(1, t + 1):\n        s = data[i]\n        balance = 0\n        valid = True\n\n        for ch in s:\n            if ch == '(':\n                balance += 1\n            else:\n                balance -= 1\n\n            if balance < 0:\n                valid = False\n                break\n\n        if balance != 0:\n            valid = False\n\n        answers.append(\"YES\" if valid else \"NO\")\n\n    sys.stdout.write(\"\\n\".join(answers))\n\n\nif __name__ == \"__main__\":\n    main()\n```",
+  "usage": {
+    "completion_tokens": 532,
+    "completion_tokens_details": {
+      "reasoning_tokens": 373
+    },
+    "prompt_tokens": 687,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1219
+  },
+  "usage_raw": {
+    "completion_tokens": 532,
+    "completion_tokens_details": {
+      "reasoning_tokens": 373
+    },
+    "prompt_tokens": 687,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1219
+  }
+}

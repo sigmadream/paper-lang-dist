@@ -1,0 +1,24 @@
+# 모델 ID와 공식 지원 옵션을 확인한 별도 프로파일을 작성해 주세요.
+# https://developers.openai.com/api/docs/guides/migrate-to-responses
+# Chat Completions를 사용하시면 protocol과 request_path를 각각
+# chat_completions와 /chat/completions로 바꾸고 모델별 output_limit_field를 확인해 주세요.
+provider: openai
+protocol: responses
+base_url: https://api.openai.com/v1
+request_path: /responses
+auth:
+  type: bearer
+  api_key_env: OPENAI_API_KEY
+model: null
+allowed_response_models: []
+generation_profile:
+  name: openai-responses-explicit
+  supported_options: [temperature, top_p, max_tokens, reasoning_effort]
+generation:
+  temperature: 0.6
+  top_p: 0.95
+  max_tokens: 16384
+request_timeout: 120
+retries: 2
+max_calls: 3600
+max_transport_attempts: 10800

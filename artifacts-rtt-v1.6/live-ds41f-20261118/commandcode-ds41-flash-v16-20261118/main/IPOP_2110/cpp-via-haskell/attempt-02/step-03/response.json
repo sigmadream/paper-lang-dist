@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport qualified Data.ByteString.Lazy.Char8 as BS\nimport Data.List (sort)\n\ntoInt :: BS.ByteString -> Int\ntoInt bs =\n  case BS.readInt bs of\n    Just (x, _) -> x\n    Nothing -> 0\n\nmain :: IO ()\nmain = do\n  input <- BS.getContents\n  let nums = map toInt (BS.words input)\n  case nums of\n    (n:c:rest) -> do\n      let houses = sort (take n rest)\n          lo = 1\n          hi = last houses - head houses\n          answer = search houses c lo hi 0\n      print answer\n    _ -> return ()\n\nsearch :: [Int] -> Int -> Int -> Int -> Int -> Int\nsearch houses c lo hi best\n  | lo > hi = best\n  | otherwise =\n      let mid = lo + (hi - lo) `div` 2\n      in if canPlace houses c mid\n           then search houses c (mid + 1) hi mid\n           else search houses c lo (mid - 1) best\n\ncanPlace :: [Int] -> Int -> Int -> Bool\ncanPlace [] _ _ = False\ncanPlace (x:xs) c d = go 1 x xs\n  where\n    go cnt _ [] = cnt >= c\n    go cnt prev (y:ys)\n      | y - prev >= d = go (cnt + 1) y ys\n      | otherwise = go cnt prev ys\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 691,
+    "total_tokens": 2673,
+    "completion_tokens": 1982,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1651
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 691,
+    "total_tokens": 2673,
+    "completion_tokens": 1982,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1651
+    }
+  },
+  "cost_usd": 0.0025857000000000002,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-a997a5eadf343f270d8fabeefcbcb596",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2110\\cpp-via-haskell\\attempt-02\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-a997a5eadf343f270d8fabeefcbcb596",
+    "object": "chat.completion",
+    "created": 1795000437,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport qualified Data.ByteString.Lazy.Char8 as BS\nimport Data.List (sort)\n\ntoInt :: BS.ByteString -> Int\ntoInt bs =\n  case BS.readInt bs of\n    Just (x, _) -> x\n    Nothing -> 0\n\nmain :: IO ()\nmain = do\n  input <- BS.getContents\n  let nums = map toInt (BS.words input)\n  case nums of\n    (n:c:rest) -> do\n      let houses = sort (take n rest)\n          lo = 1\n          hi = last houses - head houses\n          answer = search houses c lo hi 0\n      print answer\n    _ -> return ()\n\nsearch :: [Int] -> Int -> Int -> Int -> Int -> Int\nsearch houses c lo hi best\n  | lo > hi = best\n  | otherwise =\n      let mid = lo + (hi - lo) `div` 2\n      in if canPlace houses c mid\n           then search houses c (mid + 1) hi mid\n           else search houses c lo (mid - 1) best\n\ncanPlace :: [Int] -> Int -> Int -> Bool\ncanPlace [] _ _ = False\ncanPlace (x:xs) c d = go 1 x xs\n  where\n    go cnt _ [] = cnt >= c\n    go cnt prev (y:ys)\n      | y - prev >= d = go (cnt + 1) y ys\n      | otherwise = go cnt prev ys\n```",
+          "reasoning_content": "We need answer with Haskell file only. Need translate. Must preserve. Need define main IO. Handle reading ints. N C then N coords. Sort. Binary search. Coordinates up to 1e9, differences fit Int. Haskell Int 64-bit. Return answer. Need efficient for 200000. Use Data.List sort, ByteString? Standard libraries. Simpler use Data.List.sort and read via words. Reading all input with getContents, words. N 200k fine but words String maybe okay. Could use Data.ByteString.Lazy.Char8 for efficiency but standard. GHC has containers? base? ByteString is shipped? \"standard libraries shipped with toolchain\" includes bytestring likely. But safe use Prelude + Data.List.sort. 200k reading using words/read may be okay but could be somewhat slow. Better implement using ByteString? Haskell code with Data.ByteString.Lazy.Char8 and sort. But final code could use Data.List.sort. Need ensure no ambiguity with Prelude. Let's craft.\n\nmain = do\n  input <- getContents\n  let (n:c:rest) = map read (words input) :: [Int]\n      houses = take n rest\n      sorted = sort houses\n      lo = 1\n      hi = last sorted - head sorted\n  print (binarySearch lo hi sorted c)\n\nbinarySearch returns ans. Need when C? C>=2 and N>=C. hi could 0? Houses distinct so diff >=? if N>=2 diff >0. But lo=1. fine. If C maybe 2. Binary.\n\nUse recursion:\nsolve lo hi\n | lo > hi = ans? Need carry answer. Could define search lo hi best.\n | canPlace mid = search (mid+1) hi mid\n | otherwise = search lo (mid-1) best\n\ncanPlace d xs c = go 1 (head xs) (tail xs)\n go cnt _ [] = cnt >= c\n go cnt prev (x:xs)\n   | x - prev >= d = go (cnt+1) x xs\n   | otherwise = go cnt prev xs\n\nPotential performance: recursion in list fine. Need best initialized 0. Since lo=1. Use Int.\n\nInput first line maybe trailing. Pattern (n:c:rest). Safe. Need if no input? not required. We can use case to avoid warning. Code:\n\nimport Data.List (sort)\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let nums = map read (words input) :: [Int]\n  case nums of\n    (n:c:rest) -> do\n      let houses = sort (take n rest)\n          lo = 1\n          hi = last houses - head houses\n          answer = search houses c lo hi 0\n      print answer\n    _ -> return ()\n\nsearch :: [Int] -> Int -> Int -> Int -> Int -> Int\nsearch houses c lo hi best\n  | lo > hi = best\n  | otherwise =\n      let mid = lo + (hi - lo) `div` 2\n      in if canPlace houses c mid\n           then search houses c (mid+1) hi mid\n           else search houses c lo (mid-1) best\n\ncanPlace :: [Int] -> Int -> Int -> Bool\ncanPlace [] _ _ = False\ncanPlace (x:xs) c d = go 1 x xs\n  where\n    go cnt _ [] = cnt >= c\n    go cnt prev (y:ys)\n      | y - prev >= d = go (cnt+1) y ys\n      | otherwise = go cnt prev ys\n\nThis is fine. But note `hi = last houses - head houses`; if N maybe 0 no, constraints. Need output newline; print does.\n\nCould optimize with strictness? 200k, sort O(n log n), binary search ~30 * n = 6M, Haskell list recursion okay. String reading 200k maybe okay. Might pass. But for BOJ Haskell time maybe tight? Need consider. Problem 2110 N=200000, typical time 2 sec? Haskell might need efficient. Using ByteString reading and unboxed vector? Could still pass with bytestring + vector. But \"standard libraries shipped\" contains vector? Not core. Avoid.\n\nCan use Data.ByteString.Lazy.Char8 with sort? `sort` on [Int] still. Need parse. Could read all and split by whitespace via ByteString.ByteString. Use bytestring. But Data.List sort. Reading via `BS.words` lazy, map readInt. Write readInt. This may improve. Need code robust. `Data.ByteString.Lazy.Char8` is standard package bytestring (shipped with GHC). Fine.\n\nUse ByteString parse to avoid String overhead:\nimport qualified Data.ByteString.Lazy.Char8 as BS\nimport Data.List (sort)\n\nparseInts :: BS.ByteString -> [Int]\nparseInts = map (fst . fromJust . BS.readInt) . BS.words? BS.readInt returns Maybe (Int, ByteString), but can use `BS.readInt`? Actually Data.ByteString.Lazy.Char8.readInt :: ByteString -> Maybe (Int, ByteString). `map (fst . fromJust . BS.readInt) (BS.words s)` works but fromJust. Need import Data.Maybe. Since all valid. Or define readInts. Simpler use `map (read . BS.unpack) (BS.words input)` still creates strings per token. Could use `BS.readInt`.\n\nCould avoid fromJust using helper:\ntoInt bs = case BS.readInt bs of Just (x,_) -> x; Nothing -> 0\nnums = map toInt (BS.words input)\n\nThen output `BS.putStrLn (BS.pack (show ans))`. But print okay with String output. Use normal print after parse. Since input read lazy ByteString and parse to list. Need `BS.getContents`. Code:\n\nimport qualified Data.ByteString.Lazy.Char8 as BS\nimport Data.List (sort)\n\ntoInt :: BS.ByteString -> Int\ntoInt bs = case BS.readInt bs of\n  Just (x, _) -> x\n  Nothing -> 0\n\nmain=do\n input <- BS.getContents\n let nums = map toInt (BS.words input)\n case nums of\n  (n:c:rest) -> ...\n  _ -> return ()\n\nNeed `BS.words` exists? In Data.ByteString.Lazy.Char8, `words` yes. `BS.readInt` accepts leading? Words no spaces. If negative? coords nonnegative. Good. But `BS.readInt` may parse only prefix. Fine. It handles positive.\n\nSearch uses list. To check canPlace with list sorting list. Could convert houses to Array for faster indexing? Data.Array is standard. But list scan fine. Binary search scans list 31*200k ~6.2 million differences. Fine. reading parse maybe.\n\nNeed ensure `last houses` and `head houses` safe. n>=2. Good.\n\nPotential issue with `BS.readInt` and Int: returns Int. Good.\n\nCould make search strict to avoid thunks. Add BangPatterns? Extension not needed? Can use `seq`. But 6M, likely okay. It may build thunks? Recursive search with let mid. best. canPlace returns Bool forcing scan. Fine.\n\nNeed final exactly one code block. No explanation. Use Haskell module Main and main. Ensure no initialization directives irrelevant. \n\nLet's consider algorithmic constraints: binary search maximum minimum distance. Good.\n\nCould output via `print answer`; print uses stdout newline. Good.\n\nNeed preserve \"valid input specification\" so parse first two ints, then next N. okay.\n\nNow final."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 691,
+      "total_tokens": 2673,
+      "completion_tokens": 1982,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1651
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 18.23696300003212,
+  "received_at": "2026-11-18T11:14:14.078720+00:00",
+  "logical_request_id": "4eb75d18d6b1f5475aa5e0bcc816269fa859f8b659d3ad6de13f483d9f7a58d9",
+  "execution_class": "direct_api"
+}

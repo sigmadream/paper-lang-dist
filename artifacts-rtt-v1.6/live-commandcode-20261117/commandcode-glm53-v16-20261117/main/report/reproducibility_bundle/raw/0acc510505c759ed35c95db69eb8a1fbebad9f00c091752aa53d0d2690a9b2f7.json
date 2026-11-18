@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```java\nimport java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StreamTokenizer st = new StreamTokenizer(br);\n        st.parseNumbers();\n        if (st.nextToken() == StreamTokenizer.TT_EOF) return;\n        int n = (int) st.nval;\n        long[] a = new long[n];\n        for (int i = 0; i < n; i++) {\n            st.nextToken();\n            a[i] = (long) st.nval;\n        }\n        int write = 0;\n        for (int read = 0; read < n; read++) {\n            if (a[read] != 0) {\n                long tmp = a[write];\n                a[write] = a[read];\n                a[read] = tmp;\n                write++;\n            }\n        }\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i < n; i++) {\n            if (i > 0) sb.append(' ');\n            sb.append(a[i]);\n        }\n        sb.append('\\n');\n        System.out.print(sb);\n    }\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794895795,
+    "id": "a8e7eeb8-2b99-4ec8-a2cc-6dd4c7a32ce9",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 251,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_7a17e14498734c1ab9cd869895a78c04",
+      "trace_id": "7ab7a2e0ce8846bb98989af0a75eb688"
+    },
+    "usage": {
+      "completion_tokens": 251,
+      "prompt_tokens": 622,
+      "prompt_tokens_details": {
+        "cached_tokens": 576
+      },
+      "total_tokens": 873
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0013185599999999999,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.9759104999830015,
+  "logical_request_id": "fa6e92a428a5d1fcd29bb745a0f698f7db82b5e95d9f280ead75ce0831e603ca",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0283\\cpp-via-java\\attempt-04\\step-07\\response_body.txt",
+  "received_at": "2026-11-17T06:09:55.038575+00:00",
+  "request_id": "a8e7eeb8-2b99-4ec8-a2cc-6dd4c7a32ce9",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```java\nimport java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StreamTokenizer st = new StreamTokenizer(br);\n        st.parseNumbers();\n        if (st.nextToken() == StreamTokenizer.TT_EOF) return;\n        int n = (int) st.nval;\n        long[] a = new long[n];\n        for (int i = 0; i < n; i++) {\n            st.nextToken();\n            a[i] = (long) st.nval;\n        }\n        int write = 0;\n        for (int read = 0; read < n; read++) {\n            if (a[read] != 0) {\n                long tmp = a[write];\n                a[write] = a[read];\n                a[read] = tmp;\n                write++;\n            }\n        }\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i < n; i++) {\n            if (i > 0) sb.append(' ');\n            sb.append(a[i]);\n        }\n        sb.append('\\n');\n        System.out.print(sb);\n    }\n}\n```",
+  "usage": {
+    "completion_tokens": 251,
+    "prompt_tokens": 622,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 873
+  },
+  "usage_raw": {
+    "completion_tokens": 251,
+    "prompt_tokens": 622,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 873
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "text": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n\n    t = int(data[0])\n    result = []\n\n    for i in range(1, t + 1):\n        s = data[i] if i < len(data) else \"\"\n        balance = 0\n        valid = True\n\n        for c in s:\n            if c == '(':\n                balance += 1\n            else:\n                balance -= 1\n\n            if balance < 0:\n                valid = False\n                break\n\n        if balance != 0:\n            valid = False\n\n        result.append(\"YES\" if valid else \"NO\")\n\n    sys.stdout.write(\"\\n\".join(result))\n\nif __name__ == \"__main__\":\n    main()\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 633,
+    "total_tokens": 980,
+    "completion_tokens": 347,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 181
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 633,
+    "total_tokens": 980,
+    "completion_tokens": 347,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 181
+    }
+  },
+  "cost_usd": 0.000493404,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-2b2aacc3173ce821d48b92b388dc2a78",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-python\\attempt-02\\step-07\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-2b2aacc3173ce821d48b92b388dc2a78",
+    "object": "chat.completion",
+    "created": 1794982283,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n\n    t = int(data[0])\n    result = []\n\n    for i in range(1, t + 1):\n        s = data[i] if i < len(data) else \"\"\n        balance = 0\n        valid = True\n\n        for c in s:\n            if c == '(':\n                balance += 1\n            else:\n                balance -= 1\n\n            if balance < 0:\n                valid = False\n                break\n\n        if balance != 0:\n            valid = False\n\n        result.append(\"YES\" if valid else \"NO\")\n\n    sys.stdout.write(\"\\n\".join(result))\n\nif __name__ == \"__main__\":\n    main()\n```",
+          "reasoning_content": "We need answer final with one Python code block, no explanation. Need translate. Ensure exact. Use sys.stdin. Input T then T strings. Could split. Need output YES/NO. Straight.\n\nNeed be careful if missing. Code:\n\nimport sys\ndef main():\n data=sys.stdin.read().split()\n if not data: return\n t=int(data[0])\n out=[]\n for i in range(1,t+1):\n   s=data[i] if i<len(data) else \"\"\n   bal=0; valid=True\n   for c in s:\n      if c=='(': bal+=1\n      else: bal-=1\n      if bal<0: valid=False; break\n   if bal!=0: valid=False\n   out.append(\"YES\" if valid else \"NO\")\n sys.stdout.write(\"\\n\".join(out))\nif __name__...\nNeed final only code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 633,
+      "total_tokens": 980,
+      "completion_tokens": 347,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 181
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.697738400078379,
+  "received_at": "2026-11-18T06:11:25.059302+00:00",
+  "logical_request_id": "75049873a7a96ca3c9a34a338f91fe2d53eb18cc0a73d5624502fe57d7665fee",
+  "execution_class": "direct_api"
+}

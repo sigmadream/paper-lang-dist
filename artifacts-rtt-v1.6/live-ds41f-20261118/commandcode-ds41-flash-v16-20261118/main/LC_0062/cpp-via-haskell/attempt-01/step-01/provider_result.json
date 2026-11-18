@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let (m:n:_) = map read (words input) :: [Int]\n        dp0 = replicate n 1\n        step dp = scanl (+) 1 (drop 1 dp)\n        dp = foldl' (\\acc _ -> step acc) dp0 [1..m-1]\n    print (last dp)\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 596,
+    "total_tokens": 1368,
+    "completion_tokens": 772,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 670
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 596,
+    "total_tokens": 1368,
+    "completion_tokens": 772,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 670
+    }
+  },
+  "cost_usd": 0.001067568,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-1ed7012e2327810f8eb8b39718357dea",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-haskell\\attempt-01\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-1ed7012e2327810f8eb8b39718357dea",
+    "object": "chat.completion",
+    "created": 1794982793,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let (m:n:_) = map read (words input) :: [Int]\n        dp0 = replicate n 1\n        step dp = scanl (+) 1 (drop 1 dp)\n        dp = foldl' (\\acc _ -> step acc) dp0 [1..m-1]\n    print (last dp)\n```",
+          "reasoning_content": "We need answer only Haskell source file fenced. Need translate. Need preserve. Simple dp. Input first line M N; output integer. Haskell main read all ints. Handle valid. Use Int? max answer 2e9 fits Int32 but Haskell Int 64. Compute combinations? DP.\n\nNeed output exactly one complete source file in fenced code block no explanation. Module Main main. Need only standard. Let's craft.\n\nPotential input newline. readMaybe? Just words. If empty not valid. use case map read. main = do s <- getContents; let (m:n:_) = map read (words s) :: [Int]; ... print (last dp). DP list length n all 1, iterate m-1 times update.\n\nupdate row: scanl? For dp length n starting 1s. Each row i: new dp[0]=1, dp[j]=dp[j]+new[j-1] (using current dp before update). Can implement fold: tail (scanl (+) 1 (tail dp))? Check dp=[1,1,1], scanl (+) 1 [1,1] = [1,2,3]? tail = [2,3], but expected after one row [1,2,3]. Wait scanl (+) 1 (tail dp) gives [1,2,3]; not tail. Need new = scanl (+) 1 (tail dp). For dp [1,1,1], tail [1,1], scanl (+) 1 [1,1] = [1,2,3]. Yes. For length n. If n=1, tail [], scanl (+) 1 [] = [1]. Good.\n\nIterate (m-1) times: iterate step dp !! (m-1) or foldl. Use foldl' maybe. result last.\n\nNote if m,n maybe at least 1. If m=1 no iteration, dp length n of ones, result 1. Good.\n\nNeed maybe avoid read type ambiguity. let [m,n] = map read (words s) :: [Int]? Valid exact two. But if trailing spaces fine. Use case.\n\nCode:\n\nmodule Main where\nimport Data.List (foldl')\nmain :: IO ()\nmain = do\n  input <- getContents\n  let (m:n:_) = map (read :: String -> Int) (words input)\n      dp0 = replicate n 1\n      step dp = scanl (+) 1 (drop 1 dp)\n      dp = foldl' (\\acc _ -> step acc) dp0 [1..m-1]\n  print (last dp)\n\nNeed if m-1 maybe negative? constraints >=1, [1..0] = [] in Haskell? Yes [1..0] empty for Int. Good.\n\nCould use Integer for safety? Answer <=2e9 but no matter. Int fine. Use Integer maybe. read Int. Let's use Integer for no overflow? Haskell Int 64 enough. Use Integer simple. But n as Int for replicate. Could parse m,n :: Int then dp Integer. Simpler parse Int and compute Int. Constraints answer <=2e9. Fine.\n\nNeed no explanation. Ensure fenced code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 596,
+      "total_tokens": 1368,
+      "completion_tokens": 772,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 670
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 8.056868499959819,
+  "received_at": "2026-11-18T06:19:58.833357+00:00",
+  "logical_request_id": "36ad5d7d3566c22dddcaef1dcaa916f083e918fb01c8c63ddf8cc0ce80db5f59",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,86 @@
+{
+  "text": "```prolog\nmain :-\n    read_line_to_codes(user_input, T0),\n    (   T0 == end_of_file\n    ->  true\n    ;   include(is_digit_code, T0, TDigits),\n        number_codes(T, TDigits),\n        process_cases(T)\n    ).\n\nis_digit_code(C) :-\n    C >= 48,\n    C =< 57.\n\nprocess_cases(0) :- !.\nprocess_cases(N) :-\n    read_line_to_codes(user_input, Codes0),\n    (   Codes0 == end_of_file\n    ->  Codes = []\n    ;   Codes = Codes0\n    ),\n    (   valid_parentheses(Codes)\n    ->  write('YES')\n    ;   write('NO')\n    ),\n    nl,\n    N1 is N - 1,\n    process_cases(N1).\n\nvalid_parentheses(Codes) :-\n    valid_loop(Codes, 0, Final),\n    Final =:= 0.\n\nvalid_loop([], Bal, Bal).\nvalid_loop([C|Cs], Bal, Final) :-\n    (   C =:= 40\n    ->  Bal1 is Bal + 1\n    ;   C =:= 41\n    ->  Bal1 is Bal - 1\n    ;   Bal1 = Bal\n    ),\n    Bal1 >= 0,\n    valid_loop(Cs, Bal1, Final).\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 615,
+    "total_tokens": 3130,
+    "completion_tokens": 2515,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2208
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 615,
+    "total_tokens": 3130,
+    "completion_tokens": 2515,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2208
+    }
+  },
+  "cost_usd": 0.003051972,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-d9dd475a80587cdc1ed14025aeea114d",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-prolog\\attempt-05\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-d9dd475a80587cdc1ed14025aeea114d",
+    "object": "chat.completion",
+    "created": 1794993885,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\nmain :-\n    read_line_to_codes(user_input, T0),\n    (   T0 == end_of_file\n    ->  true\n    ;   include(is_digit_code, T0, TDigits),\n        number_codes(T, TDigits),\n        process_cases(T)\n    ).\n\nis_digit_code(C) :-\n    C >= 48,\n    C =< 57.\n\nprocess_cases(0) :- !.\nprocess_cases(N) :-\n    read_line_to_codes(user_input, Codes0),\n    (   Codes0 == end_of_file\n    ->  Codes = []\n    ;   Codes = Codes0\n    ),\n    (   valid_parentheses(Codes)\n    ->  write('YES')\n    ;   write('NO')\n    ),\n    nl,\n    N1 is N - 1,\n    process_cases(N1).\n\nvalid_parentheses(Codes) :-\n    valid_loop(Codes, 0, Final),\n    Final =:= 0.\n\nvalid_loop([], Bal, Bal).\nvalid_loop([C|Cs], Bal, Final) :-\n    (   C =:= 40\n    ->  Bal1 is Bal + 1\n    ;   C =:= 41\n    ->  Bal1 is Bal - 1\n    ;   Bal1 = Bal\n    ),\n    Bal1 >= 0,\n    valid_loop(Cs, Bal1, Final).\n```",
+          "reasoning_content": "We need answer only code block Prolog. Need implement main/0 reads T and lines, output YES/NO. SWI-Prolog. Need robust reading. Use read_line_to_string or read_string. Need preserve behavior. We can use SWI builtins. define main :- read_line_to_string(user_input, TStr), ... Since main invoked. Need avoid initialization. Implement.\n\nPotential issue input lines maybe whitespace. T first line. Then T strings. Use read_line_to_string(user_input, Line). But if EOF? assume valid. Convert number with number_string? atom_number. For each line, strip? Problem gives no spaces. We can handle trimming \\r. Use string_chars. Count balance: traverse chars, '(' increments, ')' decrements, fail if negative. At end bal=0 -> YES else NO.\n\nNeed read exactly T lines. read_line_to_string returns end_of_file at EOF maybe. Use atom_string? read_line_to_string returns string? SWI: read_line_to_string(Stream, String) returns string or end_of_file. Actually returns atom? Let's recall: read_line_to_string/2: String is a string (SWI) or atom end_of_file. Use atom_string(TAtom, TStr) maybe if atom. Or read_string. Simpler use read_line_to_string(user_input, TLine), atom_number(TLine, T) if atom. In SWI, read_line_to_string returns string? Documentation: read_line_to_string(+Stream, -String) where String is a string object. But examples use atom_string? Hmm SWI has read_line_to_codes. Use read_line_to_codes(user_input, Codes), Codes = end_of_file or list. Then parse T with number_codes(T, Codes). For each line read codes, process.\n\nNeed handle CR: input lines may have \\r on Windows. code strips? We can remove 0'\\r and 0'\\n not present. Codes from read_line excludes newline, may include \\r? likely not? We can process ignoring non parentheses? But spec only parentheses. Could ignore \\r. If char 13 skip.\n\nImplementation:\n\nmain :-\n    read_line_to_codes(user_input, TCodes),\n    ( TCodes == end_of_file -> true\n    ; number_codes(T, TCodes),\n      read_and_check(T)\n    ).\n\nread_and_check(0) :- !.\nread_and_check(N) :-\n    read_line_to_codes(user_input, Codes0),\n    ( Codes0 == end_of_file -> Codes = []\n    ; Codes = Codes0\n    ),\n    ( valid_paren_codes(Codes, 0) -> write('YES'), nl ; write('NO'), nl ),\n    N1 is N - 1,\n    read_and_check(N1).\n\nvalid_paren_codes(Codes, Bal) :-\n    valid_loop(Codes, 0, Final),\n    Final =:= 0.\n\nvalid_loop([], Bal, Bal).\nvalid_loop([C|Cs], Bal, Final) :-\n    ( C =:= 0'( -> Bal1 is Bal + 1\n    ; C =:= 0') -> Bal1 is Bal - 1\n    ; Bal1 = Bal\n    ),\n    Bal1 >= 0,\n    valid_loop(Cs, Bal1, Final).\n\nNeed careful Prolog syntax for char codes. In SWI, 0'( is valid? Actually character code syntax: 0'( gives code of '('? In Prolog, 0'( might parse? SWI supports 0'( for char code? Usually 0'( = 40. But syntax 0'( maybe ambiguous? Use 40 and 41. So C =:= 40, C =:= 41. Skip others.\n\nBut `valid_paren_codes(Codes,0)` I wrote has arity 2 but defined? define valid_paren(Codes) :- valid_loop(Codes,0,Final), Final=:=0. Use if-then. Need avoid leaving choicepoints? Fine.\n\nImportant: read_line_to_codes may skip empty lines? no. If T line has trailing spaces, number_codes fails. Could trim. The spec no spaces. But maybe first line \"6\". Fine. For robustness, use read_line_to_string? Let's implement with read_line_to_codes and maybe trim whitespace before number. Since valid input no spaces. But line may include \\r (13) if Windows; number_codes with [54,13] fails. We can strip trailing whitespace/cr for T. Could create trim_codes. But not necessary? Online judges use \\n, SWI read_line_to_codes strips newline but if \\r\\n, I think includes \\r? Could include. Better handle.\n\nImplement `read_line_to_codes` then filter for T? For T, remove codes <= 32. Use include. For paren line, ignore non 40/41, so \\r ignored.\n\nT parse:\nread_line_to_codes(user_input, T0),\n( T0 == end_of_file -> true ; include([C]>>(C > 32), T0, TCs), number_codes(T, TCs), ... )\n\nNeed lambda syntax in SWI `include([C]>>(C>32), ...)` works? SWI supports yall lambda. But to be safe define `non_space(C) :- C > 32.` and include(non_space, T0, TCs). But using include/3 standard? SWI includes. We can just use number_codes with T0; likely okay. Avoid extras.\n\nCould use `atom_codes(Atom, Codes), atom_number(Atom, T)` but spaces still.\n\nLet's design robust with custom trim leading/trailing whitespace. Use `exclude(whitespace_code, Codes, Trimmed)`. But we need only for T. Define `filter_digits`? Actually T positive integer, just take digits. Use `include(is_digit_code, Codes, DigitCodes)`.\n\nis_digit_code(C) :- C >= 48, C =< 57.\nThen number_codes(T, DigitCodes). This handles spaces and \\r. If no digits, fail. Valid input has digits.\n\nRead and check: For each line, valid_loop ignores any char not 40 or 41. It should only count parentheses. For empty code at EOF, invalid -> NO? If T > actual lines, spec no. Could output NO. Fine.\n\nValid_loop:\nvalid_loop([], Bal, Bal).\nvalid_loop([C|Cs], Bal, Final) :-\n    ( C =:= 40 ->\n        Bal1 is Bal + 1\n    ; C =:= 41 ->\n        Bal1 is Bal - 1\n    ; Bal1 = Bal\n    ),\n    Bal1 >= 0,\n    valid_loop(Cs, Bal1, Final).\n\nUse if-then-else; SWI. Note `(C =:= 40 -> ... ; C =:= 41 -> ... ; ...)`. Fine.\n\nNeed avoid warning singleton? no.\n\nAt end main prints each with nl.\n\nPotential issue `read_line_to_codes` returns `end_of_file` atom. Branch.\n\nProlog source:\n\n:- module? They said module Main and main :: IO (), but for Prolog define main/0. No module required? \"Prolog: SWI-Prolog, define main/0; evaluator invokes main; do not add initialization directives.\" We can just define main/0. No initialization. Good.\n\nNeed exactly one complete source file in fenced code block. No explanation.\n\nLet's ensure code is syntactically valid.\n\n```\nmain :-\n    read_line_to_codes(user_input, T0),\n    (   T0 == end_of_file\n    ->  true\n    ;   include(is_digit_code, T0, TDigits),\n        number_codes(T, TDigits),\n        process_cases(T)\n    ).\n\nis_digit_code(C) :-\n    C >= 48,\n    C =< 57.\n\nprocess_cases(0) :- !.\nprocess_cases(N) :-\n    read_line_to_codes(user_input, Codes0),\n    (   Codes0 == end_of_file\n    ->  Codes = []\n    ;   Codes = Codes0\n    ),\n    (   valid_parentheses(Codes)\n    ->  write('YES')\n    ;   write('NO')\n    ),\n    nl,\n    N1 is N - 1,\n    process_cases(N1).\n\nvalid_parentheses(Codes) :-\n    valid_loop(Codes, 0, Final),\n    Final =:= 0.\n\nvalid_loop([], Bal, Bal).\nvalid_loop([C|Cs], Bal, Final) :-\n    (   C =:= 40\n    ->  Bal1 is Bal + 1\n    ;   C =:= 41\n    ->  Bal1 is Bal - 1\n    ;   Bal1 = Bal\n    ),\n    Bal1 >= 0,\n    valid_loop(Cs, Bal1, Final).\n```\n\nNeed consider if include/3 not imported? SWI has include. Fine.\n\nBut a subtle Prolog issue: `valid_loop([], Bal, Bal).` with first two args? In valid_parentheses call `valid_loop(Codes, 0, Final)`. For empty list, Final = 0. Good.\n\nPotential issue `C =:= 40` requires C integer. yes.\n\nLet's think about behavior for sample:\nT read 6. For line \"(())())\": loop: ( +1, ( +2, ) +1, ) 0, ( 1, ) 0, ) -1 -> Bal1 >=0 fails, valid_loop fails -> NO. Good.\nLine \"(((()())()\" final? likely positive -> NO. Good.\n\nNeed output ordering. Good.\n\nCould there be blank lines? read_line_to_codes returns [] for blank line. T parsing include digits none if first blank? valid input no. For case lines blank, valid_parentheses([]) -> Final 0 -> YES, but spec each string length 2..50 no blank. Fine.\n\nOne concern: `include/3` for list of codes. In SWI, include/3 is a built-in. `is_digit_code` predicate works as closure? include(:Pred, +List, -List). Yes.\n\nCould avoid module. They didn't require module. Good.\n\nReturn exactly code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 615,
+      "total_tokens": 3130,
+      "completion_tokens": 2515,
+      "prompt_tokens_details": {
+        "cached_tokens": 512
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 2208
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 14.392569699906744,
+  "received_at": "2026-11-18T09:24:58.130688+00:00",
+  "logical_request_id": "fea5b7e28bc2ec1114ca495f0a905f8d5bf0d92c01239596b4230b653ced8f63",
+  "execution_class": "direct_api"
+}

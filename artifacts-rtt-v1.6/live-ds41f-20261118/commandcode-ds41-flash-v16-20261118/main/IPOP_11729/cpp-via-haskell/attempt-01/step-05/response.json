@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport System.IO (hSetBuffering, stdout, BufferMode(..))\n\nhanoi :: Int -> Int -> Int -> Int -> ShowS\nhanoi 1 start _ end =\n    shows start . showChar ' ' . shows end . showChar '\\n'\nhanoi n start middle end =\n    hanoi (n - 1) start end middle .\n    shows start . showChar ' ' . shows end . showChar '\\n' .\n    hanoi (n - 1) middle start end\n\nmain :: IO ()\nmain = do\n    hSetBuffering stdout (BlockBuffering Nothing)\n    input <- getLine\n    let n = read input :: Int\n    putStrLn (show ((2 ^ n) - 1 :: Int))\n    putStr (hanoi n 1 2 3 \"\")\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 644,
+    "total_tokens": 1864,
+    "completion_tokens": 1220,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1037
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 644,
+    "total_tokens": 1864,
+    "completion_tokens": 1220,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1037
+    }
+  },
+  "cost_usd": 0.0016572,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-342cc2e31fc6ec781e815740b17d1659",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_11729\\cpp-via-haskell\\attempt-01\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-342cc2e31fc6ec781e815740b17d1659",
+    "object": "chat.completion",
+    "created": 1794986271,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport System.IO (hSetBuffering, stdout, BufferMode(..))\n\nhanoi :: Int -> Int -> Int -> Int -> ShowS\nhanoi 1 start _ end =\n    shows start . showChar ' ' . shows end . showChar '\\n'\nhanoi n start middle end =\n    hanoi (n - 1) start end middle .\n    shows start . showChar ' ' . shows end . showChar '\\n' .\n    hanoi (n - 1) middle start end\n\nmain :: IO ()\nmain = do\n    hSetBuffering stdout (BlockBuffering Nothing)\n    input <- getLine\n    let n = read input :: Int\n    putStrLn (show ((2 ^ n) - 1 :: Int))\n    putStr (hanoi n 1 2 3 \"\")\n```",
+          "reasoning_content": "We need answer with Haskell code only in fenced block. Need preserve behavior. N up to 20. Output moves then sequence. Need efficient output possibly use Builder or accumulate strings. Haskell GHC, module Main, main IO.\n\nWe can implement hanoi generating moves. For N=20 moves ~1,048,575 lines. Naive [(Int,Int)] list and unlines okay memory maybe ~ huge but acceptable? Need robust. Better use Data.ByteString.Builder? Standard libraries shipped with GHC includes bytestring. Could use ByteString.Builder for efficient output. But \"only standard libraries shipped with toolchain\" bytestring is included in GHC? Typically yes base plus common packages. But safest base only: use System.IO and putStr? We can recursively write to stdout directly with hPutStr? For ~1M lines, using putStr per line could be slow but acceptable? Better use a list of strings and concat? 1M strings memory high but okay maybe ~50MB. We can build with ShowS and output via putStr. Also compute moves.\n\nNeed preserve exact output. First line moves. Then moves lines. Use recursive function hanoi n start middle end :: ShowS maybe. But need output moves first. We can compute `moves = (1::Integer) `shiftL` n - 1`? n max 20 so Int fine. Output show moves ++ \"\\n\". Then hanoi writes.\n\nPotential approach:\nmodule Main where\nimport System.IO (hSetBuffering, stdout, BufferMode(..))\nmain :: IO ()\nmain = do\n  hSetBuffering stdout (BlockBuffering Nothing)\n  input <- getLine\n  let n = read input :: Int\n  putStrLn (show ((1 `shiftL` n) - 1 :: Int)) -- need Data.Bits shiftL. Or 2^n -1. `(2 ^ n) - 1`.\n  putStr (hanoi n 1 2 3 \"\")\n\nhanoi :: Int -> Int -> Int -> Int -> ShowS\nhanoi 1 s e _ = shows s . showChar ' ' . shows e . showChar '\\n'  Wait signature start middle end. For n==1 move start to end.\nhanoi n s m e = hanoi (n-1) s e m . shows s . showChar ' ' . shows e . showChar '\\n' . hanoi (n-1) m s e\nNeed avoid name e shadow? Fine.\n\nThis uses ShowS = String -> String, builds lazily and putStr streams? `putStr (hanoi n 1 2 3 \"\")` constructs list lazily, should stream. Good.\n\nBut note original if no input returns 0; spec always valid input. We might handle maybe. Need read first line. If empty, do nothing. Haskell getLine may throw on EOF. Not necessary. But preserve? Could use getContents to be robust. Simpler.\n\nNeed ensure output first line then moves. Use `putStrLn` for moves. Then hanoi. hSetBuffering block.\n\nPotential issue n=0? constraints n>=1. Fine.\n\nNeed include Data.Bits? use 2^n. \n\nNeed exactly one source file in fenced code block. No explanation. Let's craft.\n\nBut check function arguments: hanoi n start middle end. Base n==1 outputs start end. For n>1: hanoi (n-1) start end middle; output start end; hanoi (n-1) middle start end. In ShowS compose: \nhanoi n s m e = hanoi (n-1) s e m . shows s . showChar ' ' . shows e . showChar '\\n' . hanoi (n-1) m s e\nYes.\n\nNeed module Main and main :: IO ().\n\nUse `(2 ^ n) - 1` with n Int; type of `2^n` Int inferred from show? `putStrLn (show ((2 ^ n) - 1 :: Int))`. Fine.\n\nPotential stack overflow for 1M recursive calls? hanoi depth 20, but sequence calls many. ShowS composition builds nested function composition maybe size? Let's analyze: hanoi n returns function composition. For n=20 it composes recursively; due to ShowS composition right? Actually `(.)` creates function. Evaluating hanoi n produces a function that when applied to \"\" will call hanoi (n-1) ... then show etc. It may build entire string? Because `hanoi (n-1) s e m` itself is a function; composition `(.)` is lazy. `putStr` consumes output; `putStr` will traverse string; each show char. Should be okay. However recursive hanoi is not tail recursive but output streaming, function call depth 20 per move. Fine.\n\nCould use `interact`? no.\n\nNeed final only code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 644,
+      "total_tokens": 1864,
+      "completion_tokens": 1220,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1037
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 12.586936400039122,
+  "received_at": "2026-11-18T07:18:01.802766+00:00",
+  "logical_request_id": "93f9dcd280d8f2115e40a9e3a2a310d71c7189ae7aaeaaed45cba606d3e9ca09",
+  "execution_class": "direct_api"
+}

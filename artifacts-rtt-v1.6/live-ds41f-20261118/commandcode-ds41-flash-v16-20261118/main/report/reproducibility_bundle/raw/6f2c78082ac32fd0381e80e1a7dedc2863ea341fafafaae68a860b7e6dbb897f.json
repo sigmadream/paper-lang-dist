@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\nusing namespace std;\n\nint n;\nint fullMask;\n\nint dfs(int row, int cols, int diag1, int diag2) {\n    if (row == n) return 1;\n\n    int available = fullMask & ~(cols | diag1 | diag2);\n    int total = 0;\n\n    while (available) {\n        int bit = available & -available;\n        available &= available - 1;\n\n        total += dfs(\n            row + 1,\n            cols | bit,\n            (diag1 | bit) << 1,\n            (diag2 | bit) >> 1\n        );\n    }\n\n    return total;\n}\n\nint main() {\n    if (!(cin >> n)) return 0;\n\n    fullMask = (1 << n) - 1;\n    cout << dfs(0, 0, 0, 0) << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block cpp. Need translate Haskell. Need ensure behavior valid input. N 1..14. Output count. Implement DFS bitmask. C++17 main. Need maybe use int enough: max N=14 count? N-queens counts up to 14 = 365596? Actually 14 queens total solutions 365596, yes int fine. Wait 15 excluded. Use int.\n\nNeed preserve stdin whitespace, if no values return. Haskell reads all words and first int. So implement read n; if fail return. Use long long maybe. Return exactly one fenced code block no explanation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794980536,
+    "id": "chatcmpl-0e83db34f66861a14fec156ebf1a7f0e",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 333,
+      "completion_tokens_details": {
+        "reasoning_tokens": 129
+      },
+      "prompt_tokens": 664,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 997
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0005987999999999999,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 5.24551659997087,
+  "logical_request_id": "32e9347e85e568a7a13d5a83167a583d0e880a80623fde5708e8529e7236fa55",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9663\\cpp-via-haskell\\attempt-05\\step-10\\response_body.txt",
+  "received_at": "2026-11-18T05:42:17.865022+00:00",
+  "request_id": "chatcmpl-0e83db34f66861a14fec156ebf1a7f0e",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\nusing namespace std;\n\nint n;\nint fullMask;\n\nint dfs(int row, int cols, int diag1, int diag2) {\n    if (row == n) return 1;\n\n    int available = fullMask & ~(cols | diag1 | diag2);\n    int total = 0;\n\n    while (available) {\n        int bit = available & -available;\n        available &= available - 1;\n\n        total += dfs(\n            row + 1,\n            cols | bit,\n            (diag1 | bit) << 1,\n            (diag2 | bit) >> 1\n        );\n    }\n\n    return total;\n}\n\nint main() {\n    if (!(cin >> n)) return 0;\n\n    fullMask = (1 << n) - 1;\n    cout << dfs(0, 0, 0, 0) << '\\n';\n\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 333,
+    "completion_tokens_details": {
+      "reasoning_tokens": 129
+    },
+    "prompt_tokens": 664,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 997
+  },
+  "usage_raw": {
+    "completion_tokens": 333,
+    "completion_tokens_details": {
+      "reasoning_tokens": 129
+    },
+    "prompt_tokens": 664,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 997
+  }
+}

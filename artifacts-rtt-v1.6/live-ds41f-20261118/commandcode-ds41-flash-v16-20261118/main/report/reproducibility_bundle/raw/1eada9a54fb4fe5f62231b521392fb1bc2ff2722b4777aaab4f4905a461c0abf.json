@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nimport Data.List (sort)\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let (s:t:_) = words input\n    putStrLn (if sort s == sort t then \"1\" else \"0\")\n```",
+          "reasoning_content": "We need answer only code block Haskell. Need translate. Need consider input first line s, next t. Strings lowercase no spaces. In C++ cin >> s >> t. Output 1/0 newline. Need main :: IO (). Use getLine maybe whitespace token robust. Need preserve. Write Haskell.\n\nNeed exactly one complete source file in fenced code block, no explanation. Use module Main, main.\n\nImplementation:\nimport Data.List (sort) maybe O(n log n) okay length 50000. Or counts arrays. Could use Data.Array or IntMap. Simpler sort compare; 50000 fine. But source algorithm counts; preserve constraints? O(n log n) fine likely. Better counts with Data.Array? Use foldl. Or use Data.Map? Sorting simplest.\n\nNeed handle empty? constraints length >=1, but getLine. Use words? If read all input and split whitespace. main = do input <- getContents; let (s:t:_) = words input; putStrLn (if ...). This handles trailing. Sorting. Use Data.List sort. If identical? sort s == sort t. Output \"1\" else \"0\". Use words.\n\nReturn code.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794986670,
+    "id": "chatcmpl-fbc4bcd5a5f2d9afa31c32b51478e57c",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 307,
+      "completion_tokens_details": {
+        "reasoning_tokens": 246
+      },
+      "prompt_tokens": 608,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 915
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0005507999999999999,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.9270716999890283,
+  "logical_request_id": "ae989ef1dd3a60ca5d603dc831347d4f3eadbb17a73650c817df0dcac474696d",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0242\\cpp-via-haskell\\attempt-03\\step-01\\response_body.txt",
+  "received_at": "2026-11-18T07:24:32.188537+00:00",
+  "request_id": "chatcmpl-fbc4bcd5a5f2d9afa31c32b51478e57c",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nimport Data.List (sort)\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let (s:t:_) = words input\n    putStrLn (if sort s == sort t then \"1\" else \"0\")\n```",
+  "usage": {
+    "completion_tokens": 307,
+    "completion_tokens_details": {
+      "reasoning_tokens": 246
+    },
+    "prompt_tokens": 608,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 915
+  },
+  "usage_raw": {
+    "completion_tokens": 307,
+    "completion_tokens_details": {
+      "reasoning_tokens": 246
+    },
+    "prompt_tokens": 608,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 915
+  }
+}

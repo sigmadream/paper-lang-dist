@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport qualified Data.IntMap.Strict as IM\nimport Data.List (foldl')\nimport Data.Sequence (Seq, ViewL(..), (|>), singleton, viewl)\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let nums = map read (words input) :: [Int]\n  case nums of\n    [] -> return ()\n    (n:rest) -> do\n      let (m, rest2) = case rest of\n                         [] -> (0, [])\n                         (x:xs) -> (x, xs)\n          edges = pairs (take (2 * m) rest2)\n          adj = foldl' addEdge IM.empty edges\n          dist = bfs adj\n          ans = length [() | (v, d) <- IM.toList dist, v /= 1, d == 1 || d == 2]\n      print ans\n\npairs :: [Int] -> [(Int, Int)]\npairs (a:b:cs) = (a, b) : pairs cs\npairs _ = []\n\naddEdge :: IM.IntMap [Int] -> (Int, Int) -> IM.IntMap [Int]\naddEdge mp (a, b) =\n  IM.insertWith (++) b [a] (IM.insertWith (++) a [b] mp)\n\nbfs :: IM.IntMap [Int] -> IM.IntMap Int\nbfs adj = go (IM.singleton 1 0) (singleton 1)\n  where\n    go dist q = case viewl q of\n      EmptyL -> dist\n      (u :< qs) ->\n        let du = dist IM.! u\n        in if du == 2\n             then go dist qs\n             else\n               let vs = IM.findWithDefault [] u adj\n                   step (d, qq) v =\n                     if IM.member v d\n                       then (d, qq)\n                       else (IM.insert v (du + 1) d, qq |> v)\n                   (dist', q') = foldl' step (dist, qs) vs\n               in go dist' q'\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 732,
+    "total_tokens": 3524,
+    "completion_tokens": 2792,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2330
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 732,
+    "total_tokens": 3524,
+    "completion_tokens": 2792,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2330
+    }
+  },
+  "cost_usd": 0.00357,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-7b198e7a66a0fa536d55f994fffaedae",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_5567\\cpp-via-haskell\\attempt-01\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-7b198e7a66a0fa536d55f994fffaedae",
+    "object": "chat.completion",
+    "created": 1794994869,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport qualified Data.IntMap.Strict as IM\nimport Data.List (foldl')\nimport Data.Sequence (Seq, ViewL(..), (|>), singleton, viewl)\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let nums = map read (words input) :: [Int]\n  case nums of\n    [] -> return ()\n    (n:rest) -> do\n      let (m, rest2) = case rest of\n                         [] -> (0, [])\n                         (x:xs) -> (x, xs)\n          edges = pairs (take (2 * m) rest2)\n          adj = foldl' addEdge IM.empty edges\n          dist = bfs adj\n          ans = length [() | (v, d) <- IM.toList dist, v /= 1, d == 1 || d == 2]\n      print ans\n\npairs :: [Int] -> [(Int, Int)]\npairs (a:b:cs) = (a, b) : pairs cs\npairs _ = []\n\naddEdge :: IM.IntMap [Int] -> (Int, Int) -> IM.IntMap [Int]\naddEdge mp (a, b) =\n  IM.insertWith (++) b [a] (IM.insertWith (++) a [b] mp)\n\nbfs :: IM.IntMap [Int] -> IM.IntMap Int\nbfs adj = go (IM.singleton 1 0) (singleton 1)\n  where\n    go dist q = case viewl q of\n      EmptyL -> dist\n      (u :< qs) ->\n        let du = dist IM.! u\n        in if du == 2\n             then go dist qs\n             else\n               let vs = IM.findWithDefault [] u adj\n                   step (d, qq) v =\n                     if IM.member v d\n                       then (d, qq)\n                       else (IM.insert v (du + 1) d, qq |> v)\n                   (dist', q') = foldl' step (dist, qs) vs\n               in go dist' q'\n```",
+          "reasoning_content": "We need answer only code block Haskell. Need preserve behavior. Need craft Haskell main reads stdin. Spec N at least 2, M. Source handles if no m. We can use getContents, parse ints. BFS from 1 depth up to2 count. Need output. Haskell.\n\nNeed consider if N=1 example although spec N>=2, source supports. Use words. If empty no output? Main maybe if no n return. We can implement robust.\n\nNeed exactly one complete source file fenced. Haskell code.\n\nImplementation:\nmodule Main where\nimport qualified Data.Map.Strict as M? Or use list graph.\nmain = do\n s <- getContents\n let xs = map read (words s) :: [Int]\n case xs of [] -> return ()\n           (n:m:rest) -> ...\nBut if only n no m, source m=0. Pattern handle. Let m = if length xs >=2 then xs!!1 else 0, edges after. Avoid index maybe.\n\nNeed BFS distances. n<=500, M<=10000. Use Data.Array? Simpler adjacency list list of lists via accumArray. Need imports Data.Array, Data.List? We can use IntMap for adj. Build from edges.\n\nWe can do BFS with queue list and distance array. Need count dist 1 or2.\n\nBecause small n, can build adj = foldl add (replicate (n+1) []) edges. But indexing list O(n), n 500 okay. Edges 10000, BFS. But list index (!!) okay. Could use Data.Array for clarity.\n\nPseudo:\nimport Data.Array\nimport Data.Maybe (fromMaybe)\nimport qualified Data.IntMap.Strict as IM\nimport Data.List (foldl')\n\nmain = do\n input <- getContents\n let nums = map read (words input) :: [Int]\n case nums of\n   [] -> return ()\n   (n:rest) -> do\n      let (m, rest2) = case rest of\n                         [] -> (0, [])\n                         (x:xs) -> (x,xs)\n          edges = pairs (take (2*m) rest2)\n          adj = foldl' (\\mp (a,b) -> IM.insertWith (++) a [b] $ IM.insertWith (++) b [a] mp) IM.empty edges\n          dist = bfs n adj\n          ans = length [i | i <- [2..n], let d = getD i, d==1 || d==2]\n      print ans\n\nBut careful parse if M missing, rest []. Pairs.\n\nBFS with IntMap: Use queue Data.Sequence maybe. Standard. Need dist map. BFS stops at depth2. Simpler BFS from 1 up to depth 2, set visited.\n\ndistMap = bfs depth.\nbfs:\ngo :: IM.IntMap Int -> Seq Int -> IntMap Int\ninitial IM.singleton 1 0, Seq.singleton 1\npop u:\n du = dist IM.! u\n if du == 2 skip\n neighbors = IM.findWithDefault [] u adj\n for each v if IM.notMember v dist then insert v (du+1) and enqueue.\nAfter complete, count keys in dist with value 1/2 excluding 1? Since 1 has 0, filter d==1||2. So ans = length [() | (v,d) <- IM.toList dist, v/=1, d==1 || d==2]. or just d==1||2 works 1 no.\n\nNeed import Data.Sequence as Seq, Data.Foldable (toList) maybe. Use Seq.viewl.\n\nCould avoid sequence with list queue, but enqueue append expensive. n small. Use Seq.\n\nDefine bfs :: Int -> IntMap [Int] -> IntMap Int\nbfs n adj = go (IM.singleton 1 0) (Seq.singleton 1)\n where\n go dist q = case Seq.viewl q of\n   Seq.EmptyL -> dist\n   u Seq.:< qs ->\n      let du = dist IM.! u\n      in if du == 2 then go dist qs else\n         let vs = IM.findWithDefault [] u adj\n             (dist', q') = foldl' add (dist, qs) vs\n             add (d, qq) v =\n                if IM.member v d then (d, qq) else (IM.insert v (du+1) d, qq Seq.|> v)\n         in go dist' q'\n\nNeed precedence: u Seq.:< qs valid? Constructor for viewL is :< in Data.Sequence. Use case Seq.viewl q of\n  Seq.EmptyL -> dist\n  (u Seq.:< qs) -> ...\nActually qualified operator syntax: u Seq.:< qs maybe not allowed? You can use `u Seq.:< qs`? Qualified operators can be used infix as `u Seq.:< qs`. I think yes? Safer import Data.Sequence (Seq, (|>), ViewL(..)) qualified? Could import Data.Sequence as Seq and pattern `Seq.EmptyL` and `u Seq.:< qs`. Haskell qualified operator is M.<>? Yes `x Seq.:< xs`.\n\nAlternatively use Data.Sequence (Seq, (|>), viewl, ViewL(..)) unqualified. Then pattern `EmptyL`, `u :< qs`. Use that.\n\nNeed parse robust. `let (m, rest2) = case rest of [] -> (0, []); (x:xs)->(x,xs)`. edges = pairs (take (2*m) rest2):\npairs (a:b:cs)= (a,b):pairs cs; pairs _=[]\nSince m maybe more than actual? take. Good. If extra? not.\n\nNeed read maybe no type ambiguity. `let nums = map read (words input) :: [Int]`.\n\nAdj construction:\nadj = foldl' addEdge IM.empty edges\naddEdge mp (a,b) = IM.insertWith (++) b [a] (IM.insertWith (++) a [b] mp)\nImportant order irrelevant. insertWith (++) new old? Data.IntMap.insertWith f key new map combines new with old as f new old. ([]) okay.\n\nPotential issue `IM.insertWith (++) a [b]` if existing neighbors list, [b] ++ old, okay.\n\nAnswer print.\n\nNeed output with newline, print does. If input empty, no output. Source if no n returns no output. Good.\n\nNeed only code block no explanation.\n\nDouble-check example 7: BFS dist: 1:0,2:1,5:1? Edge 2-5 gives 5 at 2 (via 2) yes, 3 via2 at2, 6 via5 at3 not count. ans 2,3,5 =3. Good.\n\nPotential issue \"distance 1 or 2\" in graph, source has BFS that if dist[u]==2 continue, so only up to2. Our BFS also stops processing depth2, but still inserts neighbors of depth1 at depth2. Good.\n\nNow produce Haskell source. Use module Main where.\n\nNeed ensure `main :: IO ()` maybe. Code:\n\nmodule Main where\n\nimport qualified Data.IntMap.Strict as IM\nimport Data.List (foldl')\nimport Data.Sequence (Seq, ViewL(..), (|>), viewl)\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let nums = map read (words input) :: [Int]\n  case nums of\n    [] -> return ()\n    (n:rest) -> do\n      let (m, rest2) = case rest of\n                         [] -> (0, [])\n                         (x:xs) -> (x, xs)\n          edges = pairs (take (2 * m) rest2)\n          adj = foldl' addEdge IM.empty edges\n          dist = bfs adj\n          ans = length [() | (v,d) <- IM.toList dist, v /= 1, d == 1 || d == 2]\n      print ans\n\npairs :: [Int] -> [(Int, Int)]\npairs (a:b:cs) = (a,b) : pairs cs\npairs _ = []\n\naddEdge :: IM.IntMap [Int] -> (Int, Int) -> IM.IntMap [Int]\naddEdge mp (a,b) =\n  IM.insertWith (++) b [a] (IM.insertWith (++) a [b] mp)\n\nbfs :: IM.IntMap [Int] -> IM.IntMap Int\nbfs adj = go (IM.singleton 1 0) (Seq.singleton 1)\n  where\n    go dist q = case viewl q of\n      EmptyL -> dist\n      (u :< qs) ->\n        let du = dist IM.! u\n        in if du == 2\n             then go dist qs\n             else\n               let vs = IM.findWithDefault [] u adj\n                   step (d, qq) v =\n                     if IM.member v d\n                       then (d, qq)\n                       else (IM.insert v (du + 1) d, qq |> v)\n                   (dist', q') = foldl' step (dist, qs) vs\n               in go dist' q'\n\nWe used Seq.singleton but imported Data.Sequence (Seq, ViewL(..), (|>), viewl) without Seq module or singleton. Need import singleton. Change import Data.Sequence (Seq, ViewL(..), (|>), viewl, singleton) and use singleton 1. Or import qualified. Let's adjust: `import Data.Sequence (Seq, ViewL(..), (|>), singleton, viewl)` then `(singleton 1)`. The type Seq maybe unused but okay.\n\nAlternatively use Data.Sequence as Seq and pattern. Use explicit.\n\nPotential duplicate edges? Spec different undirected edges? Actually \"서로 다른 무방향 간선\" may mean distinct edges. Even if duplicates, BFS member prevents. Adj duplicates harmless.\n\nN maybe 0? no.\n\nNeed no explanation. Final code block.\n\nCheck syntax: pattern `(u :< qs)` with imported ViewL(..) includes `(:<)` and `EmptyL`. Good. But conflict with list? `:<` unique. Fine.\n\nUse `foldl'` imported. Good.\n\nOne subtlety: Haskell evaluation of `dist IM.! u` for all queued u; we only enqueue when inserted, okay.\n\nIf n=1 and m=0, nums [1,0], edges [], dist singleton 1 0, ans 0. Output 0. Good.\n\nIf input \"1\\n0\" matches.\n\nPotential problem: If M line omitted, rest=[], m=0, edges take 0 []. Good.\n\nReturn code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 732,
+      "total_tokens": 3524,
+      "completion_tokens": 2792,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 2330
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 24.057765600038692,
+  "received_at": "2026-11-18T09:41:31.944420+00:00",
+  "logical_request_id": "fb988a9dbced2e906b6b58e17a64dc61f214e80c53d4af9f1de0e59733f0e2e2",
+  "execution_class": "direct_api"
+}

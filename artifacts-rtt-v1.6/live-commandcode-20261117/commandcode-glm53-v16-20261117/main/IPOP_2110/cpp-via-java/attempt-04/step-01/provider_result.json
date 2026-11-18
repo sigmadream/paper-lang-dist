@@ -1,0 +1,94 @@
+{
+  "text": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StreamTokenizer st = new StreamTokenizer(br);\n        st.parseNumbers();\n        st.ordinaryChar('/');\n        st.wordChars('0','9');\n        st.ordinaryChars(0,255);\n        st.wordChars('0','9');\n        st.whitespaceChars(0,' ');\n        st.whitespaceChars('\\t','\\r');\n\n        st.nextToken();\n        int n = (int) st.nval;\n        st.nextToken();\n        int c = (int) st.nval;\n\n        int[] a = new int[n];\n        for (int i = 0; i < n; i++) {\n            st.nextToken();\n            a[i] = (int) st.nval;\n        }\n\n        Arrays.sort(a);\n\n        int left = 1;\n        int right = a[n - 1] - a[0];\n        int ans = 0;\n\n        while (left <= right) {\n            int mid = left + (right - left) / 2;\n            int count = 1;\n            int prev = a[0];\n\n            for (int i = 1; i < n; i++) {\n                if (a[i] - prev >= mid) {\n                    count++;\n                    prev = a[i];\n                }\n            }\n\n            if (count >= c) {\n                ans = mid;\n                left = mid + 1;\n            } else {\n                right = mid - 1;\n            }\n        }\n\n        System.out.println(ans);\n    }\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 342,
+    "prompt_tokens": 684,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1026
+  },
+  "usage_raw": {
+    "completion_tokens": 342,
+    "prompt_tokens": 684,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1026
+  },
+  "cost_usd": 0.00231648,
+  "cost_source": "estimated",
+  "request_id": "bdf39d95-ab92-4c02-886c-b41623adbdcb",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_2110\\cpp-via-java\\attempt-04\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StreamTokenizer st = new StreamTokenizer(br);\n        st.parseNumbers();\n        st.ordinaryChar('/');\n        st.wordChars('0','9');\n        st.ordinaryChars(0,255);\n        st.wordChars('0','9');\n        st.whitespaceChars(0,' ');\n        st.whitespaceChars('\\t','\\r');\n\n        st.nextToken();\n        int n = (int) st.nval;\n        st.nextToken();\n        int c = (int) st.nval;\n\n        int[] a = new int[n];\n        for (int i = 0; i < n; i++) {\n            st.nextToken();\n            a[i] = (int) st.nval;\n        }\n\n        Arrays.sort(a);\n\n        int left = 1;\n        int right = a[n - 1] - a[0];\n        int ans = 0;\n\n        while (left <= right) {\n            int mid = left + (right - left) / 2;\n            int count = 1;\n            int prev = a[0];\n\n            for (int i = 1; i < n; i++) {\n                if (a[i] - prev >= mid) {\n                    count++;\n                    prev = a[i];\n                }\n            }\n\n            if (count >= c) {\n                ans = mid;\n                left = mid + 1;\n            } else {\n                right = mid - 1;\n            }\n        }\n\n        System.out.println(ans);\n    }\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794899387,
+    "id": "bdf39d95-ab92-4c02-886c-b41623adbdcb",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 342,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_433e7e4b0aeb469c9dba333c3eab0380",
+      "trace_id": "fd64dc98fc83487d9d3d5a53dfa75067"
+    },
+    "usage": {
+      "completion_tokens": 342,
+      "prompt_tokens": 684,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 1026
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.6886642000172287,
+  "received_at": "2026-11-17T07:09:46.951511+00:00",
+  "logical_request_id": "9ad95383549429e6ca38a5ed3fcb2a79b8adb77829b28e43a0ebde48bf5c627b",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,86 @@
+{
+  "text": "```prolog\nmain :-\n    read_all_codes(Codes),\n    numbers(Codes, Nums),\n    Nums = [A, B | _],\n    gcd(A, B, G),\n    L is (A // G) * B,\n    format(\"~w~n~w~n\", [G, L]).\n\nread_all_codes(Codes) :-\n    get_code(C),\n    read_all_codes_(C, [], Rev),\n    reverse(Rev, Codes).\n\nread_all_codes_(-1, Acc, Acc).\nread_all_codes_(C, Acc, Codes) :-\n    C =\\= -1,\n    get_code(C1),\n    read_all_codes_(C1, [C | Acc], Codes).\n\nnumbers([], []).\nnumbers([C | Cs], Nums) :-\n    C >= 48,\n    C =< 57,\n    !,\n    take_digits([C | Cs], Value, Rest),\n    Nums = [Value | RestNums],\n    numbers(Rest, RestNums).\nnumbers([_ | Cs], Nums) :-\n    numbers(Cs, Nums).\n\ntake_digits(Cs, Value, Rest) :-\n    take_digits_(Cs, 0, Value, Rest).\n\ntake_digits_([C | Cs], Acc, Value, Rest) :-\n    C >= 48,\n    C =< 57,\n    !,\n    Acc1 is Acc * 10 + (C - 48),\n    take_digits_(Cs, Acc1, Value, Rest).\ntake_digits_(Rest, Acc, Acc, Rest).\n\ngcd(A, 0, A) :- !.\ngcd(A, B, G) :-\n    B > 0,\n    R is A mod B,\n    gcd(B, R, G).\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 487,
+    "total_tokens": 2554,
+    "completion_tokens": 2067,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1683
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 487,
+    "total_tokens": 2554,
+    "completion_tokens": 2067,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1683
+    }
+  },
+  "cost_usd": 0.0025136040000000004,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-ffe092e7c51386760548dfb2d84c630f",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2609\\cpp-via-prolog\\attempt-02\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-ffe092e7c51386760548dfb2d84c630f",
+    "object": "chat.completion",
+    "created": 1794985065,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\nmain :-\n    read_all_codes(Codes),\n    numbers(Codes, Nums),\n    Nums = [A, B | _],\n    gcd(A, B, G),\n    L is (A // G) * B,\n    format(\"~w~n~w~n\", [G, L]).\n\nread_all_codes(Codes) :-\n    get_code(C),\n    read_all_codes_(C, [], Rev),\n    reverse(Rev, Codes).\n\nread_all_codes_(-1, Acc, Acc).\nread_all_codes_(C, Acc, Codes) :-\n    C =\\= -1,\n    get_code(C1),\n    read_all_codes_(C1, [C | Acc], Codes).\n\nnumbers([], []).\nnumbers([C | Cs], Nums) :-\n    C >= 48,\n    C =< 57,\n    !,\n    take_digits([C | Cs], Value, Rest),\n    Nums = [Value | RestNums],\n    numbers(Rest, RestNums).\nnumbers([_ | Cs], Nums) :-\n    numbers(Cs, Nums).\n\ntake_digits(Cs, Value, Rest) :-\n    take_digits_(Cs, 0, Value, Rest).\n\ntake_digits_([C | Cs], Acc, Value, Rest) :-\n    C >= 48,\n    C =< 57,\n    !,\n    Acc1 is Acc * 10 + (C - 48),\n    take_digits_(Cs, Acc1, Value, Rest).\ntake_digits_(Rest, Acc, Acc, Rest).\n\ngcd(A, 0, A) :- !.\ngcd(A, B, G) :-\n    B > 0,\n    R is A mod B,\n    gcd(B, R, G).\n```",
+          "reasoning_content": "We need answer only one fenced code block Prolog. Need translate preserving behavior. SWI-Prolog main/0. Read stdin two ints, output gcd then lcm. Need handle valid input. Implement gcd predicate, main reads using read_line_to_string or read? Input \"24 18\\n\". Use read_line_to_string(user_input, Line), split_string, number_string. Then gcd, L is A//G*B, format. Ensure main doesn't add init. Need no directives. We can use library perhaps. Must exact source file. Prolog module Main and main? Specification says Prolog SWI define main/0 evaluator invokes main; no initialization directives. Could include :- module? They said no init directives. A module directive maybe not init. But safest just define main/0, helper predicates. Need perhaps use read_line_to_string/2 from library(readutil) requires use_module directive? They said use only std libs, but \"do not add initialization directives\" maybe use_module is directive but not initialization? Hmm. We can avoid by using read/1? Since input consists of two natural numbers. `read(A), read(B)` works with whitespace, but Prolog read expects terms ending period. Input \"24 18\\n\" without period would cause syntax error. Could use `read_line_to_codes`? In SWI, `read_line_to_codes/2` built-in? It's in library(readutil) not autoload? SWI autoloads many libraries, but safe? We can use `current_input(S), read_line_to_codes(S, Codes)` maybe autoload. Need parse. Or use `read_term`? Not.\n\nCould use `get_char` loop parse two integers from stdin, robust. Implement read_int/1 that skips whitespace, reads digits until non-digit, pushes back? Need parse two ints. Simpler read all chars? Use get_char until EOF, accumulate codes, split. But Prolog char codes.\n\nImplement tokenize entire input:\nmain :- read_all_codes(Codes), split_numbers(Codes, Ns), Ns = [A,B|_], gcd(A,B,G), L is (A//G)*B, write(G), nl, write(L), nl.\n\nNeed handle EOF. read_all_codes/1:\nread_all_codes(Codes) :- current_input(S), read_codes(S, [] , Codes). Need because accum reversed.\nread_codes(S, Acc, Codes) :- get_char(S, C), (C == end_of_file -> reverse(Acc, Codes) ; ...). get_char/2 works? SWI has get_char/2. Use current_input? `get_char(C)` simpler. But if we call current_input not needed. `get_char(C)`.\nread_all_codes(Codes) :- get_char(C), read_all_codes(C, [], Codes).\nread_all_codes(end_of_file, Acc, Codes) :- reverse(Acc, Codes).\nread_all_codes(C, Acc, Codes) :- Acc1 = [C|Acc], get_char(C1), read_all_codes(C1, Acc1, Codes).\nNeed careful var C1 in base? Let's write:\nread_all_codes(Codes) :-\n    get_char(C),\n    read_all_codes_(C, [], Rev),\n    reverse(Rev, Codes).\nread_all_codes_(end_of_file, Acc, Acc).\nread_all_codes_(C, Acc, Rev) :-\n    read_all_codes_next(C, [C|Acc], Rev).\nActually recursive:\nread_all_codes_(end_of_file, Acc, Acc).\nread_all_codes_(C, Acc, Codes) :-\n    C \\== end_of_file,\n    get_char(C1),\n    read_all_codes_(C1, [C|Acc], Codes).\nThen reverse.\n\nParse integers from codes. Need skip non-digit. Input chars are codes from get_char/1 returns atom or code? In SWI, get_char(C) returns character atom one-char, or end_of_file. `char_code(C, Code)` for digit. Or use get_code instead! get_code(C) returns code integer or -1. Simpler. Use get_code.\n\nread_all_codes(Codes) :- get_code(C), read_all_codes_(C, [], Rev), reverse(Rev, Codes).\nread_all_codes_(-1, Acc, Acc) :- !.\nread_all_codes_(C, Acc, Codes) :- get_code(C1), read_all_codes_(C1, [C|Acc], Codes).\n\nParse numbers from list of codes. `split_numbers(Codes, Nums)` scanning. Need collect sequences of digit codes (48..57). Could build tokens:\nnumbers([], []).\nnumbers([C|Cs], Nums) :- C >= 48, C =< 57, !, take_digits([C|Cs], Value, Rest), numbers(Rest, NumsTail), Nums = [Value|NumsTail].\nnumbers([_|Cs], Nums) :- numbers(Cs, Nums).\n\ntake_digits(Cs, Value, Rest) :- take_digits(Cs, 0, Value, Rest).\ntake_digits([C|Cs], Acc, Value, Rest) :- C >= 48, C =< 57, !, Acc1 is Acc*10 + (C-48), take_digits(Cs, Acc1, Value, Rest).\ntake_digits(Rest, Acc, Acc, Rest).\n\nPotential issue Prolog indexing, fine.\n\nThen gcd:\ngcd(A,0,A) :- !.\ngcd(A,B,G) :- B > 0, R is A mod B, gcd(B,R,G).\n\nBut main parse Ns exactly two. Valid input. If no ints? not needed but can handle.\nmain :-\n    read_all_codes(Codes),\n    numbers(Codes, Nums),\n    Nums = [A,B|_],\n    gcd(A,B,G),\n    L is (A // G) * B,\n    format(\"~w~n~w~n\", [G,L]).\n\nNeed define numbers/2 name maybe conflicts? Fine. But careful: numbers/2 base clauses ordering: first base numbers([], []). second digit clause. third skip. Good.\n\nPotential SWI uses `read_line_to_string` easier but our code robust. `format` built-in.\n\nNeed ensure no initialization directives. No module directive? The evaluator invokes main. Typically SWI script with main/0 and `:- initialization(main).` but forbidden. They say evaluator invokes main, so just main/0.\n\nNeed return exactly fenced code block, no explanation.\n\nDouble-check Prolog syntax for `\\==` in clause:\nread_all_codes_(C, Acc, Codes) :- C \\== end_of_file, get_char... but using get_code -1. We can use two clauses:\nread_all_codes_(-1, Acc, Acc).\nread_all_codes_(C, Acc, Codes) :-\n    C =\\= -1,\n    get_code(C1),\n    read_all_codes_(C1, [C|Acc], Codes).\nBut if C can be -1 only, base. Since clauses first base then second, for -1 second could still try C =\\= -1 false. Fine. Use `C \\= -1`? `=\\=` numeric. `C \\== -1` identity? Use C =\\= -1.\n\nActually for base clause with -1 exact. OK.\n\nBut note: read_all_codes_ base consumes Acc no reverse. We reverse after. Good.\n\nLet's write final code.\n\nNeed consider Prolog parser: predicate name `read_all_codes_` okay. `numbers` okay.\n\nPotential issue `format(\"~w~n~w~n\", [G,L])` may produce string with escapes? SWI format uses `~n` newline. Good.\n\nPotential issue if input empty Nums fail causing error. Valid input only.\n\nLet's craft.\n\n"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 487,
+      "total_tokens": 2554,
+      "completion_tokens": 2067,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1683
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 18.8861788000213,
+  "received_at": "2026-11-18T06:58:02.133739+00:00",
+  "logical_request_id": "1302774b7fd3f3a12ae735becb15bfaf338c0da8981d489fabd9c12043133029",
+  "execution_class": "direct_api"
+}

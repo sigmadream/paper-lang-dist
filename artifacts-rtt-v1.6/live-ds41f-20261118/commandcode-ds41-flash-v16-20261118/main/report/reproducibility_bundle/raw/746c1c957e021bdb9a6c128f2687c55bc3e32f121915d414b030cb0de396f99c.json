@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nimport Data.List (intercalate, partition)\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let xs = map read (words input) :: [Int]\n    case xs of\n        [] -> return ()\n        (n:rest) ->\n            let vals = take n rest\n                (zeros, nonZeros) = partition (== 0) vals\n                result = nonZeros ++ zeros\n            in putStrLn (intercalate \" \" (map show result))\n```",
+          "reasoning_content": "We need answer only code block Haskell. Need preserve behavior. Program reads N, then N ints, outputs nonzeros then zeros. Need handle malformed? For valid inputs. N up to 10000. Haskell main. Need parse all ints from stdin. First int n, take n following, partition. Output space-separated newline. If no n, return. Need handle if fewer ints? C++ breaks on missing, resulting vector size fewer; then appends zeros for each successfully read zero. Actually if missing after some, output successfully processed. We can emulate by taking n from list and processing all available? Let's parse all words. C++ reads n first. then loop n times, if fail break. So process min(n, remaining count). For valid inputs exactly n. We can implement. Need output integers separated by spaces then newline. Edge N maybe 0? constraints >=1. If n=0? C++ vector empty, loop output newline. We'll output newline. But first line N and next line N ints. Fine.\n\nHaskell code:\n\nmodule Main where\nimport System.IO\nimport Data.List (partition)\nmain :: IO ()\nmain = do\n  input <- getContents\n  let xs = map read (words input) :: [Int]\n  case xs of\n    [] -> return ()\n    (n:rest) ->\n      let vals = take n rest\n          (zeros, nonzeros) = partition (==0) vals\n          result = nonzeros ++ zeros\n      in putStrLn (unlines? no just intercalate \" \" map show result)\nNeed intercalate import Data.List. Note partition returns (matching, nonmatch) so zeros/nonzeros. intercalate.\n\nIf n negative? not valid. take negative returns []. Fine. C++ loop i<n with negative none, outputs newline. same result [] newline.\n\nNeed exactly complete source file in one fenced code block. No explanation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794977214,
+    "id": "chatcmpl-0eb64204d6abb71c12b43e149d1f589d",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 528,
+      "completion_tokens_details": {
+        "reasoning_tokens": 412
+      },
+      "prompt_tokens": 636,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1164
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0008244,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 4.655435099964961,
+  "logical_request_id": "f1a5d19e90454a5f38dd6d6089f77f6006befb147eff6d0a5d7cda380ec280fe",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-haskell\\attempt-03\\step-03\\response_body.txt",
+  "received_at": "2026-11-18T04:46:57.712336+00:00",
+  "request_id": "chatcmpl-0eb64204d6abb71c12b43e149d1f589d",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nimport Data.List (intercalate, partition)\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let xs = map read (words input) :: [Int]\n    case xs of\n        [] -> return ()\n        (n:rest) ->\n            let vals = take n rest\n                (zeros, nonZeros) = partition (== 0) vals\n                result = nonZeros ++ zeros\n            in putStrLn (intercalate \" \" (map show result))\n```",
+  "usage": {
+    "completion_tokens": 528,
+    "completion_tokens_details": {
+      "reasoning_tokens": 412
+    },
+    "prompt_tokens": 636,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1164
+  },
+  "usage_raw": {
+    "completion_tokens": 528,
+    "completion_tokens_details": {
+      "reasoning_tokens": 412
+    },
+    "prompt_tokens": 636,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1164
+  }
+}

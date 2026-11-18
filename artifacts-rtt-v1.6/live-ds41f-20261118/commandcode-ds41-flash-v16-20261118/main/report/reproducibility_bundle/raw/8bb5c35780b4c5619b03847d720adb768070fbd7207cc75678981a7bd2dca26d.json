@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```python\nimport sys\n\ndef hanoi(n, start, mid, end, moves):\n    if n == 1:\n        moves.append(f\"{start} {end}\")\n        return\n    hanoi(n - 1, start, end, mid, moves)\n    moves.append(f\"{start} {end}\")\n    hanoi(n - 1, mid, start, end, moves)\n\ndef main():\n    data = sys.stdin.buffer.read().split()\n    if not data:\n        return\n\n    n = int(data[0])\n    moves = []\n    hanoi(n, 1, 2, 3, moves)\n\n    out = [str(len(moves))]\n    out.extend(moves)\n    sys.stdout.write(\"\\n\".join(out) + \"\\n\")\n\nif __name__ == \"__main__\":\n    main()\n```",
+          "reasoning_content": "We need translate C++ to Python. Preserve behavior. N up to 20, moves 2^20-1 ~1,048,575 lines. Need efficient output. Recursion depth 20 fine. Build list or write incrementally. Better use sys.stdout.write with list of strings maybe memory ~ 20MB okay. Or generate recursively and append to list. Simple.\n\nNeed main, read stdin. If no input return. Output count then moves. Use iterative? Recursion depth max 20 safe.\n\nImplement hanoi(n,start,mid,end,moves) as list of tuples or strings. For performance, maybe build list of strings. N=20 ~1M tuples okay maybe. Let's write.\n\nNeed output exactly \"7\\n1 3\\n...\". Python int.\n\nReturn one code block only.\n\nLet's craft:\n\nimport sys\ndef hanoi(n,start,mid,end,moves):\n    if n==1:\n        moves.append(f\"{start} {end}\")\n        return\n    hanoi(n-1,start,end,mid,moves)\n    moves.append(f\"{start} {end}\")\n    hanoi(n-1,mid,start,end,moves)\n\ndef main():\n    data=sys.stdin.buffer.read().split()\n    if not data: return\n    n=int(data[0])\n    moves=[]\n    hanoi(n,1,2,3,moves)\n    out=[str(len(moves))]\n    out.extend(moves)\n    sys.stdout.write(\"\\n\".join(out)+\"\\n\")\nif __name__==\"__main__\": main()\n\nCheck moves count equals len. Fine.\n\nCould avoid f-strings? Fine. Ensure final newline.\n\nReturn code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794995754,
+    "id": "chatcmpl-7014499397699a529a352565e4de013a",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 525,
+      "completion_tokens_details": {
+        "reasoning_tokens": 351
+      },
+      "prompt_tokens": 668,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 1193
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.000792768,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 5.205977400066331,
+  "logical_request_id": "fea70b270276070125ae9bddf2fa7e51be2add97215704fa6bc0983f17ba042f",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_11729\\cpp-via-python\\attempt-04\\step-01\\response_body.txt",
+  "received_at": "2026-11-18T09:55:56.643968+00:00",
+  "request_id": "chatcmpl-7014499397699a529a352565e4de013a",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```python\nimport sys\n\ndef hanoi(n, start, mid, end, moves):\n    if n == 1:\n        moves.append(f\"{start} {end}\")\n        return\n    hanoi(n - 1, start, end, mid, moves)\n    moves.append(f\"{start} {end}\")\n    hanoi(n - 1, mid, start, end, moves)\n\ndef main():\n    data = sys.stdin.buffer.read().split()\n    if not data:\n        return\n\n    n = int(data[0])\n    moves = []\n    hanoi(n, 1, 2, 3, moves)\n\n    out = [str(len(moves))]\n    out.extend(moves)\n    sys.stdout.write(\"\\n\".join(out) + \"\\n\")\n\nif __name__ == \"__main__\":\n    main()\n```",
+  "usage": {
+    "completion_tokens": 525,
+    "completion_tokens_details": {
+      "reasoning_tokens": 351
+    },
+    "prompt_tokens": 668,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1193
+  },
+  "usage_raw": {
+    "completion_tokens": 525,
+    "completion_tokens_details": {
+      "reasoning_tokens": 351
+    },
+    "prompt_tokens": 668,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1193
+  }
+}

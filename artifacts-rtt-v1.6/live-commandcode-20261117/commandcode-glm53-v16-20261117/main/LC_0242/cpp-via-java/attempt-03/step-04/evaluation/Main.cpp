@@ -1,0 +1,26 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    string s, t;
+    getline(cin, s);
+    getline(cin, t);
+    // trim
+    auto trim = [](const string& str) {
+        size_t a = str.find_first_not_of(" \t\r\n");
+        if (a == string::npos) return string();
+        size_t b = str.find_last_not_of(" \t\r\n");
+        return str.substr(a, b - a + 1);
+    };
+    s = trim(s);
+    t = trim(t);
+    int counts[26] = {0};
+    for (char c : s) counts[c - 'a']++;
+    for (char c : t) counts[c - 'a']--;
+    bool ok = true;
+    for (int x : counts) if (x != 0) { ok = false; break; }
+    cout << (ok ? 1 : 0) << "\n";
+    return 0;
+}

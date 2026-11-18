@@ -1,0 +1,94 @@
+{
+  "text": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(readutil)).\n\nmain :-\n    current_input(In),\n    read_line_to_codes(In, Line1),\n    atom_codes(A1, Line1),\n    atom_number(A1, N),\n    read_line_to_codes(In, Line2),\n    atom_codes(A2, Line2),\n    atomic_list_parts(A2, Parts),\n    maplist(atom_number, Parts, Nums),\n    length(Nums, N),\n    N > 0,\n    Nums = [First|Rest],\n    foldl(kadane, Rest, First-First, _-Best),\n    write(Best), nl.\n\natomic_list_parts(A, Parts) :-\n    atom_codes(A, Codes),\n    split_codes(Codes, Parts).\n\nsplit_codes(Codes, Parts) :-\n    phrase(codes_parts(Parts), Codes).\n\ncodes_parts([P|Ps]) -->\n    ws, {phrase(nonblank(P), Rest, Rest)}, !.\ncodes_parts([]) --> [].\n\nws --> [C], { C = 32 ; C = 9 ; C = 10 ; C = 13 }, ws.\nws --> [].\n\nnonblank([C|Cs]) --> [C], { C \\= 32, C \\= 9, C \\= 10, C \\= 13 }, nonblank(Cs).\nnonblank([]) --> [].\n\nkadale(_, _, _, _) :- fail.\n\nkadane(X, Cur0-Best0, Cur-Best) :-\n    Cur1 is max(X, Cur0 + X),\n    Best is max(Best0, Cur1),\n    Cur = Cur1.\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 347,
+    "prompt_tokens": 602,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 949
+  },
+  "usage_raw": {
+    "completion_tokens": 347,
+    "prompt_tokens": 602,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 949
+  },
+  "cost_usd": 0.0022236800000000004,
+  "cost_source": "estimated",
+  "request_id": "a7a38461-5e3e-4bd5-bace-dc9b76758135",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\pilot\\LC_0053\\cpp-via-prolog\\attempt-01\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(readutil)).\n\nmain :-\n    current_input(In),\n    read_line_to_codes(In, Line1),\n    atom_codes(A1, Line1),\n    atom_number(A1, N),\n    read_line_to_codes(In, Line2),\n    atom_codes(A2, Line2),\n    atomic_list_parts(A2, Parts),\n    maplist(atom_number, Parts, Nums),\n    length(Nums, N),\n    N > 0,\n    Nums = [First|Rest],\n    foldl(kadane, Rest, First-First, _-Best),\n    write(Best), nl.\n\natomic_list_parts(A, Parts) :-\n    atom_codes(A, Codes),\n    split_codes(Codes, Parts).\n\nsplit_codes(Codes, Parts) :-\n    phrase(codes_parts(Parts), Codes).\n\ncodes_parts([P|Ps]) -->\n    ws, {phrase(nonblank(P), Rest, Rest)}, !.\ncodes_parts([]) --> [].\n\nws --> [C], { C = 32 ; C = 9 ; C = 10 ; C = 13 }, ws.\nws --> [].\n\nnonblank([C|Cs]) --> [C], { C \\= 32, C \\= 9, C \\= 10, C \\= 13 }, nonblank(Cs).\nnonblank([]) --> [].\n\nkadale(_, _, _, _) :- fail.\n\nkadane(X, Cur0-Best0, Cur-Best) :-\n    Cur1 is max(X, Cur0 + X),\n    Best is max(Best0, Cur1),\n    Cur = Cur1.\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794895444,
+    "id": "a7a38461-5e3e-4bd5-bace-dc9b76758135",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 347,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_9aabd63408934b639e64521f3212b008",
+      "trace_id": "80342239f41f43859b5728b36f4a233b"
+    },
+    "usage": {
+      "completion_tokens": 347,
+      "prompt_tokens": 602,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 949
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.795794700039551,
+  "received_at": "2026-11-17T06:04:03.591246+00:00",
+  "logical_request_id": "ad9bcf0a403edef5af67d24870c581af805bd3d1599077173bdf6285eb771cda",
+  "execution_class": "direct_api"
+}

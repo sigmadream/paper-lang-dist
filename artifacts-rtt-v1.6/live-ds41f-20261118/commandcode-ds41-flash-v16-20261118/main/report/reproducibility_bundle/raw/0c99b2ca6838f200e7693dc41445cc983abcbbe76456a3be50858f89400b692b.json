@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nimport qualified Data.IntMap.Strict as IM\nimport qualified Data.Set as Set\nimport Data.List (foldl')\nimport Data.Maybe (fromMaybe)\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let nums = map read (words input) :: [Int]\n  case nums of\n    (n : m : rest) -> do\n      let edges = pairUp (take (2 * m) rest)\n          adj = foldl' addEdge IM.empty edges\n          visited = bfs adj (Set.singleton 1) [(1, 0)]\n          answer = if n >= 1 then Set.size visited - 1 else 0\n      print answer\n    _ -> return ()\n\npairUp :: [Int] -> [(Int, Int)]\npairUp (a : b : xs) = (a, b) : pairUp xs\npairUp _ = []\n\naddEdge :: IM.IntMap [Int] -> (Int, Int) -> IM.IntMap [Int]\naddEdge mp (a, b) =\n  IM.insertWith (++) b [a] $\n  IM.insertWith (++) a [b] mp\n\nbfs :: IM.IntMap [Int] -> Set.Set Int -> [(Int, Int)] -> Set.Set Int\nbfs _ visited [] = visited\nbfs adj visited ((u, d) : q)\n  | d >= 2 = bfs adj visited q\n  | otherwise =\n      let (vis', newQ) = foldl' step (visited, []) (fromMaybe [] (IM.lookup u adj))\n          step (vis, acc) v\n            | Set.member v vis = (vis, acc)\n            | otherwise = (Set.insert v vis, acc ++ [(v, d + 1)])\n      in bfs adj vis' (q ++ newQ)\n```",
+          "reasoning_content": "We need answer only Haskell source in fenced code block. Need preserve behavior. Need consider input spec says N>=2 but example \"1\\n0\" valid? Public example has N=1 M=0. Source handles. Need translate. Haskell read all tokens, parse n m then edges. Need output count vertices distance 1 or 2 from 1. C++ BFS stops expanding at dist 2. Equivalent compute. Need handle empty? If no input, return. In Haskell main reads maybe empty, if no tokens do nothing. Need parse all ints. Use Data.List, maybe Data.Array? Simpler: n,m from tokens. Edges list. adjacency as list array or IntMap. N<=500 so list okay. BFS.\n\nImplement:\n\nmodule Main where\nimport System.IO\nimport qualified Data.Map.Strict as M\nimport Data.Maybe\nimport qualified Data.Set as S\nimport Control.Monad\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let ws = words input\n  if null ws then return ()\n  else do\n    let (n:m:rest) = map read ws :: [Int] -- but if only n? C++ cin>>n>>m if fail return. Could pattern parse safely.\n...\n\nNeed robust: parse ints; case ints of (n:m:rest) -> let edges = take m (pairs rest). If no m maybe? Spec always. Example N=1 M=0. Use helper.\n\nWe can avoid Map by arrays using Data.Array (standard GHC base includes array? Data.Array is in array package shipped with GHC. \"standard libraries shipped\" yes. But maybe avoid dependencies beyond base? array is shipped. Simpler use Data.IntMap.\n\nadj = foldl' add M.empty pairs where add map (a,b) = M.insertWith (++) a [b] (M.insertWith (++) b [a] map) careful duplicates? Edges distinct, no matter. Actually insertWith (++) key [b] map. fine.\n\nBFS: need compute distances up to 2. Use queue list and Set visited. Since small, Data.Sequence? base containers. Use Data.Sequence maybe. Or simple list queue plus head O(1) amortized. BFS with state (queue [(vertex,dist)], visited Set). Process if dist<2 then neighbors not visited enqueue dist+1. Count at end vertices with dist 1 or 2 excluding 1. Since we only enqueue unvisited. Need count. Could run BFS returning Set of vertices within distance <=2 excluding 1. Since condition: vertices visited by BFS with dist <=2. That's exactly distance 1 or 2. So answer = size set minus 1? Actually set includes 1. If BFS from 1 up to depth 2, visited set contains 1 plus distance1 plus distance2. answer = size - 1. Since n>=1. In C++ if n>=1 dist[1]=0. For n=1 => set {1}, size-1=0. Good. If graph? yes.\n\nNeed be careful BFS only expands nodes with distance <2? C++ expands if dist[u] != 2, so it enqueues dist 2 but doesn't expand. Visited includes all distance <=2. So same.\n\nImplement:\n\nbfs :: IntMap [Int] -> Set Int -> [(Int,Int)] -> Set Int\nbfs adj visited [] = visited\nbfs adj visited ((u,d):q)\n  | d == 2 = bfs adj visited q  -- already visited\n  | otherwise = let ns = fromMaybe [] (M.lookup u adj)\n                    (visited', q') = foldl' (\\(vis,qq) v -> if S.member v vis then (vis,qq) else (S.insert v vis, qq ++ [(v,d+1)])) (visited,q) ns\n                in bfs adj visited' q'\nBut q++ poor but n small. Could use Data.Sequence for clean. Use list with q ++ maybe O(n^2) but 500, fine. However Haskell laziness. Simpler:\n\nbfs visited [] = visited\nbfs visited ((u,d):q)\n  | d == 2 = bfs visited q\n  | otherwise =\n      let nbrs = M.findWithDefault [] u adj\n          (visited', new) = foldl' step (visited, []) nbrs\n          step (vis, acc) v | S.member v vis = (vis, acc)\n                            | otherwise = (S.insert v vis, acc ++ [(v, d+1)])\n      in bfs visited' (q ++ new)\n\nNeed initialize visited = S.singleton 1, queue [(1,0)].\n\nAnswer = S.size visited - 1. But if n? We can check n>0. If n maybe 0 not spec. If n>=1. Source if n>=1. For n=0 would ? Input invalid. We can handle n <=0 output 0? But spec N>=2. Public N=1. Use if n >= 1 then size-1 else 0. Hmm if n=0 and edges? C++ if n>=1 no BFS, answer loop from 2 to 0 none 0. We can output 0. But Haskell n parse. Our adjacency may include n. We'll just compute if n>=1 else 0. But initialized singleton 1 would include 1 even if n<1. Use answer = if n >= 1 then S.size vis - 1 else 0.\n\nNeed parse edges carefully. def pairs [] = [] ; pairs (a:b:xs) = (a,b): pairs xs; pairs _ = [].\n\nNeed type annotations.\n\nPotential issue using Data.IntMap as M, Data.Set as S. Need import Data.List (foldl').\n\nLet's craft.\n\nCode:\n\nmodule Main where\nimport qualified Data.IntMap.Strict as IM\nimport qualified Data.Set as Set\nimport Data.List (foldl')\nimport Data.Maybe (fromMaybe)\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let nums = map read (words input) :: [Int]\n  case nums of\n    (n:m:rest) -> do\n      let edgeTokens = take (2*m) rest\n          edges = pairUp edgeTokens\n          adj = foldl' addEdge IM.empty edges\n          visited = bfs adj (Set.singleton 1) [(1,0)]\n          ans = if n >= 1 then Set.size visited - 1 else 0\n      print ans\n    _ -> return ()\n\npairUp :: [Int] -> [(Int,Int)]\npairUp (a:b:xs)= (a,b):pairUp xs\npairUp _ = []\n\naddEdge :: IM.IntMap [Int] -> (Int,Int) -> IM.IntMap [Int]\naddEdge mp (a,b) = IM.insertWith (++) b [a] (IM.insertWith (++) a [b] mp)\n-- Careful insertWith (++) new old => new ++ old? Data.Map insertWith f key new map: if exists old, f new old. (++) new old = new ++ old. fine.\n\nbfs :: IM.IntMap [Int] -> Set.Set Int -> [(Int,Int)] -> Set.Set Int\nbfs _ visited [] = visited\nbfs adj visited ((u,d):q)\n  | d >= 2 = bfs adj visited q\n  | otherwise =\n      let (vis', newQ) = foldl' step (visited, []) (fromMaybe [] (IM.lookup u adj))\n          step (vis, acc) v\n            | Set.member v vis = (vis, acc)\n            | otherwise = (Set.insert v vis, acc ++ [(v, d+1)])\n      in bfs adj vis' (q ++ newQ)\n\nNeed ensure BFS counts all distance 2. Suppose q has (u,d=1), process neighbors, enqueue d=2. Then process d=2 skip. Good.\n\nPotential duplicate issue: visited inserted when enqueued. Good.\n\nNow final should be one fenced code block no explanation. Need not include comments? okay.\n\nCheck sample 1: n=1,m=0 rest [], visited {1}, ans 0. print \"0\". sample 2: outputs 3.\n\nLet's final.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794979525,
+    "id": "chatcmpl-9667d8e36e08e4fbbe5f0de2c6dffd1b",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 2180,
+      "completion_tokens_details": {
+        "reasoning_tokens": 1784
+      },
+      "prompt_tokens": 732,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 2912
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0028355999999999998,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 14.243475300027058,
+  "logical_request_id": "5936955e3d19244080d857ada97daa361801c6e7cf487274c961be1880e6e877",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_5567\\cpp-via-haskell\\attempt-04\\step-05\\response_body.txt",
+  "received_at": "2026-11-18T05:25:37.890913+00:00",
+  "request_id": "chatcmpl-9667d8e36e08e4fbbe5f0de2c6dffd1b",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nimport qualified Data.IntMap.Strict as IM\nimport qualified Data.Set as Set\nimport Data.List (foldl')\nimport Data.Maybe (fromMaybe)\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let nums = map read (words input) :: [Int]\n  case nums of\n    (n : m : rest) -> do\n      let edges = pairUp (take (2 * m) rest)\n          adj = foldl' addEdge IM.empty edges\n          visited = bfs adj (Set.singleton 1) [(1, 0)]\n          answer = if n >= 1 then Set.size visited - 1 else 0\n      print answer\n    _ -> return ()\n\npairUp :: [Int] -> [(Int, Int)]\npairUp (a : b : xs) = (a, b) : pairUp xs\npairUp _ = []\n\naddEdge :: IM.IntMap [Int] -> (Int, Int) -> IM.IntMap [Int]\naddEdge mp (a, b) =\n  IM.insertWith (++) b [a] $\n  IM.insertWith (++) a [b] mp\n\nbfs :: IM.IntMap [Int] -> Set.Set Int -> [(Int, Int)] -> Set.Set Int\nbfs _ visited [] = visited\nbfs adj visited ((u, d) : q)\n  | d >= 2 = bfs adj visited q\n  | otherwise =\n      let (vis', newQ) = foldl' step (visited, []) (fromMaybe [] (IM.lookup u adj))\n          step (vis, acc) v\n            | Set.member v vis = (vis, acc)\n            | otherwise = (Set.insert v vis, acc ++ [(v, d + 1)])\n      in bfs adj vis' (q ++ newQ)\n```",
+  "usage": {
+    "completion_tokens": 2180,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1784
+    },
+    "prompt_tokens": 732,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 2912
+  },
+  "usage_raw": {
+    "completion_tokens": 2180,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1784
+    },
+    "prompt_tokens": 732,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 2912
+  }
+}

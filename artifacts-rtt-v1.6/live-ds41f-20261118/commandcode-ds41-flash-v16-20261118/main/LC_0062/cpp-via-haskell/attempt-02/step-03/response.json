@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let nums = map read (words input) :: [Integer]\n    case nums of\n        (m:n:_) -> print (uniquePaths m n)\n        _ -> return ()\n\nuniquePaths :: Integer -> Integer -> Integer\nuniquePaths m n =\n    let start = replicate (fromInteger n) 1\n        final = foldl' (\\dp _ -> scanl1 (+) dp) start [2..m]\n    in last final\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 535,
+    "total_tokens": 1300,
+    "completion_tokens": 765,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 641
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 535,
+    "total_tokens": 1300,
+    "completion_tokens": 765,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 641
+    }
+  },
+  "cost_usd": 0.001040868,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-784d4908569a457861602f0140aa04a0",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-haskell\\attempt-02\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-784d4908569a457861602f0140aa04a0",
+    "object": "chat.completion",
+    "created": 1794995654,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let nums = map read (words input) :: [Integer]\n    case nums of\n        (m:n:_) -> print (uniquePaths m n)\n        _ -> return ()\n\nuniquePaths :: Integer -> Integer -> Integer\nuniquePaths m n =\n    let start = replicate (fromInteger n) 1\n        final = foldl' (\\dp _ -> scanl1 (+) dp) start [2..m]\n    in last final\n```",
+          "reasoning_content": "We need answer with Haskell source one fenced block, no explanation. Need translate. Need preserve stdin reading two ints M N, output unique paths. Constraints. Simple.\n\nNeed provide module Main main. Use readMaybe? Can use words getContents. Compute. Could use foldl. Need exact output newline. Handle if no? For valid inputs. We can parse first two. Use Integer or Int. Answer <=2e9 fits Int 64? Haskell Int maybe 64 on GHC likely. Use Integer safe. DP list length n initialized 1. For each row after first update tail via scanl? Simpler recursive.\n\ndp = replicate n 1\niterate m-1: step row: tail? Given dp[j] new = dp[j]+new dp[j-1] for j 1..n-1, dp[0]=1. That's scanl1 (+)? scanl1 (+) dp gives prefix sums? For dp list [1,1,1], scanl1 (+) => [1,2,3], but expected after one row [1,2,3]. For second row from [1,2,3] scanl1 => [1,3,6]. Yes. So iterate scanl1 (+) dp, until m-1 times. Last element. For m=1 unchanged. Use foldl' maybe. Or combinations. We'll output.\n\nNeed parse. main = do s <- getContents; let xs = map read (words s) :: [Integer]; case xs of (m:n:_) -> print (paths m n); _ -> return (). If input no then no output; source returns 0. Valid only. print adds newline.\n\npaths m n = let start = replicate (fromIntegral n) 1; after = iterate step start !! (fromIntegral m -1) in last after. But n up to 100, m up to 100. fromIntegral Integer to Int. Could use generic.\n\nPotential issue `iterate` and !! with negative if m? M>=1 so m-1 >=0. Use foldl' over [1..m-1] to avoid huge list (not issue). Code:\n\nimport Data.List (foldl')\nmain :: IO ()\nmain = do\n  input <- getContents\n  let nums = map read (words input) :: [Integer]\n  case nums of\n    (m:n:_) -> print (uniquePaths m n)\n    _ -> return ()\n\nuniquePaths :: Integer -> Integer -> Integer\nuniquePaths m n =\n  let start = replicate (fromInteger n) 1\n      final = foldl' (\\dp _ -> scanl1 (+) dp) start [2..m]\n  in last final\n\nWait [2..m] gives m-1 iterations if m>=2, if m=1 empty. Yes.\n\n`replicate (fromInteger n)` n Integer. Type maybe Int inferred by replicate count. fromInteger n needs Int; okay.\n\n`scanl1 (+) dp`. Works Integer.\n\nNeed output exactly one complete source file fenced. Ensure no explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 535,
+      "total_tokens": 1300,
+      "completion_tokens": 765,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 641
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 8.788435199996457,
+  "received_at": "2026-11-18T09:54:19.977617+00:00",
+  "logical_request_id": "2104b3ddec96d8a1e849f5d08d638a24a6fad1ba67942ba07e83ab0a53617b97",
+  "execution_class": "direct_api"
+}

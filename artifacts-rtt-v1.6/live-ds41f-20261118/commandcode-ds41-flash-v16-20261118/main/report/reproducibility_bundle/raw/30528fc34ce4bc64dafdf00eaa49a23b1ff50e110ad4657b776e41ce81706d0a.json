@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nvoid hanoi(int k, int start, int mid, int end) {\n    if (k == 1) {\n        cout << start << ' ' << end << '\\n';\n        return;\n    }\n\n    hanoi(k - 1, start, end, mid);\n    cout << start << ' ' << end << '\\n';\n    hanoi(k - 1, mid, start, end);\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    cout << ((1 << n) - 1) << '\\n';\n    hanoi(n, 1, 2, 3);\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer with C++17 source only fenced code block. Need translate preserving. N<=20 moves up to 2^20-1 = 1,048,575. Storing strings maybe okay but can output efficiently. Need first line count then moves. Could compute count (1<<n)-1. Need output ordering recursive exactly.\n\nPotential issue recursion 20 fine. Need optimize output. Use ios sync false, maybe build string or direct cout. Up to ~1M lines, cout with sync off fine. Could use recursive lambda.\n\nNeed return exactly one complete source file in one fenced code block no explanation. Ensure main.\n\nCould implement:\n\n#include <bits/stdc++.h>\nusing namespace std;\nvoid hanoi(int k,int start,int mid,int end, ostream& os){ if(k==1){ os<<start<<' '<<end<<'\\n'; return;} hanoi(k-1,start,end,mid,os); os<<start<<' '<<end<<'\\n'; hanoi(k-1,mid,start,end,os);}\n\nint main(){ios::sync_with_stdio(false); cin.tie(nullptr); int n; if(!(cin>>n)) return 0; cout<<((1<<n)-1)<<'\\n'; hanoi(n,1,2,3,cout); return 0;}\n\nN=20 1<<20 int okay. Use int. This preserves. Need no explanation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794978442,
+    "id": "chatcmpl-5089186d6f964ae7e0eb0a439c44011b",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 469,
+      "completion_tokens_details": {
+        "reasoning_tokens": 298
+      },
+      "prompt_tokens": 632,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1101
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0007524,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.524760500062257,
+  "logical_request_id": "594983fa9ba207f6fcf6d03cf21ac0e2059b0836e3a60f433a98c1417a659816",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_11729\\cpp-via-python\\attempt-05\\step-02\\response_body.txt",
+  "received_at": "2026-11-18T05:07:24.091114+00:00",
+  "request_id": "chatcmpl-5089186d6f964ae7e0eb0a439c44011b",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nvoid hanoi(int k, int start, int mid, int end) {\n    if (k == 1) {\n        cout << start << ' ' << end << '\\n';\n        return;\n    }\n\n    hanoi(k - 1, start, end, mid);\n    cout << start << ' ' << end << '\\n';\n    hanoi(k - 1, mid, start, end);\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    cout << ((1 << n) - 1) << '\\n';\n    hanoi(n, 1, 2, 3);\n\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 469,
+    "completion_tokens_details": {
+      "reasoning_tokens": 298
+    },
+    "prompt_tokens": 632,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1101
+  },
+  "usage_raw": {
+    "completion_tokens": 469,
+    "completion_tokens_details": {
+      "reasoning_tokens": 298
+    },
+    "prompt_tokens": 632,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1101
+  }
+}

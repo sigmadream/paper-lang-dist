@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        int[] a = new int[n];\n        for (int i = 0; i < n; i++) {\n            a[i] = sc.nextInt();\n        }\n\n        int write = 0;\n        for (int read = 0; read < n; read++) {\n            if (a[read] != 0) {\n                int temp = a[write];\n                a[write] = a[read];\n                a[read] = temp;\n                write++;\n            }\n        }\n\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i < n; i++) {\n            if (i > 0) sb.append(' ');\n            sb.append(a[i]);\n        }\n        sb.append('\\n');\n        System.out.print(sb);\n    }\n}\n```",
+          "reasoning_content": "We need answer only code block Java. Need translate. Need preserve behavior. Java 17 public class Main. Read N then N ints. Move zeros stable via write pointer swapping. Output space separated newline. Use Scanner or BufferedReader. Standard libraries. N>=1. Values int. Need one file. No explanation. Fenced code block. Let's craft.\n\nPotential issue signed 32-bit. use int. Use BufferedReader StringTokenizer for speed. Output StringBuilder. main. If input maybe empty? contract valid. Could simple Scanner. N up to 10000. Fine. Use Scanner. But robust. Use BufferedReader. Need import java.io.*; java.util.*. public class Main.\n\nImplementation:\nStringTokenizer st; read all? We can read line by line. First line N. Second line N ints may span multiple lines? contract says next line N ints, but robust use tokenizer. Use BufferedReader and StringTokenizer, fill as needed.\n\nSimpler Scanner sc = new Scanner(System.in); int n=sc.nextInt(); int[] a=new int[n]; for... Move: int write=0; for read 0..n-1 if a[read]!=0 { int temp=a[write]; a[write]=a[read]; a[read]=temp; write++; } Output builder append. This swap moves zeros. Preserves order of nonzeros. Correct.\n\nReturn exactly code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794989764,
+    "id": "chatcmpl-688f453da0c1aa0062b386664205a28e",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 488,
+      "completion_tokens_details": {
+        "reasoning_tokens": 285
+      },
+      "prompt_tokens": 650,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 1138
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0007429680000000001,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 4.535186800058,
+  "logical_request_id": "cc64cbcf9fbaf6254a291ae7c09ae75ace8f3f07b90c69be91510bb49f7728ec",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-java\\attempt-02\\step-01\\response_body.txt",
+  "received_at": "2026-11-18T08:16:06.038886+00:00",
+  "request_id": "chatcmpl-688f453da0c1aa0062b386664205a28e",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        int[] a = new int[n];\n        for (int i = 0; i < n; i++) {\n            a[i] = sc.nextInt();\n        }\n\n        int write = 0;\n        for (int read = 0; read < n; read++) {\n            if (a[read] != 0) {\n                int temp = a[write];\n                a[write] = a[read];\n                a[read] = temp;\n                write++;\n            }\n        }\n\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i < n; i++) {\n            if (i > 0) sb.append(' ');\n            sb.append(a[i]);\n        }\n        sb.append('\\n');\n        System.out.print(sb);\n    }\n}\n```",
+  "usage": {
+    "completion_tokens": 488,
+    "completion_tokens_details": {
+      "reasoning_tokens": 285
+    },
+    "prompt_tokens": 650,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1138
+  },
+  "usage_raw": {
+    "completion_tokens": 488,
+    "completion_tokens_details": {
+      "reasoning_tokens": 285
+    },
+    "prompt_tokens": 650,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1138
+  }
+}

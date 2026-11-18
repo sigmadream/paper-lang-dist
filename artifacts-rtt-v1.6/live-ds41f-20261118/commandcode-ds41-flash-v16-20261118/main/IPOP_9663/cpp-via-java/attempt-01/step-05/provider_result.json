@@ -1,0 +1,86 @@
+{
+  "text": "```java\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\n\npublic class Main {\n    static int n;\n    static int ans = 0;\n    static boolean[] col;\n    static boolean[] diag1;\n    static boolean[] diag2;\n\n    static void solve(int r) {\n        if (r == n) {\n            ans++;\n            return;\n        }\n\n        for (int c = 0; c < n; c++) {\n            int d1 = r + c;\n            int d2 = r - c + n - 1;\n\n            if (col[c] || diag1[d1] || diag2[d2]) {\n                continue;\n            }\n\n            col[c] = true;\n            diag1[d1] = true;\n            diag2[d2] = true;\n\n            solve(r + 1);\n\n            col[c] = false;\n            diag1[d1] = false;\n            diag2[d2] = false;\n        }\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n\n        if (line == null) {\n            return;\n        }\n\n        line = line.trim();\n        if (line.isEmpty()) {\n            return;\n        }\n\n        n = Integer.parseInt(line);\n\n        col = new boolean[n];\n        diag1 = new boolean[2 * n - 1];\n        diag2 = new boolean[2 * n - 1];\n\n        solve(0);\n        System.out.println(ans);\n    }\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 744,
+    "total_tokens": 1252,
+    "completion_tokens": 508,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 174
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 744,
+    "total_tokens": 1252,
+    "completion_tokens": 508,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 174
+    }
+  },
+  "cost_usd": 0.0007575360000000001,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-d74eb622bee55d2ff827138469358ea6",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9663\\cpp-via-java\\attempt-01\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-d74eb622bee55d2ff827138469358ea6",
+    "object": "chat.completion",
+    "created": 1794994728,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```java\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\n\npublic class Main {\n    static int n;\n    static int ans = 0;\n    static boolean[] col;\n    static boolean[] diag1;\n    static boolean[] diag2;\n\n    static void solve(int r) {\n        if (r == n) {\n            ans++;\n            return;\n        }\n\n        for (int c = 0; c < n; c++) {\n            int d1 = r + c;\n            int d2 = r - c + n - 1;\n\n            if (col[c] || diag1[d1] || diag2[d2]) {\n                continue;\n            }\n\n            col[c] = true;\n            diag1[d1] = true;\n            diag2[d2] = true;\n\n            solve(r + 1);\n\n            col[c] = false;\n            diag1[d1] = false;\n            diag2[d2] = false;\n        }\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n\n        if (line == null) {\n            return;\n        }\n\n        line = line.trim();\n        if (line.isEmpty()) {\n            return;\n        }\n\n        n = Integer.parseInt(line);\n\n        col = new boolean[n];\n        diag1 = new boolean[2 * n - 1];\n        diag2 = new boolean[2 * n - 1];\n\n        solve(0);\n        System.out.println(ans);\n    }\n}\n```",
+          "reasoning_content": "We need answer exactly one fenced code block, Java 17 class Main. Need translate. Preserve behavior for valid inputs. Could just implement N-queen backtracking. Need consider N<15, max 14 count 365596? Actually N=14 365596. Java fine. Need stdin read whitespace-trim line. Original reads first line only, trims, stoi. Valid input single N. We'll implement robust scanner maybe read entire token. But preserving for valid. Use BufferedReader readLine, trim parse. If empty return. main. Need output count long? Max 365596 fits int. Use int.\n\nNeed provide only code block. Ensure class Main public. Use fields static int n, ans; boolean arrays. solve.\n\nPotential issue if line includes extra? Valid one line. Fine. Java source. No explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 744,
+      "total_tokens": 1252,
+      "completion_tokens": 508,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 174
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.013829799951054,
+  "received_at": "2026-11-18T09:38:50.101463+00:00",
+  "logical_request_id": "bf5c7d3e73f84a84c8acc4e8f1d8393da36038ea0bb0984431f63bffa18b31ac",
+  "execution_class": "direct_api"
+}

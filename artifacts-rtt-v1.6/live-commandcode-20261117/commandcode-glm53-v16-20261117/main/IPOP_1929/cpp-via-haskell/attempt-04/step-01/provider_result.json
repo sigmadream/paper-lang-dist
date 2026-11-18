@@ -1,0 +1,94 @@
+{
+  "text": "```haskell\nmodule Main (main) where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  input <- BS.getContents\n  let ws = map (maybe 0 fst . BS.readInt) (BS.words input)\n      (m : n : _) = ws\n      sieve = sieveTo n\n      result = [i | i <- [m..n], sieve !! i]\n  mapM_ (BS.putStrLn . BS.pack . show) result\n\nsieveTo :: Int -> [Bool]\nsieveTo n = go initial 2\n  where\n    arrSize = n + 1\n    initial = replicate arrSize True\n    go arr i\n      | i * i > n = arr\n      | arr !! i  = go (mark arr (i * i) i) (i + 1)\n      | otherwise = go arr (i + 1)\n    mark arr start step =\n      [ if j == start || (j >= start && (j - start) `rem` step == 0) then False else arr !! j\n      | j <- [0 .. n]\n      ]\n```\n\nThis linked-list sieve would be too slow for n up to 10^6. Let me provide an efficient version using `Data.Array` (unboxed via `array` package which ships with GHC):\n\n```haskell\nmodule Main (main) where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.Array.Unboxed (UArray, listArray, (!), bounds)\n\nmain :: IO ()\nmain = do\n  input <- BS.getContents\n  let (m : n : _) = map (maybe 0 fst . BS.readInt) (BS.words input)\n      sieve = sieveTo n\n      result = [i | i <- [m..n], sieve ! i]\n  BS.putStr (BS.unlines [BS.pack (show i) | i <- result])\n\nsieveTo :: Int -> UArray Int Bool\nsieveTo n = go initial 2\n  where\n    initial :: UArray Int Bool\n    initial = listArray (0, n) (True : replicate (n - 1) True ++ [False] `orIf` []) `seq`\n              listArray (0, n) (replicate (n + 1) True)\n    go arr i\n      | i * i > n = arr\n      | arr ! i  = go (markMultiples arr i) (i + 1)\n      | otherwise = go arr (i + 1)\n    markMultiples arr p = arr `seq` arr // [(j, False) | j <- [p * p, p * p + p .. n]]\n\norIf :: a -> a -> a\norIf = const\n```\n\nI'm overcomplicating this. Here is the clean, correct, efficient final version:\n\n```haskell\nmodule Main (main) where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.Array.Unboxed (UArray, listArray, (!), (//), bounds)\n\nmain :: IO ()\nmain = do\n  input <- BS.getContents\n  let (m : n : _) = map (maybe 0 fst . BS.readInt) (BS.words input)\n      sieve = sieveTo n\n      primes = [i | i <- [max m 2 .. n], sieve ! i]\n  BS.putStr (BS.unlines [BS.pack (show i) | i <- primes])\n\nsieveTo :: Int -> UArray Int Bool\nsieveTo n = go initial 2\n  where\n    initial = listArray (0, n) (replicate (n + 1) True) // [(0, False), (1, False)]\n    go arr i\n      | i * i > n = arr\n      | arr ! i  = go (arr // [(j, False) | j <- [i * i, i * i + i .. n]]) (i + 1)\n      | otherwise = go arr (i + 1)\n```\n\nThe `//` updates create O(n log log n) work but with array copying each step it becomes O(n · π(n)) which is too slow. Using a mutable `STUArray`:\n\n```haskell\nmodule Main (main) where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.Array.Unboxed (UArray, listArray, (!))\nimport Data.Array.ST (STUArray, newArray, readArray, writeArray, runSTUArray)\nimport Control.Monad (forM_, when)\n\nmain :: IO ()\nmain = do\n  input <- BS.getContents\n  let (m : n : _) = map (maybe 0 fst . BS.readInt) (BS.words input)\n      sieve = sieveTo n\n      primes = [i | i <- [m .. n], i >= 2 && sieve ! i]\n  BS.putStr (BS.unlines [BS.pack (show i) | i <- primes])\n\nsieveTo :: Int -> UArray Int Bool\nsieveTo n = runSTUArray $ do\n  arr <- newArray (0, n) True :: STUArray s Int Bool\n  writeArray arr 0 False\n  when (n >= 1) $ writeArray arr 1 False\n  let lim = floor (sqrt (fromIntegral n :: Double)) :: Int\n  forM_ [2 .. lim] $ \\i -> do\n    p <- readArray arr i\n    when p $ forM_ [i * i, i * i + i .. n] $ \\j -> writeArray arr j False\n  return arr\n```\n\nThis is the final answer.",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 1204,
+    "prompt_tokens": 563,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1767
+  },
+  "usage_raw": {
+    "completion_tokens": 1204,
+    "prompt_tokens": 563,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1767
+  },
+  "cost_usd": 0.00593988,
+  "cost_source": "estimated",
+  "request_id": "d6d38b72-4cdc-41a0-8e3d-3a9b96da9ee2",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_1929\\cpp-via-haskell\\attempt-04\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  input <- BS.getContents\n  let ws = map (maybe 0 fst . BS.readInt) (BS.words input)\n      (m : n : _) = ws\n      sieve = sieveTo n\n      result = [i | i <- [m..n], sieve !! i]\n  mapM_ (BS.putStrLn . BS.pack . show) result\n\nsieveTo :: Int -> [Bool]\nsieveTo n = go initial 2\n  where\n    arrSize = n + 1\n    initial = replicate arrSize True\n    go arr i\n      | i * i > n = arr\n      | arr !! i  = go (mark arr (i * i) i) (i + 1)\n      | otherwise = go arr (i + 1)\n    mark arr start step =\n      [ if j == start || (j >= start && (j - start) `rem` step == 0) then False else arr !! j\n      | j <- [0 .. n]\n      ]\n```\n\nThis linked-list sieve would be too slow for n up to 10^6. Let me provide an efficient version using `Data.Array` (unboxed via `array` package which ships with GHC):\n\n```haskell\nmodule Main (main) where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.Array.Unboxed (UArray, listArray, (!), bounds)\n\nmain :: IO ()\nmain = do\n  input <- BS.getContents\n  let (m : n : _) = map (maybe 0 fst . BS.readInt) (BS.words input)\n      sieve = sieveTo n\n      result = [i | i <- [m..n], sieve ! i]\n  BS.putStr (BS.unlines [BS.pack (show i) | i <- result])\n\nsieveTo :: Int -> UArray Int Bool\nsieveTo n = go initial 2\n  where\n    initial :: UArray Int Bool\n    initial = listArray (0, n) (True : replicate (n - 1) True ++ [False] `orIf` []) `seq`\n              listArray (0, n) (replicate (n + 1) True)\n    go arr i\n      | i * i > n = arr\n      | arr ! i  = go (markMultiples arr i) (i + 1)\n      | otherwise = go arr (i + 1)\n    markMultiples arr p = arr `seq` arr // [(j, False) | j <- [p * p, p * p + p .. n]]\n\norIf :: a -> a -> a\norIf = const\n```\n\nI'm overcomplicating this. Here is the clean, correct, efficient final version:\n\n```haskell\nmodule Main (main) where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.Array.Unboxed (UArray, listArray, (!), (//), bounds)\n\nmain :: IO ()\nmain = do\n  input <- BS.getContents\n  let (m : n : _) = map (maybe 0 fst . BS.readInt) (BS.words input)\n      sieve = sieveTo n\n      primes = [i | i <- [max m 2 .. n], sieve ! i]\n  BS.putStr (BS.unlines [BS.pack (show i) | i <- primes])\n\nsieveTo :: Int -> UArray Int Bool\nsieveTo n = go initial 2\n  where\n    initial = listArray (0, n) (replicate (n + 1) True) // [(0, False), (1, False)]\n    go arr i\n      | i * i > n = arr\n      | arr ! i  = go (arr // [(j, False) | j <- [i * i, i * i + i .. n]]) (i + 1)\n      | otherwise = go arr (i + 1)\n```\n\nThe `//` updates create O(n log log n) work but with array copying each step it becomes O(n · π(n)) which is too slow. Using a mutable `STUArray`:\n\n```haskell\nmodule Main (main) where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.Array.Unboxed (UArray, listArray, (!))\nimport Data.Array.ST (STUArray, newArray, readArray, writeArray, runSTUArray)\nimport Control.Monad (forM_, when)\n\nmain :: IO ()\nmain = do\n  input <- BS.getContents\n  let (m : n : _) = map (maybe 0 fst . BS.readInt) (BS.words input)\n      sieve = sieveTo n\n      primes = [i | i <- [m .. n], i >= 2 && sieve ! i]\n  BS.putStr (BS.unlines [BS.pack (show i) | i <- primes])\n\nsieveTo :: Int -> UArray Int Bool\nsieveTo n = runSTUArray $ do\n  arr <- newArray (0, n) True :: STUArray s Int Bool\n  writeArray arr 0 False\n  when (n >= 1) $ writeArray arr 1 False\n  let lim = floor (sqrt (fromIntegral n :: Double)) :: Int\n  forM_ [2 .. lim] $ \\i -> do\n    p <- readArray arr i\n    when p $ forM_ [i * i, i * i + i .. n] $ \\j -> writeArray arr j False\n  return arr\n```\n\nThis is the final answer.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794898522,
+    "id": "d6d38b72-4cdc-41a0-8e3d-3a9b96da9ee2",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 1204,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_a9c0569c509e4633aac7a939bd8caadd",
+      "trace_id": "70ef62726c614e5890f8407cbcf2c0c4"
+    },
+    "usage": {
+      "completion_tokens": 1204,
+      "prompt_tokens": 563,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 1767
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 7.774916500027757,
+  "received_at": "2026-11-17T06:55:22.321194+00:00",
+  "logical_request_id": "cd7dff94da02b89fc8ccdc5ac425830a44471bd5af2d49d81809d1535de46ee5",
+  "execution_class": "direct_api"
+}

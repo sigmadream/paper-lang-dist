@@ -1,0 +1,12 @@
+{
+  "checked_date": "2026-11-17",
+  "sources": [
+    {"url": "https://commandcode.ai/docs/provider", "evidence": "공식 주소는 https://api.commandcode.ai/provider/v1이며 Chat Completions와 Responses를 제공합니다. 모델별 지원 endpoint는 공개 모델 목록에서 확인합니다."},
+    {"url": "https://api.commandcode.ai/provider/v1/models", "evidence": "정확한 모델 ID zai-org/GLM-5.3와 deepseek/deepseek-v4-pro가 있고 두 모델 모두 /chat/completions 및 /responses를 지원합니다. 원래 모델을 Flash로 대체하지 않습니다."},
+    {"url": "https://commandcode.ai/docs/resources/pricing-limits", "evidence": "백만 토큰당 GLM 입력 1.40·출력 4.40·캐시 입력 0.26달러입니다. DeepSeek Pro는 할인 아닌 피크 입력 1.32·출력 3.96·캐시 입력 0.044달러를 보수적으로 적용합니다."},
+    {"url": "https://docs.z.ai/api-reference/llm/chat-completion", "evidence": "GLM-5.3 temperature는 0~1, top_p는 0.01~1, 출력 상한은 최대 131072이며 reasoning_effort low/high/max를 지원합니다. seed 항목은 확인하지 못해 전달하지 않습니다."},
+    {"url": "https://docs.z.ai/guides/llm/glm-5.3", "evidence": "GLM-5.3은 추론을 끌 수 없으며 low는 가벼운 추론, high와 max는 다른 추론 수준입니다. 이 실행은 low를 별도 명시합니다."},
+    {"url": "https://api-docs.deepseek.com/guides/thinking_mode/", "evidence": "DeepSeek V4 Pro의 추론 모드는 temperature를 지원하지 않고 top_p도 무시합니다. reasoning_effort low/high/max를 지원하며 이 실행은 low를 요청합니다. seed 지원 근거는 확인하지 못했습니다."}
+  ],
+  "comparison_condition": "문제·평가·프롬프트·중단 규칙은 같지만 생성 프로파일은 모델별 별도 조건입니다. 요청한 low를 동일 실효 추론량으로 해석하지 않으며 서버 실효 미보고는 null입니다."
+}

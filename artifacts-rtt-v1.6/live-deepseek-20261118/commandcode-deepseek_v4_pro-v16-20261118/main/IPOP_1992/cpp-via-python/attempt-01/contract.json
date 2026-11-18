@@ -1,0 +1,355 @@
+{
+  "protocol": "rtt-hops-v1.6",
+  "schema_version": "observation-v1.6",
+  "schema": "observation-v1.6",
+  "problem_ids": [
+    "IPOP_11729",
+    "IPOP_2110",
+    "IPOP_1992",
+    "IPOP_2579",
+    "IPOP_5567",
+    "IPOP_10988",
+    "IPOP_1929",
+    "IPOP_2609",
+    "IPOP_9012",
+    "LC_0053",
+    "LC_0062",
+    "IPOP_9663",
+    "LC_0242",
+    "LC_0283",
+    "LC_0338"
+  ],
+  "routes": [
+    [
+      "cpp",
+      "python"
+    ],
+    [
+      "cpp",
+      "java"
+    ],
+    [
+      "cpp",
+      "haskell"
+    ],
+    [
+      "cpp",
+      "prolog"
+    ]
+  ],
+  "repeats": 5,
+  "thresholds": [
+    0.8,
+    0.85,
+    0.9
+  ],
+  "primary_threshold": 0.85,
+  "config": {
+    "manuscript_version": "v1.6",
+    "experiment_version": "rtt-hops-v1.6",
+    "schema_version": "observation-v1.6",
+    "selection": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\papers\\v1.6\\data\\selection.json",
+    "corpus_root": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6",
+    "validation": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\validation\\validation.json",
+    "output_root": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-deepseek-20261118",
+    "campaign_id": "commandcode-deepseek_v4_pro-v16-20261118",
+    "profile_id": "commandcode-deepseek_v4_pro-v16-low-16384",
+    "provider_config": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\configs\\v1.6\\providers\\commandcode_deepseek_v4_pro_20261118.yaml",
+    "problem_ids": [
+      "IPOP_11729",
+      "IPOP_2110",
+      "IPOP_1992",
+      "IPOP_2579",
+      "IPOP_5567",
+      "IPOP_10988",
+      "IPOP_1929",
+      "IPOP_2609",
+      "IPOP_9012",
+      "LC_0053",
+      "LC_0062",
+      "IPOP_9663",
+      "LC_0242",
+      "LC_0283",
+      "LC_0338"
+    ],
+    "pilot_problem_ids": [
+      "IPOP_11729",
+      "IPOP_1992",
+      "LC_0053"
+    ],
+    "routes": [
+      [
+        "cpp",
+        "python"
+      ],
+      [
+        "cpp",
+        "java"
+      ],
+      [
+        "cpp",
+        "haskell"
+      ],
+      [
+        "cpp",
+        "prolog"
+      ]
+    ],
+    "repeats": 5,
+    "pilot_repeats": 1,
+    "threshold": 0.85,
+    "thresholds": [
+      0.8,
+      0.85,
+      0.9
+    ],
+    "max_hops": 10,
+    "confirmation_roundtrips": 1,
+    "schedule_seed": 20261117,
+    "observation_wall_seconds": 900,
+    "confirmation_wall_seconds": 300,
+    "runtime": {
+      "tools": {
+        "cpp": "C:\\Users\\sigma\\scoop\\apps\\perl\\5.42.3.1\\c\\bin\\g++.exe",
+        "python": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+        "java": "C:\\Users\\sigma\\scoop\\apps\\openjdk\\current\\bin\\javac.EXE",
+        "haskell": "C:\\Users\\sigma\\scoop\\apps\\ghcup\\current\\ghcup\\bin\\ghc.EXE",
+        "prolog": "C:\\Users\\sigma\\scoop\\shims\\swipl.EXE"
+      },
+      "compile_timeout": 180,
+      "fixture_timeout": 5,
+      "minimum_evaluation_cases": 13
+    },
+    "similarity": {
+      "java": "C:\\Users\\sigma\\scoop\\apps\\openjdk\\current\\bin\\java.exe",
+      "jar": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\jplag-6.3.0-jar-with-dependencies.jar",
+      "jar_sha256": "5f2c21e8b88ed77134effcb3a5a3ab13d188f6a3e16d401387f7479e92db9aa2",
+      "language": "cpp",
+      "minimum_tokens": 9,
+      "normalize": false,
+      "similarity_field": "averageSimilarity"
+    },
+    "budget": {
+      "max_logical_requests": 3600,
+      "max_transport_attempts": 10800,
+      "cost_cap_usd": 49.32
+    },
+    "llm": {
+      "provider": "compatible",
+      "protocol": "chat_completions",
+      "base_url": "https://api.commandcode.ai/provider/v1",
+      "request_path": "/chat/completions",
+      "auth": {
+        "type": "bearer",
+        "api_key_env": "CMD_API_KEY"
+      },
+      "model": "deepseek/deepseek-v4-pro",
+      "allowed_response_models": [],
+      "generation_profile": {
+        "name": "commandcode-deepseek_v4_pro-v16-low-16384",
+        "supported_options": [
+          "max_tokens",
+          "reasoning_effort"
+        ],
+        "option_values": {
+          "reasoning_effort": [
+            "low"
+          ]
+        }
+      },
+      "generation": {
+        "max_tokens": 16384,
+        "reasoning_effort": "low"
+      },
+      "request_timeout": 180,
+      "retries": 2,
+      "max_calls": 3600,
+      "max_transport_attempts": 10800,
+      "cost_cap_usd": 49.32,
+      "max_request_cost_usd": 0.25,
+      "max_input_tokens": 32768,
+      "pricing": {
+        "input_per_million": 1.32,
+        "output_per_million": 3.96,
+        "cached_input_per_million": 0.044
+      }
+    },
+    "execution_wrapper": {
+      "path": "scripts/run_deepseek_v16_20261118.py",
+      "sha256": "b518c8e96a5dfb0c0284ef393112eed57dbb95e34ba1180fa2121a46a6eb527f",
+      "authentication_policy": "키는 메모리에 보관하고 provider.complete 동안에만 주입하며 평가·JPlag는 허용 목록 환경으로 수행합니다",
+      "serial_execution": true
+    },
+    "phase_budget_policy": {
+      "preflight": {
+        "max_calls": 1,
+        "max_transport_attempts": 1,
+        "cost_cap_usd": 0.24,
+        "max_request_cost_usd": 0.12,
+        "retries": 0
+      },
+      "pilot": {
+        "max_calls": 144,
+        "max_transport_attempts": 432,
+        "cost_cap_usd": 49.62,
+        "max_request_cost_usd": 0.25,
+        "retries": 2
+      },
+      "main": {
+        "max_calls": 3600,
+        "max_transport_attempts": 10800,
+        "cost_cap_usd": 49.32,
+        "max_request_cost_usd": 0.25,
+        "retries": 2
+      }
+    }
+  },
+  "manifest": {
+    "job": {
+      "campaign_id": "commandcode-deepseek_v4_pro-v16-20261118",
+      "phase": "main",
+      "problem_id": "IPOP_1992",
+      "route": "cpp-via-python",
+      "seed_language": "cpp",
+      "target_language": "python",
+      "repeat": 1
+    },
+    "file_hashes": {
+      "evaluation/case01.inp": "8516632d770e25405fd0efa2c5504c30d462fe85ee635f83173f7983394d28a8",
+      "evaluation/case01.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "evaluation/case02.inp": "2a93ef399846526811d56221542f541f9397cd39f0b6718c7fbb44c08d2735fc",
+      "evaluation/case02.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "evaluation/case03.inp": "f4e2985f0b7784a24c8c796cf3f5d97ba0bf39179df5ac66de0185811830b52c",
+      "evaluation/case03.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "evaluation/case04.inp": "ca67eb1b29f5f22837e3739fd3a417edf32432ecfa0f389514b17b60f43ff197",
+      "evaluation/case04.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "evaluation/case05.inp": "deba4f165c9a7064ce4e102ff3d8476f2d251b36183423165b621cd861091466",
+      "evaluation/case05.out": "1f4e92c497f7fbc8418a1056fa0ff88a5f2adeca3c56be31447275fe6b74fe6e",
+      "evaluation/case06.inp": "f7413a3053f7d59b847efc1a615bb36fab99c08cb9f7e996399bb598dbe9e7e5",
+      "evaluation/case06.out": "f183d7d48e8acf7c601520a7dcc48ffeff90663ccbba11ea1c2c12227dc5cf66",
+      "evaluation/case07.inp": "afd71c9e27559486f0bb646887b92cb84d07e64e1bd965f82c126941abfee8eb",
+      "evaluation/case07.out": "dcbe39bda6337740edd53efd1d41b263b10eba8eee48a034e04f370f348293ba",
+      "evaluation/case08.inp": "53dee4b72411ce63024dcbac2e5042c437a415f23ac61a7539862a7295c57534",
+      "evaluation/case08.out": "9472c1258a499114dd70efe3eb2ba3df6b7f4aadee688ecc0efaedd902762264",
+      "evaluation/case09.inp": "b970e2ab672608cf05a064bbcbd363a779d15d9122d8927ace2ba87560cbc9a6",
+      "evaluation/case09.out": "7c7b351c86caa19250e11523bee87dc9cc75c88df3391d25762ec71e5f094851",
+      "evaluation/case10.inp": "b9420660cd926164b2eccbe2dbb6c55dc1cda7bd356d21c509024ac573345ddf",
+      "evaluation/case10.out": "1f4e92c497f7fbc8418a1056fa0ff88a5f2adeca3c56be31447275fe6b74fe6e",
+      "evaluation/case11.inp": "16dd662650f2db963e21fbe71580ca098c03481fdb2ec77cfe44007fe9b5f040",
+      "evaluation/case11.out": "9d212a909c6be5fae08181880ca6476f0a2845fa245da50fd335c4afb4df1084",
+      "evaluation/case12.inp": "de10602e66f231370d3dcb63e696dd4fa827cf23f44f2f9e40b407102acec40d",
+      "evaluation/case12.out": "49c4cd6b43106084110056e6f6a06bd71af108c2847a091e39ee9a5ca1437399",
+      "evaluation/case13.inp": "97937068616160959a6dab6db339eaf9a2412e0bf361e9014822b0ed3ce397bd",
+      "evaluation/case13.out": "658514abd6e0cb46d428d8eab76f2ee3b31d3aa8df819fb1eb2aeb282de42c4e",
+      "prompt_examples/1.inp": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81",
+      "prompt_examples/1.out": "ce81057b7126bcdf9a2f06aa8799361c3d23893472f46b66af90de74cf1db15e",
+      "prompt_examples/10.inp": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81",
+      "prompt_examples/10.out": "ce81057b7126bcdf9a2f06aa8799361c3d23893472f46b66af90de74cf1db15e",
+      "prompt_examples/2.inp": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81",
+      "prompt_examples/2.out": "ce81057b7126bcdf9a2f06aa8799361c3d23893472f46b66af90de74cf1db15e",
+      "prompt_examples/3.inp": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81",
+      "prompt_examples/3.out": "ce81057b7126bcdf9a2f06aa8799361c3d23893472f46b66af90de74cf1db15e",
+      "prompt_examples/4.inp": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81",
+      "prompt_examples/4.out": "ce81057b7126bcdf9a2f06aa8799361c3d23893472f46b66af90de74cf1db15e",
+      "prompt_examples/5.inp": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81",
+      "prompt_examples/5.out": "ce81057b7126bcdf9a2f06aa8799361c3d23893472f46b66af90de74cf1db15e",
+      "prompt_examples/6.inp": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81",
+      "prompt_examples/6.out": "ce81057b7126bcdf9a2f06aa8799361c3d23893472f46b66af90de74cf1db15e",
+      "prompt_examples/7.inp": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81",
+      "prompt_examples/7.out": "ce81057b7126bcdf9a2f06aa8799361c3d23893472f46b66af90de74cf1db15e",
+      "prompt_examples/8.inp": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81",
+      "prompt_examples/8.out": "ce81057b7126bcdf9a2f06aa8799361c3d23893472f46b66af90de74cf1db15e",
+      "prompt_examples/9.inp": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81",
+      "prompt_examples/9.out": "ce81057b7126bcdf9a2f06aa8799361c3d23893472f46b66af90de74cf1db15e",
+      "reference.cpp": "f81654391c828b9ba16eae37cb02c1e9da3cb107c367e35bfc138b1e1ff1f40f",
+      "reference.hs": "760e868709da7fecd35964c935106d294dd1cb5076fcb8652da8f0a47bd16fff",
+      "reference.java": "fc433478cb8cd7702e79b7390a43e817f4172c2ab5015976e21fddce0dc44763",
+      "reference.pl": "d7f1e37b356c9059c46b7f78c30c865eb768afe37baf20ef46dce0bd121083df",
+      "reference.py": "e3c7da48566cb75efc7d467a9170e0e598b61153f9b3b0f32332d01d8d4b3ccf",
+      "statement.md": "e103f7f49b133f273982e1f19021cb7a3ebe032dafcd4f5a16d21d43a5889b2f"
+    }
+  },
+  "environment": {
+    "python": "3.15.1 (main, Oct 21 2026, 17:51:31) [MSC v.1951 64 bit (AMD64)]",
+    "python_executable": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+    "tools": {
+      "cpp": {
+        "path": "C:\\Users\\sigma\\scoop\\apps\\perl\\5.42.3.1\\c\\bin\\g++.exe",
+        "version": "g++.exe (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders, r8) 13.2.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+      },
+      "python": {
+        "path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+        "version": "Python 3.15.1"
+      },
+      "java": {
+        "path": "C:\\Users\\sigma\\scoop\\apps\\openjdk\\27.0.1.0.3-1\\bin\\javac.exe",
+        "version": "javac 27.0.1.0.3"
+      },
+      "haskell": {
+        "path": "C:\\Users\\sigma\\scoop\\persist\\ghcup\\ghcup\\bin\\ghc.exe",
+        "version": "The Glorious Glasgow Haskell Compilation System, version 9.10.3"
+      },
+      "prolog": {
+        "path": "C:\\Users\\sigma\\scoop\\shims\\swipl.exe",
+        "version": "SWI-Prolog version 10.0.2 for x64-win64"
+      },
+      "similarity_java": {
+        "path": "C:\\Users\\sigma\\scoop\\apps\\openjdk\\27.0.1.0.3-1\\bin\\java.exe",
+        "version": "openjdk 27.0.1.0.3 2026-10-25\nOpenJDK Runtime Environment (build 27.0.1.0.3+1-2)\nOpenJDK 64-Bit Server VM (build 27.0.1.0.3+1-2, mixed mode, sharing)"
+      }
+    },
+    "jplag_jar_sha256": "5f2c21e8b88ed77134effcb3a5a3ab13d188f6a3e16d401387f7479e92db9aa2"
+  },
+  "implementation_hashes": {
+    "__main__.py": "34cbd20eb83266cc6b75f7c38a9f64065abca8324fc482edbcabead721bf0c3c",
+    "cli.py": "1a8c40aef48730ca5d9b7145b106e32fac93958a660cc9d33bf37bdefad78d03",
+    "hops_experiment.py": "045068ffcddb406f0f04192f66cb6a9811eac62519c28b772f2702a9d14e6a07",
+    "hops_state.py": "266071696b2cbaac7015b73e1a885b0fe6d05a596498e906fa93187046e7cfed",
+    "hops_reporting.py": "5a6b112bf66e6c89a6b24116bb05e770e4cd229aac70d30321cb0a0ec38aec29",
+    "providers.py": "7cd2242c0d1f4bac2527fb4a6179b461c107da0af6fc260060cfc2971512c4d4",
+    "provider_protocols.py": "309560f09ddbd3eea614e43d10de0ff7ace567558007e5ce5bd957205f3f165e",
+    "copilot_provider.py": "7b24988107325ff93d5a24bd17075746ee3a3fd79fffe4dfd10f9b2c67035e81",
+    "fps_execution.py": "df321b3b4edaf5ef9456486d22df6ca0cceaeefac63fedb831cdea034ccdf4ab",
+    "jplag_similarity.py": "ae940dd55801295172740ca80f8a0c162a08e6b60e336867f0cd9a31226814da",
+    "extract.py": "34dcbffbf4e16dd8b610389374044f280e87ac2503dba8b8b2aa60c4db92f60a",
+    "scripts/prepare_v16_corpus.py": "458ffc918f57240b6daf900b2af375f4b5e81ba1bc5653d94c4cf7d00c9fd8f3",
+    "scripts/validate_v16_corpus.py": "2746e301b599313ddc5cd12cbec04f9264c3b13d4e04d1379ecbe06ecada4f89",
+    "problem/metadata/ipop19/tools/oracles.py": "d86c63c3b14339c342aa71496bb645592e2c7af2187a145e3b0ea8a2a6ac4c7c",
+    "problem/metadata/leetcode21/tools/oracles.py": "1fa179aa0d4c59abb6e09d132a89aba7d402b3b05ba7a60b9b1f3c238a9a5967"
+  },
+  "prompt_version": "hops.translation.v1.6",
+  "system_prompt": "Translate the supplied program to the requested language, preserving its complete stdin/stdout behavior for every valid input in the specification. Return exactly one complete source file in one fenced code block, with no explanation. Use only the standard libraries shipped with the specified toolchain. C++: C++17 with main(). Haskell: GHC, module Main and main :: IO (). Prolog: SWI-Prolog, define main/0; the evaluator invokes main; do not add initialization directives. Python: Python 3, one script that reads stdin and writes stdout. Java: Java 17, one file declaring public class Main with public static void main. Preserve required algorithmic constraints and output ordering. Do not hard-code examples.",
+  "stop_rules": {
+    "max_hops": 10,
+    "confirmation_roundtrips": 1,
+    "threshold": 0.85,
+    "thresholds": [
+      0.8,
+      0.85,
+      0.9
+    ],
+    "observation_wall_seconds": 900,
+    "confirmation_wall_seconds": 300
+  },
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_missing_reason": "server_not_reported",
+  "hashes": {
+    "code": "c4b2f3fd97a6967d49edb7eb6673639deebf0b89921820f473e693bf62793358",
+    "aggregator": "5a6b112bf66e6c89a6b24116bb05e770e4cd229aac70d30321cb0a0ec38aec29",
+    "prompt": "e27b6a66cbded59d8ab350d7ce3f1d62e2f9fb8f938d023b6031124ce1219932",
+    "data": "14d58d1ba46975fc61791f1076f38a063457bb984ae03f1ff402be72c9ccb736",
+    "tools": "5f69344179722c045ce78a8e3315046c2577dd0e3c472c9686ac353f75c51511",
+    "provider": "b7948a19209525ae560c9b8550e425c63d47f7bdc5d0861ed950280573e7c797",
+    "generation": "fbba09950718b78810348cf0f069dac8e628d264f017256a8e145d8d9f6b1f37",
+    "stop_rules": "0f5a197eb32e1708fabd91ca744cd40c532794a0d6a875f00bcb942356c66e5c"
+  },
+  "dependency_hashes": {
+    "pyproject.toml": "b48b7c5a1811df70be81d9db48d09b8a7cb475f460741b019846d89b8c3d840e",
+    "uv.lock": "9e0b3e18d8ddb402d6fae9f96379a8d14ead1c8ff4df6403e10095986967dc9f"
+  },
+  "contract_hash": "f58bacbd4fe871acff85c06e8f0d92e5e720911a8bdd12a8d068ea910b82c52f"
+}

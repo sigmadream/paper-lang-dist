@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nsolve :: [String] -> Int -> Int -> Int -> String\nsolve grid r c size =\n  let first = (grid !! r) !! c\n      same = all (\\(i, j) -> (grid !! i) !! j == first)\n                  [(i, j) | i <- [r .. r + size - 1], j <- [c .. c + size - 1]]\n  in if same\n       then [first]\n       else\n         let half = size `div` 2\n             tl = solve grid r c half\n             tr = solve grid r (c + half) half\n             bl = solve grid (r + half) c half\n             br = solve grid (r + half) (c + half) half\n         in \"(\" ++ tl ++ tr ++ bl ++ br ++ \")\"\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (nStr : rest) -> do\n      let n = read nStr\n          grid = take n rest\n      putStrLn (solve grid 0 0 n)\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 765,
+    "total_tokens": 1424,
+    "completion_tokens": 659,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 405
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 765,
+    "total_tokens": 1424,
+    "completion_tokens": 659,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 405
+    }
+  },
+  "cost_usd": 0.0010203,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-6d7668e1e7846d529212bc9330ba68f3",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_1992\\cpp-via-haskell\\attempt-04\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-6d7668e1e7846d529212bc9330ba68f3",
+    "object": "chat.completion",
+    "created": 1794986476,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nsolve :: [String] -> Int -> Int -> Int -> String\nsolve grid r c size =\n  let first = (grid !! r) !! c\n      same = all (\\(i, j) -> (grid !! i) !! j == first)\n                  [(i, j) | i <- [r .. r + size - 1], j <- [c .. c + size - 1]]\n  in if same\n       then [first]\n       else\n         let half = size `div` 2\n             tl = solve grid r c half\n             tr = solve grid r (c + half) half\n             bl = solve grid (r + half) c half\n             br = solve grid (r + half) (c + half) half\n         in \"(\" ++ tl ++ tr ++ bl ++ br ++ \")\"\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (nStr : rest) -> do\n      let n = read nStr\n          grid = take n rest\n      putStrLn (solve grid 0 0 n)\n```",
+          "reasoning_content": "We need answer exactly one fenced code block Haskell. Need translate. Need ensure stdin behavior valid. Implement main reads N and grid, recursive solve. Need performance N<=64. Haskell simple.\n\nNeed output newline. Could use interact? Need parse lines. Input format first line N, then N lines strings no spaces. Handle maybe whitespace. Use getContents, lines, drop? If leading blank? valid no. Could read all tokens words? Grid lines consist 0/1 no spaces, so words works. first token N, then N strings. Use words content. But if N=... fine. Implement.\n\nPotential import Data.List? For accessing string indexed. Recursive with list of strings. Could use Vector? Simple. Since N <=64, String indexing O(N) but tiny. Use grid :: [String], !!. Need syntax.\n\nsolve :: [String] -> Int -> Int -> Int -> String\nsolve grid r c size =\n let first = (grid !! r) !! c\n     same = all (\\(i,j)-> (grid!!i)!!j == first) [(i,j)| i<-..., j<-...]\n in if same then [first] else \"(\" ++ solve ... ++ \")\" etc.\n\nCould avoid list comprehensions with all over range. Fine.\n\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of [] -> return (); (nStr:rest) -> do\n    let n = read nStr\n        grid = take n rest\n        ans = solve grid 0 0 n\n    putStrLn ans\n\nValid input. Need exactly one source file fenced.\n\nEnsure line `putStrLn ans` adds newline. Good.\n\nCould optimize same check. Fine.\n\nNeed preserve behavior if no input? C++ returns nothing. Haskell [] returns. Good.\n\nNeed only code no explanation. Use module Main where, main :: IO (). Fenced haskell.\n\nLet's final."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 765,
+      "total_tokens": 1424,
+      "completion_tokens": 659,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 405
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 6.911385099985637,
+  "received_at": "2026-11-18T07:21:20.786170+00:00",
+  "logical_request_id": "62c2481940f24061a8e36a2ecde6b82781f01bf455ccc691ac98e225c42d9834",
+  "execution_class": "direct_api"
+}

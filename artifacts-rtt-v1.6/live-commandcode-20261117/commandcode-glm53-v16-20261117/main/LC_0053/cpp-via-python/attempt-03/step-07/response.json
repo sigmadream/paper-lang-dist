@@ -1,0 +1,94 @@
+{
+  "text": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    n = int(data[0])\n    a = list(map(int, data[1:1+n]))\n    cur = best = a[0]\n    for i in range(1, n):\n        cur = max(a[i], cur + a[i])\n        best = max(best, cur)\n    print(best)\n\nmain()\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 96,
+    "prompt_tokens": 522,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 618
+  },
+  "usage_raw": {
+    "completion_tokens": 96,
+    "prompt_tokens": 522,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 618
+  },
+  "cost_usd": 0.00071544,
+  "cost_source": "estimated",
+  "request_id": "c8a44524-1f45-4aa7-a9e1-eaab36877809",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0053\\cpp-via-python\\attempt-03\\step-07\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    n = int(data[0])\n    a = list(map(int, data[1:1+n]))\n    cur = best = a[0]\n    for i in range(1, n):\n        cur = max(a[i], cur + a[i])\n        best = max(best, cur)\n    print(best)\n\nmain()\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794896516,
+    "id": "c8a44524-1f45-4aa7-a9e1-eaab36877809",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 96,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_8e3e505609b640a79f916f4f43cfd58d",
+      "trace_id": "5e12c86d11054dc899baa7d0e9072ee0"
+    },
+    "usage": {
+      "completion_tokens": 96,
+      "prompt_tokens": 522,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 618
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.0469904000055976,
+  "received_at": "2026-11-17T06:21:56.015217+00:00",
+  "logical_request_id": "f3e087d947dddb3c63a71491e9efdb6471faa5fdb3904133aca7f8566a990809",
+  "execution_class": "direct_api"
+}

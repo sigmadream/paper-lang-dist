@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    vector<string> data;\n    string token;\n    while (cin >> token) data.push_back(token);\n\n    if (data.empty()) return 0;\n\n    int t = stoi(data[0]);\n    vector<string> answers;\n\n    for (int i = 1; i <= t; ++i) {\n        const string& s = data[i];\n        int balance = 0;\n        bool valid = true;\n\n        for (char ch : s) {\n            if (ch == '(') ++balance;\n            else --balance;\n\n            if (balance < 0) {\n                valid = false;\n                break;\n            }\n        }\n\n        if (balance != 0) valid = false;\n\n        answers.push_back(valid ? \"YES\" : \"NO\");\n    }\n\n    for (size_t i = 0; i < answers.size(); ++i) {\n        if (i) cout << '\\n';\n        cout << answers[i];\n    }\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 609,
+    "total_tokens": 963,
+    "completion_tokens": 354,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 117
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 609,
+    "total_tokens": 963,
+    "completion_tokens": 354,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 117
+    }
+  },
+  "cost_usd": 0.000494604,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-fa7eb936ca33303d768126ed0270182a",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-python\\attempt-01\\step-08\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-fa7eb936ca33303d768126ed0270182a",
+    "object": "chat.completion",
+    "created": 1794987980,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    vector<string> data;\n    string token;\n    while (cin >> token) data.push_back(token);\n\n    if (data.empty()) return 0;\n\n    int t = stoi(data[0]);\n    vector<string> answers;\n\n    for (int i = 1; i <= t; ++i) {\n        const string& s = data[i];\n        int balance = 0;\n        bool valid = true;\n\n        for (char ch : s) {\n            if (ch == '(') ++balance;\n            else --balance;\n\n            if (balance < 0) {\n                valid = false;\n                break;\n            }\n        }\n\n        if (balance != 0) valid = false;\n\n        answers.push_back(valid ? \"YES\" : \"NO\");\n    }\n\n    for (size_t i = 0; i < answers.size(); ++i) {\n        if (i) cout << '\\n';\n        cout << answers[i];\n    }\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need translate Python to C++17. Need preserve behavior. Read T then T strings. Output YES/NO lines. Note source writes join without trailing newline. We can match: output lines with newline between, no trailing maybe. Usually accepted. Let's produce exact behavior: read all tokens, if empty return. t = stoi, loop. Print with \"\\n\" between, no trailing newline? Use vector and join or print conditionally. I'll output no trailing newline matching. Include bits/stdc++.h, main.\n\nNeed fenced code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 609,
+      "total_tokens": 963,
+      "completion_tokens": 354,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 117
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.510335800005123,
+  "received_at": "2026-11-18T07:46:21.903165+00:00",
+  "logical_request_id": "234cedae9d6f44d6e48f309b8d03dd22568bbd1fa77d63118904b911ae96148d",
+  "execution_class": "direct_api"
+}

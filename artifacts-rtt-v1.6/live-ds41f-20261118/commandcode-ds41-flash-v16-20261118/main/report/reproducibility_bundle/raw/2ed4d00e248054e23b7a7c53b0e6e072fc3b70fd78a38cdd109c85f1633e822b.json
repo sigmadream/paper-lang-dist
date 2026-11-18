@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    cin >> n;\n    vector<int> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int write = 0;\n    for (int read = 0; read < n; read++) {\n        if (a[read] != 0) {\n            int t = a[write];\n            a[write] = a[read];\n            a[read] = t;\n            write++;\n        }\n    }\n\n    for (int i = 0; i < n; i++) {\n        if (i > 0) cout << ' ';\n        cout << a[i];\n    }\n    cout << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block cpp. Need translate. Ensure preserve behavior. Simple. Need maybe if n? constraint >=1. Use iostream vector. Output spaces newline. Exactly source. No explanation. Must return one complete source file fenced code block. Use C++17 main.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794997529,
+    "id": "chatcmpl-d897e99d54045fb61bd8b73386557c98",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 251,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 652,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 903
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0004967999999999999,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.607042899937369,
+  "logical_request_id": "b4763cdd96c4b10bfcdbc355eda99f49652231bd2e813a689e9ef36196ca8b1f",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-java\\attempt-05\\step-02\\response_body.txt",
+  "received_at": "2026-11-18T10:25:31.004561+00:00",
+  "request_id": "chatcmpl-d897e99d54045fb61bd8b73386557c98",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    cin >> n;\n    vector<int> a(n);\n    for (int i = 0; i < n; i++) {\n        cin >> a[i];\n    }\n\n    int write = 0;\n    for (int read = 0; read < n; read++) {\n        if (a[read] != 0) {\n            int t = a[write];\n            a[write] = a[read];\n            a[read] = t;\n            write++;\n        }\n    }\n\n    for (int i = 0; i < n; i++) {\n        if (i > 0) cout << ' ';\n        cout << a[i];\n    }\n    cout << '\\n';\n\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 251,
+    "completion_tokens_details": {
+      "reasoning_tokens": 60
+    },
+    "prompt_tokens": 652,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 903
+  },
+  "usage_raw": {
+    "completion_tokens": 251,
+    "completion_tokens_details": {
+      "reasoning_tokens": 60
+    },
+    "prompt_tokens": 652,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 903
+  }
+}

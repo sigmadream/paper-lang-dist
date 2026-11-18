@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let [a, b] = map read (words input) :: [Integer]\n    print (gcd a b)\n    print (lcm a b)\n```",
+          "reasoning_content": "We need answer exactly one fenced code block, Haskell. Need translate. Preserve stdin behavior. main reads two ints, outputs gcd and lcm each line. Use Prelude gcd, lcm. Note lcm in Haskell handles positive. Need robust reading. EOF? If invalid? Source returns 0 if can't read. Haskell can read words maybe. Specification valid input two naturals. Just read. Must output. We can define gcd? Use Prelude. Avoid conflict? main = do input <- getContents; let [a,b] = map read (words input) :: [Integer]; print (gcd a b); print (lcm a b). print adds newline, exactly two lines. But print no trailing? print adds newline. Fine. Use Int or Integer. Values small. Exactly one source file module Main where main :: IO (). Need no explanation. Fenced code block.\n\nPotential issue lazy pattern if extra whitespace. Valid. We can use case. Fine.\n\nNeed comply \"Return exactly one complete source file in one fenced code block\". final only block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794998333,
+    "id": "chatcmpl-dd68563f366c039b4adb03fde3a190f5",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 280,
+      "completion_tokens_details": {
+        "reasoning_tokens": 222
+      },
+      "prompt_tokens": 488,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 768
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00048239999999999996,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.394364400068298,
+  "logical_request_id": "31ccfb6a1f36f3d1162fcbcfe7f279fc92bd71ff4202f3c0262d52bc73c08a04",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2609\\cpp-via-haskell\\attempt-02\\step-01\\response_body.txt",
+  "received_at": "2026-11-18T10:38:55.539085+00:00",
+  "request_id": "chatcmpl-dd68563f366c039b4adb03fde3a190f5",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let [a, b] = map read (words input) :: [Integer]\n    print (gcd a b)\n    print (lcm a b)\n```",
+  "usage": {
+    "completion_tokens": 280,
+    "completion_tokens_details": {
+      "reasoning_tokens": 222
+    },
+    "prompt_tokens": 488,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 768
+  },
+  "usage_raw": {
+    "completion_tokens": 280,
+    "completion_tokens_details": {
+      "reasoning_tokens": 222
+    },
+    "prompt_tokens": 488,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 768
+  }
+}

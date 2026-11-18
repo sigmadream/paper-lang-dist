@@ -1,0 +1,107 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Control.Monad (forM_)\nimport Text.Read (readMaybe)\n\nisBalanced :: String -> Bool\nisBalanced = go 0\n  where\n    go bal [] = bal == 0\n    go bal ('(':xs) = go (bal + 1) xs\n    go bal (')':xs)\n      | bal > 0 = go (bal - 1) xs\n      | otherwise = False\n    go _ _ = False\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    (tStr:rest) ->\n      case readMaybe tStr :: Maybe Int of\n        Just t ->\n          mapM_ putStrLn\n            [ if isBalanced s then \"YES\" else \"NO\"\n            | s <- take t rest\n            ]\n        Nothing -> return ()\n    [] -> return ()\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4-pro",
+  "actual_model": "deepseek/deepseek-v4-pro",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4-pro",
+    "actual": "deepseek/deepseek-v4-pro",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 670,
+    "completion_tokens": 870,
+    "total_tokens": 1540,
+    "prompt_tokens_details": {
+      "cached_tokens": 512,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 668,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "usage_raw": {
+    "prompt_tokens": 670,
+    "completion_tokens": 870,
+    "total_tokens": 1540,
+    "prompt_tokens_details": {
+      "cached_tokens": 512,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 668,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "cost_usd": 0.003676288,
+  "cost_source": "estimated",
+  "request_id": "gen_01M7P7A945D9J23C6E6VMBNAVZ",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-deepseek-20261118\\commandcode-deepseek_v4_pro-v16-20261118\\main\\IPOP_9012\\cpp-via-haskell\\attempt-02\\step-07\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "gen_01M7P7A945D9J23C6E6VMBNAVZ",
+    "object": "chat.completion",
+    "created": 1794968474,
+    "model": "deepseek/deepseek-v4-pro",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Control.Monad (forM_)\nimport Text.Read (readMaybe)\n\nisBalanced :: String -> Bool\nisBalanced = go 0\n  where\n    go bal [] = bal == 0\n    go bal ('(':xs) = go (bal + 1) xs\n    go bal (')':xs)\n      | bal > 0 = go (bal - 1) xs\n      | otherwise = False\n    go _ _ = False\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    (tStr:rest) ->\n      case readMaybe tStr :: Maybe Int of\n        Just t ->\n          mapM_ putStrLn\n            [ if isBalanced s then \"YES\" else \"NO\"\n            | s <- take t rest\n            ]\n        Nothing -> return ()\n    [] -> return ()\n```",
+          "reasoning": "We need answer with Haskell code only in fenced block, no explanation. Need translate C++ program to Haskell preserving complete stdin/stdout behavior. Need module Main and main :: IO (). Use standard libs. Input: first line positive integer T, then T lines parentheses strings length 2..50. Output YES/NO each.\n\nC++ reads tStr token via cin >> tStr (skips whitespace). It tries parse int fully. Then for i<T reads strings via cin >> s (skips whitespace, reads token). So strings are tokens, no spaces. Haskell need replicate behavior: read all stdin, maybe parse lines? But C++ cin >> token reads any whitespace-separated tokens. Input spec says first line T, then each string on separate lines, but if extra spaces? We should preserve valid input behavior: token-based. Haskell can read stdin with getContents, words, parse first token as integer. Then take T tokens and process. Need output each result line. If invalid integer return without output? C++ returns 0 no output. But spec valid input positive integer, so okay. Need handle if fewer tokens than T; C++ reads until break then returns 0. Haskell can map over take T tokens after parse. If parse fails, output nothing. Need preserve error behavior for invalid? Not required. Use readMaybe from Text.Read maybe. Could use reads. We'll implement.\n\nNeed isBalanced over String, char '(' and ')' only. Function: loop with balance int. For each char: if '(' increment; if ')' then if bal>0 decrement else return false; else false. Return bal==0.\n\nNeed choose exact code. Use main :: IO (). Could do:\n\nimport Control.Monad (forM_)\nimport Text.Read (readMaybe)\n\nisBalanced :: String -> Bool\nisBalanced = go 0\n  where\n    go bal [] = bal == 0\n    go bal ('(':xs) = go (bal+1) xs\n    go bal (')':xs)\n      | bal > 0 = go (bal-1) xs\n      | otherwise = False\n    go _ _ = False\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    (tStr:rest) -> case readMaybe tStr :: Maybe Int of\n      Just t -> mapM_ putStrLn [if isBalanced s then \"YES\" else \"NO\" | s <- take t rest]\n      Nothing -> return ()\n    [] -> return ()\n\nThis handles all. Need ensure if t is negative? C++ T reads int, could be negative but spec positive. If negative, take negative yields empty list. That's okay. C++ for i=0; i<T; ++i; if T negative zero iterations. Good.\n\nPotential issue: Haskell's words splits on whitespace, same as cin >> token. If input contains empty line, okay. Output exactly. Need ensure line buffering? putStrLn fine. But if no newline after last? putStrLn adds newline. C++ outputs newline. Good.\n\nWe need only code block. Use Haskell fenced code.",
+          "reasoning_details": [
+            {
+              "type": "reasoning.text",
+              "text": "We need answer with Haskell code only in fenced block, no explanation. Need translate C++ program to Haskell preserving complete stdin/stdout behavior. Need module Main and main :: IO (). Use standard libs. Input: first line positive integer T, then T lines parentheses strings length 2..50. Output YES/NO each.\n\nC++ reads tStr token via cin >> tStr (skips whitespace). It tries parse int fully. Then for i<T reads strings via cin >> s (skips whitespace, reads token). So strings are tokens, no spaces. Haskell need replicate behavior: read all stdin, maybe parse lines? But C++ cin >> token reads any whitespace-separated tokens. Input spec says first line T, then each string on separate lines, but if extra spaces? We should preserve valid input behavior: token-based. Haskell can read stdin with getContents, words, parse first token as integer. Then take T tokens and process. Need output each result line. If invalid integer return without output? C++ returns 0 no output. But spec valid input positive integer, so okay. Need handle if fewer tokens than T; C++ reads until break then returns 0. Haskell can map over take T tokens after parse. If parse fails, output nothing. Need preserve error behavior for invalid? Not required. Use readMaybe from Text.Read maybe. Could use reads. We'll implement.\n\nNeed isBalanced over String, char '(' and ')' only. Function: loop with balance int. For each char: if '(' increment; if ')' then if bal>0 decrement else return false; else false. Return bal==0.\n\nNeed choose exact code. Use main :: IO (). Could do:\n\nimport Control.Monad (forM_)\nimport Text.Read (readMaybe)\n\nisBalanced :: String -> Bool\nisBalanced = go 0\n  where\n    go bal [] = bal == 0\n    go bal ('(':xs) = go (bal+1) xs\n    go bal (')':xs)\n      | bal > 0 = go (bal-1) xs\n      | otherwise = False\n    go _ _ = False\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    (tStr:rest) -> case readMaybe tStr :: Maybe Int of\n      Just t -> mapM_ putStrLn [if isBalanced s then \"YES\" else \"NO\" | s <- take t rest]\n      Nothing -> return ()\n    [] -> return ()\n\nThis handles all. Need ensure if t is negative? C++ T reads int, could be negative but spec positive. If negative, take negative yields empty list. That's okay. C++ for i=0; i<T; ++i; if T negative zero iterations. Good.\n\nPotential issue: Haskell's words splits on whitespace, same as cin >> token. If input contains empty line, okay. Output exactly. Need ensure line buffering? putStrLn fine. But if no newline after last? putStrLn adds newline. C++ outputs newline. Good.\n\nWe need only code block. Use Haskell fenced code.",
+              "format": "unknown",
+              "index": 0
+            }
+          ]
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 670,
+      "completion_tokens": 870,
+      "total_tokens": 1540,
+      "prompt_tokens_details": {
+        "cached_tokens": 512,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 668,
+        "image_tokens": 0
+      },
+      "cache_creation_input_tokens": 0
+    },
+    "system_fingerprint": "fp_5cod3khkuw"
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 12.98768200003542,
+  "received_at": "2026-11-18T02:21:13.957430+00:00",
+  "logical_request_id": "328187dde011ce342f06f103e167d867b1be01a4573ca577e6ed4cf185f04545",
+  "execution_class": "direct_api"
+}

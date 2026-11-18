@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int m, n;\n    if (!(std::cin >> m >> n)) return 0;\n\n    std::vector<char> is_prime(n + 1, 1);\n    if (n >= 0) is_prime[0] = 0;\n    if (n >= 1) is_prime[1] = 0;\n\n    for (int i = 2; i <= n / i; ++i) {\n        if (is_prime[i]) {\n            for (long long j = 1LL * i * i; j <= n; j += i) {\n                is_prime[static_cast<int>(j)] = 0;\n            }\n        }\n    }\n\n    for (int x = m; x <= n; ++x) {\n        if (is_prime[x]) {\n            std::cout << x << '\\n';\n        }\n    }\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 586,
+    "total_tokens": 1042,
+    "completion_tokens": 456,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 234
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 586,
+    "total_tokens": 1042,
+    "completion_tokens": 456,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 234
+    }
+  },
+  "cost_usd": 0.0007229999999999999,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-6d4b6d6e054e64d734b9411674eb87b7",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_1929\\cpp-via-python\\attempt-04\\step-04\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-6d4b6d6e054e64d734b9411674eb87b7",
+    "object": "chat.completion",
+    "created": 1794986437,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int m, n;\n    if (!(std::cin >> m >> n)) return 0;\n\n    std::vector<char> is_prime(n + 1, 1);\n    if (n >= 0) is_prime[0] = 0;\n    if (n >= 1) is_prime[1] = 0;\n\n    for (int i = 2; i <= n / i; ++i) {\n        if (is_prime[i]) {\n            for (long long j = 1LL * i * i; j <= n; j += i) {\n                is_prime[static_cast<int>(j)] = 0;\n            }\n        }\n    }\n\n    for (int x = m; x <= n; ++x) {\n        if (is_prime[x]) {\n            std::cout << x << '\\n';\n        }\n    }\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block cpp. Need translate. Need consider M,N up to 1e6. Use sieve vector<bool/char>. Output ascending newline. Preserve valid input. Need exactly one complete source file fenced. No explanation. Implement main. Use iostream fast io. Edge M=1,N maybe. Sieve to n. Then loop m..n print if prime. Use bool char vector, set 0,1 false. for i=2;i*i<=n. Then output. Need final newline after each. Could use ostringstream for speed. Return. C++17.\n\nNeed note source does is_prime[0], [1], n>=1. vector<char> size n+1. If n>=1 yes. Fill 1. Set 0/1 false. For i <= n/i. if prime. for j=i*i j<=n j+=i false. Output. If no data? Spec valid. Could handle. Use ios. Print using std::cout with \"\\n\". For up to 1e6 fine. Maybe fast iostream.\n\nFinal exactly fenced code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 586,
+      "total_tokens": 1042,
+      "completion_tokens": 456,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 234
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 5.680851099896245,
+  "received_at": "2026-11-18T07:20:39.727077+00:00",
+  "logical_request_id": "45c26ccbba84cd309f604bd9e282697fb42adefde2714ae72adfc2dcb5f30c02",
+  "execution_class": "direct_api"
+}

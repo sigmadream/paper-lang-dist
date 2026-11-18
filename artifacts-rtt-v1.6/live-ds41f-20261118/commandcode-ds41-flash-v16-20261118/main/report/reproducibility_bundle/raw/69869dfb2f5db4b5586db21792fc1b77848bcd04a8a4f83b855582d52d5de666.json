@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```prolog\nmy_gcd(A, 0, A) :-\n    A > 0.\nmy_gcd(A, B, G) :-\n    B > 0,\n    R is A mod B,\n    my_gcd(B, R, G).\n\nmain :-\n    read(A),\n    read(B),\n    my_gcd(A, B, G),\n    L is (A // G) * B,\n    format('~w~n~w~n', [G, L]).\n```",
+          "reasoning_content": "We need answer exactly one complete source file in fenced code block, no explanation. Need translate to Prolog SWI-Prolog define main/0, evaluator invokes main; no initialization directives. Need preserve stdin/stdout. Read A B from stdin, compute gcd lcm, output two lines. Need handle valid input only. Need not hardcode.\n\nNeed produce Prolog code. main/0. Read line, split? Use read? Input \"24 18\\n\". Using read_term? Simple read(A), read(B) works if whitespace separated, read/1 reads terms. Yes SWI read/1 reads next term from stdin. main :- read(A), read(B), gcd(A,B,G), L is (A // G) * B, writeln(G), writeln(L). Need handle EOF? valid input always. Could include catch? But fine. Need ensure module Main? Spec says Prolog SWI-Prolog define main/0; evaluator invokes main. It doesn't explicitly require module Main unlike Haskell. We can define main. No initialization directives. Use gcd built-in? SWI has gcd/3? In SWI-Prolog, arithmetic function gcd? There is gcd/3? Actually SWI-Prolog library? Let's be safe implement own gcd using Euclidean algorithm. Or use arithmetic gcd/2? SWI has gcd/2? I recall SWI-Prolog has gcd/2 as built-in? There's `gcd(+Int1, +Int2, -Gcd)`? In SWI, `gcd/3`? Let's verify: SWI-Prolog arithmetic functions include `gcd/2`? I know `lcm/2`? In SWI, `gcd(+Int, +Int)` maybe? Hmm. To be safe implement recursive gcd.\n\nDefine gcd(A,0,A) :- A > 0. gcd(A,B,G) :- B > 0, R is A mod B, gcd(B,R,G). Actually base gcd(A,0,A). For positive ints.\n\nmain :-\n    read(A),\n    read(B),\n    gcd(A,B,G),\n    L is (A // G) * B,\n    format('~w~n~w~n', [G,L]).\n\nNeed careful: read(A), read(B) reads terms. If input contains \"24 18\\n\", first read(24), second read(18). Good.\n\nNo initialization directives. Return fenced code block. Maybe `:-` directives? None needed. Could include `main.`? No just main predicate.\n\nNeed ensure no extra. Use `write(G), nl, write(L), nl.` or format. format is standard. Good.\n\nPotential issue: SWI-Prolog `read/1` reads a Prolog term, for numbers okay. If input has newline no problem. Valid input only. If there are multiple lines? fine.\n\nNeed define gcd/3 maybe name conflict with built-in? Use my_gcd to avoid. Code:\n\nmy_gcd(A, 0, A) :- A > 0.\nmy_gcd(A, B, G) :-\n    B > 0,\n    R is A mod B,\n    my_gcd(B, R, G).\n\nmain :-\n    read(A),\n    read(B),\n    my_gcd(A, B, G),\n    L is (A // G) * B,\n    format('~w~n~w~n', [G, L]).\n\nmain :- true? no. Just main.\n\nNeed maybe if gcd(A,0,A) fails if A=0 but A positive. Fine.\n\nAnswer only code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794987823,
+    "id": "chatcmpl-0c211b33a7e4a111bca3a73a90abbc41",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 861,
+      "completion_tokens_details": {
+        "reasoning_tokens": 752
+      },
+      "prompt_tokens": 445,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 1306
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.001053804,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 5.639218999887817,
+  "logical_request_id": "7b2da97a41dea144f740ab09ef02940f0d8173bb5324e055deca64780bc41aa7",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2609\\cpp-via-prolog\\attempt-05\\step-03\\response_body.txt",
+  "received_at": "2026-11-18T07:43:46.847660+00:00",
+  "request_id": "chatcmpl-0c211b33a7e4a111bca3a73a90abbc41",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```prolog\nmy_gcd(A, 0, A) :-\n    A > 0.\nmy_gcd(A, B, G) :-\n    B > 0,\n    R is A mod B,\n    my_gcd(B, R, G).\n\nmain :-\n    read(A),\n    read(B),\n    my_gcd(A, B, G),\n    L is (A // G) * B,\n    format('~w~n~w~n', [G, L]).\n```",
+  "usage": {
+    "completion_tokens": 861,
+    "completion_tokens_details": {
+      "reasoning_tokens": 752
+    },
+    "prompt_tokens": 445,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1306
+  },
+  "usage_raw": {
+    "completion_tokens": 861,
+    "completion_tokens_details": {
+      "reasoning_tokens": 752
+    },
+    "prompt_tokens": 445,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1306
+  }
+}

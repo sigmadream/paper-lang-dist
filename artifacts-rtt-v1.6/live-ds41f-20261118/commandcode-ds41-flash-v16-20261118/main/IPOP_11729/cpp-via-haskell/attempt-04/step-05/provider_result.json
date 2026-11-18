@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport System.IO\n\nhanoi :: Int -> Int -> Int -> Int -> IO ()\nhanoi 0 _ _ _ = pure ()\nhanoi n from via to = do\n    hanoi (n - 1) from to via\n    putStrLn (show from ++ \" \" ++ show to)\n    hanoi (n - 1) via from to\n\nmain :: IO ()\nmain = do\n    hSetBuffering stdout (BlockBuffering Nothing)\n    contents <- getContents\n    let n = read (head (words contents)) :: Int\n        moves = (2 ^ n - 1) :: Int\n    print moves\n    hanoi n 1 2 3\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 617,
+    "total_tokens": 1696,
+    "completion_tokens": 1079,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 923
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 617,
+    "total_tokens": 1696,
+    "completion_tokens": 1079,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 923
+    }
+  },
+  "cost_usd": 0.0014799,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-b1d064c06d54ef771fda3a6ce7992c56",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_11729\\cpp-via-haskell\\attempt-04\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-b1d064c06d54ef771fda3a6ce7992c56",
+    "object": "chat.completion",
+    "created": 1794992585,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport System.IO\n\nhanoi :: Int -> Int -> Int -> Int -> IO ()\nhanoi 0 _ _ _ = pure ()\nhanoi n from via to = do\n    hanoi (n - 1) from to via\n    putStrLn (show from ++ \" \" ++ show to)\n    hanoi (n - 1) via from to\n\nmain :: IO ()\nmain = do\n    hSetBuffering stdout (BlockBuffering Nothing)\n    contents <- getContents\n    let n = read (head (words contents)) :: Int\n        moves = (2 ^ n - 1) :: Int\n    print moves\n    hanoi n 1 2 3\n```",
+          "reasoning_content": "We need answer exactly one fenced code block Haskell. Need translate. Need preserve stdin/stdout for N 1..20. Need output moves order same. Performance: up to 2^20-1 ~1,048,575 lines, Haskell lazy IO can handle. Need main. We can implement hanoi generating strings recursively, output count then unlines? Need efficient. Using putStr for count and then hanoi output. Naive recursive putStrLn per move ~1M okay, but could be slow? Haskell GHC fine maybe. Need avoid hardcode.\n\nImplement:\nmodule Main where\nimport System.IO\nimport Control.Monad\n\nhanoi :: Int -> Int -> Int -> Int -> IO ()\nhanoi 0 _ _ _ = return ()\nhanoi n from via to = do\n  hanoi (n-1) from to via\n  putStrLn (show from ++ \" \" ++ show to)\n  hanoi (n-1) via from to\n\nmain = do\n  input <- getLine\n  let n = read input :: Int\n  putStrLn (show ((1 :: Integer) `shiftL` n - 1)) -- need Data.Bits or use (2^n -1). Integer exponent: 2 ^ n - 1. n<=20 no issue, Int.\n  hanoi n 1 2 3\n\nNeed handle possibly whitespace, if no input? C++ if cin>>n only. Spec valid. Using getLine for \"3\\n\". Could use getContents, reads all. If empty? Not valid. We can robust:\nmain = do\n s <- getContents\n let n = read (head (words s)) :: Int\n ...\nBut lazy. Fine.\nNeed import Control.Monad? not needed.\nOutput count Int: (2^n -1) :: Int. n up to20. show (2^n - 1). In Haskell precedence: 2^n -1. Need type annotation. let moves = (2 ^ n - 1) :: Int. But ^ for Int works.\n\nPotential performance of putStrLn many calls maybe 1M; okay but can be slower. We can use hPutStr stdout? Let's craft efficient enough. Using mapM_ maybe. Recursive IO.\n\nNeed ensure output exactly same. Example matches.\n\nCould improve by building string using show and unlines? 1M strings memory huge ~ maybe 8-16 MB? Actually ~20MB, okay, but recursion concatenation lazy. We can use Builder not std. Use putStr with unlines [show f ++ \" \" ++ show t | generated] might build list 1M. Still fine. But recursive putStrLn is okay.\n\nPotential issue Haskell default buffering: putStrLn to stdout line buffered if terminal, block if pipe. 1M lines, okay. Can set hSetBuffering stdout (BlockBuffering Nothing) for performance. Need import System.IO.\n\nFinal source:\nmodule Main where\nimport System.IO\n\nhanoi :: Int -> Int -> Int -> Int -> IO ()\nhanoi 0 _ _ _ = pure ()\nhanoi n from via to = do\n  hanoi (n - 1) from to via\n  putStrLn (show from ++ \" \" ++ show to)\n  hanoi (n - 1) via from to\n\nmain :: IO ()\nmain = do\n  hSetBuffering stdout (BlockBuffering Nothing)\n  contents <- getContents\n  let n = read (head (words contents)) :: Int\n      moves = (2 ^ n - 1) :: Int\n  print moves\n  hanoi n 1 2 3\n\nNeed if N=0? constraint 1. If empty, head error but valid. print moves outputs newline. Good.\n\nWait C++ outputs count with '\\n', then moves. print moves same.\n\nUse \"from\" reserved? In Haskell, from not reserved? It is not keyword. via fine. \"to\" not reserved? to is not keyword. Fine. But function parameters named from? Haskell keywords include case, class, data, default, deriving, do, else, if, import, in, infix, infixl, infixr, instance, let, module, newtype, of, then, type, where, _ . \"from\" is an identifier. Good.\n\nNeed exactly one complete source file in fenced code block no explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 617,
+      "total_tokens": 1696,
+      "completion_tokens": 1079,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 923
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 8.137675000005402,
+  "received_at": "2026-11-18T09:03:12.261146+00:00",
+  "logical_request_id": "281de411b174e775249a43bc3aead1044d82487392cc7daf634e62aac56cd36b",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,452 @@
+{
+  "source": "#include <iostream>\n#include <string>\n#include <algorithm>\n\nint main() {\n    std::string s;\n    if (std::cin >> s) {\n        std::string r = s;\n        std::reverse(r.begin(), r.end());\n        std::cout << (s == r ? \"1\" : \"0\") << '\\n';\n    }\n    return 0;\n}",
+  "evaluation_status": "success",
+  "sym_adj": 0.0,
+  "sym_origin": 0.0,
+  "sym_status": "measured",
+  "timing": {
+    "elapsed_seconds": 36.206549199996516,
+    "confirmation_seconds": 0,
+    "checkpoint_monotonic": 611197.7306423,
+    "active_kind": "discovery",
+    "stage": "sym_origin",
+    "deadline_reason": null
+  },
+  "deadline_reason": null,
+  "accepted_within_deadline": true,
+  "source_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\source.cpp",
+  "evaluation": {
+    "contract": {
+      "source": "255abf66f54116fe7b6379785bdd38dc37c4bcde7d149d0bd2df2c9b3bb891da",
+      "language": "cpp",
+      "runtime": {
+        "tools": {
+          "cpp": "C:\\Users\\sigma\\scoop\\apps\\perl\\5.42.3.1\\c\\bin\\g++.exe",
+          "python": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+          "java": "C:\\Users\\sigma\\scoop\\apps\\openjdk\\current\\bin\\javac.EXE",
+          "haskell": "C:\\Users\\sigma\\scoop\\apps\\ghcup\\current\\ghcup\\bin\\ghc.EXE",
+          "prolog": "C:\\Users\\sigma\\scoop\\shims\\swipl.EXE"
+        },
+        "compile_timeout": 180,
+        "fixture_timeout": 5,
+        "minimum_evaluation_cases": 13
+      },
+      "inputs": {
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case01.inp": "8e4621379786ef42a4fec155cd525c291dd7db3c1fde3478522f4f61c03fd1bd",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case01.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case02.inp": "9ac2812ddcc8c533691aaee6e4b7ebd8bf65b2f8bb5a55013eb2d3bd2245ae80",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case02.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case03.inp": "3d1766c406f4212d1d799d19b4ac9df472fe8ad7c70fa67e3e09ee17c153e534",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case03.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case04.inp": "9f044692f57e2d2543e1e8b5663dc4ba180260166f062ddb06427cbb51cf3a6e",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case04.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case05.inp": "33f52b6e3e5378f136d6315227ed85680d457d695add09ad56489319dcf12af4",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case05.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case06.inp": "381fe6d9d6caddb0d2b9fe828365351b7d910acea5c7c6410d378c084962410b",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case06.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case07.inp": "fbadd487e34039b5b6f66ca68d04b56f3b6c1d0a1c55c4bb16897a86ffd69fa9",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case07.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case08.inp": "3ad37c276b5fdc5264cf59ef078655abcc1ec426b4ada17a56f0ea156d7d59f3",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case08.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case09.inp": "e930d040e869c1d226c3e66a4c7895e6420f40e38491a21ca6d4b55a7cb5b05b",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case09.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case10.inp": "ab33af9f96cd121e7fcff10886dfb2fb1d0acd3d023fa1972d12edfe826eecc7",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case10.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case11.inp": "be44589a52516d32f126aa5c8cf7427f2c83736aa72397de81626db43e66d3d8",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case11.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case12.inp": "9b67be0b7ea8d5e7af14bc5c0201724e78cd2a4f8877c4662a714aee6c926ad7",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case12.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case13.inp": "6c043ce8ded9af0fbe7bd7dc46c6df2809ca50d292a0d14aa77d0bb7f05ed0a4",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\IPOP_10988\\evaluation\\case13.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    "compile": {
+      "command": [
+        "C:\\Users\\sigma\\scoop\\apps\\perl\\5.42.3.1\\c\\bin\\g++.exe",
+        "-O2",
+        "-std=c++17",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\evaluation\\Main.cpp",
+        "-o",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\evaluation\\program.exe"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 1.0792855999898165
+    },
+    "cases": [
+      {
+        "case": "case01",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\evaluation\\program.exe"
+        ],
+        "exit_code": 0,
+        "stdout": "1\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.09288600005675107
+      },
+      {
+        "case": "case02",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\evaluation\\program.exe"
+        ],
+        "exit_code": 0,
+        "stdout": "1\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.01938670000527054
+      },
+      {
+        "case": "case03",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\evaluation\\program.exe"
+        ],
+        "exit_code": 0,
+        "stdout": "0\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.02379480004310608
+      },
+      {
+        "case": "case04",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\evaluation\\program.exe"
+        ],
+        "exit_code": 0,
+        "stdout": "1\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.02189799991901964
+      },
+      {
+        "case": "case05",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\evaluation\\program.exe"
+        ],
+        "exit_code": 0,
+        "stdout": "1\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.02870330004952848
+      },
+      {
+        "case": "case06",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\evaluation\\program.exe"
+        ],
+        "exit_code": 0,
+        "stdout": "0\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.024893300025723875
+      },
+      {
+        "case": "case07",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\evaluation\\program.exe"
+        ],
+        "exit_code": 0,
+        "stdout": "1\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.026272700051777065
+      },
+      {
+        "case": "case08",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\evaluation\\program.exe"
+        ],
+        "exit_code": 0,
+        "stdout": "1\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.025007399963214993
+      },
+      {
+        "case": "case09",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\evaluation\\program.exe"
+        ],
+        "exit_code": 0,
+        "stdout": "0\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.02999329997692257
+      },
+      {
+        "case": "case10",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\evaluation\\program.exe"
+        ],
+        "exit_code": 0,
+        "stdout": "1\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.02318100002594292
+      },
+      {
+        "case": "case11",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\evaluation\\program.exe"
+        ],
+        "exit_code": 0,
+        "stdout": "1\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.025539200054481626
+      },
+      {
+        "case": "case12",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\evaluation\\program.exe"
+        ],
+        "exit_code": 0,
+        "stdout": "0\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.023100499995052814
+      },
+      {
+        "case": "case13",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\evaluation\\program.exe"
+        ],
+        "exit_code": 0,
+        "stdout": "1\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.022211499977856874
+      }
+    ],
+    "status": "success"
+  },
+  "similarity": {
+    "adjacent": {
+      "contract": {
+        "seed_sha256": "162921c67cb6c5e02009edf34ff7bc0e435187cd785990e66123b8150a162988",
+        "candidate_sha256": "255abf66f54116fe7b6379785bdd38dc37c4bcde7d149d0bd2df2c9b3bb891da",
+        "config": {
+          "java": "C:\\Users\\sigma\\scoop\\apps\\openjdk\\current\\bin\\java.exe",
+          "jar": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\jplag-6.3.0-jar-with-dependencies.jar",
+          "jar_sha256": "5f2c21e8b88ed77134effcb3a5a3ab13d188f6a3e16d401387f7479e92db9aa2",
+          "language": "cpp",
+          "minimum_tokens": 9,
+          "normalize": false,
+          "similarity_field": "averageSimilarity"
+        }
+      },
+      "command": [
+        "C:\\Users\\sigma\\scoop\\apps\\openjdk\\current\\bin\\java.exe",
+        "-jar",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\jplag-6.3.0-jar-with-dependencies.jar",
+        "-M",
+        "RUN",
+        "-l",
+        "cpp",
+        "-t",
+        "9",
+        "-m",
+        "0",
+        "-n",
+        "-1",
+        "--cluster-skip",
+        "--csv-export",
+        "--encoding",
+        "UTF-8",
+        "--overwrite",
+        "-r",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\sym_adj\\result",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\sym_adj\\submissions"
+      ],
+      "status": "measured",
+      "value": 0.0,
+      "reason": null,
+      "reference": "seed_source",
+      "candidate": "stabilized_source",
+      "exit_code": 0,
+      "stdout": "2026-11-18-08:24:49_893 [INFO] JPlag - Total time for comparing submissions: 0h 00min 00s 329ms\n2026-11-18-08:24:49_895 [WARN] ClusteringFactory - Cluster calculation disabled (as requested)!\n2026-11-18-08:24:50_005 [INFO] ReportObjectFactory - Start writing report...\n2026-11-18-08:24:50_008 [INFO] ReportObjectFactory - Start to export results...\n2026-11-18-08:24:50_108 [INFO] OutputFileGenerator - Successfully written the result: C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\sym_adj\\result.jplag\n2026-11-18-08:24:50_108 [INFO] OutputFileGenerator - View the result using --mode\n",
+      "stderr": "WARNING: A restricted method in java.lang.System has been called\nWARNING: java.lang.System::load has been called by org.jline.nativ.JLineNativeLoader in an unnamed module (file:/C:/Users/sigma/orca/workspaces/paper-lang-dist/stickleback/jplag-6.3.0-jar-with-dependencies.jar)\nWARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module\nWARNING: Restricted methods will be blocked in a future release unless native access is enabled\n\n\nLoading Submissions   0% [                                 ] 0/2 (0:00:00 / ?) \nLoading Submissions 100% [===========================] 2/2 (0:00:00 / 0:00:00) \nLoading Submissions 100% [===========================] 2/2 (0:00:00 / 0:00:00) \n\nParsing Submissions   0% [                                 ] 0/2 (0:00:00 / ?) \nParsing Submissions 100% [===========================] 2/2 (0:00:00 / 0:00:00) \nParsing Submissions 100% [===========================] 2/2 (0:00:00 / 0:00:00) \n\nPreparing Submissions   0% [=========================] 2/2 (0:00:00 / 0:00:00) \nPreparing Submissions 100% [=========================] 2/2 (0:00:00 / 0:00:00) \n\nComparing Submission Pairs   0% [                          ] 0/1 (0:00:00 / ?) \nComparing Submission Pairs 100% [====================] 1/1 (0:00:00 / 0:00:00) \nComparing Submission Pairs 100% [====================] 1/1 (0:00:00 / 0:00:00) \n",
+      "raw_csv_row": {
+        "submissionName1": "candidate",
+        "submissionName2": "seed",
+        "averageSimilarity": "0.0",
+        "maxSimilarity": "0.0"
+      },
+      "attempts": [
+        {
+          "contract": {
+            "seed_sha256": "162921c67cb6c5e02009edf34ff7bc0e435187cd785990e66123b8150a162988",
+            "candidate_sha256": "255abf66f54116fe7b6379785bdd38dc37c4bcde7d149d0bd2df2c9b3bb891da",
+            "config": {
+              "java": "C:\\Users\\sigma\\scoop\\apps\\openjdk\\current\\bin\\java.exe",
+              "jar": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\jplag-6.3.0-jar-with-dependencies.jar",
+              "jar_sha256": "5f2c21e8b88ed77134effcb3a5a3ab13d188f6a3e16d401387f7479e92db9aa2",
+              "language": "cpp",
+              "minimum_tokens": 9,
+              "normalize": false,
+              "similarity_field": "averageSimilarity"
+            }
+          },
+          "command": [
+            "C:\\Users\\sigma\\scoop\\apps\\openjdk\\current\\bin\\java.exe",
+            "-jar",
+            "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\jplag-6.3.0-jar-with-dependencies.jar",
+            "-M",
+            "RUN",
+            "-l",
+            "cpp",
+            "-t",
+            "9",
+            "-m",
+            "0",
+            "-n",
+            "-1",
+            "--cluster-skip",
+            "--csv-export",
+            "--encoding",
+            "UTF-8",
+            "--overwrite",
+            "-r",
+            "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\sym_adj\\result",
+            "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\sym_adj\\submissions"
+          ],
+          "status": "measured",
+          "value": 0.0,
+          "reason": null,
+          "reference": "seed_source",
+          "candidate": "stabilized_source",
+          "exit_code": 0,
+          "stdout": "2026-11-18-08:24:49_893 [INFO] JPlag - Total time for comparing submissions: 0h 00min 00s 329ms\n2026-11-18-08:24:49_895 [WARN] ClusteringFactory - Cluster calculation disabled (as requested)!\n2026-11-18-08:24:50_005 [INFO] ReportObjectFactory - Start writing report...\n2026-11-18-08:24:50_008 [INFO] ReportObjectFactory - Start to export results...\n2026-11-18-08:24:50_108 [INFO] OutputFileGenerator - Successfully written the result: C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\sym_adj\\result.jplag\n2026-11-18-08:24:50_108 [INFO] OutputFileGenerator - View the result using --mode\n",
+          "stderr": "WARNING: A restricted method in java.lang.System has been called\nWARNING: java.lang.System::load has been called by org.jline.nativ.JLineNativeLoader in an unnamed module (file:/C:/Users/sigma/orca/workspaces/paper-lang-dist/stickleback/jplag-6.3.0-jar-with-dependencies.jar)\nWARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module\nWARNING: Restricted methods will be blocked in a future release unless native access is enabled\n\n\nLoading Submissions   0% [                                 ] 0/2 (0:00:00 / ?) \nLoading Submissions 100% [===========================] 2/2 (0:00:00 / 0:00:00) \nLoading Submissions 100% [===========================] 2/2 (0:00:00 / 0:00:00) \n\nParsing Submissions   0% [                                 ] 0/2 (0:00:00 / ?) \nParsing Submissions 100% [===========================] 2/2 (0:00:00 / 0:00:00) \nParsing Submissions 100% [===========================] 2/2 (0:00:00 / 0:00:00) \n\nPreparing Submissions   0% [=========================] 2/2 (0:00:00 / 0:00:00) \nPreparing Submissions 100% [=========================] 2/2 (0:00:00 / 0:00:00) \n\nComparing Submission Pairs   0% [                          ] 0/1 (0:00:00 / ?) \nComparing Submission Pairs 100% [====================] 1/1 (0:00:00 / 0:00:00) \nComparing Submission Pairs 100% [====================] 1/1 (0:00:00 / 0:00:00) \n",
+          "raw_csv_row": {
+            "submissionName1": "candidate",
+            "submissionName2": "seed",
+            "averageSimilarity": "0.0",
+            "maxSimilarity": "0.0"
+          }
+        }
+      ]
+    },
+    "origin": {
+      "contract": {
+        "seed_sha256": "d857b6b99406044bf3401f088b126f8171d8871048d3f11e1364e9482431992e",
+        "candidate_sha256": "255abf66f54116fe7b6379785bdd38dc37c4bcde7d149d0bd2df2c9b3bb891da",
+        "config": {
+          "java": "C:\\Users\\sigma\\scoop\\apps\\openjdk\\current\\bin\\java.exe",
+          "jar": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\jplag-6.3.0-jar-with-dependencies.jar",
+          "jar_sha256": "5f2c21e8b88ed77134effcb3a5a3ab13d188f6a3e16d401387f7479e92db9aa2",
+          "language": "cpp",
+          "minimum_tokens": 9,
+          "normalize": false,
+          "similarity_field": "averageSimilarity"
+        }
+      },
+      "command": [
+        "C:\\Users\\sigma\\scoop\\apps\\openjdk\\current\\bin\\java.exe",
+        "-jar",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\jplag-6.3.0-jar-with-dependencies.jar",
+        "-M",
+        "RUN",
+        "-l",
+        "cpp",
+        "-t",
+        "9",
+        "-m",
+        "0",
+        "-n",
+        "-1",
+        "--cluster-skip",
+        "--csv-export",
+        "--encoding",
+        "UTF-8",
+        "--overwrite",
+        "-r",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\sym_origin\\result",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\sym_origin\\submissions"
+      ],
+      "status": "measured",
+      "value": 0.0,
+      "reason": null,
+      "reference": "seed_source",
+      "candidate": "stabilized_source",
+      "exit_code": 0,
+      "stdout": "2026-11-18-08:24:52_136 [INFO] JPlag - Total time for comparing submissions: 0h 00min 00s 130ms\n2026-11-18-08:24:52_137 [WARN] ClusteringFactory - Cluster calculation disabled (as requested)!\n2026-11-18-08:24:52_247 [INFO] ReportObjectFactory - Start writing report...\n2026-11-18-08:24:52_250 [INFO] ReportObjectFactory - Start to export results...\n2026-11-18-08:24:52_365 [INFO] OutputFileGenerator - Successfully written the result: C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\sym_origin\\result.jplag\n2026-11-18-08:24:52_366 [INFO] OutputFileGenerator - View the result using --mode\n",
+      "stderr": "WARNING: A restricted method in java.lang.System has been called\nWARNING: java.lang.System::load has been called by org.jline.nativ.JLineNativeLoader in an unnamed module (file:/C:/Users/sigma/orca/workspaces/paper-lang-dist/stickleback/jplag-6.3.0-jar-with-dependencies.jar)\nWARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module\nWARNING: Restricted methods will be blocked in a future release unless native access is enabled\n\n\nLoading Submissions   0% [                                 ] 0/2 (0:00:00 / ?) \nLoading Submissions 100% [===========================] 2/2 (0:00:00 / 0:00:00) \nLoading Submissions 100% [===========================] 2/2 (0:00:00 / 0:00:00) \n\nParsing Submissions   0% [                                 ] 0/2 (0:00:00 / ?) \nParsing Submissions 100% [===========================] 2/2 (0:00:00 / 0:00:00) \nParsing Submissions 100% [===========================] 2/2 (0:00:00 / 0:00:00) \n\nPreparing Submissions   0% [=========================] 1/2 (0:00:00 / 0:00:00) \nPreparing Submissions 100% [=========================] 2/2 (0:00:00 / 0:00:00) \n\nComparing Submission Pairs   0% [                          ] 0/1 (0:00:00 / ?) \nComparing Submission Pairs 100% [====================] 1/1 (0:00:00 / 0:00:00) \nComparing Submission Pairs 100% [====================] 1/1 (0:00:00 / 0:00:00) \n",
+      "raw_csv_row": {
+        "submissionName1": "candidate",
+        "submissionName2": "seed",
+        "averageSimilarity": "0.0",
+        "maxSimilarity": "0.0"
+      },
+      "attempts": [
+        {
+          "contract": {
+            "seed_sha256": "d857b6b99406044bf3401f088b126f8171d8871048d3f11e1364e9482431992e",
+            "candidate_sha256": "255abf66f54116fe7b6379785bdd38dc37c4bcde7d149d0bd2df2c9b3bb891da",
+            "config": {
+              "java": "C:\\Users\\sigma\\scoop\\apps\\openjdk\\current\\bin\\java.exe",
+              "jar": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\jplag-6.3.0-jar-with-dependencies.jar",
+              "jar_sha256": "5f2c21e8b88ed77134effcb3a5a3ab13d188f6a3e16d401387f7479e92db9aa2",
+              "language": "cpp",
+              "minimum_tokens": 9,
+              "normalize": false,
+              "similarity_field": "averageSimilarity"
+            }
+          },
+          "command": [
+            "C:\\Users\\sigma\\scoop\\apps\\openjdk\\current\\bin\\java.exe",
+            "-jar",
+            "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\jplag-6.3.0-jar-with-dependencies.jar",
+            "-M",
+            "RUN",
+            "-l",
+            "cpp",
+            "-t",
+            "9",
+            "-m",
+            "0",
+            "-n",
+            "-1",
+            "--cluster-skip",
+            "--csv-export",
+            "--encoding",
+            "UTF-8",
+            "--overwrite",
+            "-r",
+            "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\sym_origin\\result",
+            "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\sym_origin\\submissions"
+          ],
+          "status": "measured",
+          "value": 0.0,
+          "reason": null,
+          "reference": "seed_source",
+          "candidate": "stabilized_source",
+          "exit_code": 0,
+          "stdout": "2026-11-18-08:24:52_136 [INFO] JPlag - Total time for comparing submissions: 0h 00min 00s 130ms\n2026-11-18-08:24:52_137 [WARN] ClusteringFactory - Cluster calculation disabled (as requested)!\n2026-11-18-08:24:52_247 [INFO] ReportObjectFactory - Start writing report...\n2026-11-18-08:24:52_250 [INFO] ReportObjectFactory - Start to export results...\n2026-11-18-08:24:52_365 [INFO] OutputFileGenerator - Successfully written the result: C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-04\\sym_origin\\result.jplag\n2026-11-18-08:24:52_366 [INFO] OutputFileGenerator - View the result using --mode\n",
+          "stderr": "WARNING: A restricted method in java.lang.System has been called\nWARNING: java.lang.System::load has been called by org.jline.nativ.JLineNativeLoader in an unnamed module (file:/C:/Users/sigma/orca/workspaces/paper-lang-dist/stickleback/jplag-6.3.0-jar-with-dependencies.jar)\nWARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module\nWARNING: Restricted methods will be blocked in a future release unless native access is enabled\n\n\nLoading Submissions   0% [                                 ] 0/2 (0:00:00 / ?) \nLoading Submissions 100% [===========================] 2/2 (0:00:00 / 0:00:00) \nLoading Submissions 100% [===========================] 2/2 (0:00:00 / 0:00:00) \n\nParsing Submissions   0% [                                 ] 0/2 (0:00:00 / ?) \nParsing Submissions 100% [===========================] 2/2 (0:00:00 / 0:00:00) \nParsing Submissions 100% [===========================] 2/2 (0:00:00 / 0:00:00) \n\nPreparing Submissions   0% [=========================] 1/2 (0:00:00 / 0:00:00) \nPreparing Submissions 100% [=========================] 2/2 (0:00:00 / 0:00:00) \n\nComparing Submission Pairs   0% [                          ] 0/1 (0:00:00 / ?) \nComparing Submission Pairs 100% [====================] 1/1 (0:00:00 / 0:00:00) \nComparing Submission Pairs 100% [====================] 1/1 (0:00:00 / 0:00:00) \n",
+          "raw_csv_row": {
+            "submissionName1": "candidate",
+            "submissionName2": "seed",
+            "averageSimilarity": "0.0",
+            "maxSimilarity": "0.0"
+          }
+        }
+      ]
+    }
+  }
+}

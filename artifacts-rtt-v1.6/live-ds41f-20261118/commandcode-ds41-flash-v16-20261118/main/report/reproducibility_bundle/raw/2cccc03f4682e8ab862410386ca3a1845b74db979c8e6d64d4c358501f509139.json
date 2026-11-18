@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    case map read (words input) :: [Integer] of\n        (m:n:_) -> print (uniquePaths (fromInteger m) (fromInteger n))\n        _ -> return ()\n\nuniquePaths :: Int -> Int -> Integer\nuniquePaths m n =\n    (iterate (scanl1 (+)) (replicate n 1) !! (m - 1)) !! (n - 1)\n```",
+          "reasoning_content": "We need answer with Haskell code only, fenced. Need translate. Need preserve behavior. Read M N from stdin, output paths. Constraints. Implement DP. Haskell. Need exactly one complete source file in fenced block, no explanation. Module Main, main. Use getContents, words parse. Output integer. Need handle missing? Original returns 0 if no parse. We can match. Use readMaybe? Could just parse words. For valid inputs. But preserve missing: main = do s <- getContents; case words s of (a:b:_) -> print ... ; _ -> return (). Need long long but Haskell Integer safe. Algorithm O(MN) fine.\n\nPotential subtle: row initialized n ones. For i=1..m-1, fold over j 1..n-1 updating list maybe. Need efficient. n<=100. Simpler use 2D DP. unique m n = dp where row length n all 1; iterate m-1 times: scanl1 (+) row? Wait scanl1 (+) row gives cumulative sums, where new row[0]=row[0]=1, new row[j]=old row[j]+new row[j-1]. This exactly. After (m-1) iterations, last element result. For m=3 n=7: start ones; iter1 cumulative [1,2,3,4,5,6,7]; iter2 cumulative [1,3,6,10,15,21,28]; result 28. If m=1 no iter result row[n-1]=1. If n=1 row [1] always 1. Good. Need maybe use iterate (scanl1 (+)) [1..n]!!(m-1) last. But [1,1,.. n] not [1..n]. Use replicate n 1. Result (iterate (scanl1 (+)) (replicate n 1) !! (m-1)) !! (n-1). Haskell indexing safe for constraints. Or recursive.\n\nOutput one integer newline. Code:\n\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case map read (words input) :: [Integer] of\n    (m:n:_) -> print (uniquePaths (fromInteger m) (fromInteger n))\n    _ -> return ()\n\nuniquePaths :: Int -> Int -> Integer\nuniquePaths m n = (iterate (scanl1 (+)) (replicate n 1) !! (m - 1)) !! (n - 1)\n\nPotential negative? constraints. Good. Need no explanation. Use exactly fenced block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794994292,
+    "id": "chatcmpl-b91a1ffa12e2c85ddd116a4656f16428",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 652,
+      "completion_tokens_details": {
+        "reasoning_tokens": 543
+      },
+      "prompt_tokens": 522,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 1174
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0009013679999999999,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 8.86960590002127,
+  "logical_request_id": "ed6384debd84aaaa5dd13b12e917c957edd957c23cebf449d2d82d8b5422050e",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-haskell\\attempt-03\\step-07\\response_body.txt",
+  "received_at": "2026-11-18T09:31:36.515907+00:00",
+  "request_id": "chatcmpl-b91a1ffa12e2c85ddd116a4656f16428",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    case map read (words input) :: [Integer] of\n        (m:n:_) -> print (uniquePaths (fromInteger m) (fromInteger n))\n        _ -> return ()\n\nuniquePaths :: Int -> Int -> Integer\nuniquePaths m n =\n    (iterate (scanl1 (+)) (replicate n 1) !! (m - 1)) !! (n - 1)\n```",
+  "usage": {
+    "completion_tokens": 652,
+    "completion_tokens_details": {
+      "reasoning_tokens": 543
+    },
+    "prompt_tokens": 522,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1174
+  },
+  "usage_raw": {
+    "completion_tokens": 652,
+    "completion_tokens_details": {
+      "reasoning_tokens": 543
+    },
+    "prompt_tokens": 522,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1174
+  }
+}

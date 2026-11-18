@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    case words input of\n        (s:_) -> putStrLn (if s == reverse s then \"1\" else \"0\")\n        []    -> return ()\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 453,
+    "total_tokens": 645,
+    "completion_tokens": 192,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 132
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 453,
+    "total_tokens": 645,
+    "completion_tokens": 192,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 132
+    }
+  },
+  "cost_usd": 0.00036629999999999996,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-958fd80f8288ebfa521ce56c0e85c21f",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-958fd80f8288ebfa521ce56c0e85c21f",
+    "object": "chat.completion",
+    "created": 1795001095,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    case words input of\n        (s:_) -> putStrLn (if s == reverse s then \"1\" else \"0\")\n        []    -> return ()\n```",
+          "reasoning_content": "We need answer exactly one file fenced code block Haskell. Need translate. No explanation. Ensure reads stdin, outputs. Use module Main main. Need handle whitespace, string lowercase single token. Use getLine or words. Preserve if no input? Program only if cin >> s. For valid input. Use getContents, take first word. Haskell:\n\nmodule Main where\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    (s:_) -> putStrLn (if s == reverse s then \"1\" else \"0\")\n    [] -> return ()\n\nNeed exactly source file in code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 453,
+      "total_tokens": 645,
+      "completion_tokens": 192,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 132
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.7528467999072745,
+  "received_at": "2026-11-18T11:24:57.383650+00:00",
+  "logical_request_id": "533f87921601fe9b446898f87766f0817b77cac4c319459c8f14e43ada480245",
+  "execution_class": "direct_api"
+}

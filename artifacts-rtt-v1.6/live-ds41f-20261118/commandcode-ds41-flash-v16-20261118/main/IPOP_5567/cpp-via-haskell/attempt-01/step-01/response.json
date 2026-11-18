@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport qualified Data.Set as S\nimport Data.Array (Array, accumArray, (!))\n\nparsePairs :: [Int] -> [(Int, Int)]\nparsePairs (a:b:xs) = (a, b) : parsePairs xs\nparsePairs _ = []\n\nmain :: IO ()\nmain = do\n  contents <- getContents\n  let tokens = words contents\n  case tokens of\n    [] -> return ()\n    _ -> do\n      let nums = map read tokens :: [Int]\n      case nums of\n        (n:m:rest) -> do\n          let edges = parsePairs (take (2 * m) rest)\n              adj :: Array Int [Int]\n              adj = accumArray (\\xs x -> x : xs) [] (1, n)\n                      (concatMap (\\(a, b) -> [(a, b), (b, a)]) edges)\n              level1 = S.delete 1 (S.fromList (adj ! 1))\n              neighbors = S.fromList (concatMap (\\v -> adj ! v) (S.toList level1))\n              level2 = neighbors `S.difference` (S.insert 1 level1)\n              ans = S.size level1 + S.size level2\n          print ans\n        _ -> return ()\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 698,
+    "total_tokens": 3086,
+    "completion_tokens": 2388,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2114
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 698,
+    "total_tokens": 3086,
+    "completion_tokens": 2388,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2114
+    }
+  },
+  "cost_usd": 0.003075,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-5bc2005f49437ea64882c46287b3ef4f",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_5567\\cpp-via-haskell\\attempt-01\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-5bc2005f49437ea64882c46287b3ef4f",
+    "object": "chat.completion",
+    "created": 1794994835,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport qualified Data.Set as S\nimport Data.Array (Array, accumArray, (!))\n\nparsePairs :: [Int] -> [(Int, Int)]\nparsePairs (a:b:xs) = (a, b) : parsePairs xs\nparsePairs _ = []\n\nmain :: IO ()\nmain = do\n  contents <- getContents\n  let tokens = words contents\n  case tokens of\n    [] -> return ()\n    _ -> do\n      let nums = map read tokens :: [Int]\n      case nums of\n        (n:m:rest) -> do\n          let edges = parsePairs (take (2 * m) rest)\n              adj :: Array Int [Int]\n              adj = accumArray (\\xs x -> x : xs) [] (1, n)\n                      (concatMap (\\(a, b) -> [(a, b), (b, a)]) edges)\n              level1 = S.delete 1 (S.fromList (adj ! 1))\n              neighbors = S.fromList (concatMap (\\v -> adj ! v) (S.toList level1))\n              level2 = neighbors `S.difference` (S.insert 1 level1)\n              ans = S.size level1 + S.size level2\n          print ans\n        _ -> return ()\n```",
+          "reasoning_content": "We need translate to Haskell. Need preserve behavior for valid inputs. Note spec says N>=2 but example has 1 0. Source reads n m. If n=1, works. Need output count of vertices distance 1 or 2 from 1.\n\nImplement BFS or simpler: neighbors of 1 plus neighbors of neighbors excluding self and distance-1 nodes. Need dedupe. BFS is straightforward.\n\nInput parsing: tokens. Read all ints. First n, then m, then 2m edges. Output ans.\n\nHaskell with lazy IO read all words.\n\nWe should be careful: if input empty, return ().\n\nBFS with sets or list. N<=500. Use Data.Set or just Data.List with nub. Simpler BFS using Set.\n\nLet's implement BFS:\n\nimport qualified Data.Set as S\nimport qualified Data.Map.Strict as M ... maybe use IntSet.\n\nUse Data.IntSet for visited.\n\nBFS queue as list of (node, dist). Start [(1,0)]. visited = singleton 1. ans = 0.\n\nprocess:\ngo queue visited ans\npop (u,d)\nfor v in adj!u:\n if not visited:\n   visited' = insert v\n   if d+1 <=2 then ans+1\n   enqueue (v,d+1)\nBut we only need expand nodes at dist 0 or 1 (since dist 2 nodes' children are dist 3, not counted). But enqueueing dist 2 nodes harmless, though we can skip. Actually if we enqueue dist 2, their neighbors get visited, but those are dist 3 and not counted. That would wrongly mark vertices as visited but we never count them anyway. However it could affect nothing because count only increments on newly discovered with new dist <=2. Dist 3 not counted. But we don't need to process dist 2. Simpler: process all but only count when new dist <=2.\n\nBut careful: if a node at dist 3 is reached via one path, then later via a shorter path? BFS ensures first discovery is shortest, so fine.\n\nImplement with adjacency list as Array or list indexing. N small. Use Data.Array.\n\nBuild adjacency: Array (1,n) [[Int]] but need bounds. For n could be 1, array (1,1). Use accumArray (flip (:)) [] (1,n) pairs. Wait accumulate both directions: list of (u,v) then (v,u). Use accumArray (flip (:)) [] (1,n) (concatMap (\\(u,v)->[(u,v),(v,u)]) edges).\n\nThen BFS:\n\nbfs :: Array Int [Int] -> Int -> Int\nbfs adj n = go [(1,0)] (S.singleton 1) 0\n  where\n    go [] _ ans = ans\n    go ((u,d):q) vis ans =\n      let nbrs = adj ! u\n          (vis', ans', q') = foldl step (vis, ans, q) nbrs\n          step (vs, a, qq) v =\n            if S.member v vs then (vs, a, qq)\n            else let nd = d+1\n                     a' = if nd <= 2 then a+1 else a\n                 in (S.insert v vs, a', qq ++ [(v,nd)])\n      in go q' vis' ans'\n\nBut qq ++ [(v,nd)] is O(n) per append; fine n<=500. Better use list as stack? BFS order matters? First discovery in BFS requires queue order. Using stack (prepend) would be DFS, breaking shortest path guarantee. With N small, could use Data.Sequence. Or use list and append; fine.\n\nAlternatively simple approach: compute dist via BFS returning dist array, then count dist 1 or 2. Could use ST or IORef, but pure is fine.\n\nOr even simpler: since N<=500, compute reachable within 2 by set operations: start set {1}. Level1 = neighbors of 1 \\ {1}. Level2 = neighbors of level1 \\ ({1} union level1). ans = size(level1) + size(level2). This counts distinct vertices at distance exactly 1 or 2. Because graph undirected, distance 1 or 2. Neighbors of level1 include level1 nodes themselves? In undirected graph, a neighbor of a level1 node could be another level1 node (edge between two neighbors of 1) — that's distance 1, already counted, exclude. Could also be 1. So level2 = (union of adj of level1) \\ ({1} ∪ level1). That works. No need BFS. This is simple and correct.\n\nImplementation:\n\nimport qualified Data.Set as S\nimport Data.List (foldl')\n\nmain = do\n  input <- getContents\n  let ws = words input\n  case ws of\n    [] -> return ()\n    _ -> do\n      let nums = map read ws :: [Int]\n      case nums of\n        (n:m:rest) -> do\n          let pairs = zip (take m (everyOther rest)) ... \n\nParsing edges: rest is list of ints, length 2m. Could take pairs: pairUp (a:b:xs) = (a,b):pairUp xs.\n\nBuild adjacency as a list of lists indexed 1..n. Could use Array.\n\nLet adjList = accumArray (\\xs x -> x:xs) [] (1,n) (concatMap (\\(a,b)->[(a,b),(b,a)]) edges)\n\nThen:\n  let s1 = S.delete 1 $ S.fromList (adjList ! 1)\n      reachable = S.fromList (concatMap (\\v -> adjList ! v) (S.toList s1))\n      s2 = reachable `S.difference` (S.insert 1 s1)\n      ans = S.size s1 + S.size s2\n  print ans\n\nNeed handle n=1: adjList ! 1 works if array (1,1). s1 empty. reachable empty. ans 0.\n\nEdge case: no edge to 1, s1 empty. Fine.\n\nIf n from input but m edges reference nodes >n? Spec guarantees within.\n\nNeed handle possible trailing/extra tokens? Just take m.\n\nUse accumArray from Data.Array. Need import Data.Array.\n\nLet's verify example 2:\nn=7, edges. adj1=[2]. s1={2}. reachable=adj2 = [1,3,5] set {1,3,5}. remove {1,2} => {3,5}. ans =1+2=3. Correct.\n\nExample1: n=1,m=0. s1 empty. ans 0.\n\nThis preserves behavior.\n\nNeed output exactly one complete source file in code block. Haskell GHC module Main main :: IO ().\n\nLet's write robust parsing.\n\nPotential issue: input may have n,m but n=1, m=0. works.\n\nread of empty? We guard.\n\nCode:\n\nmodule Main where\n\nimport qualified Data.Set as S\nimport Data.Array (Array, accumArray, (!))\nimport Data.List (foldl')\n\nparsePairs :: [Int] -> [(Int,Int)]\nparsePairs (a:b:xs) = (a,b) : parsePairs xs\nparsePairs _ = []\n\nmain :: IO ()\nmain = do\n  contents <- getContents\n  let tokens = words contents\n  case tokens of\n    [] -> return ()\n    _ -> do\n      let nums = map read tokens :: [Int]\n      case nums of\n        (n:m:rest) -> do\n          let edges = parsePairs (take (2*m) rest)\n              adj :: Array Int [Int]\n              adj = accumArray (\\xs x -> x : xs) [] (1, n)\n                      (concatMap (\\(a,b) -> [(a,b),(b,a)]) edges)\n              level1 = S.delete 1 (S.fromList (adj ! 1))\n              neighbors = S.fromList (concatMap (\\v -> adj ! v) (S.toList level1))\n              level2 = neighbors `S.difference` (S.insert 1 level1)\n              ans = S.size level1 + S.size level2\n          print ans\n        _ -> return ()\n\nWait: `S.delete 1` removes 1 if present. In graph no self loops per spec (a<b), so adj ! 1 won't contain 1. But safe.\n\nPotential subtle bug: level2 computation uses neighbors of level1. If level1 contains a node v that is adjacent to another level1 node w, then w is in neighbors, but level2 excludes level1 so w not counted again. Good. If v adjacent to 1, 1 excluded. Good.\n\nDistance exactly 2: any path 1 - v - u where v in level1, u not 1 and not level1 -> distance 2 (since u not level1 means not adjacent to 1). Yes.\n\nBut wait: If there's an edge between two level1 nodes, could that make some node at distance 2 via longer route? No.\n\nThis is correct for undirected graph.\n\nComplexity fine.\n\nOutput uses print adds newline. Matches.\n\nNeed maybe `S.fromList` of adj ! 1 includes duplicate neighbors if multiedges. Set dedupes. Spec says different undirected edges (probably no multiedges but fine).\n\nOne thing: accumArray with (1,n): if n=0? Spec n>=2 but example n=1. If n=0 invalid. If n<1 array bounds error. But spec says 2<=N. Example 1 has n=1 though. We handle n>=1. If n=0 we'd crash, but not valid input.\n\nNeed maybe no `foldl'` used; remove import. Could leave unused import warning but fine. Remove to be clean.\n\nReturn exactly code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 698,
+      "total_tokens": 3086,
+      "completion_tokens": 2388,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 2114
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 21.111201799940318,
+  "received_at": "2026-11-18T09:40:54.139338+00:00",
+  "logical_request_id": "cbb8f88379d0bfef734724ca51a185c78c4c0834bcce5050383265df0d7eee3e",
+  "execution_class": "direct_api"
+}

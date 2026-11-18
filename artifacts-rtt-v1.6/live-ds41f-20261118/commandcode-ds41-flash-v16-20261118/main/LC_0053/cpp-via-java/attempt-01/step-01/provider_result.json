@@ -1,0 +1,86 @@
+{
+  "text": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n\n        long cur = sc.nextLong();\n        long best = cur;\n\n        for (int i = 1; i < n; i++) {\n            long x = sc.nextLong();\n            cur = Math.max(x, cur + x);\n            best = Math.max(best, cur);\n        }\n\n        System.out.println(best);\n    }\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 608,
+    "total_tokens": 1167,
+    "completion_tokens": 559,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 447
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 608,
+    "total_tokens": 1167,
+    "completion_tokens": 559,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 447
+    }
+  },
+  "cost_usd": 0.0007026719999999999,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-090168bca05de7cb7dffa514070b954a",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-java\\attempt-01\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-090168bca05de7cb7dffa514070b954a",
+    "object": "chat.completion",
+    "created": 1794978619,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n\n        long cur = sc.nextLong();\n        long best = cur;\n\n        for (int i = 1; i < n; i++) {\n            long x = sc.nextLong();\n            cur = Math.max(x, cur + x);\n            best = Math.max(best, cur);\n        }\n\n        System.out.println(best);\n    }\n}\n```",
+          "reasoning_content": "We need answer exactly one fenced code block with Java 17 source. Need preserve behavior. Need think about input contract. First line N, next line N ints. Output integer one. Java.\n\nNeed return only code block no explanation. Need ensure class Main. Use long maybe ints sum up to 1e9 within int? N 100000 *10000 = 1e9 exactly, min -1e9, within int. But use long safe. Read all via Scanner? N up to 100k fine. Could use BufferedReader StringTokenizer. Need complete. If empty? valid input. Main. Could simplify. Need not use hardcoded. Output best newline.\n\nPotential nuance: Source reads int n, then vector. If n maybe 1. Works. Java.\n\nNeed include import java.io.*; import java.util.*; public class Main { public static void main(String[] args) throws Exception { ... } }\n\nUse StringTokenizer split. Since next line N ints but could be across lines, reading tokens robust. Use BufferedReader and StringTokenizer with hasMoreTokens. Read n then loop n tokens. Need parse long. Implementation:\n\nBufferedReader br = new BufferedReader(new InputStreamReader(System.in));\nStringTokenizer st = new StringTokenizer(br.readLine());\nint n = Integer.parseInt(st.nextToken());\nlong cur=0,best? Need read first. Could use scanner-like token generator. Simpler: read all tokens in loop with token stream.\n\nStringTokenizer st = new StringTokenizer(\"\");\nString next() throws IOException { while(!st.hasMoreTokens()) st=new StringTokenizer(br.readLine()); return st.nextToken(); }\nBut in main can't define easily unless use helper static. Or read all remaining via StreamTokenizer? Simpler use Scanner: Scanner sc = new Scanner(System.in); int n=sc.nextInt(); long cur=sc.nextLong(); long best=cur; for i=1..n-1 { long x=sc.nextLong(); cur=Math.max(x,cur+x); best=Math.max(best,cur);} System.out.println(best); Scanner okay for 100k. standard. Need import java.util.Scanner.\n\nCould also handle n. Use long. Output exactly.\n\nNeed final only code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 608,
+      "total_tokens": 1167,
+      "completion_tokens": 559,
+      "prompt_tokens_details": {
+        "cached_tokens": 512
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 447
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.638113699969836,
+  "received_at": "2026-11-18T05:10:21.659268+00:00",
+  "logical_request_id": "3752e65118deeaac168a053f276f6c62de8be6d4b937246e6c2b6b64fd647e48",
+  "execution_class": "direct_api"
+}

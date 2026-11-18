@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <numeric>\n\nint main() {\n    long long a, b;\n    std::cin >> a >> b;\n    long long g = std::gcd(a, b);\n    std::cout << g << '\\n';\n    std::cout << (a / g) * b << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need translate Haskell to C++17. Simple gcd/lcm. Read two longs, print gcd then lcm. Ensure exact output lines.\n\nUse std::gcd from <numeric>, or implement. C++17.\n\nReturn one file fenced.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1795000281,
+    "id": "chatcmpl-745f7f3af0764cf44a3d1a260dd99943",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 128,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 423,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 551
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0002805,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.035626500030048,
+  "logical_request_id": "7c3061453bdd0a2ca6b5245b3cf42f7af24666133a63a786cb04cdeeb327a15e",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2609\\cpp-via-haskell\\attempt-01\\step-06\\response_body.txt",
+  "received_at": "2026-11-18T11:11:22.741991+00:00",
+  "request_id": "chatcmpl-745f7f3af0764cf44a3d1a260dd99943",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <numeric>\n\nint main() {\n    long long a, b;\n    std::cin >> a >> b;\n    long long g = std::gcd(a, b);\n    std::cout << g << '\\n';\n    std::cout << (a / g) * b << '\\n';\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 128,
+    "completion_tokens_details": {
+      "reasoning_tokens": 50
+    },
+    "prompt_tokens": 423,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 551
+  },
+  "usage_raw": {
+    "completion_tokens": 128,
+    "completion_tokens_details": {
+      "reasoning_tokens": 50
+    },
+    "prompt_tokens": 423,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 551
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n    string s, t;\n    if (!getline(cin, s)) s = \"\";\n    if (!getline(cin, t)) t = \"\";\n    // trim\n    auto trim = [](const string& x) {\n        size_t a = 0, b = x.size();\n        while (a < b && isspace((unsigned char)x[a])) a++;\n        while (b > a && isspace((unsigned char)x[b - 1])) b--;\n        return x.substr(a, b - a);\n    };\n    s = trim(s);\n    t = trim(t);\n    array<int, 26> counts{};\n    for (char c : s) counts[c - 'a']++;\n    for (char c : t) counts[c - 'a']--;\n    bool ok = true;\n    for (int x : counts) if (x != 0) { ok = false; break; }\n    cout << (ok ? 1 : 0) << \"\\n\";\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794896590,
+    "id": "55ddef5d-f9fa-4135-bffa-e8dbf19c2040",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 241,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_a9221f622c3d4716ac9b4e5de1665856",
+      "trace_id": "c6a865c6af0e488e90facc3ee70c1110"
+    },
+    "usage": {
+      "completion_tokens": 241,
+      "prompt_tokens": 563,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 804
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0014108400000000002,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.3279125000117347,
+  "logical_request_id": "ab030b97d0b227c29e54be592ff8866976f6a4cd1289f02704ca967c2627cd74",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0242\\cpp-via-java\\attempt-01\\step-06\\response_body.txt",
+  "received_at": "2026-11-17T06:23:10.279842+00:00",
+  "request_id": "55ddef5d-f9fa-4135-bffa-e8dbf19c2040",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n    string s, t;\n    if (!getline(cin, s)) s = \"\";\n    if (!getline(cin, t)) t = \"\";\n    // trim\n    auto trim = [](const string& x) {\n        size_t a = 0, b = x.size();\n        while (a < b && isspace((unsigned char)x[a])) a++;\n        while (b > a && isspace((unsigned char)x[b - 1])) b--;\n        return x.substr(a, b - a);\n    };\n    s = trim(s);\n    t = trim(t);\n    array<int, 26> counts{};\n    for (char c : s) counts[c - 'a']++;\n    for (char c : t) counts[c - 'a']--;\n    bool ok = true;\n    for (int x : counts) if (x != 0) { ok = false; break; }\n    cout << (ok ? 1 : 0) << \"\\n\";\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 241,
+    "prompt_tokens": 563,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 804
+  },
+  "usage_raw": {
+    "completion_tokens": 241,
+    "prompt_tokens": 563,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 804
+  }
+}

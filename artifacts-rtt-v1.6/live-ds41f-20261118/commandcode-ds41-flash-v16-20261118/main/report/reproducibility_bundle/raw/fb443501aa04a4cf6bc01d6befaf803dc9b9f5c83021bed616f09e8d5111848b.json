@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int T;\n    if (!(cin >> T)) return 0;\n\n    string line;\n    getline(cin, line);\n\n    for (int i = 0; i < T; ++i) {\n        if (!getline(cin, line)) break;\n\n        if (!line.empty() && line.back() == '\\r') {\n            line.pop_back();\n        }\n\n        bool ok = true;\n        int balance = 0;\n\n        for (char c : line) {\n            if (c == '(') {\n                ++balance;\n            } else if (c == ')') {\n                if (balance == 0) {\n                    ok = false;\n                } else {\n                    --balance;\n                }\n            } else {\n                ok = false;\n            }\n        }\n\n        if (balance != 0) ok = false;\n\n        cout << (ok ? \"YES\\n\" : \"NO\\n\");\n    }\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer exact one cpp source file fenced. Need translate Prolog behavior to C++17 preserving stdin/stdout for valid inputs in spec. Need consider quirks? Spec says T positive, each line parentheses length 2..50. We can simple read T then each line, check balanced and never negative. Need perhaps mimic source code nuance: source reads all chars, first line, trim, parse number, then read_print_lines. It uses next_line that takes until newline; if empty line? valid input no blanks. It strips trailing CR. Main prints YES/NO. For valid spec, simple.\n\nNeed output one code block only. Ensure includes bits/stdc++.h, main. Read T with getline? Input first line T. Then for each T read line. Use getline after reading T. Strings may contain CR? handle remove trailing '\\r'. Check balance.\n\nPotential issue first line could have leading/trailing spaces? Spec says first line positive integer. Use cin >> T; then getline discard. Then loop getline. If blank due to \\r? Getline reads rest. Actually if first line \"6\\n\", cin>>T leaves newline, then ignore. Each line no spaces. For CRLF, getline line ends with '\\r'; strip. Good. If there are blank lines? Not valid. But source next_line returns line nonempty? take_line_nonempty: if newline immediately, returns [] and true? Actually take_line_nonempty([10|Cs],[],Cs) :- !. next_line called with Codes includes newline, returns Line=[] Rest. It doesn't skip empty. read_print_lines would process empty line as NO. But spec no empty.\n\nIf no line? source stops if no next_line, doesn't print for missing. We can if getline fails break. But T lines.\n\nNeed exactly source one fenced code block, no explanation. Use C++17.\n\nLet's craft:\n\n#include <bits/stdc++.h>\nusing namespace std;\nint main(){ios::sync_with_stdio(false);cin.tie(nullptr); int T; if(!(cin>>T)) return 0; string line; getline(cin,line); for(int i=0;i<T;i++){ if(!getline(cin,line)) break; if(!line.empty() && line.back()=='\\r') line.pop_back(); // maybe trim? source does not trim line for parentheses, only strips CR; spaces would be invalid (valid_codes no match => NO). We can not trim. But if line has leading/trailing spaces, source would process codes and invalid -> NO, ours check chars? Our balance loop should treat non-parenthesis as NO. If we only check parens, spaces ignored? Need implement invalid chars cause NO. Actually valid_parentheses_codes only clauses for 40,41, empty. Any other code causes failure -> NO. So iterate chars; if c == '(' bal++; else if c == ')' {if bal==0 ok=false; else bal--;} else ok=false. But source after strip_cr_codes, line may contain '\\r' not at end? invalid. We'll strip trailing \\r as source. For valid input okay. For trailing spaces, source fails because codes include space -> NO, ours if else invalid false. Good.\n bool ok=true; int bal=0; for(char c: line){ if(c=='(') bal++; else if(c==')'){ if(bal==0){ok=false;} else bal--; } else { // source would fail\n   ok=false;\n } } if(bal!=0) ok=false; cout<<(ok?\"YES\\n\":\"NO\\n\");}\n return 0;\n}\n\nBut consider source read_print_lines for each line; if line length maybe empty; valid_codes([],0) true -> YES. Ours empty bal0 ok true -> YES. Good.\n\nNeed maybe if getline fails, source stops early and doesn't print remaining; ours break. Fine.\n\nReturn exactly code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794994081,
+    "id": "chatcmpl-ebfbd47ec8a1dda59a5a193d3676b229",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 1061,
+      "completion_tokens_details": {
+        "reasoning_tokens": 832
+      },
+      "prompt_tokens": 1091,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 2152
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.001487604,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 10.647596800001338,
+  "logical_request_id": "2db65e18553a89aba639aa41d269d2f84819eb6bc76fa69b3738e04e223da89b",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-prolog\\attempt-05\\step-10\\response_body.txt",
+  "received_at": "2026-11-18T09:28:09.953038+00:00",
+  "request_id": "chatcmpl-ebfbd47ec8a1dda59a5a193d3676b229",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int T;\n    if (!(cin >> T)) return 0;\n\n    string line;\n    getline(cin, line);\n\n    for (int i = 0; i < T; ++i) {\n        if (!getline(cin, line)) break;\n\n        if (!line.empty() && line.back() == '\\r') {\n            line.pop_back();\n        }\n\n        bool ok = true;\n        int balance = 0;\n\n        for (char c : line) {\n            if (c == '(') {\n                ++balance;\n            } else if (c == ')') {\n                if (balance == 0) {\n                    ok = false;\n                } else {\n                    --balance;\n                }\n            } else {\n                ok = false;\n            }\n        }\n\n        if (balance != 0) ok = false;\n\n        cout << (ok ? \"YES\\n\" : \"NO\\n\");\n    }\n\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 1061,
+    "completion_tokens_details": {
+      "reasoning_tokens": 832
+    },
+    "prompt_tokens": 1091,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 2152
+  },
+  "usage_raw": {
+    "completion_tokens": 1061,
+    "completion_tokens_details": {
+      "reasoning_tokens": 832
+    },
+    "prompt_tokens": 1091,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 2152
+  }
+}

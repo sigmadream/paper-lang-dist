@@ -1,0 +1,95 @@
+{
+  "text": "```prolog\nmain :-\n    read_line_to_codes(user_input, L),\n    ( L == end_of_file -> true\n    ; number_codes(T, L),\n      loop(T)\n    ).\n\nloop(0) :- !.\nloop(N) :-\n    N > 0,\n    read_line_to_codes(user_input, L),\n    ( L == end_of_file -> true\n    ; check(L, 0, R),\n      ( R == ok(0) -> Out = \"YES\" ; Out = \"NO\" ),\n      format(\"~s~n\", [Out]),\n      N1 is N - 1,\n      loop(N1)\n    ).\n\ncheck([], B, ok(B)).\ncheck([0'(|Cs], B, R) :-\n    B1 is B + 1,\n    check(Cs, B1, R).\ncheck([_)|Cs], B, R) :-\n    B1 is B - 1,\n    ( B1 < 0 -> R = bad\n    ; check(Cs, B1, R)\n    ).\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 557,
+    "prompt_tokens": 612,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1169
+  },
+  "usage_raw": {
+    "completion_tokens": 557,
+    "prompt_tokens": 612,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1169
+  },
+  "cost_usd": 0.0031616800000000005,
+  "cost_source": "estimated",
+  "request_id": "a1c1cb75-b77e-4d69-851e-b5e3628b847a",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_9012\\cpp-via-prolog\\attempt-04\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\nmain :-\n    read_line_to_codes(user_input, L),\n    ( L == end_of_file -> true\n    ; number_codes(T, L),\n      loop(T)\n    ).\n\nloop(0) :- !.\nloop(N) :-\n    N > 0,\n    read_line_to_codes(user_input, L),\n    ( L == end_of_file -> true\n    ; check(L, 0, R),\n      ( R == ok(0) -> Out = \"YES\" ; Out = \"NO\" ),\n      format(\"~s~n\", [Out]),\n      N1 is N - 1,\n      loop(N1)\n    ).\n\ncheck([], B, ok(B)).\ncheck([0'(|Cs], B, R) :-\n    B1 is B + 1,\n    check(Cs, B1, R).\ncheck([_)|Cs], B, R) :-\n    B1 is B - 1,\n    ( B1 < 0 -> R = bad\n    ; check(Cs, B1, R)\n    ).\n```",
+          "reasoning_content": "Prolog:\n\n```prolog\n:- module(main, []).\n```\nActually just define main/0. Read lines.\n\n```prolog\nmain :-\n    read_line_to_codes(user_input, L),\n    ( L == end_of_file -> true\n    ; number_codes(T, L),\n      loop(T) ).\n\nloop(0) :- !.\nloop(N) :-\n    read_line_to_codes(user_input, L),\n    ( L == end_of_file -> true\n    ; check(L, 0, Bal),\n      ( Bal == 0 -> R = \"YES\" ; R = \"NO\" ),\n      format(\"~s~n\", [R]),\n      N1 is N-1,\n      loop(N1) ).\n\ncheck([], B, B).\ncheck([0'(|Cs], B, R) :- B1 is B+1, !, check(Cs, B1, R).\ncheck([_)|Cs], B, R) :- B1 is B-1, B1 >= 0, !, check(Cs, B1, R).\n```\n\nWait if B goes negative, second clause fails; need to catch. Use catch or handle: if negative, result NO. Simpler: check with validity flag.\n\n```prolog\ncheck([], B, ok(B)).\ncheck([0'(|Cs], B, R) :- B1 is B+1, check(Cs, B1, R).\ncheck([_)|Cs], B, R) :- B1 is B-1, ( B1 < 0 -> R = bad ; check(Cs, B1, R) ).\n```\n\nThen result ok(0) -> YES.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794895569,
+    "id": "a1c1cb75-b77e-4d69-851e-b5e3628b847a",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 557,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_688a647489c243b38be7fcffd121954a",
+      "trace_id": "0de834a23f0a4dcbbad7572de83ceb29"
+    },
+    "usage": {
+      "completion_tokens": 557,
+      "prompt_tokens": 612,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 1169
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.046083299966995,
+  "received_at": "2026-11-17T06:06:09.417605+00:00",
+  "logical_request_id": "a89c49d3b25c4191169c7d3bc948abcdf9b427f9e16c9435087516dc8d5802e4",
+  "execution_class": "direct_api"
+}

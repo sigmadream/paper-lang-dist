@@ -1,0 +1,94 @@
+{
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    ios_base::sync_with_stdio(false);\n    cin.tie(nullptr);\n    int n, m;\n    cin >> n >> m;\n    vector<vector<int>> adj(n+1);\n    for(int i=0;i<m;i++){\n        int u,v;\n        cin >> u >> v;\n        adj[u].push_back(v);\n        adj[v].push_back(u);\n    }\n    vector<int> dist(n+1,-1);\n    queue<int> q;\n    q.push(1);\n    dist[1]=0;\n    int ans=0;\n    while(!q.empty()){\n        int curr=q.front();\n        q.pop();\n        for(int next: adj[curr]){\n            if(dist[next]==-1){\n                dist[next]=dist[curr]+1;\n                q.push(next);\n                if(dist[next]<=2) ans++;\n            }\n        }\n    }\n    cout << ans << \"\\n\";\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 208,
+    "prompt_tokens": 778,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 986
+  },
+  "usage_raw": {
+    "completion_tokens": 208,
+    "prompt_tokens": 778,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 986
+  },
+  "cost_usd": 0.0014936799999999998,
+  "cost_source": "estimated",
+  "request_id": "a0f82a98-7d7b-43f3-bff6-f966b2fc58b1",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_5567\\cpp-via-java\\attempt-05\\step-10\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    ios_base::sync_with_stdio(false);\n    cin.tie(nullptr);\n    int n, m;\n    cin >> n >> m;\n    vector<vector<int>> adj(n+1);\n    for(int i=0;i<m;i++){\n        int u,v;\n        cin >> u >> v;\n        adj[u].push_back(v);\n        adj[v].push_back(u);\n    }\n    vector<int> dist(n+1,-1);\n    queue<int> q;\n    q.push(1);\n    dist[1]=0;\n    int ans=0;\n    while(!q.empty()){\n        int curr=q.front();\n        q.pop();\n        for(int next: adj[curr]){\n            if(dist[next]==-1){\n                dist[next]=dist[curr]+1;\n                q.push(next);\n                if(dist[next]<=2) ans++;\n            }\n        }\n    }\n    cout << ans << \"\\n\";\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794902466,
+    "id": "a0f82a98-7d7b-43f3-bff6-f966b2fc58b1",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 208,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_15f2f7c64cf449eeb23edf4a0aae85da",
+      "trace_id": "1935d141a4c24fd3947badc51b25fb01"
+    },
+    "usage": {
+      "completion_tokens": 208,
+      "prompt_tokens": 778,
+      "prompt_tokens_details": {
+        "cached_tokens": 448
+      },
+      "total_tokens": 986
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.8741746000014246,
+  "received_at": "2026-11-17T08:01:05.825396+00:00",
+  "logical_request_id": "e9b99a13c99451ec029a4dd11b4d28d16d0f7e9b2681c68f72f6ab4747dacc24",
+  "execution_class": "direct_api"
+}

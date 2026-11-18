@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    int n;\n    if (!(std::cin >> n)) return 0;\n    std::vector<int> a(n);\n    for (int i = 0; i < n; ++i) {\n        std::cin >> a[i];\n    }\n\n    int write = 0;\n    for (int read = 0; read < n; ++read) {\n        if (a[read] != 0) {\n            int t = a[write];\n            a[write] = a[read];\n            a[read] = t;\n            ++write;\n        }\n    }\n\n    for (int i = 0; i < n; ++i) {\n        if (i > 0) std::cout << ' ';\n        std::cout << a[i];\n    }\n    std::cout << '\\n';\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 658,
+    "total_tokens": 864,
+    "completion_tokens": 206,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 9
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 658,
+    "total_tokens": 864,
+    "completion_tokens": 206,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 9
+    }
+  },
+  "cost_usd": 0.0004446,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-4fa74147a5ee8abcb8239b03ed0d2a22",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-java\\attempt-05\\step-06\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-4fa74147a5ee8abcb8239b03ed0d2a22",
+    "object": "chat.completion",
+    "created": 1794997561,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    int n;\n    if (!(std::cin >> n)) return 0;\n    std::vector<int> a(n);\n    for (int i = 0; i < n; ++i) {\n        std::cin >> a[i];\n    }\n\n    int write = 0;\n    for (int read = 0; read < n; ++read) {\n        if (a[read] != 0) {\n            int t = a[write];\n            a[write] = a[read];\n            a[read] = t;\n            ++write;\n        }\n    }\n\n    for (int i = 0; i < n; ++i) {\n        if (i > 0) std::cout << ' ';\n        std::cout << a[i];\n    }\n    std::cout << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "Translate to C++ preserving behavior. Simple."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 658,
+      "total_tokens": 864,
+      "completion_tokens": 206,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 9
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.3307982000987977,
+  "received_at": "2026-11-18T10:26:02.880170+00:00",
+  "logical_request_id": "5020667290c891d00e003f50dc5a394695522851347b6a86a9b5c36d521f1aa0",
+  "execution_class": "direct_api"
+}

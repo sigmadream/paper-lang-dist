@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    int m, n;\n    if (!(std::cin >> m >> n)) return 0;\n\n    std::vector<long long> dp(n, 1);\n\n    for (int i = 1; i < m; ++i) {\n        for (int j = 1; j < n; ++j) {\n            dp[j] += dp[j - 1];\n        }\n    }\n\n    std::cout << dp[n - 1] << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer code block only. Translate Java to C++17. Need preserve behavior. Simple. Use iostream. long long dp maybe long in Java 64-bit. Input M N. If n maybe. Output. Exactly code.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794988401,
+    "id": "chatcmpl-3b262220a561eb5bba72a5a47864a829",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 172,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 538,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 710
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0003678,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.470311400014907,
+  "logical_request_id": "699c9a0d02b7c2afad8548421c54f3f00a088e763316ec5279be2f8330d16ef0",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-java\\attempt-04\\step-04\\response_body.txt",
+  "received_at": "2026-11-18T07:53:22.155787+00:00",
+  "request_id": "chatcmpl-3b262220a561eb5bba72a5a47864a829",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    int m, n;\n    if (!(std::cin >> m >> n)) return 0;\n\n    std::vector<long long> dp(n, 1);\n\n    for (int i = 1; i < m; ++i) {\n        for (int j = 1; j < n; ++j) {\n            dp[j] += dp[j - 1];\n        }\n    }\n\n    std::cout << dp[n - 1] << '\\n';\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 172,
+    "completion_tokens_details": {
+      "reasoning_tokens": 48
+    },
+    "prompt_tokens": 538,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 710
+  },
+  "usage_raw": {
+    "completion_tokens": 172,
+    "completion_tokens_details": {
+      "reasoning_tokens": 48
+    },
+    "prompt_tokens": 538,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 710
+  }
+}

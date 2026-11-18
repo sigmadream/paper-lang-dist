@@ -1,0 +1,82 @@
+{
+  "source": ":- module(main, [main/0]).\n:- set_current_prolog_flag(argv, main).\n\nread_line(Line) :-\n    read_line_to_codes(current_input, Cs),\n    ( Cs == end_of_file -> Line = []\n    ; Cs == [] -> Line = []\n    ; append(Cs, [0'\\n], Cs2), read_line_to_codes(current_input, Rest),\n      append(Cs2, Rest, Line)\n    ).\n\ntrim_trailing(Line, Str) :-\n    append(Str, Tail, Line),\n    ( Tail == [] ; Tail == [0'\\n] ; Tail == [0'\\r,0'\\n] ; Tail == [0'\\r] ),\n    !.\n\nmain :-\n    read_line_to_codes(current_input, S0),\n    read_line_to_codes(current_input, T0),\n    ( S0 == end_of_file -> S = [] ; S = S0 ),\n    ( T0 == end_of_file -> T = [] ; T = T0 ),\n    ( append(S, [0'\\r], S1) -> true ; S1 = S ),\n    ( append(T, [0'\\r], T1) -> true ; T1 = T ),\n    ( msort(S1, SS), msort(T1, TT), SS == TT -> R = 1 ; R = 0 ),\n    format(\"~d~n\", [R]).",
+  "evaluation_status": "compile_error",
+  "sym_adj": null,
+  "sym_origin": null,
+  "sym_status": null,
+  "timing": {
+    "elapsed_seconds": 4.6049692000378855,
+    "confirmation_seconds": 0,
+    "checkpoint_monotonic": 506085.298826,
+    "active_kind": "discovery",
+    "stage": "evaluation",
+    "deadline_reason": null
+  },
+  "deadline_reason": null,
+  "accepted_within_deadline": true,
+  "source_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0242\\cpp-via-prolog\\attempt-04\\step-01\\source.pl",
+  "evaluation": {
+    "contract": {
+      "source": "1b46e051834871663ed0980651d0aa6ba02025f7b7f8999b89c0cb0142721740",
+      "language": "prolog",
+      "runtime": {
+        "tools": {
+          "cpp": "C:\\Users\\sigma\\scoop\\apps\\perl\\5.42.3.1\\c\\bin\\g++.exe",
+          "python": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+          "java": "C:\\Users\\sigma\\scoop\\apps\\openjdk\\current\\bin\\javac.EXE",
+          "haskell": "C:\\Users\\sigma\\scoop\\apps\\ghcup\\current\\ghcup\\bin\\ghc.EXE",
+          "prolog": "C:\\Users\\sigma\\scoop\\shims\\swipl.EXE"
+        },
+        "compile_timeout": 180,
+        "fixture_timeout": 5,
+        "minimum_evaluation_cases": 13
+      },
+      "inputs": {
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case01.inp": "cee8f1d8fa61dd2483fcf338f8ed5062c25baef219443b45271685356e440c32",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case01.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case02.inp": "58055bdcc73787eb88c78d36f0b4939e9c5dc1c3ad17e25cc85a6833cf1a0cab",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case02.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case03.inp": "7a34a9fa09265f2ba21c828ec0f9cfcdd8744e8a174b3b0aac8c0143cd44a60c",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case03.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case04.inp": "0ae9508ece40e4d195760e69c0880f27d15f36111dd2ab637026bd9fe203cc7c",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case04.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case05.inp": "9dcfea3d1e76313597bbf74417e87c438e955b9642863b80a2224382c29cc9db",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case05.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case06.inp": "2868ef10209cd547fc6a00feda428c4a372ef343a281679097f5df59d8fc88dc",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case06.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case07.inp": "1178c38ab2ae9605f58435e67fe9a6849d23e45009cbbcf00432879c46f37051",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case07.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case08.inp": "9048d07dccb2b2e666f8849fd0a266db51ce536053e63f780aa73605f4d881f7",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case08.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case09.inp": "328ddd4615dc72a7f2ce0b00894947f153fe008b62da64b17a0a943f92412b9c",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case09.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case10.inp": "c423436852156d7687ad33e4f3f91c9c6ff395494d0e631d2fcda15bed6773a4",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case10.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case11.inp": "62e71acf0ffdd715daa46f7f458b5c36d626c3906954103bdc835794a7ba57e4",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case11.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case12.inp": "c342d2cf7dcd0978fd6bdd9671a6a95e5f894498d3c78f3c8c69b7eb4e1b73f8",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case12.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case13.inp": "29dd82a8b2c6db2768a88e25c436b4244c6fd5ce455683cb30971d80b2a45cff",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0242\\evaluation\\case13.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+      }
+    },
+    "compile": {
+      "command": [
+        "C:\\Users\\sigma\\scoop\\shims\\swipl.EXE",
+        "-q",
+        "--on-error=status",
+        "-l",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0242\\cpp-via-prolog\\attempt-04\\step-01\\evaluation\\Main.pl",
+        "-g",
+        "halt"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "ERROR: c:/users/sigma/orca/workspaces/paper-lang-dist/stickleback/artifacts-rtt-v1.6/live-commandcode-20261117/commandcode-glm53-v16-20261117/main/lc_0242/cpp-via-prolog/attempt-04/step-01/evaluation/main.pl:2:\nERROR:    catch/3: Unknown procedure: main:set_current_prolog_flag/2\nWarning: c:/users/sigma/orca/workspaces/paper-lang-dist/stickleback/artifacts-rtt-v1.6/live-commandcode-20261117/commandcode-glm53-v16-20261117/main/lc_0242/cpp-via-prolog/attempt-04/step-01/evaluation/main.pl:2:\nWarning:    Goal (directive) failed: main:set_current_prolog_flag(argv,main)\nWarning: [Thread main] Halting with status 1 due to 1 errors and 1 warnings\n",
+      "timed_out": false,
+      "seconds": 0.2706537999911234
+    },
+    "cases": [],
+    "status": "compile_error"
+  }
+}

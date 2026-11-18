@@ -1,0 +1,86 @@
+{
+  "text": "```prolog\nmain :-\n    ( read_line_to_codes(user_input, FirstCodes),\n      FirstCodes \\== end_of_file ->\n        trim_codes(FirstCodes, TCodes),\n        ( TCodes == [] ->\n            true\n        ; ( catch(number_codes(T, TCodes), _, fail) ->\n              loop(T)\n          ; true\n          )\n        )\n    ; true\n    ).\n\nloop(0) :- !.\nloop(N) :-\n    N > 0,\n    read_line_to_codes(user_input, Line),\n    ( Line == end_of_file ->\n        true\n    ; trim_codes(Line, S),\n      ( valid_parens(S) ->\n          writeln('YES')\n      ; writeln('NO')\n      ),\n      N1 is N - 1,\n      loop(N1)\n    ).\n\ntrim_codes(Codes, Trimmed) :-\n    strip_leading_ws(Codes, C1),\n    reverse(C1, R1),\n    strip_leading_ws(R1, R2),\n    reverse(R2, Trimmed).\n\nstrip_leading_ws([C|Cs], Rest) :-\n    whitespace(C),\n    !,\n    strip_leading_ws(Cs, Rest).\nstrip_leading_ws(Cs, Cs).\n\nwhitespace(C) :-\n    C =:= 9\n    ; C =:= 10\n    ; C =:= 11\n    ; C =:= 12\n    ; C =:= 13\n    ; C =:= 32.\n\nvalid_parens(Codes) :-\n    Codes \\== [],\n    valid(Codes, 0).\n\nvalid([], 0).\nvalid([40|Cs], Bal) :-\n    Bal1 is Bal + 1,\n    valid(Cs, Bal1).\nvalid([41|Cs], Bal) :-\n    Bal > 0,\n    Bal1 is Bal - 1,\n    valid(Cs, Bal1).\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 883,
+    "total_tokens": 4132,
+    "completion_tokens": 3249,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2836
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 883,
+    "total_tokens": 4132,
+    "completion_tokens": 3249,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2836
+    }
+  },
+  "cost_usd": 0.0041637,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-1aec9a0327561e027515a3eea7b858d6",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-prolog\\attempt-03\\step-07\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-1aec9a0327561e027515a3eea7b858d6",
+    "object": "chat.completion",
+    "created": 1794991702,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\nmain :-\n    ( read_line_to_codes(user_input, FirstCodes),\n      FirstCodes \\== end_of_file ->\n        trim_codes(FirstCodes, TCodes),\n        ( TCodes == [] ->\n            true\n        ; ( catch(number_codes(T, TCodes), _, fail) ->\n              loop(T)\n          ; true\n          )\n        )\n    ; true\n    ).\n\nloop(0) :- !.\nloop(N) :-\n    N > 0,\n    read_line_to_codes(user_input, Line),\n    ( Line == end_of_file ->\n        true\n    ; trim_codes(Line, S),\n      ( valid_parens(S) ->\n          writeln('YES')\n      ; writeln('NO')\n      ),\n      N1 is N - 1,\n      loop(N1)\n    ).\n\ntrim_codes(Codes, Trimmed) :-\n    strip_leading_ws(Codes, C1),\n    reverse(C1, R1),\n    strip_leading_ws(R1, R2),\n    reverse(R2, Trimmed).\n\nstrip_leading_ws([C|Cs], Rest) :-\n    whitespace(C),\n    !,\n    strip_leading_ws(Cs, Rest).\nstrip_leading_ws(Cs, Cs).\n\nwhitespace(C) :-\n    C =:= 9\n    ; C =:= 10\n    ; C =:= 11\n    ; C =:= 12\n    ; C =:= 13\n    ; C =:= 32.\n\nvalid_parens(Codes) :-\n    Codes \\== [],\n    valid(Codes, 0).\n\nvalid([], 0).\nvalid([40|Cs], Bal) :-\n    Bal1 is Bal + 1,\n    valid(Cs, Bal1).\nvalid([41|Cs], Bal) :-\n    Bal > 0,\n    Bal1 is Bal - 1,\n    valid(Cs, Bal1).\n```",
+          "reasoning_content": "We need answer one fenced code block Prolog. Need translate C++ preserving stdin/stdout for valid inputs. Need SWI-Prolog main/0. Read T first line trim whitespace, then T lines, trim, check parentheses. Output YES/NO.\n\nNeed be careful Prolog reading lines from stdin. Use read_line_to_string/2? SWI has read_line_to_string(Stream,String). Read first line. trim whitespace. stoi. Need parse integer from trimmed string. Could use number_string. T positive. Then loop T: read line; trim; valid. If EOF? C++ breaks and outputs only lines read. Spec valid input T lines so okay. Need output ordering. Use format or writeln.\n\nNeed implement trim whitespace includes tabs, nl, vt, ff, cr, space. read_line_to_string excludes newline. Could trim using char codes. Need handle leading/trailing whitespace. T no spaces maybe. Lines may empty? length 2..50 but trimming could make empty if whitespace line. Then NO, which C++ does (empty invalid). Good.\n\nNeed use only standard libs shipped SWI.\n\nMain:\nmain :-\n    ( catch(read_line_to_string(user_input, First), _, fail) -> true ; true? )\nNeed if no first line return. Simpler:\nmain :-\n    ( read_line_to_string(user_input, First) ->\n        trim_string(First, TStr),\n        ( TStr == \"\" -> true\n        ; catch(number_string(T, TStr), _, fail) -> ...\n        ; true )\n    ; true ).\n\nBut if number_string fails, need return. Use if-then else.\n\nThen loop T:\nprocess(T) with recursion.\nread_line_to_string(user_input, Line) returns end_of_file atom if EOF? Documentation read_line_to_string(-String) reads line; at EOF returns end_of_file. Need handle. C++ for loop i<T: getline if fail break. So if end_of_file, stop. But if first line ok and missing lines, stop. Use.\nprocess(0,_)?? T positive.\n\nDefine loop(0) :- !. loop(N) :- read_line_to_string(user_input, Line), ( Line == end_of_file -> true ; trim_string(Line,S), ( valid_parens(S) -> writeln('YES') ; writeln('NO') ), N1 is N-1, loop(N1) ).\n\nNeed ensure read_line_to_string returns string maybe end_of_file atom. For T parse:\ntrim_string(Input, Trimmed) using string_codes or char handling. Simpler use string_codes and codes_trim. Or use atomic? Input is string.\n\nImplement trim_string(String, Trimmed) :-\n   string_codes(String, Codes),\n   trim_codes(Codes, TrimmedCodes),\n   string_codes(Trimmed, TrimmedCodes).\n\ntrim_codes(Codes, Result) :-\n   drop_leading(Codes, Codes1),\n   reverse(Codes1, Rev),\n   drop_leading(Rev, Rev1),\n   reverse(Rev1, Result).\n\ndrop_leading([C|Cs], Rest) :- is_ws(C), !, drop_leading(Cs, Rest).\ndrop_leading(Cs, Cs).\n\nis_ws(C) :- member(C, [9,10,11,12,13,32]).\n\nvalid_parens(S) :- S \\== \"\", string_codes(S, Codes), valid_bal(Codes,0), final 0.\n\nBut string_codes on string. Could use chars? Fine.\n\nvalid_parens(S) :-\n  S \\== '',\n  string_codes(S, Codes),\n  valid(Codes, 0).\n\nvalid([], Bal) :- Bal =:= 0.\nvalid([C|Cs], Bal) :-\n  ( C =:= 40 -> Bal1 is Bal+1, valid(Cs,Bal1)\n  ; C =:= 41 -> Bal > 0, Bal1 is Bal-1, valid(Cs,Bal1)\n  ; fail\n  ).\nNeed note S \\== \"\" with empty string. In Prolog double quoted strings are strings due SWI. S \\== \"\" works. But if S is atom? read_line_to_string returns string, trim returns string. Good.\n\nPotential issue Prolog syntax for if-then with number parse. Need parse T from TStr. number_string(T,TStr). Number_string requires TStr can have +/- etc. T positive. If TStr empty, fail. Use catch to be safe. If no T or invalid, main succeeds no output. C++ tries stoi: stoi(\"abc\") throws caught return 0. stoi(\"1abc\") actually returns 1 (parses prefix). But valid spec T positive integer no issue. Could preserve valid input only.\n\nNeed main/0 only, no init directives. Good.\n\nNeed output exactly code block. Should we include module declaration? Requirement: SWI-Prolog, define main/0; evaluator invokes main; do not add initialization directives. Could include :- module? No, main. Need no initialization. Just predicates. Need ensure main/0 doesn't conflict with system? It's fine.\n\nNeed decide output final exactly one fenced code block, no explanation. Ensure code compiles with SWI. Need avoid Unicode? Fine.\n\nLet's craft robust.\n\nPotential subtlety: read_line_to_string/2 predicate availability: SWI-Prolog has read_line_to_string/2 since 7? Yes. It is library(readutil)? Actually read_line_to_string/2 is built-in in SWI? I think read_line_to_string/2 is in library(readutil) originally? Let's recall SWI: read_line_to_codes/2, read_line_to_string/2 are built-in? They are in library(readutil)? In SWI-Prolog, read_line_to_codes/2 is built-in. read_line_to_string/2 is also built-in? I have used read_line_to_string(user_input, Line) in SWI without include. Documentation says read_line_to_string(+Stream, -String) is a built-in? It might be in library(readutil). But SWI auto-loads? Hmm.\n\nRequirement only standard libs. Could use read_line_to_codes/2 which definitely built-in. Then string_codes. Let's use read_line_to_codes to be safe. It returns Codes or end_of_file. Then trim codes directly. Main read first line codes. For T parse, codes -> string -> trim -> number_string. Or parse trimmed codes to number via number_codes? number_codes(T, TrimmedCodes). That accepts. Good. Output via writeln atom YES/NO. For each line read_line_to_codes.\n\nread_line_to_codes(user_input, Codes) reads line excluding newline; at EOF returns end_of_file. It might return empty list for empty line. Good.\n\nImplement trim_codes as above.\n\nMain:\nmain :-\n    ( read_line_to_codes(user_input, FirstCodes), FirstCodes \\== end_of_file ->\n        trim_codes(FirstCodes, TCodes),\n        ( Tcodes == [] -> true\n        ; catch(number_codes(T, Tcodes), _, fail) ->\n            loop(T)\n        ; true )\n    ; true ).\n\nCareful Prolog syntax: `( read_line_to_codes(...), FirstCodes \\== end_of_file -> ... ; true)`.\n\nBut number_codes may succeed with trailing garbage? number_codes('1abc', ..) fails? number_codes parses entire code list? SWI number_codes requires entire list? I think `number_codes(X, \"1abc\")` fails because syntax error. Good valid.\n\nTrim codes:\ntrim_codes(Codes, Trimmed) :-\n    strip_leading_ws(Codes, C1),\n    reverse(C1, R1),\n    strip_leading_ws(R1, R2),\n    reverse(R2, Trimmed).\n\nstrip_leading_ws([C|Cs], Rest) :-\n    whitespace(C), !, ...\nNeed whitespace facts. Avoid member? Could use `whitespace(C) :- C =:= 9 ; ...`.\nUse ->? fine.\n\nvalid:\nvalid_parens(Codes) :- Codes \\== [], valid_bal(Codes,0).\nBut S empty check at trimmed codes list. valid_parens(S) if string? We can directly with codes. In loop read codes, trim, call valid_parens(S) maybe use codes.\n\nDefine valid_parens([]) :- fail? We can:\nvalid_parens(Codes) :-\n    Codes \\== [],\n    valid(Codes, 0).\n\nvalid([], Bal) :- Bal =:= 0.\nvalid([40|Cs], Bal) :- !, Bal1 is Bal+1, valid(Cs,Bal1).\nvalid([41|Cs], Bal) :- !, Bal > 0, Bal1 is Bal-1, valid(Cs,Bal1).\nvalid(_, _) :- fail. But with cuts maybe fine.\nSimpler:\nvalid([], 0).\nvalid([40|Cs], Bal) :- Bal1 is Bal+1, valid(Cs, Bal1).\nvalid([41|Cs], Bal) :- Bal > 0, Bal1 is Bal-1, valid(Cs, Bal1).\nThis ensures other codes fail. Initial 0. At end Bal=0. Good.\n\nloop(0) :- !.\nloop(N) :-\n    N > 0,\n    read_line_to_codes(user_input, Line),\n    ( Line == end_of_file -> true\n    ; trim_codes(Line, S),\n      ( valid_parens(S) -> writeln('YES') ; writeln('NO') ),\n      N1 is N - 1,\n      loop(N1)\n    ).\n\nIf EOF before N, stops. C++ for loop breaks if getline fail, yes.\n\nPotential issue if read_line_to_codes at EOF after all expected? loop stops before reading extra. Good.\n\nNeed T parse, number_codes accepts trimmed codes. If T = 0? Spec positive. loop(0) outputs none; C++ would none. Good.\n\nNeed maybe handle T negative? Spec positive. If negative loop(N) N>0 false? loop(-1) no clause. But C++ loop i< -1 none. Not needed. Could add loop(N) :- N =< 0. But with cut for 0 only. Valid T positive. Fine is okay but maybe main catch. Spec.\n\nNeed use `writeln('YES')` prints YES newline. In Prolog `writeln('YES')` writes atom YES. Good.\n\nNeed potential name conflict `valid/2` with library. Fine.\n\nNeed final code block only. Ensure no initialization directives. No `:- initialization(main)`. Good.\n\nLet's consider SWI string vs atom: read_line_to_codes returns codes. Good.\n\nNeed preserve trimming: C++ trim trims leading and trailing whitespace. read_line_to_codes excludes newline but line may contain CR? For Windows line endings, read_line_to_codes may include \\r? It probably reads up to \\n and includes \\r? Actually read_line_to_codes reads line and strips newline, may leave \\r. Trim removes 13. Good.\n\nOutput for lines: C++ if getline fails break. If input has blank line, getline succeeds with empty, trim empty, NO. Our read_line_to_codes returns [] for blank, trim [], valid_parens([]) fails -> NO. Good.\n\nInitial if first line only whitespace: C++ trim empty return 0. Our Tcodes == [] -> true. Good.\n\nIf first line invalid number: C++ return 0. Our number_codes fails catch -> true. Good.\n\nNeed catch number_codes? number_codes won't throw usually. Could omit. But use catch safe.\n\nSyntax:\nmain :-\n    ( read_line_to_codes(user_input, FirstCodes),\n      FirstCodes \\== end_of_file\n    ->\n        trim_codes(FirstCodes, TCodes),\n        ( Tcodes == []\n        -> true\n        ; catch(number_codes(T, Tcodes), _, fail)\n        ->\n            loop(T)\n        ; true\n        )\n    ;\n        true\n    ).\n\nPotential operator precedence with nested if. Need parentheses. Prolog `;` with `->` precedence tricky. Need ensure. Write with explicit if-then-else using `( Cond -> Then ; Else )`. For parse:\n( Tcodes == [] -> true\n; ( catch(number_codes(T,Tcodes), _, fail) -> loop(T) ; true )\n)\nThis is clear.\n\nMain:\nmain :-\n    ( read_line_to_codes(user_input, FirstCodes),\n      FirstCodes \\== end_of_file ->\n        trim_codes(FirstCodes, Tcodes),\n        ( Tcodes == [] ->\n            true\n        ; ( catch(number_codes(T, Tcodes), _, fail) ->\n              loop(T)\n          ; true\n          )\n        )\n    ; true\n    ).\n\nNeed note condition `read_line_to_codes(...), FirstCodes \\== end_of_file -> ...` will bind FirstCodes and check. If EOF, else true.\n\nFunctions order doesn't matter.\n\nNeed if `catch(number_codes(T, Tcodes), _, fail)` has variable T in condition; if succeeds T bound. Good.\n\nPotential issue Tcodes variable case: use Tcodes vs T Codes? We'll be consistent.\n\nLet's final."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 883,
+      "total_tokens": 4132,
+      "completion_tokens": 3249,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 2836
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 24.425296999979764,
+  "received_at": "2026-11-18T08:48:44.598344+00:00",
+  "logical_request_id": "453f3c071e49b74da6e9fd47de9a3ab94a1d9868b224ddc3afdd28f1fa01ce09",
+  "execution_class": "direct_api"
+}

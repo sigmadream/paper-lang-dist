@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n:- set_prolog_flag(double_quotes, codes).\n\nmain :-\n    read_line_to_codes(user_input, L),\n    phrase(numbers(L), [M,N]),\n    unique_paths(M, N, R),\n    format(\"~d~n\", [R]).\n\nnumbers([]) --> [].\nnumbers([C|T]) --> {code_type(C, space)}, !, numbers(T).\nnumbers([C|T]) --> {digit(C)}, number_(Cs, [C|T], R), numbers(R1),\n    {R1 = T}, [R|Rest], !, {Rest = []}.\n```\n\nWait, that's wrong. Let me write it cleanly:\n\n```prolog\n:- module(main, [main/0]).\n\nmain :-\n    read_line_to_codes(user_input, L),\n    phrase(nums(L), [M, N]),\n    unique_paths(M, N, R),\n    format(\"~d~n\", [R]).\n\nnums([]) --> [].\nnums([C|T]) --> {code_type(C, space)}, nums(T).\nnums([C|T]) --> {char_type(C, digit)}, !,\n    digits(T, Ds, Rest),\n    {number_codes(N, [C|Ds])},\n    nums(Rest), [N].\nnums([C|T]) --> [C], nums(T).\n\ndigits([C|T], [C|Ds], Rest) :- char_type(C, digit), !, digits(T, Ds, Rest).\ndigits(L, [], L).\n\nunique_paths(1, _, 1) :- !.\nunique_paths(_, 1, 1) :- !.\nunique_paths(M, N, R) :-\n    N2 is N - 1,\n    length(Dp, N2),\n    maplist(=(1), Dp),\n    rows(1, M, Dp, Final),\n    last(Final, R).\n\nrows(M, M, Dp, Dp) :- !.\nrows(I, M, Dp, Final) :-\n    I < M,\n    prefix_sum(Dp, NewDp),\n    I1 is I + 1,\n    rows(I1, M, NewDp, Final).\n\nprefix_sum([X], [X]).\nprefix_sum([X,Y|T], [X|Rest]) :-\n    Z is X + Y,\n    prefix_sum([Z|T], Rest).\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794897061,
+    "id": "c50630db-db47-4ce9-970a-ae93fb8f30ef",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 504,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_3fb7129c1f334f6ea8cc411cc755cf64",
+      "trace_id": "19e7c92c4ad84c4a9256983134842907"
+    },
+    "usage": {
+      "completion_tokens": 504,
+      "prompt_tokens": 590,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 1094
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00289768,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 4.9527699000318535,
+  "logical_request_id": "ee26552f67b27eaaec032527deee6a81e8d43f018e2ea3a34193e6b4e6c32aef",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0062\\cpp-via-prolog\\attempt-04\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T06:31:00.874075+00:00",
+  "request_id": "c50630db-db47-4ce9-970a-ae93fb8f30ef",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```prolog\n:- module(main, [main/0]).\n:- set_prolog_flag(double_quotes, codes).\n\nmain :-\n    read_line_to_codes(user_input, L),\n    phrase(numbers(L), [M,N]),\n    unique_paths(M, N, R),\n    format(\"~d~n\", [R]).\n\nnumbers([]) --> [].\nnumbers([C|T]) --> {code_type(C, space)}, !, numbers(T).\nnumbers([C|T]) --> {digit(C)}, number_(Cs, [C|T], R), numbers(R1),\n    {R1 = T}, [R|Rest], !, {Rest = []}.\n```\n\nWait, that's wrong. Let me write it cleanly:\n\n```prolog\n:- module(main, [main/0]).\n\nmain :-\n    read_line_to_codes(user_input, L),\n    phrase(nums(L), [M, N]),\n    unique_paths(M, N, R),\n    format(\"~d~n\", [R]).\n\nnums([]) --> [].\nnums([C|T]) --> {code_type(C, space)}, nums(T).\nnums([C|T]) --> {char_type(C, digit)}, !,\n    digits(T, Ds, Rest),\n    {number_codes(N, [C|Ds])},\n    nums(Rest), [N].\nnums([C|T]) --> [C], nums(T).\n\ndigits([C|T], [C|Ds], Rest) :- char_type(C, digit), !, digits(T, Ds, Rest).\ndigits(L, [], L).\n\nunique_paths(1, _, 1) :- !.\nunique_paths(_, 1, 1) :- !.\nunique_paths(M, N, R) :-\n    N2 is N - 1,\n    length(Dp, N2),\n    maplist(=(1), Dp),\n    rows(1, M, Dp, Final),\n    last(Final, R).\n\nrows(M, M, Dp, Dp) :- !.\nrows(I, M, Dp, Final) :-\n    I < M,\n    prefix_sum(Dp, NewDp),\n    I1 is I + 1,\n    rows(I1, M, NewDp, Final).\n\nprefix_sum([X], [X]).\nprefix_sum([X,Y|T], [X|Rest]) :-\n    Z is X + Y,\n    prefix_sum([Z|T], Rest).\n```",
+  "usage": {
+    "completion_tokens": 504,
+    "prompt_tokens": 590,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1094
+  },
+  "usage_raw": {
+    "completion_tokens": 504,
+    "prompt_tokens": 590,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1094
+  }
+}

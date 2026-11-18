@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nbool canPlace(const vector<long long>& houses, int C, long long dist) {\n    int count = 1;\n    long long prev = houses[0];\n\n    for (size_t i = 1; i < houses.size(); ++i) {\n        if (houses[i] - prev >= dist) {\n            ++count;\n            prev = houses[i];\n            if (count >= C) return true;\n        }\n    }\n\n    return false;\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int N, C;\n    cin >> N >> C;\n\n    vector<long long> houses(N);\n    for (int i = 0; i < N; ++i) {\n        cin >> houses[i];\n    }\n\n    sort(houses.begin(), houses.end());\n\n    long long left = 1;\n    long long right = houses.back() - houses.front();\n    long long answer = 0;\n\n    while (left <= right) {\n        long long mid = left + (right - left) / 2;\n\n        if (canPlace(houses, C, mid)) {\n            answer = mid;\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n\n    cout << answer << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer with C++17 code. Need translate. Need preserve stdin stdout. Need one fenced code block only. Implement N,C, N coords, sort, binary search max min distance. Constraints 200k, coords up to 1e9. C>=2. Use long long maybe int enough distance <=1e9. Return. Need not explanation.\n\nPotential issue source reads all tokens via lines, but C++ cin >> works. Output answer newline.\n\nImplement canPlace(vector<long long>& a, int C, long long d): count=1 prev=a[0]; for each if x-prev>=d count++, prev=x; if count>=C true. Binary low=1 high=a.back()-a.front() (since distinct, high >=1). If C==? C>=2. Answer maybe 0 if impossible? high okay. Search while low<=high. Use long long mid=low+(high-low)/2. If can best=mid low=mid+1 else high=mid-1. Print best.\n\nNeed exactly one complete source file. Use #include <bits/stdc++.h> accepted standard? C++ standard libraries shipped, bits includes GNU extension okay but maybe use standard includes safer. Use iostream vector algorithm. main.\n\nReturn fenced cpp.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794997817,
+    "id": "chatcmpl-501ad802ba042ecbcd16510307be3920",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 566,
+      "completion_tokens_details": {
+        "reasoning_tokens": 268
+      },
+      "prompt_tokens": 1057,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1623
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0009962999999999999,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 5.010699799982831,
+  "logical_request_id": "c90d6240a38d435ffc23d766f432149b695502d96c4f91d49e56fc055ffa7939",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2110\\cpp-via-prolog\\attempt-03\\step-02\\response_body.txt",
+  "received_at": "2026-11-18T10:30:21.576438+00:00",
+  "request_id": "chatcmpl-501ad802ba042ecbcd16510307be3920",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nbool canPlace(const vector<long long>& houses, int C, long long dist) {\n    int count = 1;\n    long long prev = houses[0];\n\n    for (size_t i = 1; i < houses.size(); ++i) {\n        if (houses[i] - prev >= dist) {\n            ++count;\n            prev = houses[i];\n            if (count >= C) return true;\n        }\n    }\n\n    return false;\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int N, C;\n    cin >> N >> C;\n\n    vector<long long> houses(N);\n    for (int i = 0; i < N; ++i) {\n        cin >> houses[i];\n    }\n\n    sort(houses.begin(), houses.end());\n\n    long long left = 1;\n    long long right = houses.back() - houses.front();\n    long long answer = 0;\n\n    while (left <= right) {\n        long long mid = left + (right - left) / 2;\n\n        if (canPlace(houses, C, mid)) {\n            answer = mid;\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n\n    cout << answer << '\\n';\n\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 566,
+    "completion_tokens_details": {
+      "reasoning_tokens": 268
+    },
+    "prompt_tokens": 1057,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1623
+  },
+  "usage_raw": {
+    "completion_tokens": 566,
+    "completion_tokens_details": {
+      "reasoning_tokens": 268
+    },
+    "prompt_tokens": 1057,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1623
+  }
+}

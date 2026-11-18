@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let values = map read (words input) :: [Integer]\n  case values of\n    (n : rest) -> do\n      let arr = take (fromIntegral n) rest\n      case arr of\n        [] -> return ()\n        (x : xs) -> do\n          let (_, best) = foldl' step (x, x) xs\n              step (cur, ans) v =\n                let newCur = max v (cur + v)\n                    newAns = max ans newCur\n                in (newCur, newAns)\n          print best\n    _ -> return ()\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 610,
+    "total_tokens": 1034,
+    "completion_tokens": 424,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 266
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 610,
+    "total_tokens": 1034,
+    "completion_tokens": 424,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 266
+    }
+  },
+  "cost_usd": 0.0006541679999999999,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-2745b8c2120029e65cffebd5c969774f",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-haskell\\attempt-05\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-2745b8c2120029e65cffebd5c969774f",
+    "object": "chat.completion",
+    "created": 1794987597,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let values = map read (words input) :: [Integer]\n  case values of\n    (n : rest) -> do\n      let arr = take (fromIntegral n) rest\n      case arr of\n        [] -> return ()\n        (x : xs) -> do\n          let (_, best) = foldl' step (x, x) xs\n              step (cur, ans) v =\n                let newCur = max v (cur + v)\n                    newAns = max ans newCur\n                in (newCur, newAns)\n          print best\n    _ -> return ()\n```",
+          "reasoning_content": "We need answer with Haskell source only, code block. Need translate. Need preserve stdin. Program reads n then n ints, computes max subarray. Use Integer? C++ ll. Haskell. Need handle n>=1. Could use read words. Output best. Standard libs. main. Need exactly one complete source file fenced. No explanation.\n\nNeed consider input possibly multiple whitespace/newlines. Parse all tokens. n then take n. Compute maximum subarray. Use foldl' maybe.\n\nCode:\n\nmodule Main where\nimport Data.List (foldl')\nmain :: IO ()\nmain = do\n  s <- getContents\n  let xs = map read (words s) :: [Integer]\n  case xs of\n    (n:rest) -> do\n      let a = take (fromIntegral n) rest\n      case a of\n        [] -> return ()\n        (x:ys) ->\n          let (_, best) = foldl' (\\(cur,b) y -> let c = max y (cur+y) in (c, max b c)) (x,x) ys\n          in print best\n    _ -> return ()\n\nNeed if n=0 not valid. If no input nothing. This matches valid. Could use Integer. Fine.\n\nNeed output exactly one code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 610,
+      "total_tokens": 1034,
+      "completion_tokens": 424,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 266
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 5.474765999941155,
+  "received_at": "2026-11-18T07:39:59.557463+00:00",
+  "logical_request_id": "26c6db17ef01c571ec08e4a6b11814eaff7ff7620dc8d031ac0085544cb5debb",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,33 @@
+import sys
+
+def solve(grid, r, c, size):
+    first = grid[r][c]
+    same = True
+    for i in range(r, r + size):
+        row = grid[i]
+        for j in range(c, c + size):
+            if row[j] != first:
+                same = False
+                break
+        if not same:
+            break
+    if same:
+        return first
+    half = size // 2
+    tl = solve(grid, r, c, half)
+    tr = solve(grid, r, c + half, half)
+    bl = solve(grid, r + half, c, half)
+    br = solve(grid, r + half, c + half, half)
+    return "(" + tl + tr + bl + br + ")"
+
+def main():
+    data = sys.stdin.read().split()
+    if not data:
+        return
+    n = int(data[0])
+    grid = data[1:1 + n]
+    result = solve(grid, 0, 0, n)
+    sys.stdout.write(result + "\n")
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\ncheck :: String -> Bool\ncheck s = go 0 s\n  where\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '('  = go (bal + 1) cs\n      | bal <= 0  = False\n      | otherwise = go (bal - 1) cs\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    [] -> return ()\n    (tStr:rest) -> do\n      let t = read tStr :: Int\n      mapM_ (putStrLn . boolToString . check) (take t rest)\n  where\n    boolToString True  = \"YES\"\n    boolToString False = \"NO\"\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 634,
+    "total_tokens": 1083,
+    "completion_tokens": 449,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 280
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 634,
+    "total_tokens": 1083,
+    "completion_tokens": 449,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 280
+    }
+  },
+  "cost_usd": 0.0006161039999999999,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-71e5ab5ad39685b59aff2222d79a009c",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-haskell\\attempt-03\\step-07\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-71e5ab5ad39685b59aff2222d79a009c",
+    "object": "chat.completion",
+    "created": 1794979634,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\ncheck :: String -> Bool\ncheck s = go 0 s\n  where\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '('  = go (bal + 1) cs\n      | bal <= 0  = False\n      | otherwise = go (bal - 1) cs\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    [] -> return ()\n    (tStr:rest) -> do\n      let t = read tStr :: Int\n      mapM_ (putStrLn . boolToString . check) (take t rest)\n  where\n    boolToString True  = \"YES\"\n    boolToString False = \"NO\"\n```",
+          "reasoning_content": "We need translate C++ to Haskell. Preserve stdin/stdout. Simple. Need parse T then T lines. Use getLine, read. Handle whitespace. We'll produce main.\n\nNeed be careful with potential empty lines? Input valid. We can read all tokens: first token T, then T strings. Using words on getContents. But parentheses strings no spaces, fine.\n\nImplementation:\n\nmodule Main where\nimport System.IO\nmain :: IO () = do\n  input <- getContents\n  let (tStr:rest) = words input\n      t = read tStr :: Int\n      results = map check (take t rest)\n  mapM_ putStrLn results\n\ncheck s = go 0 s where go bal [] = bal == 0; go bal (c:cs) | c=='(' = go (bal+1) cs | bal <= 0 = False | otherwise = go (bal-1) cs. Actually if char ')' only. Since only parentheses. For '(' increment, else if bal <=0 False else decrement with rest. Need final bal==0. Could use foldM.\n\nEnsure if no input? Not required. We can handle robust: case words input of [] -> return (); (tStr:rest) -> ...\n\nOutput exactly. Use putStrLn.\n\nReturn one fenced code block, no explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 634,
+      "total_tokens": 1083,
+      "completion_tokens": 449,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 280
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.531982699991204,
+  "received_at": "2026-11-18T05:27:16.090395+00:00",
+  "logical_request_id": "b5e467814a7612cbab2ff47a960b7514e2b5e596d291cec7f24e85c3dc51aa8f",
+  "execution_class": "direct_api"
+}

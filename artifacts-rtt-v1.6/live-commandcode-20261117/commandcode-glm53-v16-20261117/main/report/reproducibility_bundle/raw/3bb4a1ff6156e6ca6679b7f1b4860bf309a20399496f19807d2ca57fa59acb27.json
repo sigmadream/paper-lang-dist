@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <string>\n#include <algorithm>\n\nint main() {\n    std::string s;\n    std::getline(std::cin, s);\n    // trim\n    size_t b = s.find_first_not_of(\" \\t\\r\\n\");\n    size_t e = s.find_last_not_of(\" \\t\\r\\n\");\n    if (b == std::string::npos) s.clear();\n    else s = s.substr(b, e - b + 1);\n\n    bool valid = true;\n    size_t len = s.size();\n    for (size_t i = 0; i < len / 2; i++) {\n        if (s[i] != s[len - 1 - i]) {\n            valid = false;\n            break;\n        }\n    }\n    std::cout << (valid ? 1 : 0) << std::endl;\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794900150,
+    "id": "a1413ca7-3aa6-4f9d-b106-45a911551403",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 190,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_1b660946133e406f956751ee689aa837",
+      "trace_id": "86adc57c0b164e8ca0f675206f22d817"
+    },
+    "usage": {
+      "completion_tokens": 190,
+      "prompt_tokens": 502,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 692
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00110104,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.485193000000436,
+  "logical_request_id": "6953800cba051a830096c28baee0b08d7a3311a544daf57d8390c1229a771c29",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_10988\\cpp-via-java\\attempt-03\\step-02\\response_body.txt",
+  "received_at": "2026-11-17T07:22:30.315619+00:00",
+  "request_id": "a1413ca7-3aa6-4f9d-b106-45a911551403",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```cpp\n#include <iostream>\n#include <string>\n#include <algorithm>\n\nint main() {\n    std::string s;\n    std::getline(std::cin, s);\n    // trim\n    size_t b = s.find_first_not_of(\" \\t\\r\\n\");\n    size_t e = s.find_last_not_of(\" \\t\\r\\n\");\n    if (b == std::string::npos) s.clear();\n    else s = s.substr(b, e - b + 1);\n\n    bool valid = true;\n    size_t len = s.size();\n    for (size_t i = 0; i < len / 2; i++) {\n        if (s[i] != s[len - 1 - i]) {\n            valid = false;\n            break;\n        }\n    }\n    std::cout << (valid ? 1 : 0) << std::endl;\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 190,
+    "prompt_tokens": 502,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 692
+  },
+  "usage_raw": {
+    "completion_tokens": 190,
+    "prompt_tokens": 502,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 692
+  }
+}

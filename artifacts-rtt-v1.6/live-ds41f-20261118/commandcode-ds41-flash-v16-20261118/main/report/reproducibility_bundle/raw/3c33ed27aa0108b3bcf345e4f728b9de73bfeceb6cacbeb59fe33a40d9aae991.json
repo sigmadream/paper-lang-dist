@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    if len(data) < 2:\n        return\n    m, n = int(data[0]), int(data[1])\n\n    dp = [1] * n\n    for _ in range(1, m):\n        for j in range(1, n):\n            dp[j] += dp[j - 1]\n\n    print(dp[n - 1])\n\nif __name__ == \"__main__\":\n    main()\n```",
+          "reasoning_content": "We need answer exactly one complete source file in one fenced code block, no explanation. Need translate C++ to Python. Preserve stdin/stdout. Code likely read M N, compute unique paths. Need handle 1<=M,N<=100. Return script reading all ints. Output dp[n-1]. Note C++ only if two ints. We can mimic: read tokens; if fewer than 2 return; m,n = first two. dp = [1]*n; for i in 1..m-1 for j 1..n-1 dp[j]+=dp[j-1]; print(dp[n-1]). Need fenced code block. No extra. Ensure complete source.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794993080,
+    "id": "chatcmpl-8599d41a62f9c8c0368acab9d73a6bfe",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 252,
+      "completion_tokens_details": {
+        "reasoning_tokens": 145
+      },
+      "prompt_tokens": 516,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 768
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00045719999999999995,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 4.25792270002421,
+  "logical_request_id": "921d8aeef78a49af119fb0f8c75fc062ce9b7f2c236480c65846fa6a8bfcea64",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-02\\step-03\\response_body.txt",
+  "received_at": "2026-11-18T09:11:20.785892+00:00",
+  "request_id": "chatcmpl-8599d41a62f9c8c0368acab9d73a6bfe",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    if len(data) < 2:\n        return\n    m, n = int(data[0]), int(data[1])\n\n    dp = [1] * n\n    for _ in range(1, m):\n        for j in range(1, n):\n            dp[j] += dp[j - 1]\n\n    print(dp[n - 1])\n\nif __name__ == \"__main__\":\n    main()\n```",
+  "usage": {
+    "completion_tokens": 252,
+    "completion_tokens_details": {
+      "reasoning_tokens": 145
+    },
+    "prompt_tokens": 516,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 768
+  },
+  "usage_raw": {
+    "completion_tokens": 252,
+    "completion_tokens_details": {
+      "reasoning_tokens": 145
+    },
+    "prompt_tokens": 516,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 768
+  }
+}

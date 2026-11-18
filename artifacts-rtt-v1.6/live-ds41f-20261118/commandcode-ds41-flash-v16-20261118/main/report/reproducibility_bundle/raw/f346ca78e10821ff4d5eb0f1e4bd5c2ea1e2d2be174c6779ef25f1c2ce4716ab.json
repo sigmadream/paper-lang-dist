@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <string>\n\nbool isValid(const std::string& s) {\n    int balance = 0;\n    for (char c : s) {\n        if (c == '(') {\n            ++balance;\n        } else if (c == ')') {\n            if (balance == 0) return false;\n            --balance;\n        } else {\n            return false;\n        }\n    }\n    return balance == 0;\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n    int t;\n    if (!(std::cin >> t)) return 0;\n    while (t--) {\n        std::string s;\n        std::cin >> s;\n        std::cout << (isValid(s) ? \"YES\" : \"NO\") << '\\n';\n    }\n    return 0;\n}\n```",
+          "reasoning_content": "We need translate Haskell to C++17. Simple. Read T, then T strings, check balanced. Note input may have whitespace. Use cin >> string. Output.\n\nNeed one fenced cpp code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794977349,
+    "id": "chatcmpl-0e8517a37402c321e97724d555567087",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 229,
+      "completion_tokens_details": {
+        "reasoning_tokens": 44
+      },
+      "prompt_tokens": 627,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 856
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0004629,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.1633478000294417,
+  "logical_request_id": "36821a2e7710b6ce8950a8c9ac809a93e357c524789cc4deae9da8d903e8f2b8",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-haskell\\attempt-05\\step-06\\response_body.txt",
+  "received_at": "2026-11-18T04:49:10.009080+00:00",
+  "request_id": "chatcmpl-0e8517a37402c321e97724d555567087",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <string>\n\nbool isValid(const std::string& s) {\n    int balance = 0;\n    for (char c : s) {\n        if (c == '(') {\n            ++balance;\n        } else if (c == ')') {\n            if (balance == 0) return false;\n            --balance;\n        } else {\n            return false;\n        }\n    }\n    return balance == 0;\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n    int t;\n    if (!(std::cin >> t)) return 0;\n    while (t--) {\n        std::string s;\n        std::cin >> s;\n        std::cout << (isValid(s) ? \"YES\" : \"NO\") << '\\n';\n    }\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 229,
+    "completion_tokens_details": {
+      "reasoning_tokens": 44
+    },
+    "prompt_tokens": 627,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 856
+  },
+  "usage_raw": {
+    "completion_tokens": 229,
+    "completion_tokens_details": {
+      "reasoning_tokens": 44
+    },
+    "prompt_tokens": 627,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 856
+  }
+}

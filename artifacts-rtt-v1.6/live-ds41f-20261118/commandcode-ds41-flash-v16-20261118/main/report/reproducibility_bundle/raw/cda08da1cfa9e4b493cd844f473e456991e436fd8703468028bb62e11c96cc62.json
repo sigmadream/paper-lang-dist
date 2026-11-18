@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n\nusing namespace std;\n\nlong long comb(int n, int k) {\n    if (k < 0 || k > n) return 0;\n    int kk = min(k, n - k);\n    long long acc = 1;\n    for (int i = 1; i <= kk; ++i) {\n        acc = acc * (n - kk + i) / i;\n    }\n    return acc;\n}\n\nlong long uniquePaths(long long m, long long n) {\n    return comb((int)(m + n - 2), (int)min(m - 1, n - 1));\n}\n\nint main() {\n    long long m, n;\n    if (cin >> m >> n) {\n        cout << uniquePaths(m, n) << endl;\n    }\n    return 0;\n}\n```",
+          "reasoning_content": "We need translate Haskell to C++17. Straightforward. Compute combination. Answer bounded 2e9 fits in long long / int actually 2e9 overflows signed int? 2e9 < 2^31-1 ~2.147e9, so int ok, but use long long.\n\nNeed preserve stdin reading M N, output integer. If insufficient input, output nothing? Haskell returns (). We'll mimic.\n\nImplement comb using long long, iterative. Use __int128 maybe for intermediate? n up to 198. comb could be large but final answer bounded only for valid inputs; intermediate product acc * (...) could be at most ~ result * n maybe < 2e9*200 = 4e11 fits long long. Fine.\n\nOutput code block only.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794993036,
+    "id": "chatcmpl-46b177b2c44fea8139f1d098d727239b",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 343,
+      "completion_tokens_details": {
+        "reasoning_tokens": 160
+      },
+      "prompt_tokens": 568,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 911
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.000582,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.342311799991876,
+  "logical_request_id": "38f38f03a4e163fe24abd0eca1183f62cb72751f5a30d35bbc79c88b8657eaf1",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-haskell\\attempt-04\\step-06\\response_body.txt",
+  "received_at": "2026-11-18T09:10:36.835039+00:00",
+  "request_id": "chatcmpl-46b177b2c44fea8139f1d098d727239b",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n\nusing namespace std;\n\nlong long comb(int n, int k) {\n    if (k < 0 || k > n) return 0;\n    int kk = min(k, n - k);\n    long long acc = 1;\n    for (int i = 1; i <= kk; ++i) {\n        acc = acc * (n - kk + i) / i;\n    }\n    return acc;\n}\n\nlong long uniquePaths(long long m, long long n) {\n    return comb((int)(m + n - 2), (int)min(m - 1, n - 1));\n}\n\nint main() {\n    long long m, n;\n    if (cin >> m >> n) {\n        cout << uniquePaths(m, n) << endl;\n    }\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 343,
+    "completion_tokens_details": {
+      "reasoning_tokens": 160
+    },
+    "prompt_tokens": 568,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 911
+  },
+  "usage_raw": {
+    "completion_tokens": 343,
+    "completion_tokens_details": {
+      "reasoning_tokens": 160
+    },
+    "prompt_tokens": 568,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 911
+  }
+}

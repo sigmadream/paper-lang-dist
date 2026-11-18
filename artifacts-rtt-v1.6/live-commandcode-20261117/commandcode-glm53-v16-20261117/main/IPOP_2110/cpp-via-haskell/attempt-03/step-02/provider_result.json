@@ -1,0 +1,94 @@
+{
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nstatic bool feasible(const vector<long long>& a, long long mid, long long c) {\n    long long prev = a[0];\n    long long cnt = 1;\n    for (size_t i = 1; i < a.size(); ++i) {\n        if (a[i] - prev >= mid) {\n            prev = a[i];\n            ++cnt;\n        }\n    }\n    return cnt >= c;\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n    long long n, c;\n    if (!(cin >> n >> c)) return 0;\n    vector<long long> a(n);\n    for (long long i = 0; i < n; ++i) cin >> a[i];\n    sort(a.begin(), a.end());\n    long long lo = 1, hi = a[n - 1] - a[0], ans = 0;\n    while (lo <= hi) {\n        long long mid = lo + (hi - lo) / 2;\n        if (feasible(a, mid, c)) {\n            ans = mid;\n            lo = mid + 1;\n        } else {\n            hi = mid - 1;\n        }\n    }\n    cout << ans << \"\\n\";\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 285,
+    "prompt_tokens": 779,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1064
+  },
+  "usage_raw": {
+    "completion_tokens": 285,
+    "prompt_tokens": 779,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1064
+  },
+  "cost_usd": 0.0021986799999999997,
+  "cost_source": "estimated",
+  "request_id": "38879dba-8d77-488d-b83a-fbdc43acd401",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_2110\\cpp-via-haskell\\attempt-03\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nstatic bool feasible(const vector<long long>& a, long long mid, long long c) {\n    long long prev = a[0];\n    long long cnt = 1;\n    for (size_t i = 1; i < a.size(); ++i) {\n        if (a[i] - prev >= mid) {\n            prev = a[i];\n            ++cnt;\n        }\n    }\n    return cnt >= c;\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n    long long n, c;\n    if (!(cin >> n >> c)) return 0;\n    vector<long long> a(n);\n    for (long long i = 0; i < n; ++i) cin >> a[i];\n    sort(a.begin(), a.end());\n    long long lo = 1, hi = a[n - 1] - a[0], ans = 0;\n    while (lo <= hi) {\n        long long mid = lo + (hi - lo) / 2;\n        if (feasible(a, mid, c)) {\n            ans = mid;\n            lo = mid + 1;\n        } else {\n            hi = mid - 1;\n        }\n    }\n    cout << ans << \"\\n\";\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794898615,
+    "id": "38879dba-8d77-488d-b83a-fbdc43acd401",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 285,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_69a90e3c265f4676942357f98061f4e8",
+      "trace_id": "bd42c0bb688e4334a16ebb0eb65c9158"
+    },
+    "usage": {
+      "completion_tokens": 285,
+      "prompt_tokens": 779,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 1064
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.7881268999772146,
+  "received_at": "2026-11-17T06:56:55.214300+00:00",
+  "logical_request_id": "acb948cfea97a5266bd5bca6c86dfe62b0cf3f1c1c927c35312e11a1faa09953",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nbool canPlace(const vector<long long>& arr, int c, long long d) {\n    if (arr.empty()) return false;\n    int count = 1;\n    long long prev = arr[0];\n    for (size_t i = 1; i < arr.size(); ++i) {\n        if (arr[i] - prev >= d) {\n            ++count;\n            prev = arr[i];\n        }\n    }\n    return count >= c;\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n, c;\n    if (!(cin >> n >> c)) return 0;\n\n    vector<long long> arr(n);\n    for (int i = 0; i < n; ++i) cin >> arr[i];\n\n    sort(arr.begin(), arr.end());\n\n    long long lo = 1;\n    long long hi = arr.back() - arr.front();\n    long long ans = 0;\n\n    while (lo <= hi) {\n        long long mid = lo + (hi - lo) / 2;\n        if (canPlace(arr, c, mid)) {\n            ans = mid;\n            lo = mid + 1;\n        } else {\n            hi = mid - 1;\n        }\n    }\n\n    cout << ans << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer with C++ source only, fenced code block. Need translate. Need preserve behavior. Let's craft.\n\nSpec: N C first, then N coordinates. Sort. Binary search max min distance. C>=2. Use int but coords up to 1e9 differences int okay (<=1e9), but use long long safe. n up to 200k. canPlace O(n), binary search ~30 => fine.\n\nPotential edge cases: If C==1? Constraints C>=2, but source handles c maybe 1: canPlace c d [] false only if empty; with arr nonempty go count 1 >= c true, binary search hi range. But not needed. Need preserve source. If n=0? no.\n\nC++ main read. Input may be empty? Source getContents words, case vals; if empty returns. We can mimic. Read all via cin. If no n return.\n\nImplement canPlace with vector<long long>& arr, int c, long long d. Source: canPlace c d [] = False; else go 1 x xs. go count _ [] = count>=c. So if arr nonempty. For c possibly 0? constraints no. If c=1, true for any d? with arr nonempty yes. Binary search lo=1 hi=last-first. If n=1 hi=0 and lo=1 => lo>hi returns ans 0. But C<=N and C>=2 so n>=2. Fine.\n\nWrite.\n\nNeed final exactly one code block no explanation. Use #include <bits/stdc++.h>. main signature int main.\n\nCheck example1: sorted [1,100], c2. lo1 hi99. binary search finds 99. canPlace d99 true. ans 99. good.\n\nExample2 gives 8.\n\nPotential issue binary search initial ans=0. Works.\n\nReturn.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794984546,
+    "id": "chatcmpl-3bb724f22698be11aeb53315f199672b",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 687,
+      "completion_tokens_details": {
+        "reasoning_tokens": 392
+      },
+      "prompt_tokens": 722,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1409
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.001041,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 6.398921900079586,
+  "logical_request_id": "10406bb6cc17ceacc4464d0d6a2260d1f17128bb235e8e474d3f7fa99adc0c24",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2110\\cpp-via-haskell\\attempt-04\\step-02\\response_body.txt",
+  "received_at": "2026-11-18T06:49:10.613852+00:00",
+  "request_id": "chatcmpl-3bb724f22698be11aeb53315f199672b",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nbool canPlace(const vector<long long>& arr, int c, long long d) {\n    if (arr.empty()) return false;\n    int count = 1;\n    long long prev = arr[0];\n    for (size_t i = 1; i < arr.size(); ++i) {\n        if (arr[i] - prev >= d) {\n            ++count;\n            prev = arr[i];\n        }\n    }\n    return count >= c;\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n, c;\n    if (!(cin >> n >> c)) return 0;\n\n    vector<long long> arr(n);\n    for (int i = 0; i < n; ++i) cin >> arr[i];\n\n    sort(arr.begin(), arr.end());\n\n    long long lo = 1;\n    long long hi = arr.back() - arr.front();\n    long long ans = 0;\n\n    while (lo <= hi) {\n        long long mid = lo + (hi - lo) / 2;\n        if (canPlace(arr, c, mid)) {\n            ans = mid;\n            lo = mid + 1;\n        } else {\n            hi = mid - 1;\n        }\n    }\n\n    cout << ans << '\\n';\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 687,
+    "completion_tokens_details": {
+      "reasoning_tokens": 392
+    },
+    "prompt_tokens": 722,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1409
+  },
+  "usage_raw": {
+    "completion_tokens": 687,
+    "completion_tokens_details": {
+      "reasoning_tokens": 392
+    },
+    "prompt_tokens": 722,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1409
+  }
+}

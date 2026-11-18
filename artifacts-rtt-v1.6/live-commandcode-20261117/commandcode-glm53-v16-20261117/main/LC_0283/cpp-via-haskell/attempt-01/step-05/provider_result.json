@@ -1,0 +1,94 @@
+{
+  "text": "```haskell\nmodule Main (main) where\n\nimport System.Environment\nimport Data.List\n\nmain :: IO ()\nmain = do\n  inp <- getContents\n  let ws = words inp\n  case ws of\n    (nStr : rest) -> do\n      let n = read nStr :: Int\n          a = take n (map read rest :: [Integer])\n          res = filter (/= 0) a ++ replicate (n - length (filter (/= 0) a)) 0\n      putStrLn (intercalate \" \" (map show res))\n    _ -> return ()\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 127,
+    "prompt_tokens": 616,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 743
+  },
+  "usage_raw": {
+    "completion_tokens": 127,
+    "prompt_tokens": 616,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 743
+  },
+  "cost_usd": 0.00091048,
+  "cost_source": "estimated",
+  "request_id": "d10f8865-b8d6-4f50-970a-55a1ca85d3b7",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0283\\cpp-via-haskell\\attempt-01\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport System.Environment\nimport Data.List\n\nmain :: IO ()\nmain = do\n  inp <- getContents\n  let ws = words inp\n  case ws of\n    (nStr : rest) -> do\n      let n = read nStr :: Int\n          a = take n (map read rest :: [Integer])\n          res = filter (/= 0) a ++ replicate (n - length (filter (/= 0) a)) 0\n      putStrLn (intercalate \" \" (map show res))\n    _ -> return ()\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794902070,
+    "id": "d10f8865-b8d6-4f50-970a-55a1ca85d3b7",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 127,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_b05b5be1ffb3412b9f2b0c0f31fb8988",
+      "trace_id": "abface7556f54cef8396039950d6f3aa"
+    },
+    "usage": {
+      "completion_tokens": 127,
+      "prompt_tokens": 616,
+      "prompt_tokens_details": {
+        "cached_tokens": 448
+      },
+      "total_tokens": 743
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 7.987648500013165,
+  "received_at": "2026-11-17T07:54:29.701068+00:00",
+  "logical_request_id": "12c7845139f6a2f51928ee8054d1c05c9ae3d3d71546b40e92cb22470113e93d",
+  "execution_class": "direct_api"
+}

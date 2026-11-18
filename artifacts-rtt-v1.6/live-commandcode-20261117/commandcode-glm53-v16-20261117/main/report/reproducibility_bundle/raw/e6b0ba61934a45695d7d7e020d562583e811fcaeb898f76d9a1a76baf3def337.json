@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n    int n, c;\n    if(scanf(\"%d %d\", &n, &c)!=2) return 0;\n    vector<long long> a(n);\n    for(int i=0;i<n;i++) scanf(\"%lld\", &a[i]);\n    sort(a.begin(), a.end());\n    long long left=1, right=a[n-1]-a[0], ans=0;\n    while(left<=right){\n        long long mid=(left+right)/2;\n        int count=1;\n        long long prev=a[0];\n        for(int i=1;i<n;i++){\n            if(a[i]-prev>=mid){count++;prev=a[i];}\n        }\n        if(count>=c){ans=mid;left=mid+1;}\n        else right=mid-1;\n    }\n    printf(\"%lld\\n\", ans);\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794897115,
+    "id": "e95592ff-9721-42a5-95a5-78a4c5906583",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 200,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_56514df734a6406780043d8e2ee4d46e",
+      "trace_id": "401bb9c2a77941beb162c4da949b0ffc"
+    },
+    "usage": {
+      "completion_tokens": 200,
+      "prompt_tokens": 602,
+      "prompt_tokens_details": {
+        "cached_tokens": 448
+      },
+      "total_tokens": 802
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0012120800000000001,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.3671714999945834,
+  "logical_request_id": "5c1f629d91902d9ecf7c7dded3344ca075f1147a2eb5ced12677d04b8a635659",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_2110\\cpp-via-python\\attempt-05\\step-04\\response_body.txt",
+  "received_at": "2026-11-17T06:31:55.356385+00:00",
+  "request_id": "e95592ff-9721-42a5-95a5-78a4c5906583",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n    int n, c;\n    if(scanf(\"%d %d\", &n, &c)!=2) return 0;\n    vector<long long> a(n);\n    for(int i=0;i<n;i++) scanf(\"%lld\", &a[i]);\n    sort(a.begin(), a.end());\n    long long left=1, right=a[n-1]-a[0], ans=0;\n    while(left<=right){\n        long long mid=(left+right)/2;\n        int count=1;\n        long long prev=a[0];\n        for(int i=1;i<n;i++){\n            if(a[i]-prev>=mid){count++;prev=a[i];}\n        }\n        if(count>=c){ans=mid;left=mid+1;}\n        else right=mid-1;\n    }\n    printf(\"%lld\\n\", ans);\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 200,
+    "prompt_tokens": 602,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 802
+  },
+  "usage_raw": {
+    "completion_tokens": 200,
+    "prompt_tokens": 602,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 802
+  }
+}

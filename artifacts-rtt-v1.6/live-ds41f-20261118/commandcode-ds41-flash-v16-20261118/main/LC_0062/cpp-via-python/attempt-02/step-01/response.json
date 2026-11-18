@@ -1,0 +1,86 @@
+{
+  "text": "```python\nimport sys\n\n\ndef main() -> None:\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    m = int(data[0])\n    n = int(data[1])\n\n    dp = [1] * n\n    for _ in range(1, m):\n        for j in range(1, n):\n            dp[j] += dp[j - 1]\n\n    print(dp[-1])\n\n\nif __name__ == \"__main__\":\n    main()\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 594,
+    "total_tokens": 864,
+    "completion_tokens": 270,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 164
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 594,
+    "total_tokens": 864,
+    "completion_tokens": 270,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 164
+    }
+  },
+  "cost_usd": 0.0005022,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-5cf30f5defef84909dd360362639d3a0",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-02\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-5cf30f5defef84909dd360362639d3a0",
+    "object": "chat.completion",
+    "created": 1794993065,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\nimport sys\n\n\ndef main() -> None:\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    m = int(data[0])\n    n = int(data[1])\n\n    dp = [1] * n\n    for _ in range(1, m):\n        for j in range(1, n):\n            dp[j] += dp[j - 1]\n\n    print(dp[-1])\n\n\nif __name__ == \"__main__\":\n    main()\n```",
+          "reasoning_content": "We need translate C++ to Python. Need preserve behavior. Program reads M N, computes unique paths. Need output integer. Need handle valid inputs M,N 1..100. Straight.\n\nNeed decide input reading: cin >> m >> n reads whitespace separated. Python sys.stdin.read().split().\n\nAlgorithm: dp = [1]*n; for i in range(1,m): for j in range(1,n): dp[j]+=dp[j-1]; print(dp[-1]). Note if n maybe 0? constraints >=1. If n=0 not valid. Good.\n\nReturn exactly one complete source file in fenced code block, no explanation. Python 3 one script reads stdin writes stdout. We can provide code.\n\nNeed ensure no hardcode. Fine.\n\nFinal with code block only."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 594,
+      "total_tokens": 864,
+      "completion_tokens": 270,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 164
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.4328282999340445,
+  "received_at": "2026-11-18T09:11:06.045375+00:00",
+  "logical_request_id": "cc7552b36de442e40ff46c42b9fab92e362bf76d96bd65badf8188770fcac855",
+  "execution_class": "direct_api"
+}

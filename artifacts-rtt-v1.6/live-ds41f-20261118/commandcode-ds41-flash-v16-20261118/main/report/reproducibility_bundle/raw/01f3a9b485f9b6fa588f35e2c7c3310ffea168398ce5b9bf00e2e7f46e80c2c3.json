@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <functional>\n\nlong long solve(int n) {\n    int full = (1 << n) - 1;\n\n    std::function<long long(int, int, int, int)> go =\n        [&](int r, int cols, int d1, int d2) -> long long {\n            if (r == n) return 1;\n\n            long long total = 0;\n            int avail = full & ~(cols | d1 | d2);\n\n            while (avail) {\n                int b = avail & -avail;\n                avail ^= b;\n\n                total += go(\n                    r + 1,\n                    cols | b,\n                    ((d1 | b) << 1) & full,\n                    (d2 | b) >> 1\n                );\n            }\n\n            return total;\n        };\n\n    return go(0, 0, 0, 0);\n}\n\nint main() {\n    int n;\n    if (std::cin >> n) {\n        std::cout << solve(n) << '\\n';\n    }\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block cpp. Need translate Haskell. Need preserve behavior valid input. Compute N queens count N<15. Use bitmask DFS. C++17 main reads int. Output count. Note source uses getContents reads; if invalid returns nothing. Valid input specified. Can simply read n. Need count fits int (for 14 count 365596) int fine. Implement.\n\nNeed be careful Haskell go arguments: d1 shifted left with full mask, d2 shifted right. Standard. Use uint32/int. Return long long? Output count. Use int or long long. Let's craft. main(){ int n; if(cin>>n) cout<<solve(n)<<endl; }\n\nsolve:\nint full=(1<<n)-1; function dfs(r, cols,d1,d2)\nif r==n return 1;\nint avail = full & ~(cols|d1|d2);\nlong long total=0;\nwhile(avail){ int b=avail & -avail; avail-=b; total += dfs(r+1, cols|b, ((d1|b)<<1)&full, (d2|b)>>1);}\nreturn total.\n\nUse std::function or lambda generic. N up to14. fine. Return long long. Provide one fenced block. No explanation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794996117,
+    "id": "chatcmpl-0a38991c94396998eb828186870c74c9",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 513,
+      "completion_tokens_details": {
+        "reasoning_tokens": 277
+      },
+      "prompt_tokens": 615,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1128
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0008001,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 4.591684099985287,
+  "logical_request_id": "cfe039d9f8f32d0b12464dc9e4ea240019a0e73956c75f92f3bec0aec631e0db",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9663\\cpp-via-haskell\\attempt-02\\step-04\\response_body.txt",
+  "received_at": "2026-11-18T10:01:59.784681+00:00",
+  "request_id": "chatcmpl-0a38991c94396998eb828186870c74c9",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <functional>\n\nlong long solve(int n) {\n    int full = (1 << n) - 1;\n\n    std::function<long long(int, int, int, int)> go =\n        [&](int r, int cols, int d1, int d2) -> long long {\n            if (r == n) return 1;\n\n            long long total = 0;\n            int avail = full & ~(cols | d1 | d2);\n\n            while (avail) {\n                int b = avail & -avail;\n                avail ^= b;\n\n                total += go(\n                    r + 1,\n                    cols | b,\n                    ((d1 | b) << 1) & full,\n                    (d2 | b) >> 1\n                );\n            }\n\n            return total;\n        };\n\n    return go(0, 0, 0, 0);\n}\n\nint main() {\n    int n;\n    if (std::cin >> n) {\n        std::cout << solve(n) << '\\n';\n    }\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 513,
+    "completion_tokens_details": {
+      "reasoning_tokens": 277
+    },
+    "prompt_tokens": 615,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1128
+  },
+  "usage_raw": {
+    "completion_tokens": 513,
+    "completion_tokens_details": {
+      "reasoning_tokens": 277
+    },
+    "prompt_tokens": 615,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1128
+  }
+}

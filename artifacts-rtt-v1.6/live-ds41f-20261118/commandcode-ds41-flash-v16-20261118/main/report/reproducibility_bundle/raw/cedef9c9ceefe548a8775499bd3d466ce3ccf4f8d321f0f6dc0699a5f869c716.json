@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<int> arr(n);\n    for (int i = 0; i < n; ++i) {\n        cin >> arr[i];\n    }\n\n    vector<int> result;\n    result.reserve(n);\n\n    int zeroCount = 0;\n    for (int x : arr) {\n        if (x != 0) {\n            result.push_back(x);\n        } else {\n            ++zeroCount;\n        }\n    }\n\n    for (int i = 0; i < zeroCount; ++i) {\n        result.push_back(0);\n    }\n\n    for (size_t i = 0; i < result.size(); ++i) {\n        if (i > 0) cout << ' ';\n        cout << result[i];\n    }\n    cout << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block cpp. Need translate. Need preserve behavior. Simple. Need include main, read N then N ints, output nonzero then zeros. Edge cases. Standard C++17.\n\nNeed ensure exactly one complete source file fenced. No explanation. Let's craft.\n\nNeed consider signed 32-bit, N up to 10000. Use long long? Int enough. Read int. If input empty return. If n maybe 0? Spec >=1 but okay. Output space separated newline. If result empty? N>=1, but maybe no? Could print newline. Haskell unwords [] = \"\" then putStrLn -> newline. Match.\n\nImplement:\n\n#include <bits/stdc++.h>\nusing namespace std;\nint main(){ios::sync_with_stdio(false);cin.tie(nullptr);\n int n; if(!(cin>>n)) return 0; vector<int> a(n); for(int i=0;i<n;i++) cin>>a[i];\n vector<int> res; res.reserve(n); int zeros=0; for(int x:a){ if(x!=0) res.push_back(x); else zeros++;} for(int i=0;i<zeros;i++) res.push_back(0); for(size_t i=0;i<res.size();++i){ if(i) cout<<\" \"; cout<<res[i];} cout<<\"\\n\"; return 0;}\n\nCould build output directly. Need if not enough values? valid input. Good.\n\nReturn code block only.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794998247,
+    "id": "chatcmpl-baed5d51fde034a82aefc45137709d1d",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 523,
+      "completion_tokens_details": {
+        "reasoning_tokens": 306
+      },
+      "prompt_tokens": 571,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1094
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0007989,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 4.118664500070736,
+  "logical_request_id": "937ea9d71d658aa0dd72437959c62291b5da7e3c231dd8ae0164473a8b409cfb",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-haskell\\attempt-04\\step-02\\response_body.txt",
+  "received_at": "2026-11-18T10:37:31.023370+00:00",
+  "request_id": "chatcmpl-baed5d51fde034a82aefc45137709d1d",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<int> arr(n);\n    for (int i = 0; i < n; ++i) {\n        cin >> arr[i];\n    }\n\n    vector<int> result;\n    result.reserve(n);\n\n    int zeroCount = 0;\n    for (int x : arr) {\n        if (x != 0) {\n            result.push_back(x);\n        } else {\n            ++zeroCount;\n        }\n    }\n\n    for (int i = 0; i < zeroCount; ++i) {\n        result.push_back(0);\n    }\n\n    for (size_t i = 0; i < result.size(); ++i) {\n        if (i > 0) cout << ' ';\n        cout << result[i];\n    }\n    cout << '\\n';\n\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 523,
+    "completion_tokens_details": {
+      "reasoning_tokens": 306
+    },
+    "prompt_tokens": 571,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1094
+  },
+  "usage_raw": {
+    "completion_tokens": 523,
+    "completion_tokens_details": {
+      "reasoning_tokens": 306
+    },
+    "prompt_tokens": 571,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1094
+  }
+}

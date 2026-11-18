@@ -1,0 +1,73 @@
+{
+  "provider": {
+    "provider": "compatible",
+    "protocol": "chat_completions",
+    "base_url": "https://api.commandcode.ai/provider/v1",
+    "request_path": "/chat/completions",
+    "auth": {
+      "type": "bearer",
+      "api_key_env": "CMD_API_KEY"
+    },
+    "model": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "generation_profile": {
+      "name": "commandcode-glm53-v16-low-16384",
+      "supported_options": [
+        "temperature",
+        "top_p",
+        "max_tokens",
+        "reasoning_effort"
+      ],
+      "option_values": {
+        "reasoning_effort": [
+          "low"
+        ]
+      }
+    },
+    "generation": {
+      "temperature": 0.6,
+      "top_p": 0.95,
+      "max_tokens": 16384,
+      "reasoning_effort": "low"
+    },
+    "request_timeout": 180,
+    "retries": 2,
+    "max_calls": 3600,
+    "max_transport_attempts": 10800,
+    "cost_cap_usd": 50,
+    "max_request_cost_usd": 0.25,
+    "max_input_tokens": 32768,
+    "pricing": {
+      "input_per_million": 1.4,
+      "output_per_million": 4.4,
+      "cached_input_per_million": 0.26
+    }
+  },
+  "payload": {
+    "model": "zai-org/GLM-5.3",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Translate the supplied program to the requested language, preserving its complete stdin/stdout behavior for every valid input in the specification. Return exactly one complete source file in one fenced code block, with no explanation. Use only the standard libraries shipped with the specified toolchain. C++: C++17 with main(). Haskell: GHC, module Main and main :: IO (). Prolog: SWI-Prolog, define main/0; the evaluator invokes main; do not add initialization directives. Python: Python 3, one script that reads stdin and writes stdout. Java: Java 17, one file declaring public class Main with public static void main. Preserve required algorithmic constraints and output ordering. Do not hard-code examples."
+      },
+      {
+        "role": "user",
+        "content": "Source language: cpp\nTarget language: java\nSpecification:\n# LC_0338: Counting Bits\n\n0부터 N까지 각 정수의 이진 표현에서 1의 개수를 순서대로 출력한다.\n\n## 제약\n\n0<=N<=100000. 기준 구현은 내장 popcount를 사용하지 않는다.\n\n## 표준입출력 계약\n\n첫 줄 정수 N.\n출력은 정수 하나 또는 공백으로 구분한 정수 배열이다. 참/거짓은 각각 1/0으로 출력한다. 인덱스는 0부터 시작한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[공식 명세](https://leetcode.com/problems/counting-bits/)\n\nPublic examples:\n[{\"input\": \"2\\n\", \"output\": \"0 1 1\\n\"}]\nSource code:\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    string line;\n    if (!getline(cin, line)) return 0;\n    // trim\n    size_t s = line.find_first_not_of(\" \\t\\r\\n\");\n    if (s == string::npos) return 0;\n    size_t e = line.find_last_not_of(\" \\t\\r\\n\");\n    line = line.substr(s, e - s + 1);\n    int n = stoi(line);\n    vector<int> counts(n + 1);\n    for (int i = 1; i <= n; i++) counts[i] = counts[i / 2] + i % 2;\n    string out;\n    for (int i = 0; i <= n; i++) {\n        if (i > 0) out += ' ';\n        out += to_string(counts[i]);\n    }\n    out += '\\n';\n    cout << out;\n    return 0;\n}"
+      }
+    ],
+    "generation": {
+      "temperature": 0.6,
+      "top_p": 0.95,
+      "max_tokens": 16384,
+      "reasoning_effort": "low"
+    },
+    "logical_request": {
+      "campaign": "commandcode-glm53-v16-20261117",
+      "phase": "main",
+      "problem": "LC_0338",
+      "route": "cpp-via-java",
+      "repeat": 2,
+      "step": 7
+    }
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "text": "```haskell\nmodule Main where\n\nisValid :: String -> Bool\nisValid = go 0\n  where\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '(' = go (bal + 1) cs\n      | c == ')' = bal > 0 && go (bal - 1) cs\n      | otherwise = False\n\nresult :: String -> String\nresult s\n  | isValid s = \"YES\"\n  | otherwise = \"NO\"\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let tokens = words input\n    case tokens of\n      [] -> pure ()\n      (tStr:rest) -> do\n          let t = read tStr :: Int\n          mapM_ (putStrLn . result) (take t rest)\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4-pro",
+  "actual_model": "deepseek/deepseek-v4-pro",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4-pro",
+    "actual": "deepseek/deepseek-v4-pro",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 635,
+    "completion_tokens": 1570,
+    "total_tokens": 2205,
+    "prompt_tokens_details": {
+      "cached_tokens": 384,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1392,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "usage_raw": {
+    "prompt_tokens": 635,
+    "completion_tokens": 1570,
+    "total_tokens": 2205,
+    "prompt_tokens_details": {
+      "cached_tokens": 384,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1392,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "cost_usd": 0.006565416,
+  "cost_source": "estimated",
+  "request_id": "gen_01M7MD92P8TQK30AKCQ00CXEFJ",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-deepseek_v4_pro-v16-20261117\\main\\IPOP_9012\\cpp-via-haskell\\attempt-02\\step-07\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "gen_01M7MD92P8TQK30AKCQ00CXEFJ",
+    "object": "chat.completion",
+    "created": 1794907640,
+    "model": "deepseek/deepseek-v4-pro",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nisValid :: String -> Bool\nisValid = go 0\n  where\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '(' = go (bal + 1) cs\n      | c == ')' = bal > 0 && go (bal - 1) cs\n      | otherwise = False\n\nresult :: String -> String\nresult s\n  | isValid s = \"YES\"\n  | otherwise = \"NO\"\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let tokens = words input\n    case tokens of\n      [] -> pure ()\n      (tStr:rest) -> do\n          let t = read tStr :: Int\n          mapM_ (putStrLn . result) (take t rest)\n```",
+          "reasoning": "We need answer only one fenced code block Haskell. Need translate C++ to Haskell preserving stdin/stdout. We need produce module Main and main :: IO (). Read T, then T lines parentheses length 2..50. Output YES/NO per line. Need preserve behavior for valid input: parentheses strings; C++ uses cin >> string skips whitespace; if missing maybe break but spec valid. Haskell equivalent: read all lines? Need handle maybe empty? Input first line T, subsequent T strings. We can use getContents, lines. But lines will drop empty lines; strings length >=2 so fine. If trailing spaces? lines strips newline no spaces. Use words? words would split on whitespace and ignore empty; same. But if parentheses string could contain spaces? No only parentheses. We can use getContents >>= mapM_ ... . Need parse first as Int. Could use `read`. Since valid. Using `lines` then case. Need ensure no extra newline? print YES/NO. `putStrLn`. We can write:\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let (tLine:rest) = lines input\n      t = read tLine :: Int\n      strs = take t rest\n  mapM_ (putStrLn . check) strs\n\ncheck :: String -> String\ncheck = ... balance.\n\nNeed handle invalid char? Spec only parentheses valid. But source returns false for else. Could implement check with fold and maybe char not '(' or ')' => invalid. However if input contains invalid char, C++ would return false. We can preserve: define step.\n\nHaskell implementation:\n\nisValid :: String -> Bool\nisValid = go 0\n  where\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '(' = go (bal+1) cs\n      | c == ')' = bal > 0 && go (bal-1) cs\n      | otherwise = False\n\nNeed note `bal > 0 && go ...` is fine but if bal <=0 returns False short-circuit. Stack safe? max 50, recursion fine.\n\nmain: \nmain :: IO ()\nmain = do\n  input <- getContents\n  let ls = lines input\n  case ls of\n    [] -> return ()\n    (tStr:rest) -> do\n      let t = read tStr :: Int\n      mapM_ (putStrLn . result) (take t rest)\n\nresult s = if isValid s then \"YES\" else \"NO\"\n\nPotential issue `lines` strips empty strings; no empty parentheses strings anyway. If there are trailing empty lines, take t rest okay. If input has leading blank? Spec no.\n\nNeed include module Main. Standard Haskell. GHC. Could include `module Main where`. Code block only. Ensure exactly one fenced code block. Use `haskell`.\n\nNeed maybe handle line endings from Windows `\\r`? C++ >> string would read `\\r`? Actually text mode on Windows? Online judge Linux. `lines` doesn't strip \\r; if input has CRLF, each string would have trailing '\\r' which is not '(' or ')' invalid. Need preserve behavior for valid input likely Unix. We can use `words`? `words` splits on whitespace including CR? In Haskell, `words` uses `isSpace`, CR is space, so words would strip \\r and not include. `lines` considers CR a char? In Haskell, `lines` breaks at newline \\n; it leaves \\r? Actually `lines` treats \\n line separator and does not remove \\r; if CRLF line ends with \\r\\n, string includes \\r. Using `words` is more robust and gives tokens. But C++ cin >> string skips whitespace and then reads token; so equivalent to `words` for whitespace-separated tokens. Use `words input` rather than lines. Then first token T, rest strings. That maps exactly. If there are invalid chars? still token. Use `words`. Then if input has CRLF, `words` strips. Use `words`. The public examples have newline. Good.\n\nmain:\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (tStr:rest) -> let t = read tStr :: Int in mapM_ (putStrLn . result) (take t rest)\n\nNeed import? `read` is Prelude. `mapM_` Prelude.\n\nCould add type `result :: String -> String`.\n\nLet's craft final with code block. Ensure no explanation. We'll output:\n\n```haskell\nmodule Main where\n\nisValid :: String -> Bool\nisValid = go 0\n  where\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '(' = go (bal + 1) cs\n      | c == ')' = bal > 0 && go (bal - 1) cs\n      | otherwise = False\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let tokens = words input\n    case tokens of\n        [] -> pure ()\n        (tStr:rest) -> do\n            let t = read tStr :: Int\n            mapM_ (putStrLn . result) (take t rest)\n  where\n    result s\n      | isValid s = \"YES\"\n      | otherwise = \"NO\"\n```\n\nBut `where` attached to main? In Haskell, `where` after do block applies to main; `result` fine. But careful indentation: `where` aligned? We can either define top-level `result`. Simpler top-level.\n\n```haskell\nmodule Main where\n\nisValid :: String -> Bool\nisValid = go 0\n  where\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '(' = go (bal + 1) cs\n      | c == ')' = bal > 0 && go (bal - 1) cs\n      | otherwise = False\n\nresult :: String -> String\nresult s\n  | isValid s = \"YES\"\n  | otherwise = \"NO\"\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> pure ()\n    (tStr:rest) -> do\n      let t = read tStr :: Int\n      mapM_ (putStrLn . result) (take t rest)\n```\n\nThis satisfies. Need no explanation. Ensure exactly one fenced code block.",
+          "reasoning_details": [
+            {
+              "type": "reasoning.text",
+              "text": "We need answer only one fenced code block Haskell. Need translate C++ to Haskell preserving stdin/stdout. We need produce module Main and main :: IO (). Read T, then T lines parentheses length 2..50. Output YES/NO per line. Need preserve behavior for valid input: parentheses strings; C++ uses cin >> string skips whitespace; if missing maybe break but spec valid. Haskell equivalent: read all lines? Need handle maybe empty? Input first line T, subsequent T strings. We can use getContents, lines. But lines will drop empty lines; strings length >=2 so fine. If trailing spaces? lines strips newline no spaces. Use words? words would split on whitespace and ignore empty; same. But if parentheses string could contain spaces? No only parentheses. We can use getContents >>= mapM_ ... . Need parse first as Int. Could use `read`. Since valid. Using `lines` then case. Need ensure no extra newline? print YES/NO. `putStrLn`. We can write:\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let (tLine:rest) = lines input\n      t = read tLine :: Int\n      strs = take t rest\n  mapM_ (putStrLn . check) strs\n\ncheck :: String -> String\ncheck = ... balance.\n\nNeed handle invalid char? Spec only parentheses valid. But source returns false for else. Could implement check with fold and maybe char not '(' or ')' => invalid. However if input contains invalid char, C++ would return false. We can preserve: define step.\n\nHaskell implementation:\n\nisValid :: String -> Bool\nisValid = go 0\n  where\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '(' = go (bal+1) cs\n      | c == ')' = bal > 0 && go (bal-1) cs\n      | otherwise = False\n\nNeed note `bal > 0 && go ...` is fine but if bal <=0 returns False short-circuit. Stack safe? max 50, recursion fine.\n\nmain: \nmain :: IO ()\nmain = do\n  input <- getContents\n  let ls = lines input\n  case ls of\n    [] -> return ()\n    (tStr:rest) -> do\n      let t = read tStr :: Int\n      mapM_ (putStrLn . result) (take t rest)\n\nresult s = if isValid s then \"YES\" else \"NO\"\n\nPotential issue `lines` strips empty strings; no empty parentheses strings anyway. If there are trailing empty lines, take t rest okay. If input has leading blank? Spec no.\n\nNeed include module Main. Standard Haskell. GHC. Could include `module Main where`. Code block only. Ensure exactly one fenced code block. Use `haskell`.\n\nNeed maybe handle line endings from Windows `\\r`? C++ >> string would read `\\r`? Actually text mode on Windows? Online judge Linux. `lines` doesn't strip \\r; if input has CRLF, each string would have trailing '\\r' which is not '(' or ')' invalid. Need preserve behavior for valid input likely Unix. We can use `words`? `words` splits on whitespace including CR? In Haskell, `words` uses `isSpace`, CR is space, so words would strip \\r and not include. `lines` considers CR a char? In Haskell, `lines` breaks at newline \\n; it leaves \\r? Actually `lines` treats \\n line separator and does not remove \\r; if CRLF line ends with \\r\\n, string includes \\r. Using `words` is more robust and gives tokens. But C++ cin >> string skips whitespace and then reads token; so equivalent to `words` for whitespace-separated tokens. Use `words input` rather than lines. Then first token T, rest strings. That maps exactly. If there are invalid chars? still token. Use `words`. Then if input has CRLF, `words` strips. Use `words`. The public examples have newline. Good.\n\nmain:\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (tStr:rest) -> let t = read tStr :: Int in mapM_ (putStrLn . result) (take t rest)\n\nNeed import? `read` is Prelude. `mapM_` Prelude.\n\nCould add type `result :: String -> String`.\n\nLet's craft final with code block. Ensure no explanation. We'll output:\n\n```haskell\nmodule Main where\n\nisValid :: String -> Bool\nisValid = go 0\n  where\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '(' = go (bal + 1) cs\n      | c == ')' = bal > 0 && go (bal - 1) cs\n      | otherwise = False\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let tokens = words input\n    case tokens of\n        [] -> pure ()\n        (tStr:rest) -> do\n            let t = read tStr :: Int\n            mapM_ (putStrLn . result) (take t rest)\n  where\n    result s\n      | isValid s = \"YES\"\n      | otherwise = \"NO\"\n```\n\nBut `where` attached to main? In Haskell, `where` after do block applies to main; `result` fine. But careful indentation: `where` aligned? We can either define top-level `result`. Simpler top-level.\n\n```haskell\nmodule Main where\n\nisValid :: String -> Bool\nisValid = go 0\n  where\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '(' = go (bal + 1) cs\n      | c == ')' = bal > 0 && go (bal - 1) cs\n      | otherwise = False\n\nresult :: String -> String\nresult s\n  | isValid s = \"YES\"\n  | otherwise = \"NO\"\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> pure ()\n    (tStr:rest) -> do\n      let t = read tStr :: Int\n      mapM_ (putStrLn . result) (take t rest)\n```\n\nThis satisfies. Need no explanation. Ensure exactly one fenced code block.",
+              "format": "unknown",
+              "index": 0
+            }
+          ]
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 635,
+      "completion_tokens": 1570,
+      "total_tokens": 2205,
+      "prompt_tokens_details": {
+        "cached_tokens": 384,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1392,
+        "image_tokens": 0
+      },
+      "cache_creation_input_tokens": 0
+    },
+    "system_fingerprint": "fp_no0tkm90w0"
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 35.3585432000109,
+  "received_at": "2026-11-17T09:27:19.822395+00:00",
+  "logical_request_id": "1b63245ac588c5c81c0e98b58c5dc522a19f8c79c5e4d14e5de418dd69619c6d",
+  "execution_class": "direct_api"
+}

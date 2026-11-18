@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.List (sort)\nimport Data.Maybe (fromMaybe)\n\nreadInts :: IO [Integer]\nreadInts = do\n  s <- BS.getContents\n  return $ map (fromMaybe 0 . BS.readInteger) (BS.words s)\n\ncountGE :: [Integer] -> Integer -> Integer\ncountGE xs mid = go (tail xs) (head xs) 1\n  where\n    go [] _ cnt = cnt\n    go (x:rest) prev cnt\n      | x - prev >= mid = go rest x (cnt + 1)\n      | otherwise = go rest prev cnt\n\nmain :: IO ()\nmain = do\n  nums <- readInts\n  let (n : c : rest) = nums\n      a = sort (take (fromIntegral n) rest)\n      lo = 1\n      hi = last a - head a\n      search l r ans\n        | l > r = ans\n        | countGE a mid >= c = search (mid + 1) r mid\n        | otherwise = search l (mid - 1) ans\n        where mid = l + (r - l) `div` 2\n      ans = search lo hi 0\n  print ans\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794897852,
+    "id": "0f955fbf-d330-49d3-b6a1-0601efbc451d",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 283,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_5a59dd63448b49e095b827a964ce3838",
+      "trace_id": "b28deb3cff474156af76e310c56911e5"
+    },
+    "usage": {
+      "completion_tokens": 283,
+      "prompt_tokens": 719,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 1002
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00181404,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.822591400006786,
+  "logical_request_id": "fa18558c99d090a5cd41ffb467864f10d1a2ec865e22ed40fb42d8c342c05d9e",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_2110\\cpp-via-haskell\\attempt-05\\step-03\\response_body.txt",
+  "received_at": "2026-11-17T06:44:12.395782+00:00",
+  "request_id": "0f955fbf-d330-49d3-b6a1-0601efbc451d",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```haskell\nmodule Main (main) where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.List (sort)\nimport Data.Maybe (fromMaybe)\n\nreadInts :: IO [Integer]\nreadInts = do\n  s <- BS.getContents\n  return $ map (fromMaybe 0 . BS.readInteger) (BS.words s)\n\ncountGE :: [Integer] -> Integer -> Integer\ncountGE xs mid = go (tail xs) (head xs) 1\n  where\n    go [] _ cnt = cnt\n    go (x:rest) prev cnt\n      | x - prev >= mid = go rest x (cnt + 1)\n      | otherwise = go rest prev cnt\n\nmain :: IO ()\nmain = do\n  nums <- readInts\n  let (n : c : rest) = nums\n      a = sort (take (fromIntegral n) rest)\n      lo = 1\n      hi = last a - head a\n      search l r ans\n        | l > r = ans\n        | countGE a mid >= c = search (mid + 1) r mid\n        | otherwise = search l (mid - 1) ans\n        where mid = l + (r - l) `div` 2\n      ans = search lo hi 0\n  print ans\n```",
+  "usage": {
+    "completion_tokens": 283,
+    "prompt_tokens": 719,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1002
+  },
+  "usage_raw": {
+    "completion_tokens": 283,
+    "prompt_tokens": 719,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1002
+  }
+}

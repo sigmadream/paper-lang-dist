@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n#include <algorithm>\n#include <cctype>\n\nstatic bool parseFirstToken(const std::string& s, bool& neg, unsigned long long& mag) {\n    if (s.empty()) return false;\n\n    std::size_t i = 0;\n    neg = false;\n    if (s[0] == '+' || s[0] == '-') {\n        neg = (s[0] == '-');\n        i = 1;\n    }\n\n    if (i >= s.size()) return false;\n\n    unsigned long long v = 0;\n    const unsigned long long CAP = 3000000000ULL;\n\n    for (; i < s.size(); ++i) {\n        unsigned char c = static_cast<unsigned char>(s[i]);\n        if (!std::isdigit(c)) return false;\n\n        int d = s[i] - '0';\n        if (v < CAP) {\n            v = v * 10ULL + static_cast<unsigned long long>(d);\n            if (v > CAP) v = CAP;\n        }\n    }\n\n    mag = v;\n    return true;\n}\n\nstatic bool parseValue(const std::string& s, long long& out) {\n    if (s.empty()) return false;\n\n    std::size_t i = 0;\n    bool neg = false;\n\n    if (s[0] == '+' || s[0] == '-') {\n        neg = (s[0] == '-');\n        i = 1;\n    }\n\n    if (i >= s.size()) return false;\n\n    long long v = 0;\n\n    for (; i < s.size(); ++i) {\n        unsigned char c = static_cast<unsigned char>(s[i]);\n        if (!std::isdigit(c)) return false;\n\n        int d = s[i] - '0';\n        v = v * 10LL + static_cast<long long>(d);\n    }\n\n    out = neg ? -v : v;\n    return true;\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::string first;\n    if (!(std::cin >> first)) return 0;\n\n    bool neg = false;\n    unsigned long long mag = 0;\n\n    if (!parseFirstToken(first, neg, mag)) return 0;\n\n    long long k;\n    if (neg || mag == 0) {\n        k = 0;\n    } else {\n        const unsigned long long LIMIT = 2147483647ULL;\n        k = static_cast<long long>(std::min(mag, LIMIT));\n    }\n\n    std::vector<long long> nums;\n    bool invalid = false;\n\n    for (long long i = 0; i < k; ++i) {\n        std::string tok;\n        if (!(std::cin >> tok)) break;\n\n        long long v;\n        if (!parseValue(tok, v)) {\n            invalid = true;\n            break;\n        }\n\n        nums.push_back(v);\n    }\n\n    if (invalid) {\n        nums.clear();\n    }\n\n    long long answer;\n\n    if (nums.empty()) {\n        answer = 0;\n    } else {\n        long long current = nums[0];\n        long long best = nums[0];\n\n        for (std::size_t i = 1; i < nums.size(); ++i) {\n            long long y = nums[i];\n            current = std::max(y, current + y);\n            best = std::max(best, current);\n        }\n\n        answer = best;\n    }\n\n    std::cout << answer << '\\n';\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 818,
+    "total_tokens": 3621,
+    "completion_tokens": 2803,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2027
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 818,
+    "total_tokens": 3621,
+    "completion_tokens": 2803,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2027
+    }
+  },
+  "cost_usd": 0.003496104,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-e4fdc100099e66bada5b1947a4968aba",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-haskell\\attempt-02\\step-10\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-e4fdc100099e66bada5b1947a4968aba",
+    "object": "chat.completion",
+    "created": 1794992788,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n#include <algorithm>\n#include <cctype>\n\nstatic bool parseFirstToken(const std::string& s, bool& neg, unsigned long long& mag) {\n    if (s.empty()) return false;\n\n    std::size_t i = 0;\n    neg = false;\n    if (s[0] == '+' || s[0] == '-') {\n        neg = (s[0] == '-');\n        i = 1;\n    }\n\n    if (i >= s.size()) return false;\n\n    unsigned long long v = 0;\n    const unsigned long long CAP = 3000000000ULL;\n\n    for (; i < s.size(); ++i) {\n        unsigned char c = static_cast<unsigned char>(s[i]);\n        if (!std::isdigit(c)) return false;\n\n        int d = s[i] - '0';\n        if (v < CAP) {\n            v = v * 10ULL + static_cast<unsigned long long>(d);\n            if (v > CAP) v = CAP;\n        }\n    }\n\n    mag = v;\n    return true;\n}\n\nstatic bool parseValue(const std::string& s, long long& out) {\n    if (s.empty()) return false;\n\n    std::size_t i = 0;\n    bool neg = false;\n\n    if (s[0] == '+' || s[0] == '-') {\n        neg = (s[0] == '-');\n        i = 1;\n    }\n\n    if (i >= s.size()) return false;\n\n    long long v = 0;\n\n    for (; i < s.size(); ++i) {\n        unsigned char c = static_cast<unsigned char>(s[i]);\n        if (!std::isdigit(c)) return false;\n\n        int d = s[i] - '0';\n        v = v * 10LL + static_cast<long long>(d);\n    }\n\n    out = neg ? -v : v;\n    return true;\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::string first;\n    if (!(std::cin >> first)) return 0;\n\n    bool neg = false;\n    unsigned long long mag = 0;\n\n    if (!parseFirstToken(first, neg, mag)) return 0;\n\n    long long k;\n    if (neg || mag == 0) {\n        k = 0;\n    } else {\n        const unsigned long long LIMIT = 2147483647ULL;\n        k = static_cast<long long>(std::min(mag, LIMIT));\n    }\n\n    std::vector<long long> nums;\n    bool invalid = false;\n\n    for (long long i = 0; i < k; ++i) {\n        std::string tok;\n        if (!(std::cin >> tok)) break;\n\n        long long v;\n        if (!parseValue(tok, v)) {\n            invalid = true;\n            break;\n        }\n\n        nums.push_back(v);\n    }\n\n    if (invalid) {\n        nums.clear();\n    }\n\n    long long answer;\n\n    if (nums.empty()) {\n        answer = 0;\n    } else {\n        long long current = nums[0];\n        long long best = nums[0];\n\n        for (std::size_t i = 1; i < nums.size(); ++i) {\n            long long y = nums[i];\n            current = std::max(y, current + y);\n            best = std::max(best, current);\n        }\n\n        answer = best;\n    }\n\n    std::cout << answer << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block cpp. Need translate preserving behavior. Need inspect Haskell quirks.\n\nProgram reads all tokens. First token parse integer-like. If none return. n possibly negative/zero/large. k clamps: if n<=0 =>0; if n>2147483647=>2147483647; else n. collectNums k ts collects up to k parsable tokens until non-number or end. Then maxSubarray: [] =>0, otherwise Kadane using Integer.\n\nNeed C++17 mimic. Tokens via >>. First token string. parseIntegerLike semantics: optional + or -, then rest all digits and non-empty. It doesn't allow leading/trailing? token from words no whitespace. all digits. Need parse into arbitrary? Haskell Integer unbounded. n can huge. To decide clamp > 2^31-1, can parse sign/magnitude big. But inputs likely within? Need preserve all valid spec N <=100000. But spec says valid; could ignore weird? Need complete stdin behavior. Need emulate.\n\nNeed output print Integer no issue but values max 1e9. C++ long long enough for sum N*10000=1e9. Actually max 1e9. Use long long.\n\nNeed parseIntegerLike returns Maybe Integer. In C++ need parse token to maybe big integer for n. But only need k. Since k clamped 0..2147483647. We can parse decimal string with saturating to > INT_MAX, recognizing sign. Also collectNums parse each token as integer; need parse to Integer. Values spec -10000..10000. But preserve if arbitrary? Haskell can parse arbitrary and Kadane uses Integer. C++ long long may overflow if huge tokens but not valid. Could implement big? Not needed? \"for every valid input in specification\" so tokens within range. We can simple.\n\nNeed behavior with k=0. collectNums go 0 _=[] returns []; maxSubarray [] = 0; print 0. Important if n<=0 prints 0. If N positive use first N parsable tokens. If encounter invalid token, collectNums Nothing -> [] immediately, discards? In Haskell collectNums: when invalid, returns [] not partial. That is, if any among first k tokens invalid, entire nums = []. Because go m (x:xs) case Nothing -> []; yes, not retaining previous. Need mimic: if invalid encountered before k, result empty, not partial. So maxSubarray on empty =0. If fewer tokens than k with all valid, collects all and computes. The spec valid input has N tokens. But preserve.\n\nNeed parseIntegerLike: '+' alone invalid. '-' alone invalid. \"001\" valid. Empty none. Token maybe \"+123\". Haskell parse uses foldl' over ds. Integer. For n huge positive clamp. For n negative <=0 k=0. For N perhaps \"+5\". Need parse sign.\n\nC++ main:\nread string first; if !cin >> t return.\nparse first. Need determine if valid and sign and saturate. Function parseNClamped? If invalid return. For n parse maybe bool valid, bool neg, long long sat value with cap > INT_MAX. Need if n <=0 -> k=0. If negative, k=0. If positive and magnitude > 2147483647 -> k=2147483647; else magnitude. Note n > 2147483647 clamp. If n=2147483648. If n=+2147483648. If n has huge. For negative with magnitude huge still n<=0 => k=0. For zero k=0. So parse first: optional sign, rest digits nonempty. Compute capped magnitude up to 2147483648 maybe. If neg: k=0 regardless (even if magnitude zero? \"-0\" n=0 <=0 yes). If positive: k = min(mag, 2147483647LL). If leading '+' same.\n\nThen collect up to k tokens from stdin using >> string. Need validate each token parseIntegerLike. If invalid -> nums becomes empty and stop? Actually if invalid encountered, collectNums returns [] immediately, ignoring previously. We can set vector empty and break; then maxSubarray empty ->0. But if break early, remaining input unread irrelevant. Need if too few tokens: collects all then ends, calculate. If k=0, we should not read tokens? collectNums 0 _ = [] no reading. Haskell getContents already read all but logically no consuming? Since program exits, irrelevant. We can not read. If k huge potentially loop, but valid N <=100000. If k=INT_MAX and input infinite? not. We can loop until k or EOF. For invalid, break.\n\nparseIntegerLike for values: optional sign, nonempty digits. Use long long val = val*10 + digit. For valid spec safe. Could saturate to avoid overflow. Kadane long long. If token huge, Haskell exact; but spec not. Could implement arbitrary? Maybe no.\n\nNeed maxSubarray empty =>0. For non-empty:\ncur = first, best=first;\nfor each y: cur=max(y,cur+y); best=max(best,cur);\nNote y long long.\n\nPrint best newline.\n\nNeed maybe if first token invalid -> return no output. If valid n and k=0 -> print 0 even if no tokens. Yes.\n\nPotential subtlety: Haskell words splits on any whitespace. C++ >> same.\n\nNeed output exactly source file fenced. No explanation.\n\nLet's craft C++17. Use #include <bits/stdc++.h> allowed standard? \"standard libraries shipped\" bits is GCC but maybe okay. Better use iostream, string, vector, algorithm, cctype. parse.\n\nFunction bool parseIntegerLike(const string&, bool& neg, unsigned long long& magCapped?) But for value parse long long. We'll implement two functions.\n\nFor first parse with saturation:\nbool parseFirst(const string& s, bool& neg, unsigned long long& mag) {\nif s.empty return false;\nsize_t i=0; neg=false; if s[0]=='+'||'-' { neg=s[0]=='-'; i=1; }\nif i>=s.size() return false;\nunsigned long long v=0; bool overflow=false;\nfor (;i<s.size();++i){ if !isdigit((unsigned char)s[i]) return false; int d=s[i]-'0'; if (!overflow) { if (v > (ULLONG_MAX-d)/10) overflow=true; else v=v*10+d; if(v>3000000000ULL){ overflow=true; } } }\nif overflow huge. We only need cap 2147483647. Simpler cap to 3e9: v = min(3000000000ULL, v*10+d) with check. Use unsigned long long no overflow for 3e9. For digits, if v<3000000000ULL then v=v*10+d; if v>3000000000ULL v=3000000000ULL. Fine. But if v=3000000000 then next: v*10 may exceed ULL? v is 3e9, *10=3e10 safe. Actually ULL huge. We can do if (v > 3000000000ULL) keep. But when v=3e9, v*10 safe. Use unsigned long long. Okay.\nif neg => k=0; else k = min<unsigned long long>(v, 2147483647).\n\nFor value parse:\nbool parseValue(const string& s, long long& out) {\nif empty false; i optional; if i==size false; long long v=0; for digits. need maybe saturate but valid. Could use __int128 maybe not standard. long long enough for spec. If overflow, undefined. We can just parse with long long and maybe no. Could cap at LLONG_MAX? Haskell exact. Not needed. Use long long. If sign negative, out=-v. For \"-0\" out 0.\n\nCollect:\nlong long k = ...; // int up to 2147483647, but loop count. Use long long or uint64_t.\nvector<long long> nums;\nbool bad=false;\nfor (long long i=0;i<k;i++){ string tok; if(!(cin>>tok)) break; long long val; if(!parseValue(tok,val)){ bad=true; break;} nums.push_back(val);}\nIf bad nums.clear(); (or just nums empty). Since invalid means return [] regardless previous. If no bad, nums as collected.\n\nThen if nums.empty print 0 else compute.\n\nWait if k=0, loop none. nums empty print 0. If first token invalid, return no output. parseFirst only validates digits, but for negative etc. parseFirst sets neg maybe. If invalid return no output. Good.\n\nNeed include climits? vector.\n\nPotential issue for n positive huge > k clamped to 2147483647. We loop up to 2.1 billion until EOF. If input has exactly N small? If n huge but actual tokens finite, loop reads until EOF and breaks after at most tokens. Fine. If input has >2B tokens impossible. stdin maybe huge but fine.\n\nOne more subtlety: collectNums if invalid after some valid returns [] and then maxSubarray [] = 0. Our bad nums.clear. Good.\n\nIf fewer tokens than k, collects all valid, maxSubarray all. In Haskell if go m [] = [], returns partial. Yes.\n\nNeed if no first token return no output. Good.\n\nLet's final."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 818,
+      "total_tokens": 3621,
+      "completion_tokens": 2803,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 2027
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 18.67667870002333,
+  "received_at": "2026-11-18T09:06:45.590242+00:00",
+  "logical_request_id": "ee6d54dd2c8a37b56957e460b512963c847d76c80b1f146d21ea6eed9123da85",
+  "execution_class": "direct_api"
+}

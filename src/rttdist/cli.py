@@ -79,7 +79,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="Resume a previous run using existing artifacts",
     )
     _add_config_arguments(resume_parser)
-    resume_parser.add_argument("--new-attempt", action="store_true", help="Preserve an unresumable infrastructure attempt and start a new one")
+    resume_parser.add_argument(
+        "--new-attempt",
+        action="store_true",
+        help="Preserve an unresumable infrastructure attempt and start a new one",
+    )
     resume_parser.add_argument(
         "--run-id",
         dest="run_id_option",
@@ -99,7 +103,9 @@ def build_parser() -> argparse.ArgumentParser:
         help="Generate summary report from existing run",
     )
     _add_config_arguments(report_parser)
-    report_parser.add_argument("--runs", help="Comma-separated main run IDs with identical conditions")
+    report_parser.add_argument(
+        "--runs", help="Comma-separated main run IDs with identical conditions"
+    )
     report_parser.add_argument(
         "--run-id",
         dest="run_id_option",
@@ -113,14 +119,33 @@ def build_parser() -> argparse.ArgumentParser:
     )
     report_parser.set_defaults(func=_cmd_report)
 
-    fps_parser = subparsers.add_parser('fps', help='Run/resume the versioned similarity/FPS campaign')
-    fps_parser.add_argument('--config', required=True)
-    fps_parser.add_argument('--phase', choices=['pilot','main'], required=True)
-    fps_parser.add_argument('--action', choices=['run','resume','report'], default='run')
-    fps_parser.add_argument('--shard', default=None, help='Run only jobs i, i+k, ... of the shuffled schedule, as i/k')
+    fps_parser = subparsers.add_parser(
+        "fps", help="Run/resume the versioned similarity/FPS campaign"
+    )
+    fps_parser.add_argument("--config", required=True)
+    fps_parser.add_argument("--phase", choices=["pilot", "main"], required=True)
+    fps_parser.add_argument(
+        "--action", choices=["run", "resume", "report"], default="run"
+    )
+    fps_parser.add_argument(
+        "--shard",
+        default=None,
+        help="Run only jobs i, i+k, ... of the shuffled schedule, as i/k",
+    )
     fps_parser.set_defaults(func=_cmd_fps)
 
+    hops_parser = subparsers.add_parser("hops", help="v1.6 홉 실험 실행·재개·보고")
+    hops_parser.add_argument("--config", required=True)
+    hops_parser.add_argument("--provider-config")
+    hops_parser.add_argument("--phase", choices=["pilot", "main"], required=True)
+    hops_parser.add_argument(
+        "--action", choices=["run", "resume", "report"], default="run"
+    )
+    hops_parser.add_argument("--shard", help="고정 순서의 i/k 샤드")
+    hops_parser.set_defaults(func=_cmd_hops)
+
     from rttdist.research.cli import add_parser
+
     add_parser(subparsers)
 
     return parser
@@ -128,12 +153,35 @@ def build_parser() -> argparse.ArgumentParser:
 
 def _cmd_fps(args):
     from rttdist.fps_experiment import load_config, run_campaign
-    if args.action == 'report':
+
+    if args.action == "report":
         from rttdist.fps_reporting import report
+
         summary = report(load_config(args.config), args.phase)
-        return EXIT_SUCCESS if summary['complete'] else EXIT_RUNTIME_ERROR
+        return EXIT_SUCCESS if summary["complete"] else EXIT_RUNTIME_ERROR
     records = run_campaign(load_config(args.config), args.phase, args.shard)
-    return EXIT_SUCCESS if all(r['evaluable'] for r in records) else EXIT_RUNTIME_ERROR
+    return EXIT_SUCCESS if all(r["evaluable"] for r in records) else EXIT_RUNTIME_ERROR
+
+
+def _cmd_hops(args):
+    from rttdist.hops_experiment import (
+        load_hops_config,
+        report_hops_campaign,
+        run_hops_campaign,
+    )
+
+    try:
+        cfg = load_hops_config(args.config, args.provider_config)
+        if args.action == "report":
+            report_hops_campaign(cfg, args.phase)
+            return EXIT_SUCCESS
+        records = run_hops_campaign(cfg, args.phase, args.shard)
+    except (OSError, ValueError, KeyError, RuntimeError) as exc:
+        _error(f"v1.6 명령을 완료하지 못했습니다: {exc}")
+        return EXIT_RUNTIME_ERROR
+    return (
+        EXIT_SUCCESS if all(r.get("evaluable") for r in records) else EXIT_RUNTIME_ERROR
+    )
 
 
 def _setup_logging(verbose: bool) -> None:
@@ -219,10 +267,12 @@ def _cmd_validate_corpus(args: argparse.Namespace) -> int:
 
     if args.execute:
         from rttdist.experiment_io import validate_execute
+
         validate_execute(config)
         return EXIT_SUCCESS
 
     from rttdist.ast_similarity import parser_smoke
+
     parser_smoke()
 
     print(f"Config validated successfully.")
@@ -315,7 +365,9 @@ def _cmd_resume(args: argparse.Namespace) -> int:
     print(f"Output root: {config.output_root}")
 
     if config.experiment_version:
-        return _run_v1(config, config_path, run_id, resume=True, new_attempt=args.new_attempt)
+        return _run_v1(
+            config, config_path, run_id, resume=True, new_attempt=args.new_attempt
+        )
 
     try:
         results = run_pipeline_service(
@@ -354,6 +406,7 @@ def _cmd_report(args: argparse.Namespace) -> int:
     """Generate summary report from existing run."""
     if args.runs:
         from rttdist.reporting_v1 import report_runs
+
         config = _load_config(args.config_option or args.config)
         report_runs(config.output_root, args.runs.split(","))
         return EXIT_SUCCESS
@@ -381,6 +434,7 @@ def _cmd_report(args: argparse.Namespace) -> int:
 
     if (output_root / run_id / "run_metadata.json").exists():
         from rttdist.reporting_v1 import report_runs
+
         report_runs(output_root, [run_id])
         return EXIT_SUCCESS
 
@@ -388,7 +442,7 @@ def _cmd_report(args: argparse.Namespace) -> int:
         artifacts = write_run_summary(
             output_root=output_root,
             run_id=run_id,
-            )
+        )
         print(f"Report generated successfully.")
         print(f"  - JSON: {artifacts.summary_json_path}")
         print(f"  - Markdown: {artifacts.summary_markdown_path}")
@@ -414,7 +468,7 @@ def _write_summary_or_exit(
             output_root=config.output_root,
             run_id=run_id,
             run_results=results,
-            )
+        )
     except Exception as exc:
         _error(f"Report generation failed: {exc}")
         sys.exit(EXIT_RUNTIME_ERROR)
@@ -431,10 +485,20 @@ def _validate_provider_runtime_or_exit(config: ExperimentConfig) -> None:
 def _run_v1(config, path, run_id, resume, new_attempt=False):
     import yaml
     from rttdist.experiment_v1 import run_experiment
+
     raw = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
-    results = run_experiment(config, raw, run_id, resume=resume, new_attempt=new_attempt)
+    results = run_experiment(
+        config, raw, run_id, resume=resume, new_attempt=new_attempt
+    )
     print(f"Recorded {len(results)} experiments")
-    return EXIT_RUNTIME_ERROR if any(r["status"] == "api_error" or r["details"].get("missing_toolchain") for r in results) else EXIT_SUCCESS
+    return (
+        EXIT_RUNTIME_ERROR
+        if any(
+            r["status"] == "api_error" or r["details"].get("missing_toolchain")
+            for r in results
+        )
+        else EXIT_SUCCESS
+    )
 
 
 def main(argv: Sequence[str] | None = None) -> int:

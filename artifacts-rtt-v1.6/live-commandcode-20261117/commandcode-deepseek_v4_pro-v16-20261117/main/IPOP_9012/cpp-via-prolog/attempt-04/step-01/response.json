@@ -1,0 +1,107 @@
+{
+  "text": "```prolog\n:- use_module(library(readutil)).\n\nmain :-\n    read_line_to_string(user_input, Line0),\n    ( Line0 = end_of_file -> halt ; true ),\n    number_string(T, Line0),\n    process(T).\n\nprocess(0) :- !.\nprocess(N) :-\n    N > 0,\n    read_line_to_string(user_input, S),\n    ( S = end_of_file -> halt ; true ),\n    ( is_valid(S) -> write('YES'), nl ; write('NO'), nl ),\n    N1 is N - 1,\n    process(N1).\n\nis_valid(S) :-\n    string_chars(S, Chars),\n    is_valid_chars(Chars, 0).\n\nis_valid_chars([], Bal) :- Bal =:= 0.\nis_valid_chars([C|Cs], Bal) :-\n    ( C = '(' ->\n        Bal1 is Bal + 1\n    ;\n        Bal1 is Bal - 1\n    ),\n    Bal1 >= 0,\n    is_valid_chars(Cs, Bal1).\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4-pro",
+  "actual_model": "deepseek/deepseek-v4-pro",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4-pro",
+    "actual": "deepseek/deepseek-v4-pro",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 589,
+    "completion_tokens": 1902,
+    "total_tokens": 2491,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1676,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "usage_raw": {
+    "prompt_tokens": 589,
+    "completion_tokens": 1902,
+    "total_tokens": 2491,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1676,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "cost_usd": 0.0083094,
+  "cost_source": "estimated",
+  "request_id": "gen_01M7MCRG7BEAETJM256FB31973",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-deepseek_v4_pro-v16-20261117\\main\\IPOP_9012\\cpp-via-prolog\\attempt-04\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "gen_01M7MCRG7BEAETJM256FB31973",
+    "object": "chat.completion",
+    "created": 1794907104,
+    "model": "deepseek/deepseek-v4-pro",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\n:- use_module(library(readutil)).\n\nmain :-\n    read_line_to_string(user_input, Line0),\n    ( Line0 = end_of_file -> halt ; true ),\n    number_string(T, Line0),\n    process(T).\n\nprocess(0) :- !.\nprocess(N) :-\n    N > 0,\n    read_line_to_string(user_input, S),\n    ( S = end_of_file -> halt ; true ),\n    ( is_valid(S) -> write('YES'), nl ; write('NO'), nl ),\n    N1 is N - 1,\n    process(N1).\n\nis_valid(S) :-\n    string_chars(S, Chars),\n    is_valid_chars(Chars, 0).\n\nis_valid_chars([], Bal) :- Bal =:= 0.\nis_valid_chars([C|Cs], Bal) :-\n    ( C = '(' ->\n        Bal1 is Bal + 1\n    ;\n        Bal1 is Bal - 1\n    ),\n    Bal1 >= 0,\n    is_valid_chars(Cs, Bal1).\n```",
+          "reasoning": "We need to translate C++ program to Prolog (SWI-Prolog). The program reads an integer T, then T lines each containing a string of parentheses, and outputs YES if the string is a valid parentheses sequence (balanced and never negative), else NO.\n\nWe need to define main/0 in Prolog. The evaluator invokes main. We should read from standard input, process each line. But careful: Prolog input reading might be line-based. The input first line is an integer T, then subsequent lines each contain a string. The C++ uses cin >> t (reads integer token) and then cin >> s (reads string token, which reads until whitespace, but each line contains only the parentheses string so fine). In Prolog, we can read a line, parse integer, then read T more lines.\n\nRules: \"Use only the standard libraries shipped with the specified toolchain.\" SWI-Prolog standard library includes read/1, read_string/3, etc. But we need to preserve complete stdin/stdout behavior for every valid input. Valid inputs: first line positive integer T, then T lines each with a parentheses string length 2..50. No extra whitespace? The input format says \"첫 줄 양의 정수 T. 이후 T줄에 소괄호 문자열 하나씩\" so each string on its own line. The examples show each string on separate lines. So we can read line by line.\n\nIn Prolog, we can use read_string(user_input, \"\\n\", \"\\r\", _, Line) to read a line as string. Or use read_line_to_string/2, but it's in library(readutil). We can also use read/1 for term reading but parentheses strings are not valid Prolog atoms because they start with '(' and may contain characters? Actually atoms can be written with quotes, but input is not quoted. So term reading would not work. So need to read line as string.\n\nWe need main/0. Should output exactly \"YES\\n\" or \"NO\\n\" for each.\n\nImplementation plan:\n- main: \n    - read first line as string, convert to integer T.\n    - process T times: \n        - read a line as string (the parentheses string).\n        - check if valid: simulate balance.\n        - output YES or NO.\n    - halt.\n\nWe need to convert line string to integer: use number_string(T, Line) after trimming whitespace? But the first line will be just number, no spaces. read_string with \"\\n\" as separator will read up to newline, not including newline? Actually read_string/5: read_string(Stream, Sep, PadChars, -1, String) reads until separator, separator is removed, but includes pad chars? Let's define: read_string(Stream, SepChars, PadChars, -1, String) where SepChars is a list of separator chars (e.g., \"\\n\"), PadChars is a list of chars that should be skipped after separator? Actually SWI's read_string/5 syntax: read_string(+Stream, +SepChars, +PadChars, -1, -String) reads a string until a separator char, the separator is not included, PadChars are chars that are skipped after separator? Need check. Alternatively use read_line_to_string/2 from readutil, which reads one line (excluding newline). That is straightforward. We can include library(readutil) via :- use_module(library(readutil)). That is standard.\n\nBut we are only allowed standard libraries. library(readutil) is part of SWI standard distribution? Yes, it's a standard library.\n\nSo:\n:- use_module(library(readutil)).\n\nmain :-\n    read_line_to_string(user_input, Line0),\n    ( Line0 = end_of_file -> halt ; true ),\n    number_string(T, Line0),\n    process(T).\n\nprocess(0) :- !.\nprocess(N) :-\n    N > 0,\n    read_line_to_string(user_input, S),\n    ( S = end_of_file -> halt ; true ),\n    ( is_valid(S) -> write('YES'), nl ; write('NO'), nl ),\n    N1 is N - 1,\n    process(N1).\n\n% is_valid: check parentheses balance.\n% We can convert string to list of chars, then iterate.\nis_valid(S) :-\n    string_chars(S, Chars),\n    is_valid_chars(Chars, 0).\n\nis_valid_chars([], Bal) :- Bal =:= 0.\nis_valid_chars([C|Cs], Bal) :-\n    ( C = '(' -> Bal1 is Bal + 1 ; Bal1 is Bal - 1 ),\n    Bal1 >= 0,\n    is_valid_chars(Cs, Bal1).\nThat works, but note: In Prolog, comparing Bal1 >= 0 will fail if Bal1 is negative, causing backtracking. Since there is no other clause, it will fail, which is correct for invalid. However, we want to break early; using this recursive approach will fail if any negative.\n\nNeed to ensure that input lines can be empty? Not in valid inputs.\n\nAlso need to handle possible whitespace around T? Not required but could be robust. We can trim whitespace: e.g., use split_string to remove spaces? But spec says first line exactly integer. We'll trust input.\n\nAlternatively, we can use read/1 for T, then for each subsequent line use read_string/3 or read_line_to_string/2. But mixing read/1 and read_line_to_string may have issues because read/1 consumes the newline? Usually read/1 reads a term and leaves the newline, so the next read_line_to_string will read empty line. So better use line reading for all.\n\nBut after reading first line as string, we convert to integer. Then we read next T lines. That should be fine.\n\nEdge cases: The input may have trailing newline after last line. read_line_to_string will read till newline; if end_of_file is encountered, returns end_of_file. We handle that by halting if end_of_file before expected lines (should not happen with valid input). Also need to ensure that if there are extra empty lines, we don't read them? Not relevant.\n\nNow output exactly \"YES\\n\" or \"NO\\n\". We use write and nl.\n\nNow Prolog code.\n\nWe need to output one complete source file in one fenced code block. So we reply with:\n\n```prolog\n:- use_module(library(readutil)).\n\nmain :-\n    read_line_to_string(user_input, Line0),\n    ( Line0 = end_of_file -> halt ; true ),\n    number_string(T, Line0),\n    process(T).\n\nprocess(0) :- !.\nprocess(N) :-\n    N > 0,\n    read_line_to_string(user_input, S),\n    ( S = end_of_file -> halt ; true ),\n    ( is_valid(S) -> write('YES'), nl ; write('NO'), nl ),\n    N1 is N - 1,\n    process(N1).\n\nis_valid(S) :-\n    string_chars(S, Chars),\n    is_valid_chars(Chars, 0).\n\nis_valid_chars([], Bal) :- Bal =:= 0.\nis_valid_chars([C|Cs], Bal) :-\n    ( C = '(' ->\n        Bal1 is Bal + 1\n    ;\n        Bal1 is Bal - 1\n    ),\n    Bal1 >= 0,\n    is_valid_chars(Cs, Bal1).\n```\n\nBut note: The program should not have extra output. The fenced code block must contain exactly the Prolog code.\n\nOne more consideration: In the original C++, it uses ios_base::sync_with_stdio(false); cin.tie(NULL); not relevant. The input reading is by tokens, which would skip any whitespace including newlines. But spec says each string on its own line, so line-based reading is fine. We preserve behavior for all valid inputs: T lines of strings, no embedded whitespace. So line reading is equivalent.\n\nNow produce final answer.",
+          "reasoning_details": [
+            {
+              "type": "reasoning.text",
+              "text": "We need to translate C++ program to Prolog (SWI-Prolog). The program reads an integer T, then T lines each containing a string of parentheses, and outputs YES if the string is a valid parentheses sequence (balanced and never negative), else NO.\n\nWe need to define main/0 in Prolog. The evaluator invokes main. We should read from standard input, process each line. But careful: Prolog input reading might be line-based. The input first line is an integer T, then subsequent lines each contain a string. The C++ uses cin >> t (reads integer token) and then cin >> s (reads string token, which reads until whitespace, but each line contains only the parentheses string so fine). In Prolog, we can read a line, parse integer, then read T more lines.\n\nRules: \"Use only the standard libraries shipped with the specified toolchain.\" SWI-Prolog standard library includes read/1, read_string/3, etc. But we need to preserve complete stdin/stdout behavior for every valid input. Valid inputs: first line positive integer T, then T lines each with a parentheses string length 2..50. No extra whitespace? The input format says \"첫 줄 양의 정수 T. 이후 T줄에 소괄호 문자열 하나씩\" so each string on its own line. The examples show each string on separate lines. So we can read line by line.\n\nIn Prolog, we can use read_string(user_input, \"\\n\", \"\\r\", _, Line) to read a line as string. Or use read_line_to_string/2, but it's in library(readutil). We can also use read/1 for term reading but parentheses strings are not valid Prolog atoms because they start with '(' and may contain characters? Actually atoms can be written with quotes, but input is not quoted. So term reading would not work. So need to read line as string.\n\nWe need main/0. Should output exactly \"YES\\n\" or \"NO\\n\" for each.\n\nImplementation plan:\n- main: \n    - read first line as string, convert to integer T.\n    - process T times: \n        - read a line as string (the parentheses string).\n        - check if valid: simulate balance.\n        - output YES or NO.\n    - halt.\n\nWe need to convert line string to integer: use number_string(T, Line) after trimming whitespace? But the first line will be just number, no spaces. read_string with \"\\n\" as separator will read up to newline, not including newline? Actually read_string/5: read_string(Stream, Sep, PadChars, -1, String) reads until separator, separator is removed, but includes pad chars? Let's define: read_string(Stream, SepChars, PadChars, -1, String) where SepChars is a list of separator chars (e.g., \"\\n\"), PadChars is a list of chars that should be skipped after separator? Actually SWI's read_string/5 syntax: read_string(+Stream, +SepChars, +PadChars, -1, -String) reads a string until a separator char, the separator is not included, PadChars are chars that are skipped after separator? Need check. Alternatively use read_line_to_string/2 from readutil, which reads one line (excluding newline). That is straightforward. We can include library(readutil) via :- use_module(library(readutil)). That is standard.\n\nBut we are only allowed standard libraries. library(readutil) is part of SWI standard distribution? Yes, it's a standard library.\n\nSo:\n:- use_module(library(readutil)).\n\nmain :-\n    read_line_to_string(user_input, Line0),\n    ( Line0 = end_of_file -> halt ; true ),\n    number_string(T, Line0),\n    process(T).\n\nprocess(0) :- !.\nprocess(N) :-\n    N > 0,\n    read_line_to_string(user_input, S),\n    ( S = end_of_file -> halt ; true ),\n    ( is_valid(S) -> write('YES'), nl ; write('NO'), nl ),\n    N1 is N - 1,\n    process(N1).\n\n% is_valid: check parentheses balance.\n% We can convert string to list of chars, then iterate.\nis_valid(S) :-\n    string_chars(S, Chars),\n    is_valid_chars(Chars, 0).\n\nis_valid_chars([], Bal) :- Bal =:= 0.\nis_valid_chars([C|Cs], Bal) :-\n    ( C = '(' -> Bal1 is Bal + 1 ; Bal1 is Bal - 1 ),\n    Bal1 >= 0,\n    is_valid_chars(Cs, Bal1).\nThat works, but note: In Prolog, comparing Bal1 >= 0 will fail if Bal1 is negative, causing backtracking. Since there is no other clause, it will fail, which is correct for invalid. However, we want to break early; using this recursive approach will fail if any negative.\n\nNeed to ensure that input lines can be empty? Not in valid inputs.\n\nAlso need to handle possible whitespace around T? Not required but could be robust. We can trim whitespace: e.g., use split_string to remove spaces? But spec says first line exactly integer. We'll trust input.\n\nAlternatively, we can use read/1 for T, then for each subsequent line use read_string/3 or read_line_to_string/2. But mixing read/1 and read_line_to_string may have issues because read/1 consumes the newline? Usually read/1 reads a term and leaves the newline, so the next read_line_to_string will read empty line. So better use line reading for all.\n\nBut after reading first line as string, we convert to integer. Then we read next T lines. That should be fine.\n\nEdge cases: The input may have trailing newline after last line. read_line_to_string will read till newline; if end_of_file is encountered, returns end_of_file. We handle that by halting if end_of_file before expected lines (should not happen with valid input). Also need to ensure that if there are extra empty lines, we don't read them? Not relevant.\n\nNow output exactly \"YES\\n\" or \"NO\\n\". We use write and nl.\n\nNow Prolog code.\n\nWe need to output one complete source file in one fenced code block. So we reply with:\n\n```prolog\n:- use_module(library(readutil)).\n\nmain :-\n    read_line_to_string(user_input, Line0),\n    ( Line0 = end_of_file -> halt ; true ),\n    number_string(T, Line0),\n    process(T).\n\nprocess(0) :- !.\nprocess(N) :-\n    N > 0,\n    read_line_to_string(user_input, S),\n    ( S = end_of_file -> halt ; true ),\n    ( is_valid(S) -> write('YES'), nl ; write('NO'), nl ),\n    N1 is N - 1,\n    process(N1).\n\nis_valid(S) :-\n    string_chars(S, Chars),\n    is_valid_chars(Chars, 0).\n\nis_valid_chars([], Bal) :- Bal =:= 0.\nis_valid_chars([C|Cs], Bal) :-\n    ( C = '(' ->\n        Bal1 is Bal + 1\n    ;\n        Bal1 is Bal - 1\n    ),\n    Bal1 >= 0,\n    is_valid_chars(Cs, Bal1).\n```\n\nBut note: The program should not have extra output. The fenced code block must contain exactly the Prolog code.\n\nOne more consideration: In the original C++, it uses ios_base::sync_with_stdio(false); cin.tie(NULL); not relevant. The input reading is by tokens, which would skip any whitespace including newlines. But spec says each string on its own line, so line-based reading is fine. We preserve behavior for all valid inputs: T lines of strings, no embedded whitespace. So line reading is equivalent.\n\nNow produce final answer.",
+              "format": "unknown",
+              "index": 0
+            }
+          ]
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 589,
+      "completion_tokens": 1902,
+      "total_tokens": 2491,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1676,
+        "image_tokens": 0
+      },
+      "cache_creation_input_tokens": 0
+    },
+    "system_fingerprint": "fp_xnoqpd6hwp"
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 42.25057039997773,
+  "received_at": "2026-11-17T09:18:23.506013+00:00",
+  "logical_request_id": "aa9307d25ae82cea16913e4a59973067957094d1586ac525d5feb9849492e893",
+  "execution_class": "direct_api"
+}

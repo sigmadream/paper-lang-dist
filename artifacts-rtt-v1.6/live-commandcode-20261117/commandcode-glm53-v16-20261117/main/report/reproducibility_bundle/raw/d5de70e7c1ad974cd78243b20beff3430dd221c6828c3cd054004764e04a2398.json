@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n    int n, m;\n    cin >> n >> m;\n    vector<vector<int>> adj(n + 1);\n    for (int i = 0; i < m; ++i) {\n        int a, b;\n        cin >> a >> b;\n        adj[a].push_back(b);\n        adj[b].push_back(a);\n    }\n    set<int> invited;\n    for (int y : adj[1]) {\n        if (y == 1) continue;\n        invited.insert(y);\n        for (int z : adj[y]) {\n            if (z != 1) invited.insert(z);\n        }\n    }\n    cout << invited.size() << \"\\n\";\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794901153,
+    "id": "ce660f82-992a-4842-bc3e-869ce3ca400d",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 180,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_db65ad0543224ee2bd364cebae5dee50",
+      "trace_id": "bd11a13b69744c7189b38887fcae2984"
+    },
+    "usage": {
+      "completion_tokens": 180,
+      "prompt_tokens": 713,
+      "prompt_tokens_details": {
+        "cached_tokens": 448
+      },
+      "total_tokens": 893
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00127948,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.651332999987062,
+  "logical_request_id": "6ae1a99bfde1844521fee0d58fd6507208cdea08e50e71bc52d01cf77752258d",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_5567\\cpp-via-haskell\\attempt-01\\step-04\\response_body.txt",
+  "received_at": "2026-11-17T07:39:13.343312+00:00",
+  "request_id": "ce660f82-992a-4842-bc3e-869ce3ca400d",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n    int n, m;\n    cin >> n >> m;\n    vector<vector<int>> adj(n + 1);\n    for (int i = 0; i < m; ++i) {\n        int a, b;\n        cin >> a >> b;\n        adj[a].push_back(b);\n        adj[b].push_back(a);\n    }\n    set<int> invited;\n    for (int y : adj[1]) {\n        if (y == 1) continue;\n        invited.insert(y);\n        for (int z : adj[y]) {\n            if (z != 1) invited.insert(z);\n        }\n    }\n    cout << invited.size() << \"\\n\";\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 180,
+    "prompt_tokens": 713,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 893
+  },
+  "usage_raw": {
+    "completion_tokens": 180,
+    "prompt_tokens": 713,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 893
+  }
+}

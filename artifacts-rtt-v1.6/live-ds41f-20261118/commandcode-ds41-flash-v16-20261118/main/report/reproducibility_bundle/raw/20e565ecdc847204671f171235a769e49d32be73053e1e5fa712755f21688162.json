@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```prolog\nmain :-\n    read_line_to_string(user_input, S),\n    read_line_to_string(user_input, T),\n    string_codes(S, RawSC),\n    string_codes(T, RawTC),\n    delete(RawSC, 13, SC),\n    delete(RawTC, 13, TC),\n    msort(SC, SortedS),\n    msort(TC, SortedT),\n    ( SortedS == SortedT -> R = 1 ; R = 0 ),\n    format(\"~w~n\", [R]).\n```",
+          "reasoning_content": "We need answer only Prolog code. Need translate. Must preserve stdin stdout. SWI-Prolog main/0; no initialization directives. Need read two lines strings. Handle length up to 50000, lowercase. Output 1/0 newline.\n\nNeed be careful SWI read_line_to_string or read_string. main reads first line and second line. Using read_line_to_string(user_input, S), etc. But input first line possibly spaces? only lowercase, no spaces. read_line_to_string reads line excluding newline. If trailing empty? fine.\n\nCounting anagram: compare sorted chars? Efficient O(n log n) okay 50000. Or count using chars. SWI has string_codes. Need count occurrences. Could use sort on codes and compare. O(n log n) fine. Or use aggregate. Simpler: string_codes(S, Cs), string_codes(T, Ds), msort(Cs, A), msort(Ds, B), (A==B -> 1 ; 0). msort available. But length 50k okay. Or sum counts using dict? Simpler msort.\n\nNeed ensure reading exact lines. read_line_to_string(user_input, S), read_line_to_string(user_input, T). main prints. If T maybe empty? constraints length 1. Use format(\"~w~n\", [R]).\n\nPotential issue read_line_to_string returns atom end_of_file if EOF. But valid.\n\nNeed define main(0). No init directives. Provide complete source in fenced block. No explanation.\n\nNeed \"module Main and main :: IO ()\" for Haskell? Target Prolog. Just code.\n\nProlog code:\n\nmain :-\n    read_line_to_string(user_input, S),\n    read_line_to_string(user_input, T),\n    string_codes(S, SC),\n    string_codes(T, TC),\n    msort(SC, SortedS),\n    msort(TC, SortedT),\n    ( SortedS == SortedT -> R = 1 ; R = 0 ),\n    format(\"~w~n\", [R]).\n\nCould read_line_to_string includes \\r? If Windows CRLF, maybe strips \\r? SWI read_line_to_string removes newline but maybe leaves \\r? Typically removes line ending including \\r? Not sure. Could use read_string(user_input, \"\\n\", \"\\r\", _, S)? Hmm. read_line_to_string likely no newline, maybe retains \\r? The spec uses standard input; on Linux no issue. To robustly strip trailing \\r: can remove leading/trailing? But strings only lowercase, could use atom? Simpler maybe use read_line_to_string, then normalize by removing trailing '\\r'? SWI read_line_to_string docs: \"Read a line from stream... strips newline\". It likely only '\\n', may leave '\\r'. Could handle by using read_string to read until \\n, with escape \\r? read_string/5.\n\nSWI has read_string(+Stream, +Sep, +Escape, -String, -Len). Use read_string(user_input, \"\\n\", \"\\r\", _, S), and read_string for T. But if CRLF and escape \"\\r\" means treat \\r as escape? Need semantics. I think read_string(Stream, Sep, Escape, String, Length): reads until Sep or Escape. If escape encountered, it is included? Actually maybe. Simpler: read_line_to_string then strip trailing \\r code 13 from codes before compare? Since only lowercase, if CR present, remove all 13 codes.\n\nCan write helper normalize_codes(Line, Codes) after string_codes, exclude 13. In Prolog, exclude/3 from apply? SWI has exclude/3? library(apply), autoload. Or manual.\n\nBut read_line_to_string strips newline, if CR remains, codes include 13. So:\n\nstring_codes(S, RawS), exclude(=(13), RawS, SC)? exclude/3 requires closure. exclude([X]>>(X=13), RawS, SC) with yall. But no library? We can use include? Simpler: use atomic_list_concat? Not needed.\n\nManual filtering:\n\nstrip_cr([], []).\nstrip_cr([13|T], R) :- strip_cr(T, R).\nstrip_cr([H|T], [H|R]) :- H \\= 13, strip_cr(T,R).\n\nThen msort.\n\nAlternative use string_codes and delete(Raw, 13, Clean) (delete removes all equal). SWI has delete/3. string_codes(S,Raw), delete(Raw, 13, SC). delete/3 removes all elements that unify? SWI delete(List, Elem, List2) removes all elements unifying. Yes.\n\nThen main.\n\nNeed no init directives. Just predicates.\n\nPotential issue `main` conflicts with system? Fine.\n\nFinal only code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794988747,
+    "id": "chatcmpl-6ffd2949e782bd1d6c35abae458a0d18",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 1154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 1032
+      },
+      "prompt_tokens": 607,
+      "prompt_tokens_details": {
+        "cached_tokens": 512
+      },
+      "total_tokens": 1761
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.001416372,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 7.218822399969213,
+  "logical_request_id": "b5acecc23c8f55a7c4f06af7308887c714b18031f85ce03a0fdb6c291a8487f3",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0242\\cpp-via-prolog\\attempt-01\\step-01\\response_body.txt",
+  "received_at": "2026-11-18T07:59:13.519554+00:00",
+  "request_id": "chatcmpl-6ffd2949e782bd1d6c35abae458a0d18",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```prolog\nmain :-\n    read_line_to_string(user_input, S),\n    read_line_to_string(user_input, T),\n    string_codes(S, RawSC),\n    string_codes(T, RawTC),\n    delete(RawSC, 13, SC),\n    delete(RawTC, 13, TC),\n    msort(SC, SortedS),\n    msort(TC, SortedT),\n    ( SortedS == SortedT -> R = 1 ; R = 0 ),\n    format(\"~w~n\", [R]).\n```",
+  "usage": {
+    "completion_tokens": 1154,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1032
+    },
+    "prompt_tokens": 607,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "total_tokens": 1761
+  },
+  "usage_raw": {
+    "completion_tokens": 1154,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1032
+    },
+    "prompt_tokens": 607,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "total_tokens": 1761
+  }
+}

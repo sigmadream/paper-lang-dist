@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```prolog\n:- use_module(library(readutil)).\n\nread_pair(M, N) :-\n    read_line_to_string(user_input, Line),\n    split_string(Line, \" \\t\\r\\n\", \" \\t\\r\\n\", Tokens),\n    Tokens = [A, B | _],\n    number_string(M, A),\n    number_string(N, B).\n\nnext_row([], _, Acc, Row) :-\n    reverse(Acc, Row).\nnext_row([X | Xs], Left, Acc, Row) :-\n    Y is X + Left,\n    next_row(Xs, Y, [Y | Acc], Row).\n\nnext_row(Row, NewRow) :-\n    Row = [First | Rest],\n    next_row(Rest, First, [First], NewRow).\n\niterate_rows(0, Row, Row).\niterate_rows(K, Row, Final) :-\n    K > 0,\n    next_row(Row, NewRow),\n    K1 is K - 1,\n    iterate_rows(K1, NewRow, Final).\n\nunique_paths(M, N, Ans) :-\n    length(Row, N),\n    maplist(=(1), Row),\n    M1 is M - 1,\n    iterate_rows(M1, Row, Final),\n    last(Final, Ans).\n\nmain :-\n    read_pair(M, N),\n    unique_paths(M, N, Ans),\n    format(\"~w~n\", [Ans]).\n```",
+          "reasoning_content": "We need answer only code block Prolog. Need translate. Need SWI-Prolog main/0, no init directives. Read stdin M N, compute unique paths DP, output integer newline. Constraints up to 100, answer <=2e9 fits maybe Prolog ints unbounded. Need implement reading.\n\nNeed be careful SWI main invoked. main/0 should read from current input. Use read_line_to_string? Could use read? Input \"3 7\\n\". Simplest: read_term? read integer pair? But might have newline. read(M), read(N)? read/1 reads terms separated by whitespace? Actually read reads a term including period, needs fullstop. \"3 7\" as two terms no period maybe fails. Better read line and split.\n\nUse read_line_to_string(user_input, Line), atomic_list_concat(Parts,' ',Line)? Handle multiple spaces. Use split_string(Line, \" \\t\\r\\n\", \" \\t\\r\\n\", Parts), maplist(number_string, [M,N], Parts). But if line may contain both. Spec first line M N. fine. Could fallback reading all tokens if empty? Need robust maybe read entire stdin tokens. Use read_line_to_string loop or read_string. Simpler: read_string(user_input, _, S), split_string(S, \" \\t\\n\\r\", \" \\t\\n\\r\", Tokens), get first two. But read_string/3 reads all? SWI read_string(+Stream, +Len, -String), Len can be end_of_file? Actually read_string/3 with Len = _ reads until EOF? SWI docs: read_string(+Stream, ?Length, -String) reads Length chars; if Length is var, reads to EOF? I think read_string/3: Length is number or end_of_file? There is read_string(-String) maybe no. Let's ensure.\n\nSWI has read_string/3: read_string(+Stream, +Length, -String) where Length can be integer or `end_of_file`? I know common use: read_string(user_input, _, String) reads entire stream? Yes SWI: \"If Length is unbound, read all input until EOF\". I think yes. Could use that.\n\nAlternatively use read_line_to_string(user_input, Line), then tokenize. That is safe because one line. If extra whitespace line? first line. Need maybe M N on first line; can ignore rest.\n\nImplement get_two(N1,N2) :-\n  read_line_to_string(user_input, Line), \n  split_string(Line, \" \\t\\r\\n\", \" \\t\\r\\n\", Tokens),\n  Tokens = [A,B|_],\n  number_string(N1,A), number_string(N2,B).\n\nBut if line empty due leading newline? not per spec. Could robustly skip empty. Implement next_tokens? Simpler read whole input.\n\nNeed compute unique paths. Definition paths(M,N): M rows, N cols. If m,n >=1. C(m+n-2, n-1) maybe. But DP easy.\n\nProlog DP row: list length N all 1. For i=2..M, update row: first 1, each new = prev + left. Need output last element. Could use arithmetic formula with combination. Since max 100 and answer small. Compute binomial recursively might be okay but avoid big? Prolog int unbounded. We can use formula C(M+N-2, M-1) using factorial? Potential large intermediate but okay for 100 (~200!), big ints fine. Simpler DP.\n\nDefine unique_paths(M,N,Ans) :-\n  length(Row,N), maplist(=(1), Row), \n  M1 is M-1, iterate_rows(M1, Row, Final), last(Final, Ans).\n\niterate_rows(0, Row, Row).\niterate_rows(K, Row, Final) :- K>0, next_row(Row, NewRow), K1 is K-1, iterate_rows(K1, NewRow, Final).\n\nnext_row(Row, NewRow) :-\n  Row = [_|_], \n  next_row_acc(Row, 0, NewRow).\n next row: first remains? Given row [1, ...], update dp[j] += dp[j-1] for j>=1. Traverse with left previous new? Algorithm:\n next_row(Row, NewRow) :- Row = [First|Rest], next_row_rest(Rest, First, [First], NewRow). Here Left is new previous value? Let's derive: new[0]=old[0]=1. For each old x at j: new[j] = old[j] + new[j-1]; NewLeft = new[j]. Iterate old rest, accumulate new value.\nnext_row_rest([], _, Acc, NewRow) :- reverse(Acc, NewRow).\nnext_row_rest([X|Xs], Left, Acc, NewRow) :-\n   Y is X + Left,\n   next_row_rest(Xs, Y, [Y|Acc], NewRow).\nThis starts Acc [First], Left First. For each X old[1], compute Y=old[1]+new[0]=X+Left where Left new previous. Then Left=Y. works.\n\nAlternatively use formula to avoid list? fine.\n\nOutput write(Ans), nl.\n\nNeed main/0. When evaluator invokes main, it won't call halt maybe okay. main prints.\n\nNeed include module? \"module Main and main\"? For Prolog says define main/0. Need include source file maybe `:- module(main, [main/0]).`? They said no initialization directives. Module directive okay? They may call main in loaded file. If no module directive, main/0 defined. Better no module since Prolog spec. Just predicates.\n\nNeed use standards only SWI.\n\nPotential issue read_line_to_string available. Use `read_line_to_string/2`. Is it standard shipped. yes.\n\nNeed handle line with M N. Code:\n\n:- use_module(library(readutil)).? read_line_to_string is built-in maybe need library(readutil)? In SWI, read_line_to_string/2 is in library(readutil)? Actually `read_line_to_string/2` is a built-in in SWI? I think yes? Let's recall SWI-Prolog: read_line_to_codes/2, read_line_to_string/2 are in library(readutil). It may autoload? `read_line_to_string/2` is available via library(readutil), often need `:- use_module(library(readutil)).` That is a directive but not initialization. Allowed? They said no initialization directives, use_module is directive. Is it okay? They didn't forbid use_module, only initialization directives. But source target can include use_module. They said \"do not add initialization directives\" meaning no `:- initialization(main).` Use_module is okay. But if using only standard built-ins, maybe `read_line_to_codes(user_input, Codes)` is built-in? `read_line_to_codes/2` also in library(readutil). Yet SWI includes predicates? Let's check memory: In SWI-Prolog, `read_line_to_codes/2` is defined in library(readutil). It is not built-in? The library is autoloaded, so maybe no directive needed, but safe to include `:- use_module(library(readutil)).` This is not initialization.\n\nAlternatively use `read_term`? no.\n\nCould use `read_string(user_input, _, Str)` built-in? I think read_string/3 is built-in? SWI has `read_string/3` in readutil? Actually `read_string/3` is built-in in SWI? It might be ISO? no. I recall using `read_string(user_input, \"\\n\", \"\\r\", _, Line)` with library(readutil? Actually `read_string/5`). Better use read_line_to_string with use_module.\n\nInput parser:\nread_pair(M,N) :-\n    read_line_to_string(user_input, Line),\n    split_string(Line, \" \\t\\r\\n\", \" \\t\\r\\n\", Tokens),\n    Tokens = [A,B|_],\n    number_string(M,A),\n    number_string(N,B).\n\nIf line could have blank due? not. Could handle by skipping empty:\nread_pair(M,N) :- \n  read_line_to_string(user_input, Line),\n  ( Line == end_of_file -> M=1,N=1 ; ...? ). Spec has valid.\n\nNeed M,N ints; number_string works with \"3\". Good.\n\nPotential issue `split_string` trims leading/trailing, and consecutive whitespace collapsed? If separators string includes spaces, `split_string(Line, \" \\t\\r\\n\", \" \\t\\r\\n\", Tokens)` returns tokens maybe includes empty? According docs, characters in second are separators, third are padding? It discards empty? Let's recall SWI `split_string(+String, +SepChars, +PadChars, -SubStrings)` splits on separators; padding chars are removed from beginning/end of substrings and consecutive pad? In examples, split_string(\"a,b\", \",\", \" \", [\"a\",\"b\"]). For multiple spaces with SepChars \" \" and PadChars \" \"? If both same, empty strings? Hmm.\n\nCommon idiom: `split_string(Line, \" \", \" \", Tokens)` works with whitespace? Actually for arbitrary whitespace use `atomic_list_concat(L, ' ', Line)`? \n\nLet's test mentally. SWI split_string(\"  3   7 \", \" \", \" \", Tokens) likely Tokens = [\"3\",\"7\"] because pad chars removed. Using Sep \" \\t\\r\\n\", Pad same. Good.\n\nCould use `tokenize_atom`? not needed.\n\nNow output. Write integer. `writeln(Ans).` maybe outputs with newline. Use `format(\"~w~n\",[Ans])`.\n\nNeed ensure main does not fail. Define:\nmain :-\n    read_pair(M,N),\n    unique_paths(M,N,Ans),\n    format(\"~w~n\",[Ans]).\n\nIf read_line_to_string returns end_of_file, fail. Valid.\n\nPotential naming conflict with `main`. No.\n\nLet's craft final code block only.\n\nMaybe they don't want module. Good.\n\nNeed include use_module directive. That is allowed? Could avoid with `read_line_to_codes`. But still library. Use `:- use_module(library(readutil)).` Not initialization.\n\nConsider evaluator loads file and calls main. `use_module` will load. okay.\n\nLet's ensure `next_row` handles N=1. Row [1]; Rest=[]; reverse([1],[1]). For M iterations it remains [1] ans 1. If M=1, iterate_rows(0) returns initial row, last =1. Good.\n\nNow question says \"Return exactly one complete source file in one fenced code block, with no explanation.\" So final just code block.\n\nPotential issue line split if M N separated by newline? Spec first line M N. Could maybe have trailing. okay.\n\nCould implement whole input robustly with `read_string` but not needed.\n\nLet's final.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794992087,
+    "id": "chatcmpl-d4ccc3ab50b848162a0ac81cd9a6239d",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 2659,
+      "completion_tokens_details": {
+        "reasoning_tokens": 2352
+      },
+      "prompt_tokens": 595,
+      "prompt_tokens_details": {
+        "cached_tokens": 512
+      },
+      "total_tokens": 3254
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.003218772,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 21.136100100004114,
+  "logical_request_id": "975c26fc6693190cfc689b8a4265646f0abeadf414efbad115bb19d56adb9cc6",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-prolog\\attempt-03\\step-01\\response_body.txt",
+  "received_at": "2026-11-18T08:55:06.821013+00:00",
+  "request_id": "chatcmpl-d4ccc3ab50b848162a0ac81cd9a6239d",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```prolog\n:- use_module(library(readutil)).\n\nread_pair(M, N) :-\n    read_line_to_string(user_input, Line),\n    split_string(Line, \" \\t\\r\\n\", \" \\t\\r\\n\", Tokens),\n    Tokens = [A, B | _],\n    number_string(M, A),\n    number_string(N, B).\n\nnext_row([], _, Acc, Row) :-\n    reverse(Acc, Row).\nnext_row([X | Xs], Left, Acc, Row) :-\n    Y is X + Left,\n    next_row(Xs, Y, [Y | Acc], Row).\n\nnext_row(Row, NewRow) :-\n    Row = [First | Rest],\n    next_row(Rest, First, [First], NewRow).\n\niterate_rows(0, Row, Row).\niterate_rows(K, Row, Final) :-\n    K > 0,\n    next_row(Row, NewRow),\n    K1 is K - 1,\n    iterate_rows(K1, NewRow, Final).\n\nunique_paths(M, N, Ans) :-\n    length(Row, N),\n    maplist(=(1), Row),\n    M1 is M - 1,\n    iterate_rows(M1, Row, Final),\n    last(Final, Ans).\n\nmain :-\n    read_pair(M, N),\n    unique_paths(M, N, Ans),\n    format(\"~w~n\", [Ans]).\n```",
+  "usage": {
+    "completion_tokens": 2659,
+    "completion_tokens_details": {
+      "reasoning_tokens": 2352
+    },
+    "prompt_tokens": 595,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "total_tokens": 3254
+  },
+  "usage_raw": {
+    "completion_tokens": 2659,
+    "completion_tokens_details": {
+      "reasoning_tokens": 2352
+    },
+    "prompt_tokens": 595,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "total_tokens": 3254
+  }
+}

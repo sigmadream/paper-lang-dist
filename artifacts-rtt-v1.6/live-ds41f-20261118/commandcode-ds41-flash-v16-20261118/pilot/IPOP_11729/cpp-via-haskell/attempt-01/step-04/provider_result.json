@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\nusing namespace std;\n\nvoid hanoi(int n, int s, int m, int e) {\n    if (n == 1) {\n        cout << s << ' ' << e << '\\n';\n        return;\n    }\n    hanoi(n - 1, s, e, m);\n    cout << s << ' ' << e << '\\n';\n    hanoi(n - 1, m, s, e);\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n    int n;\n    cin >> n;\n    cout << ((1 << n) - 1) << '\\n';\n    hanoi(n, 1, 2, 3);\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 625,
+    "total_tokens": 1088,
+    "completion_tokens": 463,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 302
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 625,
+    "total_tokens": 1088,
+    "completion_tokens": 463,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 302
+    }
+  },
+  "cost_usd": 0.0007431,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-7c2411948ffd62e5ac7179dd8409076a",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\pilot\\IPOP_11729\\cpp-via-haskell\\attempt-01\\step-04\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-7c2411948ffd62e5ac7179dd8409076a",
+    "object": "chat.completion",
+    "created": 1794976815,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\nusing namespace std;\n\nvoid hanoi(int n, int s, int m, int e) {\n    if (n == 1) {\n        cout << s << ' ' << e << '\\n';\n        return;\n    }\n    hanoi(n - 1, s, e, m);\n    cout << s << ' ' << e << '\\n';\n    hanoi(n - 1, m, s, e);\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n    int n;\n    cin >> n;\n    cout << ((1 << n) - 1) << '\\n';\n    hanoi(n, 1, 2, 3);\n    return 0;\n}\n```",
+          "reasoning_content": "We need translate Haskell to C++17, preserving behavior. Simple recursion, output 2^n - 1 then hanoi moves. N<=20 so 2^20-1 fits int.\n\nNeed fast output — use ios and possibly build string. Output up to ~1M lines (2^20-1 moves ≈ 1,048,575). Use ostream with sync off is fine, but maybe string buffer better.\n\nLet's write clean C++.\n\nCheck example: n=3 → 7 and standard moves.\n\nCode:\n\n#include <bits/stdc++.h>\nusing namespace std;\n\nvoid hanoi(int n, int s, int m, int e, ostream& os) {\n    if (n == 1) { os << s << ' ' << e << '\\n'; return; }\n    hanoi(n-1, s, e, m, os);\n    os << s << ' ' << e << '\\n';\n    hanoi(n-1, m, s, e, os);\n}\n\nint main(){\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n    int n; cin >> n;\n    cout << ((1 << n) - 1) << '\\n';\n    hanoi(n,1,2,3,cout);\n    return 0;\n}\n\n1<<n for n=20 fine. Could use 1LL but not needed. Use (1 << n) - 1.\n\nFenced block only."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 625,
+      "total_tokens": 1088,
+      "completion_tokens": 463,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 302
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.4536300000036135,
+  "received_at": "2026-11-18T04:40:17.470380+00:00",
+  "logical_request_id": "f68493a77a2d21fc301c7b136e402fb72a22c608bb13a71b655e3b3e9b6fccb0",
+  "execution_class": "direct_api"
+}

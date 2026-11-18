@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\n{-# OPTIONS_GHC -O2 #-}\nmodule Main where\n\nimport Data.Array\nimport qualified Data.Set as Set\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let ws = words input\n    case ws of\n        [] -> return ()\n        (nStr : mStr : rest) -> do\n            let n = read nStr :: Int\n                m = read mStr :: Int\n            if n <= 0\n                then putStrLn \"0\"\n                else do\n                    let edgeVals = map read (take (2 * m) rest) :: [Int]\n                        es = pairUp edgeVals\n                        adj = accumArray (flip (:)) [] (0, n - 1)\n                                (concatMap (\\(a, b) -> [(a - 1, b - 1), (b - 1, a - 1)]) es)\n                        d1 = Set.fromList (adj ! 0)\n                        d2 = Set.fromList\n                                [ w\n                                | v <- Set.toList d1\n                                , w <- adj ! v\n                                , w /= 0\n                                , not (Set.member w d1)\n                                ]\n                        answer = Set.size d1 + Set.size d2\n                    putStrLn (show answer)\n        _ -> return ()\n\npairUp :: [Int] -> [(Int, Int)]\npairUp (a : b : xs) = (a, b) : pairUp xs\npairUp _ = []\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 737,
+    "total_tokens": 2749,
+    "completion_tokens": 2012,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1685
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 737,
+    "total_tokens": 2749,
+    "completion_tokens": 2012,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1685
+    }
+  },
+  "cost_usd": 0.0026355,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-cb38ca2389810069ae3b55445aa6f83b",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_5567\\cpp-via-haskell\\attempt-01\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-cb38ca2389810069ae3b55445aa6f83b",
+    "object": "chat.completion",
+    "created": 1794994910,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\n{-# OPTIONS_GHC -O2 #-}\nmodule Main where\n\nimport Data.Array\nimport qualified Data.Set as Set\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let ws = words input\n    case ws of\n        [] -> return ()\n        (nStr : mStr : rest) -> do\n            let n = read nStr :: Int\n                m = read mStr :: Int\n            if n <= 0\n                then putStrLn \"0\"\n                else do\n                    let edgeVals = map read (take (2 * m) rest) :: [Int]\n                        es = pairUp edgeVals\n                        adj = accumArray (flip (:)) [] (0, n - 1)\n                                (concatMap (\\(a, b) -> [(a - 1, b - 1), (b - 1, a - 1)]) es)\n                        d1 = Set.fromList (adj ! 0)\n                        d2 = Set.fromList\n                                [ w\n                                | v <- Set.toList d1\n                                , w <- adj ! v\n                                , w /= 0\n                                , not (Set.member w d1)\n                                ]\n                        answer = Set.size d1 + Set.size d2\n                    putStrLn (show answer)\n        _ -> return ()\n\npairUp :: [Int] -> [(Int, Int)]\npairUp (a : b : xs) = (a, b) : pairUp xs\npairUp _ = []\n```",
+          "reasoning_content": "We need answer with Haskell code only, fenced code block. Need handle input spec. Note example input \"1\\n0\" though constraint N>=2, M>=1 but preserve. Source reads n then m then m edges. BFS. Haskell read all ints. Need main. Implement.\n\nPotential issues: no edges if m=0. Simple.\n\nUse Data.List, Data.Maybe? We can build adjacency via accumArray or list. N <=500, M<=10000. Fine.\n\nRead tokens: words. Parse ints. First n, second m, then edges. Need if no input? Source if !(cin>>n) return 0. Implement safe pattern.\n\nAdjacency: Array Int [Int] or list of lists. Build by fold over edges. Use Data.Array? base included. Simpler use IntMap? containers maybe available but standard GHC. Use Data.Array standard. Construct adj = accumArray (flip (:)) [] (0,n-1) (concat [[(a-1,b-1),(b-1,a-1)] | ...]). But duplicates? Problem says different undirected edges, no issue. BFS distance with queue. Use Data.Sequence? containers. Or implement BFS levels.\n\nNeed count vertices at distance 1 or 2 from 0. We can BFS compute dist. Use list as queue? N small. Could use BFS fold.\n\nOption: Use Data.Array and Data.Sequence. Standard GHC includes containers. The prompt \"standard libraries shipped\" okay.\n\nSimpler: compute neighbors set, distance one set, distance two set = all neighbors of distance-one excluding 0 and dist1. Count union dist1 ∪ dist2. Because undirected unweighted. Need exclude self (0). Distance 1 neighbors of 0. Distance 2 are neighbors of those not in {0} ∪ dist1. Count unique. This exactly number. No need BFS deeper. We can do:\n\nlet adj = ...\n    d1 = S.fromList (adj ! 0)\n    d2 = S.fromList [w | v <- S.toList d1, w <- adj ! v, w /= 0, not (S.member w d1)]\nanswer = S.size d1 + S.size d2\nSince N maybe 1: adj array (0,0) works if n=1. M maybe 0. accumArray (0,n-1). Need handle n=0? not valid. If n=1 and edges none.\n\nInput parsing: tokens = words content. Maybe first two. Could pattern:\nmain = do\n s <- getContents\n let xs = map read (words s) :: [Int]\n case xs of\n   [] -> return ()\n   (n:m:rest) -> ...\nBut source if only n and no m? cin >> m would fail? It doesn't check m after n, but valid inputs always m. Public has 1,0. So okay. We can pattern (n:m:rest). If no tokens do nothing.\n\nFor n maybe 0? not valid. If n==0, array (0,-1) invalid. But N>=2 and public 1. Fine. Could guard n <=0 -> print 0.\n\nNeed output newline. putStrLn (show answer).\n\nLet's craft robust with Data.Array, Data.Set, Data.List. Use accumArray. Need import Data.Array, qualified Data.Set as S.\n\nConstruct edges from rest: take m? Should use first m edges but valid. Let edgePairs = pairs rest maybe. Use take (2*m) rest then pair. But if rest odd? valid. Code:\nlet edgeVals = take (2*m) rest\n    edges = [(a-1,b-1) | (a:b:_) <- chunksOf 2 edgeVals]\nNeed chunksOf not in Data.List? chunksOf in Data.List.Split not base. Could write helper or exploit pairs:\npairs (a:b:cs) = (a,b):pairs cs; pairs _ = [].\nlet es = pairs edgeVals\n    adj = accumArray (flip (:)) [] (0,n-1) (concatMap (\\(a,b) -> [(a,b),(b,a)]) es)\nNeed accept n=0: if n<=0 print 0 else. If n=1, bounds (0,0). Good.\n\nPotential issue accumArray (flip (:)) []: For each index, function receives new value then acc? accumArray :: (a -> b -> a) -> a -> (i,i) -> [(i,b)] -> Array i a. f old new. flip (:) old new = new : old. Fine, order irrelevant.\n\nSet fromList.\n\nd2 list comprehension:\nd1 = S.fromList (adj ! 0)\nd2 = S.fromList [w | v <- S.toList d1, w <- adj ! v, w /= 0, not (S.member w d1)]\nanswer = S.size d1 + S.size d2\n\nWhat if self-loop? a<b no. Duplicate no. If edge 1 2, d1={1? zero-based 1}, d2 neighbors of 1 excluding 0,d1. Good.\n\nNeed not add vertices at distance >2. fine.\n\nNote original BFS: if dist[u]==2 continue. It marks dist 1/2. For undirected. Counting same.\n\nLet's ensure public input \"7\\n6...\" output 3. 0 connected to 1 (zero-based? input 1 2 -> vertices 0 and 1). d1={1}. d2 from 1 neighbors: 2,4? input 2 3 (1,2), 2 5 (1,4) => {2,4}. Count 3. yes.\n\nNow final exactly code block. Need module Main main. In Haskell, no explanation. Use fenced code block with haskell. Ensure code compiles.\n\nLet's write:\n\n{-# OPTIONS_GHC -O2 #-}\nmodule Main where\n\nimport Data.Array\nimport qualified Data.Set as Set\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let ws = words input\n    case ws of\n      [] -> return ()\n      (nStr:mStr:rest) -> do\n          let n = read nStr :: Int\n              m = read mStr :: Int\n          if n <= 0\n            then putStrLn \"0\"\n            else do\n              let edgeVals = map read (take (2*m) rest) :: [Int]\n                  es = pairUp edgeVals\n                  adj = accumArray (flip (:)) [] (0, n-1)\n                          (concatMap (\\(a,b) -> [(a-1,b-1),(b-1,a-1)]) es)\n                  d1 = Set.fromList (adj ! 0)\n                  d2 = Set.fromList\n                         [ w\n                         | v <- Set.toList d1\n                         , w <- adj ! v\n                         , w /= 0\n                         , not (Set.member w d1)\n                         ]\n                  ans = Set.size d1 + Set.size d2\n              putStrLn (show ans)\n      _ -> return ()\n\npairUp :: [Int] -> [(Int,Int)]\npairUp (a:b:xs) = (a,b) : pairUp xs\npairUp _ = []\n\nPotential issue if n==1 and edge 1 1? constraints a<b, m may >0 impossible. But if invalid, accumArray bounds (0,0), edge indices a-1=0,b-1? self? If b maybe out of bounds. Valid only.\n\nmStr: Could there be input only n? then pattern falls _ -> return. Source would then try m maybe uninitialized. Not valid.\n\nWe should maybe avoid read m if mStr? fine.\n\nNeed if m negative? no.\n\nNow final."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 737,
+      "total_tokens": 2749,
+      "completion_tokens": 2012,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1685
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 19.010338200023398,
+  "received_at": "2026-11-18T09:42:07.287271+00:00",
+  "logical_request_id": "71e5d9013dac72caf3b391531f5a0a4f006ed35a33159888e5965bc40c77db65",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport System.IO\n\nmain :: IO ()\nmain = do\n  contents <- getContents\n  let ls = lines contents\n  case ls of\n    (tStr:rest) -> mapM_ (putStrLn . judge) (take (read tStr :: Int) rest)\n    _ -> return ()\n  where\n    judge s = if check 0 s then \"YES\" else \"NO\"\n    check b [] = b == 0\n    check b (c:cs)\n      | b' < 0 = False\n      | otherwise = check b' cs\n      where b' = if c == '(' then b + 1 else b - 1\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794895605,
+    "id": "78468a36-caff-42d8-9aae-668e965c6c4b",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 154,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_eb0e636f914446299f623aaf2a3c28d8",
+      "trace_id": "0ffca6b6de5d42e1a16db88a255a172b"
+    },
+    "usage": {
+      "completion_tokens": 154,
+      "prompt_tokens": 594,
+      "prompt_tokens_details": {
+        "cached_tokens": 448
+      },
+      "total_tokens": 748
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00099848,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 12.069709900009912,
+  "logical_request_id": "c5cc2335c78e4fb7c8a670566fe94f66382c329eca7d61d95f21c394be170ddc",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_9012\\cpp-via-haskell\\attempt-02\\step-05\\response_body.txt",
+  "received_at": "2026-11-17T06:06:45.037185+00:00",
+  "request_id": "78468a36-caff-42d8-9aae-668e965c6c4b",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```haskell\nmodule Main (main) where\n\nimport System.IO\n\nmain :: IO ()\nmain = do\n  contents <- getContents\n  let ls = lines contents\n  case ls of\n    (tStr:rest) -> mapM_ (putStrLn . judge) (take (read tStr :: Int) rest)\n    _ -> return ()\n  where\n    judge s = if check 0 s then \"YES\" else \"NO\"\n    check b [] = b == 0\n    check b (c:cs)\n      | b' < 0 = False\n      | otherwise = check b' cs\n      where b' = if c == '(' then b + 1 else b - 1\n```",
+  "usage": {
+    "completion_tokens": 154,
+    "prompt_tokens": 594,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 748
+  },
+  "usage_raw": {
+    "completion_tokens": 154,
+    "prompt_tokens": 594,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 748
+  }
+}

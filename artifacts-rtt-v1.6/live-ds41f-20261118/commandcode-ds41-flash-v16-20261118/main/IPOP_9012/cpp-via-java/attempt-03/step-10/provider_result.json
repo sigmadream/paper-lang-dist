@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <string>\n\nstatic std::string trim(const std::string& s) {\n    std::size_t start = 0;\n    while (start < s.size() && s[start] <= ' ') {\n        ++start;\n    }\n    std::size_t end = s.size();\n    while (end > start && s[end - 1] <= ' ') {\n        --end;\n    }\n    return s.substr(start, end - start);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::string first;\n    if (!std::getline(std::cin, first)) {\n        return 0;\n    }\n\n    int t = std::stoi(trim(first));\n    std::string output;\n\n    for (int i = 0; i < t; ++i) {\n        std::string s;\n        if (!std::getline(std::cin, s)) {\n            s = \"\";\n        }\n        s = trim(s);\n\n        int bal = 0;\n        bool valid = true;\n\n        for (char c : s) {\n            if (c == '(') {\n                ++bal;\n            } else {\n                --bal;\n            }\n            if (bal < 0) {\n                valid = false;\n                break;\n            }\n        }\n\n        if (bal != 0) {\n            valid = false;\n        }\n\n        output += valid ? \"YES\\n\" : \"NO\\n\";\n    }\n\n    std::cout << output;\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 784,
+    "total_tokens": 1145,
+    "completion_tokens": 361,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 33
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 784,
+    "total_tokens": 1145,
+    "completion_tokens": 361,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 33
+    }
+  },
+  "cost_usd": 0.0005555040000000001,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-e37e1f8a357ee2702fb8034ea2b2e56e",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-java\\attempt-03\\step-10\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-e37e1f8a357ee2702fb8034ea2b2e56e",
+    "object": "chat.completion",
+    "created": 1794981763,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\n\nstatic std::string trim(const std::string& s) {\n    std::size_t start = 0;\n    while (start < s.size() && s[start] <= ' ') {\n        ++start;\n    }\n    std::size_t end = s.size();\n    while (end > start && s[end - 1] <= ' ') {\n        --end;\n    }\n    return s.substr(start, end - start);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::string first;\n    if (!std::getline(std::cin, first)) {\n        return 0;\n    }\n\n    int t = std::stoi(trim(first));\n    std::string output;\n\n    for (int i = 0; i < t; ++i) {\n        std::string s;\n        if (!std::getline(std::cin, s)) {\n            s = \"\";\n        }\n        s = trim(s);\n\n        int bal = 0;\n        bool valid = true;\n\n        for (char c : s) {\n            if (c == '(') {\n                ++bal;\n            } else {\n                --bal;\n            }\n            if (bal < 0) {\n                valid = false;\n                break;\n            }\n        }\n\n        if (bal != 0) {\n            valid = false;\n        }\n\n        output += valid ? \"YES\\n\" : \"NO\\n\";\n    }\n\n    std::cout << output;\n    return 0;\n}\n```",
+          "reasoning_content": "Translate to C++17. Straightforward. Need read lines, trim whitespace <= ' '. Preserve behavior incl null lines (unlikely). Use getline."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 784,
+      "total_tokens": 1145,
+      "completion_tokens": 361,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 33
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.0820258000167087,
+  "received_at": "2026-11-18T06:02:43.435391+00:00",
+  "logical_request_id": "243a7499d9bdb9083621fedfc33b183d5913d7c400f02ccc7c81fbf98684d62f",
+  "execution_class": "direct_api"
+}

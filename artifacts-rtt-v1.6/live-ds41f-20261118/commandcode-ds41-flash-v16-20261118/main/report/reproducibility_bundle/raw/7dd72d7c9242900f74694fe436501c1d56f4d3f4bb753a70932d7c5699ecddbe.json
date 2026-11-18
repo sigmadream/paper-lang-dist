@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNext()) return;\n        String s = sc.next();\n        boolean valid = true;\n        for (int i = 0; i < s.length() / 2; i++) {\n            if (s.charAt(i) != s.charAt(s.length() - 1 - i)) {\n                valid = false;\n                break;\n            }\n        }\n        System.out.println(valid ? 1 : 0);\n    }\n}\n```",
+          "reasoning_content": "Translate to Java 17. Simple.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794991955,
+    "id": "chatcmpl-a1362095c9af3e37a0cebeeea4ab14c0",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 132,
+      "completion_tokens_details": {
+        "reasoning_tokens": 8
+      },
+      "prompt_tokens": 498,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 630
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.000270168,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.9802661000285298,
+  "logical_request_id": "dd611246bec83ae849c77f070da412fe499b8e85a2a93433490a28db7cf6b065",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-java\\attempt-03\\step-01\\response_body.txt",
+  "received_at": "2026-11-18T08:52:35.045868+00:00",
+  "request_id": "chatcmpl-a1362095c9af3e37a0cebeeea4ab14c0",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNext()) return;\n        String s = sc.next();\n        boolean valid = true;\n        for (int i = 0; i < s.length() / 2; i++) {\n            if (s.charAt(i) != s.charAt(s.length() - 1 - i)) {\n                valid = false;\n                break;\n            }\n        }\n        System.out.println(valid ? 1 : 0);\n    }\n}\n```",
+  "usage": {
+    "completion_tokens": 132,
+    "completion_tokens_details": {
+      "reasoning_tokens": 8
+    },
+    "prompt_tokens": 498,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 630
+  },
+  "usage_raw": {
+    "completion_tokens": 132,
+    "completion_tokens_details": {
+      "reasoning_tokens": 8
+    },
+    "prompt_tokens": 498,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 630
+  }
+}

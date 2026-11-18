@@ -1,0 +1,22 @@
+# 사용자 공급자의 주소·모델 ID·지원 옵션을 명시해 주세요.
+provider: compatible
+protocol: chat_completions
+base_url: https://example.invalid/v1
+request_path: /chat/completions
+auth:
+  type: bearer
+  api_key_env: RTT_API_KEY
+model: null
+allowed_response_models: []
+generation_profile:
+  name: compatible-explicit
+  supported_options: [temperature, top_p, max_tokens]
+  output_limit_field: max_tokens
+generation:
+  temperature: 0.6
+  top_p: 0.95
+  max_tokens: 16384
+request_timeout: 120
+retries: 2
+max_calls: 3600
+max_transport_attempts: 10800

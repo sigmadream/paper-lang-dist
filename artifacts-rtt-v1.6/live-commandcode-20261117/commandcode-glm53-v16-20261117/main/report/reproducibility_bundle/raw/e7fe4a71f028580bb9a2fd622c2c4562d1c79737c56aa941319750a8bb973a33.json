@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.List (intercalate)\n\nmain :: IO ()\nmain = do\n  inp <- getLine\n  let n = read inp :: Int\n  if n < 0\n    then return ()\n    else do\n      let arr = 0 : go 1\n          go i\n            | i > n = []\n            | otherwise = (arr !! (i `div` 2) + i `mod` 2) : go (i + 1)\n      putStrLn $ intercalate \" \" (map show arr)\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794897798,
+    "id": "246fcf45-9261-46ff-9ff6-cfdda20c87ed",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 126,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_a1bd9ed251ad4b369a350f3a10a67792",
+      "trace_id": "2d9359e9e59f4abba37d806c54807eb5"
+    },
+    "usage": {
+      "completion_tokens": 126,
+      "prompt_tokens": 525,
+      "prompt_tokens_details": {
+        "cached_tokens": 448
+      },
+      "total_tokens": 651
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00077868,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.6621238000225276,
+  "logical_request_id": "0adc95eace10323845362273e12a9bdfec0818e8eb7678873cc6ee2afc1353bb",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0338\\cpp-via-haskell\\attempt-03\\step-03\\response_body.txt",
+  "received_at": "2026-11-17T06:43:17.943603+00:00",
+  "request_id": "246fcf45-9261-46ff-9ff6-cfdda20c87ed",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.List (intercalate)\n\nmain :: IO ()\nmain = do\n  inp <- getLine\n  let n = read inp :: Int\n  if n < 0\n    then return ()\n    else do\n      let arr = 0 : go 1\n          go i\n            | i > n = []\n            | otherwise = (arr !! (i `div` 2) + i `mod` 2) : go (i + 1)\n      putStrLn $ intercalate \" \" (map show arr)\n```",
+  "usage": {
+    "completion_tokens": 126,
+    "prompt_tokens": 525,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 651
+  },
+  "usage_raw": {
+    "completion_tokens": 126,
+    "prompt_tokens": 525,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 651
+  }
+}

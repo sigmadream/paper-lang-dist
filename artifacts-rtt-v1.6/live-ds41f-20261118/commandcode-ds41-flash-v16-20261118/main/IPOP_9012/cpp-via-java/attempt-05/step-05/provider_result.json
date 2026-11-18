@@ -1,0 +1,86 @@
+{
+  "text": "```java\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n\n        String first = br.readLine();\n        if (first == null) return;\n\n        int t = Integer.parseInt(first.trim());\n        StringBuilder output = new StringBuilder();\n\n        for (int i = 0; i < t; i++) {\n            String s = br.readLine();\n            if (s == null) s = \"\";\n            s = s.trim();\n\n            int balance = 0;\n            boolean valid = true;\n\n            for (int j = 0; j < s.length(); j++) {\n                char c = s.charAt(j);\n                if (c == '(') {\n                    balance++;\n                } else {\n                    balance--;\n                }\n\n                if (balance < 0) {\n                    valid = false;\n                    break;\n                }\n            }\n\n            if (balance != 0) valid = false;\n\n            output.append(valid ? \"YES\\n\" : \"NO\\n\");\n        }\n\n        System.out.print(output);\n    }\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 770,
+    "total_tokens": 2644,
+    "completion_tokens": 1874,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1642
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 770,
+    "total_tokens": 2644,
+    "completion_tokens": 1874,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1642
+    }
+  },
+  "cost_usd": 0.0024421679999999998,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-8acca107bb15e97d4eea0de546bd26b7",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-java\\attempt-05\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-8acca107bb15e97d4eea0de546bd26b7",
+    "object": "chat.completion",
+    "created": 1794982344,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```java\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n\n        String first = br.readLine();\n        if (first == null) return;\n\n        int t = Integer.parseInt(first.trim());\n        StringBuilder output = new StringBuilder();\n\n        for (int i = 0; i < t; i++) {\n            String s = br.readLine();\n            if (s == null) s = \"\";\n            s = s.trim();\n\n            int balance = 0;\n            boolean valid = true;\n\n            for (int j = 0; j < s.length(); j++) {\n                char c = s.charAt(j);\n                if (c == '(') {\n                    balance++;\n                } else {\n                    balance--;\n                }\n\n                if (balance < 0) {\n                    valid = false;\n                    break;\n                }\n            }\n\n            if (balance != 0) valid = false;\n\n            output.append(valid ? \"YES\\n\" : \"NO\\n\");\n        }\n\n        System.out.print(output);\n    }\n}\n```",
+          "reasoning_content": "We need answer only Java code, one file. Need translate preserving behavior. Need consider trim mimicking Java String.trim(): removes chars <= ' ' (U+0020). Java's String.trim removes control chars <= space. C++ lambda trims. In Java can implement similarly on string chars <= ' '. But input lines can include maybe whitespace. Need mimic std::getline semantics: reads line until '\\n', strips '\\n' but leaves '\\r'? C++ getline delimiter '\\n', so if CRLF, line includes trailing '\\r'. Then trim removes '\\r' since <= space. Java Scanner? Need preserve. Use BufferedReader readLine: strips \\n and \\r? Java BufferedReader.readLine treats \\r, \\n, or \\r\\n as line terminators, so it removes CR in CRLF, whereas C++ getline would include \\r then trim removes it. Same net after trim for strings and first line. But for lines where trailing \\r needed? trim removes anyway. For lines can contain spaces? C++ getline gets whole line, trim removes leading/trailing whitespace. Java readLine does not remove internal. implement trim.\n\nPotential issue first line: C++ if cannot getline return, else parse stoi(trim(line)). If first line empty or invalid, throws? Specification valid. For t lines beyond EOF, C++ sets s=\"\" then trim and for loop, bal 0 valid true => YES unless t? Actually if missing line, s=\"\" then bal=0 valid true, output YES. But valid inputs have lines. Not concern? \"valid input\" specification: T then T lines. So okay.\n\nNeed parse first line as integer. C++ stoi handles leading whitespace after trim none, and optional sign. Java Integer.parseInt(trim(line)) mostly. But C++ stoi accepts trailing non-numeric? It parses prefix and ignores trailing? Actually std::stoi(str) discards whitespace, parses integer, if pos not specified? It may parse until non-digit and returns. Java parseInt requires entire string numeric. Spec valid integer line likely simple. But preserve every valid input; T positive int, line maybe whitespace. trim. Java parseInt works. Could mimic stoi? Not necessary but maybe robust. Could manually parse. Also C++ stoi throws invalid_argument/out_of_range; valid only.\n\nNeed output exactly. Use StringBuilder.\n\nAlgorithm: for each of T, read line (or \"\"), trim, balance logic. Wait source treats any char not '(' as ')' via else --bal. The specification says parentheses. But preserve source: for c: if '(' ++ else --. So if line has other chars after trim, it decrements. But valid strings only parens. We can replicate exactly: if c == '(' bal++ else bal--; if bal<0 valid false break; after loop if bal != 0 valid false. That means empty string => valid true -> YES, source. For e.g. \"a\" => bal -1 invalid NO. Need preserve. Use same.\n\nNeed mimic trim: remove leading/trailing chars with (unsigned char)s[i] <= ' '. In Java char c <= ' ' equivalent for <= U+0020. C++ uses unsigned char compare <= ' '; for non-ASCII bytes, C++ char bytes of UTF-8 > 32 so not trimmed. Java char for Unicode codepoint > 32 not trimmed. For U+0080 etc not trimmed. Good. But if input contains byte 0x80 in UTF-8, Java reader decodes replacement maybe >32. But not relevant. Use char <= ' '. Java String.trim uses <= ' ', exactly. Could call s.trim()? Java String.trim removes chars <= U+0020. That matches. But note Java trim removes leading/trailing char <= ' ', yes. Use custom? s.trim() is exactly Java semantics. The C++ comment says mimic Java String.trim(). So use trim. Good.\n\nNeed read lines. If input uses lone \\r? BufferedReader.readLine splits on \\r, whereas C++ getline only \\n. If a line contains embedded \\r not before \\n, C++ includes it, trim at ends maybe; Java readLine would split earlier. Could matter for weird valid inputs? Valid input likely lines separated \\n, no embedded \\r except CRLF. For CRLF, both after trim same. But if a string contains \\r as middle whitespace? Not valid per spec (only parentheses). So okay.\n\nNeed consider first readLine can be null. Return. T lines: Use br.readLine(); if null s = \"\". But C++ after EOF, subsequent getline sets fail, s remains? In C++, if getline fails, it sets s to empty? Actually getline if no chars extracted and failbit, string is erased? std::getline: if no characters extracted, failbit set and string may be empty (since C++11? It erases? Let's check: getline calls str.erase() first? std::getline behaves as unformatted input: if no characters extracted, sets failbit, string is empty? It does erase). Source explicitly if ! getline s=\"\" so okay. Mimic.\n\nNeed import java.io.*; maybe BufferedReader InputStreamReader.\n\nParsing T: use Integer.parseInt(trim(line)). If line null return. Could use parseInt. Good.\n\nPotential need main class Main public. Return fenced code. No explanation. Ensure source exactly one fenced block.\n\nLet's produce.\n\nBut let's scrutinize preservation for T and lines. Source reads first line, trim, stoi. Then loop t times reading lines. If string line has trailing spaces, trim. If line has leading spaces before parentheses, trim removes. Good.\n\nOne subtlety: Java BufferedReader.readLine() strips newline and also \\r. C++ std::getline leaves \\r then trim removes if at end. If line is e.g. \"( )\" internal space: C++: chars '(' then ' ' -> else --bal? Wait code: for each char c in s. If c == '(' ++bal; else --bal. For space, else --. So internal spaces matter. Java same. Good.\n\nIf string line contains tab at end, trim removes.\n\nIf first line contains e.g. \"6 \" trim -> \"6\". parseInt. If first line contains \"+6\", stoi accepts; Java parseInt accepts leading +? Integer.parseInt(\"+6\") yes. If first line contains \"6abc\", stoi returns 6; Java parseInt throws. Valid input T line is positive integer, no trailing. No issue. If first line has leading zeros, parseInt accepts. If T=0? spec positive, source handles t=0 no output. Java same.\n\nNeed maybe avoid Scanner for performance. Good.\n\nImplement trimLine:\nString tline = br.readLine();\nif (tline == null) return;\nint t = Integer.parseInt(tline.trim());\nStringBuilder output = new StringBuilder();\nfor (int i=0; i<t; i++) { String s = br.readLine(); if (s == null) s = \"\"; s = s.trim(); int bal=0; boolean valid=true; for (int j=0; j<s.length(); j++) { char c=s.charAt(j); if(c=='(') ++bal; else --bal; if(bal<0){valid=false; break;}} if(bal!=0) valid=false; output.append(valid ? \"YES\\n\":\"NO\\n\");}\nSystem.out.print(output);\nCould use System.out.print(output.toString()). Fine.\n\nBut note Java String.trim() doesn't remove U+00A0 etc same as C++. Good.\n\nPotential issue: C++'s trim lambda uses unsigned char(s[start]) <= ' ', but Java char <= ' ' compares Unicode code unit <= 32. For surrogate etc no. Fine.\n\nNeed no package. Public class Main.\n\nFinal code fenced."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 770,
+      "total_tokens": 2644,
+      "completion_tokens": 1874,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1642
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 17.563066000002436,
+  "received_at": "2026-11-18T06:12:39.732558+00:00",
+  "logical_request_id": "8e6a9b9bdbbbbf5cb8cfd8410c8eb65be4bae44f5575cd924f81c47797170b3b",
+  "execution_class": "direct_api"
+}

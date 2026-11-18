@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StringBuilder sb = new StringBuilder();\n        String firstLine = br.readLine();\n        if (firstLine == null) return;\n        firstLine = firstLine.trim();\n        if (firstLine.isEmpty()) return;\n        int n;\n        try {\n            n = Integer.parseInt(firstLine.split(\"\\\\s+\")[0]);\n        } catch (NumberFormatException e) {\n            return;\n        }\n\n        int[] a = new int[n];\n        int count = 0;\n        while (count < n) {\n            String line = br.readLine();\n            if (line == null) break;\n            StringTokenizer st = new StringTokenizer(line);\n            while (st.hasMoreTokens() && count < n) {\n                try {\n                    a[count] = Integer.parseInt(st.nextToken());\n                } catch (NumberFormatException e) {\n                    a[count] = 0;\n                }\n                count++;\n            }\n        }\n        while (count < n) {\n            a[count] = 0;\n            count++;\n        }\n\n        int write = 0;\n        for (int read = 0; read < n; ++read) {\n            if (a[read] != 0) {\n                int tmp = a[write];\n                a[write] = a[read];\n                a[read] = tmp;\n                ++write;\n            }\n        }\n\n        for (int i = 0; i < n; ++i) {\n            if (i > 0) sb.append(' ');\n            sb.append(a[i]);\n        }\n        sb.append('\\n');\n        System.out.print(sb.toString());\n    }\n}\n```",
+          "reasoning_content": "Translate to Java 17. Simple.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794989820,
+    "id": "chatcmpl-7bb3325e43d727b9fd76db572108f9e5",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 379,
+      "completion_tokens_details": {
+        "reasoning_tokens": 8
+      },
+      "prompt_tokens": 686,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 1065
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.000547704,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.052761200000532,
+  "logical_request_id": "8b099a210adc82db8fcd0638f3bea156d531b3b24cee5ab4e03f047f53e8ca1d",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-java\\attempt-02\\step-07\\response_body.txt",
+  "received_at": "2026-11-18T08:17:00.509059+00:00",
+  "request_id": "chatcmpl-7bb3325e43d727b9fd76db572108f9e5",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StringBuilder sb = new StringBuilder();\n        String firstLine = br.readLine();\n        if (firstLine == null) return;\n        firstLine = firstLine.trim();\n        if (firstLine.isEmpty()) return;\n        int n;\n        try {\n            n = Integer.parseInt(firstLine.split(\"\\\\s+\")[0]);\n        } catch (NumberFormatException e) {\n            return;\n        }\n\n        int[] a = new int[n];\n        int count = 0;\n        while (count < n) {\n            String line = br.readLine();\n            if (line == null) break;\n            StringTokenizer st = new StringTokenizer(line);\n            while (st.hasMoreTokens() && count < n) {\n                try {\n                    a[count] = Integer.parseInt(st.nextToken());\n                } catch (NumberFormatException e) {\n                    a[count] = 0;\n                }\n                count++;\n            }\n        }\n        while (count < n) {\n            a[count] = 0;\n            count++;\n        }\n\n        int write = 0;\n        for (int read = 0; read < n; ++read) {\n            if (a[read] != 0) {\n                int tmp = a[write];\n                a[write] = a[read];\n                a[read] = tmp;\n                ++write;\n            }\n        }\n\n        for (int i = 0; i < n; ++i) {\n            if (i > 0) sb.append(' ');\n            sb.append(a[i]);\n        }\n        sb.append('\\n');\n        System.out.print(sb.toString());\n    }\n}\n```",
+  "usage": {
+    "completion_tokens": 379,
+    "completion_tokens_details": {
+      "reasoning_tokens": 8
+    },
+    "prompt_tokens": 686,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1065
+  },
+  "usage_raw": {
+    "completion_tokens": 379,
+    "completion_tokens_details": {
+      "reasoning_tokens": 8
+    },
+    "prompt_tokens": 686,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1065
+  }
+}

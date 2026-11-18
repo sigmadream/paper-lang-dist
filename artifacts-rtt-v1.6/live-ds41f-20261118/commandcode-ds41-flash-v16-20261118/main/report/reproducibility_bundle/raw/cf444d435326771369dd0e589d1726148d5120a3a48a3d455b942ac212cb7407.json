@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n, c;\n    cin >> n >> c;\n\n    vector<int> a(n);\n    for (int i = 0; i < n; ++i) {\n        cin >> a[i];\n    }\n\n    sort(a.begin(), a.end());\n\n    int left = 1;\n    int right = a[n - 1] - a[0];\n    int ans = 0;\n\n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        int count = 1;\n        int prev = a[0];\n\n        for (int i = 1; i < n; ++i) {\n            if (a[i] - prev >= mid) {\n                ++count;\n                prev = a[i];\n            }\n        }\n\n        if (count >= c) {\n            ans = mid;\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n\n    cout << ans << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only complete cpp source in fenced code block no explanation. Need translate preserving behavior. C++17 main. Need consider input all whitespace. Java uses readLine each coordinate. But robust parse ints. Output ans. Need include bits/stdc++.h or iostream vector algorithm. Standard libraries. Use long? coords up to 1e9 difference fits int (1e9), mid int. N 200k. C++.\n\nNeed ensure if n? constraints yes. Could use ios fast. Read n c then n values. Sort. left=1 right=a[n-1]-a[0]. ans=0. If c maybe 2 and diff. fine. If n? min2. return.\n\nNeed exactly fenced code block. No explanation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794985631,
+    "id": "chatcmpl-dfc29625dd33e9046beed66426905ef3",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 409,
+      "completion_tokens_details": {
+        "reasoning_tokens": 161
+      },
+      "prompt_tokens": 718,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1127
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0007061999999999999,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.7664477999787778,
+  "logical_request_id": "0371cab68a28d42f7d4fb0efcbd12d68c315a16c4937d9adaae737d363b7bcb7",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2110\\cpp-via-java\\attempt-01\\step-06\\response_body.txt",
+  "received_at": "2026-11-18T07:07:12.038301+00:00",
+  "request_id": "chatcmpl-dfc29625dd33e9046beed66426905ef3",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n, c;\n    cin >> n >> c;\n\n    vector<int> a(n);\n    for (int i = 0; i < n; ++i) {\n        cin >> a[i];\n    }\n\n    sort(a.begin(), a.end());\n\n    int left = 1;\n    int right = a[n - 1] - a[0];\n    int ans = 0;\n\n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        int count = 1;\n        int prev = a[0];\n\n        for (int i = 1; i < n; ++i) {\n            if (a[i] - prev >= mid) {\n                ++count;\n                prev = a[i];\n            }\n        }\n\n        if (count >= c) {\n            ans = mid;\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n\n    cout << ans << '\\n';\n\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 409,
+    "completion_tokens_details": {
+      "reasoning_tokens": 161
+    },
+    "prompt_tokens": 718,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1127
+  },
+  "usage_raw": {
+    "completion_tokens": 409,
+    "completion_tokens_details": {
+      "reasoning_tokens": 161
+    },
+    "prompt_tokens": 718,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1127
+  }
+}

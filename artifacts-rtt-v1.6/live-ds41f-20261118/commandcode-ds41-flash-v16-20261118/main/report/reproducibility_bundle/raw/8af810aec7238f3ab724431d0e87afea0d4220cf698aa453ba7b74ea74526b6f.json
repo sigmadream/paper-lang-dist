@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nimport Data.List (foldl')\n\npaths :: Integer -> Integer -> Integer\npaths m n = last (foldl' (\\row _ -> step row) (replicate (fromIntegral n) 1) [1 .. m - 1])\n  where\n    step [] = []\n    step (x:xs) = x : go x xs\n\n    go _ [] = []\n    go acc (y:ys) =\n      let z = y + acc\n      in z : go z ys\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case map read (words input) :: [Integer] of\n    (m:n:_) -> print (paths m n)\n    _ -> return ()\n```",
+          "reasoning_content": "We need answer exactly one Haskell source file fenced code block, no explanation. Need translate C++ program preserving stdin/stdout. Haskell GHC module Main and main :: IO (). Need compute unique paths for M N. Constraints. Input first line M N. Output integer. Use standard libs. Implement readMaybe? Simpler read all ints. Need output row[n-1]. Edge cases. C++ uses long long vector n size, row initialized 1. For m>=1 n>=1. Loop i 1..m-1, j 1..n-1 update row[j]+=row[j-1]. If n=1 row[0]=1 output 1. m maybe? m=1 output 1. Haskell.\n\nNeed be careful reading stdin. Could use getContents, words, map read. Pattern [m,n]. Use Int or Integer. Answer <=2e9 but use Integer. DP list. For each row, foldl over j. row list length n of Integers 1. Update. We can implement updateRow :: [Integer] -> [Integer]; updateRow (x:xs) = x : go x xs where go prev (y:ys) = let z=y+prev in z:go z ys; go _ [] = []. This computes cumulative sum of row elements: Starting cumulative first element row[0], for each next add previous cumulative. For each of m-1 rows. Wait C++ row initially all ones length n. For each i from1 to m-1, for j=1..n-1 row[j]+=row[j-1]. This is cumulative sum over list, leaving first as is. So replicate (m-1) (updateRow row). Then last element.\n\nIf n could 0? no. If n=1 updateRow [1] => [1], last=1. For m maybe. Use foldl' maybe.\n\nNeed parse if no input? C++ if no read return 0. Haskell if no ints output nothing. We can handle case. main = do s <- getContents; case map read (words s) :: [Integer] of (m:n:_) -> print (paths m n); _ -> return (). But type annotation. Need maybe read as Integer. Use let vals = map read (words s) :: [Integer]. For pattern.\n\nOutput print adds newline. Good.\n\nNeed final only code block. Ensure Haskell syntax.\n\nPotential issue m,n up to 100, Integer fine. Could use Int. Use Integer.\n\nLet's craft:\n\nmodule Main where\n\nimport Data.List (foldl')\n\npaths :: Integer -> Integer -> Integer\npaths m n = last (foldl' (\\row _ -> step row) (replicate (fromIntegral n) 1) [1..m-1])\n  where step [] = []\n        step (x:xs) = x : go x xs\n        go _ [] = []\n        go acc (y:ys) = let z = y + acc in z : go z ys\n\nmain :: IO ()\nmain = do\n  s <- getContents\n  case map read (words s) :: [Integer] of\n    (m:n:_) -> print (paths m n)\n    _ -> return ()\n\nNeed fromIntegral n to Int? replicate :: Int -> a -> [a], fromIntegral n can infer Int from replicate. Since n Integer, fromIntegral n :: Int okay. [1..m-1] if m is Integer, list Integer but foldl' wants list b; fromIntegral? foldl' over [1..m-1] where m Integer. It's okay b ~ Integer. step row ignores index. But foldl' requires list Integer. no problem. However fromIntegral n to Int could overflow? n<=100. fine.\n\nCould avoid type ambiguity by paths m n where m,n Integer. replicate (fromIntegral n) 1. 1 inferred Integer due row last. Good.\n\nNeed maybe if m=0? Constraint >=1. If m-1 negative? [1..(-1)] empty if m=0. not issue. n=0 replicate 0 [] then last error. Constraints.\n\nCheck sample: paths 3 7: row ones len7; step -> [1,2,3,4,5,6,7]; second -> [1,3,6,10,15,21,28]; last 28. Good.\n\nNeed final with fenced code block. Ensure exactly complete source file.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794981223,
+    "id": "chatcmpl-e0491c54e1915a4c1ca2ca383214b71c",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 1103,
+      "completion_tokens_details": {
+        "reasoning_tokens": 942
+      },
+      "prompt_tokens": 549,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1652
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0014883,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 9.977563799940981,
+  "logical_request_id": "c382c489b0f1a724b976c279f670799f4d80a987a001fe8e38c4149a6505125a",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-haskell\\attempt-05\\step-09\\response_body.txt",
+  "received_at": "2026-11-18T05:53:51.421453+00:00",
+  "request_id": "chatcmpl-e0491c54e1915a4c1ca2ca383214b71c",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nimport Data.List (foldl')\n\npaths :: Integer -> Integer -> Integer\npaths m n = last (foldl' (\\row _ -> step row) (replicate (fromIntegral n) 1) [1 .. m - 1])\n  where\n    step [] = []\n    step (x:xs) = x : go x xs\n\n    go _ [] = []\n    go acc (y:ys) =\n      let z = y + acc\n      in z : go z ys\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case map read (words input) :: [Integer] of\n    (m:n:_) -> print (paths m n)\n    _ -> return ()\n```",
+  "usage": {
+    "completion_tokens": 1103,
+    "completion_tokens_details": {
+      "reasoning_tokens": 942
+    },
+    "prompt_tokens": 549,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1652
+  },
+  "usage_raw": {
+    "completion_tokens": 1103,
+    "completion_tokens_details": {
+      "reasoning_tokens": 942
+    },
+    "prompt_tokens": 549,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1652
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  inp <- getContents\n  case map read (words inp) :: [Integer] of\n    (n:xs) | n > 0, length xs >= fromIntegral n ->\n      let arr = take (fromIntegral n) xs\n          go (c, b) x = let c' = max x (c + x) in (c', max b c')\n          (_, best) = foldl' go (head arr, head arr) (tail arr)\n      in print best\n    _ -> return ()\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794898264,
+    "id": "c56c2539-2894-4e50-a4fa-6f77d59941e4",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 138,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_d0d61d37457a489899b3860fb4f689c5",
+      "trace_id": "59e00dea8a3646d08bc29b83eff4b674"
+    },
+    "usage": {
+      "completion_tokens": 138,
+      "prompt_tokens": 546,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 684
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00093384,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.777897199965082,
+  "logical_request_id": "9a75bac89737d67c615ce545f9fd15100bce63bdcb3a68cc380075f7935a3098",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0053\\cpp-via-haskell\\attempt-01\\step-03\\response_body.txt",
+  "received_at": "2026-11-17T06:51:04.196128+00:00",
+  "request_id": "c56c2539-2894-4e50-a4fa-6f77d59941e4",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  inp <- getContents\n  case map read (words inp) :: [Integer] of\n    (n:xs) | n > 0, length xs >= fromIntegral n ->\n      let arr = take (fromIntegral n) xs\n          go (c, b) x = let c' = max x (c + x) in (c', max b c')\n          (_, best) = foldl' go (head arr, head arr) (tail arr)\n      in print best\n    _ -> return ()\n```",
+  "usage": {
+    "completion_tokens": 138,
+    "prompt_tokens": 546,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 684
+  },
+  "usage_raw": {
+    "completion_tokens": 138,
+    "prompt_tokens": 546,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 684
+  }
+}

@@ -1,0 +1,22 @@
+# 일반 API용 키를 사용해 주세요. Coding Plan 키·주소와 구분됩니다.
+# https://docs.z.ai/api-reference/introduction
+provider: zai
+protocol: chat_completions
+base_url: https://api.z.ai/api/paas/v4
+request_path: /chat/completions
+auth:
+  type: bearer
+  api_key_env: ZAI_API_KEY
+model: null
+allowed_response_models: []
+generation_profile:
+  name: zai-general-explicit
+  supported_options: [temperature, top_p, max_tokens, thinking]
+generation:
+  temperature: 0.6
+  top_p: 0.95
+  max_tokens: 16384
+request_timeout: 120
+retries: 2
+max_calls: 3600
+max_transport_attempts: 10800

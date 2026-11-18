@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let (a:b:_) = map read (words input) :: [Integer]\n        g = gcd a b\n    print g\n    print ((a `div` g) * b)\n```",
+          "reasoning_content": "We need answer with Haskell file only fenced code. Need translate. Use read two ints. gcd from Prelude. lcm maybe but ensure a/g*b. Constraints fine Int. main IO. Need exactly source file in fenced code block no explanation.\n\nNeed consider input maybe whitespace. Use words, map read. Could simply getContents, let [a,b] = map read (words input) :: [Integer]. Use Integer safe. Output gcd and (a `div` g)*b.\n\nNeed fence code block. Final only.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1795000273,
+    "id": "chatcmpl-e76f98216a848be7b979ad3988daa502",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 177,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 441,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 618
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.000231804,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.021505899960175,
+  "logical_request_id": "70d49d8c31378bba210217fc90c56675bfe528bab24cf9e0533da6da140608e0",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2609\\cpp-via-haskell\\attempt-01\\step-05\\response_body.txt",
+  "received_at": "2026-11-18T11:11:15.864490+00:00",
+  "request_id": "chatcmpl-e76f98216a848be7b979ad3988daa502",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let (a:b:_) = map read (words input) :: [Integer]\n        g = gcd a b\n    print g\n    print ((a `div` g) * b)\n```",
+  "usage": {
+    "completion_tokens": 177,
+    "completion_tokens_details": {
+      "reasoning_tokens": 111
+    },
+    "prompt_tokens": 441,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 618
+  },
+  "usage_raw": {
+    "completion_tokens": 177,
+    "completion_tokens_details": {
+      "reasoning_tokens": 111
+    },
+    "prompt_tokens": 441,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 618
+  }
+}

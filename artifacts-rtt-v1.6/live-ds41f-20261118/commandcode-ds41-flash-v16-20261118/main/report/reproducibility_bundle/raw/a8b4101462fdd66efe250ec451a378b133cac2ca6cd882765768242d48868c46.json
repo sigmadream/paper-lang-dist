@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```python\nimport sys\n\ndef main():\n    data = list(map(int, sys.stdin.buffer.read().split()))\n    if not data:\n        return\n\n    n = data[0]\n    scores = [0] + data[1:1 + n]\n    dp = [0] * (n + 1)\n\n    if n >= 1:\n        dp[1] = scores[1]\n    if n >= 2:\n        dp[2] = scores[1] + scores[2]\n\n    for i in range(3, n + 1):\n        dp[i] = max(dp[i - 2], dp[i - 3] + scores[i - 1]) + scores[i]\n\n    print(dp[n])\n\nif __name__ == \"__main__\":\n    main()\n```",
+          "reasoning_content": "We need answer only code block Python. Need translate. Ensure N=1 etc. Provide script reading stdin writing stdout. Could just implement. Need no explanation. Fenced code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794998351,
+    "id": "chatcmpl-aac319129fb60566d85e62db3e8f0228",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 204,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 666,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 870
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00044459999999999996,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.24796680000145,
+  "logical_request_id": "00738204b9a28d893eca92c11e0efe4439ce0d7082fceddcef93ec34df2cf5f4",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2579\\cpp-via-python\\attempt-02\\step-01\\response_body.txt",
+  "received_at": "2026-11-18T10:39:12.413627+00:00",
+  "request_id": "chatcmpl-aac319129fb60566d85e62db3e8f0228",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```python\nimport sys\n\ndef main():\n    data = list(map(int, sys.stdin.buffer.read().split()))\n    if not data:\n        return\n\n    n = data[0]\n    scores = [0] + data[1:1 + n]\n    dp = [0] * (n + 1)\n\n    if n >= 1:\n        dp[1] = scores[1]\n    if n >= 2:\n        dp[2] = scores[1] + scores[2]\n\n    for i in range(3, n + 1):\n        dp[i] = max(dp[i - 2], dp[i - 3] + scores[i - 1]) + scores[i]\n\n    print(dp[n])\n\nif __name__ == \"__main__\":\n    main()\n```",
+  "usage": {
+    "completion_tokens": 204,
+    "completion_tokens_details": {
+      "reasoning_tokens": 37
+    },
+    "prompt_tokens": 666,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 870
+  },
+  "usage_raw": {
+    "completion_tokens": 204,
+    "completion_tokens_details": {
+      "reasoning_tokens": 37
+    },
+    "prompt_tokens": 666,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 870
+  }
+}

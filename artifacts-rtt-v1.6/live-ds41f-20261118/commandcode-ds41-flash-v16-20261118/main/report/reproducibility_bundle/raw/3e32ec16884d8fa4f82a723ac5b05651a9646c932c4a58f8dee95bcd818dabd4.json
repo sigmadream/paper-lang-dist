@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    static void hanoi(int n, int start, int mid, int end, StringBuilder sb) {\n        if (n == 1) {\n            sb.append(start).append(' ').append(end).append('\\n');\n            return;\n        }\n        hanoi(n - 1, start, end, mid, sb);\n        sb.append(start).append(' ').append(end).append('\\n');\n        hanoi(n - 1, mid, start, end, sb);\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) {\n            return;\n        }\n\n        int n = sc.nextInt();\n\n        StringBuilder sb = new StringBuilder();\n        sb.append((1L << n) - 1).append('\\n');\n        hanoi(n, 1, 2, 3, sb);\n\n        System.out.print(sb);\n    }\n}\n```",
+          "reasoning_content": "We need answer only code block Java. Need translate preserve behavior. Need consider N up to 20, moves 1,048,575. Using StringBuilder recursion. Java 17 public class Main. Need efficient output. Recursion max 20 fine. Build StringBuilder with append. 1L << n. Print.\n\nNeed ensure output exactly. Source appends move lines. For n maybe if input invalid return? We can use Scanner? Need read int. Since only valid input. Use BufferedReader? Standard. Simpler Scanner. But performance okay (only one int). StringBuilder huge ~ (2^20)*4? Actually lines \"1 3\\n\" 4 chars ~4MB, okay. Use System.out.print(sb). Could use BufferedWriter. Need exact.\n\nPotential issue recursion calls append to StringBuilder pass by reference. Implement static void hanoi(int n,int start,int mid,int end,StringBuilder sb). append start, ' ', end, '\\n'. Main reads via BufferedReader or Scanner. Need handle no input return. Java Scanner maybe not shipped? java.util.Scanner standard. Could use BufferedReader with StringTokenizer. Simpler Scanner. But Scanner slower irrelevant. Use BufferedReader to avoid import? Both standard. Let's use BufferedReader and StringTokenizer? Need just int line. Scanner easy.\n\nNeed final exactly code fenced. No explanation. Ensure import java.util.Scanner. Class Main main.\n\nLet's consider source uses 1L so n=20 gives 1048575 fits int? 2^20-1 = 1048575. append long? sb += to_string((1L << n)-1) yields string. In Java append((1L << n)-1) long. Good.\n\nNeed if n=0 not valid, source hanoi with n=0 would infinite? Actually if n=0, hanoi(0...) calls hanoi(-1) eventually? But constraint 1..20. Fine.\n\nCould output via BufferedWriter but System.out.print of StringBuilder okay. Java memory fine. Use StringBuilder sb = new StringBuilder(); sb.append((1L << n) - 1).append('\\n'). Then hanoi. System.out.print(sb). Need perhaps flush? print flushes? Not necessarily but program exits. System.out auto flush? It does on exit? PrintStream maybe not, but standard out flushed by OS? Usually fine. Could System.out.flush().\n\nPotential concern output size ~4MB, System.out.print large. Fine.\n\nNeed only one complete source.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1795000385,
+    "id": "chatcmpl-1667655cc692b4cbc7d25162f0f9de23",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 710,
+      "completion_tokens_details": {
+        "reasoning_tokens": 505
+      },
+      "prompt_tokens": 683,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1393
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0010569000000000002,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 6.967397900065407,
+  "logical_request_id": "60ef02bb1a647fa587c6c8489f80441ceb6923cc200c4282c2850553f28ef9b7",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_11729\\cpp-via-java\\attempt-01\\step-05\\response_body.txt",
+  "received_at": "2026-11-18T11:13:12.305357+00:00",
+  "request_id": "chatcmpl-1667655cc692b4cbc7d25162f0f9de23",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    static void hanoi(int n, int start, int mid, int end, StringBuilder sb) {\n        if (n == 1) {\n            sb.append(start).append(' ').append(end).append('\\n');\n            return;\n        }\n        hanoi(n - 1, start, end, mid, sb);\n        sb.append(start).append(' ').append(end).append('\\n');\n        hanoi(n - 1, mid, start, end, sb);\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) {\n            return;\n        }\n\n        int n = sc.nextInt();\n\n        StringBuilder sb = new StringBuilder();\n        sb.append((1L << n) - 1).append('\\n');\n        hanoi(n, 1, 2, 3, sb);\n\n        System.out.print(sb);\n    }\n}\n```",
+  "usage": {
+    "completion_tokens": 710,
+    "completion_tokens_details": {
+      "reasoning_tokens": 505
+    },
+    "prompt_tokens": 683,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1393
+  },
+  "usage_raw": {
+    "completion_tokens": 710,
+    "completion_tokens_details": {
+      "reasoning_tokens": 505
+    },
+    "prompt_tokens": 683,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1393
+  }
+}

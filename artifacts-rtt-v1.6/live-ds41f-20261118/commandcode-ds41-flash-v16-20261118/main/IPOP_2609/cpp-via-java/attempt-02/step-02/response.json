@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n\nint gcd(int a, int b) {\n    while (b != 0) {\n        int r = a % b;\n        a = b;\n        b = r;\n    }\n    return a;\n}\n\nint main() {\n    int a, b;\n    std::cin >> a >> b;\n    int g = gcd(a, b);\n    std::cout << g << '\\n';\n    std::cout << (a / g) * b << '\\n';\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 529,
+    "total_tokens": 722,
+    "completion_tokens": 193,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 80
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 529,
+    "total_tokens": 722,
+    "completion_tokens": 193,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 80
+    }
+  },
+  "cost_usd": 0.00039029999999999995,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-042a9740c1847e3405f957f5767314bf",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2609\\cpp-via-java\\attempt-02\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-042a9740c1847e3405f957f5767314bf",
+    "object": "chat.completion",
+    "created": 1794981976,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n\nint gcd(int a, int b) {\n    while (b != 0) {\n        int r = a % b;\n        a = b;\n        b = r;\n    }\n    return a;\n}\n\nint main() {\n    int a, b;\n    std::cin >> a >> b;\n    int g = gcd(a, b);\n    std::cout << g << '\\n';\n    std::cout << (a / g) * b << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer exactly one complete source file in fenced code block, no explanation. C++17. Simple. Need preserve behavior. Input two ints, output gcd newline lcm newline. a,b up to 10000 so int fine, lcm up to 100M fits int. Could use long long. Return code.\n\nNeed ensure exactly one code block, no explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 529,
+      "total_tokens": 722,
+      "completion_tokens": 193,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.174007400055416,
+  "received_at": "2026-11-18T06:06:17.000617+00:00",
+  "logical_request_id": "0195f1642ea173135feda8c56e642b9b72c5adda6be22e192d031dc9f6e6db54",
+  "execution_class": "direct_api"
+}

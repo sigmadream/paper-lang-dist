@@ -1,0 +1,30 @@
+#include <iostream>
+#include <vector>
+
+int main() {
+    int n;
+    std::cin >> n;
+
+    std::vector<int> a(n);
+    for (int i = 0; i < n; ++i) {
+        std::cin >> a[i];
+    }
+
+    int write = 0;
+    for (int read = 0; read < n; ++read) {
+        if (a[read] != 0) {
+            int t = a[write];
+            a[write] = a[read];
+            a[read] = t;
+            ++write;
+        }
+    }
+
+    for (int i = 0; i < n; ++i) {
+        if (i > 0) std::cout << ' ';
+        std::cout << a[i];
+    }
+    std::cout << '\n';
+
+    return 0;
+}

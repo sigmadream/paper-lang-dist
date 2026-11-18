@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StringTokenizer st;\n\n        String first = br.readLine();\n        if (first == null) return;\n\n        st = new StringTokenizer(first);\n        int n = Integer.parseInt(st.nextToken());\n        int m = Integer.parseInt(st.nextToken());\n\n        List<Integer>[] adj = new ArrayList[n + 1];\n        for (int i = 1; i <= n; i++) {\n            adj[i] = new ArrayList<>();\n        }\n\n        for (int i = 0; i < m; i++) {\n            st = new StringTokenizer(br.readLine());\n            int u = Integer.parseInt(st.nextToken());\n            int v = Integer.parseInt(st.nextToken());\n            adj[u].add(v);\n            adj[v].add(u);\n        }\n\n        int[] dist = new int[n + 1];\n        Arrays.fill(dist, -1);\n\n        Queue<Integer> q = new ArrayDeque<>();\n        q.offer(1);\n        dist[1] = 0;\n\n        int ans = 0;\n\n        while (!q.isEmpty()) {\n            int curr = q.poll();\n\n            for (int next : adj[curr]) {\n                if (dist[next] == -1) {\n                    dist[next] = dist[curr] + 1;\n                    q.offer(next);\n                    if (dist[next] <= 2) {\n                        ans++;\n                    }\n                }\n            }\n        }\n\n        System.out.println(ans);\n    }\n}\n```",
+          "reasoning_content": "We need answer exactly one complete source file java. Need translate. Need consider input spec says N,M but public example \"1\\n0\" even constraint N>=2? Source reads n m. Need preserve complete stdin behavior. Java 17 class Main. Use BFS. Output ans. Need edge cases. Source uses vector n+1, reads m. If n maybe 1, works. Need no explanation. Fenced code block only.\n\nNeed ensure Java scanner efficient. Use BufferedReader? M up to 10000, simple. Use StringTokenizer. Java file public class Main. main throws IOException. Build ArrayList<Integer>[] adj = new ArrayList[n+1]; init. Read n,m. If no input return. BFS ArrayDeque. dist int[] init -1. ans increments when setting distance <=2. Note source if n=1 m=0 ans 0. If edge to self? spec a<b, no. Fine.\n\nNeed answer with code block. Ensure exact. \n",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794997739,
+    "id": "chatcmpl-2f78d54a2f62efdd2769077238e360f0",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 524,
+      "completion_tokens_details": {
+        "reasoning_tokens": 202
+      },
+      "prompt_tokens": 696,
+      "prompt_tokens_details": {
+        "cached_tokens": 640
+      },
+      "total_tokens": 1220
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0006494399999999999,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.045386099955067,
+  "logical_request_id": "8cd90dd719eaf8c7a563bd0f7dc48a912cd1fb1196b4db752683b1ecd302c58d",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_5567\\cpp-via-java\\attempt-01\\step-01\\response_body.txt",
+  "received_at": "2026-11-18T10:29:02.108456+00:00",
+  "request_id": "chatcmpl-2f78d54a2f62efdd2769077238e360f0",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StringTokenizer st;\n\n        String first = br.readLine();\n        if (first == null) return;\n\n        st = new StringTokenizer(first);\n        int n = Integer.parseInt(st.nextToken());\n        int m = Integer.parseInt(st.nextToken());\n\n        List<Integer>[] adj = new ArrayList[n + 1];\n        for (int i = 1; i <= n; i++) {\n            adj[i] = new ArrayList<>();\n        }\n\n        for (int i = 0; i < m; i++) {\n            st = new StringTokenizer(br.readLine());\n            int u = Integer.parseInt(st.nextToken());\n            int v = Integer.parseInt(st.nextToken());\n            adj[u].add(v);\n            adj[v].add(u);\n        }\n\n        int[] dist = new int[n + 1];\n        Arrays.fill(dist, -1);\n\n        Queue<Integer> q = new ArrayDeque<>();\n        q.offer(1);\n        dist[1] = 0;\n\n        int ans = 0;\n\n        while (!q.isEmpty()) {\n            int curr = q.poll();\n\n            for (int next : adj[curr]) {\n                if (dist[next] == -1) {\n                    dist[next] = dist[curr] + 1;\n                    q.offer(next);\n                    if (dist[next] <= 2) {\n                        ans++;\n                    }\n                }\n            }\n        }\n\n        System.out.println(ans);\n    }\n}\n```",
+  "usage": {
+    "completion_tokens": 524,
+    "completion_tokens_details": {
+      "reasoning_tokens": 202
+    },
+    "prompt_tokens": 696,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 1220
+  },
+  "usage_raw": {
+    "completion_tokens": 524,
+    "completion_tokens_details": {
+      "reasoning_tokens": 202
+    },
+    "prompt_tokens": 696,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 1220
+  }
+}

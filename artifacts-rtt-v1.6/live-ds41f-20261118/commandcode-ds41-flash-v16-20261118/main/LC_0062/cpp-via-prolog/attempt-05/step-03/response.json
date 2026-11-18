@@ -1,0 +1,86 @@
+{
+  "text": "```prolog\nmain :-\n    read_line_to_codes(user_input, Codes),\n    ( Codes == end_of_file ->\n        true\n    ;\n        tokenize_codes(Codes, Tokens),\n        Tokens = [MCodes, NCodes|_],\n        number_codes(M, MCodes),\n        number_codes(N, NCodes),\n        unique_paths(M, N, Answer),\n        writeln(Answer)\n    ).\n\ntokenize_codes([], []).\ntokenize_codes([C|Cs], Tokens) :-\n    code_type(C, space), !,\n    tokenize_codes(Cs, Tokens).\ntokenize_codes(Cs, [Token|Tokens]) :-\n    take_nonspace(Cs, Token, Rest),\n    tokenize_codes(Rest, Tokens).\n\ntake_nonspace([], [], []).\ntake_nonspace([C|Cs], [], Rest) :-\n    code_type(C, space), !,\n    Rest = Cs.\ntake_nonspace([C|Cs], [C|Token], Rest) :-\n    take_nonspace(Cs, Token, Rest).\n\nunique_paths(M, N, Answer) :-\n    make_ones(N, Row0),\n    Rows is M - 1,\n    iterate_rows(Rows, Row0, Row),\n    last_element(Row, Answer).\n\nmake_ones(0, []) :- !.\nmake_ones(N, [1|Rest]) :-\n    N > 0,\n    N1 is N - 1,\n    make_ones(N1, Rest).\n\niterate_rows(0, Row, Row) :- !.\niterate_rows(K, Row, Result) :-\n    update_row(Row, Updated),\n    K1 is K - 1,\n    iterate_rows(K1, Updated, Result).\n\nupdate_row([First|Rest], [First|NewRest]) :-\n    update_rest(Rest, First, NewRest).\n\nupdate_rest([], _, []).\nupdate_rest([X|Xs], Prev, [Y|Ys]) :-\n    Y is Prev + X,\n    update_rest(Xs, Y, Ys).\n\nlast_element([X], X) :- !.\nlast_element([_|Tail], X) :-\n    last_element(Tail, X).\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 530,
+    "total_tokens": 2859,
+    "completion_tokens": 2329,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1845
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 530,
+    "total_tokens": 2859,
+    "completion_tokens": 2329,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1845
+    }
+  },
+  "cost_usd": 0.0029538,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-0a78abd538c7637f28a44d38e084fd26",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-prolog\\attempt-05\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-0a78abd538c7637f28a44d38e084fd26",
+    "object": "chat.completion",
+    "created": 1794990971,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\nmain :-\n    read_line_to_codes(user_input, Codes),\n    ( Codes == end_of_file ->\n        true\n    ;\n        tokenize_codes(Codes, Tokens),\n        Tokens = [MCodes, NCodes|_],\n        number_codes(M, MCodes),\n        number_codes(N, NCodes),\n        unique_paths(M, N, Answer),\n        writeln(Answer)\n    ).\n\ntokenize_codes([], []).\ntokenize_codes([C|Cs], Tokens) :-\n    code_type(C, space), !,\n    tokenize_codes(Cs, Tokens).\ntokenize_codes(Cs, [Token|Tokens]) :-\n    take_nonspace(Cs, Token, Rest),\n    tokenize_codes(Rest, Tokens).\n\ntake_nonspace([], [], []).\ntake_nonspace([C|Cs], [], Rest) :-\n    code_type(C, space), !,\n    Rest = Cs.\ntake_nonspace([C|Cs], [C|Token], Rest) :-\n    take_nonspace(Cs, Token, Rest).\n\nunique_paths(M, N, Answer) :-\n    make_ones(N, Row0),\n    Rows is M - 1,\n    iterate_rows(Rows, Row0, Row),\n    last_element(Row, Answer).\n\nmake_ones(0, []) :- !.\nmake_ones(N, [1|Rest]) :-\n    N > 0,\n    N1 is N - 1,\n    make_ones(N1, Rest).\n\niterate_rows(0, Row, Row) :- !.\niterate_rows(K, Row, Result) :-\n    update_row(Row, Updated),\n    K1 is K - 1,\n    iterate_rows(K1, Updated, Result).\n\nupdate_row([First|Rest], [First|NewRest]) :-\n    update_rest(Rest, First, NewRest).\n\nupdate_rest([], _, []).\nupdate_rest([X|Xs], Prev, [Y|Ys]) :-\n    Y is Prev + X,\n    update_rest(Xs, Y, Ys).\n\nlast_element([X], X) :- !.\nlast_element([_|Tail], X) :-\n    last_element(Tail, X).\n```",
+          "reasoning_content": "We need answer only code block with Prolog source. Need translate preserving behavior. Need SWI-Prolog main/0 no init directives. Read M N, compute unique paths, output integer newline. Spec M,N 1..100, answer <=2e9 fits. Use DP or combin formula. Need complete source file module Main? They say Prolog SWI define main/0 evaluator invokes main; do not add initialization directives. Should include :- module? \"Return exactly one complete source file\". Could do main :- read_input... No initialization. Need avoid directives? \"do not add initialization directives\" but module directive maybe okay? They specified SWI-Prolog define main/0. We can just have main/0 and helper predicates. Use read_line_to_codes? Need robust input parse. In SWI, read integer tokens from current input. Use read_int/1? Better use read_line_to_codes(user_input, Codes), split string? Simpler: read(M), read(N)? But input \"3 7\\n\" read/1 reads terms, read(M) will read 3, read(N) reads 7. In SWI, read/1 reads next term, works whitespace separated. But after reading M, read N yes. Output with writeln. Need if no input? Not necessary? Preserve C++: if not read returns 0. In Prolog can handle end_of_file. Use read_term? Simpler: main :- catch(read(M), _, halt?) Hmm should exit silently if no input? Evaluator valid. Could do main :- ( read(M), read(N) -> compute ; true). But read(M) can throw? For valid input fine. If EOF, read returns end_of_file unified with M; then read(N) fails or end_of_file. Need avoid output? Could write.\n\nPotential issue read/1 expects term followed by period? Ah in Prolog read/1 reads a term terminated by period, not whitespace. Input \"3 7\\n\" without '.' would cause syntax error. So can't use read/1. Need parse line/tokens.\n\nUse read_line_to_codes(user_input, Codes), split by spaces. Or use SWI library(pio) phrase_from_stream? Standard library shipped. Implement reading all chars from stdin until EOF, tokenize. Use read_string? SWI has read_string/3? Simpler robust: read_line_to_codes(user_input, Codes), parse first line. Input first line M N. Codes may include digits spaces. Could use number_codes? We can split on space.\n\nImplement read_line_to_codes(user_input, Codes), (Codes == end_of_file -> true ; split whitespace). Need extract two integers. Could use atomic_list_concat? Let's design.\n\nmain :-\n    read_line_to_codes(user_input, Codes),\n    ( Codes == end_of_file -> true\n    ; tokenize_codes(Codes, Tokens),\n      Tokens = [MStr, NStr|_],  % tokens as strings? \n      number_codes(M, MStr),\n      number_codes(N, NStr),\n      unique_paths(M, N, Ans),\n      writeln(Ans)\n    ).\n\nNeed tokenize_codes returns list of lists codes separated by whitespace. Handle leading/trailing/multiple spaces. Implement:\n\ntokenize_codes([], []).\ntokenize_codes([C|Cs], Toks) :-\n    code_type(C, space), !,\n    tokenize_codes(Cs, Toks).\ntokenize_codes(Cs, [Tok|Toks]) :-\n    take_nonspace(Cs, Tok, Rest),\n    tokenize_codes(Rest, Toks).\n\ntake_nonspace([], [], []).\ntake_nonspace([C|Cs], [], Rest) :-\n    code_type(C, space), !,\n    Rest = Cs.\ntake_nonspace([C|Cs], [C|Tok], Rest) :-\n    take_nonspace(Cs, Tok, Rest).\n\nNeed code_type/2 available. Use char_type? code_type(C, space) works for codes.\n\nunique_paths M N Ans: DP row. Since M,N up to 100, simple recursion. Use list of ones length N. Loop M-1 times update row. Or compute binomial C(M+N-2, M-1). Easier DP list.\n\nImplement:\n\nunique_paths(M, N, Ans) :-\n    length(Row0, N),\n    maplist(=(1), Row0),\n    Rows is M - 1,\n    iterate_rows(Rows, Row0, Row),\n    last(Row, Ans).\n\niterate_rows(0, Row, Row) :- !.\niterate_rows(K, Row, Result) :-\n    update_row(Row, Updated),\n    K1 is K - 1,\n    iterate_rows(K1, Updated, Result).\n\nupdate_row([First|Rest], [First|NewRest]) :-\n    update_rest(Rest, First, NewRest).\n\nupdate_rest([], _, []).\nupdate_rest([X|Xs], Prev, [Y|Ys]) :-\n    Y is Prev + X,\n    update_rest(Xs, Y, Ys).\n\nThis for M rows: initial row for first row all ones. For k=1 to M-1 update. Good.\n\nNeed handle N=1: update_row([1]?) Actually Row0 length N. If N=1, Row0=[1]. update_row([First|Rest], [First|NewRest]) with Rest=[] NewRest=[] returns [1]. Good.\n\nAlternative use formula reducing loops.\n\nNeed include module Main? If use module directive, it's a directive but not initialization? They said do not add initialization directives. Module directive okay? To be safe, no module directive; just predicates. The evaluator invokes main. SWI can run by consulting file and calling main. \"Haskell module Main\" but Prolog just define main/0. File no module. That's fine.\n\nNeed ensure output newline. writeln(Ans).\n\nPotential issue code_type(C, space) includes tab/newline. okay.\n\nCould use SWI built-ins? read_line_to_codes from library? In SWI it's built-in? `read_line_to_codes/2` available (library readutil? Actually in SWI-Prolog, read_line_to_codes/2 is built-in in ISO? I recall SWI has `read_line_to_codes/2` and `read_line_to_string/2`). It's commonly available. Should be fine.\n\nNeed maybe output if no input? If Codes == end_of_file. If first line may empty? Not valid. Could parse only first line; valid has M N on first line. Good. Could input line with multiple? only first line. But if spaces multiple. tokenize handles.\n\nIf M,N are one digit? number_codes works. If N or M zero? constraints >=1. Could parse.\n\nLet's produce code block. No explanation. Ensure source complete. Use cpp target Prolog.\n\nNeed consider read_line_to_codes/2 with `user_input` stream. In SWI, `read_line_to_codes(user_input, Codes)`. Yes.\n\nPotential issue tokenization: code_type(C, space) succeeds for whitespace. Good.\n\nPotential issue `maplist(=(1), Row0)` requires library(apply)? maplist is built-in in SWI? In SWI, maplist/2 is in library(apply) autoloaded maybe yes. To be safe implement make_ones. Avoid dependency maplist. Use:\n\nmake_ones(0, []) :- !.\nmake_ones(N, [1|T]) :- N > 0, N1 is N-1, make_ones(N1, T).\n\nNeed avoid `maplist`. Use make_ones.\n\nImplement:\n\nunique_paths(M,N,Ans) :-\n    make_ones(N, Row0),\n    Rows is M-1,\n    iterate_rows(Rows, Row0, Row),\n    last(Row, Ans).\n\nlast([X], X) :- !.\nlast([_|T], X) :- last(T, X).\n\nNo semicolon.\n\nFull:\n\nmain :-\n    read_line_to_codes(user_input, Codes),\n    ( Codes == end_of_file -> true\n    ; tokenize_codes(Codes, Tokens),\n      Tokens = [MCodes, NCodes|_],\n      number_codes(M, MCodes),\n      number_codes(N, NCodes),\n      unique_paths(M, N, Ans),\n      writeln(Ans)\n    ).\n\nPotential if tokenization yields no tokens, pattern fails and program fails. Not valid.\n\nNeed ensure `+=` etc no. Good.\n\nWill output."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 530,
+      "total_tokens": 2859,
+      "completion_tokens": 2329,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1845
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 18.252917899983004,
+  "received_at": "2026-11-18T08:36:27.115094+00:00",
+  "logical_request_id": "cc95d6347efb9f09307ce78bbab20693c24f2bed68fa8b61af483d69f57f336b",
+  "execution_class": "direct_api"
+}

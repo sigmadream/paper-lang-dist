@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    n = int(data[0])\n    score = [0] * (n + 1)\n    for i in range(1, n + 1):\n        score[i] = int(data[i])\n    dp = [0] * (n + 1)\n    if n >= 1:\n        dp[1] = score[1]\n    if n >= 2:\n        dp[2] = score[1] + score[2]\n    for i in range(3, n + 1):\n        dp[i] = max(dp[i - 2], dp[i - 3] + score[i - 1]) + score[i]\n    print(dp[n])\n\nmain()\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794902565,
+    "id": "b9168352-8981-4426-ac3d-622a8bdb264d",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 165,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_b78d5fe25f9c4cc48eeab148b25fe69f",
+      "trace_id": "233ebb6631634b608ba03ab347ba871b"
+    },
+    "usage": {
+      "completion_tokens": 165,
+      "prompt_tokens": 671,
+      "prompt_tokens_details": {
+        "cached_tokens": 448
+      },
+      "total_tokens": 836
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0011546800000000002,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 4.070201900030952,
+  "logical_request_id": "3c6ad74c18fea6b5e6f8884fdf246b10b9d3b034e0b81ef6762eec803d046fd7",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_2579\\cpp-via-python\\attempt-05\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T08:02:45.155101+00:00",
+  "request_id": "b9168352-8981-4426-ac3d-622a8bdb264d",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    n = int(data[0])\n    score = [0] * (n + 1)\n    for i in range(1, n + 1):\n        score[i] = int(data[i])\n    dp = [0] * (n + 1)\n    if n >= 1:\n        dp[1] = score[1]\n    if n >= 2:\n        dp[2] = score[1] + score[2]\n    for i in range(3, n + 1):\n        dp[i] = max(dp[i - 2], dp[i - 3] + score[i - 1]) + score[i]\n    print(dp[n])\n\nmain()\n```",
+  "usage": {
+    "completion_tokens": 165,
+    "prompt_tokens": 671,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 836
+  },
+  "usage_raw": {
+    "completion_tokens": 165,
+    "prompt_tokens": 671,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 836
+  }
+}

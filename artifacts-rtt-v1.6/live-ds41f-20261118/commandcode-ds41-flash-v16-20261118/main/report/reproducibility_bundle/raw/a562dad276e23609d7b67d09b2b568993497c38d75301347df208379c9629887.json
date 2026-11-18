@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n\n        int T = sc.nextInt();\n        StringBuilder output = new StringBuilder();\n\n        while (T-- > 0) {\n            String s = sc.next();\n            int bal = 0;\n            boolean valid = true;\n\n            for (int i = 0; i < s.length(); i++) {\n                if (s.charAt(i) == '(') {\n                    ++bal;\n                } else {\n                    --bal;\n                }\n\n                if (bal < 0) {\n                    valid = false;\n                    break;\n                }\n            }\n\n            if (bal != 0) valid = false;\n\n            output.append(valid ? \"YES\\n\" : \"NO\\n\");\n        }\n\n        System.out.print(output);\n    }\n}\n```",
+          "reasoning_content": "We need answer exactly one complete source file in fenced code block, no explanation. Need Java 17 public class Main. Preserve behavior. Simple. Need ensure source language cpp to Java. Output. We can implement BufferedReader or Scanner. Use standard libs. One file.\n\nNeed consider if input T and strings. Use Scanner okay. Write output. We can use StringBuilder.\n\nReturn fenced code block. No explanation. Ensure exactly complete source.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794979083,
+    "id": "chatcmpl-90b7d1daca636adbc5b9c2e906ab9213",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 279,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 643,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 922
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0005277000000000001,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.387231500004418,
+  "logical_request_id": "ab3974381b81895ae53c37bcd142053e9372c109cef2e4b7313b80c25f8a36c6",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-java\\attempt-02\\step-07\\response_body.txt",
+  "received_at": "2026-11-18T05:18:04.246668+00:00",
+  "request_id": "chatcmpl-90b7d1daca636adbc5b9c2e906ab9213",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n\n        int T = sc.nextInt();\n        StringBuilder output = new StringBuilder();\n\n        while (T-- > 0) {\n            String s = sc.next();\n            int bal = 0;\n            boolean valid = true;\n\n            for (int i = 0; i < s.length(); i++) {\n                if (s.charAt(i) == '(') {\n                    ++bal;\n                } else {\n                    --bal;\n                }\n\n                if (bal < 0) {\n                    valid = false;\n                    break;\n                }\n            }\n\n            if (bal != 0) valid = false;\n\n            output.append(valid ? \"YES\\n\" : \"NO\\n\");\n        }\n\n        System.out.print(output);\n    }\n}\n```",
+  "usage": {
+    "completion_tokens": 279,
+    "completion_tokens_details": {
+      "reasoning_tokens": 91
+    },
+    "prompt_tokens": 643,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 922
+  },
+  "usage_raw": {
+    "completion_tokens": 279,
+    "completion_tokens_details": {
+      "reasoning_tokens": 91
+    },
+    "prompt_tokens": 643,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 922
+  }
+}

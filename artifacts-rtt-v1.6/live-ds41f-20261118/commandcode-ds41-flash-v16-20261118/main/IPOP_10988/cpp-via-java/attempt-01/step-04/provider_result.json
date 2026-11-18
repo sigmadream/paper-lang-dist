@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::string line;\n    if (!std::getline(std::cin, line)) {\n        return 0;\n    }\n\n    auto isTrimChar = [](char c) {\n        return c <= ' ';\n    };\n\n    std::size_t begin = 0;\n    std::size_t end = line.size();\n\n    while (begin < end && isTrimChar(line[begin])) {\n        ++begin;\n    }\n    while (end > begin && isTrimChar(line[end - 1])) {\n        --end;\n    }\n\n    std::string s = line.substr(begin, end - begin);\n    if (s.empty()) {\n        return 0;\n    }\n\n    bool valid = true;\n    for (std::size_t i = 0; i < s.size() / 2; ++i) {\n        if (s[i] != s[s.size() - 1 - i]) {\n            valid = false;\n            break;\n        }\n    }\n\n    std::cout << (valid ? 1 : 0) << '\\n';\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 610,
+    "total_tokens": 950,
+    "completion_tokens": 340,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 80
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 610,
+    "total_tokens": 950,
+    "completion_tokens": 340,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 80
+    }
+  },
+  "cost_usd": 0.000591,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-d1f5b745c5245bcc8b347629d2fade98",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-java\\attempt-01\\step-04\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-d1f5b745c5245bcc8b347629d2fade98",
+    "object": "chat.completion",
+    "created": 1794988457,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::string line;\n    if (!std::getline(std::cin, line)) {\n        return 0;\n    }\n\n    auto isTrimChar = [](char c) {\n        return c <= ' ';\n    };\n\n    std::size_t begin = 0;\n    std::size_t end = line.size();\n\n    while (begin < end && isTrimChar(line[begin])) {\n        ++begin;\n    }\n    while (end > begin && isTrimChar(line[end - 1])) {\n        --end;\n    }\n\n    std::string s = line.substr(begin, end - begin);\n    if (s.empty()) {\n        return 0;\n    }\n\n    bool valid = true;\n    for (std::size_t i = 0; i < s.size() / 2; ++i) {\n        if (s[i] != s[s.size() - 1 - i]) {\n            valid = false;\n            break;\n        }\n    }\n\n    std::cout << (valid ? 1 : 0) << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block cpp. Need translate preserving. Straightforward. Need consider input reading line, trim chars <= ' ' at both ends, empty return no output. C++17. Use getline. If no line return. find begin/end char <= ' '. If empty return. Palindrome print 1/0.\n\nNeed exact one complete source file fenced. No explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 610,
+      "total_tokens": 950,
+      "completion_tokens": 340,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.477996399975382,
+  "received_at": "2026-11-18T07:54:18.228889+00:00",
+  "logical_request_id": "f62908c192eeece079db0a995a3878e8f7dd6c9aeeba98106270b5418c1adcbb",
+  "execution_class": "direct_api"
+}

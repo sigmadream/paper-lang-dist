@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    case (map read (words input) :: [Int]) of\n        [] -> return ()\n        (n:xs) -> do\n            let arr = take n xs\n                result = filter (/= 0) arr ++ filter (== 0) arr\n            putStrLn (unwords (map show result))\n```",
+          "reasoning_content": "We need translate C++ to Haskell, preserve stdin/stdout. Need output exactly. Haskell GHC, module Main and main :: IO (). Read n, then n ints. Output nonzero in order then zeros, space-separated, newline. Edge cases: N>=1 per constraint, but source if no n returns 0. We should handle EOF gracefully maybe. Need only standard libs. Output integer array.\n\nImplement read all tokens. main = do input <- getContents; let (n:rest) = map read (words input) :: [Int]; arr = take n rest; ... Actually words ignoring newlines. Output unwords (map show (filter (/=0) arr ++ filter (==0) arr)) then newline. If empty input, avoid error. Could define safe. Constraints N>=1, but safe.\n\nNeed return exactly one fenced code block. No explanation.\n\nNeed consider if n is zero? Output newline? Source with n=0 would print just '\\n'. But constraints N>=1. We can handle. If n missing, return. Using case.\n\nPotential issue Haskell lazy IO and reading all fine.\n\nNeed not hard-code. Code:\n\nmodule Main where\n\nimport System.IO (hSetBuffering, stdout, BufferMode(..)) not necessary.\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case map read (words input) :: [Int] of\n    [] -> return ()\n    (n:xs) -> do\n      let arr = take n xs\n          result = filter (/= 0) arr ++ filter (== 0) arr\n      putStrLn (unwords (map show result))\n\nBut if input has negative? read handles. Fine. If there are extra tokens ignore. If n=0, arr empty, result empty, putStrLn \"\" outputs newline, matches source (cout << '\\n'). Good.\n\nBut note type annotation in case: `case map read (words input) :: [Int] of` syntax? In Haskell, `case (map read (words input) :: [Int]) of`. Need parentheses.\n\nAlso possible integer overflow? Int 64-bit on GHC. signed 32-bit, fine.\n\nReturn code block.\n\nNeed ensure module Main. Done.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794991279,
+    "id": "chatcmpl-139957ade09caa4777630980cc9ee2d8",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 562,
+      "completion_tokens_details": {
+        "reasoning_tokens": 469
+      },
+      "prompt_tokens": 677,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 1239
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0007646039999999999,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.881377000012435,
+  "logical_request_id": "78094558a2449f3ff14733da3416433cfc36674a9d5f2fb67b6b1db31bb39e07",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-haskell\\attempt-05\\step-09\\response_body.txt",
+  "received_at": "2026-11-18T08:41:22.143021+00:00",
+  "request_id": "chatcmpl-139957ade09caa4777630980cc9ee2d8",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    case (map read (words input) :: [Int]) of\n        [] -> return ()\n        (n:xs) -> do\n            let arr = take n xs\n                result = filter (/= 0) arr ++ filter (== 0) arr\n            putStrLn (unwords (map show result))\n```",
+  "usage": {
+    "completion_tokens": 562,
+    "completion_tokens_details": {
+      "reasoning_tokens": 469
+    },
+    "prompt_tokens": 677,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1239
+  },
+  "usage_raw": {
+    "completion_tokens": 562,
+    "completion_tokens_details": {
+      "reasoning_tokens": 469
+    },
+    "prompt_tokens": 677,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1239
+  }
+}

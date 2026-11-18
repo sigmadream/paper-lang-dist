@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```java\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\nimport java.util.StringTokenizer;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StringTokenizer st;\n\n        String line = br.readLine();\n        if (line == null) return;\n        line = line.trim();\n        if (line.isEmpty()) return;\n        int n = Integer.parseInt(line);\n\n        long first = 0;\n        boolean hasFirst = false;\n        while (!hasFirst) {\n            String l = br.readLine();\n            if (l == null) return;\n            st = new StringTokenizer(l);\n            if (st.hasMoreTokens()) {\n                first = Long.parseLong(st.nextToken());\n                hasFirst = true;\n                break;\n            }\n        }\n\n        long cur = first;\n        long best = first;\n        int count = 1;\n\n        while (count < n) {\n            String l = br.readLine();\n            if (l == null) break;\n            st = new StringTokenizer(l);\n            while (st.hasMoreTokens() && count < n) {\n                long x = Long.parseLong(st.nextToken());\n                cur = Math.max(x, cur + x);\n                best = Math.max(best, cur);\n                count++;\n            }\n        }\n\n        System.out.println(best);\n    }\n}\n```",
+          "reasoning_content": "Translate C++ to Java. Straightforward. Edge: n could be 1, read first. If no input, return. Need to read tokens; input may have whitespace/newlines. Use Scanner or BufferedReader with tokenizer. Scanner is fine for 100k.\n\nImplement Main class.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794978650,
+    "id": "chatcmpl-63a09d1060b4f8d1d0aa608222530077",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 343,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 545,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 888
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0005750999999999999,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.521105600055307,
+  "logical_request_id": "c82302c85f03bbbac7590a97d70ef1da4b7dd8b9c4d922281199f5e4d19c8c53",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-java\\attempt-01\\step-05\\response_body.txt",
+  "received_at": "2026-11-18T05:10:51.077782+00:00",
+  "request_id": "chatcmpl-63a09d1060b4f8d1d0aa608222530077",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```java\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\nimport java.util.StringTokenizer;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StringTokenizer st;\n\n        String line = br.readLine();\n        if (line == null) return;\n        line = line.trim();\n        if (line.isEmpty()) return;\n        int n = Integer.parseInt(line);\n\n        long first = 0;\n        boolean hasFirst = false;\n        while (!hasFirst) {\n            String l = br.readLine();\n            if (l == null) return;\n            st = new StringTokenizer(l);\n            if (st.hasMoreTokens()) {\n                first = Long.parseLong(st.nextToken());\n                hasFirst = true;\n                break;\n            }\n        }\n\n        long cur = first;\n        long best = first;\n        int count = 1;\n\n        while (count < n) {\n            String l = br.readLine();\n            if (l == null) break;\n            st = new StringTokenizer(l);\n            while (st.hasMoreTokens() && count < n) {\n                long x = Long.parseLong(st.nextToken());\n                cur = Math.max(x, cur + x);\n                best = Math.max(best, cur);\n                count++;\n            }\n        }\n\n        System.out.println(best);\n    }\n}\n```",
+  "usage": {
+    "completion_tokens": 343,
+    "completion_tokens_details": {
+      "reasoning_tokens": 59
+    },
+    "prompt_tokens": 545,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 888
+  },
+  "usage_raw": {
+    "completion_tokens": 343,
+    "completion_tokens_details": {
+      "reasoning_tokens": 59
+    },
+    "prompt_tokens": 545,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 888
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint n;\nint ans = 0;\nvector<bool> col, diag1, diag2;\n\nvoid solve(int r) {\n    if (r == n) {\n        ans++;\n        return;\n    }\n\n    for (int c = 0; c < n; c++) {\n        int d1 = r + c;\n        int d2 = r - c + n - 1;\n\n        if (col[c] || diag1[d1] || diag2[d2]) continue;\n\n        col[c] = true;\n        diag1[d1] = true;\n        diag2[d2] = true;\n\n        solve(r + 1);\n\n        col[c] = false;\n        diag1[d1] = false;\n        diag2[d2] = false;\n    }\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    if (!(cin >> n)) return 0;\n\n    col.assign(n, false);\n    diag1.assign(2 * n - 1, false);\n    diag2.assign(2 * n - 1, false);\n\n    solve(0);\n\n    cout << ans << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer code only cpp. Need translate exact. Need consider N=1..14. Use C++17. Simple. Ensure main. Return fenced code block only. No explanation. Need perhaps optimize? Java backtracking fine for 14? N-Queen naive with bool and loop 14 ~ maybe 365k nodes? Actually N=14 solutions 365596, nodes ~? Fine C++ fast. Use ios. Include bits/stdc++.h. Good.\n\nNeed ensure stdin behavior if no int returns. Use if(!(cin>>n)) return 0; arrays size max maybe vectors. Global n ans vectors bool. Implement dfs. Print ans newline.\n\nFinal only code.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794991386,
+    "id": "chatcmpl-38943e4cf6c26107749303d787a36e3f",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 413,
+      "completion_tokens_details": {
+        "reasoning_tokens": 142
+      },
+      "prompt_tokens": 644,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "total_tokens": 1057
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0006135359999999999,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.968520399997942,
+  "logical_request_id": "d8a4eff37ce9635dc6dca831c5fd1ecf4cc1aaaaf4aa15bff5355743f56e6472",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9663\\cpp-via-java\\attempt-04\\step-08\\response_body.txt",
+  "received_at": "2026-11-18T08:43:08.188423+00:00",
+  "request_id": "chatcmpl-38943e4cf6c26107749303d787a36e3f",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint n;\nint ans = 0;\nvector<bool> col, diag1, diag2;\n\nvoid solve(int r) {\n    if (r == n) {\n        ans++;\n        return;\n    }\n\n    for (int c = 0; c < n; c++) {\n        int d1 = r + c;\n        int d2 = r - c + n - 1;\n\n        if (col[c] || diag1[d1] || diag2[d2]) continue;\n\n        col[c] = true;\n        diag1[d1] = true;\n        diag2[d2] = true;\n\n        solve(r + 1);\n\n        col[c] = false;\n        diag1[d1] = false;\n        diag2[d2] = false;\n    }\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    if (!(cin >> n)) return 0;\n\n    col.assign(n, false);\n    diag1.assign(2 * n - 1, false);\n    diag2.assign(2 * n - 1, false);\n\n    solve(0);\n\n    cout << ans << '\\n';\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 413,
+    "completion_tokens_details": {
+      "reasoning_tokens": 142
+    },
+    "prompt_tokens": 644,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 1057
+  },
+  "usage_raw": {
+    "completion_tokens": 413,
+    "completion_tokens_details": {
+      "reasoning_tokens": 142
+    },
+    "prompt_tokens": 644,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 1057
+  }
+}

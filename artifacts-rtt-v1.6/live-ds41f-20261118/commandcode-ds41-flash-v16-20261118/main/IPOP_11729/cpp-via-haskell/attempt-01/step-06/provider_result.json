@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <string>\n\nvoid hanoi(int n, int start, int middle, int end, std::string& out) {\n    if (n == 1) {\n        out += std::to_string(start);\n        out += ' ';\n        out += std::to_string(end);\n        out += '\\n';\n        return;\n    }\n\n    hanoi(n - 1, start, end, middle, out);\n\n    out += std::to_string(start);\n    out += ' ';\n    out += std::to_string(end);\n    out += '\\n';\n\n    hanoi(n - 1, middle, start, end, out);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    std::string out;\n    out.reserve(8 * 1024 * 1024);\n\n    out += std::to_string((1 << n) - 1);\n    out += '\\n';\n\n    hanoi(n, 1, 2, 3, out);\n\n    std::cout << out;\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 643,
+    "total_tokens": 1694,
+    "completion_tokens": 1051,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 799
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 643,
+    "total_tokens": 1694,
+    "completion_tokens": 1051,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 799
+    }
+  },
+  "cost_usd": 0.001341204,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-7f6cec222bd63ce6cea8a888676548cb",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_11729\\cpp-via-haskell\\attempt-01\\step-06\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-7f6cec222bd63ce6cea8a888676548cb",
+    "object": "chat.completion",
+    "created": 1794986288,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\n\nvoid hanoi(int n, int start, int middle, int end, std::string& out) {\n    if (n == 1) {\n        out += std::to_string(start);\n        out += ' ';\n        out += std::to_string(end);\n        out += '\\n';\n        return;\n    }\n\n    hanoi(n - 1, start, end, middle, out);\n\n    out += std::to_string(start);\n    out += ' ';\n    out += std::to_string(end);\n    out += '\\n';\n\n    hanoi(n - 1, middle, start, end, out);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    std::string out;\n    out.reserve(8 * 1024 * 1024);\n\n    out += std::to_string((1 << n) - 1);\n    out += '\\n';\n\n    hanoi(n, 1, 2, 3, out);\n\n    std::cout << out;\n    return 0;\n}\n```",
+          "reasoning_content": "We need translate Haskell to C++17. Preserve behavior. Output moves. Need efficient output since N=20 -> 1,048,575 moves. Use buffered string or ostream with sync off. Straightforward.\n\nHaskell hanoi function order: hanoi n start middle end:\n- hanoi (n-1) start end middle\n- print start end\n- hanoi (n-1) middle start end\n\nSo recursion. Need produce exact output. C++ can use std::string building or ostream. Use fast output with string buffer. 1M lines, each up to \"20 20\\n\" ~6 bytes -> ~6MB. Fine.\n\nRead N from stdin. print (1<<n)-1. Then recursive. But recursion depth 20 fine.\n\nImplement:\n\nvoid hanoi(int n,int start,int middle,int end, std::string& out){\n if(n==1){ out += to_string(start); out+=' '; out+=to_string(end); out+='\\n'; return;}\n hanoi(n-1,start,end,middle,out);\n out += ...\n hanoi(n-1,middle,start,end,out);\n}\n\nActually Haskell for n=1 ignores middle. Same.\n\nNeed ensure for n maybe? n>=1 so fine. But could handle n=0? not needed.\n\nUse long long? N<=20, 2^20-1 = 1048575 fits int. But use unsigned/int. We'll compute (1<<n)-1. int fine.\n\nOutput first line then moves. Build std::string output. Could reserve. Or use ostream with '\\n'. Building easier.\n\nLet's produce complete code.\n\nNeed exactly one code block, no explanation.\n\nLet's double-check ordering matches. Example n=3: yes standard.\n\nPotential newline at end: yes each move ends with \\n. Haskell putStr outputs newline for each move, including last. So final newline. Good.\n\nLet's write.\n\n```cpp\n#include <iostream>\n#include <string>\n\nvoid hanoi(int n, int start, int middle, int end, std::string& out) {\n    if (n == 1) {\n        out += std::to_string(start);\n        out += ' ';\n        out += std::to_string(end);\n        out += '\\n';\n        return;\n    }\n    hanoi(n - 1, start, end, middle, out);\n    out += std::to_string(start);\n    out += ' ';\n    out += std::to_string(end);\n    out += '\\n';\n    hanoi(n - 1, middle, start, end, out);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    std::string out;\n    out.reserve(1 << 22);\n\n    out += std::to_string((1 << n) - 1);\n    out += '\\n';\n\n    hanoi(n, 1, 2, 3, out);\n\n    std::cout << out;\n    return 0;\n}\n```\n\nReserve 1<<22 = 4MB, output ~6MB maybe reallocation. Could reserve larger. N=20 moves 1,048,575, lines max \"20 20\\n\" = 6 bytes => ~6.3MB. Reserve 1<<23 = 8MB. Or not important. Use out.reserve(8*1024*1024). Fine.\n\nCheck 1<<n with n=20 int is fine. For reserve use 1u<<23 maybe. Keep simple.\n\nNeed ensure no overflow if n=20: (1<<20)-1 = 1048575. Good.\n\nShould output exactly. Yes.\n\nFinal answer code block only."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 643,
+      "total_tokens": 1694,
+      "completion_tokens": 1051,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 799
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 9.266570499981754,
+  "received_at": "2026-11-18T07:18:14.351105+00:00",
+  "logical_request_id": "0bba35be048ae5103928f5b57f97f08dcf1e0df37fef4e172646d55252d964f7",
+  "execution_class": "direct_api"
+}

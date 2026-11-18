@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    std::vector<long long> a(n);\n    for (int i = 0; i < n; ++i) {\n        std::cin >> a[i];\n    }\n\n    long long cur = a[0];\n    long long best = a[0];\n\n    for (int i = 1; i < n; ++i) {\n        cur = std::max(a[i], cur + a[i]);\n        best = std::max(best, cur);\n    }\n\n    std::cout << best << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer exactly one complete source file in one fenced code block, no explanation. Need C++17 main. Translate Python. Ensure stdin stdout. Need maybe N >=1. Use long long? Elements up to 10000 and N 100000, max sum 1e9 fits int actually 1e9 (100000*10000=1,000,000,000) within int. But use long long safe. Output newline. Code only. Need exactly one fenced code block. No explanation. Ensure no extra.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794985352,
+    "id": "chatcmpl-f14976bcb1f2840d79b0303256d3a513",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 289,
+      "completion_tokens_details": {
+        "reasoning_tokens": 112
+      },
+      "prompt_tokens": 526,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 815
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0005046,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.8863034000387415,
+  "logical_request_id": "68332c68bc40a4190f53bb60e56938e349acce265af83cbac722f0aac648f252",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-python\\attempt-01\\step-06\\response_body.txt",
+  "received_at": "2026-11-18T07:02:32.957527+00:00",
+  "request_id": "chatcmpl-f14976bcb1f2840d79b0303256d3a513",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    std::vector<long long> a(n);\n    for (int i = 0; i < n; ++i) {\n        std::cin >> a[i];\n    }\n\n    long long cur = a[0];\n    long long best = a[0];\n\n    for (int i = 1; i < n; ++i) {\n        cur = std::max(a[i], cur + a[i]);\n        best = std::max(best, cur);\n    }\n\n    std::cout << best << '\\n';\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 289,
+    "completion_tokens_details": {
+      "reasoning_tokens": 112
+    },
+    "prompt_tokens": 526,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 815
+  },
+  "usage_raw": {
+    "completion_tokens": 289,
+    "completion_tokens_details": {
+      "reasoning_tokens": 112
+    },
+    "prompt_tokens": 526,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 815
+  }
+}

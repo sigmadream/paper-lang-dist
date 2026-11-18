@@ -1,0 +1,94 @@
+{
+  "text": "```java\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String s = br.readLine();\n        if (s == null) s = \"\";\n        int end = s.length();\n        while (end > 0) {\n            char c = s.charAt(end - 1);\n            if (c == '\\n' || c == '\\r' || c == ' ' || c == '\\t') end--;\n            else break;\n        }\n        boolean valid = true;\n        int len = end;\n        for (int i = 0; i < len / 2; i++) {\n            if (s.charAt(i) != s.charAt(end - 1 - i)) { valid = false; break; }\n        }\n        System.out.println(valid ? 1 : 0);\n    }\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 187,
+    "prompt_tokens": 531,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 718
+  },
+  "usage_raw": {
+    "completion_tokens": 187,
+    "prompt_tokens": 531,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 718
+  },
+  "cost_usd": 0.00112844,
+  "cost_source": "estimated",
+  "request_id": "3f2087ca-0402-4823-8c90-9e4f2e366743",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_10988\\cpp-via-java\\attempt-04\\step-09\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```java\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String s = br.readLine();\n        if (s == null) s = \"\";\n        int end = s.length();\n        while (end > 0) {\n            char c = s.charAt(end - 1);\n            if (c == '\\n' || c == '\\r' || c == ' ' || c == '\\t') end--;\n            else break;\n        }\n        boolean valid = true;\n        int len = end;\n        for (int i = 0; i < len / 2; i++) {\n            if (s.charAt(i) != s.charAt(end - 1 - i)) { valid = false; break; }\n        }\n        System.out.println(valid ? 1 : 0);\n    }\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794901057,
+    "id": "3f2087ca-0402-4823-8c90-9e4f2e366743",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 187,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_27426477f0914ea4948fd65913961e76",
+      "trace_id": "2e4418ad5320417f9692db186893d270"
+    },
+    "usage": {
+      "completion_tokens": 187,
+      "prompt_tokens": 531,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 718
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 13.972094799974002,
+  "received_at": "2026-11-17T07:37:36.694677+00:00",
+  "logical_request_id": "a83efbb5c794daf19ab3743b0549259ec4314de2d323d0927ada9ba44072992e",
+  "execution_class": "direct_api"
+}

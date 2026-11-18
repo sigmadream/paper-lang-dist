@@ -1,0 +1,95 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(readutil)).\n\nadd_move(S, E, C0, C) :-\n    C1 = [0'1+S-0' |C0], false.\n```\n\nWait, let me write it properly.```prolog\n:- module(main, [main/0]).\n:- use_module(library(readutil)).\n\nadd_move(S, E, C0, C) :-\n    C = [0'0+S, 0' , 0'0+E, 0'\\n | C0].\n\nhanoi(1, S, _, E, C0, C) :- !, add_move(S, E, C0, C).\nhanoi(N, S, M, E, C0, C) :-\n    N > 1,\n    N1 is N - 1,\n    hanoi(N1, S, E, M, CA),\n    add_move(S, E, CA, CB),\n    hanoi(N1, M, S, E, CB, C).\n\nmain :-\n    read_line_to_codes(user_input, Line),\n    ( Line == end_of_file -> true\n    ; number_codes(N, Line),\n      Cnt is 2^N - 1,\n      ( N >= 1 ->\n          hanoi(N, 1, 2, 3, [], Codes0),\n          reverse(Codes0, Codes),\n          format(\"~d~n\", [Cnt]),\n          put_codes(Codes),\n          flush_output\n      ; true\n      )\n    ).\n```",
+          "reasoning_content": "N=20 gives ~1M moves, need efficiency. Use writeln with codes? Use portray or write strings. Build output efficiently: use format? Better: accumulate into a string via chars and write once. Use SWI-Prolog with string_codes building... Use difflist? Simplest: collect moves as codes into a difference list, then write.\n\nI'll generate moves writing to a buffer string using string_concat (O(n^2) bad). Use chars in a list with difference lists, then write via put_chars.\n\nImplement:\n\nhanoi(1,S,_,E,C0,C1) :- add move.\nCount is 2^N - 1.\n\nUse codes: move \"S E\\n\" as digits: 0'1 etc.\n\nmain:-  read_line_to_codes, parse N, build buffer, write count then buffer.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794899819,
+    "id": "2851d05b-904d-4e5e-8f8b-baac3f2e2050",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 501,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_d3d8b523d5314d42a3e054116aa45b61",
+      "trace_id": "f0aec7119bc349dfa8f600ce9610a8cb"
+    },
+    "usage": {
+      "completion_tokens": 501,
+      "prompt_tokens": 673,
+      "prompt_tokens_details": {
+        "cached_tokens": 640
+      },
+      "total_tokens": 1174
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.002417,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 7.403087400016375,
+  "logical_request_id": "2ffaf6fd7f2c5be578e149b8b02b13eeb7628e6dcc26f4f43e63a076c4c72cc8",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_11729\\cpp-via-prolog\\attempt-05\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T07:16:59.342626+00:00",
+  "request_id": "2851d05b-904d-4e5e-8f8b-baac3f2e2050",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(readutil)).\n\nadd_move(S, E, C0, C) :-\n    C1 = [0'1+S-0' |C0], false.\n```\n\nWait, let me write it properly.```prolog\n:- module(main, [main/0]).\n:- use_module(library(readutil)).\n\nadd_move(S, E, C0, C) :-\n    C = [0'0+S, 0' , 0'0+E, 0'\\n | C0].\n\nhanoi(1, S, _, E, C0, C) :- !, add_move(S, E, C0, C).\nhanoi(N, S, M, E, C0, C) :-\n    N > 1,\n    N1 is N - 1,\n    hanoi(N1, S, E, M, CA),\n    add_move(S, E, CA, CB),\n    hanoi(N1, M, S, E, CB, C).\n\nmain :-\n    read_line_to_codes(user_input, Line),\n    ( Line == end_of_file -> true\n    ; number_codes(N, Line),\n      Cnt is 2^N - 1,\n      ( N >= 1 ->\n          hanoi(N, 1, 2, 3, [], Codes0),\n          reverse(Codes0, Codes),\n          format(\"~d~n\", [Cnt]),\n          put_codes(Codes),\n          flush_output\n      ; true\n      )\n    ).\n```",
+  "usage": {
+    "completion_tokens": 501,
+    "prompt_tokens": 673,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 1174
+  },
+  "usage_raw": {
+    "completion_tokens": 501,
+    "prompt_tokens": 673,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 1174
+  }
+}

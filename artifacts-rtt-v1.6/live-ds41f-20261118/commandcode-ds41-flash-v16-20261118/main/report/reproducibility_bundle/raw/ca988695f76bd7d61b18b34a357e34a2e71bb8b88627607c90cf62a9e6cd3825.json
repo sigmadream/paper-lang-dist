@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <string>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    std::vector<int> counts(n + 1, 0);\n\n    for (int i = 1; i <= n; ++i) {\n        counts[i] = counts[i >> 1] + (i & 1);\n    }\n\n    for (int i = 0; i <= n; ++i) {\n        if (i > 0) {\n            std::cout << ' ';\n        }\n        std::cout << counts[i];\n    }\n    std::cout << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer exactly one fenced code block, C++ source. No explanation. Need translate. Preserve stdin/stdout. N 0..100000. Output space-separated counts for 0..N newline. Use no builtin popcount per spec baseline; original uses DP. C++17 main. Include bits/stdc++.h or iostream vector. Return exactly complete source fenced. Need no extra text. Let's craft.\n\nNeed be careful if no data return. n int. vector<int> counts(n+1). loop. output with spaces + newline. Could use ostringstream or cout. Fine.\n\nFinal only code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794992858,
+    "id": "chatcmpl-cfecec2cf3a5c3b1db2307bb0c479c3e",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 307,
+      "completion_tokens_details": {
+        "reasoning_tokens": 135
+      },
+      "prompt_tokens": 495,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 802
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00040400399999999996,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.9687339999945834,
+  "logical_request_id": "ab40739f0535c3865441105359a340c556f5fa867dbd7f9a62d68054fe5ad04c",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0338\\cpp-via-python\\attempt-03\\step-04\\response_body.txt",
+  "received_at": "2026-11-18T09:07:38.895897+00:00",
+  "request_id": "chatcmpl-cfecec2cf3a5c3b1db2307bb0c479c3e",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n#include <string>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    std::vector<int> counts(n + 1, 0);\n\n    for (int i = 1; i <= n; ++i) {\n        counts[i] = counts[i >> 1] + (i & 1);\n    }\n\n    for (int i = 0; i <= n; ++i) {\n        if (i > 0) {\n            std::cout << ' ';\n        }\n        std::cout << counts[i];\n    }\n    std::cout << '\\n';\n\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 307,
+    "completion_tokens_details": {
+      "reasoning_tokens": 135
+    },
+    "prompt_tokens": 495,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 802
+  },
+  "usage_raw": {
+    "completion_tokens": 307,
+    "completion_tokens_details": {
+      "reasoning_tokens": 135
+    },
+    "prompt_tokens": 495,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 802
+  }
+}

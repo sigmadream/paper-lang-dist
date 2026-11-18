@@ -1,0 +1,95 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(charsio)).\n\nmain :-\n    read_line_to_codes(user_input, NLine),\n    ( NLine == end_of_file -> true\n    ; number_codes(N, NLine),\n      read_grid(N, Grid),\n      solve(Grid, 0, 0, N, Codes),\n      append(Codes, [0'\\n], Out),\n      put_chars(Out)\n    ).\n\nread_grid(0, []) :- !.\nread_grid(N, [Row|Rows]) :-\n    read_line_to_codes(user_input, Line),\n    Line \\== end_of_file,\n    append(Row, [0'\\n|Rest], Line), !,\n    N1 is N - 1,\n    read_grid(N1, Rest0),\n    append(Rest0, [], Rest),\n    Rows = Rest0.\nread_grid(N, [Row|Rows]) :-\n    read_line_to_codes(user_input, Line),\n    Line \\== end_of_file,\n    append(Row, _, Line), !,\n    N1 is N - 1,\n    read_grid(N1, Rows).\n\nsolve(Grid, R, C, Size, Codes) :-\n    get(Grid, R, C, First),\n    ( all_same(Grid, R, C, Size, First)\n    -> Codes = [First]\n    ; Half is Size // 2,\n      R1 is R + Half, C1 is C + Half,\n      solve(Grid, R, C, Half, TL),\n      solve(Grid, R, C1, Half, TR),\n      solve(Grid, R1, C, Half, BL),\n      solve(Grid, R1, C1, Half, BR),\n      append([0'(|TL], T1),\n      append(T1, TR, T2),\n      append(T2, BL, T3),\n      append(T3, BR, T4),\n      append(T4, [0')], Codes)\n    ).\n\nall_same(_, _, _, 0, _) :- !.\nall_same(Grid, R, C, Size, First) :-\n    length(Row, Size),\n    nth0(R, Grid, Row),\n    append(Prefix, [First|Rest], Row),\n    length(Prefix, C),\n    !,\n    Rest = [],\n    Size1 is Size - 1,\n    R1 is R + 1,\n    all_same(Grid, R1, C, Size1, First).\n\nget(Grid, R, C, X) :-\n    nth0(R, Grid, Row),\n    nth0(C, Row, X).\n\nput_chars([]).\nput_chars([H|T]) :- put_code(H), put_chars(T).\n```",
+          "reasoning_content": "Prolog translation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794896100,
+    "id": "e69a8e3f-2925-4656-a27f-943b39f4badb",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 564,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_60bed1ad7ad44d73b3d244d2f13f9bcd",
+      "trace_id": "57e62bb6ca9e41088dd4c8d6bd384ba2"
+    },
+    "usage": {
+      "completion_tokens": 564,
+      "prompt_tokens": 755,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 1319
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0033926800000000003,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 4.0181727999588475,
+  "logical_request_id": "b86a8cb08eae811eb411a59fcf91b2ee324be60b5728264d8c3489245004bde5",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_1992\\cpp-via-prolog\\attempt-04\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T06:14:59.630430+00:00",
+  "request_id": "e69a8e3f-2925-4656-a27f-943b39f4badb",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(charsio)).\n\nmain :-\n    read_line_to_codes(user_input, NLine),\n    ( NLine == end_of_file -> true\n    ; number_codes(N, NLine),\n      read_grid(N, Grid),\n      solve(Grid, 0, 0, N, Codes),\n      append(Codes, [0'\\n], Out),\n      put_chars(Out)\n    ).\n\nread_grid(0, []) :- !.\nread_grid(N, [Row|Rows]) :-\n    read_line_to_codes(user_input, Line),\n    Line \\== end_of_file,\n    append(Row, [0'\\n|Rest], Line), !,\n    N1 is N - 1,\n    read_grid(N1, Rest0),\n    append(Rest0, [], Rest),\n    Rows = Rest0.\nread_grid(N, [Row|Rows]) :-\n    read_line_to_codes(user_input, Line),\n    Line \\== end_of_file,\n    append(Row, _, Line), !,\n    N1 is N - 1,\n    read_grid(N1, Rows).\n\nsolve(Grid, R, C, Size, Codes) :-\n    get(Grid, R, C, First),\n    ( all_same(Grid, R, C, Size, First)\n    -> Codes = [First]\n    ; Half is Size // 2,\n      R1 is R + Half, C1 is C + Half,\n      solve(Grid, R, C, Half, TL),\n      solve(Grid, R, C1, Half, TR),\n      solve(Grid, R1, C, Half, BL),\n      solve(Grid, R1, C1, Half, BR),\n      append([0'(|TL], T1),\n      append(T1, TR, T2),\n      append(T2, BL, T3),\n      append(T3, BR, T4),\n      append(T4, [0')], Codes)\n    ).\n\nall_same(_, _, _, 0, _) :- !.\nall_same(Grid, R, C, Size, First) :-\n    length(Row, Size),\n    nth0(R, Grid, Row),\n    append(Prefix, [First|Rest], Row),\n    length(Prefix, C),\n    !,\n    Rest = [],\n    Size1 is Size - 1,\n    R1 is R + 1,\n    all_same(Grid, R1, C, Size1, First).\n\nget(Grid, R, C, X) :-\n    nth0(R, Grid, Row),\n    nth0(C, Row, X).\n\nput_chars([]).\nput_chars([H|T]) :- put_code(H), put_chars(T).\n```",
+  "usage": {
+    "completion_tokens": 564,
+    "prompt_tokens": 755,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1319
+  },
+  "usage_raw": {
+    "completion_tokens": 564,
+    "prompt_tokens": 755,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1319
+  }
+}

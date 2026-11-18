@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <cstdio>\n#include <algorithm>\n#include <vector>\n\nint main() {\n    int n, c;\n    if (scanf(\"%d %d\", &n, &c) != 2) return 0;\n\n    std::vector<int> a(n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &a[i]);\n    }\n\n    std::sort(a.begin(), a.end());\n\n    int left = 1;\n    int right = a[n - 1] - a[0];\n    int ans = 0;\n\n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        int count = 1;\n        int prev = a[0];\n\n        for (int i = 1; i < n; i++) {\n            if (a[i] - prev >= mid) {\n                count++;\n                prev = a[i];\n            }\n        }\n\n        if (count >= c) {\n            ans = mid;\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n\n    printf(\"%d\\n\", ans);\n    return 0;\n}\n```",
+          "reasoning_content": "Translate to C++17. Straightforward.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794979135,
+    "id": "chatcmpl-17b4718b60344e6e5c2d2c3c674184cc",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 266,
+      "completion_tokens_details": {
+        "reasoning_tokens": 9
+      },
+      "prompt_tokens": 921,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1187
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0005955,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.0652476000832394,
+  "logical_request_id": "18993ff20b3b9af9a2c3c5ab80cf9f8ed31bd9b0ad5a34aa45fe4338325cff96",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2110\\cpp-via-java\\attempt-02\\step-04\\response_body.txt",
+  "received_at": "2026-11-18T05:18:55.593316+00:00",
+  "request_id": "chatcmpl-17b4718b60344e6e5c2d2c3c674184cc",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <cstdio>\n#include <algorithm>\n#include <vector>\n\nint main() {\n    int n, c;\n    if (scanf(\"%d %d\", &n, &c) != 2) return 0;\n\n    std::vector<int> a(n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &a[i]);\n    }\n\n    std::sort(a.begin(), a.end());\n\n    int left = 1;\n    int right = a[n - 1] - a[0];\n    int ans = 0;\n\n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        int count = 1;\n        int prev = a[0];\n\n        for (int i = 1; i < n; i++) {\n            if (a[i] - prev >= mid) {\n                count++;\n                prev = a[i];\n            }\n        }\n\n        if (count >= c) {\n            ans = mid;\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n\n    printf(\"%d\\n\", ans);\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 266,
+    "completion_tokens_details": {
+      "reasoning_tokens": 9
+    },
+    "prompt_tokens": 921,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1187
+  },
+  "usage_raw": {
+    "completion_tokens": 266,
+    "completion_tokens_details": {
+      "reasoning_tokens": 9
+    },
+    "prompt_tokens": 921,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1187
+  }
+}

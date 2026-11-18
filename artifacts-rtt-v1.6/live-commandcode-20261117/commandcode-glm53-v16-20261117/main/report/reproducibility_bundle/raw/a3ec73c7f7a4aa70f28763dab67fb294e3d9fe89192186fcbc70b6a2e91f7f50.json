@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.Array (Array, listArray, (!), bounds)\nimport System.IO (hSetEncoding, stdout, utf8)\n\nsolve :: Int -> Array Int Int\nsolve n = arr\n  where\n    arr = listArray (0, n) [f i | i <- [0 .. n]]\n    f i = if i == 0 then 0 else (arr ! (i `div` 2)) + (i `mod` 2)\n\nmain :: IO ()\nmain = do\n    inp <- getContents\n    let n = case words inp of\n              (x:_) -> read x :: Int\n              _     -> 0\n    hSetEncoding stdout utf8\n    let arr = solve n\n    putStrLn $ unwords [show (arr ! i) | i <- [0 .. n]]\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794901817,
+    "id": "0df870d1-40fd-446b-9c52-a802279a20f4",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 186,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_470744e27a0a424ca57c5a3ec4cf9fc6",
+      "trace_id": "b314b2262bcf4b3fac12ec20ee50191f"
+    },
+    "usage": {
+      "completion_tokens": 186,
+      "prompt_tokens": 579,
+      "prompt_tokens_details": {
+        "cached_tokens": 576
+      },
+      "total_tokens": 765
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0009723600000000001,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.312692499952391,
+  "logical_request_id": "2e3d10962d9ae849c78069d2050f1fd66178aa541054fe4c44f54da01eaed065",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0338\\cpp-via-haskell\\attempt-04\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T07:50:17.097896+00:00",
+  "request_id": "0df870d1-40fd-446b-9c52-a802279a20f4",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.Array (Array, listArray, (!), bounds)\nimport System.IO (hSetEncoding, stdout, utf8)\n\nsolve :: Int -> Array Int Int\nsolve n = arr\n  where\n    arr = listArray (0, n) [f i | i <- [0 .. n]]\n    f i = if i == 0 then 0 else (arr ! (i `div` 2)) + (i `mod` 2)\n\nmain :: IO ()\nmain = do\n    inp <- getContents\n    let n = case words inp of\n              (x:_) -> read x :: Int\n              _     -> 0\n    hSetEncoding stdout utf8\n    let arr = solve n\n    putStrLn $ unwords [show (arr ! i) | i <- [0 .. n]]\n```",
+  "usage": {
+    "completion_tokens": 186,
+    "prompt_tokens": 579,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 765
+  },
+  "usage_raw": {
+    "completion_tokens": 186,
+    "prompt_tokens": 579,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 765
+  }
+}

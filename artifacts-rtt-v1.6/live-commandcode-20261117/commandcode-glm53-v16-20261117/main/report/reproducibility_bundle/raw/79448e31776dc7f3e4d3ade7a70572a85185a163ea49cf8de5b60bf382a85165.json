@@ -1,0 +1,355 @@
+{
+  "config": {
+    "budget": {
+      "cost_cap_usd": 50,
+      "max_logical_requests": 3600,
+      "max_transport_attempts": 10800
+    },
+    "campaign_id": "commandcode-glm53-v16-20261117",
+    "confirmation_roundtrips": 1,
+    "confirmation_wall_seconds": 300,
+    "corpus_root": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6",
+    "execution_wrapper": {
+      "authentication_policy": "키는 메모리에 보관하고 provider.complete 동안에만 주입하며 평가·JPlag는 허용 목록 환경으로 수행합니다",
+      "path": "scripts/run_commandcode_v16.py",
+      "serial_execution": true,
+      "sha256": "aee0838d6de8c586fb90a714ba80b11f37825d006455f2f110ea92491010ef9e"
+    },
+    "experiment_version": "rtt-hops-v1.6",
+    "llm": {
+      "allowed_response_models": [],
+      "auth": {
+        "api_key_env": "CMD_API_KEY",
+        "type": "bearer"
+      },
+      "base_url": "https://api.commandcode.ai/provider/v1",
+      "cost_cap_usd": 50,
+      "generation": {
+        "max_tokens": 16384,
+        "reasoning_effort": "low",
+        "temperature": 0.6,
+        "top_p": 0.95
+      },
+      "generation_profile": {
+        "name": "commandcode-glm53-v16-low-16384",
+        "option_values": {
+          "reasoning_effort": [
+            "low"
+          ]
+        },
+        "supported_options": [
+          "temperature",
+          "top_p",
+          "max_tokens",
+          "reasoning_effort"
+        ]
+      },
+      "max_calls": 3600,
+      "max_input_tokens": 32768,
+      "max_request_cost_usd": 0.25,
+      "max_transport_attempts": 10800,
+      "model": "zai-org/GLM-5.3",
+      "pricing": {
+        "cached_input_per_million": 0.26,
+        "input_per_million": 1.4,
+        "output_per_million": 4.4
+      },
+      "protocol": "chat_completions",
+      "provider": "compatible",
+      "request_path": "/chat/completions",
+      "request_timeout": 180,
+      "retries": 2
+    },
+    "manuscript_version": "v1.6",
+    "max_hops": 10,
+    "observation_wall_seconds": 900,
+    "output_root": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117",
+    "phase_budget_policy": {
+      "main": {
+        "cost_cap_usd": 50,
+        "max_calls": 3600,
+        "max_transport_attempts": 10800
+      },
+      "pilot": {
+        "cost_cap_usd": 50,
+        "max_calls": 144,
+        "max_transport_attempts": 432
+      },
+      "preflight": {
+        "cost_cap_usd": 0.25,
+        "max_calls": 1,
+        "max_transport_attempts": 1
+      }
+    },
+    "pilot_problem_ids": [
+      "IPOP_11729",
+      "IPOP_1992",
+      "LC_0053"
+    ],
+    "pilot_repeats": 1,
+    "problem_ids": [
+      "IPOP_11729",
+      "IPOP_2110",
+      "IPOP_1992",
+      "IPOP_2579",
+      "IPOP_5567",
+      "IPOP_10988",
+      "IPOP_1929",
+      "IPOP_2609",
+      "IPOP_9012",
+      "LC_0053",
+      "LC_0062",
+      "IPOP_9663",
+      "LC_0242",
+      "LC_0283",
+      "LC_0338"
+    ],
+    "profile_id": "commandcode-glm53-v16-low-16384",
+    "provider_config": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\configs\\v1.6\\providers\\commandcode_glm53_experiment.yaml",
+    "repeats": 5,
+    "routes": [
+      [
+        "cpp",
+        "python"
+      ],
+      [
+        "cpp",
+        "java"
+      ],
+      [
+        "cpp",
+        "haskell"
+      ],
+      [
+        "cpp",
+        "prolog"
+      ]
+    ],
+    "runtime": {
+      "compile_timeout": 180,
+      "fixture_timeout": 5,
+      "minimum_evaluation_cases": 13,
+      "tools": {
+        "cpp": "C:\\Users\\sigma\\scoop\\apps\\perl\\5.42.3.1\\c\\bin\\g++.exe",
+        "haskell": "C:\\Users\\sigma\\scoop\\apps\\ghcup\\current\\ghcup\\bin\\ghc.EXE",
+        "java": "C:\\Users\\sigma\\scoop\\apps\\openjdk\\current\\bin\\javac.EXE",
+        "prolog": "C:\\Users\\sigma\\scoop\\shims\\swipl.EXE",
+        "python": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe"
+      }
+    },
+    "schedule_seed": 20261117,
+    "schema_version": "observation-v1.6",
+    "selection": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\papers\\v1.6\\data\\selection.json",
+    "similarity": {
+      "jar": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\jplag-6.3.0-jar-with-dependencies.jar",
+      "jar_sha256": "5f2c21e8b88ed77134effcb3a5a3ab13d188f6a3e16d401387f7479e92db9aa2",
+      "java": "C:\\Users\\sigma\\scoop\\apps\\openjdk\\current\\bin\\java.exe",
+      "language": "cpp",
+      "minimum_tokens": 9,
+      "normalize": false,
+      "similarity_field": "averageSimilarity"
+    },
+    "threshold": 0.85,
+    "thresholds": [
+      0.8,
+      0.85,
+      0.9
+    ],
+    "validation": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\validation\\validation.json"
+  },
+  "contract_hash": "c9d757e1ef3dfc102365edf34cfe7d66b8fcc8f0b266eb38109ec5872fab0437",
+  "dependency_hashes": {
+    "pyproject.toml": "b48b7c5a1811df70be81d9db48d09b8a7cb475f460741b019846d89b8c3d840e",
+    "uv.lock": "9e0b3e18d8ddb402d6fae9f96379a8d14ead1c8ff4df6403e10095986967dc9f"
+  },
+  "effective_generation": null,
+  "effective_generation_missing_reason": "server_not_reported",
+  "environment": {
+    "jplag_jar_sha256": "5f2c21e8b88ed77134effcb3a5a3ab13d188f6a3e16d401387f7479e92db9aa2",
+    "python": "3.15.1 (main, Oct 21 2026, 17:51:31) [MSC v.1951 64 bit (AMD64)]",
+    "python_executable": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+    "tools": {
+      "cpp": {
+        "path": "C:\\Users\\sigma\\scoop\\apps\\perl\\5.42.3.1\\c\\bin\\g++.exe",
+        "version": "g++.exe (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders, r8) 13.2.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+      },
+      "haskell": {
+        "path": "C:\\Users\\sigma\\scoop\\persist\\ghcup\\ghcup\\bin\\ghc.exe",
+        "version": "The Glorious Glasgow Haskell Compilation System, version 9.10.3"
+      },
+      "java": {
+        "path": "C:\\Users\\sigma\\scoop\\apps\\openjdk\\27.0.1.0.3-1\\bin\\javac.exe",
+        "version": "javac 27.0.1.0.3"
+      },
+      "prolog": {
+        "path": "C:\\Users\\sigma\\scoop\\shims\\swipl.exe",
+        "version": "SWI-Prolog version 10.0.2 for x64-win64"
+      },
+      "python": {
+        "path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+        "version": "Python 3.15.1"
+      },
+      "similarity_java": {
+        "path": "C:\\Users\\sigma\\scoop\\apps\\openjdk\\27.0.1.0.3-1\\bin\\java.exe",
+        "version": "openjdk 27.0.1.0.3 2026-10-25\nOpenJDK Runtime Environment (build 27.0.1.0.3+1-2)\nOpenJDK 64-Bit Server VM (build 27.0.1.0.3+1-2, mixed mode, sharing)"
+      }
+    }
+  },
+  "hashes": {
+    "aggregator": "5a6b112bf66e6c89a6b24116bb05e770e4cd229aac70d30321cb0a0ec38aec29",
+    "code": "28bc450179f5e72f2318ebc1705a9ba72631a6c1dea082bdc5c34ff3e9aceb2e",
+    "data": "b8cade3e4bd4c9b54860d74d2460fdaea58ee069cbbf470082bfd0c05d74edb2",
+    "generation": "220f8240e0c54e408b421c5f6e8b8c6482273594d5f0e3811e2fdc90bdad174c",
+    "prompt": "e27b6a66cbded59d8ab350d7ce3f1d62e2f9fb8f938d023b6031124ce1219932",
+    "provider": "aafff1c8da5b2be0c93921d1ad2f258366073bb9689e7d91d607860366cc88c9",
+    "stop_rules": "0f5a197eb32e1708fabd91ca744cd40c532794a0d6a875f00bcb942356c66e5c",
+    "tools": "5f69344179722c045ce78a8e3315046c2577dd0e3c472c9686ac353f75c51511"
+  },
+  "implementation_hashes": {
+    "__main__.py": "34cbd20eb83266cc6b75f7c38a9f64065abca8324fc482edbcabead721bf0c3c",
+    "cli.py": "1a8c40aef48730ca5d9b7145b106e32fac93958a660cc9d33bf37bdefad78d03",
+    "copilot_provider.py": "7b24988107325ff93d5a24bd17075746ee3a3fd79fffe4dfd10f9b2c67035e81",
+    "extract.py": "34dcbffbf4e16dd8b610389374044f280e87ac2503dba8b8b2aa60c4db92f60a",
+    "fps_execution.py": "df321b3b4edaf5ef9456486d22df6ca0cceaeefac63fedb831cdea034ccdf4ab",
+    "hops_experiment.py": "721b098ca2630c910d79cb8b895a47af62a5b82cd250ba1dc8d0b7aa13b2d5a3",
+    "hops_reporting.py": "5a6b112bf66e6c89a6b24116bb05e770e4cd229aac70d30321cb0a0ec38aec29",
+    "hops_state.py": "266071696b2cbaac7015b73e1a885b0fe6d05a596498e906fa93187046e7cfed",
+    "jplag_similarity.py": "ae940dd55801295172740ca80f8a0c162a08e6b60e336867f0cd9a31226814da",
+    "problem/metadata/ipop19/tools/oracles.py": "d86c63c3b14339c342aa71496bb645592e2c7af2187a145e3b0ea8a2a6ac4c7c",
+    "problem/metadata/leetcode21/tools/oracles.py": "1fa179aa0d4c59abb6e09d132a89aba7d402b3b05ba7a60b9b1f3c238a9a5967",
+    "provider_protocols.py": "309560f09ddbd3eea614e43d10de0ff7ace567558007e5ce5bd957205f3f165e",
+    "providers.py": "ae30b57fc25cb916a0758a96d46223e86e5f57cd6dfe8390c41df369838d9960",
+    "scripts/prepare_v16_corpus.py": "458ffc918f57240b6daf900b2af375f4b5e81ba1bc5653d94c4cf7d00c9fd8f3",
+    "scripts/validate_v16_corpus.py": "2746e301b599313ddc5cd12cbec04f9264c3b13d4e04d1379ecbe06ecada4f89"
+  },
+  "manifest": {
+    "file_hashes": {
+      "evaluation/case01.inp": "cfd2631e0ca6a198e1b9ff307cd36054c81a28fc1ef9c5d2564aa69c546743c2",
+      "evaluation/case01.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "evaluation/case02.inp": "2b364d5ff3b5c55cf7383b238361c807347f773862d03ec117030e7694c26e1a",
+      "evaluation/case02.out": "c38029691f44acacc2e533e91a213e03bcfc10d50ef256bfa7a0e962f73c8f41",
+      "evaluation/case03.inp": "66dabb5b014c6954d4b967fb7a88a6b6de5b1473efd575e81b772008a337e734",
+      "evaluation/case03.out": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+      "evaluation/case04.inp": "487e3cb5f6acfb56fe6ac0fcd0008051bcbd30b26949cadce0ddbbca95e39e79",
+      "evaluation/case04.out": "69fa4dd4fdc0b43ba7ca7c997539c4500f03ab9b220228e2b1e97bd305397806",
+      "evaluation/case05.inp": "ccd5553927bffe1c352b186ca9410d328f220f5cd516c45d4ee4ecc69f39d568",
+      "evaluation/case05.out": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+      "evaluation/case06.inp": "bee4984159e3c180126e4c0fadd8c7a7ec1b42a2a7483649ca27973ab180bc4d",
+      "evaluation/case06.out": "92961e9752250efa971147344b22295db32d7b75e940e0971e5fb34f21d0bc67",
+      "evaluation/case07.inp": "897cfaada24c5cd5f67eccfb0967c8f2771e642a39600ad109724e6790f807bc",
+      "evaluation/case07.out": "9b6dd0f55d1cea37555db317f53a0631f694bd46df8018cc2aeed3d9e2f32f5f",
+      "evaluation/case08.inp": "44ecf01d60f488c947fdd3e6e4b983720b0d2e2e93c1b837d255cc6d8661a796",
+      "evaluation/case08.out": "7c468f5e59f2871b946e051445493bbcace531d597edbbcc9935e7d02d025114",
+      "evaluation/case09.inp": "ba518443414ba6980fe78612a609e76da6ef375cd4cc3f79135555134c853897",
+      "evaluation/case09.out": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f",
+      "evaluation/case10.inp": "0978e0ede870b495ca4f3957c6a0683ec0b69c5b79c45062a38ac75c1fd87de6",
+      "evaluation/case10.out": "7fb2aaeaf3eef66b52db104118c30f62899f5f0df520350a94a8fcb843c0dfdf",
+      "evaluation/case11.inp": "1b5398221dbbb2bc45ab4f4e06a52c987a754a07eb74829011ec341a0096fb0e",
+      "evaluation/case11.out": "6edfde2b82519b387d0a1c07119f4d172aefce1a4af34fc35c6a6c2306e93f96",
+      "evaluation/case12.inp": "6632e0439b86dd5f0a643550499d5e7a6eebea94cf2b81f54e5e0731bc12a18c",
+      "evaluation/case12.out": "bfe35ef46218439ea00a50a31f900e0bcb4b9aa5bf7fa1cbb1b5e0a80f17c660",
+      "evaluation/case13.inp": "f6880e650ad0ed01e8694b971b48b926a72136cdbb0ec6ebf6a7fc067382013b",
+      "evaluation/case13.out": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+      "prompt_examples/1.inp": "4251bdefdfd2a6748622583d0f8eee248e2cbfd228f05ad43a09b2bade01ae8e",
+      "prompt_examples/1.out": "2dd9964aa7c59c01362061846da85dcf727bb9f7f25e6b1c67ff342e6ef8c69c",
+      "prompt_examples/10.inp": "5bcd9b97022bdb5261c54d3c433728a6a9e4de3812858cb99220afa65244e463",
+      "prompt_examples/10.out": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f",
+      "prompt_examples/2.inp": "dc7ea33954697da32d6cbf60ce9871374910e53089625e4a6da39fec9ad2cac4",
+      "prompt_examples/2.out": "b7a33ec2d3fa6748259d5a72ed976b7308fa7355fd99818bc0dc12fece595277",
+      "prompt_examples/3.inp": "28e9de6e20584aafe7780f776273a7446f8b738e4614f001692e85c6046c39b0",
+      "prompt_examples/3.out": "9b6dd0f55d1cea37555db317f53a0631f694bd46df8018cc2aeed3d9e2f32f5f",
+      "prompt_examples/4.inp": "9a8c501f5d03f9aef16175774a5b4511ee24d43614a9bb7a0a238ab28fca7045",
+      "prompt_examples/4.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "prompt_examples/5.inp": "fd0c62179732453335fe185bd7013b777360dfc72bc1ee65c216917dffeefecf",
+      "prompt_examples/5.out": "4593c89b4d60161d78fef3f48312d7833649b876a0c1d762cb5b9d73acaa0a20",
+      "prompt_examples/6.inp": "be0f48b05a34b53cbd9cb915cdf2cfd54d97d025c67ce925048d6857cf671c63",
+      "prompt_examples/6.out": "9b6dd0f55d1cea37555db317f53a0631f694bd46df8018cc2aeed3d9e2f32f5f",
+      "prompt_examples/7.inp": "30efe4154de96ac8bfa12ee62b3b5b8f2fcabd3f2247e597c83f6408696f3c6f",
+      "prompt_examples/7.out": "f7c4f4cc6c99f0e5d21986eaf4e0ee5170b03b05ba444a6b2792a902e38f07b2",
+      "prompt_examples/8.inp": "714091e7460f5050e77ff3bb8e96d57839fcb3367aadae06db959a308858e8de",
+      "prompt_examples/8.out": "9b6dd0f55d1cea37555db317f53a0631f694bd46df8018cc2aeed3d9e2f32f5f",
+      "prompt_examples/9.inp": "ea46adf6da2077f67cbd06d2b2583c9de4a560ed0fe6ad36072709b6f1197451",
+      "prompt_examples/9.out": "4593c89b4d60161d78fef3f48312d7833649b876a0c1d762cb5b9d73acaa0a20",
+      "reference.cpp": "85c3bc32e810499c85b6c7eac6c03ee5531b068363d30f6c13a72905558f6c64",
+      "reference.hs": "5ff337f7eea3749bbb319b3ae6b652995bcd96fa6c33525d51880231e61dc7a7",
+      "reference.java": "52dd075bca43f5aff5a77e8700e911ead9b76ad6976a7387ef4303902d75e06a",
+      "reference.pl": "fb120a533379dbd808b74de28c1fc78c920f2fcdf248c626dff472f0ef83fb04",
+      "reference.py": "30de3b23f75bc2aa809cb3a31e680da77fcbfef349eed2e555f9235ec350e193",
+      "statement.md": "2c1705bbcc52332a5ff9e7eeffb09d37206d0b20143fbb2f3af1353c61a8733f"
+    },
+    "job": {
+      "campaign_id": "commandcode-glm53-v16-20261117",
+      "phase": "main",
+      "problem_id": "IPOP_2110",
+      "repeat": 5,
+      "route": "cpp-via-prolog",
+      "seed_language": "cpp",
+      "target_language": "prolog"
+    }
+  },
+  "primary_threshold": 0.85,
+  "problem_ids": [
+    "IPOP_11729",
+    "IPOP_2110",
+    "IPOP_1992",
+    "IPOP_2579",
+    "IPOP_5567",
+    "IPOP_10988",
+    "IPOP_1929",
+    "IPOP_2609",
+    "IPOP_9012",
+    "LC_0053",
+    "LC_0062",
+    "IPOP_9663",
+    "LC_0242",
+    "LC_0283",
+    "LC_0338"
+  ],
+  "prompt_version": "hops.translation.v1.6",
+  "protocol": "rtt-hops-v1.6",
+  "repeats": 5,
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "routes": [
+    [
+      "cpp",
+      "python"
+    ],
+    [
+      "cpp",
+      "java"
+    ],
+    [
+      "cpp",
+      "haskell"
+    ],
+    [
+      "cpp",
+      "prolog"
+    ]
+  ],
+  "schema": "observation-v1.6",
+  "schema_version": "observation-v1.6",
+  "stop_rules": {
+    "confirmation_roundtrips": 1,
+    "confirmation_wall_seconds": 300,
+    "max_hops": 10,
+    "observation_wall_seconds": 900,
+    "threshold": 0.85,
+    "thresholds": [
+      0.8,
+      0.85,
+      0.9
+    ]
+  },
+  "system_prompt": "Translate the supplied program to the requested language, preserving its complete stdin/stdout behavior for every valid input in the specification. Return exactly one complete source file in one fenced code block, with no explanation. Use only the standard libraries shipped with the specified toolchain. C++: C++17 with main(). Haskell: GHC, module Main and main :: IO (). Prolog: SWI-Prolog, define main/0; the evaluator invokes main; do not add initialization directives. Python: Python 3, one script that reads stdin and writes stdout. Java: Java 17, one file declaring public class Main with public static void main. Preserve required algorithmic constraints and output ordering. Do not hard-code examples.",
+  "thresholds": [
+    0.8,
+    0.85,
+    0.9
+  ]
+}

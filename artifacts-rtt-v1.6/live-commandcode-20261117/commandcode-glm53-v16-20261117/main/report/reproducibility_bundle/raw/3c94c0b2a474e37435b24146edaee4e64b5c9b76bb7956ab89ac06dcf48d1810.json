@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    if len(data) < 2:\n        return\n    m, n = int(data[0]), int(data[1])\n    dp = [1] * n\n    for _ in range(1, m):\n        for j in range(1, n):\n            dp[j] += dp[j - 1]\n    print(dp[n - 1])\n\nmain()\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794900610,
+    "id": "404cb094-d51f-4efe-86a8-0ef199a41a73",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 98,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_bc8ef9e2746a4a87b4f11f4288d2273c",
+      "trace_id": "ebc9fb00afab4fbeb3f9a3e17416e6f4"
+    },
+    "usage": {
+      "completion_tokens": 98,
+      "prompt_tokens": 501,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 599
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0006948400000000001,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.0851413999916986,
+  "logical_request_id": "f95fdffd95bbf3ceaaebda695b4c5415e71eb9a5c940e7aa1f3675cc0b796336",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0062\\cpp-via-python\\attempt-02\\step-03\\response_body.txt",
+  "received_at": "2026-11-17T07:30:09.577012+00:00",
+  "request_id": "404cb094-d51f-4efe-86a8-0ef199a41a73",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    if len(data) < 2:\n        return\n    m, n = int(data[0]), int(data[1])\n    dp = [1] * n\n    for _ in range(1, m):\n        for j in range(1, n):\n            dp[j] += dp[j - 1]\n    print(dp[n - 1])\n\nmain()\n```",
+  "usage": {
+    "completion_tokens": 98,
+    "prompt_tokens": 501,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 599
+  },
+  "usage_raw": {
+    "completion_tokens": 98,
+    "prompt_tokens": 501,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 599
+  }
+}

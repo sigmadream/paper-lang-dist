@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int T;\n    if (!(std::cin >> T)) return 0;\n\n    while (T--) {\n        std::string s;\n        std::cin >> s;\n\n        int balance = 0;\n        bool valid = true;\n\n        for (char c : s) {\n            balance += (c == '(') ? 1 : -1;\n            if (balance < 0) {\n                valid = false;\n                break;\n            }\n        }\n\n        if (balance != 0) valid = false;\n\n        std::cout << (valid ? \"YES\" : \"NO\") << '\\n';\n    }\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 625,
+    "total_tokens": 863,
+    "completion_tokens": 238,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 69
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 625,
+    "total_tokens": 863,
+    "completion_tokens": 238,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 69
+    }
+  },
+  "cost_usd": 0.00047309999999999995,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-bd39d2f6980bda5a3e2fe473167060ce",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-haskell\\attempt-02\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-bd39d2f6980bda5a3e2fe473167060ce",
+    "object": "chat.completion",
+    "created": 1794977053,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int T;\n    if (!(std::cin >> T)) return 0;\n\n    while (T--) {\n        std::string s;\n        std::cin >> s;\n\n        int balance = 0;\n        bool valid = true;\n\n        for (char c : s) {\n            balance += (c == '(') ? 1 : -1;\n            if (balance < 0) {\n                valid = false;\n                break;\n            }\n        }\n\n        if (balance != 0) valid = false;\n\n        std::cout << (valid ? \"YES\" : \"NO\") << '\\n';\n    }\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block C++17. Need translate. Simple. Need consider input words behavior: reads T then next T strings via words. In C++, read T then cin >> s for T. Print YES/NO based balance never negative and final zero. Preserve valid inputs. Provide complete source file fenced. No explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 625,
+      "total_tokens": 863,
+      "completion_tokens": 238,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.693933500093408,
+  "received_at": "2026-11-18T04:44:13.786743+00:00",
+  "logical_request_id": "3ed2cd61881755c1f76c105cb949b06482606d2e2f5c6c54903352379c012b97",
+  "execution_class": "direct_api"
+}

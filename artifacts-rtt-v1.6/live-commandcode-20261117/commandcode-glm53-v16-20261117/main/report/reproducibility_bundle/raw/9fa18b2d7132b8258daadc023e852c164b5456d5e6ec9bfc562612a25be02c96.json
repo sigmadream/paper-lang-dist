@@ -1,0 +1,95 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(readutil)).\n\nmain :-\n    read_line_to_codes(user_input, L1),\n    ( L1 == end_of_file -> true\n    ; number_codes(N, L1),\n      read_line_to_codes(user_input, L2),\n      ( L2 == end_of_file -> Nums = []\n      ; split_and_numbers(L2, Nums)\n      ),\n      length(Nums, N),\n      Nums = [H|T],\n      kadane(T, H, H, Best),\n      write(Best), nl\n    ).\n\nsplit_and_numbers(Codes, Nums) :-\n    phrase(numbers(Nums), Codes).\n\nnumbers([X|Xs]) -->\n    blanks,\n    integer(X),\n    !,\n    numbers(Xs).\nnumbers([]) -->\n    [].\n\nblanks -->\n    [C], { code_type(C, space), ! },\n    blanks.\nblanks -->\n    [].\n\ninteger(X) -->\n    sign(S),\n    digits(D),\n    { number_codes(X0, D), X is S * X0 }.\n\nsign(-1) --> \"-\", !.\nsign(1) --> [].\n\ndigits([C|Cs]) -->\n    [C], { code_type(C, digit) },\n    digits(Cs).\ndigits([C]) -->\n    [C], { code_type(C, digit) }.\n\nkadane([], _, Best, Best).\nkadane([X|Xs], Cur0, Best0, Best) :-\n    Cur1 is max(X, Cur0 + X),\n    Best1 is max(Best0, Cur1),\n    kadane(Xs, Cur1, Best1, Best).\n```",
+          "reasoning_content": "Prolog SWI, read line of ints.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794900494,
+    "id": "fb45502b-af56-4813-9e95-b21de87b883b",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 363,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_689b7c9a09ad4025875822e77423ce32",
+      "trace_id": "5a3aee478b06482ca789d96ae5d5f60a"
+    },
+    "usage": {
+      "completion_tokens": 363,
+      "prompt_tokens": 532,
+      "prompt_tokens_details": {
+        "cached_tokens": 448
+      },
+      "total_tokens": 895
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00183128,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.53554890002124,
+  "logical_request_id": "7786accafb1d98dc3e94b9581dea7c1c474530a3d40c23990c674b25e1a455e9",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0053\\cpp-via-prolog\\attempt-04\\step-03\\response_body.txt",
+  "received_at": "2026-11-17T07:28:14.445984+00:00",
+  "request_id": "fb45502b-af56-4813-9e95-b21de87b883b",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(readutil)).\n\nmain :-\n    read_line_to_codes(user_input, L1),\n    ( L1 == end_of_file -> true\n    ; number_codes(N, L1),\n      read_line_to_codes(user_input, L2),\n      ( L2 == end_of_file -> Nums = []\n      ; split_and_numbers(L2, Nums)\n      ),\n      length(Nums, N),\n      Nums = [H|T],\n      kadane(T, H, H, Best),\n      write(Best), nl\n    ).\n\nsplit_and_numbers(Codes, Nums) :-\n    phrase(numbers(Nums), Codes).\n\nnumbers([X|Xs]) -->\n    blanks,\n    integer(X),\n    !,\n    numbers(Xs).\nnumbers([]) -->\n    [].\n\nblanks -->\n    [C], { code_type(C, space), ! },\n    blanks.\nblanks -->\n    [].\n\ninteger(X) -->\n    sign(S),\n    digits(D),\n    { number_codes(X0, D), X is S * X0 }.\n\nsign(-1) --> \"-\", !.\nsign(1) --> [].\n\ndigits([C|Cs]) -->\n    [C], { code_type(C, digit) },\n    digits(Cs).\ndigits([C]) -->\n    [C], { code_type(C, digit) }.\n\nkadane([], _, Best, Best).\nkadane([X|Xs], Cur0, Best0, Best) :-\n    Cur1 is max(X, Cur0 + X),\n    Best1 is max(Best0, Cur1),\n    kadane(Xs, Cur1, Best1, Best).\n```",
+  "usage": {
+    "completion_tokens": 363,
+    "prompt_tokens": 532,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 895
+  },
+  "usage_raw": {
+    "completion_tokens": 363,
+    "prompt_tokens": 532,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 895
+  }
+}

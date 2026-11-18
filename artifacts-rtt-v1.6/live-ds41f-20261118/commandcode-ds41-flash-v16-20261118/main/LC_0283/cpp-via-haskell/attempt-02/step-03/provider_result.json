@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (nStr : rest) -> do\n      let n = read nStr :: Int\n          nums = map read (take n rest) :: [Integer]\n          nonZero = filter (/= 0) nums\n          zeros = replicate (n - length nonZero) 0\n          result = nonZero ++ zeros\n      putStrLn (unwords (map show result))\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 647,
+    "total_tokens": 1033,
+    "completion_tokens": 386,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 264
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 647,
+    "total_tokens": 1033,
+    "completion_tokens": 386,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 264
+    }
+  },
+  "cost_usd": 0.000619668,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-ad4e36e9f8b44c900cc42e1b51b87f39",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-haskell\\attempt-02\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-ad4e36e9f8b44c900cc42e1b51b87f39",
+    "object": "chat.completion",
+    "created": 1794981101,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (nStr : rest) -> do\n      let n = read nStr :: Int\n          nums = map read (take n rest) :: [Integer]\n          nonZero = filter (/= 0) nums\n          zeros = replicate (n - length nonZero) 0\n          result = nonZero ++ zeros\n      putStrLn (unwords (map show result))\n```",
+          "reasoning_content": "We need to translate C++ to Haskell. Read N, then N integers. Output non-zero in order, then zeros, space-separated, trailing newline.\n\nEdge: trailing spaces? C++ prints no trailing space, just newline. Let's match.\n\nHandle input parsing. Use words and read. For n=0? Constraint says N>=1 but be safe.\n\nLet's write:\n\n```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (nStr:_) -> do\n      let n = read nStr :: Int\n          nums = map read (take n (drop 1 tokens)) :: [Integer]\n          nonZero = filter (/= 0) nums\n          zeros = replicate (n - length nonZero) 0\n          result = nonZero ++ zeros\n      putStrLn $ unwords (map show result)\n```\n\nunwords produces space-separated without trailing space. putStrLn adds newline. Good.\n\nBut wait, for n=0, unwords [] = \"\" and putStrLn prints empty line. Fine.\n\nInteger for 32-bit signed — fine.\n\nOnly read n elements. Good."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 647,
+      "total_tokens": 1033,
+      "completion_tokens": 386,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 264
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.395986399962567,
+  "received_at": "2026-11-18T05:51:43.008602+00:00",
+  "logical_request_id": "f9b1546faaa3df4440e79f592410a61c5be38248aaacb5ca89599f79f44bd78c",
+  "execution_class": "direct_api"
+}

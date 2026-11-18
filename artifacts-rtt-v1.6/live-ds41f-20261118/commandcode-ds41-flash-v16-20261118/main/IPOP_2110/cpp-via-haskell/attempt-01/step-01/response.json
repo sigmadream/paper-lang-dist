@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Data.List (sort)\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let ws = words input\n    case ws of\n        (nStr : cStr : rest) -> do\n            let n = read nStr :: Int\n                c = read cStr :: Int\n                houses = sort (map read (take n rest) :: [Int])\n            if null houses\n                then return ()\n                else do\n                    let left = 1\n                        right = last houses - head houses\n                        answer = binarySearch houses c left right 0\n                    print answer\n        _ -> return ()\n\nbinarySearch :: [Int] -> Int -> Int -> Int -> Int -> Int\nbinarySearch houses c left right answer\n    | left > right = answer\n    | otherwise =\n        let mid = left + (right - left) `div` 2\n            count = countInstall houses mid\n        in if count >= c\n               then binarySearch houses c (mid + 1) right mid\n               else binarySearch houses c left (mid - 1) answer\n\ncountInstall :: [Int] -> Int -> Int\ncountInstall [] _ = 0\ncountInstall (x : xs) distance = go xs x 1\n  where\n    go [] _ count = count\n    go (y : ys) prev count\n        | y - prev >= distance = go ys y (count + 1)\n        | otherwise = go ys prev count\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 687,
+    "total_tokens": 1566,
+    "completion_tokens": 879,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 558
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 687,
+    "total_tokens": 1566,
+    "completion_tokens": 879,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 558
+    }
+  },
+  "cost_usd": 0.0012609,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-914c6639c76e6e147157256c0ee8b7ab",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2110\\cpp-via-haskell\\attempt-01\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-914c6639c76e6e147157256c0ee8b7ab",
+    "object": "chat.completion",
+    "created": 1794980723,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Data.List (sort)\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let ws = words input\n    case ws of\n        (nStr : cStr : rest) -> do\n            let n = read nStr :: Int\n                c = read cStr :: Int\n                houses = sort (map read (take n rest) :: [Int])\n            if null houses\n                then return ()\n                else do\n                    let left = 1\n                        right = last houses - head houses\n                        answer = binarySearch houses c left right 0\n                    print answer\n        _ -> return ()\n\nbinarySearch :: [Int] -> Int -> Int -> Int -> Int -> Int\nbinarySearch houses c left right answer\n    | left > right = answer\n    | otherwise =\n        let mid = left + (right - left) `div` 2\n            count = countInstall houses mid\n        in if count >= c\n               then binarySearch houses c (mid + 1) right mid\n               else binarySearch houses c left (mid - 1) answer\n\ncountInstall :: [Int] -> Int -> Int\ncountInstall [] _ = 0\ncountInstall (x : xs) distance = go xs x 1\n  where\n    go [] _ count = count\n    go (y : ys) prev count\n        | y - prev >= distance = go ys y (count + 1)\n        | otherwise = go ys prev count\n```",
+          "reasoning_content": "We need translate C++ to Haskell. Need preserve behavior. Read stdin, parse ints, output max min distance. Implement binary search.\n\nNeed careful with empty? Constraints valid. Use interact or getContents. N C, then N coords. Sort. left=1 right=max-min ans=0. Note if N==1? C>=2 so N>=2.\n\nHaskell code:\n\n```haskell\nmodule Main where\nimport Data.List (sort)\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let ws = words input\n  case ws of\n    (nS:cS:rest) -> do\n      let n = read nS :: Int\n          c = read cS :: Int\n          a = sort (map read (take n rest) :: [Int])\n      if null a then return () else do\n        let left0 = 1\n            right0 = last a - head a\n            ans = search a c left0 right0 0\n        print ans\n    _ -> return ()\n\nsearch :: [Int] -> Int -> Int -> Int -> Int -> Int\nsearch a c left right ans\n  | left > right = ans\n  | otherwise =\n      let mid = left + (right - left) `div` 2\n          count = countInstall a mid\n      in if count >= c\n           then search a c (mid+1) right mid\n           else search a c left (mid-1) ans\n\ncountInstall :: [Int] -> Int -> Int\ncountInstall [] _ = 0\ncountInstall (x:xs) d = go xs x 1\n  where\n    go [] _ cnt = cnt\n    go (y:ys) prev cnt\n      | y - prev >= d = go ys y (cnt+1)\n      | otherwise = go ys prev cnt\n```\n\nPotential compiler warning no issue. But wait countInstall starts count=1 yes. For n=0 not possible.\n\nEdge case: a.back-a.front could 0? coords distinct so >=1 if n>=2. For N=2 C=2 output difference. works.\n\nReturn exactly one complete source file in one fenced code block, no explanation. Good.\n\nNeed ensure standard libs. main. Use print outputs \"99\\n\" equivalent.\n\nPotential issue: read nS etc with ws pattern. Fine.\n\nCould simplify using list operations.\n\nNeed be aware countInstall with d maybe mid huge, int OK. Use Int. Coordinates up to 1e9, difference up to 1e9, mid fits Int 64. Haskell Int at least 64 on typical. Fine.\n\nLet's produce final only."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 687,
+      "total_tokens": 1566,
+      "completion_tokens": 879,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 558
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 10.664369500009343,
+  "received_at": "2026-11-18T05:45:32.010496+00:00",
+  "logical_request_id": "1eb905f9deffff4b07686bbc393851ea5bc8aefec52f4fe9a97d123d9397fd73",
+  "execution_class": "direct_api"
+}

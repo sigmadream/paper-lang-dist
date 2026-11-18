@@ -1,0 +1,94 @@
+{
+  "text": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(readutil)).\n\nmain :-\n    read_line_to_codes(user_input, L1),\n    parse_int(L1, N),\n    read_line_to_codes(user_input, L2),\n    split_ints(L2, As),\n    length(As, N),\n    (   As = [First|Rest]\n    ->  kadane(Rest, First, First, Best),\n        format(\"~d~n\", [Best])\n    ;   true\n    ).\n\nkadane([], _, Best, Best).\nkadane([X|Xs], Cur, Best0, Best) :-\n    Cur1 is max(X, Cur + X),\n    Best1 is max(Best0, Cur1),\n    kadane(Xs, Cur1, Best1, Best).\n\nparse_int(Codes, N) :-\n    number_codes(N, Codes).\n\nsplit_ints(Codes, Nums) :-\n    split_whitespace(Codes, Tokens),\n    maplist(parse_int, Tokens, Nums).\n\nsplit_whitespace(Codes, Tokens) :-\n    split_string(Codes, \" \", \"\", Strs),\n    exclude(empty_string, Strs, TokensS),\n    maplist(string_codes, TokensS, Tokens).\n\nempty_string(S) :- S == \"\".\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 269,
+    "prompt_tokens": 602,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 871
+  },
+  "usage_raw": {
+    "completion_tokens": 269,
+    "prompt_tokens": 602,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 871
+  },
+  "cost_usd": 0.0013697600000000002,
+  "cost_source": "estimated",
+  "request_id": "f1640682-2f8a-4e93-8e39-d4e3344d9261",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0053\\cpp-via-prolog\\attempt-02\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(readutil)).\n\nmain :-\n    read_line_to_codes(user_input, L1),\n    parse_int(L1, N),\n    read_line_to_codes(user_input, L2),\n    split_ints(L2, As),\n    length(As, N),\n    (   As = [First|Rest]\n    ->  kadane(Rest, First, First, Best),\n        format(\"~d~n\", [Best])\n    ;   true\n    ).\n\nkadane([], _, Best, Best).\nkadane([X|Xs], Cur, Best0, Best) :-\n    Cur1 is max(X, Cur + X),\n    Best1 is max(Best0, Cur1),\n    kadane(Xs, Cur1, Best1, Best).\n\nparse_int(Codes, N) :-\n    number_codes(N, Codes).\n\nsplit_ints(Codes, Nums) :-\n    split_whitespace(Codes, Tokens),\n    maplist(parse_int, Tokens, Nums).\n\nsplit_whitespace(Codes, Tokens) :-\n    split_string(Codes, \" \", \"\", Strs),\n    exclude(empty_string, Strs, TokensS),\n    maplist(string_codes, TokensS, Tokens).\n\nempty_string(S) :- S == \"\".\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794898995,
+    "id": "f1640682-2f8a-4e93-8e39-d4e3344d9261",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 269,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_ed965dcab9f041c5bc90a6d42cb62ffb",
+      "trace_id": "d9f646ac7cab4dddb5c2ca02f256d0a0"
+    },
+    "usage": {
+      "completion_tokens": 269,
+      "prompt_tokens": 602,
+      "prompt_tokens_details": {
+        "cached_tokens": 576
+      },
+      "total_tokens": 871
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.2778302000369877,
+  "received_at": "2026-11-17T07:03:15.259987+00:00",
+  "logical_request_id": "1345d98c001cafe86cefff63ab501d847f36eaf397f3eaf48204a60a89c3e758",
+  "execution_class": "direct_api"
+}

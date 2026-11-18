@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let nums = map read (words input) :: [Integer]\n    case nums of\n        [] -> return ()\n        (n:rest) -> putStrLn (show (solve (fromIntegral n) rest))\n\nsolve :: Int -> [Integer] -> Integer\nsolve n xs\n    | n <= 0 = 0\n    | n == 1 = case xs of\n        (a:_) -> a\n        _ -> 0\n    | n == 2 = case xs of\n        (a:b:_) -> a + b\n        _ -> 0\n    | otherwise = case xs of\n        (s1:s2:rest) ->\n            let restN = take (n - 2) rest\n            in go (s1 + s2) s1 0 s2 restN\n        _ -> 0\n  where\n    go p1 _ _ _ [] = p1\n    go p1 p2 p3 prev (cur:cs) =\n        let nxt = max p2 (p3 + prev) + cur\n        in go nxt p1 p2 cur cs\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 774,
+    "total_tokens": 3197,
+    "completion_tokens": 2423,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2159
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 774,
+    "total_tokens": 3197,
+    "completion_tokens": 2423,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2159
+    }
+  },
+  "cost_usd": 0.003026904,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-49242981447a495e15a724709adc6687",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2579\\cpp-via-haskell\\attempt-04\\step-07\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-49242981447a495e15a724709adc6687",
+    "object": "chat.completion",
+    "created": 1794983887,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let nums = map read (words input) :: [Integer]\n    case nums of\n        [] -> return ()\n        (n:rest) -> putStrLn (show (solve (fromIntegral n) rest))\n\nsolve :: Int -> [Integer] -> Integer\nsolve n xs\n    | n <= 0 = 0\n    | n == 1 = case xs of\n        (a:_) -> a\n        _ -> 0\n    | n == 2 = case xs of\n        (a:b:_) -> a + b\n        _ -> 0\n    | otherwise = case xs of\n        (s1:s2:rest) ->\n            let restN = take (n - 2) rest\n            in go (s1 + s2) s1 0 s2 restN\n        _ -> 0\n  where\n    go p1 _ _ _ [] = p1\n    go p1 p2 p3 prev (cur:cs) =\n        let nxt = max p2 (p3 + prev) + cur\n        in go nxt p1 p2 cur cs\n```",
+          "reasoning_content": "We need answer only code block haskell translation. Need ensure behavior. Let's understand source DP. It has variables maybe confusing. Need translate equivalent.\n\nN up to 300 scores positive. Need max sum ending at last, no three consecutive.\n\nSource:\nif n1 score1\nn2 sum\ndp1=s1\ndp2=dp1+s2\np1=dp2\np2=dp1\np3=0\nfor i=3..n:\n next = max(p2, p3 + scores[i-1]) + scores[i]\n p3=p2; p2=p1; p1=next\nprint p1\n\nLet's verify standard recurrence. At i=3:\nnext=max(s1,0+s2)+s3 = max(s1,s2)+s3. Wait valid ways to end at 3 with no 3 consecutive: [1,3] sum s1+s3 or [2,3] sum s2+s3. yes max(s1,s2)+s3. correct. p1 after = dp3.\ni=4: before p3=0,p2=s1,p1=dp2? Let's trace after i3: p3=p2_old=s1; p2=p1_old=s1+s2; p1=dp3.\ni4 next=max(p2, p3+s3)+s4 = max(s1+s2, s1+s3)+s4. Valid ending at4: [1,2,4] sum s1+s2+s4 or [1,3,4]? [1,3,4] has? consecutive indices 3,4 only, sum s1+s3+s4. Wait p3+s3 is s1+s3, yes. Also [2,4]? s2+s4 maybe less than s1+s3? But p2=s1+s2, max may not include s2? Let's derive standard dp for ending at i with step from i-2: dp[i-2]+s[i]; or from i-1 with previous must be from i-3? dp[i-3]+s[i-1]+s[i]. For i4: max(dp2? Actually dp[i-2]=dp2 = s1+s2, plus s4 = s1+s2+s4; or dp[i-3]+s3+s4 = dp1+s3+s4 = s1+s3+s4. max. correct. [2,4] would not be optimal? dp2 covers [1,2] better due positive, so okay. Recurrence maintains max ending.\n\nHaskell implement input read all ints. Handle n. Use list scores 1-indexed or array. N<=300 can just use list/array. Need preserve if no input? Source if no cin returns 0 no output. In Haskell, read all; if empty return. n maybe <=0 but spec >=1. Could handle.\n\nNeed one complete source file module Main main. Use standard libraries. Need avoid lazy issues? Use Int or Integer. Scores up to 10000, N300 max sum 3e6 fits Int. Use Integer safe.\n\nImplementation simple:\n\nmodule Main where\nimport System.IO\nimport Control.Monad\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let xs = map read (words input) :: [Integer]\n  case xs of\n    [] -> return ()\n    (n:rest) -> do\n       let scores = take n rest\n       putStrLn (show (solve n scores))\n\nsolve :: Int -> [Integer] -> Integer\nsolve n scores\n | n <= 0 = 0\n | n == 1 = head scores? But if n=1 scores nonempty. Could use list indexing.\nBetter convert to array? Use Data.Array maybe standard. Or list indexes via list. N small.\n\nUse function with list to get s1,s2. For n>=3 need iterate over scores from 3. We can pattern match.\n\nsolve n (s1:s2:rest) for n>=3:\ninitial p1=s1+s2, p2=s1, p3=0\nloop i=3 over rest (which are scores[3..n]) need previous score s_{i-1}. Could use prev variable.\nState (p1,p2,p3) where p1=dp i-1? Let's align before processing i. At start after n=2, p1=dp2=s1+s2, p2=dp1=s1, p3=0 (dp0? not used? For i=3 recurrence uses p3 + scores[i-1]=0+s2). prev=s2. Iterate for each current score cur (i from3):\n next = max p2 (p3 + prev) + cur\n new p3=p2; p2=p1; p1=next; prev=cur.\nReturn p1 after process all.\n\nCheck i=3 prev=s2 p3=0 -> max(s1, s2)+s3 yes.\ni=4 state after i3: p3=s1,p2=s1+s2,p1=dp3, prev=s3 -> next=max(s1+s2, s1+s3)+s4 yes.\n\nBut if n==2 return s1+s2. n==1 s1. n could be > length? assume valid.\n\nCould define:\nsolve 1 [s] = s\nsolve 2 [s1,s2] = s1+s2\nsolve n (s1:s2:rest) = go (s1+s2) s1 0 s2 (take (n-2) rest)\n  where go p1 p2 p3 prev [] = p1\n        go p1 p2 p3 prev (x:xs) = let next = max p2 (p3+prev)+x\n                                       in go next p1 p2 x xs\nsolve _ _ = 0\n\nBut pattern solve n (s1:s2:rest) overlaps n? Need order. For n>=3. If n > length rest? take restrict. If n=3 rest has score3. Fine.\n\nIssue n=2 with list maybe pattern. Good.\n\nNeed ensure no output for empty. If input has n but rest empty? spec not. We can still.\n\nPotential concern parsing negatives? scores positive, n. map read on words works for \"1\\n10\". Show adds newline via putStrLn.\n\nNeed output exactly one complete source file in fenced block. final.\n\nBut let's thoroughly consider equivalence. Source C++ uses 1-index scores vector n+1; n may be 0? It reads n and scores; if n<=0 output 0 after reading (but loop none). Spec n>=1.\n\nOur Haskell if n<=0 returns 0 even if rest? We pattern case (n:rest), if n<=0 -> putStrLn \"0\" maybe source if n=0 prints 0. But source code: reads n, vector n+1, loop none, if n<=0 output 0. yes. If n negative, vector(n+1) invalid? Actually vector<int> scores(n+1) if n negative convert huge size causing exception before check. But invalid input. No matter.\n\nIf n==1 but scores list lacks? Not valid.\n\nNeed maybe import Prelude all. Module Main default.\n\nCould use interactive? getContents.\n\nLet's craft final code. Ensure syntax.\n\nmodule Main where\n\nimport System.IO (hSetBuffering, stdout, BufferMode(..))? Not necessary. We can just getContents.\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let nums = map read (words input) :: [Integer]\n    case nums of\n        [] -> return ()\n        (n:rest) -> putStrLn (show (solve (fromIntegral n) rest))\n\nsolve :: Int -> [Integer] -> Integer\nsolve n xs\n    | n <= 0 = 0\n    | n == 1 = case xs of (a:_) -> a; _ -> 0\n    | n == 2 = case xs of (a:b:_) -> a + b; _ -> 0\n    | otherwise =\n        case xs of\n            (s1:s2:rest) ->\n                let restN = take (n - 2) rest\n                in go (s1 + s2) s1 0 s2 restN\n            _ -> 0\n  where\n    go p1 p2 p3 _ [] = p1\n    go p1 p2 p3 prev (cur:cs) =\n        let nxt = max p2 (p3 + prev) + cur\n        in go nxt p1 p2 cur cs\n\nCheck variable shadow n in let restN? fine. But n is Int, fromIntegral n. nums n from input Integer; fromIntegral to Int safe.\n\nWait solve n==1 case xs gets rest excluding n. If n=1, rest contains 1 score. Good.\n\nPotential bug: In otherwise case, for n=3, xs=(s1:s2:s3:...). rest = [s3..]. restN=take 1 rest = [s3]. go initial p1=s1+s2,p2=s1,p3=0,prev=s2. Process s3 -> next=max(s1,s2)+s3. p1 next. [] -> next. Correct.\n\nn=4 initial p1=s1+s2. Process s3: p1=dp3, p2 old? In go after first: go nxt p1 p2 cur cs where arguments: go p1' p2' p3' prev' remainder. It calls go nxt p1 p2 cur cs. So new p1=nxt, new p2=old p1 (dp2), new p3=old p2 (s1), prev=cur(s3). Then process s4: next=max(p2=dp2, p3=s1 + prev=s3)+s4 = max(s1+s2,s1+s3)+s4. correct.\n\nOutput ordering one line.\n\nNow final need only fenced code no explanation. Use ```haskell."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 774,
+      "total_tokens": 3197,
+      "completion_tokens": 2423,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 2159
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 20.59782919997815,
+  "received_at": "2026-11-18T06:38:26.015916+00:00",
+  "logical_request_id": "1f690b5e50f4c47a385657dc3fdf289f816ee7b4d3fad07c8c72c26e04c10aec",
+  "execution_class": "direct_api"
+}

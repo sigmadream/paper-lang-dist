@@ -1,0 +1,95 @@
+{
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    string line;\n    if(!getline(cin, line)) { cout << 0 << \"\\n\"; return 0; }\n    long long n = 0;\n    size_t i = 0;\n    while(i < line.size() && line[i]==' ') i++;\n    bool any=false;\n    for(; i<line.size(); ++i){\n        if(line[i]>='0' && line[i]<='9'){ n = n*10 + (line[i]-'0'); any=true; }\n        else break;\n    }\n    if(!any) n = 0;\n    vector<int> cnts(n+1, 0);\n    for(long long k=1;k<=n;++k) cnts[k] = cnts[k/2] + (int)(k%2);\n    string out;\n    for(long long k=0;k<=n;++k){\n        if(k) out += ' ';\n        out += to_string(cnts[k]);\n    }\n    out += '\\n';\n    cout << out;\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 258,
+    "prompt_tokens": 548,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 806
+  },
+  "usage_raw": {
+    "completion_tokens": 258,
+    "prompt_tokens": 548,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 806
+  },
+  "cost_usd": 0.0014646400000000001,
+  "cost_source": "estimated",
+  "request_id": "31594b5a-c400-4ae4-88bf-f3793cf1af19",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0338\\cpp-via-haskell\\attempt-02\\step-04\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    string line;\n    if(!getline(cin, line)) { cout << 0 << \"\\n\"; return 0; }\n    long long n = 0;\n    size_t i = 0;\n    while(i < line.size() && line[i]==' ') i++;\n    bool any=false;\n    for(; i<line.size(); ++i){\n        if(line[i]>='0' && line[i]<='9'){ n = n*10 + (line[i]-'0'); any=true; }\n        else break;\n    }\n    if(!any) n = 0;\n    vector<int> cnts(n+1, 0);\n    for(long long k=1;k<=n;++k) cnts[k] = cnts[k/2] + (int)(k%2);\n    string out;\n    for(long long k=0;k<=n;++k){\n        if(k) out += ' ';\n        out += to_string(cnts[k]);\n    }\n    out += '\\n';\n    cout << out;\n    return 0;\n}\n```",
+          "reasoning_content": "Note: n=0 case, listArray (0,0) [0] fine. Translate.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794901791,
+    "id": "31594b5a-c400-4ae4-88bf-f3793cf1af19",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 258,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_ec20c02f7c28482fbdee56c03ec43b94",
+      "trace_id": "b2d0fc0d678146e4ae765f88dd229b60"
+    },
+    "usage": {
+      "completion_tokens": 258,
+      "prompt_tokens": 548,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 806
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.8901861000340432,
+  "received_at": "2026-11-17T07:49:50.664149+00:00",
+  "logical_request_id": "58f6be394e4b452c0876567ef90d3cdc3231541477364d56bf8322230cdb86dd",
+  "execution_class": "direct_api"
+}

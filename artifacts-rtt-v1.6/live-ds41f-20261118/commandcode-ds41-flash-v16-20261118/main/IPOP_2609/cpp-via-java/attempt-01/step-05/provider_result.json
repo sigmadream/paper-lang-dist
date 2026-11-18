@@ -1,0 +1,86 @@
+{
+  "text": "```java\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\nimport java.util.StringTokenizer;\n\npublic class Main {\n    private static int gcd(int a, int b) {\n        while (b != 0) {\n            int r = a % b;\n            a = b;\n            b = r;\n        }\n        return a;\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StringTokenizer st = new StringTokenizer(br.readLine());\n\n        int a = Integer.parseInt(st.nextToken());\n        int b = Integer.parseInt(st.nextToken());\n\n        int g = gcd(a, b);\n        long l = (long) (a / g) * b;\n\n        StringBuilder sb = new StringBuilder();\n        sb.append(g).append('\\n');\n        sb.append(l).append('\\n');\n        System.out.print(sb);\n    }\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 501,
+    "total_tokens": 714,
+    "completion_tokens": 213,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 25
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 501,
+    "total_tokens": 714,
+    "completion_tokens": 213,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 25
+    }
+  },
+  "cost_usd": 0.0004059,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-c2faeb0f37795c147b346cb409481e0a",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2609\\cpp-via-java\\attempt-01\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-c2faeb0f37795c147b346cb409481e0a",
+    "object": "chat.completion",
+    "created": 1795000220,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```java\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\nimport java.util.StringTokenizer;\n\npublic class Main {\n    private static int gcd(int a, int b) {\n        while (b != 0) {\n            int r = a % b;\n            a = b;\n            b = r;\n        }\n        return a;\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StringTokenizer st = new StringTokenizer(br.readLine());\n\n        int a = Integer.parseInt(st.nextToken());\n        int b = Integer.parseInt(st.nextToken());\n\n        int g = gcd(a, b);\n        long l = (long) (a / g) * b;\n\n        StringBuilder sb = new StringBuilder();\n        sb.append(g).append('\\n');\n        sb.append(l).append('\\n');\n        System.out.print(sb);\n    }\n}\n```",
+          "reasoning_content": "Translate to Java. Straightforward. Provide Main class reading stdin, compute gcd, print gcd and lcm (use long)."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 501,
+      "total_tokens": 714,
+      "completion_tokens": 213,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 25
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.031864400021732,
+  "received_at": "2026-11-18T11:10:22.394755+00:00",
+  "logical_request_id": "36ef4aa90246b8063eb294d00bd97f770d63070984a4f028a033714f299d0c49",
+  "execution_class": "direct_api"
+}

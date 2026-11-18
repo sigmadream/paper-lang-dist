@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n\nusing namespace std;\n\nlong long dfs(int n, int full, int row, int cols, int diag1, int diag2) {\n    if (row == n) return 1;\n    long long result = 0;\n    int available = full & ~(cols | diag1 | diag2);\n    while (available) {\n        int bit = available & -available;\n        available &= available - 1;\n        result += dfs(n, full, row + 1,\n                      cols | bit,\n                      (diag1 | bit) << 1,\n                      (diag2 | bit) >> 1);\n    }\n    return result;\n}\n\nint main() {\n    int n;\n    cin >> n;\n    int full = (1 << n) - 1;\n    cout << dfs(n, full, 0, 0, 0, 0) << '\\n';\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 603,
+    "total_tokens": 914,
+    "completion_tokens": 311,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 106
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 603,
+    "total_tokens": 914,
+    "completion_tokens": 311,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 106
+    }
+  },
+  "cost_usd": 0.0005541,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-d2e61873c81f519429d5dc92f3f7850a",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9663\\cpp-via-haskell\\attempt-05\\step-04\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-d2e61873c81f519429d5dc92f3f7850a",
+    "object": "chat.completion",
+    "created": 1794980466,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n\nusing namespace std;\n\nlong long dfs(int n, int full, int row, int cols, int diag1, int diag2) {\n    if (row == n) return 1;\n    long long result = 0;\n    int available = full & ~(cols | diag1 | diag2);\n    while (available) {\n        int bit = available & -available;\n        available &= available - 1;\n        result += dfs(n, full, row + 1,\n                      cols | bit,\n                      (diag1 | bit) << 1,\n                      (diag2 | bit) >> 1);\n    }\n    return result;\n}\n\nint main() {\n    int n;\n    cin >> n;\n    int full = (1 << n) - 1;\n    cout << dfs(n, full, 0, 0, 0, 0) << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block cpp. Need translate Haskell N-queen bitmask. Need preserve behavior. N <15. Use C++17 main. Input int. Output count. Could use int/long long? N=14 count 365596 fits int. But use long long. Need complete file. Ensure semantics. Haskell dfs acc. Simple recursive lambda or function.\n\nNeed maybe stdin getContents reads first word. Use cin >> n. Then solve.\n\nNeed no explanation, exactly one fenced code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 603,
+      "total_tokens": 914,
+      "completion_tokens": 311,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 106
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.3538061999715865,
+  "received_at": "2026-11-18T05:41:07.541610+00:00",
+  "logical_request_id": "6fcb0e3f3e2f9e93179b6d462d5f7229124a114ee5d130c6547c9213903dc5b6",
+  "execution_class": "direct_api"
+}

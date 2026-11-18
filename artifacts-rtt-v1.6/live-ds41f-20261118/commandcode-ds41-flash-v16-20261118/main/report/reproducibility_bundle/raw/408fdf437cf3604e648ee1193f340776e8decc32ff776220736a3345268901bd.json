@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<long long> data;\n    long long value;\n    while (std::cin >> value) {\n        data.push_back(value);\n    }\n\n    if (data.empty()) {\n        return 0;\n    }\n\n    int n = static_cast<int>(data[0]);\n    if (n <= 0 || data.size() < 2) {\n        return 0;\n    }\n\n    long long x = data[1];\n    long long cur = x;\n    long long best = x;\n\n    for (int i = 2; i <= n; ++i) {\n        x = data[i];\n        cur = (x > cur + x) ? x : cur + x;\n        if (cur > best) {\n            best = cur;\n        }\n    }\n\n    std::cout << best << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer with C++ source only fenced. Need preserve behavior. Consider edge cases. Python code reads n data, if n<=0 or len<2 return no output. Then first element. Loop range(2,n+1) accesses data[i], assumes enough. We can translate similarly. C++17 main. Read tokens? Could just cin >> n then loop. But if missing? Contract valid. Need maybe no output if n<=0 or missing second. But C++ reading into vector. Simpler: read all long long tokens. If empty return. n = tokens[0]. if n<=0 or tokens.size()<2 return. x = tokens[1]; etc. For i in 2..n inclusive use tokens[i] (requires size > n). Valid input. Use long long though constraints int enough but sum up to 1e9 fits int. Output. Exactly one file. No explanation.\n\nNeed ensure if n=1 loop not execute. Use tokens vector<long long>. indices. If tokens size maybe less than n+1? Python would crash? not valid. Fine.\n\nReturn fenced code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794980249,
+    "id": "chatcmpl-0eed39320557e0b90c584c86be291339",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 430,
+      "completion_tokens_details": {
+        "reasoning_tokens": 234
+      },
+      "prompt_tokens": 536,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 966
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0006768,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.930157000082545,
+  "logical_request_id": "f300ebc0abf1b98627bcfd72470aa93ff701d751e465732bcb7bd3df8f85fd9e",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-python\\attempt-03\\step-10\\response_body.txt",
+  "received_at": "2026-11-18T05:37:31.795301+00:00",
+  "request_id": "chatcmpl-0eed39320557e0b90c584c86be291339",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<long long> data;\n    long long value;\n    while (std::cin >> value) {\n        data.push_back(value);\n    }\n\n    if (data.empty()) {\n        return 0;\n    }\n\n    int n = static_cast<int>(data[0]);\n    if (n <= 0 || data.size() < 2) {\n        return 0;\n    }\n\n    long long x = data[1];\n    long long cur = x;\n    long long best = x;\n\n    for (int i = 2; i <= n; ++i) {\n        x = data[i];\n        cur = (x > cur + x) ? x : cur + x;\n        if (cur > best) {\n            best = cur;\n        }\n    }\n\n    std::cout << best << '\\n';\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 430,
+    "completion_tokens_details": {
+      "reasoning_tokens": 234
+    },
+    "prompt_tokens": 536,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 966
+  },
+  "usage_raw": {
+    "completion_tokens": 430,
+    "completion_tokens_details": {
+      "reasoning_tokens": 234
+    },
+    "prompt_tokens": 536,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 966
+  }
+}

@@ -1,0 +1,19 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    long long n;
+    if (!(cin >> n)) return 0;
+    vector<long long> counts(n + 1, 0);
+    for (long long i = 1; i <= n; ++i) {
+        counts[i] = counts[i / 2] + (i & 1);
+    }
+    for (size_t i = 0; i < counts.size(); ++i) {
+        if (i) cout << ' ';
+        cout << counts[i];
+    }
+    cout << '\n';
+    return 0;
+}

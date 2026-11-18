@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(readutil)).\n\nread_int(Stream, N) :-\n    read_line_to_codes(Stream, Line),\n    (Line == end_of_file -> N = 0\n    ; line_number(Line, N)).\n\nline_number(Codes, N) :-\n    number_codes(N, Codes).\n\nread_grid(_, 0, []).\nread_grid(Stream, N, [Row|Rows]) :-\n    read_line_to_codes(Stream, Line),\n    Line \\== end_of_file,\n    length(Row, N),\n    maplist(digit_code, Row),\n    N1 is N - 1,\n    read_grid(Stream, N1, Rows).\n\ndigit_code(C) :- C =:= 48 ; C =:= 49.\n\nsame_value([Row|Rows], C, R, S) :-\n    nth0(R, [Row|Rows], Line),\n    sub_string(Line, C, S, _, Sub),\n    string_chars(Sub, Chars),\n    maplist([X]>>(X == Chars), Chars).\n\n% check uniform block\nuniform(Grid, R, C, S, Ch) :-\n    nth0(R, Grid, Row),\n    string_chars(Row, RowChars),\n    nth0(C, RowChars, Ch),\n    check_all(Grid, R, C, S, Ch).\n\ncheck_all(_, R, _, S, _) :- R >= S, !.\ncheck_all(Grid, R, C, S, Ch) :-\n    nth0(R, Grid, Row),\n    string_chars(Row, RowChars),\n    check_row(RowChars, C, S, Ch),\n    R1 is R + 1,\n    check_all(Grid, R1, C, S, Ch).\n\ncheck_row(_, C, _, Ch) :- C >= _, fail.\ncheck_row(_, _, S, _) :- S =< 0, !.\ncheck_row(RowChars, C, S, Ch) :-\n    nth0(C, RowChars, X),\n    X == Ch,\n    C1 is C + 1,\n    S1 is S - 1,\n    check_row(RowChars, C1, S1, Ch).\n\nsolve(Grid, R, C, S, Result) :-\n    (   uniform(Grid, R, C, S, Ch)\n    ->  atom_chars(Result, [Ch])\n    ;   H is S // 2,\n        R1 is R, C1 is C,\n        R2 is R, C2 is C + H,\n        R3 is R + H, C3 is C,\n        R4 is R + H, C4 is C + H,\n        solve(Grid, R1, C1, H, A),\n        solve(Grid, R2, C2, H, B),\n        solve(Grid, R3, C3, H, Cc),\n        solve(Grid, R4, C4, H, D),\n        atomic_list_concat(['(', A, B, Cc, D, ')'], Result)\n    ).\n\nmain :-\n    current_input(Stream),\n    read_int(Stream, N),\n    (   N > 0\n    ->  read_grid(Stream, N, N, Grid),\n        solve(Grid, 0, 0, N, Result),\n        write(Result), nl\n    ;   true\n    ).\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794900907,
+    "id": "eb64d1e5-5ea6-40ec-94f2-5a30ec740ff6",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 697,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_10a66a0affd4456995c912750f97fd8a",
+      "trace_id": "9632c682e45145639037b737537ef5eb"
+    },
+    "usage": {
+      "completion_tokens": 697,
+      "prompt_tokens": 755,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 1452
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0039778800000000005,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 6.05591379996622,
+  "logical_request_id": "d6984e3a5f78d34f73f66cc7230ee3f1ad20dd23ca525c46910379941d96a1f1",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_1992\\cpp-via-prolog\\attempt-05\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T07:35:06.964845+00:00",
+  "request_id": "eb64d1e5-5ea6-40ec-94f2-5a30ec740ff6",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(readutil)).\n\nread_int(Stream, N) :-\n    read_line_to_codes(Stream, Line),\n    (Line == end_of_file -> N = 0\n    ; line_number(Line, N)).\n\nline_number(Codes, N) :-\n    number_codes(N, Codes).\n\nread_grid(_, 0, []).\nread_grid(Stream, N, [Row|Rows]) :-\n    read_line_to_codes(Stream, Line),\n    Line \\== end_of_file,\n    length(Row, N),\n    maplist(digit_code, Row),\n    N1 is N - 1,\n    read_grid(Stream, N1, Rows).\n\ndigit_code(C) :- C =:= 48 ; C =:= 49.\n\nsame_value([Row|Rows], C, R, S) :-\n    nth0(R, [Row|Rows], Line),\n    sub_string(Line, C, S, _, Sub),\n    string_chars(Sub, Chars),\n    maplist([X]>>(X == Chars), Chars).\n\n% check uniform block\nuniform(Grid, R, C, S, Ch) :-\n    nth0(R, Grid, Row),\n    string_chars(Row, RowChars),\n    nth0(C, RowChars, Ch),\n    check_all(Grid, R, C, S, Ch).\n\ncheck_all(_, R, _, S, _) :- R >= S, !.\ncheck_all(Grid, R, C, S, Ch) :-\n    nth0(R, Grid, Row),\n    string_chars(Row, RowChars),\n    check_row(RowChars, C, S, Ch),\n    R1 is R + 1,\n    check_all(Grid, R1, C, S, Ch).\n\ncheck_row(_, C, _, Ch) :- C >= _, fail.\ncheck_row(_, _, S, _) :- S =< 0, !.\ncheck_row(RowChars, C, S, Ch) :-\n    nth0(C, RowChars, X),\n    X == Ch,\n    C1 is C + 1,\n    S1 is S - 1,\n    check_row(RowChars, C1, S1, Ch).\n\nsolve(Grid, R, C, S, Result) :-\n    (   uniform(Grid, R, C, S, Ch)\n    ->  atom_chars(Result, [Ch])\n    ;   H is S // 2,\n        R1 is R, C1 is C,\n        R2 is R, C2 is C + H,\n        R3 is R + H, C3 is C,\n        R4 is R + H, C4 is C + H,\n        solve(Grid, R1, C1, H, A),\n        solve(Grid, R2, C2, H, B),\n        solve(Grid, R3, C3, H, Cc),\n        solve(Grid, R4, C4, H, D),\n        atomic_list_concat(['(', A, B, Cc, D, ')'], Result)\n    ).\n\nmain :-\n    current_input(Stream),\n    read_int(Stream, N),\n    (   N > 0\n    ->  read_grid(Stream, N, N, Grid),\n        solve(Grid, 0, 0, N, Result),\n        write(Result), nl\n    ;   true\n    ).\n```",
+  "usage": {
+    "completion_tokens": 697,
+    "prompt_tokens": 755,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1452
+  },
+  "usage_raw": {
+    "completion_tokens": 697,
+    "prompt_tokens": 755,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1452
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let nums = map read (words input) :: [Int]\n    case nums of\n        [] -> return ()\n        (n:rest) -> do\n            let arr = take n rest\n            if null arr\n                then print 0\n                else print (maxSubarray arr)\n\nmaxSubarray :: [Int] -> Int\nmaxSubarray (x:xs) = go x x xs\n  where\n    go best cur [] = best\n    go best cur (y:ys) =\n        let cur' = max y (cur + y)\n            best' = max best cur'\n        in go best' cur' ys\nmaxSubarray [] = 0\n```",
+          "reasoning_content": "We need answer Haskell translation. Need exactly one fenced code block, no explanation. Implement reads stdin: first N then N ints. Could just read all ints; n first; take n elements; Kadane using Integer or Int? Constraints sums up to 1e9, Int fine 64-bit. Need handle n==0 maybe though spec n>=1. Program C++ if n==0 after reading vector (empty) outputs 0. In Haskell parse tokens. If no input? C++ returns 0 if no n. We can output nothing maybe. Need preserve. Simple:\n\nmodule Main where\nimport System.IO\nimport Data.List\n\nmain :: IO ()\nmain = do\n  s <- getContents\n  let xs = map read (words s) :: [Int]\n  case xs of\n    [] -> return ()\n    (n:_) -> do\n      let arr = take n (drop 1 xs)\n      if null arr then print 0 else print (maximumSubarray arr)\n\nmaximumSubarray :: [Int] -> Int\nmaximumSubarray (x:xs) = go x x xs where\n go best cur [] = best\n go best cur (y:ys) = let cur' = max y (cur+y); best'=max best cur' in go best' cur' ys\n\nBut Int sum: max 1e5*10000=1e9, fits 32-bit? 1,000,000,000 under 2,147,483,647 yes. Negative min -1e9. Fine. Haskell Int 64 on platform.\n\nNeed ensure if getContents empty no output. Good. Using words and read. Could use foldl'. Include Data.List foldl'. Simpler pattern. Fenced haskell.\n\nNeed only code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794982914,
+    "id": "chatcmpl-8e6803432afdcf6cb0e2e198591b4b2b",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 541,
+      "completion_tokens_details": {
+        "reasoning_tokens": 373
+      },
+      "prompt_tokens": 605,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1146
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0008307,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 5.230914100073278,
+  "logical_request_id": "ac1054a4b81dd43289dc942255d896594de207df12c3fceb1a1c9028b4795028",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-haskell\\attempt-03\\step-09\\response_body.txt",
+  "received_at": "2026-11-18T06:21:57.450995+00:00",
+  "request_id": "chatcmpl-8e6803432afdcf6cb0e2e198591b4b2b",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let nums = map read (words input) :: [Int]\n    case nums of\n        [] -> return ()\n        (n:rest) -> do\n            let arr = take n rest\n            if null arr\n                then print 0\n                else print (maxSubarray arr)\n\nmaxSubarray :: [Int] -> Int\nmaxSubarray (x:xs) = go x x xs\n  where\n    go best cur [] = best\n    go best cur (y:ys) =\n        let cur' = max y (cur + y)\n            best' = max best cur'\n        in go best' cur' ys\nmaxSubarray [] = 0\n```",
+  "usage": {
+    "completion_tokens": 541,
+    "completion_tokens_details": {
+      "reasoning_tokens": 373
+    },
+    "prompt_tokens": 605,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1146
+  },
+  "usage_raw": {
+    "completion_tokens": 541,
+    "completion_tokens_details": {
+      "reasoning_tokens": 373
+    },
+    "prompt_tokens": 605,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1146
+  }
+}

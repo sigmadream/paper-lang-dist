@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n\nvoid hanoi(int n, int from, int via, int to) {\n    if (n == 0) return;\n    hanoi(n - 1, from, to, via);\n    std::cout << from << ' ' << to << '\\n';\n    hanoi(n - 1, via, from, to);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (std::cin >> n) {\n        std::cout << ((1LL << n) - 1) << '\\n';\n        hanoi(n, 1, 2, 3);\n    }\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer with C++17 complete source. Need translate preserving behavior. Need output count 2^N-1 then moves. N<=20 count fits int 1048575. Use recursion. Output efficiently maybe ios sync false. Need exact formatting spaces newline. Need no explanation only fenced code block.\n\nLet's ensure recursion hanoiB n a b c: n=0 nothing; n=1 a _ c outputs a c; n>1 hanoi(n-1,a,c,b), output a c for single, hanoi(n-1,b,a,c). In C++ can do simpler move function n from src to dst via aux, prints. Count = (1LL<<n)-1. For n=20 1048575. Output with ostream. Could use string buffer? 1M lines fine with sync false. Need main reads int. If no input? use if cin>>n.\n\nNeed exactly one code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794992576,
+    "id": "chatcmpl-b60c03617a4b98a881eee27f76548a6d",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 351,
+      "completion_tokens_details": {
+        "reasoning_tokens": 195
+      },
+      "prompt_tokens": 692,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1043
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0006288,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.346981899929233,
+  "logical_request_id": "09e8c47ce162d0eb1f0f5138ecb085972f029758b55a355869a4aba11630b396",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_11729\\cpp-via-haskell\\attempt-04\\step-04\\response_body.txt",
+  "received_at": "2026-11-18T09:02:58.226796+00:00",
+  "request_id": "chatcmpl-b60c03617a4b98a881eee27f76548a6d",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n\nvoid hanoi(int n, int from, int via, int to) {\n    if (n == 0) return;\n    hanoi(n - 1, from, to, via);\n    std::cout << from << ' ' << to << '\\n';\n    hanoi(n - 1, via, from, to);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (std::cin >> n) {\n        std::cout << ((1LL << n) - 1) << '\\n';\n        hanoi(n, 1, 2, 3);\n    }\n\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 351,
+    "completion_tokens_details": {
+      "reasoning_tokens": 195
+    },
+    "prompt_tokens": 692,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1043
+  },
+  "usage_raw": {
+    "completion_tokens": 351,
+    "completion_tokens_details": {
+      "reasoning_tokens": 195
+    },
+    "prompt_tokens": 692,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1043
+  }
+}

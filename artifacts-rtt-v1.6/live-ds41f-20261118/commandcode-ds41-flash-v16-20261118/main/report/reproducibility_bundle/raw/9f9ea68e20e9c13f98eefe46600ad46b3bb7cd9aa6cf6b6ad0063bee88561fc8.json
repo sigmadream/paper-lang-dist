@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let ws = words input\n    case ws of\n        [] -> return ()\n        (nStr:rest) ->\n            case rest of\n                [] -> putStrLn \"0\"\n                (xStr:_) -> do\n                    let n = read nStr :: Int\n                        vals = map read (take n rest) :: [Integer]\n                    case vals of\n                        [] -> putStrLn \"0\"\n                        (x:xs) -> do\n                            let (_, best) = foldl' step (x, x) xs\n                                step (cur, b) v =\n                                    let nc = max v (cur + v)\n                                    in (nc, max b nc)\n                            print best\n```",
+          "reasoning_content": "Translate to Haskell. Read N, then N integers. Kadane. Handle empty input gracefully. Note source reads first element separately; if missing prints 0. We'll mimic: if no n, return; if no first element, print 0.\n\nSimple: read all tokens. First is n, then take n values. If fewer than 1 value after n, output 0.\n\nActually source: if cin>>n fails, return 0 (no output). If first value fails, print 0.\n\nLet's write.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794982866,
+    "id": "chatcmpl-5faf3c6f9245d95d754065c70cd3d88c",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 286,
+      "completion_tokens_details": {
+        "reasoning_tokens": 108
+      },
+      "prompt_tokens": 560,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 846
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0005112,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.1787688001058996,
+  "logical_request_id": "b67ff44d821840fae8852110c1202c589e5dfa197c14b18b10ca1834fa6681e0",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-haskell\\attempt-03\\step-03\\response_body.txt",
+  "received_at": "2026-11-18T06:21:07.423185+00:00",
+  "request_id": "chatcmpl-5faf3c6f9245d95d754065c70cd3d88c",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let ws = words input\n    case ws of\n        [] -> return ()\n        (nStr:rest) ->\n            case rest of\n                [] -> putStrLn \"0\"\n                (xStr:_) -> do\n                    let n = read nStr :: Int\n                        vals = map read (take n rest) :: [Integer]\n                    case vals of\n                        [] -> putStrLn \"0\"\n                        (x:xs) -> do\n                            let (_, best) = foldl' step (x, x) xs\n                                step (cur, b) v =\n                                    let nc = max v (cur + v)\n                                    in (nc, max b nc)\n                            print best\n```",
+  "usage": {
+    "completion_tokens": 286,
+    "completion_tokens_details": {
+      "reasoning_tokens": 108
+    },
+    "prompt_tokens": 560,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 846
+  },
+  "usage_raw": {
+    "completion_tokens": 286,
+    "completion_tokens_details": {
+      "reasoning_tokens": 108
+    },
+    "prompt_tokens": 560,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 846
+  }
+}

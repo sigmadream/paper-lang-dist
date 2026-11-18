@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nimport qualified Data.IntMap.Strict as IM\nimport qualified Data.IntSet as IS\n\nmain :: IO ()\nmain = do\n  s <- getContents\n  let xs = map read (words s) :: [Int]\n  case xs of\n    [] -> return ()\n    (n:ys) ->\n      if n <= 0\n        then putStrLn \"0\"\n        else do\n          let (m, zs) = case ys of\n                          (a:as) -> (a, as)\n                          [] -> (0, [])\n              limit = max 0 m\n              tokens = take (2 * limit) zs\n              edges = pairs tokens\n              adj = foldl (addEdge n) IM.empty edges\n              l0 = IS.singleton 1\n              l1 = IS.fromList [v | v <- IM.findWithDefault [] 1 adj, v /= 1]\n              addSecond acc u =\n                foldl\n                  (\\s v -> if IS.member v l0 || IS.member v l1 then s else IS.insert v s)\n                  acc\n                  (IM.findWithDefault [] u adj)\n              l2 = foldl addSecond IS.empty (IS.toList l1)\n              ans = IS.size (IS.union l1 l2)\n          print ans\n  where\n    pairs (a:b:rest) = (a, b) : pairs rest\n    pairs _ = []\n\n    addEdge n mp (a, b)\n      | a >= 1 && a <= n && b >= 1 && b <= n =\n          IM.insertWith (++) b [a] (IM.insertWith (++) a [b] mp)\n      | otherwise = mp\n```",
+          "reasoning_content": "We need answer only Haskell source fenced. Need translate preserving behavior. Need think valid inputs. We can implement BFS. Need read all ints stdin. N from first. If empty return. n<=0 print0. m next. limit max(0,m). Build adj with bounds. BFS from 1 if n>=1. Dist. Count v=2..n dist 1 or 2. Need Haskell. Use Data.List, Data.Maybe maybe. Control.Monad. Could parse Ints.\n\nNeed preserve if n<=0 output 0. Given constraints N>=2 but source handles. Also potential M missing? Robust parse. Use readMaybe. We can just map read words, but empty. Input valid. Still preserve n <=0. Need handle if n <1, no dist[1]? We can guard n<=0. For n>0. m if missing 0.\n\nEdges limit and break if insufficient. Use splitAt/ recursion. Simpler convert list to array? N<=500, M<=10000. Use adjacency list via IntMap or Data.Array? Standard. Could build list of edges taking limit pairs from remaining list, filtering bounds. Then BFS.\n\nHaskell code:\n\nmodule Main where\nimport qualified Data.IntMap.Strict as IM\nimport qualified Data.IntSet as IS\nimport Data.Maybe (fromMaybe)\nimport Control.Monad (forM_, when)\nimport System.IO\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let vals = map readInt (words input) :: [Int]\n  case vals of\n    [] -> return ()\n    (n:rest) -> do\n      if n <= 0 then putStrLn \"0\" else do\n        let (mVal, rest1) = case rest of (x:xs)->(x,xs); _->(0,[])\n            limit = max 0 mVal\n            edgeTokens = take (2*limit) rest1 -- But source breaks if idx+1 >= size. take 2*limit and process pairs. If odd? break if insufficient pair. We need process only complete pairs. take (2*limit) may produce odd, pair loop ignores last. That's same break? Source for i: if idx+1 >= size then break, so if one token remains, no edge. take 2*limit yields one token if only one left, pairs function ignore. Good.\n            edges = pairUp edgeTokens\n            adj = foldl addEdge IM.empty edges\n            addEdge mp (a,b)\n              | a>=1 && a<=n && b>=1 && b<=n =\n                  IM.insertWith (++) a [b] $ IM.insertWith (++) b [a] mp\n              | otherwise = mp\n            dist = bfs n adj\n            ans = length [ v | v <- [2..n], let d = IM.findWithDefault (-1) v dist, d==1 || d==2]\n        print ans\n\nBut Haskell issue if n>0 but n maybe? N>=2. dist initial IM.singleton 1 0. BFS queue. Need stop at dist>=2; source doesn't add beyond 2? It skips expanding nodes with dist>=2. When at dist1, neighbors get dist2. When those nodes popped, skip. When at dist0, neighbors dist1. Fine. BFS needs adjacency. Use [Int] queue.\n\nbfs :: Int -> IM.IntMap [Int] -> IM.IntMap Int\nbfs n adj = go (Seq.singleton 1) (IM.singleton 1 0)\n where go q dist = case Seq.viewl q of\n   EmptyL -> dist\n   u :< qs ->\n      if IM.findWithDefault (-1) u dist >= 2 then go qs dist else\n        let du = IM.findWithDefault (-1) u dist\n            ns = IM.findWithDefault [] u adj\n            (dist', q') = foldl (\\(d,q) v -> if IM.notMember v d then (IM.insert v (du+1) d, q Seq.|> v) else (d,q)) (dist, qs) ns\n        in go q' dist'\n\nNeed import Data.Sequence qualified as Seq. Or use list queue to avoid. N 500, list fine but O(n^2) okay. Use Data.Sequence clean.\n\nAlternative simpler: calculate distances by sets: level0 {1}, level1 neighbors, level2 neighbors not in union. Count unique level1/2 excluding 1. Since graph undirected. Could do:\nneighbors1 = concat adj at 1 unique set excluding 1.\nneighbors2 = neighbors of level1 excluding level0 and level1.\nanswer size union level1 level2. This is simpler, no BFS. Source BFS exactly distances, yes. Need count distinct vertices at distance 1/2. level1 = adjacent to 1. level2 = adjacent to level1 not in {1}∪level1. Count size union. Use IntSet. This avoids queue. Need ensure adj only valid. Implement:\n\nl0 = IS.singleton 1\nl1 = IS.fromList [v | v <- IM.findWithDefault [] 1 adj, v /= 1] -- source BFS: starting dist[1]=0. For neighbor if dist[v]==-1. Since 1 already, self-edge? Input a<b, no self. But robust. Exclude 1. \nl2 = foldl ... IS.empty for u in l1: for v in adj u, if v not in l0 and not in l1 then insert. Dist2. Need also if v already l2 fine set.\nans = size (IS.union l1 l2) (n>=? all vertices valid). l2 may include? Bounds prevents >n. Exclude 1 and l1. Count v 2..n. l1 excludes 1. l2 excludes 1,l1. Good. If n<=0 handled. If n=1, adj maybe none, l1 maybe empty, answer 0. Source counts v=2..1 none. If self-edge if a,b same? Input a<b, but source could have a=b if invalid? bounds no a<b not enforced. If edge 1 1, adj[1] contains 1; BFS won't set dist[1], because already 0. Our l1 excludes 1, okay. l2 from l1. Good.\n\nNeed parse tokens. Potential negative m? limit max 0 m. take (2*limit) when limit huge? M<=10000. Fine.\n\nNeed readInt? words then map read. Since valid ints. But source while(cin >> x) stops at non-int? In C++ extraction stops on invalid and vals prior. Input spec valid. Could use readMaybe to be robust? \"preserve for valid inputs\". map read okay. But if trailing? words. Fine. For empty no output.\n\nNeed ensure if n<=0, source outputs 0 even if no? It already if vals empty return no output. If n=0 output 0. Our case n<=0 prints 0. Good.\n\nNeed if n>0 but no rest M, m=0. Our case rest [] -> m=0.\n\nPotential issue source if n <=0 prints 0 and no reading? We already read all but output same.\n\nNow produce final exactly one code block. Need no explanation. Use Haskell. Need avoid unused imports maybe no error. Let's craft.\n\n```\nmodule Main where\n\nimport qualified Data.IntMap.Strict as IM\nimport qualified Data.IntSet as IS\n\nmain :: IO ()\nmain = do\n  s <- getContents\n  let xs = map read (words s) :: [Int]\n  case xs of\n    [] -> return ()\n    (n:ys) ->\n      if n <= 0\n        then putStrLn \"0\"\n        else do\n          let (m, zs) = case ys of\n                          (a:as) -> (a, as)\n                          [] -> (0, [])\n              limit = max 0 m\n              tokens = take (2 * limit) zs\n              edges = pairs tokens\n              adj = foldl (addEdge n) IM.empty edges\n              l0 = IS.singleton 1\n              l1 = IS.fromList [v | v <- IM.findWithDefault [] 1 adj, v /= 1]\n              l2 = foldl addSecond IS.empty (IS.toList l1)\n              addSecond acc u = foldl (\\s v -> if IS.member v l0 || IS.member v l1 then s else IS.insert v s) acc (IM.findWithDefault [] u adj)\n              ans = IS.size (IS.union l1 l2)\n          print ans\n  where\n    pairs (a:b:rest) = (a,b) : pairs rest\n    pairs _ = []\n    addEdge n mp (a,b)\n      | a >= 1 && a <= n && b >= 1 && b <= n =\n          IM.insertWith (++) b [a] (IM.insertWith (++) a [b] mp)\n      | otherwise = mp\n```\n\nCheck addEdge order: IM.insertWith (++) a [b] mp adds [b] to existing list? Data.IntMap.Strict.insertWith f key new map, f new old. (++) new [b] ++ old. So order reversed but irrelevant. Then insert b [a]. Good.\n\nWait `addSecond` is inside let and references l0 l1. Haskell let binding function in let okay. But `l2 = foldl addSecond IS.empty ...` where addSecond defined in same let after? Haskell let is recursive, okay. Need indentation. In do let block, definitions aligned. We'll ensure.\n\nPotential issue `addSecond` type and l0 l1 from same let. Fine.\n\nHowever l1 = adjacent to 1. What if n=1 and edge 1 1? l1 excludes 1. Good.\n\nWhat if n>0 but 1 not within n? If n? n>0 so 1 within. Good.\n\nCould simplify by using `read` no readMaybe. Valid.\n\nNeed final only code block. \nWait desired target Haskell GHC module Main main IO. Good.\n\nLet's final.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794995488,
+    "id": "chatcmpl-52bb06608492725f54e0bfe7d35a74fc",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 2571,
+      "completion_tokens_details": {
+        "reasoning_tokens": 2199
+      },
+      "prompt_tokens": 856,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 3427
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.003229104,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 21.143158399965614,
+  "logical_request_id": "9ad70f412e5964c683a3b11baa5480b2ca0283bc608879cb9b19247838cb6940",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_5567\\cpp-via-haskell\\attempt-05\\step-11\\response_body.txt",
+  "received_at": "2026-11-18T09:51:47.248936+00:00",
+  "request_id": "chatcmpl-52bb06608492725f54e0bfe7d35a74fc",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nimport qualified Data.IntMap.Strict as IM\nimport qualified Data.IntSet as IS\n\nmain :: IO ()\nmain = do\n  s <- getContents\n  let xs = map read (words s) :: [Int]\n  case xs of\n    [] -> return ()\n    (n:ys) ->\n      if n <= 0\n        then putStrLn \"0\"\n        else do\n          let (m, zs) = case ys of\n                          (a:as) -> (a, as)\n                          [] -> (0, [])\n              limit = max 0 m\n              tokens = take (2 * limit) zs\n              edges = pairs tokens\n              adj = foldl (addEdge n) IM.empty edges\n              l0 = IS.singleton 1\n              l1 = IS.fromList [v | v <- IM.findWithDefault [] 1 adj, v /= 1]\n              addSecond acc u =\n                foldl\n                  (\\s v -> if IS.member v l0 || IS.member v l1 then s else IS.insert v s)\n                  acc\n                  (IM.findWithDefault [] u adj)\n              l2 = foldl addSecond IS.empty (IS.toList l1)\n              ans = IS.size (IS.union l1 l2)\n          print ans\n  where\n    pairs (a:b:rest) = (a, b) : pairs rest\n    pairs _ = []\n\n    addEdge n mp (a, b)\n      | a >= 1 && a <= n && b >= 1 && b <= n =\n          IM.insertWith (++) b [a] (IM.insertWith (++) a [b] mp)\n      | otherwise = mp\n```",
+  "usage": {
+    "completion_tokens": 2571,
+    "completion_tokens_details": {
+      "reasoning_tokens": 2199
+    },
+    "prompt_tokens": 856,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 3427
+  },
+  "usage_raw": {
+    "completion_tokens": 2571,
+    "completion_tokens_details": {
+      "reasoning_tokens": 2199
+    },
+    "prompt_tokens": 856,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 3427
+  }
+}

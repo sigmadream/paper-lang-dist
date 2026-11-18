@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    static int n;\n    static int ans = 0;\n    static boolean[] col;\n    static boolean[] diag1;\n    static boolean[] diag2;\n\n    static void solve(int r) {\n        if (r == n) {\n            ++ans;\n            return;\n        }\n        for (int c = 0; c < n; ++c) {\n            int d1 = r + c;\n            int d2 = r - c + n - 1;\n            if (col[c] || diag1[d1] || diag2[d2]) continue;\n            col[c] = diag1[d1] = diag2[d2] = true;\n            solve(r + 1);\n            col[c] = diag1[d1] = diag2[d2] = false;\n        }\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        n = sc.nextInt();\n        col = new boolean[n];\n        diag1 = new boolean[2 * n];\n        diag2 = new boolean[2 * n];\n        solve(0);\n        System.out.println(ans);\n    }\n}\n```",
+          "reasoning_content": "We need translate to Java 17. Straightforward.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794992493,
+    "id": "chatcmpl-b32d957a65238dd28cde075af977a8c3",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 280,
+      "completion_tokens_details": {
+        "reasoning_tokens": 11
+      },
+      "prompt_tokens": 634,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "total_tokens": 914
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.000450936,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.3742637999821454,
+  "logical_request_id": "720a0808d3d0f80d875aa94a146df0bac39e69c7388cc417f0d0838bf30c9d7d",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9663\\cpp-via-java\\attempt-05\\step-05\\response_body.txt",
+  "received_at": "2026-11-18T09:01:34.027482+00:00",
+  "request_id": "chatcmpl-b32d957a65238dd28cde075af977a8c3",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    static int n;\n    static int ans = 0;\n    static boolean[] col;\n    static boolean[] diag1;\n    static boolean[] diag2;\n\n    static void solve(int r) {\n        if (r == n) {\n            ++ans;\n            return;\n        }\n        for (int c = 0; c < n; ++c) {\n            int d1 = r + c;\n            int d2 = r - c + n - 1;\n            if (col[c] || diag1[d1] || diag2[d2]) continue;\n            col[c] = diag1[d1] = diag2[d2] = true;\n            solve(r + 1);\n            col[c] = diag1[d1] = diag2[d2] = false;\n        }\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        n = sc.nextInt();\n        col = new boolean[n];\n        diag1 = new boolean[2 * n];\n        diag2 = new boolean[2 * n];\n        solve(0);\n        System.out.println(ans);\n    }\n}\n```",
+  "usage": {
+    "completion_tokens": 280,
+    "completion_tokens_details": {
+      "reasoning_tokens": 11
+    },
+    "prompt_tokens": 634,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 914
+  },
+  "usage_raw": {
+    "completion_tokens": 280,
+    "completion_tokens_details": {
+      "reasoning_tokens": 11
+    },
+    "prompt_tokens": 634,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 914
+  }
+}

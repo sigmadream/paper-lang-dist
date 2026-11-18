@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <string>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    std::vector<int> counts(n + 1, 0);\n    for (int i = 1; i <= n; ++i) {\n        counts[i] = counts[i / 2] + (i % 2);\n    }\n\n    std::string sb;\n    for (int i = 0; i <= n; ++i) {\n        if (i > 0) sb += ' ';\n        sb += std::to_string(counts[i]);\n    }\n    sb += '\\n';\n    std::cout << sb;\n    return 0;\n}\n```",
+          "reasoning_content": "Translate to C++17. Straightforward. Need output space-separated starting from index 0 to N, trailing newline. If no input, return.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794983276,
+    "id": "chatcmpl-40fe1fae85543278062e7bf67ba80bf6",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 209,
+      "completion_tokens_details": {
+        "reasoning_tokens": 33
+      },
+      "prompt_tokens": 543,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 752
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00041369999999999997,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.4760993000818416,
+  "logical_request_id": "a39cd52e6fe0a57ba78f62c7c2c13f42828377e6da1c92a915f4c93f412eca8b",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0338\\cpp-via-java\\attempt-03\\step-06\\response_body.txt",
+  "received_at": "2026-11-18T06:27:56.476829+00:00",
+  "request_id": "chatcmpl-40fe1fae85543278062e7bf67ba80bf6",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n#include <string>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    std::vector<int> counts(n + 1, 0);\n    for (int i = 1; i <= n; ++i) {\n        counts[i] = counts[i / 2] + (i % 2);\n    }\n\n    std::string sb;\n    for (int i = 0; i <= n; ++i) {\n        if (i > 0) sb += ' ';\n        sb += std::to_string(counts[i]);\n    }\n    sb += '\\n';\n    std::cout << sb;\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 209,
+    "completion_tokens_details": {
+      "reasoning_tokens": 33
+    },
+    "prompt_tokens": 543,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 752
+  },
+  "usage_raw": {
+    "completion_tokens": 209,
+    "completion_tokens_details": {
+      "reasoning_tokens": 33
+    },
+    "prompt_tokens": 543,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 752
+  }
+}

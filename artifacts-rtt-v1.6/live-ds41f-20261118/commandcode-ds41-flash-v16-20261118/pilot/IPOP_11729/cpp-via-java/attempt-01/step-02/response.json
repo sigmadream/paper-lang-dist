@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <string>\n#include <cstdlib>\n\nstatic void hanoi(int n, int start, int mid, int end, std::string& out) {\n    if (n == 1) {\n        out.push_back(static_cast<char>('0' + start));\n        out.push_back(' ');\n        out.push_back(static_cast<char>('0' + end));\n        out.push_back('\\n');\n        return;\n    }\n\n    hanoi(n - 1, start, end, mid, out);\n    out.push_back(static_cast<char>('0' + start));\n    out.push_back(' ');\n    out.push_back(static_cast<char>('0' + end));\n    out.push_back('\\n');\n    hanoi(n - 1, mid, start, end, out);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::string line;\n    if (!std::getline(std::cin, line)) return 0;\n\n    int n = std::atoi(line.c_str());\n    int moves = (1 << n) - 1;\n\n    std::string out;\n    out.reserve(static_cast<size_t>(4) * moves + 16);\n\n    out.append(std::to_string(moves));\n    out.push_back('\\n');\n\n    hanoi(n, 1, 2, 3, out);\n\n    std::cout << out;\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 723,
+    "total_tokens": 1134,
+    "completion_tokens": 411,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 96
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 723,
+    "total_tokens": 1134,
+    "completion_tokens": 411,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 96
+    }
+  },
+  "cost_usd": 0.0007101000000000001,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-ccbcccc3b4d4579f2b5255bc23f1321c",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\pilot\\IPOP_11729\\cpp-via-java\\attempt-01\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-ccbcccc3b4d4579f2b5255bc23f1321c",
+    "object": "chat.completion",
+    "created": 1794976378,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\n#include <cstdlib>\n\nstatic void hanoi(int n, int start, int mid, int end, std::string& out) {\n    if (n == 1) {\n        out.push_back(static_cast<char>('0' + start));\n        out.push_back(' ');\n        out.push_back(static_cast<char>('0' + end));\n        out.push_back('\\n');\n        return;\n    }\n\n    hanoi(n - 1, start, end, mid, out);\n    out.push_back(static_cast<char>('0' + start));\n    out.push_back(' ');\n    out.push_back(static_cast<char>('0' + end));\n    out.push_back('\\n');\n    hanoi(n - 1, mid, start, end, out);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::string line;\n    if (!std::getline(std::cin, line)) return 0;\n\n    int n = std::atoi(line.c_str());\n    int moves = (1 << n) - 1;\n\n    std::string out;\n    out.reserve(static_cast<size_t>(4) * moves + 16);\n\n    out.append(std::to_string(moves));\n    out.push_back('\\n');\n\n    hanoi(n, 1, 2, 3, out);\n\n    std::cout << out;\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer exactly one fenced code block C++ source. Need preserve. N<=20, moves up to 1048575, output ~4MB. Use string or ostream. Need C++17 main. Could build string reserve 4*moves+16, append static_cast<char>('0'+). Note sticks 1..3. Use recursion. Return exactly code block no explanation. Ensure no hardcode. Could use ios fast. Let's craft."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 723,
+      "total_tokens": 1134,
+      "completion_tokens": 411,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.7165090000489727,
+  "received_at": "2026-11-18T04:32:59.578186+00:00",
+  "logical_request_id": "4c039f150e6825c94c747a39ca0fcecbba4711891f71ce19708f713fa9c751e0",
+  "execution_class": "direct_api"
+}

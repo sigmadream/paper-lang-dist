@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = map read (words input) :: [Integer]\n  case tokens of\n    [] -> return ()\n    (n:rest)\n      | n <= 0 -> return ()\n      | otherwise ->\n          let m = min n (toInteger (length rest))\n          in if m <= 0\n             then return ()\n             else case rest of\n               [] -> return ()\n               (first:others) ->\n                 let k = fromInteger (m - 1)\n                     step (cur, bestSoFar) y =\n                       let cur' = max y (cur + y)\n                           best' = max bestSoFar cur'\n                       in (cur', best')\n                     (_, best) = foldl' step (first, first) (take k others)\n                 in print best\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 609,
+    "total_tokens": 1946,
+    "completion_tokens": 1337,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1142
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 609,
+    "total_tokens": 1946,
+    "completion_tokens": 1337,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1142
+    }
+  },
+  "cost_usd": 0.0017871,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-d31cdb786cba8464bfd7d6ba9cd39f24",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-haskell\\attempt-04\\step-09\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-d31cdb786cba8464bfd7d6ba9cd39f24",
+    "object": "chat.completion",
+    "created": 1794995156,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = map read (words input) :: [Integer]\n  case tokens of\n    [] -> return ()\n    (n:rest)\n      | n <= 0 -> return ()\n      | otherwise ->\n          let m = min n (toInteger (length rest))\n          in if m <= 0\n             then return ()\n             else case rest of\n               [] -> return ()\n               (first:others) ->\n                 let k = fromInteger (m - 1)\n                     step (cur, bestSoFar) y =\n                       let cur' = max y (cur + y)\n                           best' = max bestSoFar cur'\n                       in (cur', best')\n                     (_, best) = foldl' step (first, first) (take k others)\n                 in print best\n```",
+          "reasoning_content": "We need answer with Haskell source only in fenced code block. Need preserve behavior. Need think about stdin parsing. C++ reads all tokens long long. n=tokens[0], if empty return, if n<=0 return 0 no output. m=min(n, tokens.size()-1); if m<=0 return. Then Kadane over tokens 1..m. Output best newline.\n\nHaskell: read all integers from stdin. Need handle tokens empty -> no output. n<=0 -> no output. m<=0 -> no output. Else process prefix. Since Haskell lazy, okay. Need preserve potential tokens beyond n ignored. Use getContents, words, read maybe. Need output no output for cases. But valid spec N>=1 and N ints. Still preserve behavior incl empty. Need avoid errors if malformed? Not required. Could use readMaybe? Standard only. Simpler.\n\nHaskell code:\n\nmodule Main where\nimport System.IO\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = map read (words input) :: [Integer]? C++ long long but values small. Use Int or Integer. Use Integer safe.\n  case tokens of\n    [] -> return ()\n    (n:rest) ->\n      if n <= 0 then return ()\n      else\n        let m = min n (fromIntegral (length rest))? n Integer; rest length Int. Need convert. let m = min n (toInteger (length rest))\n        in if m <= 0 then return ()\n           else case rest of\n             [] -> return ()\n             (x:_) ->\n               let (best, _) = foldl ... over take (fromIntegral m - 1) rest? Need include first. Since rest length >= m >=1. Let first = head rest; xs = take (fromIntegral m - 1) rest (excluding first? Actually loop i from 2 to m uses tokens[2..m], i.e rest elements after first up to m-1 count). Kadane.\n\nNeed compute cur,best. Use foldl'. Need import Data.List foldl'. \n\nbest=foldl' step (first,first) (take (fromIntegral (m-1)) (tail rest))? But if m=1, take 0. tail rest safe? rest nonempty. We can pattern match rest (y0:ys). Then xs = take (fromIntegral (m-1)) ys. But m-1 Integer -> Int. n<=100000 safe.\n\nfoldl' (\\(cur,best) y -> let cur' = max y (cur + y); best' = max best cur' in (cur',best')) (y0,y0) xs.\n\nThen print best.\n\nNeed ensure no output if n>0 but no tokens: m=0 -> no output. Good.\n\nBut Haskell read on empty? words empty map read [] fine. If invalid? not needed.\n\nPotential output: print best adds newline. Good.\n\nNeed possibly suppress buffering? not relevant.\n\nCould implement with getLine? Better tokens all.\n\nNeed answer exactly one complete source file in fenced code block, no explanation. Ensure module Main and main :: IO ().\n\nLet's craft.\n\nPotential issue: parse n :: Integer then comparisons. length rest toInteger. take conversion.\n\nCode:\n\nmodule Main where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = map read (words input) :: [Integer]\n  case tokens of\n    [] -> return ()\n    (n:rest)\n      | n <= 0 -> return ()\n      | otherwise ->\n          let m = min n (toInteger (length rest))\n          in if m <= 0\n             then return ()\n             else case rest of\n               [] -> return ()\n               (first:others) ->\n                 let k = fromInteger (m - 1)\n                     (_, best) = foldl' step (first, first) (take k others)\n                     step (cur, bestSoFar) y =\n                       let cur' = max y (cur + y)\n                           best' = max bestSoFar cur'\n                       in (cur', best')\n                 in print best\n\nNeed Haskell indentation. step defined in let after using? In Haskell let bindings can refer? We use step in foldl'; define step before or mutual. let k = ...; step ...; (_,best)= foldl' step ... in print best. This is okay recursive? Actually let bindings are recursive, but step uses cur, bestSoFar args. Fine. However step defined after (_, best) maybe let order not matter. Let's write:\n\nlet k = fromInteger (m - 1)\n    step (cur, bestSoFar) y =\n      let cur' = max y (cur + y)\n          best' = max bestSoFar cur'\n      in (cur', best')\n    (_, best) = foldl' step (first, first) (take k others)\nin print best\n\nWorks. Need type annotation? cur Integer. Good.\n\nOne subtlety: C++ m = min(n, tokens.size()-1) where n is int from tokens[0] cast to int. If n huge? spec <=100000. Fine. If tokens[0] maybe > max int? not valid. Using Integer slightly differs but okay. If n negative returns no output. good.\n\nNow final with fenced code block only."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 609,
+      "total_tokens": 1946,
+      "completion_tokens": 1337,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1142
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 12.28482790000271,
+  "received_at": "2026-11-18T09:46:06.640838+00:00",
+  "logical_request_id": "e4c7d99eb142eac4c94d453d09584adb148b7179eaf069240bb1a5c3afab3012",
+  "execution_class": "direct_api"
+}

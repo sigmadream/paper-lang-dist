@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    case words input of\n        (s:_) -> putStrLn (if s == reverse s then \"1\" else \"0\")\n        [] -> return ()\n```",
+          "reasoning_content": "We need answer only Haskell code fenced. Need translate. Need consider stdin behavior: reads one token string, if none output nothing? Program if no input returns 0. Haskell getContents, maybe words. If no token, output nothing. Need main. Simple.\n\nNeed exactly one complete source file in fenced code block no explanation. Use module Main where. main = do input <- getContents; case words input of (s:_) -> putStrLn (if s == reverse s then \"1\" else \"0\"); [] -> return (). That preserves. Could also interact. No explanation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794990462,
+    "id": "chatcmpl-fb99bc290dd8372d7e019716b82b3e4f",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 180,
+      "completion_tokens_details": {
+        "reasoning_tokens": 121
+      },
+      "prompt_tokens": 500,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 680
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.000253104,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.350172200007364,
+  "logical_request_id": "58ce967c84a9f715aa72dcf9a8d5105525c5a86dc44730f6b03c1b57fe9c7d5c",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-03\\step-01\\response_body.txt",
+  "received_at": "2026-11-18T08:27:42.995936+00:00",
+  "request_id": "chatcmpl-fb99bc290dd8372d7e019716b82b3e4f",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    case words input of\n        (s:_) -> putStrLn (if s == reverse s then \"1\" else \"0\")\n        [] -> return ()\n```",
+  "usage": {
+    "completion_tokens": 180,
+    "completion_tokens_details": {
+      "reasoning_tokens": 121
+    },
+    "prompt_tokens": 500,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 680
+  },
+  "usage_raw": {
+    "completion_tokens": 180,
+    "completion_tokens_details": {
+      "reasoning_tokens": 121
+    },
+    "prompt_tokens": 500,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 680
+  }
+}

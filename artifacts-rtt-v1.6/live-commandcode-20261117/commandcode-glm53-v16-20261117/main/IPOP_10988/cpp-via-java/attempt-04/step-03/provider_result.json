@@ -1,0 +1,94 @@
+{
+  "text": "```java\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.io.IOException;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String s = br.readLine();\n        if (s == null) s = \"\";\n        while (!s.isEmpty()) {\n            char c = s.charAt(s.length() - 1);\n            if (c == '\\n' || c == '\\r' || c == ' ' || c == '\\t') {\n                s = s.substring(0, s.length() - 1);\n            } else {\n                break;\n            }\n        }\n        boolean valid = true;\n        for (int i = 0; i < s.length() / 2; i++) {\n            if (s.charAt(i) != s.charAt(s.length() - 1 - i)) {\n                valid = false;\n                break;\n            }\n        }\n        System.out.println(valid ? 1 : 0);\n    }\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 211,
+    "prompt_tokens": 519,
+    "prompt_tokens_details": {
+      "cached_tokens": 320
+    },
+    "total_tokens": 730
+  },
+  "usage_raw": {
+    "completion_tokens": 211,
+    "prompt_tokens": 519,
+    "prompt_tokens_details": {
+      "cached_tokens": 320
+    },
+    "total_tokens": 730
+  },
+  "cost_usd": 0.0012902,
+  "cost_source": "estimated",
+  "request_id": "a336aac9-8215-4e9c-9ed0-8f52f98ca035",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_10988\\cpp-via-java\\attempt-04\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```java\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.io.IOException;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String s = br.readLine();\n        if (s == null) s = \"\";\n        while (!s.isEmpty()) {\n            char c = s.charAt(s.length() - 1);\n            if (c == '\\n' || c == '\\r' || c == ' ' || c == '\\t') {\n                s = s.substring(0, s.length() - 1);\n            } else {\n                break;\n            }\n        }\n        boolean valid = true;\n        for (int i = 0; i < s.length() / 2; i++) {\n            if (s.charAt(i) != s.charAt(s.length() - 1 - i)) {\n                valid = false;\n                break;\n            }\n        }\n        System.out.println(valid ? 1 : 0);\n    }\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794901015,
+    "id": "a336aac9-8215-4e9c-9ed0-8f52f98ca035",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 211,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_05647dc694714639b3a931263f10409d",
+      "trace_id": "400f9266cc0f43bfa8f06f3905923f61"
+    },
+    "usage": {
+      "completion_tokens": 211,
+      "prompt_tokens": 519,
+      "prompt_tokens_details": {
+        "cached_tokens": 320
+      },
+      "total_tokens": 730
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.4274326000013389,
+  "received_at": "2026-11-17T07:36:54.957560+00:00",
+  "logical_request_id": "88dfe42fe75d84d0bb42a79460fc4c05898beb93d06bfa76d0fb86a45bc65a4a",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,94 @@
+{
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint n;\nlong long ans = 0;\nvector<char> col, diag1, diag2;\n\nvoid solve(int r) {\n    if (r == n) { ans++; return; }\n    for (int c = 0; c < n; c++) {\n        if (col[c] || diag1[r + c] || diag2[r - c + n - 1]) continue;\n        col[c] = diag1[r + c] = diag2[r - c + n - 1] = 1;\n        solve(r + 1);\n        col[c] = diag1[r + c] = diag2[r - c + n - 1] = 0;\n    }\n}\n\nint main() {\n    string line;\n    if (!getline(cin, line)) return 0;\n    string trimmed;\n    for (char ch : line) if (!isspace((unsigned char)ch)) trimmed += ch;\n    if (trimmed.empty()) return 0;\n    n = stoi(trimmed);\n    col.assign(n, 0);\n    diag1.assign(2 * n - 1, 0);\n    diag2.assign(2 * n - 1, 0);\n    solve(0);\n    cout << ans << \"\\n\";\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 283,
+    "prompt_tokens": 677,
+    "prompt_tokens_details": {
+      "cached_tokens": 320
+    },
+    "total_tokens": 960
+  },
+  "usage_raw": {
+    "completion_tokens": 283,
+    "prompt_tokens": 677,
+    "prompt_tokens_details": {
+      "cached_tokens": 320
+    },
+    "total_tokens": 960
+  },
+  "cost_usd": 0.0018282,
+  "cost_source": "estimated",
+  "request_id": "649c8543-b2c2-4abd-ad44-8fa048ec842f",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_9663\\cpp-via-java\\attempt-01\\step-08\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint n;\nlong long ans = 0;\nvector<char> col, diag1, diag2;\n\nvoid solve(int r) {\n    if (r == n) { ans++; return; }\n    for (int c = 0; c < n; c++) {\n        if (col[c] || diag1[r + c] || diag2[r - c + n - 1]) continue;\n        col[c] = diag1[r + c] = diag2[r - c + n - 1] = 1;\n        solve(r + 1);\n        col[c] = diag1[r + c] = diag2[r - c + n - 1] = 0;\n    }\n}\n\nint main() {\n    string line;\n    if (!getline(cin, line)) return 0;\n    string trimmed;\n    for (char ch : line) if (!isspace((unsigned char)ch)) trimmed += ch;\n    if (trimmed.empty()) return 0;\n    n = stoi(trimmed);\n    col.assign(n, 0);\n    diag1.assign(2 * n - 1, 0);\n    diag2.assign(2 * n - 1, 0);\n    solve(0);\n    cout << ans << \"\\n\";\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794901122,
+    "id": "649c8543-b2c2-4abd-ad44-8fa048ec842f",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 283,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_8e468a0650f9444f88c535a1cd7152cc",
+      "trace_id": "921c5462a8bc4e0c834964714528b9e3"
+    },
+    "usage": {
+      "completion_tokens": 283,
+      "prompt_tokens": 677,
+      "prompt_tokens_details": {
+        "cached_tokens": 320
+      },
+      "total_tokens": 960
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.716889999981504,
+  "received_at": "2026-11-17T07:38:41.836145+00:00",
+  "logical_request_id": "3649c65d50f17cbfa39215f93a8ac3f7396bb2554eb94e79dc743f9c3d515f3b",
+  "execution_class": "direct_api"
+}

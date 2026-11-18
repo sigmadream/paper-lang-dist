@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```prolog\n:- use_module(library(readutil)).\n\ngcd(A, 0, A) :-\n    A > 0.\ngcd(A, B, G) :-\n    B > 0,\n    R is A mod B,\n    gcd(B, R, G).\n\nremove_empty([], []).\nremove_empty([H|T], R) :-\n    ( H == \"\" ->\n        remove_empty(T, R)\n    ;\n        R = [H|R1],\n        remove_empty(T, R1)\n    ).\n\nmain :-\n    read_line_to_string(user_input, Line),\n    split_string(Line, \" \\t\\r\\n\", \" \\t\\r\\n\", Parts),\n    remove_empty(Parts, Tokens),\n    Tokens = [AStr, BStr|_],\n    atom_string(AA, AStr),\n    atom_number(AA, A),\n    atom_string(BA, BStr),\n    atom_number(BA, B),\n    gcd(A, B, G),\n    L is (A // G) * B,\n    format(\"~d~n~d~n\", [G, L]).\n```",
+          "reasoning_content": "We need answer only code block Prolog. Need translate. Need define main/0, no init directives. Read stdin two naturals, output gcd and lcm. SWI-Prolog. Need preserve complete stdin/stdout. Implement read numbers. Could use read_line_to_string or read. Use read_line_to_codes? We'll produce robust.\n\nmain :- read_line_to_string(user_input, Line), split_string(Line, \" \\t\\r\\n\", \" \\t\\r\\n\", Parts), maplist(number_string? Actually Parts strings). Need handle maybe two tokens same line. Spec first line two natural. We can use read_line_to_string then split_string, exclude empty, maplist atom_number? SWI has atom_number/2. Parts are strings (not atoms) but atom_number accepts atom or string? SWI atom_number(+Atom, -Number) accepts atom? Docs atom_number(+Atom,-Number), Atom text. Strings maybe accepted? safer use number_codes after atom_codes. Or use read/1? read requires period. So tokenize.\n\nCould use read_line_to_string, split_string(Line, \" \\t\", \" \\t\", [AStr,BStr]), number_string(A,AStr) maybe number_string/2? SWI has number_string/2? Yes number_string(?Number, ?String) in SWI? There is number_string/2. Let's avoid uncertainty: atom_number(AStrAtom,A) after atom_string. atom_string(Atom, String). Use maplist.\n\nSimpler:\n:- use_module(library(readutil)). But SWI read_line_to_string available built-in? It's in readutil? In SWI, read_line_to_codes/2 from readutil maybe autoload. Use read_line_to_string from readutil? We can use read_line_to_codes. Need not initialization. :- use_module(library(readutil)). That's directive not initialization; allowed? \"do not add initialization directives\" use_module is directive but not initialization. Fine. Alternatively with SWI built-ins.\n\nmain :-\n    read_line_to_string(user_input, Line),\n    split_string(Line, \" \\t\\r\\n\", \" \\t\\r\\n\", Parts),\n    exclude(=(\"\"), Parts, [AS,BS|_]), % with strings? =(\"\") works? Empty string \"\".\n    atom_string(AA, AS), atom_number(AA, A), atom_string(BA, BS), atom_number(BA, B),\n    gcd(A,B,G),\n    L is (A // G) * B,\n    format(\"~w~n~w~n\", [G,L]).\n\nNeed define gcd predicate. Use Euclidean with recursion:\ngcd(A,0,A) :- A > 0.\ngcd(A,B,G) :- B > 0, R is A mod B, gcd(B,R,G).\nInput positive. Could handle B=0.\n\nNeed careful if split_string returns list with empty tokens? split_string with separators and pad chars? In SWI, split_string(String, Separators, PadChars, SubStrings). This usually removes? Actually with pad \" \\t\\r\\n\" maybe empty tokens filtered? Fine. Pattern [AS,BS|_]. If extra whitespace maybe okay.\n\nNeed perhaps output exact no extra. format.\n\nWe need return exactly one complete source file fenced code block, no explanation. Ensure no initialization directives. Use module main? The spec: \"Haskell: module Main and main :: IO (). Prolog: SWI-Prolog, define main/0; evaluator invokes main; do not add initialization directives.\" No need module directive, but can include. Usually source only main.\n\nNeed consider query invocation main; Prolog output. Should be good.\n\nBut let's ensure number parsing with read_line_to_string when EOF? valid input. Maybe A B on first line. Use split_string. If trailing newline, line without newline? read_line_to_string removes newline? It returns line excluding newline? Actually read_line_to_string reads up to newline and returns string without newline? In SWI, read_line_to_string(Stream, String) reads line excluding newline? Let's recall: read_line_to_string/2 \"Read the next line as a string. The newline is removed.\" It may terminate. Good.\n\nPotential issue split_string with pad chars and separator same. Example split_string(\"24 18\", \" \", \" \", Parts) gives [\"24\",\"18\"]. Fine.\n\nUse atom_number for parse: atom_number('24', A). Need atom_string(Atom, String) correct order? SWI atom_string(?Atom, ?String). Yes.\n\nCould use number_codes for robust:\natom_codes(Atom, AS)\nnumber_codes(A, AS)\nActually AS is string? In SWI, strings and code lists distinct. atom_string easier.\n\nLet's craft code:\n\nmain :-\n    read_line_to_string(user_input, Line),\n    split_string(Line, \" \\t\\r\\n\", \" \\t\\r\\n\", Parts),\n    include([P]>>(P \\= \"\"), Parts, Tokens),  % lambda and include? Simpler avoid.\n    Tokens = [AStr, BStr|_],\n    atom_string(AA, AStr),\n    atom_number(AA, A),\n    atom_string(BA, BStr),\n    atom_number(BA, B),\n    gcd(A, B, G),\n    L is (A // G) * B,\n    format(\"~d~n~d~n\", [G, L]).\n\nBut if split_string leaves empty strings, Tokens could begin \"\". With leading spaces? Input likely no leading. But robust use exclude(==(\"\"), Parts, Tokens). The predicate exclude/3 imported from apply. Is it autoloaded? SWI autoloads apply? Usually yes. Could avoid by custom remove_empty.\n\nremove_empty([], []).\nremove_empty([H|T], R) :-\n  ( H == \"\" -> remove_empty(T, R) ; R = [H|R1], remove_empty(T,R1) ).\n\nUse string comparison H == \"\". In Prolog, == compares terms. Strings are terms; \"\" empty string. Fine.\n\nread_line_to_string built-in in SWI? Let's verify: In SWI-Prolog, read_line_to_string/2 is built-in? It is in library(readutil), maybe autoloaded. It might need :- use_module(library(readutil)). Let's include that. Directive use_module not initialization. Good.\n\nBut the prompt says \"do not add initialization directives\"; use_module is not initialization. Safe? Might be okay. Could use read_line_to_codes from readutil too.\n\nAlternative use read/1 with input terminated period impossible. So need readutil.\n\nFinal code block.\n\nNeed maybe include module? If use_module library, then no. Define main/0.\n\nLet's produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794989039,
+    "id": "chatcmpl-75179c9707bfd78aeef99256a45c1bb1",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 1671,
+      "completion_tokens_details": {
+        "reasoning_tokens": 1433
+      },
+      "prompt_tokens": 487,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 2158
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0021136679999999995,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 14.895889700041153,
+  "logical_request_id": "56c53d6a152a0189dd42b6dd470a3c00cb2af5047bf656a294a73e188130064c",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2609\\cpp-via-prolog\\attempt-04\\step-01\\response_body.txt",
+  "received_at": "2026-11-18T08:04:11.986891+00:00",
+  "request_id": "chatcmpl-75179c9707bfd78aeef99256a45c1bb1",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```prolog\n:- use_module(library(readutil)).\n\ngcd(A, 0, A) :-\n    A > 0.\ngcd(A, B, G) :-\n    B > 0,\n    R is A mod B,\n    gcd(B, R, G).\n\nremove_empty([], []).\nremove_empty([H|T], R) :-\n    ( H == \"\" ->\n        remove_empty(T, R)\n    ;\n        R = [H|R1],\n        remove_empty(T, R1)\n    ).\n\nmain :-\n    read_line_to_string(user_input, Line),\n    split_string(Line, \" \\t\\r\\n\", \" \\t\\r\\n\", Parts),\n    remove_empty(Parts, Tokens),\n    Tokens = [AStr, BStr|_],\n    atom_string(AA, AStr),\n    atom_number(AA, A),\n    atom_string(BA, BStr),\n    atom_number(BA, B),\n    gcd(A, B, G),\n    L is (A // G) * B,\n    format(\"~d~n~d~n\", [G, L]).\n```",
+  "usage": {
+    "completion_tokens": 1671,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1433
+    },
+    "prompt_tokens": 487,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 2158
+  },
+  "usage_raw": {
+    "completion_tokens": 1671,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1433
+    },
+    "prompt_tokens": 487,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 2158
+  }
+}

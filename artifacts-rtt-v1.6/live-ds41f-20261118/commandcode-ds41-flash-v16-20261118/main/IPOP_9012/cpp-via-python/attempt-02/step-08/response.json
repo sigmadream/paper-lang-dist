@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::vector<std::string> data;\n    std::string token;\n    while (std::cin >> token) {\n        data.push_back(token);\n    }\n\n    if (data.empty()) {\n        return 0;\n    }\n\n    int t = std::stoi(data[0]);\n    std::vector<std::string> result;\n\n    for (int i = 1; i <= t; ++i) {\n        std::string s = (i < static_cast<int>(data.size())) ? data[i] : \"\";\n        int balance = 0;\n        bool valid = true;\n\n        for (char c : s) {\n            if (c == '(') {\n                ++balance;\n            } else {\n                --balance;\n            }\n\n            if (balance < 0) {\n                valid = false;\n                break;\n            }\n        }\n\n        if (balance != 0) {\n            valid = false;\n        }\n\n        result.push_back(valid ? \"YES\" : \"NO\");\n    }\n\n    for (int i = 0; i < static_cast<int>(result.size()); ++i) {\n        if (i > 0) {\n            std::cout << '\\n';\n        }\n        std::cout << result[i];\n    }\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 616,
+    "total_tokens": 1030,
+    "completion_tokens": 414,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 112
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 616,
+    "total_tokens": 1030,
+    "completion_tokens": 414,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 112
+    }
+  },
+  "cost_usd": 0.0006815999999999999,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-ee507fa184f0809b5b09036cbb390d05",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-python\\attempt-02\\step-08\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-ee507fa184f0809b5b09036cbb390d05",
+    "object": "chat.completion",
+    "created": 1794982288,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::vector<std::string> data;\n    std::string token;\n    while (std::cin >> token) {\n        data.push_back(token);\n    }\n\n    if (data.empty()) {\n        return 0;\n    }\n\n    int t = std::stoi(data[0]);\n    std::vector<std::string> result;\n\n    for (int i = 1; i <= t; ++i) {\n        std::string s = (i < static_cast<int>(data.size())) ? data[i] : \"\";\n        int balance = 0;\n        bool valid = true;\n\n        for (char c : s) {\n            if (c == '(') {\n                ++balance;\n            } else {\n                --balance;\n            }\n\n            if (balance < 0) {\n                valid = false;\n                break;\n            }\n        }\n\n        if (balance != 0) {\n            valid = false;\n        }\n\n        result.push_back(valid ? \"YES\" : \"NO\");\n    }\n\n    for (int i = 0; i < static_cast<int>(result.size()); ++i) {\n        if (i > 0) {\n            std::cout << '\\n';\n        }\n        std::cout << result[i];\n    }\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block cpp. Need translate. Need consider output exact? Source writes join no trailing newline. Accept. Need produce C++17 main. Read all tokens. If no return. T then loop i 1..T. Need s if i<data.size else \"\". balance int. For else assumes ')' but could any? Spec only parentheses. Valid if never negative and zero at end. Output lines join with newline no final. Use cout maybe no trailing newline. Exactly one source fenced. No explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 616,
+      "total_tokens": 1030,
+      "completion_tokens": 414,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 112
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.822501399903558,
+  "received_at": "2026-11-18T06:11:30.689785+00:00",
+  "logical_request_id": "0abd181fc1fefe48823b6b578707e97de8f60d1fb64c9a93bba409af1ef2c68a",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nstring out;\n\nvoid appendInt(long long x) {\n    char buf[24];\n    int len = 0;\n\n    if (x == 0) {\n        buf[len++] = '0';\n    } else {\n        while (x > 0) {\n            buf[len++] = char('0' + (x % 10));\n            x /= 10;\n        }\n        reverse(buf, buf + len);\n    }\n\n    out.append(buf, len);\n}\n\nvoid hanoi(int n, int start, int mid, int end) {\n    if (n == 1) {\n        appendInt(start);\n        out.push_back(' ');\n        appendInt(end);\n        out.push_back('\\n');\n        return;\n    }\n\n    hanoi(n - 1, start, end, mid);\n\n    appendInt(start);\n    out.push_back(' ');\n    appendInt(end);\n    out.push_back('\\n');\n\n    hanoi(n - 1, mid, start, end);\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    long long count = (1LL << n) - 1;\n\n    out.reserve(static_cast<size_t>(count) * 6 + 32);\n\n    appendInt(count);\n    out.push_back('\\n');\n\n    hanoi(n, 1, 2, 3);\n\n    cout << out;\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer exactly one fenced code block C++ source. Need preserve behavior. Need maybe N up to20, moves ~1,048,575 lines, StringBuilder equivalent. C++ iostream with sync off or build string. Need output first count (1L<<n)-1, then moves. Recursion as given. Need include bits/stdc++.h. main reads int if none return. Since valid input. Could use string reserve maybe ~? Each line <=5 chars. n=20 moves 1,048,575, about 5MB. Fine. Need no explanation. Ensure exactly source file in fenced code block. Use std::string result. For appending ints, could use std::to_string each call expensive but okay 1m. Better custom append_int for speed. But simple okay. Need preserve behavior for every valid input. n>=1. Count as long long. hanoi n. For n=1 output \"1\\n1 3\\n\".\n\nPotential nuance Java recursion if n? okay. Implement.\n\nLet's craft C++17.\n\n```\n#include <bits/stdc++.h>\nusing namespace std;\nstring out;\nvoid appendInt(long long x){ char buf[24]; int len=0; if(x==0){out.push_back('0'); return;} ...}\nvoid hanoi(int n,int start,int mid,int end){\n if(n==1){ appendInt(start); out.push_back(' '); appendInt(end); out.push_back('\\n'); return;}\n hanoi(n-1,start,end,mid);\n appendInt(start); out.push_back(' '); appendInt(end); out.push_back('\\n');\n hanoi(n-1,mid,start,end);\n}\nint main(){ios::sync_with_stdio(false);cin.tie(nullptr);\n int n; if(!(cin>>n)) return 0;\n long long count=(1LL<<n)-1;\n out.reserve(... maybe compute count*5 + 20);\n appendInt(count); out.push_back('\\n');\n hanoi(n,1,2,3);\n cout<<out; return 0;\n}\n```\n\nNeed reserve: total lines moves * up to 4 chars? For n=20, each line \"1 2\\n\" 4, max \"10 20\\n\" 6. count ~1m, reserve count*6+20 about 6.3MB. okay. Could reserve count*6+32. Use size_t. Avoid overflow no.\n\nNeed appendInt with non-negative only, but maybe implement general. n count positive. start/end positive.\n\nCustom appendInt:\n```\nvoid appendInt(long long x){\n char buf[24];\n int idx=0;\n if(x==0) buf[idx++]='0';\n else { while(x>0){buf[idx++]='0'+x%10; x/=10;} reverse(buf,buf+idx);}\n out.append(buf, idx);\n}\n```\nBut reverse needs algorithm included. okay.\n\nPotential issue out.append(buf, idx) char* length okay.\n\nReturn exactly code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794977508,
+    "id": "chatcmpl-9f53259714b3aea193bc5cdc58aa62b7",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 947,
+      "completion_tokens_details": {
+        "reasoning_tokens": 624
+      },
+      "prompt_tokens": 695,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1642
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0013448999999999998,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 7.553947699954733,
+  "logical_request_id": "43d883835df5fa7e44360b4b5873755c7bc4763365e4474c3cb5c5a9840624b5",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_11729\\cpp-via-java\\attempt-05\\step-02\\response_body.txt",
+  "received_at": "2026-11-18T04:51:54.166029+00:00",
+  "request_id": "chatcmpl-9f53259714b3aea193bc5cdc58aa62b7",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nstring out;\n\nvoid appendInt(long long x) {\n    char buf[24];\n    int len = 0;\n\n    if (x == 0) {\n        buf[len++] = '0';\n    } else {\n        while (x > 0) {\n            buf[len++] = char('0' + (x % 10));\n            x /= 10;\n        }\n        reverse(buf, buf + len);\n    }\n\n    out.append(buf, len);\n}\n\nvoid hanoi(int n, int start, int mid, int end) {\n    if (n == 1) {\n        appendInt(start);\n        out.push_back(' ');\n        appendInt(end);\n        out.push_back('\\n');\n        return;\n    }\n\n    hanoi(n - 1, start, end, mid);\n\n    appendInt(start);\n    out.push_back(' ');\n    appendInt(end);\n    out.push_back('\\n');\n\n    hanoi(n - 1, mid, start, end);\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    long long count = (1LL << n) - 1;\n\n    out.reserve(static_cast<size_t>(count) * 6 + 32);\n\n    appendInt(count);\n    out.push_back('\\n');\n\n    hanoi(n, 1, 2, 3);\n\n    cout << out;\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 947,
+    "completion_tokens_details": {
+      "reasoning_tokens": 624
+    },
+    "prompt_tokens": 695,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1642
+  },
+  "usage_raw": {
+    "completion_tokens": 947,
+    "completion_tokens_details": {
+      "reasoning_tokens": 624
+    },
+    "prompt_tokens": 695,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1642
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n\nmain :-\n    ( read_line_to_string(user_input, Line1) ->\n        ( Line1 == end_of_file ->\n            true\n        ; number_string(N, Line1),\n          read_line_to_string(user_input, Line2),\n          split_string(Line2, \" \", \" \", Parts),\n          maplist(number_string, Nums0, Parts),\n          length(Nums0, N),\n          max_subarray(Nums0, Best),\n          format(\"~d~n\", [Best])\n        )\n    ; true ).\n\nmax_subarray([First|Rest], Best) :-\n    foldl(step, Rest, cur-First, _-Best).\n\nstep(X, cur-Cur, cur-NewCur-BestSoFar) :-\n    Cur1 is Cur + X,\n    ( X > Cur1 -> NewCur = X ; NewCur = Cur1 ),\n    BestSoFar = NewCur.\n\nstep(X, cur-Cur, cur-NewCur-BestSoFar) :-\n    Cur1 is Cur + X,\n    X =< Cur1,\n    NewCur = Cur1,\n    NewCur > Cur,\n    BestSoFar = NewCur.\n\nstep(_X, cur-Cur, cur-Cur-Cur).\n```\n\nWait, this fold approach doesn't track the best across steps correctly. Let me rewrite properly:\n\n```prolog\n:- module(main, [main/0]).\n\nmain :-\n    ( read_line_to_string(user_input, Line1) ->\n        ( Line1 == end_of_file ->\n            true\n        ; split_string(Line1, \" \", \" \", NP),\n          NP \\= [],\n          last(NP, NStr),\n          number_string(N, NStr),\n          read_line_to_string(user_input, Line2),\n          split_string(Line2, \" \", \" \", Parts),\n          maplist(number_string, Nums, Parts),\n          length(Nums, N),\n          kadane(Nums, Best),\n          format(\"~d~n\", [Best])\n        )\n    ; true ).\n\nkadane([First|Rest], Best) :-\n    foldl(kstep, Rest, First-First, _-Best).\n\nkstep(X, Cur-Best, NewCur-NewBest) :-\n    Cur1 is Cur + X,\n    ( X > Cur1 -> NewCur = X ; NewCur = Cur1 ),\n    ( NewCur > Best -> NewBest = NewCur ; NewBest = Best ).\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794899019,
+    "id": "661df85f-43a7-4397-8e0e-5edb9b5ff7f5",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 513,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_77d4f6b20fb14a20801d97ec9fe55a38",
+      "trace_id": "8af9233f83a84dcda132f60cde42ff30"
+    },
+    "usage": {
+      "completion_tokens": 513,
+      "prompt_tokens": 530,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 1043
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0025614400000000003,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 4.1356420000083745,
+  "logical_request_id": "57f42e9d4af19f06001d029898b2aa195820d2cc86023f1dd41c4393bfdb109c",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0053\\cpp-via-prolog\\attempt-02\\step-05\\response_body.txt",
+  "received_at": "2026-11-17T07:03:38.883115+00:00",
+  "request_id": "661df85f-43a7-4397-8e0e-5edb9b5ff7f5",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```prolog\n:- module(main, [main/0]).\n\nmain :-\n    ( read_line_to_string(user_input, Line1) ->\n        ( Line1 == end_of_file ->\n            true\n        ; number_string(N, Line1),\n          read_line_to_string(user_input, Line2),\n          split_string(Line2, \" \", \" \", Parts),\n          maplist(number_string, Nums0, Parts),\n          length(Nums0, N),\n          max_subarray(Nums0, Best),\n          format(\"~d~n\", [Best])\n        )\n    ; true ).\n\nmax_subarray([First|Rest], Best) :-\n    foldl(step, Rest, cur-First, _-Best).\n\nstep(X, cur-Cur, cur-NewCur-BestSoFar) :-\n    Cur1 is Cur + X,\n    ( X > Cur1 -> NewCur = X ; NewCur = Cur1 ),\n    BestSoFar = NewCur.\n\nstep(X, cur-Cur, cur-NewCur-BestSoFar) :-\n    Cur1 is Cur + X,\n    X =< Cur1,\n    NewCur = Cur1,\n    NewCur > Cur,\n    BestSoFar = NewCur.\n\nstep(_X, cur-Cur, cur-Cur-Cur).\n```\n\nWait, this fold approach doesn't track the best across steps correctly. Let me rewrite properly:\n\n```prolog\n:- module(main, [main/0]).\n\nmain :-\n    ( read_line_to_string(user_input, Line1) ->\n        ( Line1 == end_of_file ->\n            true\n        ; split_string(Line1, \" \", \" \", NP),\n          NP \\= [],\n          last(NP, NStr),\n          number_string(N, NStr),\n          read_line_to_string(user_input, Line2),\n          split_string(Line2, \" \", \" \", Parts),\n          maplist(number_string, Nums, Parts),\n          length(Nums, N),\n          kadane(Nums, Best),\n          format(\"~d~n\", [Best])\n        )\n    ; true ).\n\nkadane([First|Rest], Best) :-\n    foldl(kstep, Rest, First-First, _-Best).\n\nkstep(X, Cur-Best, NewCur-NewBest) :-\n    Cur1 is Cur + X,\n    ( X > Cur1 -> NewCur = X ; NewCur = Cur1 ),\n    ( NewCur > Best -> NewBest = NewCur ; NewBest = Best ).\n```",
+  "usage": {
+    "completion_tokens": 513,
+    "prompt_tokens": 530,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1043
+  },
+  "usage_raw": {
+    "completion_tokens": 513,
+    "prompt_tokens": 530,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1043
+  }
+}

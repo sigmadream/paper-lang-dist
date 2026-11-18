@@ -1,0 +1,73 @@
+{
+  "payload": {
+    "generation": {
+      "max_tokens": 16384,
+      "reasoning_effort": "low",
+      "temperature": 0.6,
+      "top_p": 0.95
+    },
+    "logical_request": {
+      "campaign": "commandcode-glm53-v16-20261117",
+      "phase": "main",
+      "problem": "LC_0062",
+      "repeat": 5,
+      "route": "cpp-via-java",
+      "step": 4
+    },
+    "messages": [
+      {
+        "content": "Translate the supplied program to the requested language, preserving its complete stdin/stdout behavior for every valid input in the specification. Return exactly one complete source file in one fenced code block, with no explanation. Use only the standard libraries shipped with the specified toolchain. C++: C++17 with main(). Haskell: GHC, module Main and main :: IO (). Prolog: SWI-Prolog, define main/0; the evaluator invokes main; do not add initialization directives. Python: Python 3, one script that reads stdin and writes stdout. Java: Java 17, one file declaring public class Main with public static void main. Preserve required algorithmic constraints and output ordering. Do not hard-code examples.",
+        "role": "system"
+      },
+      {
+        "content": "Source language: java\nTarget language: cpp\nSpecification:\n# LC_0062: Unique Paths\n\nM×N 격자의 좌상단에서 우하단까지 오른쪽 또는 아래로만 이동하는 경로 수를 구한다.\n\n## 제약\n\n1<=M,N<=100; 최종 답은 2×10^9 이하.\n\n## 표준입출력 계약\n\n첫 줄 M N.\n출력은 정수 하나 또는 공백으로 구분한 정수 배열이다. 참/거짓은 각각 1/0으로 출력한다. 인덱스는 0부터 시작한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[공식 명세](https://leetcode.com/problems/unique-paths/)\n\nPublic examples:\n[{\"input\": \"3 7\\n\", \"output\": \"28\\n\"}]\nSource code:\nimport java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StringTokenizer st = new StringTokenizer(br.readLine());\n        int m = Integer.parseInt(st.nextToken());\n        int n = Integer.parseInt(st.nextToken());\n        long[] dp = new long[n];\n        Arrays.fill(dp, 1L);\n        for (int i = 1; i < m; i++)\n            for (int j = 1; j < n; j++)\n                dp[j] += dp[j - 1];\n        System.out.println(dp[n - 1]);\n    }\n}",
+        "role": "user"
+      }
+    ],
+    "model": "zai-org/GLM-5.3"
+  },
+  "provider": {
+    "allowed_response_models": [],
+    "auth": {
+      "api_key_env": "CMD_API_KEY",
+      "type": "bearer"
+    },
+    "base_url": "https://api.commandcode.ai/provider/v1",
+    "cost_cap_usd": 50,
+    "generation": {
+      "max_tokens": 16384,
+      "reasoning_effort": "low",
+      "temperature": 0.6,
+      "top_p": 0.95
+    },
+    "generation_profile": {
+      "name": "commandcode-glm53-v16-low-16384",
+      "option_values": {
+        "reasoning_effort": [
+          "low"
+        ]
+      },
+      "supported_options": [
+        "temperature",
+        "top_p",
+        "max_tokens",
+        "reasoning_effort"
+      ]
+    },
+    "max_calls": 3600,
+    "max_input_tokens": 32768,
+    "max_request_cost_usd": 0.25,
+    "max_transport_attempts": 10800,
+    "model": "zai-org/GLM-5.3",
+    "pricing": {
+      "cached_input_per_million": 0.26,
+      "input_per_million": 1.4,
+      "output_per_million": 4.4
+    },
+    "protocol": "chat_completions",
+    "provider": "compatible",
+    "request_path": "/chat/completions",
+    "request_timeout": 180,
+    "retries": 2
+  }
+}

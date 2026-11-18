@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.List (sort)\nimport Data.Char (isSpace)\n\nparseInts :: BS.ByteString -> [Int]\nparseInts bs =\n  let s = BS.dropWhile isSpace bs\n  in if BS.null s\n       then []\n       else case BS.readInt s of\n              Just (x, rest) -> x : parseInts rest\n              Nothing -> []\n\ncountPlacements :: Int -> [Int] -> Int\ncountPlacements d xs =\n  case xs of\n    [] -> 0\n    (h:hs) -> go 1 h hs\n  where\n    go cnt _ [] = cnt\n    go cnt prev (y:ys)\n      | y - prev >= d = go (cnt + 1) y ys\n      | otherwise     = go cnt prev ys\n\nmaxMinDistance :: [Int] -> Int -> Int\nmaxMinDistance homes c = search 1 (last homes - head homes) 0\n  where\n    search lo hi best\n      | lo > hi = best\n      | otherwise =\n          let mid = lo + (hi - lo) `div` 2\n          in if countPlacements mid homes >= c\n               then search (mid + 1) hi mid\n               else search lo (mid - 1) best\n\nmain :: IO ()\nmain = do\n  input <- BS.getContents\n  case parseInts input of\n    (n:c:rest) -> do\n      let homes = sort (take n rest)\n      print (maxMinDistance homes c)\n    _ -> return ()\n```",
+          "reasoning_content": "We need answer only Haskell code. Need translate. Need consider performance N 200k. Simple binary search O(N log range) fine Haskell ~ 200k*30=6M. Need parse. Use ByteString maybe. Need standard libraries: Data.List sort. Parsing via words maybe efficient enough for 200k+2 tokens. Use ByteString.Char8? Standard containers? base has Data.List.sort, System.IO. Read maybe. Use ByteString for speed. Need output.\n\nNeed preserve. Algorithm: read n c, list homes length n sorted. Binary search left=1 right=max-min. count placements with gap >= d: count starts 1 prev first. In Haskell implement countD :: Int -> [Int] -> Int maybe tail recursion. Count if x - prev >= d then count+1 prev=x.\n\nBinary search inclusive. answer. n>=2 c>=2. Could use Int (64-bit on GHC likely). Coordinates 1e9 differences fit Int. Fine.\n\nNeed import qualified Data.ByteString.Char8 as BS. Read all. parse ints. Could use BS.readInt. Simpler: map (read . BS.unpack) . BS.words but slower okay 200k. But to be safe use readInts.\n\nImplement parseInts :: BS.ByteString -> [Int] using BS.readInt repeatedly. Need handle negatives? coords nonnegative. N C positive. BS.readInt returns Maybe (Int, ByteString). Function:\nreadInts bs = case BS.readInt bs of\n Nothing -> []\n Just (x, rest) -> x : readInts (BS.dropWhile (== ' ')?) Actually BS.readInt skips leading spaces? ByteString.Char8.readInt: reads optional sign and digits, doesn't skip whitespace? I think readInt requires start with digit? Let's recall Data.ByteString.Char8.readInt: \"readInt b returns first integer in b and remaining bytes\" It may skip leading spaces? Actually readInt reads optional sign then digits, returns Nothing if no parse. It doesn't drop leading whitespace. Need dropWhile isSpace before. Use BS.dropWhile (<= ' ')? Simpler use words then read. 200k is fine. `let nums = map (read . BS.unpack) (BS.words input) :: [Int]`. This allocates strings but okay 200k. Haskell maybe fine.\n\nNeed ensure no import conflict. Code:\n\nmodule Main (main) where\nimport qualified Data.ByteString.Char8 as BS\nimport Data.List (sort)\n\ncountPlacements :: Int -> [Int] -> Int\ncountPlacements d xs =\n  case xs of\n    [] -> 0\n    (h:hs) -> go 1 h hs\n  where\n    go cnt _ [] = cnt\n    go cnt prev (y:ys)\n      | y - prev >= d = go (cnt+1) y ys\n      | otherwise = go cnt prev ys\n\nmain = do\n input <- BS.getContents\n let nums = map (read . BS.unpack) (BS.words input) :: [Int]\n case nums of\n   (n:c:rest) -> let homes = sort (take n rest)\n                     lo0 = 1\n                     hi0 = last homes - head homes\n                     ans = search lo0 hi0 homes c\n                 in print ans\n   _ -> return ()\n where\n   search lo hi homes c\n     | lo > hi = ? Need answer. Better define recursive with acc.\nUse binary search:\nsearch lo hi best\n  | lo > hi = best\n  | otherwise =\n      let mid = lo + (hi-lo) `div` 2\n      in if countPlacements mid homes >= c\n           then search (mid+1) hi mid\n           else search lo (mid-1) best\nThen ans = search 1 (last-h first) 0 homes c. Since c>=2 and distinct.\n\nNeed avoid `head`/`last` maybe fine. homes nonempty. We can pattern match to avoid head? n>=2. Fine.\n\nPotential performance: `last homes` O(n), head O(1). sort O(n log n). Count traverses list each time. Fine.\n\nNeed output newline. print ans gives newline.\n\nNeed ensure `where` in main with search using countPlacements. In do let? We can define local function before main at top-level maybe easier:\nbinarySearch :: [Int] -> Int -> Int\nbinarySearch homes c = search 1 (last homes - head homes) 0\n  where ...\nBut countPlacements uses. Then main.\n\nNeed parse `read` inferred Int from nums annotation. BS.unpack each word. Use `read` may throw but valid.\n\nCould optimize parsing using readInts. Might be safer performance? 200k words with read not too bad but could be okay. Online judges for Haskell maybe time. We can implement readInts with BS.readInt and dropWhile. Let's decide robust.\n\nImplement parseInts:\nparseInts :: BS.ByteString -> [Int]\nparseInts bs =\n  case BS.unreadInt bs? no.\nNeed skip whitespace:\nparseInts bs =\n  let bs' = BS.dropWhile isSpace bs\n  in if BS.null bs' then []\n     else case BS.readInt bs' of\n        Nothing -> []\n        Just (x, rest) -> x : parseInts rest\nwhere isSpace c = c == ' ' || c == '\\n' || c == '\\r' || c == '\\t'\nBut BS.readInt doesn't skip leading spaces; we drop before. Rest starts at char after number maybe whitespace, next call drops. Good. For negative? BS.readInt handles '-'? I think yes maybe. Coordinates nonnegative. N,C. Good.\n\nNeed type annotation Int? BS.readInt returns Maybe (Int, ByteString) for Char8 version I think specialized Integer? Let's recall Data.ByteString.Char8.readInt :: ByteString -> Maybe (Int, ByteString). Yes. Good.\n\nCould define `isSpace` uses Char. Need import Data.Char (isSpace). Use BS.dropWhile isSpace? Data.ByteString.Char8.dropWhile :: (Char -> Bool) -> ByteString -> ByteString. `isSpace` from Data.Char. Good.\n\nBut `BS.readInt` maybe does not parse `+`? no matter.\n\nCode:\n\n{-# LANGUAGE ... #-}? no.\n\nmodule Main where\nimport qualified Data.ByteString.Char8 as BS\nimport Data.List (sort)\nimport Data.Char (isSpace)\n\nparseInts :: BS.ByteString -> [Int]\nparseInts bs =\n  let s = BS.dropWhile isSpace bs\n  in if BS.null s then []\n     else case BS.readInt s of\n            Just (x, rest) -> x : parseInts rest\n            Nothing -> []\n\ncountPlacements :: Int -> [Int] -> Int\ncountPlacements d xs =\n  case xs of\n    [] -> 0\n    (h:hs) -> go 1 h hs\n  where\n    go cnt _ [] = cnt\n    go cnt prev (y:ys)\n      | y - prev >= d = go (cnt + 1) y ys\n      | otherwise = go cnt prev ys\n\nmaxMinDistance :: [Int] -> Int -> Int\nmaxMinDistance homes c = search 1 (last homes - head homes) 0\n  where\n    search lo hi best\n      | lo > hi = best\n      | otherwise =\n          let mid = lo + (hi - lo) `div` 2\n          in if countPlacements mid homes >= c\n               then search (mid + 1) hi mid\n               else search lo (mid - 1) best\n\nmain :: IO ()\nmain = do\n  input <- BS.getContents\n  case parseInts input of\n    (n:c:rest) -> do\n      let homes = sort (take n rest)\n      print (maxMinDistance homes c)\n    _ -> return ()\n\nNeed check if parseInts sees all. Good.\n\nPotential issue `BS.readInt` can parse negative and rest; if input is \"2 2\\n1\\n100\", parseInts: s \"2 2...\" readInt gets 2 rest \" 2...\", drop space then 2 etc. Good.\n\nNeed answer fenced code only. No explanation. Use ```haskell. Ensure exactly one file. final.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794984415,
+    "id": "chatcmpl-6d001a7fc89198ad4a216675c8a99f72",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 2131,
+      "completion_tokens_details": {
+        "reasoning_tokens": 1780
+      },
+      "prompt_tokens": 719,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 2850
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.002735268,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 18.435845700092614,
+  "logical_request_id": "2146bf9d06e4c50ec966f5d5ac523ee6fae223949b44919cd93a2a10142a1269",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2110\\cpp-via-haskell\\attempt-05\\step-07\\response_body.txt",
+  "received_at": "2026-11-18T06:47:11.110140+00:00",
+  "request_id": "chatcmpl-6d001a7fc89198ad4a216675c8a99f72",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.List (sort)\nimport Data.Char (isSpace)\n\nparseInts :: BS.ByteString -> [Int]\nparseInts bs =\n  let s = BS.dropWhile isSpace bs\n  in if BS.null s\n       then []\n       else case BS.readInt s of\n              Just (x, rest) -> x : parseInts rest\n              Nothing -> []\n\ncountPlacements :: Int -> [Int] -> Int\ncountPlacements d xs =\n  case xs of\n    [] -> 0\n    (h:hs) -> go 1 h hs\n  where\n    go cnt _ [] = cnt\n    go cnt prev (y:ys)\n      | y - prev >= d = go (cnt + 1) y ys\n      | otherwise     = go cnt prev ys\n\nmaxMinDistance :: [Int] -> Int -> Int\nmaxMinDistance homes c = search 1 (last homes - head homes) 0\n  where\n    search lo hi best\n      | lo > hi = best\n      | otherwise =\n          let mid = lo + (hi - lo) `div` 2\n          in if countPlacements mid homes >= c\n               then search (mid + 1) hi mid\n               else search lo (mid - 1) best\n\nmain :: IO ()\nmain = do\n  input <- BS.getContents\n  case parseInts input of\n    (n:c:rest) -> do\n      let homes = sort (take n rest)\n      print (maxMinDistance homes c)\n    _ -> return ()\n```",
+  "usage": {
+    "completion_tokens": 2131,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1780
+    },
+    "prompt_tokens": 719,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 2850
+  },
+  "usage_raw": {
+    "completion_tokens": 2131,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1780
+    },
+    "prompt_tokens": 719,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 2850
+  }
+}

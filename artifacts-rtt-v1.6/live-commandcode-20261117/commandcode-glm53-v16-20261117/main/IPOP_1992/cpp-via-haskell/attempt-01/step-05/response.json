@@ -1,0 +1,94 @@
+{
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.Array\n\nsolve :: Array (Int, Int) Char -> Int -> Int -> Int -> String\nsolve g r c size =\n    let first = g ! (r, c)\n        same = all (\\(i, j) -> g ! (i, j) == first)\n              [ (i, j) | i <- [r .. r + size - 1], j <- [c .. c + size - 1] ]\n    in if same\n         then [first]\n         else let h = size `div` 2\n              in \"(\" ++ solve g r c h ++ solve g r (c + h) h\n                     ++ solve g (r + h) c h ++ solve g (r + h) (c + h) h ++ \")\"\n\nmain :: IO ()\nmain = do\n    contents <- getContents\n    let (nLine : rest) = lines contents\n        n = read nLine :: Int\n        rows = take n rest\n        g = listArray ((0, 0), (n - 1, n - 1))\n            [ rows !! i !! j | i <- [0 .. n - 1], j <- [0 .. n - 1] ] :: Array (Int, Int) Char\n    putStrLn (solve g 0 0 n)\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 290,
+    "prompt_tokens": 684,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 974
+  },
+  "usage_raw": {
+    "completion_tokens": 290,
+    "prompt_tokens": 684,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 974
+  },
+  "cost_usd": 0.0020876799999999997,
+  "cost_source": "estimated",
+  "request_id": "dc16f50e-c778-4802-b674-84ea6f537907",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_1992\\cpp-via-haskell\\attempt-01\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.Array\n\nsolve :: Array (Int, Int) Char -> Int -> Int -> Int -> String\nsolve g r c size =\n    let first = g ! (r, c)\n        same = all (\\(i, j) -> g ! (i, j) == first)\n              [ (i, j) | i <- [r .. r + size - 1], j <- [c .. c + size - 1] ]\n    in if same\n         then [first]\n         else let h = size `div` 2\n              in \"(\" ++ solve g r c h ++ solve g r (c + h) h\n                     ++ solve g (r + h) c h ++ solve g (r + h) (c + h) h ++ \")\"\n\nmain :: IO ()\nmain = do\n    contents <- getContents\n    let (nLine : rest) = lines contents\n        n = read nLine :: Int\n        rows = take n rest\n        g = listArray ((0, 0), (n - 1, n - 1))\n            [ rows !! i !! j | i <- [0 .. n - 1], j <- [0 .. n - 1] ] :: Array (Int, Int) Char\n    putStrLn (solve g 0 0 n)\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794899418,
+    "id": "dc16f50e-c778-4802-b674-84ea6f537907",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 290,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_c4a3c70e9ed540e48b87a79355cdda49",
+      "trace_id": "ecdb6c48aa8f4b3aa61291bacffd6763"
+    },
+    "usage": {
+      "completion_tokens": 290,
+      "prompt_tokens": 684,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 974
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.348465299990494,
+  "received_at": "2026-11-17T07:10:17.569123+00:00",
+  "logical_request_id": "8715b5aa908e705d134e8a2d6fcda79f3af5ce59d7db18a1ec7cde8be16727ca",
+  "execution_class": "direct_api"
+}

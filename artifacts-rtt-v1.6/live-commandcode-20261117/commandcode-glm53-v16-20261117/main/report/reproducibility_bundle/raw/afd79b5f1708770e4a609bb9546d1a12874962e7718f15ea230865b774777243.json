@@ -1,0 +1,95 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n, m;\n    if (!(cin >> n)) return 0;\n    cin >> m;\n    vector<vector<int>> adj(n + 1);\n    for (int i = 0; i < m; i++) {\n        int a, b;\n        cin >> a >> b;\n        adj[a].push_back(b);\n        adj[b].push_back(a);\n    }\n    set<int> invited;\n    for (int y : adj[1]) {\n        if (y != 1) invited.insert(y);\n        for (int z : adj[y]) if (z != 1) invited.insert(z);\n    }\n    cout << invited.size() << \"\\n\";\n    return 0;\n}\n```",
+          "reasoning_content": "Note first example input \"1\\n0\" — but spec says N>=2, M>=1. Handle anyway.\n\nWait, example 2: friends at distance 1 or 2 from 1: 2,3,5 → 3. Correct.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794901140,
+    "id": "76366e85-0c8a-4c54-b82f-495e6216b62c",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 222,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_fbed96b83b644320a0f319ea706ba41c",
+      "trace_id": "9618d7dfd46746faa8f9281ff34c5864"
+    },
+    "usage": {
+      "completion_tokens": 222,
+      "prompt_tokens": 683,
+      "prompt_tokens_details": {
+        "cached_tokens": 448
+      },
+      "total_tokens": 905
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0014222800000000002,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.6486549000255764,
+  "logical_request_id": "8d1913456cb312e8c29dd469ee2a9fdd31d46d1f1a6712eecfecfb2697589135",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_5567\\cpp-via-haskell\\attempt-01\\step-02\\response_body.txt",
+  "received_at": "2026-11-17T07:39:00.151740+00:00",
+  "request_id": "76366e85-0c8a-4c54-b82f-495e6216b62c",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n, m;\n    if (!(cin >> n)) return 0;\n    cin >> m;\n    vector<vector<int>> adj(n + 1);\n    for (int i = 0; i < m; i++) {\n        int a, b;\n        cin >> a >> b;\n        adj[a].push_back(b);\n        adj[b].push_back(a);\n    }\n    set<int> invited;\n    for (int y : adj[1]) {\n        if (y != 1) invited.insert(y);\n        for (int z : adj[y]) if (z != 1) invited.insert(z);\n    }\n    cout << invited.size() << \"\\n\";\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 222,
+    "prompt_tokens": 683,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 905
+  },
+  "usage_raw": {
+    "completion_tokens": 222,
+    "prompt_tokens": 683,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 905
+  }
+}

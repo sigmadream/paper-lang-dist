@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <numeric>\n\nint main() {\n    long long a, b;\n    std::cin >> a >> b;\n    long long g = std::gcd(a, b);\n    std::cout << g << '\\n';\n    std::cout << (a / g) * b << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer translate Haskell to C++17. Need only code block. Need preserve stdin/out. Simple. Must return exactly one complete source file in one fenced code block no explanation. Use C++17 main. Compute gcd, lcm as a/g*b fits 1e8? A,B up to 10000 product 1e8 fits int. Use long long safe. Read two. Output gcd newline lcm. Ensure stdin behavior. Code only.\n\nNeed be careful \"Return exactly one complete source file in one fenced code block\". final.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794999693,
+    "id": "chatcmpl-d962cfebac17082c97c5493107a5e0b9",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 194,
+      "completion_tokens_details": {
+        "reasoning_tokens": 116
+      },
+      "prompt_tokens": 431,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 625
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00032446799999999996,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.307972399983555,
+  "logical_request_id": "06b3af260e057069300f8128c66d3e99238e7e2dbc7e0500b57c4c7c3c8a3efa",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2609\\cpp-via-haskell\\attempt-05\\step-04\\response_body.txt",
+  "received_at": "2026-11-18T11:01:34.990709+00:00",
+  "request_id": "chatcmpl-d962cfebac17082c97c5493107a5e0b9",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <numeric>\n\nint main() {\n    long long a, b;\n    std::cin >> a >> b;\n    long long g = std::gcd(a, b);\n    std::cout << g << '\\n';\n    std::cout << (a / g) * b << '\\n';\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 194,
+    "completion_tokens_details": {
+      "reasoning_tokens": 116
+    },
+    "prompt_tokens": 431,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 625
+  },
+  "usage_raw": {
+    "completion_tokens": 194,
+    "completion_tokens_details": {
+      "reasoning_tokens": 116
+    },
+    "prompt_tokens": 431,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 625
+  }
+}

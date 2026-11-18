@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int t;\n    if (!(std::cin >> t)) return 0;\n\n    std::string output;\n\n    while (t-- > 0) {\n        std::string s;\n        std::cin >> s;\n\n        int bal = 0;\n        bool valid = true;\n\n        for (char c : s) {\n            if (c == '(') bal++;\n            else bal--;\n\n            if (bal < 0) {\n                valid = false;\n                break;\n            }\n        }\n\n        if (bal != 0) valid = false;\n\n        output += valid ? \"YES\\n\" : \"NO\\n\";\n    }\n\n    std::cout << output;\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer exactly one fenced code block with C++ translation. Need preserve behavior. Use iostream, string. Handle T. Source uses Scanner nextInt then next strings. If no int return. We can do if(!(cin>>t)) return 0; then loop cin>>s. Output.\n\nNeed only code block no explanation. Ensure C++17 main. Could be minimal.\n\nPotential nuance: if invalid string? Constraints valid. Use int bal. Break then bal not zero maybe valid false. Append. Use ios fast.\n\nReturn.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794982322,
+    "id": "chatcmpl-624fc2339e87333eb49bfcf79f138c16",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 291,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 637,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 928
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0005403,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.2470579999499023,
+  "logical_request_id": "ea6ac735f80867dd0011f639252ac5f37ad08bd5ee362b8782d0a83c01a5a7bb",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-java\\attempt-05\\step-02\\response_body.txt",
+  "received_at": "2026-11-18T06:12:03.306992+00:00",
+  "request_id": "chatcmpl-624fc2339e87333eb49bfcf79f138c16",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int t;\n    if (!(std::cin >> t)) return 0;\n\n    std::string output;\n\n    while (t-- > 0) {\n        std::string s;\n        std::cin >> s;\n\n        int bal = 0;\n        bool valid = true;\n\n        for (char c : s) {\n            if (c == '(') bal++;\n            else bal--;\n\n            if (bal < 0) {\n                valid = false;\n                break;\n            }\n        }\n\n        if (bal != 0) valid = false;\n\n        output += valid ? \"YES\\n\" : \"NO\\n\";\n    }\n\n    std::cout << output;\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 291,
+    "completion_tokens_details": {
+      "reasoning_tokens": 111
+    },
+    "prompt_tokens": 637,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 928
+  },
+  "usage_raw": {
+    "completion_tokens": 291,
+    "completion_tokens_details": {
+      "reasoning_tokens": 111
+    },
+    "prompt_tokens": 637,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 928
+  }
+}

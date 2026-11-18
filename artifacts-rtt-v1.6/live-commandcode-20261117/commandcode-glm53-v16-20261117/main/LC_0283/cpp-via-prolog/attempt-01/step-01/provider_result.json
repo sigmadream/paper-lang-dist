@@ -1,0 +1,94 @@
+{
+  "text": "```prolog\n:- module(main, []).\n:- use_module(library(apply)).\n:- use_module(library(dcg/basics)).\n\nmain :-\n    read_line_to_codes(user_input, L1),\n    ( L1 == end_of_file -> N = 0\n    ; phrase(number(N), L1, _) ),\n    read_line_to_codes(user_input, L2),\n    ( L2 == end_of_file -> Vals = []\n    ; phrase(parse_ints(Vals), L2) ),\n    length(Vals, N),\n    partition_nonzeros(Vals, NonZeros, Zeros),\n    append(NonZeros, Zeros, Result),\n    print_ints(Result).\n\npartition_nonzeros([], [], []).\npartition_nonzeros([V|Vs], NonZeros, Zeros) :-\n    ( V =\\= 0 ->\n        NonZeros = [V|R1], Zeros = R2\n    ;   NonZeros = R1, Zeros = [0|R2]\n    ),\n    partition_nonzeros(Vs, R1, R2).\n\nprint_ints([]) :- nl.\nprint_ints([V|Vs]) :-\n    write(V),\n    ( Vs == [] -> true ; write(' ') ),\n    print_ints(Vs).\n\nnumber(N) --> integer(N).\nnumber(N) --> blanks, integer(N).\n\nparse_ints([]) --> [].\nparse_ints([V|Vs]) --> blanks, integer(V), parse_ints(Vs).\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 309,
+    "prompt_tokens": 653,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 962
+  },
+  "usage_raw": {
+    "completion_tokens": 309,
+    "prompt_tokens": 653,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 962
+  },
+  "cost_usd": 0.0015442000000000001,
+  "cost_source": "estimated",
+  "request_id": "386b46cc-0601-4a8e-8743-a569f806b8a8",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0283\\cpp-via-prolog\\attempt-01\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, []).\n:- use_module(library(apply)).\n:- use_module(library(dcg/basics)).\n\nmain :-\n    read_line_to_codes(user_input, L1),\n    ( L1 == end_of_file -> N = 0\n    ; phrase(number(N), L1, _) ),\n    read_line_to_codes(user_input, L2),\n    ( L2 == end_of_file -> Vals = []\n    ; phrase(parse_ints(Vals), L2) ),\n    length(Vals, N),\n    partition_nonzeros(Vals, NonZeros, Zeros),\n    append(NonZeros, Zeros, Result),\n    print_ints(Result).\n\npartition_nonzeros([], [], []).\npartition_nonzeros([V|Vs], NonZeros, Zeros) :-\n    ( V =\\= 0 ->\n        NonZeros = [V|R1], Zeros = R2\n    ;   NonZeros = R1, Zeros = [0|R2]\n    ),\n    partition_nonzeros(Vs, R1, R2).\n\nprint_ints([]) :- nl.\nprint_ints([V|Vs]) :-\n    write(V),\n    ( Vs == [] -> true ; write(' ') ),\n    print_ints(Vs).\n\nnumber(N) --> integer(N).\nnumber(N) --> blanks, integer(N).\n\nparse_ints([]) --> [].\nparse_ints([V|Vs]) --> blanks, integer(V), parse_ints(Vs).\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794902733,
+    "id": "386b46cc-0601-4a8e-8743-a569f806b8a8",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 309,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_81726d9fbbdf4b958ae040ff6a000167",
+      "trace_id": "e933ebdeb89c41a783c1cfd0a2c80290"
+    },
+    "usage": {
+      "completion_tokens": 309,
+      "prompt_tokens": 653,
+      "prompt_tokens_details": {
+        "cached_tokens": 640
+      },
+      "total_tokens": 962
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.389941399975214,
+  "received_at": "2026-11-17T08:05:32.679366+00:00",
+  "logical_request_id": "e6bae2ee0d6693c6cae9e83b317f99637d20ee445d1773022edf8ab55cfab24a",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  ms <- getLine\n  mt <- getLine\n  case (ms, mt) of\n    (Just s, Just t) -> do\n      if length s /= length t\n        then putStrLn \"0\"\n        else do\n          let a = foldl' (\\acc c -> inc acc c) (replicate 26 0) s\n              b = foldl' (\\acc c -> inc acc c) (replicate 26 0) t\n          putStrLn (if a == b then \"1\" else \"0\")\n    _ -> return ()\n  where\n    inc acc c = take i acc ++ [acc !! i + 1] ++ drop (i + 1) acc\n      where i = fromEnum c - fromEnum 'a'\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794896882,
+    "id": "5a77e0cf-1caa-42fc-8634-7ff3363da49f",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 191,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_86215b3dedc643fba7c1c340ba469a25",
+      "trace_id": "58a8d59a9200441c92a62e66fbe314ff"
+    },
+    "usage": {
+      "completion_tokens": 191,
+      "prompt_tokens": 536,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 727
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00115304,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.2060376000008546,
+  "logical_request_id": "40201f12d4979d2aa72b11fdc735fa9cab9be335c684bfada0d28b610487cc2c",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0242\\cpp-via-haskell\\attempt-05\\step-05\\response_body.txt",
+  "received_at": "2026-11-17T06:28:01.783569+00:00",
+  "request_id": "5a77e0cf-1caa-42fc-8634-7ff3363da49f",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  ms <- getLine\n  mt <- getLine\n  case (ms, mt) of\n    (Just s, Just t) -> do\n      if length s /= length t\n        then putStrLn \"0\"\n        else do\n          let a = foldl' (\\acc c -> inc acc c) (replicate 26 0) s\n              b = foldl' (\\acc c -> inc acc c) (replicate 26 0) t\n          putStrLn (if a == b then \"1\" else \"0\")\n    _ -> return ()\n  where\n    inc acc c = take i acc ++ [acc !! i + 1] ++ drop (i + 1) acc\n      where i = fromEnum c - fromEnum 'a'\n```",
+  "usage": {
+    "completion_tokens": 191,
+    "prompt_tokens": 536,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 727
+  },
+  "usage_raw": {
+    "completion_tokens": 191,
+    "prompt_tokens": 536,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 727
+  }
+}

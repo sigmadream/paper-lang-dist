@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n\nvoid hanoi(int count, int start, int via, int end) {\n    if (count == 1) {\n        std::cout << start << ' ' << end << '\\n';\n        return;\n    }\n\n    hanoi(count - 1, start, end, via);\n    std::cout << start << ' ' << end << '\\n';\n    hanoi(count - 1, via, start, end);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    std::cout << ((1 << n) - 1) << '\\n';\n    hanoi(n, 1, 2, 3);\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 638,
+    "total_tokens": 1272,
+    "completion_tokens": 634,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 454
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 638,
+    "total_tokens": 1272,
+    "completion_tokens": 634,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 454
+    }
+  },
+  "cost_usd": 0.0009521999999999999,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-e88215422321e0243392d04acbb4c1fc",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_11729\\cpp-via-python\\attempt-03\\step-10\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-e88215422321e0243392d04acbb4c1fc",
+    "object": "chat.completion",
+    "created": 1794989378,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n\nvoid hanoi(int count, int start, int via, int end) {\n    if (count == 1) {\n        std::cout << start << ' ' << end << '\\n';\n        return;\n    }\n\n    hanoi(count - 1, start, end, via);\n    std::cout << start << ' ' << end << '\\n';\n    hanoi(count - 1, via, start, end);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    std::cout << ((1 << n) - 1) << '\\n';\n    hanoi(n, 1, 2, 3);\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only source code fenced. Need translate to C++17. Preserve behavior. Need think recursion up to N=20 moves ~1,048,575 lines, fine. Use ios fast. Need read first int, if none return. Output count (1<<n)-1 using int okay n<=20. Then moves. Could either generate to vector<string> or output streaming. Python builds vector then output. C++ can generate and output directly to avoid memory, but output first count before moves. We know count. Need output newline after each line. Use std::cout. Recursion function writes start end. This preserves. Need ensure performance. Could use ios::sync_with_stdio(false); cin.tie(nullptr). Main.\n\nNeed exactly one code block no explanation. C++17. Let's craft.\n\nPotential issue output order: Python hanoi recurses then append. C++ output during recursion same order. First count printed then newline. If n? >=1. If no data return. Good.\n\nUse int n; if (!(cin>>n)) return 0; cout << ((1<<n)-1) << '\\n'; hanoi(n,1,2,3); return 0.\n\nFunction void hanoi(int count,int start,int via,int end){ if(count==1){cout<<start<<' '<<end<<'\\n'; return;} hanoi(count-1,start,end,via); cout<<start<<' '<<end<<'\\n'; hanoi(count-1,via,start,end);}\n\nThis matches parameters: Python hanoi(count,start,via,end), recursive hanoi(count-1, start, end, via, moves); in C++: start, end, via? Function signature (count,start,via,end). Call should hanoi(count-1,start,end,via). Yes. Then second hanoi(count-1, via, start, end). In C++ call as hanoi(count-1, via, start, end) where second arg start=via, third arg via=start, fourth end=end. good.\n\nNeed include bits/stdc++.h maybe standard library shipped. Use <iostream>. Fine.\n\nFinal exactly code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 638,
+      "total_tokens": 1272,
+      "completion_tokens": 634,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 454
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 5.446625299984589,
+  "received_at": "2026-11-18T08:09:41.410176+00:00",
+  "logical_request_id": "6bd1de7729d01255efc2a9f697201ceb7e8e833a4a121f3cb43ed02089f677e2",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNext()) return;\n        String s = sc.next();\n\n        boolean valid = true;\n        for (int i = 0; i < s.length() / 2; i++) {\n            if (s.charAt(i) != s.charAt(s.length() - 1 - i)) {\n                valid = false;\n                break;\n            }\n        }\n\n        System.out.println(valid ? 1 : 0);\n    }\n}\n```",
+          "reasoning_content": "We need translate to Java 17. Just provide Main class. Read token via Scanner or BufferedReader. Output 1/0. Need exactly one fenced code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794991970,
+    "id": "chatcmpl-ed70c7c90341c28b950a690282af37a0",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 158,
+      "completion_tokens_details": {
+        "reasoning_tokens": 34
+      },
+      "prompt_tokens": 506,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 664
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0003414,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.569221599958837,
+  "logical_request_id": "7af6d0eda3804972adc2d2df8a052fecd3319931797dca16f983a7aeaa3fb31f",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-java\\attempt-03\\step-03\\response_body.txt",
+  "received_at": "2026-11-18T08:52:50.260062+00:00",
+  "request_id": "chatcmpl-ed70c7c90341c28b950a690282af37a0",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNext()) return;\n        String s = sc.next();\n\n        boolean valid = true;\n        for (int i = 0; i < s.length() / 2; i++) {\n            if (s.charAt(i) != s.charAt(s.length() - 1 - i)) {\n                valid = false;\n                break;\n            }\n        }\n\n        System.out.println(valid ? 1 : 0);\n    }\n}\n```",
+  "usage": {
+    "completion_tokens": 158,
+    "completion_tokens_details": {
+      "reasoning_tokens": 34
+    },
+    "prompt_tokens": 506,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 664
+  },
+  "usage_raw": {
+    "completion_tokens": 158,
+    "completion_tokens_details": {
+      "reasoning_tokens": 34
+    },
+    "prompt_tokens": 506,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 664
+  }
+}

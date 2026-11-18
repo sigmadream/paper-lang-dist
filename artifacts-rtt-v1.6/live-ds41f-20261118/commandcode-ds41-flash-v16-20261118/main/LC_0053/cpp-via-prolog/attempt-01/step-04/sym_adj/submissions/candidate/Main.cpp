@@ -1,0 +1,26 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    long long N;
+    if (!(cin >> N)) return 0;
+
+    long long first;
+    if (!(cin >> first)) return 0;
+
+    long long cur = first;
+    long long best = first;
+
+    for (long long i = 1; i < N; ++i) {
+        long long x;
+        cin >> x;
+        cur = max(x, cur + x);
+        best = max(best, cur);
+    }
+
+    cout << best << '\n';
+    return 0;
+}

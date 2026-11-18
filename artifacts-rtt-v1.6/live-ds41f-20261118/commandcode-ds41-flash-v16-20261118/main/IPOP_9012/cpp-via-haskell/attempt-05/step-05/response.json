@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nisValid :: String -> Bool\nisValid s = go 0 s\n  where\n    go 0 [] = True\n    go _ [] = False\n    go balance (c:cs)\n      | c == '(' = go (balance + 1) cs\n      | c == ')' = balance > 0 && go (balance - 1) cs\n      | otherwise = False\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (tStr:rest) -> do\n      let t = read tStr :: Int\n          strings = take t rest\n      mapM_ (\\s -> putStrLn (if isValid s then \"YES\" else \"NO\")) strings\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 631,
+    "total_tokens": 1096,
+    "completion_tokens": 465,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 288
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 631,
+    "total_tokens": 1096,
+    "completion_tokens": 465,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 288
+    }
+  },
+  "cost_usd": 0.0007473,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-0d02808cd5cb3dcc51f8874a4c8af906",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-haskell\\attempt-05\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-0d02808cd5cb3dcc51f8874a4c8af906",
+    "object": "chat.completion",
+    "created": 1794977342,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nisValid :: String -> Bool\nisValid s = go 0 s\n  where\n    go 0 [] = True\n    go _ [] = False\n    go balance (c:cs)\n      | c == '(' = go (balance + 1) cs\n      | c == ')' = balance > 0 && go (balance - 1) cs\n      | otherwise = False\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (tStr:rest) -> do\n      let t = read tStr :: Int\n          strings = take t rest\n      mapM_ (\\s -> putStrLn (if isValid s then \"YES\" else \"NO\")) strings\n```",
+          "reasoning_content": "We need answer exactly one Haskell source file in fenced code block. Need translate. Preserve. Haskell module Main main IO. Read T then T lines strings. Output YES/NO.\n\nNeed consider input might have strings with parentheses only no spaces. Use words? The input first line T, then T lines. Using words safe since strings no whitespace. Read all tokens via getContents, words. t = read head. For each next T token check validity.\n\nImplement isValid with fold. Need output lines. Ensure no extra. Provide code only fenced.\n\nNeed exact complete source. Use module Main where, main = do input <- getContents; let (tStr:rest)=words input; t=read tStr::Int; ss=take t rest; mapM_ (putStrLn . (\\s -> if isValid s then \"YES\" else \"NO\")) ss.\n\nisValid:\nisValid s = go 0 s where go bal [] = bal==0; go bal (c:cs) | c=='(' = go (bal+1) cs | c==')' = bal>0 && go (bal-1) cs | otherwise = False. Need avoid lazy? fine. But short-circuit okay. Could use foldl. Use recursion.\n\nPotential t = 0? T positive per spec, but works. If missing rest? Not needed.\n\nNeed final fenced code block only."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 631,
+      "total_tokens": 1096,
+      "completion_tokens": 465,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 288
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.44112380000297,
+  "received_at": "2026-11-18T04:49:04.668103+00:00",
+  "logical_request_id": "22e54187a891cfa19ae92755408fe5b0f9f544262e67e4e4e0559acb00535aab",
+  "execution_class": "direct_api"
+}

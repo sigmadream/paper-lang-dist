@@ -1,0 +1,86 @@
+{
+  "text": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StringTokenizer st = new StringTokenizer(br.readLine());\n        int m = Integer.parseInt(st.nextToken());\n        int n = Integer.parseInt(st.nextToken());\n\n        long[] dp = new long[n];\n        Arrays.fill(dp, 1);\n\n        for (int i = 1; i < m; i++) {\n            for (int j = 1; j < n; j++) {\n                dp[j] += dp[j - 1];\n            }\n        }\n\n        System.out.println(dp[n - 1]);\n    }\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 594,
+    "total_tokens": 903,
+    "completion_tokens": 309,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 164
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 594,
+    "total_tokens": 903,
+    "completion_tokens": 309,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 164
+    }
+  },
+  "cost_usd": 0.000549,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-ac2e609259e89dfe7c54e8883b327063",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-java\\attempt-01\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-ac2e609259e89dfe7c54e8883b327063",
+    "object": "chat.completion",
+    "created": 1794983316,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StringTokenizer st = new StringTokenizer(br.readLine());\n        int m = Integer.parseInt(st.nextToken());\n        int n = Integer.parseInt(st.nextToken());\n\n        long[] dp = new long[n];\n        Arrays.fill(dp, 1);\n\n        for (int i = 1; i < m; i++) {\n            for (int j = 1; j < n; j++) {\n                dp[j] += dp[j - 1];\n            }\n        }\n\n        System.out.println(dp[n - 1]);\n    }\n}\n```",
+          "reasoning_content": "We need answer only code block Java 17. Need translate source. Need preserve behavior. Simple.\n\nNeed provide complete source file. Use Scanner or BufferedReader. main. Read M N, compute dp int? Answer <=2e9 fits int signed up to 2,147,483,647. C++ ll. Java int safe per constraint, but use long to be safe. Output.\n\nNeed no explanation. One fenced code block.\n\nEnsure class Main public static void main. Use BufferedReader/StreamTokenizer or Scanner. Simple.\n\nCould mirror: int m,n; long[] dp = new long[n]; Arrays.fill(dp,1); for i=1... etc; print dp[n-1].\n\nNeed handle input. Use BufferedReader StringTokenizer. If empty? valid. We'll implement.\n\nFinal with code block only."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 594,
+      "total_tokens": 903,
+      "completion_tokens": 309,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 164
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.478972699958831,
+  "received_at": "2026-11-18T06:28:37.995979+00:00",
+  "logical_request_id": "c8de0e40a53ea781eb0c38a4a74b8cb6fefe66b26eaca0e7ca50cef376106fcd",
+  "execution_class": "direct_api"
+}

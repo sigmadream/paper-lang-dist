@@ -1,0 +1,353 @@
+{
+  "corpus_version": "rtt-v1.6",
+  "languages": [
+    "cpp",
+    "python",
+    "java",
+    "haskell",
+    "prolog"
+  ],
+  "pilot_problem_ids": [
+    "IPOP_11729",
+    "IPOP_1992",
+    "LC_0053"
+  ],
+  "problems": [
+    {
+      "backtracking": false,
+      "display_name": "하노이탑 이동 순서",
+      "evaluation_cases": 13,
+      "group": "recursive",
+      "implementation_note": "재귀 호출과 가변 moves 벡터를 사용합니다.",
+      "metadata_basis": "cpp_reference",
+      "mutable_state": true,
+      "output_scale": "2^n-1개 이동 및 개수, 기존 평가 최대 n=16",
+      "problem_id": "IPOP_11729",
+      "provenance": {
+        "cpp": "problem/IPOP_11729/reference.cpp",
+        "fixtures": "problem/IPOP_11729/evaluation",
+        "independent_validation": "problem/metadata/ipop19/tools/oracles.py",
+        "legacy_reference_source": null,
+        "method": "기존 자료를 그대로 복사하고 언어별 기준 구현을 로컬에서 작성하였습니다. 외부 모델 API는 사용하지 않았습니다.",
+        "references": "papers/v1.6/data/references/IPOP_11729",
+        "statement": "problem/IPOP_11729/statement.md"
+      },
+      "recursion_kind": "multiple_calls_ordered_output",
+      "recursive": true
+    },
+    {
+      "backtracking": false,
+      "display_name": "공유기 설치",
+      "evaluation_cases": 13,
+      "group": "comparison",
+      "implementation_note": "이분탐색 경계와 탐욕 배치 상태를 갱신합니다.",
+      "metadata_basis": "cpp_reference",
+      "mutable_state": true,
+      "output_scale": "상수 개수",
+      "problem_id": "IPOP_2110",
+      "provenance": {
+        "cpp": "problem/IPOP_2110/reference.cpp",
+        "fixtures": "problem/IPOP_2110/evaluation",
+        "independent_validation": "problem/metadata/ipop19/tools/oracles.py",
+        "legacy_reference_source": null,
+        "method": "기존 자료를 그대로 복사하고 언어별 기준 구현을 로컬에서 작성하였습니다. 외부 모델 API는 사용하지 않았습니다.",
+        "references": "papers/v1.6/data/references/IPOP_2110",
+        "statement": "problem/IPOP_2110/statement.md"
+      },
+      "recursion_kind": "binary_search_iterative",
+      "recursive": false
+    },
+    {
+      "backtracking": false,
+      "display_name": "쿼드트리",
+      "evaluation_cases": 13,
+      "group": "recursive",
+      "implementation_note": "불변 영상 입력에서 좌상·우상·좌하·우하 재귀 결과를 결합합니다.",
+      "metadata_basis": "cpp_reference",
+      "mutable_state": false,
+      "output_scale": "최악 O(n^2) 인코딩",
+      "problem_id": "IPOP_1992",
+      "provenance": {
+        "cpp": "problem/IPOP_1992/reference.cpp",
+        "fixtures": "problem/IPOP_1992/evaluation",
+        "independent_validation": "problem/metadata/ipop19/tools/oracles.py",
+        "legacy_reference_source": null,
+        "method": "기존 자료를 그대로 복사하고 언어별 기준 구현을 로컬에서 작성하였습니다. 외부 모델 API는 사용하지 않았습니다.",
+        "references": "papers/v1.6/data/references/IPOP_1992",
+        "statement": "problem/IPOP_1992/statement.md"
+      },
+      "recursion_kind": "quadrant_divide_and_combine",
+      "recursive": true
+    },
+    {
+      "backtracking": false,
+      "display_name": "계단 오르기",
+      "evaluation_cases": 13,
+      "group": "comparison",
+      "implementation_note": "가변 점수·최적값 배열을 사용합니다.",
+      "metadata_basis": "cpp_reference",
+      "mutable_state": true,
+      "output_scale": "상수 개수",
+      "problem_id": "IPOP_2579",
+      "provenance": {
+        "cpp": "problem/IPOP_2579/reference.cpp",
+        "fixtures": "problem/IPOP_2579/evaluation",
+        "independent_validation": "problem/metadata/ipop19/tools/oracles.py",
+        "legacy_reference_source": "scripts/prepare_fps_corpus.py의 HS·PL 자료",
+        "method": "기존 자료를 그대로 복사하고 언어별 기준 구현을 로컬에서 작성하였습니다. 외부 모델 API는 사용하지 않았습니다.",
+        "references": "papers/v1.6/data/references/IPOP_2579",
+        "statement": "problem/IPOP_2579/statement.md"
+      },
+      "recursion_kind": "dynamic_programming_iterative",
+      "recursive": false
+    },
+    {
+      "backtracking": false,
+      "display_name": "결혼식",
+      "evaluation_cases": 13,
+      "group": "comparison",
+      "implementation_note": "인접 목록과 거리·방문 상태를 갱신합니다.",
+      "metadata_basis": "cpp_reference",
+      "mutable_state": true,
+      "output_scale": "상수 개수",
+      "problem_id": "IPOP_5567",
+      "provenance": {
+        "cpp": "problem/IPOP_5567/reference.cpp",
+        "fixtures": "problem/IPOP_5567/evaluation",
+        "independent_validation": "problem/metadata/ipop19/tools/oracles.py",
+        "legacy_reference_source": "scripts/prepare_fps_corpus.py의 HS·PL 자료",
+        "method": "기존 자료를 그대로 복사하고 언어별 기준 구현을 로컬에서 작성하였습니다. 외부 모델 API는 사용하지 않았습니다.",
+        "references": "papers/v1.6/data/references/IPOP_5567",
+        "statement": "problem/IPOP_5567/statement.md"
+      },
+      "recursion_kind": "bounded_graph_traversal_iterative",
+      "recursive": false
+    },
+    {
+      "backtracking": false,
+      "display_name": "팰린드롬인지 확인하기",
+      "evaluation_cases": 13,
+      "group": "comparison",
+      "implementation_note": "반복 인덱스와 판정 플래그를 사용합니다.",
+      "metadata_basis": "cpp_reference",
+      "mutable_state": true,
+      "output_scale": "상수 개수",
+      "problem_id": "IPOP_10988",
+      "provenance": {
+        "cpp": "problem/IPOP_10988/reference.cpp",
+        "fixtures": "problem/IPOP_10988/evaluation",
+        "independent_validation": "problem/metadata/ipop19/tools/oracles.py",
+        "legacy_reference_source": "scripts/prepare_fps_corpus.py의 HS·PL 자료",
+        "method": "기존 자료를 그대로 복사하고 언어별 기준 구현을 로컬에서 작성하였습니다. 외부 모델 API는 사용하지 않았습니다.",
+        "references": "papers/v1.6/data/references/IPOP_10988",
+        "statement": "problem/IPOP_10988/statement.md"
+      },
+      "recursion_kind": "symmetric_comparison_iterative",
+      "recursive": false
+    },
+    {
+      "backtracking": false,
+      "display_name": "소수 구하기",
+      "evaluation_cases": 13,
+      "group": "comparison",
+      "implementation_note": "가변 소수 여부 배열을 갱신합니다.",
+      "metadata_basis": "cpp_reference",
+      "mutable_state": true,
+      "output_scale": "O(n) 정수열",
+      "problem_id": "IPOP_1929",
+      "provenance": {
+        "cpp": "problem/IPOP_1929/reference.cpp",
+        "fixtures": "problem/IPOP_1929/evaluation",
+        "independent_validation": "problem/metadata/ipop19/tools/oracles.py",
+        "legacy_reference_source": "scripts/prepare_fps_corpus.py의 HS·PL 자료",
+        "method": "기존 자료를 그대로 복사하고 언어별 기준 구현을 로컬에서 작성하였습니다. 외부 모델 API는 사용하지 않았습니다.",
+        "references": "papers/v1.6/data/references/IPOP_1929",
+        "statement": "problem/IPOP_1929/statement.md"
+      },
+      "recursion_kind": "sieve_iterative",
+      "recursive": false
+    },
+    {
+      "backtracking": false,
+      "display_name": "최대공약수와 최소공배수",
+      "evaluation_cases": 13,
+      "group": "comparison",
+      "implementation_note": "C++ 원본의 while 반복 유클리드 알고리즘을 유지합니다.",
+      "metadata_basis": "cpp_reference",
+      "mutable_state": true,
+      "output_scale": "상수 개수",
+      "problem_id": "IPOP_2609",
+      "provenance": {
+        "cpp": "problem/IPOP_2609/reference.cpp",
+        "fixtures": "problem/IPOP_2609/evaluation",
+        "independent_validation": "problem/metadata/ipop19/tools/oracles.py",
+        "legacy_reference_source": "scripts/prepare_fps_corpus.py의 HS·PL 자료",
+        "method": "기존 자료를 그대로 복사하고 언어별 기준 구현을 로컬에서 작성하였습니다. 외부 모델 API는 사용하지 않았습니다.",
+        "references": "papers/v1.6/data/references/IPOP_2609",
+        "statement": "problem/IPOP_2609/statement.md"
+      },
+      "recursion_kind": "iterative_euclid",
+      "recursive": false
+    },
+    {
+      "backtracking": false,
+      "display_name": "괄호",
+      "evaluation_cases": 13,
+      "group": "comparison",
+      "implementation_note": "접두 괄호 균형과 판정 플래그를 갱신합니다.",
+      "metadata_basis": "cpp_reference",
+      "mutable_state": true,
+      "output_scale": "상수 개수",
+      "problem_id": "IPOP_9012",
+      "provenance": {
+        "cpp": "problem/IPOP_9012/reference.cpp",
+        "fixtures": "problem/IPOP_9012/evaluation",
+        "independent_validation": "problem/metadata/ipop19/tools/oracles.py",
+        "legacy_reference_source": "scripts/prepare_fps_corpus.py의 HS·PL 자료",
+        "method": "기존 자료를 그대로 복사하고 언어별 기준 구현을 로컬에서 작성하였습니다. 외부 모델 API는 사용하지 않았습니다.",
+        "references": "papers/v1.6/data/references/IPOP_9012",
+        "statement": "problem/IPOP_9012/statement.md"
+      },
+      "recursion_kind": "balance_scan_iterative",
+      "recursive": false
+    },
+    {
+      "backtracking": false,
+      "display_name": "Maximum Subarray",
+      "evaluation_cases": 13,
+      "group": "comparison",
+      "implementation_note": "현재·전체 최적 부분배열 합을 갱신합니다.",
+      "metadata_basis": "cpp_reference",
+      "mutable_state": true,
+      "output_scale": "상수 개수",
+      "problem_id": "LC_0053",
+      "provenance": {
+        "cpp": "problem/LC_0053/reference.cpp",
+        "fixtures": "problem/LC_0053/evaluation",
+        "independent_validation": "problem/metadata/leetcode21/tools/oracles.py",
+        "legacy_reference_source": "scripts/prepare_fps_corpus.py의 HS·PL 자료",
+        "method": "기존 자료를 그대로 복사하고 언어별 기준 구현을 로컬에서 작성하였습니다. 외부 모델 API는 사용하지 않았습니다.",
+        "references": "papers/v1.6/data/references/LC_0053",
+        "statement": "problem/LC_0053/statement.md"
+      },
+      "recursion_kind": "dynamic_programming_iterative",
+      "recursive": false
+    },
+    {
+      "backtracking": false,
+      "display_name": "Unique Paths",
+      "evaluation_cases": 13,
+      "group": "comparison",
+      "implementation_note": "격자 경로 수 배열을 갱신합니다.",
+      "metadata_basis": "cpp_reference",
+      "mutable_state": true,
+      "output_scale": "상수 개수",
+      "problem_id": "LC_0062",
+      "provenance": {
+        "cpp": "problem/LC_0062/reference.cpp",
+        "fixtures": "problem/LC_0062/evaluation",
+        "independent_validation": "problem/metadata/leetcode21/tools/oracles.py",
+        "legacy_reference_source": "scripts/prepare_fps_corpus.py의 HS·PL 자료",
+        "method": "기존 자료를 그대로 복사하고 언어별 기준 구현을 로컬에서 작성하였습니다. 외부 모델 API는 사용하지 않았습니다.",
+        "references": "papers/v1.6/data/references/LC_0062",
+        "statement": "problem/LC_0062/statement.md"
+      },
+      "recursion_kind": "dynamic_programming_iterative",
+      "recursive": false
+    },
+    {
+      "backtracking": true,
+      "display_name": "N-Queen",
+      "evaluation_cases": 13,
+      "group": "recursive",
+      "implementation_note": "C++ 원본의 열·대각선 배열을 변경하고 재귀 호출 뒤 복원합니다.",
+      "metadata_basis": "cpp_reference",
+      "mutable_state": true,
+      "output_scale": "상수 개수",
+      "problem_id": "IPOP_9663",
+      "provenance": {
+        "cpp": "problem/IPOP_9663/reference.cpp",
+        "fixtures": "problem/IPOP_9663/evaluation",
+        "independent_validation": "problem/metadata/ipop19/tools/oracles.py",
+        "legacy_reference_source": null,
+        "method": "기존 자료를 그대로 복사하고 언어별 기준 구현을 로컬에서 작성하였습니다. 외부 모델 API는 사용하지 않았습니다.",
+        "references": "papers/v1.6/data/references/IPOP_9663",
+        "statement": "problem/IPOP_9663/statement.md"
+      },
+      "recursion_kind": "backtracking_search",
+      "recursive": true
+    },
+    {
+      "backtracking": false,
+      "display_name": "Valid Anagram",
+      "evaluation_cases": 13,
+      "group": "comparison",
+      "implementation_note": "문자 빈도 배열을 갱신합니다.",
+      "metadata_basis": "cpp_reference",
+      "mutable_state": true,
+      "output_scale": "상수 개수",
+      "problem_id": "LC_0242",
+      "provenance": {
+        "cpp": "problem/LC_0242/reference.cpp",
+        "fixtures": "problem/LC_0242/evaluation",
+        "independent_validation": "problem/metadata/leetcode21/tools/oracles.py",
+        "legacy_reference_source": "scripts/prepare_fps_corpus.py의 HS·PL 자료",
+        "method": "기존 자료를 그대로 복사하고 언어별 기준 구현을 로컬에서 작성하였습니다. 외부 모델 API는 사용하지 않았습니다.",
+        "references": "papers/v1.6/data/references/LC_0242",
+        "statement": "problem/LC_0242/statement.md"
+      },
+      "recursion_kind": "frequency_count_iterative",
+      "recursive": false
+    },
+    {
+      "backtracking": false,
+      "display_name": "Move Zeroes",
+      "evaluation_cases": 13,
+      "group": "comparison",
+      "implementation_note": "비영 원소를 앞으로 이동한 뒤 0으로 채웁니다.",
+      "metadata_basis": "cpp_reference",
+      "mutable_state": true,
+      "output_scale": "O(n) 정수열",
+      "problem_id": "LC_0283",
+      "provenance": {
+        "cpp": "problem/LC_0283/reference.cpp",
+        "fixtures": "problem/LC_0283/evaluation",
+        "independent_validation": "problem/metadata/leetcode21/tools/oracles.py",
+        "legacy_reference_source": "scripts/prepare_fps_corpus.py의 HS·PL 자료",
+        "method": "기존 자료를 그대로 복사하고 언어별 기준 구현을 로컬에서 작성하였습니다. 외부 모델 API는 사용하지 않았습니다.",
+        "references": "papers/v1.6/data/references/LC_0283",
+        "statement": "problem/LC_0283/statement.md"
+      },
+      "recursion_kind": "array_update_iterative",
+      "recursive": false
+    },
+    {
+      "backtracking": false,
+      "display_name": "Counting Bits",
+      "evaluation_cases": 13,
+      "group": "comparison",
+      "implementation_note": "비트 개수 배열을 갱신합니다.",
+      "metadata_basis": "cpp_reference",
+      "mutable_state": true,
+      "output_scale": "O(n) 정수열",
+      "problem_id": "LC_0338",
+      "provenance": {
+        "cpp": "problem/LC_0338/reference.cpp",
+        "fixtures": "problem/LC_0338/evaluation",
+        "independent_validation": "problem/metadata/leetcode21/tools/oracles.py",
+        "legacy_reference_source": "scripts/prepare_fps_corpus.py의 HS·PL 자료",
+        "method": "기존 자료를 그대로 복사하고 언어별 기준 구현을 로컬에서 작성하였습니다. 외부 모델 API는 사용하지 않았습니다.",
+        "references": "papers/v1.6/data/references/LC_0338",
+        "statement": "problem/LC_0338/statement.md"
+      },
+      "recursion_kind": "dynamic_programming_iterative",
+      "recursive": false
+    }
+  ],
+  "replacements": {
+    "IPOP_1436": "IPOP_11729",
+    "IPOP_2217": "IPOP_1992",
+    "LC_0217": "IPOP_9663"
+  },
+  "schema_version": 1
+}

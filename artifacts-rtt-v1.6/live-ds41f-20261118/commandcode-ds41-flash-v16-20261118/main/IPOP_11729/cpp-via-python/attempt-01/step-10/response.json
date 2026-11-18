@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n\nvoid hanoi(int k, int start, int mid, int end) {\n    if (k == 1) {\n        std::cout << start << ' ' << end << '\\n';\n        return;\n    }\n\n    hanoi(k - 1, start, end, mid);\n    std::cout << start << ' ' << end << '\\n';\n    hanoi(k - 1, mid, start, end);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    std::cout << ((1 << n) - 1) << '\\n';\n    hanoi(n, 1, 2, 3);\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 634,
+    "total_tokens": 1120,
+    "completion_tokens": 486,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 306
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 634,
+    "total_tokens": 1120,
+    "completion_tokens": 486,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 306
+    }
+  },
+  "cost_usd": 0.0006605039999999999,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-54e49f539a4df0f59bad25ea82d7565e",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_11729\\cpp-via-python\\attempt-01\\step-10\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-54e49f539a4df0f59bad25ea82d7565e",
+    "object": "chat.completion",
+    "created": 1794994440,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n\nvoid hanoi(int k, int start, int mid, int end) {\n    if (k == 1) {\n        std::cout << start << ' ' << end << '\\n';\n        return;\n    }\n\n    hanoi(k - 1, start, end, mid);\n    std::cout << start << ' ' << end << '\\n';\n    hanoi(k - 1, mid, start, end);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    std::cout << ((1 << n) - 1) << '\\n';\n    hanoi(n, 1, 2, 3);\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer with cpp code only fenced. Need translate preserving behavior. Need consider N up to 20, moves ~1,048,575, output big. Python builds list strings then join. C++ can output directly or build string. Need preserve exactly: first line number (1<<n)-1, then moves in order. Reading stdin all, if empty return. n int. Could implement recursive hanoi printing to buffered ostream. But ordering: Need first print count before moves. We can compute then call recursive. stdout buffered. Use ios::sync_with_stdio(false); cin.tie(nullptr). Read token. If no token return. Output count << '\\n'; recursive.\n\nPotential stack recursion depth 20 fine. Need exact formatting: each move \"start end\\n\". Count newline. Good. C++17. Return one code block.\n\nNeed ensure \"complete source file\" includes includes, using namespace. main. Could avoid hardcode. Let's craft.\n\nMaybe issue output for empty input. If (!(cin>>n)) return 0;\n\nFunction hanoi(int k,int start,int mid,int end) or lambda. Print directly. Since count known. Use ostream? std::cout. For performance, maybe build string? 20 -> ~4MB? Actually moves 1M lines ~4MB, fine. cout with sync false fine. Could build std::string reserve and append for fastest. But preserve. Simpler.\n\nNeed no explanation. Final fenced code."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 634,
+      "total_tokens": 1120,
+      "completion_tokens": 486,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 306
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.569990099989809,
+  "received_at": "2026-11-18T09:34:03.508059+00:00",
+  "logical_request_id": "3369b3d3300ef462572f11ea344469cf5021473c2ec68dcd9ad114bf459943d7",
+  "execution_class": "direct_api"
+}

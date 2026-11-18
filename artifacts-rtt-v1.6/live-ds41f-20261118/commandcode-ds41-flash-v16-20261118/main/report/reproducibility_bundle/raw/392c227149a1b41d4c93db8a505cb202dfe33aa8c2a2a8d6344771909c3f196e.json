@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```prolog\ngcd(A, B, G) :-\n    (   B =:= 0\n    ->  G = A\n    ;   R is A mod B,\n        gcd(B, R, G)\n    ).\n\nmain :-\n    read_line_to_codes(user_input, Codes),\n    split_string(Codes, \" \\t\\r\\n\", \" \\t\\r\\n\", [AStr, BStr]),\n    number_string(A, AStr),\n    number_string(B, BStr),\n    gcd(A, B, G),\n    L is (A // G) * B,\n    format(\"~w~n~w~n\", [G, L]).\n```",
+          "reasoning_content": "We need answer exactly one fenced code block Prolog source. No explanation. Need translate. SWI-Prolog main/0, no init directives. Read stdin two ints, output gcd newline lcm newline. Need be careful reading. Use read? Input \"24 18\\n\". read/1 needs term with dot. Could use read_line_to_codes or read_term? We need standard SWI. Use read_line_to_codes(user_input, Codes), split? Simpler: read(A), read(B)? With input \"24 18\" and EOF, read(A) reads 24? Actually read/1 reads term ending period. Input has no period, at EOF may read? It might error? Better read whole line via read_line_to_codes then tokenize numbers. Could use read_line_to_codes(user_input, Codes), number_codes? Codes include space. Use atomic_list_concat? We can parse with split on space. SWI has split_string/4. read_line_to_codes(user_input, Codes), split_string(Codes, \" \\t\\r\\n\", \" \\t\\r\\n\", [AStr,BStr]), number_codes(A,AStr) etc. But if line maybe multiple whitespace. We can also read all input to codes and use number_codes? Need robust. Could use read_string? Standard SWI. Our evaluator likely runs main. We can read_line_to_codes. Implementation:\n\ngcd(A,B,G) :- B =:= 0 -> G = A ; R is A mod B, gcd(B,R,G).\nlcm(A,B,G,L) :- L is (A // G) * B.\n\nmain :-\n    read_line_to_codes(user_input, Codes),\n    split_string(Codes, \" \\t\\r\\n\", \" \\t\\r\\n\", Parts),\n    Parts = [AStr,BStr],\n    number_codes(A,AStr),\n    number_codes(B,BStr),\n    gcd(A,B,G),\n    L is (A // G) * B,\n    format(\"~w~n~w~n\", [G,L]).\n\nBut split_string expects string/codes? SWI split_string(String, Separators, PadChars, SubStrings), String can code list? I think yes, \"The predicate split_string/4 is functionally equivalent to atomic_list_concat/3... String is a string object, atom, or list of character codes.\" In SWI yes accepts codes. Parts are strings. number_codes(A, AStr) where AStr string? number_codes expects list of codes, not string. If split_string returns strings, number_codes won't accept string? Actually number_codes(+Number, ?Codes), Codes must list. In SWI, strings are not lists by default. Need convert. Alternative use atomic_list_concat(Parts, ' ', Atom)? Better use maplist(atom_codes). split_string returns strings if input? Let's verify: split_string/4 returns list of strings. need number_string/2 or atom_number. SWI has number_string(A, AStr). That works with string. Use number_string(A, AStr). Or atom_number. Standard SWI includes number_string. So:\n\nread_line_to_codes(user_input, Codes),\nsplit_string(Codes, \" \\t\\r\\n\", \" \\t\\r\\n\", [AStr,BStr]),\nnumber_string(A, AStr),\nnumber_string(B, BStr),\n\nPotential issue if read_line_to_codes reads empty? Valid input. Fine.\n\nCould do read_line_to_codes handles line. If there are extra lines? Spec first line. Good.\n\nNeed no init directives. Include main. We can define gcd. Could add cut for determinism. Use if-then-else.\n\nNeed ensure no module? \"module Main and main\" only for Haskell. Prolog define main/0. Could include module? Not needed, maybe avoid. File should be complete. Fenced code block only. Good.\n\nNeed be careful \"Return exactly one complete source file in one fenced code block, with no explanation.\" So final only code block.\n\nLet's think of edge cases: A,B positive <=10000. lcm within 1e8, fine.\n\nProlog parsing. If input is \"24 18\\n\": read_line_to_codes(user_input, Codes) yields [50,52,32,49,56] maybe no newline. split_string(Codes, \" \\t\\r\\n\", \" \\t\\r\\n\", [AStr,BStr]) where AStr=\"24\", BStr=\"18\". number_string(24, \"24\"). Good.\n\nCould use read_term? no.\n\nPotential issue if there is leading whitespace. split_string with pad chars strips. If multiple spaces, split_string handles. Good.\n\nIf the evaluator provides entire input with multiple lines maybe only first. Our read_line only first line. Spec first line. Good.\n\nCould there be empty Parts due to newline? With pad chars stripped, no.\n\nNeed no initialization directives. main/0.\n\nFinal code.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794991510,
+    "id": "chatcmpl-5ce2a4a292b493fb155c8762152ce20e",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 1188,
+      "completion_tokens_details": {
+        "reasoning_tokens": 1045
+      },
+      "prompt_tokens": 487,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 1675
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.001534068,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 11.63424110005144,
+  "logical_request_id": "f195353e9fcb9d5b8916c4a2dae2cb0fa21971172995f2060fa800cc11fea1ac",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2609\\cpp-via-prolog\\attempt-03\\step-01\\response_body.txt",
+  "received_at": "2026-11-18T08:45:19.297264+00:00",
+  "request_id": "chatcmpl-5ce2a4a292b493fb155c8762152ce20e",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```prolog\ngcd(A, B, G) :-\n    (   B =:= 0\n    ->  G = A\n    ;   R is A mod B,\n        gcd(B, R, G)\n    ).\n\nmain :-\n    read_line_to_codes(user_input, Codes),\n    split_string(Codes, \" \\t\\r\\n\", \" \\t\\r\\n\", [AStr, BStr]),\n    number_string(A, AStr),\n    number_string(B, BStr),\n    gcd(A, B, G),\n    L is (A // G) * B,\n    format(\"~w~n~w~n\", [G, L]).\n```",
+  "usage": {
+    "completion_tokens": 1188,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1045
+    },
+    "prompt_tokens": 487,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1675
+  },
+  "usage_raw": {
+    "completion_tokens": 1188,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1045
+    },
+    "prompt_tokens": 487,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1675
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nimport Data.List (sort)\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let (s:t:_) = words input\n    putStrLn (if sort s == sort t then \"1\" else \"0\")\n```",
+          "reasoning_content": "We need answer only Haskell code block. Need translate. Preserve stdin two lines strings, output 1 if anagrams else 0. Use getLine. Need handle whitespace? C++ cin >> s >> t skips whitespace. Spec each line one string. Haskell getContents lines words maybe. Safer read all words. Output. Need module Main main. Use Data.List sort? lengths 50000, sorting O(n log n) fine. Or array counts. Standard libs. Could use Data.Array? Simple sort equality: sort s == sort t. Since lowercase. But C++ counts. Both okay. Need preserve behavior: If input valid two tokens. Use interact. main = do input <- getContents; let (s:t:_) = words input in putStrLn (if sort s == sort t then \"1\" else \"0\"). Potential partial if missing but valid. Could implement counts with Int array. Simpler sort. Import Data.List (sort). Return one file fenced. No explanation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794981784,
+    "id": "chatcmpl-80873ac00663201fa8f87773608d43f8",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 271,
+      "completion_tokens_details": {
+        "reasoning_tokens": 210
+      },
+      "prompt_tokens": 538,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 809
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0004866,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.4235885000089183,
+  "logical_request_id": "629743021d315a5e5982e1622b13279ae7196ee5dd5e7a55a3abd030d7203161",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0242\\cpp-via-haskell\\attempt-05\\step-03\\response_body.txt",
+  "received_at": "2026-11-18T06:03:05.662728+00:00",
+  "request_id": "chatcmpl-80873ac00663201fa8f87773608d43f8",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nimport Data.List (sort)\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let (s:t:_) = words input\n    putStrLn (if sort s == sort t then \"1\" else \"0\")\n```",
+  "usage": {
+    "completion_tokens": 271,
+    "completion_tokens_details": {
+      "reasoning_tokens": 210
+    },
+    "prompt_tokens": 538,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 809
+  },
+  "usage_raw": {
+    "completion_tokens": 271,
+    "completion_tokens_details": {
+      "reasoning_tokens": 210
+    },
+    "prompt_tokens": 538,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 809
+  }
+}

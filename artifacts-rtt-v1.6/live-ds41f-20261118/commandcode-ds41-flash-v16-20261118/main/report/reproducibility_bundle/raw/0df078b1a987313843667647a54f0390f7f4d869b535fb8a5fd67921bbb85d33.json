@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    static int n;\n    static int ans = 0;\n    static boolean[] col = new boolean[15];\n    static boolean[] diag1 = new boolean[29];\n    static boolean[] diag2 = new boolean[29];\n\n    static void solve(int r) {\n        if (r == n) {\n            ++ans;\n            return;\n        }\n\n        for (int c = 0; c < n; ++c) {\n            int d1 = r + c;\n            int d2 = r - c + n - 1;\n\n            if (col[c] || diag1[d1] || diag2[d2]) {\n                continue;\n            }\n\n            col[c] = true;\n            diag1[d1] = true;\n            diag2[d2] = true;\n\n            solve(r + 1);\n\n            col[c] = false;\n            diag1[d1] = false;\n            diag2[d2] = false;\n        }\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) {\n            return;\n        }\n        n = sc.nextInt();\n\n        for (int i = 0; i < n; ++i) {\n            col[i] = false;\n        }\n        for (int i = 0; i < 2 * n - 1; ++i) {\n            diag1[i] = false;\n            diag2[i] = false;\n        }\n\n        solve(0);\n        System.out.println(ans);\n    }\n}\n```",
+          "reasoning_content": "Translate to Java 17. Straightforward.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794994748,
+    "id": "chatcmpl-aff8723e042e875b0a810539e6612ca8",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 351,
+      "completion_tokens_details": {
+        "reasoning_tokens": 9
+      },
+      "prompt_tokens": 670,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1021
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0006222,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 5.429539499920793,
+  "logical_request_id": "4badb13c6ccd4b5ddb307cdf05d9e11f8286a354db0019611dac6519788ff3bd",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9663\\cpp-via-java\\attempt-01\\step-07\\response_body.txt",
+  "received_at": "2026-11-18T09:39:09.624432+00:00",
+  "request_id": "chatcmpl-aff8723e042e875b0a810539e6612ca8",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    static int n;\n    static int ans = 0;\n    static boolean[] col = new boolean[15];\n    static boolean[] diag1 = new boolean[29];\n    static boolean[] diag2 = new boolean[29];\n\n    static void solve(int r) {\n        if (r == n) {\n            ++ans;\n            return;\n        }\n\n        for (int c = 0; c < n; ++c) {\n            int d1 = r + c;\n            int d2 = r - c + n - 1;\n\n            if (col[c] || diag1[d1] || diag2[d2]) {\n                continue;\n            }\n\n            col[c] = true;\n            diag1[d1] = true;\n            diag2[d2] = true;\n\n            solve(r + 1);\n\n            col[c] = false;\n            diag1[d1] = false;\n            diag2[d2] = false;\n        }\n    }\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) {\n            return;\n        }\n        n = sc.nextInt();\n\n        for (int i = 0; i < n; ++i) {\n            col[i] = false;\n        }\n        for (int i = 0; i < 2 * n - 1; ++i) {\n            diag1[i] = false;\n            diag2[i] = false;\n        }\n\n        solve(0);\n        System.out.println(ans);\n    }\n}\n```",
+  "usage": {
+    "completion_tokens": 351,
+    "completion_tokens_details": {
+      "reasoning_tokens": 9
+    },
+    "prompt_tokens": 670,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1021
+  },
+  "usage_raw": {
+    "completion_tokens": 351,
+    "completion_tokens_details": {
+      "reasoning_tokens": 9
+    },
+    "prompt_tokens": 670,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1021
+  }
+}

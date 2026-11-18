@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  inp <- getLine\n  let ws = words inp\n  case ws of\n    (ms:ns:_) | Just m <- readMaybeInt ms, Just n <- readMaybeInt ns ->\n      putStrLn (show (uniquePaths m n))\n    _ -> return ()\n\nuniquePaths :: Integer -> Integer -> Integer\nuniquePaths m n = last (foldl' step (replicate (fromInteger n) 1) [2..m])\n  where\n    step row _ = scanl1 (+) row\n\nreadMaybeInt :: String -> Maybe Integer\nreadMaybeInt s = case reads s of\n  [(v, \"\")] -> Just v\n  _         -> Nothing\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794896768,
+    "id": "96c525b3-272a-4502-8ec4-fba088aed8a1",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 172,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_e6d0b7629fef4fc8b281d8bd9ad79f18",
+      "trace_id": "5e5a637c58214f9fa5bfc3ac76ec3c36"
+    },
+    "usage": {
+      "completion_tokens": 172,
+      "prompt_tokens": 505,
+      "prompt_tokens_details": {
+        "cached_tokens": 448
+      },
+      "total_tokens": 677
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00095308,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.4882188999908976,
+  "logical_request_id": "48c16e6c5b6843e1d03a7ab1bbac38f7b372101318319e9cf6f558f3349aa9ff",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0062\\cpp-via-haskell\\attempt-05\\step-05\\response_body.txt",
+  "received_at": "2026-11-17T06:26:08.182631+00:00",
+  "request_id": "96c525b3-272a-4502-8ec4-fba088aed8a1",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  inp <- getLine\n  let ws = words inp\n  case ws of\n    (ms:ns:_) | Just m <- readMaybeInt ms, Just n <- readMaybeInt ns ->\n      putStrLn (show (uniquePaths m n))\n    _ -> return ()\n\nuniquePaths :: Integer -> Integer -> Integer\nuniquePaths m n = last (foldl' step (replicate (fromInteger n) 1) [2..m])\n  where\n    step row _ = scanl1 (+) row\n\nreadMaybeInt :: String -> Maybe Integer\nreadMaybeInt s = case reads s of\n  [(v, \"\")] -> Just v\n  _         -> Nothing\n```",
+  "usage": {
+    "completion_tokens": 172,
+    "prompt_tokens": 505,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 677
+  },
+  "usage_raw": {
+    "completion_tokens": 172,
+    "prompt_tokens": 505,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 677
+  }
+}

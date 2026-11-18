@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let [a, b] = map read (words input) :: [Integer]\n        g = gcd a b\n    putStrLn (show g)\n    putStrLn (show ((a `div` g) * b))\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 480,
+    "total_tokens": 645,
+    "completion_tokens": 165,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 91
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 480,
+    "total_tokens": 645,
+    "completion_tokens": 165,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 91
+    }
+  },
+  "cost_usd": 0.000342,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-afb1af6115c7ecaeed40d4bc1995f055",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2609\\cpp-via-haskell\\attempt-03\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-afb1af6115c7ecaeed40d4bc1995f055",
+    "object": "chat.completion",
+    "created": 1794978902,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let [a, b] = map read (words input) :: [Integer]\n        g = gcd a b\n    putStrLn (show g)\n    putStrLn (show ((a `div` g) * b))\n```",
+          "reasoning_content": "We need answer exactly one source file Haskell. Need translate. No explanation. Need fenced code. Must include module Main and main IO. Read two ints. Output gcd and lcm. Need be careful lcm maybe Int within 10000 product 1e8 fits Int32, Haskell Int okay. Use Prelude gcd, lcm exists in Prelude for Integral. Could simply.\n\nNeed exactly fenced code block. Ensure no explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 480,
+      "total_tokens": 645,
+      "completion_tokens": 165,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.2088992999633774,
+  "received_at": "2026-11-18T05:15:03.002841+00:00",
+  "logical_request_id": "5b79f8e7b16e2e65a3c7d7d99db5cd28da38aa1475704bb5f79b1b3c71b9f871",
+  "execution_class": "direct_api"
+}

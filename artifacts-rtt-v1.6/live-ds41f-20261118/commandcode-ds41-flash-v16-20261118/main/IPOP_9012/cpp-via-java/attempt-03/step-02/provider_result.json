@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nstatic string trim(const string& s) {\n    size_t start = 0, end = s.size();\n    while (start < end && (unsigned char)s[start] <= ' ') start++;\n    while (end > start && (unsigned char)s[end - 1] <= ' ') end--;\n    return s.substr(start, end - start);\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    string first;\n    if (!getline(cin, first)) return 0;\n\n    int t = stoi(trim(first));\n    string output;\n\n    for (int i = 0; i < t; i++) {\n        string s;\n        if (!getline(cin, s)) s = \"\";\n        s = trim(s);\n\n        int bal = 0;\n        bool valid = true;\n\n        for (char c : s) {\n            if (c == '(') bal++;\n            else bal--;\n\n            if (bal < 0) {\n                valid = false;\n                break;\n            }\n        }\n\n        if (bal != 0) valid = false;\n        output += valid ? \"YES\\n\" : \"NO\\n\";\n    }\n\n    cout << output;\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 675,
+    "total_tokens": 1924,
+    "completion_tokens": 1249,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 976
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 675,
+    "total_tokens": 1924,
+    "completion_tokens": 1249,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 976
+    }
+  },
+  "cost_usd": 0.0017013,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-f3f8867dc2ad5e1acf4da523c176d723",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-java\\attempt-03\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-f3f8867dc2ad5e1acf4da523c176d723",
+    "object": "chat.completion",
+    "created": 1794981642,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nstatic string trim(const string& s) {\n    size_t start = 0, end = s.size();\n    while (start < end && (unsigned char)s[start] <= ' ') start++;\n    while (end > start && (unsigned char)s[end - 1] <= ' ') end--;\n    return s.substr(start, end - start);\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    string first;\n    if (!getline(cin, first)) return 0;\n\n    int t = stoi(trim(first));\n    string output;\n\n    for (int i = 0; i < t; i++) {\n        string s;\n        if (!getline(cin, s)) s = \"\";\n        s = trim(s);\n\n        int bal = 0;\n        bool valid = true;\n\n        for (char c : s) {\n            if (c == '(') bal++;\n            else bal--;\n\n            if (bal < 0) {\n                valid = false;\n                break;\n            }\n        }\n\n        if (bal != 0) valid = false;\n        output += valid ? \"YES\\n\" : \"NO\\n\";\n    }\n\n    cout << output;\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer code only in fenced block. Need translate to C++17 preserving behavior. Need think about edge cases: Java reads first line, trim parse int; then for each t reads line, if null s=\"\"; trim; then process. C++ should mimic: read T from first line. Then for i in 0..t-1 read line via getline. But initial newline issues. Need preserve valid inputs spec. Simple.\n\nHowever note Java: first = br.readLine(); if null return; parse trim. Then loop t times: String s = br.readLine(); if null s=\"\"; s=s.trim(); Then processing. In C++: int T; cin >> T; consume newline; then loop getline(cin, s), trim. If EOF, getline fails and s maybe unchanged? We can set s=\"\". Need trim like Java String.trim removes chars <= ' ' at ends (not all whitespace; but for ASCII spaces/newlines). For valid strings only parentheses, no spaces likely. But preserve.\n\nImplement trim function removing whitespace? Java trim removes chars <= U+0020. We can mimic.\n\nNeed output YES/NO.\n\nNeed C++ main. Use string line. After cin >> t; cin.ignore(numeric_limits<streamsize>::max(), '\\n'); If no newline maybe. Then loop. getline; if fail s=\"\"; trim(s). Process.\n\nPotential issue: input may contain blank lines? Spec valid input T lines each string length 2..50, no blank. But Java trims line; if blank becomes empty -> valid? bal=0 => valid true => YES. C++ should same: if line empty, valid true. Our logic: bal=0, valid=true, loop none, bal==0, append YES. Yes.\n\nPotential issue: Java parseInt first.trim() where first may have spaces. C++ cin >> t handles leading whitespace. Fine.\n\nNeed exactly one code block, no explanation. Use ```cpp.\n\nLet's craft.\n\nCheck example: works.\n\nCould use std::all? trim:\n\nstatic string trim(const string& s) {\n size_t start=0, end=s.size();\n while(start<end && (unsigned char)s[start] <= ' ') start++;\n while(end>start && (unsigned char)s[end-1] <= ' ') end--;\n return s.substr(start, end-start);\n}\n\nJava trim checks char <= ' ' (0x20). Good.\n\nIf getline after cin.ignore. If first line has T and then no newline? cin >> t leaves at EOF maybe ignore does nothing. Loop getline fail -> s=\"\"? Need set s=\"\"; then trim. But valid input includes newline.\n\nImplementation:\n\n#include <bits/stdc++.h>\nusing namespace std;\nstatic string trim(const string& s) {...}\nint main(){\n ios::sync_with_stdio(false);\n cin.tie(nullptr);\n string first;\n if(!getline(cin, first)) return 0;\n // Java reads first line then parseInt(trim). But if T line possibly with leading/trailing. Use istringstream? We can parse int from trim(first). If first contains only T. Better mimic Java: read entire first line; trim; if empty? Java parseInt error. Use stoi(trim(first)). \n int t=stoi(trim(first));\n string sb;\n for(int i=0;i<t;i++){\n   string s;\n   if(!getline(cin,s)) s=\"\";\n   s=trim(s);\n   int bal=0; bool valid=true;\n   for(char c: s){ if(c=='(') bal++; else bal--; if(bal<0){valid=false; break;} }\n   if(bal!=0) valid=false;\n   sb += valid ? \"YES\\n\" : \"NO\\n\";\n }\n cout << sb;\n return 0;\n}\n\nThis matches first line read. If first line has trailing newline, getline strips. Good. If input begins with newline? Spec no.\n\nPotential difference: if there are extra spaces after T same line, first line contains \"6   \". trim -> \"6\". stoi fine. getline then next line. Good.\n\nIf T line and subsequent string on same line? Not valid. Java would read entire first line parse int fail if extra. C++ stoi ignores extra? stoi(\"6 abc\") returns 6. But not valid. Could use stringstream to mimic? Not necessary.\n\nCould parse via stringstream? Java Integer.parseInt requires entire trimmed string valid integer, no extra. C++ stoi allows trailing. To preserve exactly, we can use istringstream and check eof? Not needed spec. But could implement robust parse. Simpler.\n\nNeed answer exactly source."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 675,
+      "total_tokens": 1924,
+      "completion_tokens": 1249,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 976
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 10.98275119997561,
+  "received_at": "2026-11-18T06:00:48.371708+00:00",
+  "logical_request_id": "def01b85a412c8ad902679765b0fc9729056dc58dd854880aba36cc4190c0603",
+  "execution_class": "direct_api"
+}

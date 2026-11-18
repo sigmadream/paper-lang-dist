@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (nToken : rest) -> do\n      let n = read nToken :: Int\n          values = map read (take n rest) :: [Int]\n          nonZero = filter (/= 0) values\n          result = nonZero ++ replicate (n - length nonZero) 0\n      putStrLn (unwords (map show result))\n```",
+          "reasoning_content": "We need answer with Haskell source only in fenced code block. Need translate. Straightforward. Need preserve stdin/stdout. N then N ints. Output moved zeros. Haskell module Main main :: IO (). Use getContents lines/words. Note possible empty. Read all words. n first, then n integers. Need output. Could just parse all tokens. signed 32-bit fits Int. Output space-separated integers newline. Need handle no input maybe return. Implement main = do input <- getContents; let xs=map read (words input) :: [Int] in case xs of [] -> return (); (n:rest) -> let arr=take n rest; nonzero=filter (/=0) arr; zeros=replicate (n-length nonzero) 0; out=nonzero++zeros in putStrLn (unwords (map show out)). This produces output. For n=0? constraints >=1 but could handle. Need exactly one source file, no explanation. fenced code block. Use only standard libs. Fine.\n\nNeed be careful if n and rest. If n=0, output newline. But not required. We'll provide.\n\nFinal only code.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794977249,
+    "id": "chatcmpl-7e4ebe54a212a00d0033223676830117",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 362,
+      "completion_tokens_details": {
+        "reasoning_tokens": 245
+      },
+      "prompt_tokens": 656,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1018
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0006312,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 5.257097600027919,
+  "logical_request_id": "b43cbc801b864edd1d1f7187ace38689f6dab64dbf7431ab3490d85840f7d1ad",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-haskell\\attempt-03\\step-07\\response_body.txt",
+  "received_at": "2026-11-18T04:47:30.684211+00:00",
+  "request_id": "chatcmpl-7e4ebe54a212a00d0033223676830117",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (nToken : rest) -> do\n      let n = read nToken :: Int\n          values = map read (take n rest) :: [Int]\n          nonZero = filter (/= 0) values\n          result = nonZero ++ replicate (n - length nonZero) 0\n      putStrLn (unwords (map show result))\n```",
+  "usage": {
+    "completion_tokens": 362,
+    "completion_tokens_details": {
+      "reasoning_tokens": 245
+    },
+    "prompt_tokens": 656,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1018
+  },
+  "usage_raw": {
+    "completion_tokens": 362,
+    "completion_tokens_details": {
+      "reasoning_tokens": 245
+    },
+    "prompt_tokens": 656,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1018
+  }
+}

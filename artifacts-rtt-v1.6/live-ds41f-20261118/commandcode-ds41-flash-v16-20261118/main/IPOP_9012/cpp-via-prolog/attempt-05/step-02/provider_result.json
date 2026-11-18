@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int T;\n    if (!(std::cin >> T)) return 0;\n    std::cin.ignore();\n\n    for (int i = 0; i < T; ++i) {\n        std::string s;\n        if (!std::getline(std::cin, s)) s = \"\";\n\n        int balance = 0;\n        bool valid = true;\n\n        for (char c : s) {\n            if (c == '(') {\n                ++balance;\n            } else if (c == ')') {\n                --balance;\n            }\n\n            if (balance < 0) {\n                valid = false;\n            }\n        }\n\n        if (balance != 0) valid = false;\n\n        std::cout << (valid ? \"YES\" : \"NO\") << '\\n';\n    }\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 757,
+    "total_tokens": 1221,
+    "completion_tokens": 464,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 257
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 757,
+    "total_tokens": 1221,
+    "completion_tokens": 464,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 257
+    }
+  },
+  "cost_usd": 0.0007839,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-eed7d6de7d4a66855ab327b9acb6258a",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-prolog\\attempt-05\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-eed7d6de7d4a66855ab327b9acb6258a",
+    "object": "chat.completion",
+    "created": 1794993903,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int T;\n    if (!(std::cin >> T)) return 0;\n    std::cin.ignore();\n\n    for (int i = 0; i < T; ++i) {\n        std::string s;\n        if (!std::getline(std::cin, s)) s = \"\";\n\n        int balance = 0;\n        bool valid = true;\n\n        for (char c : s) {\n            if (c == '(') {\n                ++balance;\n            } else if (c == ')') {\n                --balance;\n            }\n\n            if (balance < 0) {\n                valid = false;\n            }\n        }\n\n        if (balance != 0) valid = false;\n\n        std::cout << (valid ? \"YES\" : \"NO\") << '\\n';\n    }\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer with C++ source only fenced. Need translate behavior. Need consider Prolog code quirks: reads T line, filters digits, number. Then process T cases, each read line codes, validates parentheses: balance, C=40 increment, C=41 decrement, others unchanged, requires Bal1>=0 always and final 0. It writes YES if valid else NO. For C++ stdin. Strings length 2..50, likely only parentheses. But preserve behavior maybe treat non-paren chars as neutral. T first line maybe parse integer via digits. Then for each case read lines; Prolog read_line_to_codes handles newline strips? It returns codes excluding newline, I think. If EOF, Codes=[] (valid yes). Need replicate? Spec valid inputs T lines. So simple.\n\nNeed output exactly. C++17 main. Include bits. Read T via cin >> T then getline consume. For each, getline string. Evaluate. If non-paren ignored. Empty valid. Output YES/NO newline. Note examples: second T=3 strings \"(( \", \"))\", \"())(()\". All NO. Our works.\n\nNeed return fenced code block. No explanation. Ensure exactly one source file."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 757,
+      "total_tokens": 1221,
+      "completion_tokens": 464,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 257
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.934318599989638,
+  "received_at": "2026-11-18T09:25:06.446646+00:00",
+  "logical_request_id": "75b74180b67fd002a33f349fced1f53b78226562caab62892e127cf76343b346",
+  "execution_class": "direct_api"
+}

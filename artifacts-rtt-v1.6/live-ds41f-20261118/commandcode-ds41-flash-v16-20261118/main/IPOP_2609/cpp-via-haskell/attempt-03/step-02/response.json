@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nlong long gcd_(long long a, long long b) {\n    while (b != 0) {\n        long long t = a % b;\n        a = b;\n        b = t;\n    }\n    return a;\n}\n\nint main() {\n    long long a, b;\n    cin >> a >> b;\n    long long g = gcd_(a, b);\n    cout << g << '\\n';\n    cout << (a / g) * b << '\\n';\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 475,
+    "total_tokens": 655,
+    "completion_tokens": 180,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 58
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 475,
+    "total_tokens": 655,
+    "completion_tokens": 180,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 58
+    }
+  },
+  "cost_usd": 0.0003585,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-574159514dbb6a3f5ce71558c4413e43",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2609\\cpp-via-haskell\\attempt-03\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-574159514dbb6a3f5ce71558c4413e43",
+    "object": "chat.completion",
+    "created": 1794978894,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nlong long gcd_(long long a, long long b) {\n    while (b != 0) {\n        long long t = a % b;\n        a = b;\n        b = t;\n    }\n    return a;\n}\n\nint main() {\n    long long a, b;\n    cin >> a >> b;\n    long long g = gcd_(a, b);\n    cout << g << '\\n';\n    cout << (a / g) * b << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block cpp. Need translate. Simple. Use long long. Read a b. gcd std::gcd or custom. Output g newline lcm. C++17. Include bits/stdc++.h. main. Return exactly one fenced code block no explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 475,
+      "total_tokens": 655,
+      "completion_tokens": 180,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.9303487000288442,
+  "received_at": "2026-11-18T05:14:54.075034+00:00",
+  "logical_request_id": "2cfbe2197d4ee3540fe3c24f737ea99404b97b82b8fc6c132cac3e9298f8ca77",
+  "execution_class": "direct_api"
+}

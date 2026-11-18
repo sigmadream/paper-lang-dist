@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let ws = words input\n  case ws of\n    [] -> return ()\n    (nStr:rest) ->\n      let n = read nStr :: Int\n          xs = take n (map read rest) :: [Int]\n          nonZeros = filter (/= 0) xs\n          zeros = filter (== 0) xs\n      in putStrLn (unwords (map show (nonZeros ++ zeros)))\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 639,
+    "total_tokens": 1314,
+    "completion_tokens": 675,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 559
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 639,
+    "total_tokens": 1314,
+    "completion_tokens": 675,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 559
+    }
+  },
+  "cost_usd": 0.000888804,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-804451f56bdedece2f538db39faba68f",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-haskell\\attempt-05\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-804451f56bdedece2f538db39faba68f",
+    "object": "chat.completion",
+    "created": 1794991246,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let ws = words input\n  case ws of\n    [] -> return ()\n    (nStr:rest) ->\n      let n = read nStr :: Int\n          xs = take n (map read rest) :: [Int]\n          nonZeros = filter (/= 0) xs\n          zeros = filter (== 0) xs\n      in putStrLn (unwords (map show (nonZeros ++ zeros)))\n```",
+          "reasoning_content": "We need answer exactly one complete source file in one fenced code block, no explanation. Need translate to Haskell preserving stdin/stdout. Need understand source: reads n then n ints. Outputs non-zero elements in original order, then zero elements, space separated, newline. Essentially stable move zeros. Need Haskell module Main and main :: IO ().\n\nNeed be careful if n maybe 0? constraints >=1, but source handles. Output no trailing space, newline. If no elements? n maybe? But N>=1. If all? works first flag. If n=0, output newline. Haskell can handle.\n\nNeed produce code block only. Use standard libraries. Read all words. First is n, then take n ints. Could ignore n? Source reads n and n numbers, but if extra ignore. We'll parse. Output intercalate \" \" (show) list. If empty, putStrLn \"\" gives newline. Need non-zero relative order and zeros same (all equal). partition? Use filter (/=0) xs ++ filter (==0) xs. But note zeros order irrelevant, all zero. This preserves all non-zero. Use getContents, words, read. Need handle no input gracefully. main = do s <- getContents; let ws=words s; case ws of [] -> return (); (nStr:rest) -> let n=read nStr; xs=take n (map read rest) in putStrLn (unwords (map show (filter (/=0) xs ++ filter (==0) xs))). This works. Need type inference maybe read ambiguous? n :: Int from take. xs :: [Int] from comparison. Could annotate to avoid ambiguity. Haskell code:\n\nmodule Main where\n\nimport Data.List (partition)\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let ws = words input\n  case ws of\n    [] -> return ()\n    (nStr:rest) ->\n      let n = read nStr :: Int\n          xs = take n (map read rest) :: [Int]\n          (zeros, nonzeros) = partition (== 0) xs\n      in putStrLn (unwords (map show (nonzeros ++ zeros)))\n\nWait partition (==0) returns (zeros, nonzeros) yes. If use partition, preserves nonzeros. Good. But need ensure read nStr with extra? fine. If n larger rest, take n handles shorter? read all rest, if rest fewer than n, take n all rest. Source would fail if missing? input valid. Good.\n\nCould avoid partition import by filter. Fine. Need exact. Return one complete source file fenced. No explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 639,
+      "total_tokens": 1314,
+      "completion_tokens": 675,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 559
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.655640200013295,
+  "received_at": "2026-11-18T08:40:49.752391+00:00",
+  "logical_request_id": "8b40401c1975913ffaaace19b6705e4564dc7685127c628cbd2103d97ec8a126",
+  "execution_class": "direct_api"
+}

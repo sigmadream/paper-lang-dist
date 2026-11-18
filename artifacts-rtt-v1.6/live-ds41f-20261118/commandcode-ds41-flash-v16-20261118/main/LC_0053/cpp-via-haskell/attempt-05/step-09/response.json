@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let ws = words input\n    case ws of\n        [] -> return ()\n        (nStr:rest) -> do\n            let n = read nStr :: Int\n            if n <= 0\n                then return ()\n                else\n                    let nums = map read (take n rest) :: [Integer]\n                    in case nums of\n                        [] -> return ()\n                        (x:xs) -> do\n                            let step (best, cur) v =\n                                    let cur' = max v (cur + v)\n                                    in (max best cur', cur')\n                                (ans, _) = foldl' step (x, x) xs\n                            print ans\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 647,
+    "total_tokens": 1496,
+    "completion_tokens": 849,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 678
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 647,
+    "total_tokens": 1496,
+    "completion_tokens": 849,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 678
+    }
+  },
+  "cost_usd": 0.0012128999999999998,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-42420598a01a2fdfb0deec0c0dffe9c0",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-haskell\\attempt-05\\step-09\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-42420598a01a2fdfb0deec0c0dffe9c0",
+    "object": "chat.completion",
+    "created": 1794987678,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let ws = words input\n    case ws of\n        [] -> return ()\n        (nStr:rest) -> do\n            let n = read nStr :: Int\n            if n <= 0\n                then return ()\n                else\n                    let nums = map read (take n rest) :: [Integer]\n                    in case nums of\n                        [] -> return ()\n                        (x:xs) -> do\n                            let step (best, cur) v =\n                                    let cur' = max v (cur + v)\n                                    in (max best cur', cur')\n                                (ans, _) = foldl' step (x, x) xs\n                            print ans\n```",
+          "reasoning_content": "We need answer exactly one fenced code block with Haskell source, no explanation. Need translate preserving behavior. Need consider spec: read N, then N ints. Output maximum subarray sum. Source has edge handling: if no n return, n<=0 return, reads until fail or n, if empty return, computes over xs.size() which may be less than n if input exhausted. For valid inputs N>=1 with N ints. So can simple.\n\nNeed Haskell module Main and main. Standard libs. Need parse stdin. Output integer newline. Could read all tokens. Need handle possibly missing? To preserve as much: if no tokens do nothing. If n <= 0 do nothing. Otherwise take n numbers, if empty do nothing, Kadane.\n\nHaskell code:\n\nmodule Main where\nimport System.IO (isEOF)\n-- simpler getContents, words.\nmain :: IO ()\nmain = do\n  input <- getContents\n  let ws = words input\n  case ws of\n    [] -> return ()\n    (nstr:rest) ->\n      let n = read nstr :: Int\n      in if n <= 0 then return ()\n         else case take n rest of\n           [] -> return ()\n           (x:xs) ->\n             let vals = map read (x:xs) :: [Integer] or Int\n                 (best, _) = foldl (\\(best,cur) v -> let cur' = max v (cur+v) in (max best cur', cur')) (read x, read x) xs\n             in print best\n\nNeed avoid repeated read. Better map read all take. Use Integer to avoid overflow? Constraints small but sum up to 1e9 fits Int32? 100k*10000=1e9 okay within Int32 (2.147e9) plus negatives, but use Integer safe. Output print Integer.\n\nNeed if n larger than available: source breaks, xs length available, compute on available. Our take n rest handles. If n=0 no output. If rest empty after n positive, xs empty return. Our pattern (x:xs) after map? We can map read then case.\n\nNeed preserve output ordering irrelevant.\n\nPotential issue Haskell lazy getContents okay. read invalid? valid input. Empty line no tokens.\n\nNeed maybe use foldl' for stack. Import Data.List foldl'. Standard. Code:\n\nmodule Main where\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let ws = words input\n    case ws of\n        [] -> return ()\n        (nStr:rest) -> do\n            let n = read nStr :: Int\n            if n <= 0\n                then return ()\n                else\n                    let nums = map read (take n rest) :: [Integer]\n                    in case nums of\n                        [] -> return ()\n                        (x:xs) -> do\n                            let step (best, cur) v =\n                                    let cur' = max v (cur + v)\n                                    in (max best cur', cur')\n                                (ans, _) = foldl' step (x, x) xs\n                            print ans\n\nNeed exactly one complete source file in fenced code. No explanation. Ensure fenced code block labelled haskell."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 647,
+      "total_tokens": 1496,
+      "completion_tokens": 849,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 678
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 7.6495122000342235,
+  "received_at": "2026-11-18T07:41:23.915166+00:00",
+  "logical_request_id": "89dce4189785962f50cb3f8bc920a3ccefab6760696ac004f88f8b50c8ad9d15",
+  "execution_class": "direct_api"
+}

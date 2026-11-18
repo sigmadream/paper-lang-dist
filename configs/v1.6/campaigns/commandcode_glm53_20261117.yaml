@@ -1,0 +1,94 @@
+# 승인된 실제 실험 전용 설정이며 공통 판정 조건을 유지합니다.
+manuscript_version: v1.6
+experiment_version: rtt-hops-v1.6
+schema_version: observation-v1.6
+selection: C:\Users\sigma\orca\workspaces\paper-lang-dist\stickleback\papers\v1.6\data\selection.json
+corpus_root: C:\Users\sigma\orca\workspaces\paper-lang-dist\stickleback\data\rtt-v1.6
+validation: C:\Users\sigma\orca\workspaces\paper-lang-dist\stickleback\artifacts-rtt-v1.6\validation\validation.json
+output_root: C:\Users\sigma\orca\workspaces\paper-lang-dist\stickleback\artifacts-rtt-v1.6\live-commandcode-20261117
+campaign_id: commandcode-glm53-v16-20261117
+profile_id: commandcode-glm53-v16-low-16384
+provider_config: C:\Users\sigma\orca\workspaces\paper-lang-dist\stickleback\configs\v1.6\providers\commandcode_glm53_experiment.yaml
+problem_ids:
+- IPOP_11729
+- IPOP_2110
+- IPOP_1992
+- IPOP_2579
+- IPOP_5567
+- IPOP_10988
+- IPOP_1929
+- IPOP_2609
+- IPOP_9012
+- LC_0053
+- LC_0062
+- IPOP_9663
+- LC_0242
+- LC_0283
+- LC_0338
+pilot_problem_ids:
+- IPOP_11729
+- IPOP_1992
+- LC_0053
+routes:
+- - cpp
+  - python
+- - cpp
+  - java
+- - cpp
+  - haskell
+- - cpp
+  - prolog
+repeats: 5
+pilot_repeats: 1
+threshold: 0.85
+thresholds:
+- 0.8
+- 0.85
+- 0.9
+max_hops: 10
+confirmation_roundtrips: 1
+schedule_seed: 20261117
+observation_wall_seconds: 900
+confirmation_wall_seconds: 300
+runtime:
+  tools:
+    cpp: C:\Users\sigma\scoop\apps\perl\5.42.3.1\c\bin\g++.exe
+    python: C:\Users\sigma\orca\workspaces\paper-lang-dist\stickleback\.venv\Scripts\python.exe
+    java: C:\Users\sigma\scoop\apps\openjdk\current\bin\javac.EXE
+    haskell: C:\Users\sigma\scoop\apps\ghcup\current\ghcup\bin\ghc.EXE
+    prolog: C:\Users\sigma\scoop\shims\swipl.EXE
+  compile_timeout: 180
+  fixture_timeout: 5
+  minimum_evaluation_cases: 13
+similarity:
+  java: C:\Users\sigma\scoop\apps\openjdk\current\bin\java.exe
+  jar: C:\Users\sigma\orca\workspaces\paper-lang-dist\stickleback\jplag-6.3.0-jar-with-dependencies.jar
+  jar_sha256: 5f2c21e8b88ed77134effcb3a5a3ab13d188f6a3e16d401387f7479e92db9aa2
+  language: cpp
+  minimum_tokens: 9
+  normalize: false
+  similarity_field: averageSimilarity
+budget:
+  max_logical_requests: 3600
+  max_transport_attempts: 10800
+  cost_cap_usd: 50
+llm: {}
+execution_wrapper:
+  path: scripts/run_commandcode_v16.py
+  sha256: aee0838d6de8c586fb90a714ba80b11f37825d006455f2f110ea92491010ef9e
+  authentication_policy: 키는 메모리에 보관하고 provider.complete 동안에만 주입하며 평가·JPlag는 허용 목록
+    환경으로 수행합니다
+  serial_execution: true
+phase_budget_policy:
+  preflight:
+    max_calls: 1
+    max_transport_attempts: 1
+    cost_cap_usd: 0.25
+  pilot:
+    max_calls: 144
+    max_transport_attempts: 432
+    cost_cap_usd: 50
+  main:
+    max_calls: 3600
+    max_transport_attempts: 10800
+    cost_cap_usd: 50

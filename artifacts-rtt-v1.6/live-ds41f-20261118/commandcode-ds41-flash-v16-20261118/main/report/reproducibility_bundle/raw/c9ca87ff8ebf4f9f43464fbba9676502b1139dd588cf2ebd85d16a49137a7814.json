@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\n{-# LANGUAGE BangPatterns #-}\n\nmodule Main where\n\nimport Data.Bits\nimport System.IO\n\nqueens :: Int -> Int\nqueens n = solve 0 0 0 0\n  where\n    full = (1 `shiftL` n) - 1\n\n    solve :: Int -> Int -> Int -> Int -> Int\n    solve !r !cols !d1 !d2\n      | r == n = 1\n      | otherwise = go (full .&. complement (cols .|. d1 .|. d2)) 0\n      where\n        go :: Int -> Int -> Int\n        go 0 !acc = acc\n        go bits !acc =\n          let bit = bits .&. (-bits)\n              acc' = acc + solve (r + 1)\n                                 (cols .|. bit)\n                                 ((d1 .|. bit) `shiftL` 1)\n                                 ((d2 .|. bit) `shiftR` 1)\n              bits' = bits .&. (bits - 1)\n          in go bits' acc'\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    [] -> return ()\n    (x:_) -> do\n      let n = read x :: Int\n      print (queens n)\n```",
+          "reasoning_content": "We need answer with Haskell source only in fenced block. Need translate. N up to 14. Need efficient enough. Simple list-based backtracking with sets/lists? N=14 count 365596, search nodes maybe manageable in Haskell if optimized. Better use arrays/bitmasks. Haskell bitmask backtracking.\n\nWe need count N-queens. Use Int bit operations. For each row, available columns = full xor used? Need diagonals masks shifted.\n\nClassic: place row by row; maintain cols, diag1 (r+c), diag2 (r-c+n-1). With bitmasks can use:\nsolve r cols d1 d2\n if r==n 1\n let avail = full .&. complement (cols .|. d1 .|. d2)\n loop over bits:\n   bit = avail .&. -avail\n   rest = avail .&. (bit-1)\n   solve (r+1) (cols.|.bit) ((d1.|.bit) `shiftL` 1) ((d2.|.bit) `shiftR` 1)\n Need mask shifts maybe trim to n bits. d1/d2 may have bits beyond n; avail masked by full so okay. Use Int with 1..14 safe.\n\nNeed read input. If no input return.\n\nRecursion loop over set bits. In Haskell pure. Could use Data.Bits, Control.Monad.\n\nPotential performance: count 14 maybe okay. We can define go !r !cols !d1 !d2. Strictness via BangPatterns. Loop with accumulator.\n\nsolve :: Int -> Int -> Int -> Int -> Int\nsolve r cols d1 d2\n | r == n = 1\n | otherwise = loop avail 0\n where\n   avail = full .&. complement (cols .|. d1 .|. d2)\n   loop 0 acc = acc\n   loop bits acc = \n      let bit = bits .&. negate bits\n          acc' = acc + solve (r+1) (cols .|. bit) ((d1 .|. bit) `shiftL` 1) ((d2 .|. bit) `shiftR` 1)\n          bits' = bits .&. (bits - 1)\n      in loop bits' acc'\nNeed full, n in closure. Use where in main and define solve with full/n captured? Could pass n full. Or top-level not needed.\n\nNote complement on Int negative infinite, but masked with full. (cols .|. d1 .|. d2) complement, then .&. full.\n\nd1 shiftL 1 may grow bits, but full masks each avail. d2 shiftR 1. Fine.\n\nPotential stack? depth 14, loop branching big. Tail recursion with accumulator? Actually recursive calls not tail due to addition. Need evaluate. But number nodes maybe okay. For n=14 ~? N queens search nodes maybe millions. Haskell okay.\n\nCould use Array Int Int precomputed? no.\n\nNeed ensure strict evaluation. BangPatterns. loop !bits !acc. solve arguments strict perhaps define solve !r !cols !d1 !d2.\n\nBut solve recursive and calls loop. In Haskell, if acc' expression not forced until next loop? loop !acc forces. Fine.\n\nOutput with putStrLn (show ans).\n\nNeed main handles reading. readMaybe? Simple:\nmain = do\n s <- getContents\n let n = read (head (words s)) :: Int\n print (queens n)\nIf empty? Not valid per spec but source handles no input returning. We can check null (words s), if null then return else.\n\nReturn exactly code block. No explanation. Haskell module Main. Use qualified Data.Bits? import Data.Bits. Need negate? bit = avail .&. (-avail). Data.Bits supports .&., .|., complement, shiftL, shiftR. Negative okay.\n\nLet's code.\n\nPotential issue complement and .&. require Bits Int.\n\nqueens n = let full = (1 `shiftL` n) -1 in solve 0 0 0 0\n where solve !r !cols !d1 !d2\n        | r == n = 1\n        | otherwise = go (full .&. complement (cols .|. d1 .|. d2)) 0\n        where\n          go 0 !acc = acc\n          go bits !acc =\n            let bit = bits .&. (-bits)\n                acc' = acc + solve (r+1) (cols .|. bit) ((d1 .|. bit) `shiftL` 1) ((d2 .|. bit) `shiftR` 1)\n                bits' = bits .&. (bits - 1)\n            in go bits' acc'\n\nThis uses full in scope from outer let. Good.\n\nPotential optimization: d1/d2 masking to avoid growth. Could mask d1/d2? d1 shift left. d2 shift right. But no need. For n=14, shifts per row, max bits 14+14. Int safe.\n\nPotential issue using .&. with negative bits for bit extraction. bits positive, -bits has sign, bits .&. -bits yields lowest set bit. okay.\n\nOutput.\n\nNeed ensure n=1 returns 1, n=2 0. full=(1<<1)-1=1. r0 avail=1. go bit1 solve r1=1 =>1. good.\n\nOne subtle: `go bits !acc` with bits not strict. Fine.\n\nMaybe add `{-# LANGUAGE BangPatterns #-}`.\n\nNow final only fenced.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794983543,
+    "id": "chatcmpl-189aa81f2c9ce7775a2d600e88c09d20",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 1492,
+      "completion_tokens_details": {
+        "reasoning_tokens": 1201
+      },
+      "prompt_tokens": 630,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 2122
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0019417679999999997,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 13.748463199939579,
+  "logical_request_id": "5cbc1df89a03911439c1463865091b34a8f838ef571d0499b05e1127e8246810",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9663\\cpp-via-haskell\\attempt-01\\step-01\\response_body.txt",
+  "received_at": "2026-11-18T06:32:34.342904+00:00",
+  "request_id": "chatcmpl-189aa81f2c9ce7775a2d600e88c09d20",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\n{-# LANGUAGE BangPatterns #-}\n\nmodule Main where\n\nimport Data.Bits\nimport System.IO\n\nqueens :: Int -> Int\nqueens n = solve 0 0 0 0\n  where\n    full = (1 `shiftL` n) - 1\n\n    solve :: Int -> Int -> Int -> Int -> Int\n    solve !r !cols !d1 !d2\n      | r == n = 1\n      | otherwise = go (full .&. complement (cols .|. d1 .|. d2)) 0\n      where\n        go :: Int -> Int -> Int\n        go 0 !acc = acc\n        go bits !acc =\n          let bit = bits .&. (-bits)\n              acc' = acc + solve (r + 1)\n                                 (cols .|. bit)\n                                 ((d1 .|. bit) `shiftL` 1)\n                                 ((d2 .|. bit) `shiftR` 1)\n              bits' = bits .&. (bits - 1)\n          in go bits' acc'\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    [] -> return ()\n    (x:_) -> do\n      let n = read x :: Int\n      print (queens n)\n```",
+  "usage": {
+    "completion_tokens": 1492,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1201
+    },
+    "prompt_tokens": 630,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 2122
+  },
+  "usage_raw": {
+    "completion_tokens": 1492,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1201
+    },
+    "prompt_tokens": 630,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 2122
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "text": "```prolog\nmain :-\n    read_line_to_string(user_input, NLine),\n    (   NLine == end_of_file\n    ->  true\n    ;   number_string(N, NLine),\n        read_rows(N, Rows),\n        solve(Rows, 0, 0, N, Code),\n        format('~s~n', [Code])\n    ).\n\nread_rows(0, []) :- !.\nread_rows(N, [Row|Rest]) :-\n    read_line_to_string(user_input, Row),\n    N1 is N - 1,\n    read_rows(N1, Rest).\n\nsolve(Rows, R, C, Size, Code) :-\n    nth0(R, Rows, Row),\n    string_code(Row, C, First),\n    (   all_same(Rows, R, C, Size, First)\n    ->  string_codes(Code, [First])\n    ;   Half is Size // 2,\n        R2 is R + Half,\n        C2 is C + Half,\n        solve(Rows, R, C, Half, TL),\n        solve(Rows, R, C2, Half, TR),\n        solve(Rows, R2, C, Half, BL),\n        solve(Rows, R2, C2, Half, BR),\n        string_concat(\"(\", TL, A),\n        string_concat(A, TR, B),\n        string_concat(B, BL, C1),\n        string_concat(C1, BR, D),\n        string_concat(D, \")\", Code)\n    ).\n\nall_same(Rows, R, C, Size, First) :-\n    REnd is R + Size,\n    CEnd is C + Size,\n    all_same_loop(Rows, R, C, REnd, CEnd, First).\n\nall_same_loop(_, R, _, REnd, _, _) :-\n    R >= REnd,\n    !.\nall_same_loop(Rows, R, C, REnd, CEnd, First) :-\n    nth0(R, Rows, Row),\n    check_row(Row, C, CEnd, First),\n    R1 is R + 1,\n    all_same_loop(Rows, R1, C, REnd, CEnd, First).\n\ncheck_row(_, C, CEnd, _) :-\n    C >= CEnd,\n    !.\ncheck_row(Row, C, CEnd, First) :-\n    string_code(Row, C, First),\n    C1 is C + 1,\n    check_row(Row, C1, CEnd, First).\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 764,
+    "total_tokens": 3306,
+    "completion_tokens": 2542,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1988
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 764,
+    "total_tokens": 3306,
+    "completion_tokens": 2542,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1988
+    }
+  },
+  "cost_usd": 0.0032795999999999997,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-aa6aa34918c623ebf514069988adb677",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_1992\\cpp-via-prolog\\attempt-01\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-aa6aa34918c623ebf514069988adb677",
+    "object": "chat.completion",
+    "created": 1794991491,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\nmain :-\n    read_line_to_string(user_input, NLine),\n    (   NLine == end_of_file\n    ->  true\n    ;   number_string(N, NLine),\n        read_rows(N, Rows),\n        solve(Rows, 0, 0, N, Code),\n        format('~s~n', [Code])\n    ).\n\nread_rows(0, []) :- !.\nread_rows(N, [Row|Rest]) :-\n    read_line_to_string(user_input, Row),\n    N1 is N - 1,\n    read_rows(N1, Rest).\n\nsolve(Rows, R, C, Size, Code) :-\n    nth0(R, Rows, Row),\n    string_code(Row, C, First),\n    (   all_same(Rows, R, C, Size, First)\n    ->  string_codes(Code, [First])\n    ;   Half is Size // 2,\n        R2 is R + Half,\n        C2 is C + Half,\n        solve(Rows, R, C, Half, TL),\n        solve(Rows, R, C2, Half, TR),\n        solve(Rows, R2, C, Half, BL),\n        solve(Rows, R2, C2, Half, BR),\n        string_concat(\"(\", TL, A),\n        string_concat(A, TR, B),\n        string_concat(B, BL, C1),\n        string_concat(C1, BR, D),\n        string_concat(D, \")\", Code)\n    ).\n\nall_same(Rows, R, C, Size, First) :-\n    REnd is R + Size,\n    CEnd is C + Size,\n    all_same_loop(Rows, R, C, REnd, CEnd, First).\n\nall_same_loop(_, R, _, REnd, _, _) :-\n    R >= REnd,\n    !.\nall_same_loop(Rows, R, C, REnd, CEnd, First) :-\n    nth0(R, Rows, Row),\n    check_row(Row, C, CEnd, First),\n    R1 is R + 1,\n    all_same_loop(Rows, R1, C, REnd, CEnd, First).\n\ncheck_row(_, C, CEnd, _) :-\n    C >= CEnd,\n    !.\ncheck_row(Row, C, CEnd, First) :-\n    string_code(Row, C, First),\n    C1 is C + 1,\n    check_row(Row, C1, CEnd, First).\n```",
+          "reasoning_content": "We need answer with Prolog code only fenced. Need translate. Need preserve stdin/stdout. SWI-Prolog main/0. Read N, N lines strings. Recursive quad. Output with newline. Need careful reading whitespace. SWI read_line_to_string? We can use read_string? Input may have newline. Simpler use read_line_to_string(user_input, Line) for N then rows. But N line. Could also read(N) then read rows as atoms with read_line_to_string. Since rows are strings of 0/1 no spaces. Use read_line_to_string.\n\nNeed define main/0. Avoid init directives. We need code in one fenced block.\n\nImplementation:\n\n:- module? They said Haskell module Main; Prolog define main/0. We can write plain.\n\nmain :-\n    read_line_to_string(user_input, NLine),\n    ( NLine == end_of_file -> true\n    ; number_string(N, NLine),\n      read_rows(N, Rows),\n      solve(Rows, 0, 0, N, Code),\n      format('~s~n', [Code])\n    ).\n\nread_rows(0, []) :- !.\nread_rows(N, [Row|Rest]) :-\n    read_line_to_string(user_input, Row), % Row string\n    N1 is N-1,\n    read_rows(N1, Rest).\n\nBut read_line_to_string returns string without newline. If blank? not.\n\nNeed access char at row index. SWI string_code(String, Index, Code) 0-based. To get char code at r,c: nth0? Rows list. Could use nth0(R, Rows, Row). Then string_code(Row, C, Ch). More efficient recursive but N<=64 trivial. same check loops.\n\nProlog variables: solve(Rows,R,C,Size,Code) where Code string? Build strings using string_concat. Base: get first char code, check all same. If same, string_code(Row,R? Actually char). Need output char string. Could use atom? Use string_code for row C.\n\nsame_first(Rows,R,C,Size,First) check double recursion. Since N small.\n\nImplementation:\n\nsolve(Rows, R, C, Size, Code) :-\n    nth0(R, Rows, Row),\n    string_code(Row, C, First),\n    ( all_same(Rows,R,C,Size,First) ->\n        char_code_string(First, Code)  % string from one char\n    ; Half is Size // 2,\n      R2 is R+Half, C2 is C+Half,\n      solve(Rows,R,C,Half,TL),\n      solve(Rows,R,C2,Half,TR),\n      solve(Rows,R2,C,Half,BL),\n      solve(Rows,R2,C2,Half,BR),\n      atomic_list_concat(['(',TL,TR,BL,BR,')'], Code)\n    ).\n\nBut atomic_list_concat can handle strings? In SWI, atomic_list_concat(List, Atom) yields atom; strings are atoms? Actually SWI strings are not atoms? atomic_list_concat/2 accepts atoms, strings? Let's verify: atomic_list_concat(+List, -Atom) \"Concatenates a list of atoms, strings, or numbers into an atom.\" Hmm output atom. If use string_concat nested easier.\n\nstring_concat('(', TL, A), ... but '(...' is atom not string? string_concat accepts text? SWI string_concat(+Text1,+Text2,-Text3), text can atom/string/number converted? likely. Could use append with strings? Better use atom? Output via format '~w~n' with atom. Since result contains parentheses and 0/1. Use atoms for code. string_code returns code. char_code for atom: atom_codes? Actually easiest: represent code as atom. Base: atom_codes(CharAtom,[First])? Wait First is code. atom_codes(CodeAtom, [First]). Then concatenation atomic_list_concat(List, Code) yields atom. Output format('~w~n',[Code]). Atomic_list_concat of list ['(', TL, ...] all atoms. Good.\n\nSo base: atom_codes(Code, [First]).\nRecursive: atomic_list_concat(['(',TL,TR,BL,BR,')'], Code).\n\nNeed all_same. Define:\n\nall_same(_,_,_,0,_) :- !. But Size at least 1. We can loop rows and cols via recursive indexes. Simpler:\n\nall_same(Rows, R, C, Size, First) :-\n    REnd is R + Size,\n    CEnd is C + Size,\n    all_same_loop(Rows, R, C, REnd, CEnd, First).\n\nall_same_loop(_, R, _, REnd, _, _) :- R >= REnd, !.\nall_same_loop(Rows, R, C, REnd, CEnd, First) :-\n    nth0(R, Rows, Row),\n    check_row(Row, C, CEnd, First),\n    R1 is R + 1,\n    all_same_loop(Rows, R1, C, REnd, CEnd, First).\n\ncheck_row(_, C, CEnd, _) :- C >= CEnd, !.\ncheck_row(Row, C, CEnd, First) :-\n    string_code(Row, C, First), !,\n    C1 is C+1,\n    check_row(Row, C1, CEnd, First).\n\nPotential issue string_code(Row,C,First) if char not equal fails and no next clauses? We have cut after string_code, then recurse. If equality fails, string_code(Row,C,First) fails, so clause fails. Fine no cut needed. But if string_code succeeds and not First, fails. Good.\n\nCould optimize by checking first char. Base.\n\nRead N: read_line_to_string; then number_string. Number_string expects string. If NLine maybe includes \\r? online no. Could use read_token? But okay.\n\nPotential issue read_line_to_string(user_input, NLine) on empty at EOF returns end_of_file. Good.\n\nNeed ensure only one source file no explanation. final fenced code.\n\nCheck example mentally. It should output.\n\nNeed consider main/0 invoked. We can include :- initialization? Explicit says do not add initialization directives. So just main/0. If evaluator invokes main. Need maybe include main/0 in module? Plain code.\n\nPotential problem: SWI Prolog predicate atomic_list_concat -> Code atom. format('~w~n',[Code]) outputs atom without quotes. For atoms with parentheses? ~w writes atom, parentheses? Since atom code is like ((110(0101))(0010)1(0001)); ~w prints as is? Actually write/1 may quote atoms when necessary? Parentheses and digits? An atom starting with '(' likely needs quotes? Let's think SWI write/1: write((abc)) maybe prints abc? For atom '((110...' maybe write may quote? write/1 normally writes atoms unquoted if possible; if not, uses quotes. Parentheses may be special; atom starting '(' might print as '('...'? Need test. Better use format('~s~n',[Code]) if Code string. Or use write_term(Code,[quoted(false)])? Hmm.\n\nAvoid ambiguity: use string as output. Build strings. Let's re-evaluate.\n\nSWI has string_concat/3, atom_string. We can use strings: base `string_code`? For single code to string, `string_code(String, 0, Code)` creates? string_code(+String, ?Index, ?Code) is nondet; can use `string_codes(Str,[First])`? SWI `string_codes(?String, ?Codes)`. Use `string_codes(Code, [First])` to construct string from list of codes. Then recursive: `string_concat('(', TL, A), ...` Is `'('` atom or string? In Prolog single quotes are atom. string_concat may accept atom? Better use double quotes `\"(\"` for string in SWI. So:\nstring_concat(\"(\", TL, A),\nstring_concat(A, TR, B),\n...\nCode = D + \")\"? Use string_concat(D, \")\", Code).\n\nOutput: format('~s~n',[Code]) works with string. Good. Use strings throughout.\n\nBase: string_codes(Code, [First]).\nFor recursive: use string_concat. Or `atomics_to_string`? SWI `atomics_to_string(List, String)` concatenates atoms/strings/numbers into string. Could use atomics_to_string([\"(\",TL,TR,BL,BR,\")\"], Code). But string_concat safer.\n\nLet's use strings.\n\nRead row: read_line_to_string returns string, may be end_of_file. For N rows valid.\n\nall_same: same.\n\nCheck `string_code(Row, C, First)` returns code, compare.\n\nNeed be careful if read_line_to_string for N line and rows: If N line has trailing spaces? no.\n\nCould parse N using `read_line_to_string` and `number_string(N, NLine)`. number_string handles string.\n\nPotential extra EOF? fine.\n\nNow produce final code only."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 764,
+      "total_tokens": 3306,
+      "completion_tokens": 2542,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1988
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 14.582703599939123,
+  "received_at": "2026-11-18T08:45:04.107380+00:00",
+  "logical_request_id": "c432468abae5fd1647c3ac165358cba1ab6b63088e6ec3455072f8dc53145c9e",
+  "execution_class": "direct_api"
+}

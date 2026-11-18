@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    std::vector<int> counts(n + 1, 0);\n    for (int i = 1; i <= n; ++i) {\n        counts[i] = counts[i / 2] + (i % 2);\n    }\n\n    for (int i = 0; i <= n; ++i) {\n        if (i > 0) {\n            std::cout << ' ';\n        }\n        std::cout << counts[i];\n    }\n    std::cout << '\\n';\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 487,
+    "total_tokens": 805,
+    "completion_tokens": 318,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 150
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 487,
+    "total_tokens": 805,
+    "completion_tokens": 318,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 150
+    }
+  },
+  "cost_usd": 0.0005277,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-14695dd704b87e2c5810370080545e5a",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0338\\cpp-via-python\\attempt-04\\step-04\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-14695dd704b87e2c5810370080545e5a",
+    "object": "chat.completion",
+    "created": 1794998642,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    std::vector<int> counts(n + 1, 0);\n    for (int i = 1; i <= n; ++i) {\n        counts[i] = counts[i / 2] + (i % 2);\n    }\n\n    for (int i = 0; i <= n; ++i) {\n        if (i > 0) {\n            std::cout << ' ';\n        }\n        std::cout << counts[i];\n    }\n    std::cout << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need translate Python to C++17 preserving behavior. Simple.\n\nRead N, compute counts via DP, print space-separated. Handle empty input return.\n\nNeed output exactly \"0 1 1\\n\" for N=2.\n\nWrite C++ with iostream, vector. Reading: if no input return. Use cin >> n, if fails return.\n\nFor n up to 100000, use vector<int>. counts[0]=0; for i=1..n counts[i]=counts[i/2]+(i&1). Print joined with spaces, newline.\n\nEdge N=0 prints \"0\\n\".\n\nUse long long? N<=100000 fine int.\n\nReturn one complete source file in fenced code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 487,
+      "total_tokens": 805,
+      "completion_tokens": 318,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 150
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.301433799904771,
+  "received_at": "2026-11-18T10:44:04.706393+00:00",
+  "logical_request_id": "b116e15ec80f267931cd426e37d06d236af236c914831d910052090b219a6c97",
+  "execution_class": "direct_api"
+}

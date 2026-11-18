@@ -1,0 +1,86 @@
+{
+  "text": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StreamTokenizer st = new StreamTokenizer(br);\n\n        if (st.nextToken() == StreamTokenizer.TT_EOF) return;\n        int n = (int) st.nval;\n\n        if (st.nextToken() == StreamTokenizer.TT_EOF) return;\n        int m = (int) st.nval;\n\n        List<Integer>[] adj = new ArrayList[n + 1];\n        for (int i = 1; i <= n; i++) {\n            adj[i] = new ArrayList<>();\n        }\n\n        for (int i = 0; i < m; i++) {\n            st.nextToken();\n            int u = (int) st.nval;\n            st.nextToken();\n            int v = (int) st.nval;\n\n            adj[u].add(v);\n            adj[v].add(u);\n        }\n\n        int[] dist = new int[n + 1];\n        Arrays.fill(dist, -1);\n\n        Queue<Integer> q = new ArrayDeque<>();\n        dist[1] = 0;\n        q.add(1);\n\n        int ans = 0;\n\n        while (!q.isEmpty()) {\n            int cur = q.poll();\n\n            for (int next : adj[cur]) {\n                if (dist[next] == -1) {\n                    dist[next] = dist[cur] + 1;\n                    q.add(next);\n\n                    if (dist[next] <= 2) {\n                        ans++;\n                    }\n                }\n            }\n        }\n\n        System.out.println(ans);\n    }\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 706,
+    "total_tokens": 1582,
+    "completion_tokens": 876,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 533
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 706,
+    "total_tokens": 1582,
+    "completion_tokens": 876,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 533
+    }
+  },
+  "cost_usd": 0.001263,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-0dcc3e48bf99acf8035e89f304fca195",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_5567\\cpp-via-java\\attempt-04\\step-07\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-0dcc3e48bf99acf8035e89f304fca195",
+    "object": "chat.completion",
+    "created": 1794999785,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StreamTokenizer st = new StreamTokenizer(br);\n\n        if (st.nextToken() == StreamTokenizer.TT_EOF) return;\n        int n = (int) st.nval;\n\n        if (st.nextToken() == StreamTokenizer.TT_EOF) return;\n        int m = (int) st.nval;\n\n        List<Integer>[] adj = new ArrayList[n + 1];\n        for (int i = 1; i <= n; i++) {\n            adj[i] = new ArrayList<>();\n        }\n\n        for (int i = 0; i < m; i++) {\n            st.nextToken();\n            int u = (int) st.nval;\n            st.nextToken();\n            int v = (int) st.nval;\n\n            adj[u].add(v);\n            adj[v].add(u);\n        }\n\n        int[] dist = new int[n + 1];\n        Arrays.fill(dist, -1);\n\n        Queue<Integer> q = new ArrayDeque<>();\n        dist[1] = 0;\n        q.add(1);\n\n        int ans = 0;\n\n        while (!q.isEmpty()) {\n            int cur = q.poll();\n\n            for (int next : adj[cur]) {\n                if (dist[next] == -1) {\n                    dist[next] = dist[cur] + 1;\n                    q.add(next);\n\n                    if (dist[next] <= 2) {\n                        ans++;\n                    }\n                }\n            }\n        }\n\n        System.out.println(ans);\n    }\n}\n```",
+          "reasoning_content": "We need answer exact one complete source file in fenced code block, no explanation. Need translate C++ to Java 17 Main. Preserve stdin/stdout. Need consider examples: first input \"1\\n0\" though constraints N>=2, M>=1 contradict but handles. Need BFS count dist <=2 excluding self. Use BufferedReader/StreamTokenizer or Scanner. Standard libraries. Need one file public class Main with main. Implement.\n\nPotential subtlety: parsing whitespace ints. Use StreamTokenizer. Or BufferedReader split. We can use Scanner. N up to 500 M 10000 trivial. Need output count. Use ArrayDeque<Integer>, ArrayList<Integer>[] adjacency. For n maybe 1. dist int array n+1.\n\nNeed ensure if no input exits. With Scanner hasNextInt. Code:\n\nimport java.util.*;\nimport java.io.*;\n\npublic class Main {\n public static void main(String[] args) throws Exception {\n   BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n   StreamTokenizer st = new StreamTokenizer(br);\n   if (st.nextToken() == StreamTokenizer.TT_EOF) return;\n   int n = (int) st.nval;\n   if (st.nextToken() == TT_EOF) return;\n   int m = (int) st.nval;\n   List<Integer>[] adj = new ArrayList[n+1];\n   for i...\n   for i 0..m-1 read u v...\n...\nint ans=0;\ndist[1]=0;\nq.add(1);\nwhile...\n for next...\n if dist[next]==-1...\n   if dist[next]<=2 ans++;\nSystem.out.println(ans);\n }\n}\n\nStreamTokenizer parse integers fine. Could use StringTokenizer for line reading but lines. StreamTokenizer okay. Need TT_EOF? Since no imports issue. `StreamTokenizer.TT_EOF`.\n\nPotential bug: st.nval double but integer exact. Cast.\n\nNeed return exactly source file in fenced block. No explanation.\n\nCheck first example N=1 M=0. adj size2. n>=1. ans 0. okay.\n\nSecond: count vertices dist1:2,5; dist2:3,6 =4? Wait expected output 3. Let's compute graph: edges 1-2, 2-3, 3-4, 2-5,5-6,6-7. Distance from 1: d0 {1}; d1 {2}; d2 neighbors of 2 not visited: 3,5. So answer 1+2=3. Vertex 6 distance3. Good.\n\nNo explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 706,
+      "total_tokens": 1582,
+      "completion_tokens": 876,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 533
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.994810000061989,
+  "received_at": "2026-11-18T11:03:10.168067+00:00",
+  "logical_request_id": "89817473d8b15239c986bb4cdffefac462887dac2f7e2198784a894f50d17578",
+  "execution_class": "direct_api"
+}

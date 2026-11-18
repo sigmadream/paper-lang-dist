@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(readutil)).\n\nmain :-\n    current_input(In),\n    read_line_to_string(In, Line1),\n    ( Line1 == end_of_file ->\n        true\n    ;\n        read_line_to_string(In, Line2),\n        split_string(Line2, \" \", \" \", Tokens),\n        maplist(number_string, A, Tokens),\n        A = [First|Rest],\n        foldl(step, Rest, First-First, _-Best),\n        format(\"~d~n\", [Best])\n    ).\n\nstep(X, Cur0-Best0, Cur-Best) :-\n    Cur1 is max(X, Cur0 + X),\n    Best is max(Best0, Cur1),\n    Cur = Cur1.\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794899006,
+    "id": "9de5aeeb-ec77-42e0-bc61-e993ff2f0101",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 165,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_0b59a2c2e4664e82a04636d5a84b31fb",
+      "trace_id": "d25d6fbbb1ac435c845ad8f05a47c5d8"
+    },
+    "usage": {
+      "completion_tokens": 165,
+      "prompt_tokens": 528,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 693
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0010274400000000001,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.215248199994676,
+  "logical_request_id": "da55d0d9a8f63ce20c6cea8583bf3bb6a72194982516eaf7467e6514a2b112bb",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0053\\cpp-via-prolog\\attempt-02\\step-03\\response_body.txt",
+  "received_at": "2026-11-17T07:03:26.185084+00:00",
+  "request_id": "9de5aeeb-ec77-42e0-bc61-e993ff2f0101",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(readutil)).\n\nmain :-\n    current_input(In),\n    read_line_to_string(In, Line1),\n    ( Line1 == end_of_file ->\n        true\n    ;\n        read_line_to_string(In, Line2),\n        split_string(Line2, \" \", \" \", Tokens),\n        maplist(number_string, A, Tokens),\n        A = [First|Rest],\n        foldl(step, Rest, First-First, _-Best),\n        format(\"~d~n\", [Best])\n    ).\n\nstep(X, Cur0-Best0, Cur-Best) :-\n    Cur1 is max(X, Cur0 + X),\n    Best is max(Best0, Cur1),\n    Cur = Cur1.\n```",
+  "usage": {
+    "completion_tokens": 165,
+    "prompt_tokens": 528,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 693
+  },
+  "usage_raw": {
+    "completion_tokens": 165,
+    "prompt_tokens": 528,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 693
+  }
+}

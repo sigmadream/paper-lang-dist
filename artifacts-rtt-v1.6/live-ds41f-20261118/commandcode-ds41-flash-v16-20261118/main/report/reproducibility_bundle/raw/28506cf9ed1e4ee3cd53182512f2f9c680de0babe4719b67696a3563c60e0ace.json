@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\n{-# LANGUAGE BangPatterns #-}\n\nmodule Main where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.List (sort)\nimport Data.Maybe (fromJust)\n\nmain :: IO ()\nmain = do\n  input <- BS.getContents\n  let toks = BS.words input\n      nums = map (fst . fromJust . BS.readInt) toks\n  case nums of\n    (n : c : rest) -> do\n      let houses = sort (take n rest)\n      print (solve c houses)\n    _ -> return ()\n\nsolve :: Int -> [Int] -> Int\nsolve c houses =\n  let lo0 = 1\n      hi0 = last houses - head houses\n  in search lo0 hi0 0\n  where\n    search :: Int -> Int -> Int -> Int\n    search !lo !hi !ans\n      | lo > hi = ans\n      | otherwise =\n          let mid = lo + (hi - lo) `div` 2\n          in if canPlace mid >= c\n               then search (mid + 1) hi mid\n               else search lo (mid - 1) ans\n\ncanPlace :: Int -> [Int] -> Int\ncanPlace d xs =\n  case xs of\n    [] -> 0\n    (x : rest) -> go 1 x rest\n  where\n    go :: Int -> Int -> [Int] -> Int\n    go !cnt !_ [] = cnt\n    go !cnt !prev (y : ys)\n      | y - prev >= d = go (cnt + 1) y ys\n      | otherwise = go cnt prev ys\n```",
+          "reasoning_content": "We need answer exactly one complete source file in fenced code block, no explanation. Need translate to Haskell. Need preserve stdin/stdout. Need provide Haskell module Main main. Need be careful performance N up to 200000. Implement parse efficiently maybe ByteString. Need sort list? N 200k Int, Haskell sort list okay but need efficient. Use Data.List.sort on [Int]. Coordinates 0..1e9, differences fit Int on 64-bit. Binary search. Read via ByteString getContents, B.readInt parsing. Simpler use words on String maybe okay for 200k. But Haskell performance: read all using ByteString and parse ints.\n\nNeed output answer with newline.\n\nEdge cases N=2 C=2. left=1? Source uses left=1. If houses same? distinct, but difference could 0 if same impossible. If N? C>=2. If all distinct diff >=1. If right maybe? If coordinates can be 0 and 1 diff 1. answer at least 1. Source left=1. Binary search works.\n\nImplement:\n\nmodule Main where\nimport qualified Data.ByteString.Char8 as BS\nimport Data.List (sort)\nimport Data.Maybe\n\nmain :: IO ()\nmain = do\n  s <- BS.getContents\n  let ints = map fst . unfold? Or parse all tokens via BS.words then map readInt. Using BS.readInt from words. 200k tokens fine. Simpler:\n  let ws = BS.words s\n      nums = map (fst . fromJust . BS.readInt) ws\n  case nums of\n    (n:c:rest) -> let houses = sort (take n rest)\n                  in print (solve c houses)\n    _ -> return ()\n\nBS.readInt returns Maybe (Int, ByteString). For 200k, fromJust okay. Or custom parse. This is standard library, ByteString is shipped with GHC? Data.ByteString.Char8 is bytestring package, standard GHC includes bytestring. \"standard libraries shipped with specified toolchain\" okay.\n\nPotential stack overflow sort? Data.List.sort okay but memory. For 200k okay.\n\nSolve:\nsolve :: Int -> [Int] -> Int\nsolve c houses = go 1 (last houses - head houses) 0? Need pattern. Since c>=2, houses at least 2. But maybe n from input. Solve safe.\n\ncountInstall :: Int -> [Int] -> Int\ncountInstall d (x:xs) = go 1 x xs where go cnt prev (y:ys) | y - prev >= d = go (cnt+1) y ys | otherwise = go cnt prev ys; go cnt _ [] = cnt\ncountInstall _ [] = 0\n\ngo left right ans\nwhile left<=right:\nmid = left + (right-left) `div` 2\nif countInstall mid >= c then go (mid+1) right mid else go left (mid-1) ans\n\nNeed avoid repeated list traversal count install scanning from head each time O(N log range) ~ 200k*30 =6M okay. But each count uses list. Good.\n\nCould use strict recursion with bang patterns? Add LANGUAGE BangPatterns maybe. Could avoid. For performance use strict accumulator. Haskell lazy maybe okay. We'll add {-# LANGUAGE BangPatterns #-}. It's standard. Or use foldl'? Count requires prev. Define strict go with !cnt !prev.\n\nNeed parse: nums. Could be memory. BS.words creates list of ByteString slices; 200k okay. Then map read. fine.\n\nNeed be careful BS.readInt with negative? no.\n\nOutput: BS.putStr? print adds newline. print (solve c houses) okay. But print Int.\n\nNeed one fenced code block. No explanation. The final must be code. Ensure no extra text. Use ```haskell.\n\nLet's draft:\n\n{-# LANGUAGE BangPatterns #-}\nmodule Main where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.List (sort)\nimport Data.Maybe (fromJust)\n\nmain :: IO ()\nmain = do\n  input <- BS.getContents\n  let toks = BS.words input\n      nums = map (fst . fromJust . BS.readInt) toks\n  case nums of\n    (n:c:rest) -> do\n      let houses = sort (take n rest)\n      print (solve c houses)\n    _ -> return ()\n\nsolve :: Int -> [Int] -> Int\nsolve c houses =\n  let lo0 = 1\n      hi0 = last houses - head houses\n  in search lo0 hi0 0\n  where\n    search :: Int -> Int -> Int -> Int\n    search !lo !hi !ans\n      | lo > hi = ans\n      | otherwise =\n          let mid = lo + (hi - lo) `div` 2\n          in if canPlace mid >= c\n               then search (mid + 1) hi mid\n               else search lo (mid - 1) ans\n\ncanPlace :: Int -> [Int] -> Int\ncanPlace d xs =\n  case xs of\n    [] -> 0\n    (x:rest) -> go 1 x rest\n  where\n    go !cnt !prev [] = cnt\n    go !cnt !prev (y:ys)\n      | y - prev >= d = go (cnt + 1) y ys\n      | otherwise = go cnt prev ys\n\nPotential issue canPlace signature: canPlace d xs = case xs... where go. Fine.\n\nNeed if houses empty? n>=2.\n\nCheck examples:\n2 2 [1,100], hi=99, search mid 50 canPlace=2, ans=50 lo=51, mid75 ans75, ... eventually 99. Good.\n10 4 sorted, output 8.\n\nAny concern source left=1, if right could 0? distinct coords so no. But what if N=2 coordinates 0 and 0 not distinct? no.\n\nCould binary search lo=1 hi maybe if houses list sorted. Good.\n\nNow final with code only.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794980751,
+    "id": "chatcmpl-3bd73cadc3405e591b2fff0663862f78",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 1654,
+      "completion_tokens_details": {
+        "reasoning_tokens": 1296
+      },
+      "prompt_tokens": 734,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 2388
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.002205,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 14.880448199925013,
+  "logical_request_id": "9fd8cf517f26ff271dac892ff335bc63700c3edc3f2ece3a8393bb28cb17dc18",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2110\\cpp-via-haskell\\attempt-01\\step-03\\response_body.txt",
+  "received_at": "2026-11-18T05:46:04.190357+00:00",
+  "request_id": "chatcmpl-3bd73cadc3405e591b2fff0663862f78",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\n{-# LANGUAGE BangPatterns #-}\n\nmodule Main where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.List (sort)\nimport Data.Maybe (fromJust)\n\nmain :: IO ()\nmain = do\n  input <- BS.getContents\n  let toks = BS.words input\n      nums = map (fst . fromJust . BS.readInt) toks\n  case nums of\n    (n : c : rest) -> do\n      let houses = sort (take n rest)\n      print (solve c houses)\n    _ -> return ()\n\nsolve :: Int -> [Int] -> Int\nsolve c houses =\n  let lo0 = 1\n      hi0 = last houses - head houses\n  in search lo0 hi0 0\n  where\n    search :: Int -> Int -> Int -> Int\n    search !lo !hi !ans\n      | lo > hi = ans\n      | otherwise =\n          let mid = lo + (hi - lo) `div` 2\n          in if canPlace mid >= c\n               then search (mid + 1) hi mid\n               else search lo (mid - 1) ans\n\ncanPlace :: Int -> [Int] -> Int\ncanPlace d xs =\n  case xs of\n    [] -> 0\n    (x : rest) -> go 1 x rest\n  where\n    go :: Int -> Int -> [Int] -> Int\n    go !cnt !_ [] = cnt\n    go !cnt !prev (y : ys)\n      | y - prev >= d = go (cnt + 1) y ys\n      | otherwise = go cnt prev ys\n```",
+  "usage": {
+    "completion_tokens": 1654,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1296
+    },
+    "prompt_tokens": 734,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 2388
+  },
+  "usage_raw": {
+    "completion_tokens": 1654,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1296
+    },
+    "prompt_tokens": 734,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 2388
+  }
+}

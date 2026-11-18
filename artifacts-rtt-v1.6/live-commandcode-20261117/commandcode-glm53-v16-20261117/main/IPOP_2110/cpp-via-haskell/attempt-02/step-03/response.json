@@ -1,0 +1,94 @@
+{
+  "text": "```haskell\nmodule Main (main) where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.List (sort)\nimport Data.Maybe (fromMaybe)\n\nreadInts :: IO [Integer]\nreadInts = do\n  contents <- BS.getContents\n  return $ map (maybe 0 fst . BS.readInteger) (BS.words contents)\n\ncountGE :: [Integer] -> Integer -> Integer\ncountGE s mid\n  | null s = 0\n  | otherwise = go (tail s) (head s) 1\n  where\n    go [] _ k = k\n    go (x:xs) prev k\n      | x - prev >= mid = go xs x (k + 1)\n      | otherwise = go xs prev k\n\nsearch_ :: [Integer] -> Integer -> Integer -> Integer -> Integer -> Integer\nsearch_ s c lo hi acc\n  | lo > hi = acc\n  | countGE s mid >= c = search_ s c (mid + 1) hi mid\n  | otherwise = search_ s c lo (mid - 1) acc\n  where\n    mid = lo + (hi - lo) `div` 2\n\nmain :: IO ()\nmain = do\n  nums <- readInts\n  case nums of\n    (n:c:rest) -> do\n      let a = take (fromIntegral n) rest\n          s = sort a\n          lo = 1\n          hi = last s - head s\n      print (search_ s c lo hi 0)\n    _ -> return ()\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 334,
+    "prompt_tokens": 753,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1087
+  },
+  "usage_raw": {
+    "completion_tokens": 334,
+    "prompt_tokens": 753,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1087
+  },
+  "cost_usd": 0.00208604,
+  "cost_source": "estimated",
+  "request_id": "9a130db5-bb9b-417b-aea3-1bd49c90acd7",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_2110\\cpp-via-haskell\\attempt-02\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.List (sort)\nimport Data.Maybe (fromMaybe)\n\nreadInts :: IO [Integer]\nreadInts = do\n  contents <- BS.getContents\n  return $ map (maybe 0 fst . BS.readInteger) (BS.words contents)\n\ncountGE :: [Integer] -> Integer -> Integer\ncountGE s mid\n  | null s = 0\n  | otherwise = go (tail s) (head s) 1\n  where\n    go [] _ k = k\n    go (x:xs) prev k\n      | x - prev >= mid = go xs x (k + 1)\n      | otherwise = go xs prev k\n\nsearch_ :: [Integer] -> Integer -> Integer -> Integer -> Integer -> Integer\nsearch_ s c lo hi acc\n  | lo > hi = acc\n  | countGE s mid >= c = search_ s c (mid + 1) hi mid\n  | otherwise = search_ s c lo (mid - 1) acc\n  where\n    mid = lo + (hi - lo) `div` 2\n\nmain :: IO ()\nmain = do\n  nums <- readInts\n  case nums of\n    (n:c:rest) -> do\n      let a = take (fromIntegral n) rest\n          s = sort a\n          lo = 1\n          hi = last s - head s\n      print (search_ s c lo hi 0)\n    _ -> return ()\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794903244,
+    "id": "9a130db5-bb9b-417b-aea3-1bd49c90acd7",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 334,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_32a51e99bd0240dcb5ccea52b56d9728",
+      "trace_id": "c3a532fdca10449fa19cb5692050b40f"
+    },
+    "usage": {
+      "completion_tokens": 334,
+      "prompt_tokens": 753,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 1087
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.737351900024805,
+  "received_at": "2026-11-17T08:14:04.283696+00:00",
+  "logical_request_id": "b0d27f94e3aeaa1327651387b9d796ebb7664b993ce23ca70bafe216a0f07ea6",
+  "execution_class": "direct_api"
+}

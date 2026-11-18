@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <string>\n\nstatic void hanoi(int n, int start, int mid, int end, std::string& out) {\n    if (n == 1) {\n        out += std::to_string(start);\n        out += ' ';\n        out += std::to_string(end);\n        out += '\\n';\n        return;\n    }\n\n    hanoi(n - 1, start, end, mid, out);\n    out += std::to_string(start);\n    out += ' ';\n    out += std::to_string(end);\n    out += '\\n';\n    hanoi(n - 1, mid, start, end, out);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    int moves = (1 << n) - 1;\n\n    std::string out;\n    out.reserve(4 * static_cast<size_t>(moves) + 16);\n    out += std::to_string(moves);\n    out += '\\n';\n\n    hanoi(n, 1, 2, 3, out);\n\n    std::cout << out;\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 692,
+    "total_tokens": 1124,
+    "completion_tokens": 432,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 167
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 692,
+    "total_tokens": 1124,
+    "completion_tokens": 432,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 167
+    }
+  },
+  "cost_usd": 0.000726,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-5880f6114ed43096a6b063cd1dc689dc",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\pilot\\IPOP_11729\\cpp-via-java\\attempt-01\\step-04\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-5880f6114ed43096a6b063cd1dc689dc",
+    "object": "chat.completion",
+    "created": 1794976393,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\n\nstatic void hanoi(int n, int start, int mid, int end, std::string& out) {\n    if (n == 1) {\n        out += std::to_string(start);\n        out += ' ';\n        out += std::to_string(end);\n        out += '\\n';\n        return;\n    }\n\n    hanoi(n - 1, start, end, mid, out);\n    out += std::to_string(start);\n    out += ' ';\n    out += std::to_string(end);\n    out += '\\n';\n    hanoi(n - 1, mid, start, end, out);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    int moves = (1 << n) - 1;\n\n    std::string out;\n    out.reserve(4 * static_cast<size_t>(moves) + 16);\n    out += std::to_string(moves);\n    out += '\\n';\n\n    hanoi(n, 1, 2, 3, out);\n\n    std::cout << out;\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block. Need translate to C++17 preserving. Need consider N<=20, moves (1<<n)-1 fits int? 2^20-1 ~1,048,575 yes. Output huge ~? fine. Need implement. Use std::ios::sync_with_stdio(false); cin.tie(nullptr). Read int. Build string reserve maybe 4*moves+16. Recursive function append. Ensure newline. Edge N? constraint >=1. Could handle no input. Return. Need exactly one source file in fenced code block, no explanation. Use main(). C++17.\n\nNeed perhaps avoid recursion? depth 20 fine. Use to_string? append chars. Could use string append with std::to_string for portability. But preserving output. Efficient enough.\n\nNeed final only."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 692,
+      "total_tokens": 1124,
+      "completion_tokens": 432,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 167
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.3041686000069603,
+  "received_at": "2026-11-18T04:33:15.036528+00:00",
+  "logical_request_id": "8c61114a6825200894bd6993346fef1f56eca3e28d5717a9782a0863cf9ae272",
+  "execution_class": "direct_api"
+}

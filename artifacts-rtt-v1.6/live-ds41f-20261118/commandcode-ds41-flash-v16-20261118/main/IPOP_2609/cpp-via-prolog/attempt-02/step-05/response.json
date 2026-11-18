@@ -1,0 +1,86 @@
+{
+  "text": "```prolog\nmain :-\n    (   read_line_to_string(user_input, Line)\n    ->  split_string(Line, \" \\t\", \" \\t\\r\\n\", Parts),\n        maplist(number_string, [A, B], Parts),\n        gcd(A, B, G),\n        L is (A // G) * B,\n        format(\"~w~n~w~n\", [G, L])\n    ;   true\n    ).\n\ngcd(A, 0, A) :- A > 0.\ngcd(A, B, G) :-\n    B > 0,\n    R is A mod B,\n    gcd(B, R, G).\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 438,
+    "total_tokens": 2200,
+    "completion_tokens": 1762,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1619
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 438,
+    "total_tokens": 2200,
+    "completion_tokens": 1762,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1619
+    }
+  },
+  "cost_usd": 0.0022458,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-7236cd9bf4fa5fc3fa804da2b394e688",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2609\\cpp-via-prolog\\attempt-02\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-7236cd9bf4fa5fc3fa804da2b394e688",
+    "object": "chat.completion",
+    "created": 1794985128,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\nmain :-\n    (   read_line_to_string(user_input, Line)\n    ->  split_string(Line, \" \\t\", \" \\t\\r\\n\", Parts),\n        maplist(number_string, [A, B], Parts),\n        gcd(A, B, G),\n        L is (A // G) * B,\n        format(\"~w~n~w~n\", [G, L])\n    ;   true\n    ).\n\ngcd(A, 0, A) :- A > 0.\ngcd(A, B, G) :-\n    B > 0,\n    R is A mod B,\n    gcd(B, R, G).\n```",
+          "reasoning_content": "Need Prolog program reading two ints, output gcd and lcm.\n\nmain :- read integers, compute, print.\n\nUse read_line_to_string or read tokens. SWI-Prolog: read_line_to_codes(user_input, Codes), then split.\n\nSimplest: read two integers via read/1? Input \"24 18\\n\" - read/1 expects terminating period. Not good.\n\nUse read_line_to_codes and number_codes split on whitespace.\n\nWrite:\n\nmain :-\n    read_line_to_codes(user_input, Codes),\n    split_numbers(Codes, Nums),\n    Nums = [A, B],\n    gcd(A, B, G),\n    L is (A // G) * B,\n    format(\"~w~n~w~n\", [G, L]).\n\nsplit_numbers: split codes on space, parse.\n\nSimpler: use tokenize_atom? Not standard but SWI. Use atomic_list_concat? Let's split manually.\n\nCode:\n\nmain :-\n    read_line_to_codes(user_input, Codes),\n    ( Codes == end_of_file -> true\n    ; split_numbers(Codes, [A, B]),\n      gcd(A, B, G),\n      L is (A // G) * B,\n      format(\"~w~n~w~n\", [G, L])\n    ).\n\ngcd(A, 0, A) :- A > 0.\ngcd(A, B, G) :- B > 0, R is A mod B, gcd(B, R, G).\n\nsplit_numbers(Codes, Nums) :-\n    split_numbers(Codes, Nums, [], []).\n\nHmm implement split.\n\nsplit Whitespace.\n\nsplit(Codes, Nums) :- split_helper(Codes, [], Nums).\n\nsplit_helper([], Cur, Nums) :- ( Cur == [] -> Nums = [] ; reverse(Cur, R), number_codes(N, R), append([N], [], Tail) ... )\n\nLet me write more carefully.\n\nsplit_nums(Codes, Out) :- split_nums(Codes, [], [], Out).\nsplit_nums([], [], Acc, Result) :- reverse(Acc, Result).\nsplit_nums([], Cur, Acc, Result) :- Cur \\= [], reverse(Cur, R), number_codes(N, R), reverse([N|Acc], Result). Hmm order.\n\nActually simpler approach: use split_string/4 which is SWI-Prolog standard (built-in in SWI, part of ISO-ish? It's SWI/Quintus but SWI has it).\n\nsplit_string(\"24 18\", \" \", \"\", Parts) gives [\"24\",\"18\"]. Then use number_string or atom_number.\n\nBut input is codes, need to convert. atom_codes on input.\n\nread_line_to_string(user_input, Str), split_string(Str, \" \", \" \", Parts), maplist(number_string, Nums, Parts)? number_string works element-wise.\n\nread_line_to_string exists in SWI. Or use read_string.\n\nLet's do:\nmain :-\n    read_line_to_string(user_input, Line),\n    split_string(Line, \" \\t\", \" \\t\", Parts),\n    exclude(=(\"\"), Parts, P2),\n    maplist(number_string, Nums, P2),\n    Nums = [A, B],\n    gcd(A, B, G),\n    L is (A // G) * B,\n    format(\"~w~n~w~n\", [G, L]).\n\nBut if trailing whitespace, split_string may produce empty string at end depending. Actually split_string drops trailing? It doesn't produce empty at ends by default I think with separators as separators. Let's just filter empties.\n\nActually split_string \" 24 18 \\n\" with sep \" \\t\" pad \" \\t\" — pad removes leading/trailing, so no empties. Trailing newline in line? read_line_to_string strips newline? Not sure, it reads till newline and strips it. Let's also strip \\r.\n\nSafer: pad with \" \\t\\r\\n\".\n\ngcd:\ngcd(A, 0, A).\ngcd(A, B, G) :- B > 0, R is A mod B, gcd(B, R, G).\n\nBut first clause fails if B=0 and A... actually A must be >0. Fine.\n\nOrder: put second clause first with B > 0 guard, or first clause matches only when B=0. gcd(A,0,A) fine since A>0 from input.\n\nLet me write final.\n\nAlso handle empty input maybe. Include Codes == \"\" case? If Line == \"\" then skip. Just handle.\n\nFinal:\n\n:- module? No, module Main not needed for SWI with main/0. Specification says SWI-Prolog, define main/0.\n\nmain :-\n    ( read_line_to_string(user_input, Line) ->\n        split_string(Line, \" \\t\", \" \\t\\r\\n\", Parts),\n        exclude(=(\"\"), Parts, Tokens),\n        maplist(number_string, [A, B], Tokens),\n        gcd(A, B, G),\n        L is (A // G) * B,\n        format(\"~w~n~w~n\", [G, L])\n    ; true\n    ).\n\nBut maplist(number_string, [A,B], Tokens) requires Tokens has exactly 2 elements; if more, fails. Input only has 2. Fine. Actually maplist will unify list lengths, so ok.\n\nexclude(=(\"\"), ...) — =(\"\") is not valid partial application syntax? In Prolog, callable... exclude(=(”), Parts, Tokens) actually =(\"\") creates a term =(\"\") which as goal =(\"\", X) — wait exclude calls call(P, E), so =(\"\") is goal =(\"\", E) which means \"\" = E. That works? =(\"\") is a compound term with functor = and arity 1, call(=(\"\"), E) calls =(\"\", E)? No, call/2 appends argument: call(=(\"\"), E) calls =(\"\", E). Yes it becomes =(..., E) wait no.\n\nexclude(Pred, List, Rest) calls call(Pred, E). Pred = =(\"\") which is =((\"\")). Then call(=((\"\")), E) => =((\"\"), E) => (\"\" = E). Hmm does call append? Actually call(Goal, ExtraArg) appends ExtraArg to Goal's arguments. So =(\"\") with extra E becomes =(\"\", E). That's valid. But syntax =(\"\") might not parse; need =(”).\n\nIt works in SWI. But to be safe, just use a helper filter.\n\nLet me define:\nnonempty(X) :- X \\= \"\".\n\nHmm define helper predicate. Cleaner.\n\nActually simpler to not use split_string empties issue. Let me use tokenize without needing filter:\n\nSince pad removes leading/trailing whitespace, and single space between, result is exactly 2 tokens. Let's trust it.\n\nmain :-\n    ( read_line_to_string(user_input, Line) ->\n        split_string(Line, \" \\t\", \" \\t\\r\\n\", Parts),\n        maplist(number_string, [A, B], Parts),\n        gcd(A, B, G),\n        L is (A // G) * B,\n        format(\"~w~n~w~n\", [G, L])\n    ; true\n    ).\n\nWait format/2 with list needs format(\"~w~n~w~n\", [G, L]) — yes works.\n\nBut number_string(N, String) — signature is number_string(?Number, ?String). Yes.\n\nLet's finalize."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 438,
+      "total_tokens": 2200,
+      "completion_tokens": 1762,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1619
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 16.03342940006405,
+  "received_at": "2026-11-18T06:59:02.632598+00:00",
+  "logical_request_id": "c0793747f48d51633d1d64e36299155bb14831d3ecccb063e13dc145b5ef31d3",
+  "execution_class": "direct_api"
+}

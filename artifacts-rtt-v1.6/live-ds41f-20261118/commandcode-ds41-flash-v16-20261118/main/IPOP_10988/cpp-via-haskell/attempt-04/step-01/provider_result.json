@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    [] -> pure ()\n    (s:_) -> putStrLn (if s == reverse s then \"1\" else \"0\")\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 500,
+    "total_tokens": 831,
+    "completion_tokens": 331,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 272
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 500,
+    "total_tokens": 831,
+    "completion_tokens": 331,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 272
+    }
+  },
+  "cost_usd": 0.000434304,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-0560ecd2f69063243d136b30002a5527",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-04\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-0560ecd2f69063243d136b30002a5527",
+    "object": "chat.completion",
+    "created": 1794990391,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    [] -> pure ()\n    (s:_) -> putStrLn (if s == reverse s then \"1\" else \"0\")\n```",
+          "reasoning_content": "We need answer only code block Haskell. Need translate. Preserve stdin whitespace? Source reads one token string. Haskell getContents split? Need output 1 if palindrome else 0. Could read first word. Use getLine maybe sufficient valid input one line. But preserve complete stdin for valid inputs. Input string one lowercase length. use interact maybe. Need exactly one fenced block. No explanation. Haskell module Main main. Use `getLine` maybe if trailing newline. Valid. Could robust: getContents, takeWhile not whitespace? Source `cin >> s` skips whitespace and reads token. Haskell use words. `case words <$> getContents`? main = do s <- getLine; ... For valid input, getLine gets line. If empty? length >=1. Output. Simpler.\n\nNeed ensure if no input? Source returns 0 without output. If spec valid always input. We can ignore. But preserving complete stdin for every valid input only. Use getContents and handle.\n\nHaskell:\n\nmodule Main where\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    [] -> pure ()\n    (s:_) -> putStrLn (if s == reverse s then \"1\" else \"0\")\n\nThat's good. Return code block only."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 500,
+      "total_tokens": 831,
+      "completion_tokens": 331,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 272
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 5.100766299990937,
+  "received_at": "2026-11-18T08:26:33.269158+00:00",
+  "logical_request_id": "a596cd8fdfc6179f37e2dfab8aa5d52e3425fa9b1cb5a5a915b4c8b9e7806a42",
+  "execution_class": "direct_api"
+}

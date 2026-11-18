@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n\nstatic int gcd(int a, int b) {\n    while (b != 0) {\n        int r = a % b;\n        a = b;\n        b = r;\n    }\n    return a;\n}\n\nint main() {\n    int a, b;\n    if (!(std::cin >> a)) return 0;\n    std::cin >> b;\n\n    int g = gcd(a, b);\n    std::cout << g << \"\\n\";\n    std::cout << static_cast<long long>(a / g) * b << \"\\n\";\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 491,
+    "total_tokens": 637,
+    "completion_tokens": 146,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 15
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 491,
+    "total_tokens": 637,
+    "completion_tokens": 146,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 15
+    }
+  },
+  "cost_usd": 0.0003225,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-207bc0f52043b3d557e1bb6cfa847e4f",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2609\\cpp-via-java\\attempt-03\\step-04\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-207bc0f52043b3d557e1bb6cfa847e4f",
+    "object": "chat.completion",
+    "created": 1794978984,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n\nstatic int gcd(int a, int b) {\n    while (b != 0) {\n        int r = a % b;\n        a = b;\n        b = r;\n    }\n    return a;\n}\n\nint main() {\n    int a, b;\n    if (!(std::cin >> a)) return 0;\n    std::cin >> b;\n\n    int g = gcd(a, b);\n    std::cout << g << \"\\n\";\n    std::cout << static_cast<long long>(a / g) * b << \"\\n\";\n    return 0;\n}\n```",
+          "reasoning_content": "Translate Java to C++17, output gcd and lcm. Simple."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 491,
+      "total_tokens": 637,
+      "completion_tokens": 146,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 15
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.5546480999328196,
+  "received_at": "2026-11-18T05:16:24.023867+00:00",
+  "logical_request_id": "bd35bc72a4c7c707b20c21d33792ce84603b1fe6237e36fb991761de1952ca03",
+  "execution_class": "direct_api"
+}

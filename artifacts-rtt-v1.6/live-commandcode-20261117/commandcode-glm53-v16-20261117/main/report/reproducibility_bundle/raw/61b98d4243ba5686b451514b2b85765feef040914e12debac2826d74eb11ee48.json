@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport qualified Data.ByteString as BS\nimport qualified Data.ByteString.Char8 as BC\nimport Data.Maybe (fromMaybe)\n\nmain :: IO ()\nmain = do\n  inp <- BS.getContents\n  let ws = BC.words inp\n      (m, n) = case ws of\n        (x:y:_) -> (maybe 1 fst (BC.readInt x), maybe 1 fst (BC.readInt y))\n        _ -> (1, 1)\n      sieve = BC.pack [ if p then '1' else '0' | p <- mkSieve n ]\n      mkSieve lim = go 2 (replicate (lim + 1) True)\n        where\n          go i arr\n            | i * i > lim = arr\n            | arr !! i = go (i + 1) (mark i arr)\n            | otherwise = go (i + 1) arr\n          mark i arr = [ if k >= i * i && (k - i * i) `mod` i == 0 then False else a\n                       | (k, a) <- zip [0..] arr ]\n      isPrime k = sieve `BC.index` k == '1'\n      out = BC.unlines [ BC.pack (show k) | k <- [m..n], isPrime k ]\n  BC.putStr out\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794900645,
+    "id": "8284f748-336e-4ec2-a52e-7a04fdd64d97",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 292,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_4f562115bce14b24b2aec7fade2ecfdd",
+      "trace_id": "9d93d037739f469da17c4f622cb572c6"
+    },
+    "usage": {
+      "completion_tokens": 292,
+      "prompt_tokens": 563,
+      "prompt_tokens_details": {
+        "cached_tokens": 512
+      },
+      "total_tokens": 855
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0014893200000000001,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 5.201042499975301,
+  "logical_request_id": "e2697d1a974320b240ab787c4cbfb446a6692ebafaaf72e39b742f2bb59f6f75",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_1929\\cpp-via-haskell\\attempt-01\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T07:30:45.007681+00:00",
+  "request_id": "8284f748-336e-4ec2-a52e-7a04fdd64d97",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```haskell\nmodule Main (main) where\n\nimport qualified Data.ByteString as BS\nimport qualified Data.ByteString.Char8 as BC\nimport Data.Maybe (fromMaybe)\n\nmain :: IO ()\nmain = do\n  inp <- BS.getContents\n  let ws = BC.words inp\n      (m, n) = case ws of\n        (x:y:_) -> (maybe 1 fst (BC.readInt x), maybe 1 fst (BC.readInt y))\n        _ -> (1, 1)\n      sieve = BC.pack [ if p then '1' else '0' | p <- mkSieve n ]\n      mkSieve lim = go 2 (replicate (lim + 1) True)\n        where\n          go i arr\n            | i * i > lim = arr\n            | arr !! i = go (i + 1) (mark i arr)\n            | otherwise = go (i + 1) arr\n          mark i arr = [ if k >= i * i && (k - i * i) `mod` i == 0 then False else a\n                       | (k, a) <- zip [0..] arr ]\n      isPrime k = sieve `BC.index` k == '1'\n      out = BC.unlines [ BC.pack (show k) | k <- [m..n], isPrime k ]\n  BC.putStr out\n```",
+  "usage": {
+    "completion_tokens": 292,
+    "prompt_tokens": 563,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "total_tokens": 855
+  },
+  "usage_raw": {
+    "completion_tokens": 292,
+    "prompt_tokens": 563,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "total_tokens": 855
+  }
+}

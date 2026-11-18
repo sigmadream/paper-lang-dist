@@ -1,0 +1,86 @@
+{
+  "text": "```java\nimport java.io.*;\n\npublic class Main {\n    private static String trimStr(String s) {\n        int b = 0, e = s.length();\n        while (b < e && isSpace(s.charAt(b))) ++b;\n        while (e > b && isSpace(s.charAt(e - 1))) --e;\n        return s.substring(b, e);\n    }\n\n    private static boolean isSpace(char c) {\n        return c == ' ' || c == '\\t' || c == '\\n' || c == '\\r' || c == '\\f' || c == '\\u000B';\n    }\n\n    public static void main(String[] args) throws Exception {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n\n        String first = br.readLine();\n        if (first == null) return;\n\n        int t = Integer.parseInt(trimStr(first));\n        StringBuilder output = new StringBuilder();\n\n        for (int i = 0; i < t; ++i) {\n            String s = br.readLine();\n            if (s == null) s = \"\";\n            s = trimStr(s);\n\n            int balance = 0;\n            boolean valid = true;\n\n            for (int j = 0; j < s.length(); ++j) {\n                char c = s.charAt(j);\n                if (c == '(') {\n                    ++balance;\n                } else {\n                    --balance;\n                }\n\n                if (balance < 0) {\n                    valid = false;\n                    break;\n                }\n            }\n\n            if (balance != 0) valid = false;\n\n            output.append(valid ? \"YES\\n\" : \"NO\\n\");\n        }\n\n        System.out.print(output.toString());\n    }\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 735,
+    "total_tokens": 1378,
+    "completion_tokens": 643,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 293
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 735,
+    "total_tokens": 1378,
+    "completion_tokens": 643,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 293
+    }
+  },
+  "cost_usd": 0.0009921,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-9b4d353674bdaea7296225c72bce2078",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-java\\attempt-05\\step-07\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-9b4d353674bdaea7296225c72bce2078",
+    "object": "chat.completion",
+    "created": 1794982373,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```java\nimport java.io.*;\n\npublic class Main {\n    private static String trimStr(String s) {\n        int b = 0, e = s.length();\n        while (b < e && isSpace(s.charAt(b))) ++b;\n        while (e > b && isSpace(s.charAt(e - 1))) --e;\n        return s.substring(b, e);\n    }\n\n    private static boolean isSpace(char c) {\n        return c == ' ' || c == '\\t' || c == '\\n' || c == '\\r' || c == '\\f' || c == '\\u000B';\n    }\n\n    public static void main(String[] args) throws Exception {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n\n        String first = br.readLine();\n        if (first == null) return;\n\n        int t = Integer.parseInt(trimStr(first));\n        StringBuilder output = new StringBuilder();\n\n        for (int i = 0; i < t; ++i) {\n            String s = br.readLine();\n            if (s == null) s = \"\";\n            s = trimStr(s);\n\n            int balance = 0;\n            boolean valid = true;\n\n            for (int j = 0; j < s.length(); ++j) {\n                char c = s.charAt(j);\n                if (c == '(') {\n                    ++balance;\n                } else {\n                    --balance;\n                }\n\n                if (balance < 0) {\n                    valid = false;\n                    break;\n                }\n            }\n\n            if (balance != 0) valid = false;\n\n            output.append(valid ? \"YES\\n\" : \"NO\\n\");\n        }\n\n        System.out.print(output.toString());\n    }\n}\n```",
+          "reasoning_content": "Translate to Java. Preserve behavior. Need careful with trimStr using whitespace. Read lines.\n\nEdge: if getline fails, s=\"\". Use BufferedReader readLine. First line stoi trim. If no first line, return.\n\nNote C++ stoi trimStr throws if empty/invalid, but valid input guaranteed. Use Integer.parseInt(trimmed).\n\nImplement isspace equivalent: Character.isWhitespace? C++ isspace in C locale includes space, \\t,\\n,\\v,\\f,\\r. Character.isWhitespace may differ slightly but for inputs fine. Better match: c==' '||c=='\\t'||c=='\\n'||c=='\\v'||c=='\\f'||c=='\\r'. Trim manually.\n\nOutput via StringBuilder.\n\nReturn one fenced code block.\n\nCheck if line missing for i: C++ getline fails -> s=\"\". BufferedReader readLine returns null -> \"\".\n\nAlso potential trailing whitespace trimmed so empty strings evaluate valid? balance 0 => YES. But valid input length 2..50.\n\nWrite.\n\nClass Main, import java.io.*.\n\nUse Byte? Just BufferedReader.\n\nImplement trim custom.\n\nNeed handle first line trimmed maybe has \\r. readLine strips \\n but not \\r? BufferedReader readLine handles \\r\\n and \\n and \\r I think yes strips terminators. Fine.\n\nInteger.parseInt(trimmed).\n\nOutput ordering same.\n\nCode."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 735,
+      "total_tokens": 1378,
+      "completion_tokens": 643,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 293
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.6973220000509173,
+  "received_at": "2026-11-18T06:12:55.690914+00:00",
+  "logical_request_id": "c6de6a4515cb07b7357813a435648b6d80c89dad33d2d6117de14ae6b16f05e7",
+  "execution_class": "direct_api"
+}

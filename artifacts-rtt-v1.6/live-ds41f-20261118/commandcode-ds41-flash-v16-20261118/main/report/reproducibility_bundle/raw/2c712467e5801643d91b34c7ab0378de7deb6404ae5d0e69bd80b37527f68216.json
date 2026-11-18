@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    std::vector<int> a(n);\n    for (int i = 0; i < n; ++i) {\n        std::cin >> a[i];\n    }\n\n    int write = 0;\n    for (int read = 0; read < n; ++read) {\n        if (a[read] != 0) {\n            int tmp = a[write];\n            a[write] = a[read];\n            a[read] = tmp;\n            ++write;\n        }\n    }\n\n    for (int i = 0; i < n; ++i) {\n        if (i > 0) std::cout << ' ';\n        std::cout << a[i];\n    }\n    std::cout << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "Translate Java to C++17, preserving behavior. Need think about token reading: original reads first line for n, then next line for n integers. If input tokens may span lines? Contract says first line N, next line N ints. We can just read n then loop cin >> a[i]. Output space separated newline. Edge: if empty first line? Not needed.\n\nNeed output exactly one fenced code block. C++17 with main.\n\nCould reproduce swapping but simpler stable partition. Preserve output. Use int (signed 32-bit). N up to 10000.\n\nProvide code only fenced.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794993561,
+    "id": "chatcmpl-84dde19ff36bc3645e3a31f24e1da979",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 340,
+      "completion_tokens_details": {
+        "reasoning_tokens": 126
+      },
+      "prompt_tokens": 712,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 1052
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0005839679999999999,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 4.305024500004947,
+  "logical_request_id": "de692547c6c44caeb964302a7657f0663daba54c9af20d9c800201b86b3eb3bf",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-java\\attempt-03\\step-06\\response_body.txt",
+  "received_at": "2026-11-18T09:19:23.199779+00:00",
+  "request_id": "chatcmpl-84dde19ff36bc3645e3a31f24e1da979",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    std::vector<int> a(n);\n    for (int i = 0; i < n; ++i) {\n        std::cin >> a[i];\n    }\n\n    int write = 0;\n    for (int read = 0; read < n; ++read) {\n        if (a[read] != 0) {\n            int tmp = a[write];\n            a[write] = a[read];\n            a[read] = tmp;\n            ++write;\n        }\n    }\n\n    for (int i = 0; i < n; ++i) {\n        if (i > 0) std::cout << ' ';\n        std::cout << a[i];\n    }\n    std::cout << '\\n';\n\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 340,
+    "completion_tokens_details": {
+      "reasoning_tokens": 126
+    },
+    "prompt_tokens": 712,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1052
+  },
+  "usage_raw": {
+    "completion_tokens": 340,
+    "completion_tokens_details": {
+      "reasoning_tokens": 126
+    },
+    "prompt_tokens": 712,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1052
+  }
+}

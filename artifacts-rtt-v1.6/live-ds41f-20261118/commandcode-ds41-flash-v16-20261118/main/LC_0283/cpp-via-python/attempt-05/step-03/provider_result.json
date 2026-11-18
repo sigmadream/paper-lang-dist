@@ -1,0 +1,86 @@
+{
+  "text": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.buffer.read().split()\n    if not data:\n        return\n\n    n = int(data[0])\n    a = [int(data[i + 1]) for i in range(n)]\n\n    write = 0\n    for read in range(n):\n        if a[read] != 0:\n            a[write], a[read] = a[read], a[write]\n            write += 1\n\n    sys.stdout.write(\" \".join(map(str, a)) + \"\\n\")\n\nif __name__ == \"__main__\":\n    main()\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 663,
+    "total_tokens": 867,
+    "completion_tokens": 204,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 74
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 663,
+    "total_tokens": 867,
+    "completion_tokens": 204,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 74
+    }
+  },
+  "cost_usd": 0.00025554,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-a6afd9fa84b11d8195079cf2cff1afc9",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-python\\attempt-05\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-a6afd9fa84b11d8195079cf2cff1afc9",
+    "object": "chat.completion",
+    "created": 1794991413,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.buffer.read().split()\n    if not data:\n        return\n\n    n = int(data[0])\n    a = [int(data[i + 1]) for i in range(n)]\n\n    write = 0\n    for read in range(n):\n        if a[read] != 0:\n            a[write], a[read] = a[read], a[write]\n            write += 1\n\n    sys.stdout.write(\" \".join(map(str, a)) + \"\\n\")\n\nif __name__ == \"__main__\":\n    main()\n```",
+          "reasoning_content": "We need answer exactly one fenced code block with python source. Need translate. Simple. Need preserve behavior. Input first N then N ints, output modified array separated spaces newline. Handle no input. Python.\n\nNeed consider exact contract. Source if no n return. If n maybe missing ints? valid input. We can implement.\n\nFinal only code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 663,
+      "total_tokens": 867,
+      "completion_tokens": 204,
+      "prompt_tokens_details": {
+        "cached_tokens": 640
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.9119185999734327,
+  "received_at": "2026-11-18T08:43:33.501233+00:00",
+  "logical_request_id": "2296ea715a8471807fdd2b87e984bdefbbe08520c87e8679aaa6412a7c78553f",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Data.List (sort)\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let ws = words input\n    case ws of\n        (s:t:_) -> putStrLn (if sort s == sort t then \"1\" else \"0\")\n        _       -> putStrLn \"0\"\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 606,
+    "total_tokens": 926,
+    "completion_tokens": 320,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 242
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 606,
+    "total_tokens": 926,
+    "completion_tokens": 320,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 242
+    }
+  },
+  "cost_usd": 0.000415272,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-efca53dc3be324dde63cc6d08e02f15d",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0242\\cpp-via-haskell\\attempt-02\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-efca53dc3be324dde63cc6d08e02f15d",
+    "object": "chat.completion",
+    "created": 1794991052,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Data.List (sort)\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let ws = words input\n    case ws of\n        (s:t:_) -> putStrLn (if sort s == sort t then \"1\" else \"0\")\n        _       -> putStrLn \"0\"\n```",
+          "reasoning_content": "We need translate C++ to Haskell. Preserve stdin/stdout. Simple.\n\nRead two lines (or whitespace tokens). Use getLine? Original uses >> which skips whitespace. Better mimic: read all words. But spec says first line s, next line t. Using words on full input, take first two tokens. Since strings are lowercase no spaces.\n\nEdge: if input missing, output 0. Original: if read fails output 0.\n\nHaskell:\n\nimport Data.List (sort)\nmain :: IO ()\nmain = do\n  input <- getContents\n  let ws = words input\n  case ws of\n    (s:t:_) -> putStrLn (if sort s == sort t then \"1\" else \"0\")\n    _ -> putStrLn \"0\"\n\nWait sorting O(n log n) fine for 50000. Or count array. Sorting simplest. But preserve: original checks length first then counts. sort equality covers it (different lengths -> not equal). Fine.\n\nHowever words on full input: if a line is empty? Constraints length >=1 so tokens exist. Good.\n\nNeed handle potentially input with trailing newline. Fine.\n\nProvide code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 606,
+      "total_tokens": 926,
+      "completion_tokens": 320,
+      "prompt_tokens_details": {
+        "cached_tokens": 512
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 242
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.9374084000010043,
+  "received_at": "2026-11-18T08:37:33.897470+00:00",
+  "logical_request_id": "0b2894d46bcaea41c7d5dc3d0c8e123c2fd4a8e49172d70ce7f9ccb15d2d5069",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Data.Bits\n\nsolve :: Int -> Int\nsolve n = go 0 0 0 0\n  where\n    full = (1 `shiftL` n) - 1\n\n    go :: Int -> Int -> Int -> Int -> Int\n    go r cols d1 d2\n      | r == n = 1\n      | otherwise = loop avail\n      where\n        avail = full .&. complement (cols .|. d1 .|. d2)\n\n        loop :: Int -> Int\n        loop 0 = 0\n        loop a =\n          let b = a .&. negate a\n              rest = a `xor` b\n              nextCols = cols .|. b\n              nextD1 = ((d1 .|. b) `shiftL` 1) .&. full\n              nextD2 = (d2 .|. b) `shiftR` 1\n          in go (r + 1) nextCols nextD1 nextD2 + loop rest\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let n = read (head (words input)) :: Int\n  print (solve n)\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 605,
+    "total_tokens": 1497,
+    "completion_tokens": 892,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 625
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 605,
+    "total_tokens": 1497,
+    "completion_tokens": 892,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 625
+    }
+  },
+  "cost_usd": 0.0012518999999999998,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-003a7a36db3368fa99a39078e60b8371",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9663\\cpp-via-haskell\\attempt-02\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-003a7a36db3368fa99a39078e60b8371",
+    "object": "chat.completion",
+    "created": 1794996128,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Data.Bits\n\nsolve :: Int -> Int\nsolve n = go 0 0 0 0\n  where\n    full = (1 `shiftL` n) - 1\n\n    go :: Int -> Int -> Int -> Int -> Int\n    go r cols d1 d2\n      | r == n = 1\n      | otherwise = loop avail\n      where\n        avail = full .&. complement (cols .|. d1 .|. d2)\n\n        loop :: Int -> Int\n        loop 0 = 0\n        loop a =\n          let b = a .&. negate a\n              rest = a `xor` b\n              nextCols = cols .|. b\n              nextD1 = ((d1 .|. b) `shiftL` 1) .&. full\n              nextD2 = (d2 .|. b) `shiftR` 1\n          in go (r + 1) nextCols nextD1 nextD2 + loop rest\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let n = read (head (words input)) :: Int\n  print (solve n)\n```",
+          "reasoning_content": "We need answer with Haskell code only fenced. Need translate. Need ensure correct N-queen count n<15. Implement main read n. Could use bits recursion. Haskell Int. Need output. Need preserve stdin. Use getLine, read. n maybe whitespace. Could use interact? Simpler main = do input <- getContents; let n = read (head (words input)) :: Int; print (solve n). solve bitmask. Use Int operations. n up to14 count 365596 fits Int. Use Data.Bits. Recursion with cols d1 d2 full. `avail = full .&. complement (cols .|. d1 .|. d2)`? complement infinite bits, but & full. Use `full .&. complement (...)` yes. Or full .&. (complement...). Existing full & ~(...). Then loop b = avail .&. negate avail. `negate avail` not Bit ops? In Haskell negate works Int two's complement; `. &.` handles. Or b = avail .&. (-avail). Need import Data.Bits. Shift left, right. `((d1 .|. b) << 1) .&. full`, `(d2 .|. b) >> 1`. Count Long? Int enough max 2680? Actually for N=14 number 365596, Int. Return Int. Use print.\n\nNeed exactly one source file within code block. No explanation. Ensure module Main and main. Include import Data.Bits. Could use lambda recursion directly.\n\nPotential issue `full = (1 `shiftL` n) - 1` with n>=1. Good.\n\nImplement:\n\nmodule Main where\nimport Data.Bits\nimport System.IO? not needed\n\nsolve :: Int -> Int\nsolve n = go 0 0 0 0\n where\n full = (1 `shiftL` n) - 1\n go r cols d1 d2\n   | r == n = 1\n   | otherwise = loop avail\n   where\n     avail = full .&. complement (cols .|. d1 .|. d2)\n     loop 0 = 0\n     loop a = let b = a .&. negate a\n                  rest = a `xor` b\n              in go (r+1) (cols .|. b) (((d1 .|. b) `shiftL` 1) .&. full) ((d2 .|. b) `shiftR` 1) + loop rest\n\nNeed precedence: expression with + loop rest. Let. Could write `in go ... + loop rest`. Fine because function application high; plus lower. But the `go ...` consumes args then plus.\n\nmain = do\n s <- getContents\n let n = read (head (words s)) :: Int\n print (solve n)\n\nIf empty input would error but valid input guaranteed. Could handle spaces. Good.\n\nNeed answer."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 605,
+      "total_tokens": 1497,
+      "completion_tokens": 892,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 625
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 7.984428699943237,
+  "received_at": "2026-11-18T10:02:14.892578+00:00",
+  "logical_request_id": "35cbe8c09c549afd572f3a2e3e7ac38ad4498dc746b7b70ef77487f8b4377096",
+  "execution_class": "direct_api"
+}

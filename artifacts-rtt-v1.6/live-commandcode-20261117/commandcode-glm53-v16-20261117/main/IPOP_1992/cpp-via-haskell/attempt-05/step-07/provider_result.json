@@ -1,0 +1,94 @@
+{
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.List (transpose)\n\nsolve :: [String] -> String\nsolve grid\n  | all (== c) grid' = [c]\n  | otherwise = \"(\" ++ concatMap solve [topLeft, topRight, bottomLeft, bottomRight] ++ \")\"\n  where\n    grid' = concat grid\n    c = head grid'\n    half = length (head grid) `div` 2\n    rows = map (splitAt half) grid\n    topLeft = map fst rows\n    topRight = map snd rows\n    bottomLeft = map fst (drop half rows)\n    bottomRight = map snd (drop half rows)\n\nmain :: IO ()\nmain = do\n  contents <- getContents\n  let (nLine : rest) = lines contents\n      n = read nLine :: Int\n      grid = take n rest\n  putStrLn (solve grid)\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 194,
+    "prompt_tokens": 697,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 891
+  },
+  "usage_raw": {
+    "completion_tokens": 194,
+    "prompt_tokens": 697,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 891
+  },
+  "cost_usd": 0.0010998,
+  "cost_source": "estimated",
+  "request_id": "7339b8a6-b2ad-40f4-aaf5-29d38ecf5591",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_1992\\cpp-via-haskell\\attempt-05\\step-07\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.List (transpose)\n\nsolve :: [String] -> String\nsolve grid\n  | all (== c) grid' = [c]\n  | otherwise = \"(\" ++ concatMap solve [topLeft, topRight, bottomLeft, bottomRight] ++ \")\"\n  where\n    grid' = concat grid\n    c = head grid'\n    half = length (head grid) `div` 2\n    rows = map (splitAt half) grid\n    topLeft = map fst rows\n    topRight = map snd rows\n    bottomLeft = map fst (drop half rows)\n    bottomRight = map snd (drop half rows)\n\nmain :: IO ()\nmain = do\n  contents <- getContents\n  let (nLine : rest) = lines contents\n      n = read nLine :: Int\n      grid = take n rest\n  putStrLn (solve grid)\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794898723,
+    "id": "7339b8a6-b2ad-40f4-aaf5-29d38ecf5591",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 194,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_3b66fcd935084ecb935a10a895cb8ad4",
+      "trace_id": "c87705957d6a444089b2912d5403627a"
+    },
+    "usage": {
+      "completion_tokens": 194,
+      "prompt_tokens": 697,
+      "prompt_tokens_details": {
+        "cached_tokens": 640
+      },
+      "total_tokens": 891
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.9138794000027701,
+  "received_at": "2026-11-17T06:58:43.462434+00:00",
+  "logical_request_id": "b882af34ab043e4dc26d3b41c606e29faa358e4f28cd20fbe59de34d137fb295",
+  "execution_class": "direct_api"
+}

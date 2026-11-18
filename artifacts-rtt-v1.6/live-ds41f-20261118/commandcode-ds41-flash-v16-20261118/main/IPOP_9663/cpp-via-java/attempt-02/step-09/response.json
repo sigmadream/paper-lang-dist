@@ -1,0 +1,86 @@
+{
+  "text": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    private static int n;\n    private static int ans = 0;\n    private static int[] col = new int[15];\n    private static int[] diag1 = new int[29];\n    private static int[] diag2 = new int[29];\n\n    private static void solve(int r) {\n        if (r == n) {\n            ++ans;\n            return;\n        }\n\n        for (int c = 0; c < n; ++c) {\n            if (col[c] == 1 || diag1[r + c] == 1 || diag2[r - c + n - 1] == 1) {\n                continue;\n            }\n\n            col[c] = 1;\n            diag1[r + c] = 1;\n            diag2[r - c + n - 1] = 1;\n\n            solve(r + 1);\n\n            col[c] = 0;\n            diag1[r + c] = 0;\n            diag2[r - c + n - 1] = 0;\n        }\n    }\n\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        if (!scanner.hasNextInt()) {\n            return;\n        }\n\n        n = scanner.nextInt();\n        solve(0);\n        System.out.println(ans);\n    }\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 621,
+    "total_tokens": 1036,
+    "completion_tokens": 415,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 121
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 621,
+    "total_tokens": 1036,
+    "completion_tokens": 415,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 121
+    }
+  },
+  "cost_usd": 0.0006090360000000001,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-92d6650e6ebe17320d3805e3d7ae64ea",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9663\\cpp-via-java\\attempt-02\\step-09\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-92d6650e6ebe17320d3805e3d7ae64ea",
+    "object": "chat.completion",
+    "created": 1794992304,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    private static int n;\n    private static int ans = 0;\n    private static int[] col = new int[15];\n    private static int[] diag1 = new int[29];\n    private static int[] diag2 = new int[29];\n\n    private static void solve(int r) {\n        if (r == n) {\n            ++ans;\n            return;\n        }\n\n        for (int c = 0; c < n; ++c) {\n            if (col[c] == 1 || diag1[r + c] == 1 || diag2[r - c + n - 1] == 1) {\n                continue;\n            }\n\n            col[c] = 1;\n            diag1[r + c] = 1;\n            diag2[r - c + n - 1] = 1;\n\n            solve(r + 1);\n\n            col[c] = 0;\n            diag1[r + c] = 0;\n            diag2[r - c + n - 1] = 0;\n        }\n    }\n\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        if (!scanner.hasNextInt()) {\n            return;\n        }\n\n        n = scanner.nextInt();\n        solve(0);\n        System.out.println(ans);\n    }\n}\n```",
+          "reasoning_content": "We need answer exactly one complete source file in fenced code block, no explanation. Java 17 public class Main. Translate. Need preserve behavior. Simple. Need note N<15 arrays size 15 cols, diag 29. Java. Read int via Scanner or BufferedReader. If no input return. Use static fields. Output ans newline.\n\nNeed ensure stdin behavior: if no int, return. Scanner hasNextInt. Use BufferedReader/StringTokenizer maybe. Simpler Scanner. Standard library. Return exactly.\n\nPotential recursion depth <15 fine. Use System.out.println(ans).\n\nNeed only code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 621,
+      "total_tokens": 1036,
+      "completion_tokens": 415,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 121
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.1900596999330446,
+  "received_at": "2026-11-18T08:58:25.963618+00:00",
+  "logical_request_id": "721f11f1f8dd996c069184c8bd8059303e6ad74f1101f4cccdd07d15108551ec",
+  "execution_class": "direct_api"
+}

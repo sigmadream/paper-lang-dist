@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n#include <string>\n#include <sstream>\n#include <climits>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    long long n;\n    if (!(std::cin >> n)) return 0;\n\n    std::vector<long long> values;\n    values.reserve(n);\n    for (long long i = 0; i < n; ++i) {\n        long long x;\n        std::cin >> x;\n        values.push_back(x);\n    }\n\n    if (values.empty()) return 0;\n\n    long long cur = values[0];\n    long long best = values[0];\n    for (size_t i = 1; i < values.size(); ++i) {\n        cur = std::max(values[i], cur + values[i]);\n        best = std::max(best, cur);\n    }\n\n    std::cout << best << \"\\n\";\n    return 0;\n}\n```",
+          "reasoning_content": "We need translate Prolog to C++17. Preserve behavior: read N then N ints, compute max subarray, print. Handle large ints (sum up to 1e9 fits int, but use long long).\n\nEdge cases: N>=1. Read tokens.\n\nReturn one file fenced.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794988036,
+    "id": "chatcmpl-7dd5ea5e68fff6d3c44429faa2099ffb",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 281,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 597,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 878
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0005162999999999999,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.8757007999811321,
+  "logical_request_id": "b30fd835f2f2118fc474f9398cd168eeefdd5dcc6c3aab7a2b700d920f00856a",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-prolog\\attempt-02\\step-02\\response_body.txt",
+  "received_at": "2026-11-18T07:47:16.627306+00:00",
+  "request_id": "chatcmpl-7dd5ea5e68fff6d3c44429faa2099ffb",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n#include <string>\n#include <sstream>\n#include <climits>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    long long n;\n    if (!(std::cin >> n)) return 0;\n\n    std::vector<long long> values;\n    values.reserve(n);\n    for (long long i = 0; i < n; ++i) {\n        long long x;\n        std::cin >> x;\n        values.push_back(x);\n    }\n\n    if (values.empty()) return 0;\n\n    long long cur = values[0];\n    long long best = values[0];\n    for (size_t i = 1; i < values.size(); ++i) {\n        cur = std::max(values[i], cur + values[i]);\n        best = std::max(best, cur);\n    }\n\n    std::cout << best << \"\\n\";\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 281,
+    "completion_tokens_details": {
+      "reasoning_tokens": 64
+    },
+    "prompt_tokens": 597,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 878
+  },
+  "usage_raw": {
+    "completion_tokens": 281,
+    "completion_tokens_details": {
+      "reasoning_tokens": 64
+    },
+    "prompt_tokens": 597,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 878
+  }
+}

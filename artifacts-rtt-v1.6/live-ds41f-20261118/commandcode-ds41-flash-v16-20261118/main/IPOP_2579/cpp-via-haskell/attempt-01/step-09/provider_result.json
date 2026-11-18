@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nsolve :: Int -> [Integer] -> Integer\nsolve n xs\n    | n <= 0 = 0\n    | null xs = 0\n    | otherwise =\n        case xs of\n            [a] -> a\n            (a:b:rest) -> go rest 0 a (a + b) b\n  where\n    go [] _ _ dp1 _ = dp1\n    go (score:rest) dp3 dp2 dp1 prev =\n        let cur = max dp2 (dp3 + prev) + score\n        in go rest dp2 dp1 cur score\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let vals = map read (words input) :: [Integer]\n    case vals of\n        [] -> return ()\n        (n:rest) -> do\n            let ni = fromIntegral n :: Int\n                xs = take (max 0 ni) rest\n            print (solve ni xs)\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 774,
+    "total_tokens": 2367,
+    "completion_tokens": 1593,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1380
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 774,
+    "total_tokens": 2367,
+    "completion_tokens": 1593,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1380
+    }
+  },
+  "cost_usd": 0.0021437999999999995,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-4a8f8fe3440ca65974c9a3045c3fd755",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2579\\cpp-via-haskell\\attempt-01\\step-09\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-4a8f8fe3440ca65974c9a3045c3fd755",
+    "object": "chat.completion",
+    "created": 1794978254,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nsolve :: Int -> [Integer] -> Integer\nsolve n xs\n    | n <= 0 = 0\n    | null xs = 0\n    | otherwise =\n        case xs of\n            [a] -> a\n            (a:b:rest) -> go rest 0 a (a + b) b\n  where\n    go [] _ _ dp1 _ = dp1\n    go (score:rest) dp3 dp2 dp1 prev =\n        let cur = max dp2 (dp3 + prev) + score\n        in go rest dp2 dp1 cur score\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let vals = map read (words input) :: [Integer]\n    case vals of\n        [] -> return ()\n        (n:rest) -> do\n            let ni = fromIntegral n :: Int\n                xs = take (max 0 ni) rest\n            print (solve ni xs)\n```",
+          "reasoning_content": "We need answer exactly one fenced code block Haskell. Need translate. Need understand algorithm and edge cases. Need produce Haskell module Main main IO.\n\nWe need preserve stdin/stdout behavior for valid inputs. N 1..300. Scores. Need output max sum. Source has quirky DP. Let's verify. It reads n, scores up to n, break if missing. solve. Need preserve behavior. Need Haskell read all ints. For valid spec fine. Could mimic source exactly.\n\nLet's analyze DP to ensure correctness and translation. Source solve:\nif n<=0 return 0; if xs.empty return 0.\ns1=xs[0]; if xs.size()==1 return s1.\ns2=xs[1];\ndp3=0; dp2=s1; dp1=s1+s2; prevScore=s2;\nfor i=2..:\n score=xs[i]\n cur=max(dp2, dp3+prevScore)+score\n dp3=dp2; dp2=dp1; dp1=cur; prevScore=score\nreturn dp1\n\nThis is standard? Let's test n=2: returns s1+s2. But problem requires last step and no 3 consecutive. For N=2, can climb 1+1? Stairs 1,2: floor->1->2 visits two consecutive, allowed, sum s1+s2. Good.\n\nn=3: initialize dp3=0 dp2=s1 dp1=s1+s2 prev=s2. i=2 score=s3 cur=max(dp2=s1, dp3+prev=0+s2)+s3 = max(s1,s2)+s3. Expected max for 3: must step 3, no three consecutive. Paths: 1,2,3 forbidden; 1,3 sum s1+s3; 2,3 sum s2+s3. max = max(s1,s2)+s3. Good.\n\nNeed output long long. Haskell Int or Integer. Use Integer safe. Need parse. Could write:\n\nmodule Main where\nimport System.IO\nimport Control.Monad\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let vals = map read (words input) :: [Integer]\n  case vals of\n    [] -> return ()\n    (n:rest) -> do\n       let xs = take (fromIntegral n) rest -- n Integer? fromIntegral\n       print (solve (fromIntegral n) xs)\n\nBut need preserve source break behavior if fewer scores: take n rest. If n<=0? Spec n>=1, but source handles. If vals n negative? take negative -> []; solve n<=0 returns 0. If n positive but rest fewer, source pushes until break then solve(n, xs) with xs size < n. Need mimic. Our solve could use length xs not n except n<=0 check. Source if n<=0 return 0, if xs.empty return 0. If n positive but xs empty ->0. If n positive with fewer scores size 1 -> returns first. Good.\n\nNeed ensure n parsed as Int maybe. Use let n = head vals; xs=take (fromIntegral n) (tail vals). If n<=0, fromIntegral negative to Int? In Haskell take negative yields []. For huge? valid. Need no issue. solve signature Int? xs list. We can implement on list pattern matching, using length? Need exact DP. Could use recursion.\n\nPotential translation:\n\nsolve :: Integer -> [Integer] -> Integer\nsolve n xs\n  | n <= 0 = 0\n  | null xs = 0\n  | otherwise =\n      case xs of\n        [a] -> a\n        (a:b:rest) -> go rest 0 a (a+b) b\n  where\n    go [] dp3 dp2 dp1 prev = dp1\n    go (score:rest) dp3 dp2 dp1 prev =\n       let cur = max dp2 (dp3 + prev) + score\n       in go rest dp2 dp1 cur score\n\nWait initial dp variables: dp3=0 dp2=s1 dp1=s1+s2 prev=s2. If rest empty (n=2), return dp1. go [] returns dp1. Good. For n>2, recursive.\n\nNeed ensure for n positive but xs longer? We take n. Source loops for i < xs.size(), which if input has more than n? It only pushes n scores due for i<n. So take n. Good.\n\nOutput uses print (adds newline). Source outputs '\\n'. Good.\n\nNeed include main type. Use getContents. Need no explanation. Exactly one code block.\n\nPotential issue using read on words and input. Valid. If no input, return. If first token not parse? valid.\n\nNeed perhaps not use Control.Monad.\n\nFinal:\n\n```haskell\nmodule Main where\n\nsolve :: Int -> [Integer] -> Integer\nsolve n xs\n    | n <= 0 = 0\n    | null xs = 0\n    | otherwise =\n        case xs of\n            [a] -> a\n            (a:b:rest) -> go rest 0 a (a + b) b\n  where\n    go [] _ _ dp1 _ = dp1\n    go (score:rest) dp3 dp2 dp1 prev =\n        let cur = max dp2 (dp3 + prev) + score\n        in go rest dp2 dp1 cur score\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let vals = map read (words input) :: [Integer]\n    case vals of\n        [] -> return ()\n        (n:rest) -> do\n            let ni = fromIntegral n :: Int\n                xs = take (max 0 ni) rest\n            print (solve ni xs)\n```\n\nCheck source with n<=0 and xs? It returns 0 regardless. take max 0 ni. solve n<=0 0. If n positive but rest fewer, take n rest. solve uses list length? Our solve pattern with xs, if size 1 returns a. If size 2 etc. It doesn't use n except n<=0. Source if n positive and xs empty returns 0; ours null xs ->0. Good.\n\nNeed consider n=1 and scores? returns a. Good.\n\nPotential issue if n is negative, max 0 ni but solve ni with xs [], n<=0 returns 0. Good.\n\nNeed exactly one complete source file in fenced code block. no explanation. Final only block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 774,
+      "total_tokens": 2367,
+      "completion_tokens": 1593,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1380
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 10.977331800037064,
+  "received_at": "2026-11-18T05:04:23.972623+00:00",
+  "logical_request_id": "3630214dd5fdf37165cd5253bcab36012a63a5c1e7ae95119630594cd40f5d16",
+  "execution_class": "direct_api"
+}

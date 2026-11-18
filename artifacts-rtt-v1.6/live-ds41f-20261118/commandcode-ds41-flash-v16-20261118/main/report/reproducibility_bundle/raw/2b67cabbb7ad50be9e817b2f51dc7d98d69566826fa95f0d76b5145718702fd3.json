@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StringTokenizer st = new StringTokenizer(br.readLine());\n        int n = Integer.parseInt(st.nextToken());\n\n        long[] a = new long[n];\n        st = new StringTokenizer(br.readLine());\n        for (int i = 0; i < n; i++) {\n            a[i] = Long.parseLong(st.nextToken());\n        }\n\n        long cur = a[0];\n        long best = a[0];\n        for (int i = 1; i < n; i++) {\n            cur = Math.max(a[i], cur + a[i]);\n            best = Math.max(best, cur);\n        }\n\n        System.out.println(best);\n    }\n}\n```",
+          "reasoning_content": "We need answer only code block Java 17. Need translate. Ensure behavior. read n, array long perhaps. print best. Edge maybe n? constraints >=1. Use Scanner or BufferedReader. Need exactly complete source file fenced. No explanation. Public class Main.\n\nNeed consider input maybe whitespace. implement. Output integer. Use long. Simple.\n\n",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794994451,
+    "id": "chatcmpl-89a7b2ad836af96f93cbd00673421a12",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 243,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 608,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 851
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.000474,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.861972099984996,
+  "logical_request_id": "03464bb834689d89ddfc29e55f6f9f6360c96e0a316c7b53638dc83e791bdd4b",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-java\\attempt-05\\step-01\\response_body.txt",
+  "received_at": "2026-11-18T09:34:12.043025+00:00",
+  "request_id": "chatcmpl-89a7b2ad836af96f93cbd00673421a12",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StringTokenizer st = new StringTokenizer(br.readLine());\n        int n = Integer.parseInt(st.nextToken());\n\n        long[] a = new long[n];\n        st = new StringTokenizer(br.readLine());\n        for (int i = 0; i < n; i++) {\n            a[i] = Long.parseLong(st.nextToken());\n        }\n\n        long cur = a[0];\n        long best = a[0];\n        for (int i = 1; i < n; i++) {\n            cur = Math.max(a[i], cur + a[i]);\n            best = Math.max(best, cur);\n        }\n\n        System.out.println(best);\n    }\n}\n```",
+  "usage": {
+    "completion_tokens": 243,
+    "completion_tokens_details": {
+      "reasoning_tokens": 71
+    },
+    "prompt_tokens": 608,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 851
+  },
+  "usage_raw": {
+    "completion_tokens": 243,
+    "completion_tokens_details": {
+      "reasoning_tokens": 71
+    },
+    "prompt_tokens": 608,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 851
+  }
+}

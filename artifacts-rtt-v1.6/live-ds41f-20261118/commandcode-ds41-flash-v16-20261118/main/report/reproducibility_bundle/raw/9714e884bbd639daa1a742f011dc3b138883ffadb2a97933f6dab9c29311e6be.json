@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nvalid :: String -> Bool\nvalid = go 0\n  where\n    go balance [] = balance == 0\n    go balance (c:cs)\n      | c == '(' = go (balance + 1) cs\n      | balance == 0 = False\n      | otherwise = go (balance - 1) cs\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (tStr:rest) -> do\n      let t = read tStr :: Int\n          strings = take t rest\n          output = [if valid s then \"YES\" else \"NO\" | s <- strings]\n      putStr (unlines output)\n```",
+          "reasoning_content": "We need answer with Haskell source only in code block. Need translate preserving behavior. Need consider input parsing whitespace. C++ reads T then t strings via cin >> s. Haskell read all words, first is T, next T tokens strings. Need handle valid. Output YES/NO lines. Provide module Main and main. Standard libs.\n\nNeed exact one complete source file in fenced code block no explanation. Use getContents, words. Need avoid pattern issues. Let's craft:\n\nmodule Main where\n\nvalid :: String -> Bool\nvalid = go 0 where\n go b [] = b == 0\n go b ('(':xs)=go (b+1) xs\n go b (')':xs) | b==0 = False | otherwise = go (b-1) xs\n go b (_:xs)=go b xs? Spec only parentheses, but preserve? C++ treats any non '(' as closing, so else branch. We can implement else for any char. If use only ')' fine valid inputs only parentheses. To be exact any other char would be treated as ')' decrement. Input spec only parentheses. But preserve for valid inputs enough. Could implement c == '(' else. \n\nmain:\nmain = do\n  input <- getContents\n  let xs = words input\n  case xs of\n    [] -> return ()\n    (tStr:rest) -> do\n       let t = read tStr :: Int\n           strs = take t rest\n           out = [if valid s then \"YES\" else \"NO\" | s <- strs]\n       putStr (unlines out)\n\nPotential if insufficient tokens? C++ would fail extraction? It would loop and cin >> s leaves empty? Actually while t--, cin>>s; if fail s remains previous? Original assumes valid. Fine. Could use interact. Need no extra.\n\nUse type inference. Ensure main :: IO (). Code.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794977079,
+    "id": "chatcmpl-7d68edaca7099fe0ede0d8d5c9a75785",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 558,
+      "completion_tokens_details": {
+        "reasoning_tokens": 391
+      },
+      "prompt_tokens": 599,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1157
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0008493,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 5.332447699969634,
+  "logical_request_id": "2e37de4ffc682d79ce2e5f050c02b22aedbcc489736186256aee799f0ba62769",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-haskell\\attempt-02\\step-05\\response_body.txt",
+  "received_at": "2026-11-18T04:44:42.301556+00:00",
+  "request_id": "chatcmpl-7d68edaca7099fe0ede0d8d5c9a75785",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nvalid :: String -> Bool\nvalid = go 0\n  where\n    go balance [] = balance == 0\n    go balance (c:cs)\n      | c == '(' = go (balance + 1) cs\n      | balance == 0 = False\n      | otherwise = go (balance - 1) cs\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (tStr:rest) -> do\n      let t = read tStr :: Int\n          strings = take t rest\n          output = [if valid s then \"YES\" else \"NO\" | s <- strings]\n      putStr (unlines output)\n```",
+  "usage": {
+    "completion_tokens": 558,
+    "completion_tokens_details": {
+      "reasoning_tokens": 391
+    },
+    "prompt_tokens": 599,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1157
+  },
+  "usage_raw": {
+    "completion_tokens": 558,
+    "completion_tokens_details": {
+      "reasoning_tokens": 391
+    },
+    "prompt_tokens": 599,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1157
+  }
+}

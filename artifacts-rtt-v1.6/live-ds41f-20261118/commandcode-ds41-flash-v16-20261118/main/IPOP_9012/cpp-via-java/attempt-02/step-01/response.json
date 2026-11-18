@@ -1,0 +1,86 @@
+{
+  "text": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int t = sc.nextInt();\n        StringBuilder sb = new StringBuilder();\n        while (t-- > 0) {\n            String s = sc.next();\n            int bal = 0;\n            boolean valid = true;\n            for (int i = 0; i < s.length(); i++) {\n                if (s.charAt(i) == '(') bal++;\n                else bal--;\n                if (bal < 0) {\n                    valid = false;\n                    break;\n                }\n            }\n            if (bal != 0) valid = false;\n            sb.append(valid ? \"YES\" : \"NO\").append('\\n');\n        }\n        System.out.print(sb);\n    }\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 614,
+    "total_tokens": 829,
+    "completion_tokens": 215,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 33
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 614,
+    "total_tokens": 829,
+    "completion_tokens": 215,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 33
+    }
+  },
+  "cost_usd": 0.0004422,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-b09a7f88d141803262c6275df152f97f",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-java\\attempt-02\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-b09a7f88d141803262c6275df152f97f",
+    "object": "chat.completion",
+    "created": 1794979039,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```java\nimport java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int t = sc.nextInt();\n        StringBuilder sb = new StringBuilder();\n        while (t-- > 0) {\n            String s = sc.next();\n            int bal = 0;\n            boolean valid = true;\n            for (int i = 0; i < s.length(); i++) {\n                if (s.charAt(i) == '(') bal++;\n                else bal--;\n                if (bal < 0) {\n                    valid = false;\n                    break;\n                }\n            }\n            if (bal != 0) valid = false;\n            sb.append(valid ? \"YES\" : \"NO\").append('\\n');\n        }\n        System.out.print(sb);\n    }\n}\n```",
+          "reasoning_content": "Translate to Java. Need be careful: if break early, remaining characters of the line already read since we read whole line with next(). Fine.\n\nReturn one file."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 614,
+      "total_tokens": 829,
+      "completion_tokens": 215,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 33
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.952877499978058,
+  "received_at": "2026-11-18T05:17:19.487922+00:00",
+  "logical_request_id": "c288d5ecb7162fecd14e95cd91f0a79890d3173ead8c114b61911d0dbb47ce84",
+  "execution_class": "direct_api"
+}

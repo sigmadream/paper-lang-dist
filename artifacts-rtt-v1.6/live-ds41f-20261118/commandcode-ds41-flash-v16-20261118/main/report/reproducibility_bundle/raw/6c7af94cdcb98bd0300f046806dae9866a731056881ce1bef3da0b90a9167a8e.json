@@ -1,0 +1,67 @@
+{
+  "payload": {
+    "generation": {
+      "max_tokens": 16384,
+      "reasoning_effort": "low"
+    },
+    "logical_request": {
+      "campaign": "commandcode-ds41-flash-v16-20261118",
+      "phase": "main",
+      "problem": "IPOP_9012",
+      "repeat": 2,
+      "route": "cpp-via-prolog",
+      "step": 8
+    },
+    "messages": [
+      {
+        "content": "Translate the supplied program to the requested language, preserving its complete stdin/stdout behavior for every valid input in the specification. Return exactly one complete source file in one fenced code block, with no explanation. Use only the standard libraries shipped with the specified toolchain. C++: C++17 with main(). Haskell: GHC, module Main and main :: IO (). Prolog: SWI-Prolog, define main/0; the evaluator invokes main; do not add initialization directives. Python: Python 3, one script that reads stdin and writes stdout. Java: Java 17, one file declaring public class Main with public static void main. Preserve required algorithmic constraints and output ordering. Do not hard-code examples.",
+        "role": "system"
+      },
+      {
+        "content": "Source language: prolog\nTarget language: cpp\nSpecification:\n# IPOP_9012: 괄호\n\nT개 소괄호 문자열마다 올바른 괄호열이면 YES, 아니면 NO를 출력한다.\n\n## 제약과 입력\n\n첫 줄 양의 정수 T. 이후 T줄에 소괄호 문자열 하나씩, 각 길이는 2..50이다.\n\n## 출력\n\n각 문자열이 올바른 괄호열이면 YES, 아니면 NO를 한 줄씩 출력한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[원문](https://www.acmicpc.net/problem/9012)\n\nPublic examples:\n[{\"input\": \"6\\n(())())\\n(((()())()\\n(()())((()))\\n((()()(()))(((())))()\\n()()()()(()()())()\\n(()((())()(\\n\", \"output\": \"NO\\nNO\\nYES\\nNO\\nYES\\nNO\\n\"}, {\"input\": \"3\\n((\\n))\\n())(()\\n\", \"output\": \"NO\\nNO\\nNO\\n\"}]\nSource code:\nmain :-\n    read_line_to_string(user_input, TLine),\n    (   TLine == end_of_file\n    ->  true\n    ;   number_string(T, TLine),\n        process_cases(T)\n    ).\n\nprocess_cases(0) :- !.\nprocess_cases(N) :-\n    read_line_to_string(user_input, Line),\n    (   Line == end_of_file\n    ->  true\n    ;   (   valid_parentheses(Line)\n        ->  writeln('YES')\n        ;   writeln('NO')\n        ),\n        N1 is N - 1,\n        process_cases(N1)\n    ).\n\nvalid_parentheses(Line) :-\n    string_codes(Line, Codes),\n    valid_codes(Codes, 0).\n\nvalid_codes([], 0) :- !.\nvalid_codes([40|Rest], Bal) :-\n    !,\n    Bal1 is Bal + 1,\n    valid_codes(Rest, Bal1).\nvalid_codes([41|Rest], Bal) :-\n    !,\n    (   Bal > 0\n    ->  Bal1 is Bal - 1,\n        valid_codes(Rest, Bal1)\n    ;   fail\n    ).\nvalid_codes([_|Rest], Bal) :-\n    valid_codes(Rest, Bal).",
+        "role": "user"
+      }
+    ],
+    "model": "deepseek/deepseek-v4.1-flash"
+  },
+  "provider": {
+    "allowed_response_models": [],
+    "auth": {
+      "api_key_env": "CMD_API_KEY",
+      "type": "bearer"
+    },
+    "base_url": "https://api.commandcode.ai/provider/v1",
+    "cost_cap_usd": 48.62,
+    "generation": {
+      "max_tokens": 16384,
+      "reasoning_effort": "low"
+    },
+    "generation_profile": {
+      "name": "commandcode-ds41-flash-v16-low-16384",
+      "option_values": {
+        "reasoning_effort": [
+          "low"
+        ]
+      },
+      "supported_options": [
+        "max_tokens",
+        "reasoning_effort"
+      ]
+    },
+    "max_calls": 3600,
+    "max_input_tokens": 32768,
+    "max_request_cost_usd": 0.25,
+    "max_transport_attempts": 10800,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "pricing": {
+      "cached_input_per_million": 0.006,
+      "input_per_million": 0.3,
+      "output_per_million": 1.2
+    },
+    "protocol": "chat_completions",
+    "provider": "compatible",
+    "request_path": "/chat/completions",
+    "request_timeout": 180,
+    "retries": 2
+  }
+}

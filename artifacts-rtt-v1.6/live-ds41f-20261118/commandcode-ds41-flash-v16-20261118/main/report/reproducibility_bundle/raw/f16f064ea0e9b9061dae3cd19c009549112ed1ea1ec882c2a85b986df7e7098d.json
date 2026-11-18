@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```prolog\nmain :-\n    (   read_line_to_string(user_input, S0),\n        read_line_to_string(user_input, T0)\n    ->  strip_cr(S0, S),\n        strip_cr(T0, T),\n        (   is_anagram(S, T)\n        ->  write(1)\n        ;   write(0)\n        ),\n        nl\n    ;   true\n    ).\n\nstrip_cr(S0, S) :-\n    string_codes(S0, Codes0),\n    (   append(Init, [13], Codes0)\n    ->  string_codes(S, Init)\n    ;   S = S0\n    ).\n\nis_anagram(S, T) :-\n    string_length(S, L),\n    string_length(T, L),\n    string_codes(S, Cs),\n    string_codes(T, Ct),\n    msort(Cs, A),\n    msort(Ct, B),\n    A == B.\n```",
+          "reasoning_content": "Translate to Prolog. Need read lines from stdin, handle \\r, compare anagrams, print 1 or 0.\n\nSWI-Prolog: read_line_to_string/2. But need to handle stdin. Use read_line_to_string(user_input, S).\n\nStrip trailing \\r: if S ends with \\r remove.\n\nThen check length equal, count chars. Simpler: check if same multiset — use msort or sort/2 on char codes with duplicates: msort(S_codes, A), msort(T_codes, B), A == B. But msort on strings? Convert to list of chars via string_codes.\n\nmsort on codes list works with duplicates removed? No, msort keeps duplicates. sort/2 removes duplicates, msort keeps. Use msort.\n\nThen compare.\n\nmain :-\n  catch(read_line_to_string(user_input, S), _, fail) -> ...\n\nActually need to handle EOF: if read fails, still? Spec says input always given. But source returns 0 if can't read. We can just read.\n\nCode:\n\n:- use_module(library(readutil)).  -- But directive? \"do not add initialization directives\". use_module is fine? It's not initialization. But maybe avoid: read_line_to_string is built-in in SWI.\n\nActually read_line_to_string/2 is in library(readutil), but SWI loads it by default? It's autoloaded. We can use it directly.\n\nmain :-\n    read_line_to_string(user_input, S0),\n    read_line_to_string(user_input, T0),\n    strip_cr(S0, S),\n    strip_cr(T0, T),\n    ( anagram(S, T) -> format(\"1~n\") ; format(\"0~n\") ).\n\nstrip_cr(S0, S) :-\n    ( sub_atom(S0, _, 1, 0, '\\r') -> sub_atom(S0, 0, _, 1, S) ; S = S0 ).\n\nHmm read_line_to_string returns string not atom. Use string. sub_string.\n\nstrip_cr(S0, S) :-\n    ( string_length(S0, L), L > 0, sub_string(S0, _, 1, 0, \"\\r\") ->\n        sub_string(S0, 0, _, 1, S)\n    ; S = S0 ).\n\nActually sub_string(S, B, L, A, Sub). Trailing: sub_string(S0, _, 1, 0, \"\\r\") means last char.\n\nSimpler: string_codes(S0, Codes0), reverse to check last is 0'\\r.\n\nstrip_cr(S0, S) :-\n    string_codes(S0, Codes0),\n    ( append(Codes, [13], Codes0) -> string_codes(S, Codes) ; S = S0 ).\n\nanagram(S, T) :-\n    string_length(S, L),\n    string_length(T, L),  % wait, string_length counts chars\n    string_codes(S, Cs),\n    string_codes(T, Ct),\n    msort(Cs, A),\n    msort(Ct, B),\n    A == B.\n\nWait if lengths differ, string_length check fails, then anagram fails → prints 0. Good.\n\nBut need to guard: if strings not same length, still return 0 (not exception). Fine with ->.\n\nAlso input may not have trailing newline — read_line_to_string returns without newline. It returns the line without trailing newline (I think it reads up to newline, excludes it). So \\r handling for Windows line endings.\n\nBut what about empty second line? read_line_to_string returns \"\" if empty line. Fine.\n\nWhat if only one string? read_line_to_string fails. We need to handle. Let's wrap with catch or just:\n\nmain :-\n    ( read_line_to_string(user_input, S0), read_line_to_string(user_input, T0) ->\n        ...\n    ; true\n    ).\n\nHmm if second read fails, whole conjunction fails → prints nothing. Source prints nothing (returns 0). OK.\n\nActually source: if getline fails returns 0 with no output. OK.\n\nLet me write final.\n\nActually string_length on string — yes.\n\nLet me use char_type or just codes.\n\nFinal code:\n\n:- module(main, [main/0]).\n\nmain :-\n    ( read_line_to_string(user_input, S0),\n      read_line_to_string(user_input, T0) ->\n        strip_cr(S0, S),\n        strip_cr(T0, T),\n        ( is_anagram(S, T) -> write(1) ; write(0) ),\n        nl\n    ; true\n    ).\n\nstrip_cr(S0, S) :-\n    string_codes(S0, Codes0),\n    ( append(Init, [13], Codes0) ->\n        string_codes(S, Init)\n    ; S = S0\n    ).\n\nis_anagram(S, T) :-\n    string_length(S, L),\n    string_length(T, L),\n    string_codes(S, Cs),\n    string_codes(T, Ct),\n    msort(Cs, A),\n    msort(Ct, B),\n    A == B.\n\nWait, need module declaration? Spec says \"define main/0\". No requirement for module. Let me omit module to avoid issues. Actually \"module Main and main :: IO ()\" was for Haskell. For Prolog: \"SWI-Prolog, define main/0\". So just define main/0 without module directive. That's fine, default module user.\n\nFinal.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794978377,
+    "id": "chatcmpl-c35b8d9e4776b3c53cd0ddf0152a8e88",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 1378,
+      "completion_tokens_details": {
+        "reasoning_tokens": 1173
+      },
+      "prompt_tokens": 627,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 2005
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0017288039999999998,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 9.193957600044087,
+  "logical_request_id": "4232f355d1003afc77bcd5a664ac8c4fdb99f2ac37f049c65e69823750883aac",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0242\\cpp-via-prolog\\attempt-04\\step-05\\response_body.txt",
+  "received_at": "2026-11-18T05:06:25.341132+00:00",
+  "request_id": "chatcmpl-c35b8d9e4776b3c53cd0ddf0152a8e88",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```prolog\nmain :-\n    (   read_line_to_string(user_input, S0),\n        read_line_to_string(user_input, T0)\n    ->  strip_cr(S0, S),\n        strip_cr(T0, T),\n        (   is_anagram(S, T)\n        ->  write(1)\n        ;   write(0)\n        ),\n        nl\n    ;   true\n    ).\n\nstrip_cr(S0, S) :-\n    string_codes(S0, Codes0),\n    (   append(Init, [13], Codes0)\n    ->  string_codes(S, Init)\n    ;   S = S0\n    ).\n\nis_anagram(S, T) :-\n    string_length(S, L),\n    string_length(T, L),\n    string_codes(S, Cs),\n    string_codes(T, Ct),\n    msort(Cs, A),\n    msort(Ct, B),\n    A == B.\n```",
+  "usage": {
+    "completion_tokens": 1378,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1173
+    },
+    "prompt_tokens": 627,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 2005
+  },
+  "usage_raw": {
+    "completion_tokens": 1378,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1173
+    },
+    "prompt_tokens": 627,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 2005
+  }
+}

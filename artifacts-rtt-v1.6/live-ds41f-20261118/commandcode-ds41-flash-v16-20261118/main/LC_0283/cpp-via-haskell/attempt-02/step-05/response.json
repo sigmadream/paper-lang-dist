@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    case map read (words input) :: [Int] of\n        [] -> return ()\n        (n:rest) -> do\n            let nums = take n rest\n                nonzero = filter (/= 0) nums\n                zeros = replicate (n - length nonzero) 0\n            putStrLn (unwords (map show (nonzero ++ zeros)))\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 669,
+    "total_tokens": 1119,
+    "completion_tokens": 450,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 350
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 669,
+    "total_tokens": 1119,
+    "completion_tokens": 450,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 350
+    }
+  },
+  "cost_usd": 0.0007407000000000001,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-e2f3b3f4570a32726375429e54d2060e",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-haskell\\attempt-02\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-e2f3b3f4570a32726375429e54d2060e",
+    "object": "chat.completion",
+    "created": 1794981116,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    case map read (words input) :: [Int] of\n        [] -> return ()\n        (n:rest) -> do\n            let nums = take n rest\n                nonzero = filter (/= 0) nums\n                zeros = replicate (n - length nonzero) 0\n            putStrLn (unwords (map show (nonzero ++ zeros)))\n```",
+          "reasoning_content": "We need answer exactly one complete source file in fenced code block, no explanation. Need translate C++ to Haskell preserving stdin/stdout. Need produce Haskell GHC module Main main :: IO (). Read N then N ints; output nonzeros then zeros space separated newline. Edge N maybe? constraints 1<=N<=10000. Need maybe handle input formatting arbitrary whitespace. Use getContents, words. Signed 32-bit; Int sufficient (64-bit on GHC). Need exactly output. If no input? C++ returns 0 no output. We can mimic: parse maybe. Since valid input always. Implement main = do input <- getContents; let xs = map read (words input) :: [Integer]; case xs of (n:rest) -> let arr = take (fromIntegral n) rest; nz = filter (/=0) arr; zeros = replicate (fromIntegral n - length nz) 0; in putStrLn (unwords (map show (nz ++ zeros))). Need avoid fromIntegral type issue. Simpler use Int. n Int. let nums = take n (map read rest :: [Int]). zeros = replicate (n - length nonzero) 0. putStrLn $ unwords $ map show (nonzero ++ zeros). No trailing spaces, newline. If n=0 output blank line? C++ loop none then cout << '\\n' => newline. Our unwords [] = \"\" then putStrLn \"\" => newline. Good. If no input, C++ no output. Our pattern maybe [] -> return (). Good.\n\nNeed return fenced code block only. Ensure module Main where. Use only standard. Final."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 669,
+      "total_tokens": 1119,
+      "completion_tokens": 450,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 350
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.95831180003006,
+  "received_at": "2026-11-18T05:51:59.839634+00:00",
+  "logical_request_id": "3d01030932478129ac8db8c5f469e4b08f2ec556e6b37d616c5da7ae2cadc67f",
+  "execution_class": "direct_api"
+}

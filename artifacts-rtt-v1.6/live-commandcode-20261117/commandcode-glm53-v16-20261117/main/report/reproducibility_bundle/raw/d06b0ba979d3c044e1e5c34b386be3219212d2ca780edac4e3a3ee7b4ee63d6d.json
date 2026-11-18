@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```python\nimport sys\n\ndef main():\n    sys.setrecursionlimit(10000)\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    n = int(data[0])\n    ans = 0\n    col = [False] * n\n    diag1 = [False] * (2 * n - 1)\n    diag2 = [False] * (2 * n - 1)\n\n    def solve(r):\n        nonlocal ans\n        if r == n:\n            ans += 1\n            return\n        for c in range(n):\n            if col[c] or diag1[r + c] or diag2[r - c + n - 1]:\n                continue\n            col[c] = diag1[r + c] = diag2[r - c + n - 1] = True\n            solve(r + 1)\n            col[c] = diag1[r + c] = diag2[r - c + n - 1] = False\n\n    solve(0)\n    print(ans)\n\nif __name__ == \"__main__\":\n    main()\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794899490,
+    "id": "4529edf6-118c-4017-8168-32270c13a3c3",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 232,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_c31c95c819bf4f67bb9c639a6191a2d2",
+      "trace_id": "81634813e2a240359e1944d164508848"
+    },
+    "usage": {
+      "completion_tokens": 232,
+      "prompt_tokens": 609,
+      "prompt_tokens_details": {
+        "cached_tokens": 576
+      },
+      "total_tokens": 841
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0012167599999999999,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 4.758366799971554,
+  "logical_request_id": "418e8df59619017468bdda8c03dc1a0d79db5d65976554e2dee17200969b8402",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_9663\\cpp-via-python\\attempt-05\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T07:11:30.104178+00:00",
+  "request_id": "4529edf6-118c-4017-8168-32270c13a3c3",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```python\nimport sys\n\ndef main():\n    sys.setrecursionlimit(10000)\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    n = int(data[0])\n    ans = 0\n    col = [False] * n\n    diag1 = [False] * (2 * n - 1)\n    diag2 = [False] * (2 * n - 1)\n\n    def solve(r):\n        nonlocal ans\n        if r == n:\n            ans += 1\n            return\n        for c in range(n):\n            if col[c] or diag1[r + c] or diag2[r - c + n - 1]:\n                continue\n            col[c] = diag1[r + c] = diag2[r - c + n - 1] = True\n            solve(r + 1)\n            col[c] = diag1[r + c] = diag2[r - c + n - 1] = False\n\n    solve(0)\n    print(ans)\n\nif __name__ == \"__main__\":\n    main()\n```",
+  "usage": {
+    "completion_tokens": 232,
+    "prompt_tokens": 609,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 841
+  },
+  "usage_raw": {
+    "completion_tokens": 232,
+    "prompt_tokens": 609,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 841
+  }
+}

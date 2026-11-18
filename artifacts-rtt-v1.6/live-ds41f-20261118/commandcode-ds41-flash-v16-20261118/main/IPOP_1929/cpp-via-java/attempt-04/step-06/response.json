@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int m, n;\n    if (!(cin >> m >> n)) return 0;\n\n    vector<bool> isPrime(n + 1, true);\n    if (n >= 0) isPrime[0] = false;\n    if (n >= 1) isPrime[1] = false;\n\n    for (long long i = 2; i * i <= n; ++i) {\n        if (isPrime[(int)i]) {\n            for (long long j = i * i; j <= n; j += i) {\n                isPrime[(int)j] = false;\n            }\n        }\n    }\n\n    string output;\n    for (int i = m; i <= n; ++i) {\n        if (isPrime[i]) {\n            output += to_string(i);\n            output += '\\n';\n        }\n    }\n\n    cout << output;\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 674,
+    "total_tokens": 957,
+    "completion_tokens": 283,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 61
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 674,
+    "total_tokens": 957,
+    "completion_tokens": 283,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 61
+    }
+  },
+  "cost_usd": 0.0005417999999999999,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-b7c0eb91e8702a337fcff66b0377c273",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_1929\\cpp-via-java\\attempt-04\\step-06\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-b7c0eb91e8702a337fcff66b0377c273",
+    "object": "chat.completion",
+    "created": 1794987308,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int m, n;\n    if (!(cin >> m >> n)) return 0;\n\n    vector<bool> isPrime(n + 1, true);\n    if (n >= 0) isPrime[0] = false;\n    if (n >= 1) isPrime[1] = false;\n\n    for (long long i = 2; i * i <= n; ++i) {\n        if (isPrime[(int)i]) {\n            for (long long j = i * i; j <= n; j += i) {\n                isPrime[(int)j] = false;\n            }\n        }\n    }\n\n    string output;\n    for (int i = m; i <= n; ++i) {\n        if (isPrime[i]) {\n            output += to_string(i);\n            output += '\\n';\n        }\n    }\n\n    cout << output;\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer exactly one fenced code block with C++ source, no explanation. Need translate. Simple. Ensure stdin/out. C++17 main. Use sieve up to n. Output primes m..n. Include bits/stdc++.h. No hardcode. Ensure correct. Just code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 674,
+      "total_tokens": 957,
+      "completion_tokens": 283,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 61
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.649337899987586,
+  "received_at": "2026-11-18T07:35:08.867070+00:00",
+  "logical_request_id": "abdefef65547beb9c8d7563cb913d06b80bbb46b953055e8bdd56f5f8d1c20ed",
+  "execution_class": "direct_api"
+}

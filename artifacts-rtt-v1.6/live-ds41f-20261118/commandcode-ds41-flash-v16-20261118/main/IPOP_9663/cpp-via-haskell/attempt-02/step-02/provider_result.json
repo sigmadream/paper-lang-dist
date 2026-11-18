@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <functional>\n\nint main() {\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    int full = (1 << n) - 1;\n\n    std::function<int(int, int, int, int)> go =\n        [&](int r, int cols, int d1, int d2) -> int {\n            if (r == n) return 1;\n\n            int avail = full & ~(cols | d1 | d2);\n            int acc = 0;\n\n            while (avail) {\n                int b = avail & -avail;\n                avail ^= b;\n\n                acc += go(\n                    r + 1,\n                    cols | b,\n                    ((d1 | b) << 1) & full,\n                    (d2 | b) >> 1\n                );\n            }\n\n            return acc;\n        };\n\n    std::cout << go(0, 0, 0, 0) << '\\n';\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 650,
+    "total_tokens": 1380,
+    "completion_tokens": 730,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 509
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 650,
+    "total_tokens": 1380,
+    "completion_tokens": 730,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 509
+    }
+  },
+  "cost_usd": 0.001071,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-b154657ec0529a9236891eafb63d3a22",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9663\\cpp-via-haskell\\attempt-02\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-b154657ec0529a9236891eafb63d3a22",
+    "object": "chat.completion",
+    "created": 1794996091,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <functional>\n\nint main() {\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    int full = (1 << n) - 1;\n\n    std::function<int(int, int, int, int)> go =\n        [&](int r, int cols, int d1, int d2) -> int {\n            if (r == n) return 1;\n\n            int avail = full & ~(cols | d1 | d2);\n            int acc = 0;\n\n            while (avail) {\n                int b = avail & -avail;\n                avail ^= b;\n\n                acc += go(\n                    r + 1,\n                    cols | b,\n                    ((d1 | b) << 1) & full,\n                    (d2 | b) >> 1\n                );\n            }\n\n            return acc;\n        };\n\n    std::cout << go(0, 0, 0, 0) << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer exact one complete source file in fenced code block, no explanation. Need translate Haskell N-queen bitmask to C++17 main. Need preserve behavior. Input N int <=14. Output count. Could output solve. Need consider source getContents words, if no input returns. C++ read int. Fine. Need standard libs.\n\nNeed ensure bit operations. N<15, int fine. Use int full=(1<<n)-1. Recursion lambda/function. Count up to 14 queens 365596? Brute backtracking fine. Haskell algorithm scans available bits. C++ implement same.\n\nPotential issue complement with int sign. Use mask: int avail = full & ~(cols|d1|d2). Then lowbit = avail & -avail. recurse. diagonal left: ((d1|b)<<1)&full; right: (d2|b)>>1. In Haskell d2 not masked? d2 = (d2 .|. b) shiftR 1. But starts 0 and bits within full? d2 shifted right loses LSB, so remains within full. d1 masked. Good.\n\nNeed include bits? iostream only.\n\nCould iterative? No need.\n\nFinal must exactly fenced code block. No explanation. Use class? For C++ just main.\n\nNeed maybe \"Translate supplied program to language preserving complete stdin/stdout behavior for every valid input\". Use if (!(cin>>n)) return 0. Output count newline via cout.\n\nLet's craft.\n\nBut wait ensure no hardcode. Good.\n\nPotential recursion function:\nlong long solve(int n) { int full=(1<<n)-1; function<int(int,int,int,int)> go = ... } Count max for n=14 365596 fits int. Use int.\n\nNeed include <functional>. Could avoid std::function with recursive lambda? function okay. Use std::function<int(int,int,int,int)>. Since n captured.\n\nImplement loop over avail:\nint acc=0;\nwhile(avail){ int b=avail & -avail; avail ^= b; acc += go(r+1, cols|b, ((d1|b)<<1)&full, (d2|b)>>1); }\nreturn acc;\nBase if r==n return 1.\n\nNeed note -avail on signed int with avail positive within 32767; safe. Could use avail & -avail. Good.\n\nFinal."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 650,
+      "total_tokens": 1380,
+      "completion_tokens": 730,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 509
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 7.012105099973269,
+  "received_at": "2026-11-18T10:01:36.476235+00:00",
+  "logical_request_id": "bc641255ca0ecd79d6b78f3bb59fabc88a182c4237b69bddea63632e612b2ff0",
+  "execution_class": "direct_api"
+}

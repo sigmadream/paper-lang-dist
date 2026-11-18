@@ -1,0 +1,86 @@
+{
+  "text": "```prolog\nstrip_trailing_cr(S0, S) :-\n    string_codes(S0, Codes0),\n    (   append(Codes, [13], Codes0)\n    ->  string_codes(S, Codes)\n    ;   S = S0\n    ).\n\nread_line_codes(S) :-\n    read_line_to_string(user_input, Line),\n    (   Line == end_of_file\n    ->  S = \"\"\n    ;   strip_trailing_cr(Line, S)\n    ).\n\nis_anagram(S, T) :-\n    string_codes(S, CodesS0),\n    msort(CodesS0, CodesS),\n    string_codes(T, CodesT0),\n    msort(CodesT0, CodesT),\n    CodesS == CodesT.\n\nmain :-\n    read_line_codes(S),\n    read_line_codes(T),\n    (   is_anagram(S, T)\n    ->  writeln(1)\n    ;   writeln(0)\n    ).\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 572,
+    "total_tokens": 2353,
+    "completion_tokens": 1781,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1564
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 572,
+    "total_tokens": 2353,
+    "completion_tokens": 1781,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1564
+    }
+  },
+  "cost_usd": 0.0023087999999999997,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-dc4f1614d15ef5e7b2a2a1c0633953cd",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0242\\cpp-via-prolog\\attempt-03\\step-07\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-dc4f1614d15ef5e7b2a2a1c0633953cd",
+    "object": "chat.completion",
+    "created": 1794986030,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\nstrip_trailing_cr(S0, S) :-\n    string_codes(S0, Codes0),\n    (   append(Codes, [13], Codes0)\n    ->  string_codes(S, Codes)\n    ;   S = S0\n    ).\n\nread_line_codes(S) :-\n    read_line_to_string(user_input, Line),\n    (   Line == end_of_file\n    ->  S = \"\"\n    ;   strip_trailing_cr(Line, S)\n    ).\n\nis_anagram(S, T) :-\n    string_codes(S, CodesS0),\n    msort(CodesS0, CodesS),\n    string_codes(T, CodesT0),\n    msort(CodesT0, CodesT),\n    CodesS == CodesT.\n\nmain :-\n    read_line_codes(S),\n    read_line_codes(T),\n    (   is_anagram(S, T)\n    ->  writeln(1)\n    ;   writeln(0)\n    ).\n```",
+          "reasoning_content": "We need answer only fenced code block with Prolog source. Need preserve behavior. Need define main/0. SWI-Prolog. Read lines stdin, strip possible \\r? Source reads two lines, strips trailing \\r. Then sort strings or count. Prolog can read lines using read_line_to_string? Need handle empty? Spec length 1..50000, but behavior valid. Need output 1 if sorted equal else 0.\n\nNeed be careful read_line_to_string/2 in SWI. It reads line excluding newline. Does it strip \\r? SWI read_line_to_string likely reads until newline; if Windows CRLF, returns string includes \\r? Need mimic source stripping trailing \\r. We can implement strip_trailing_cr.\n\nNeed read first line and second line. If EOF? Source: if getline fails, out.clear. read_line_codes sets empty. For valid input both present. Could implement robust.\n\nString lengths large up to 50000. Sorting in Prolog string codes maybe okay. Could count letters O(n). Better count. But source sorts. Constraint fine. Use string_codes? SWI string_codes/2. Then sort/2. Compare. Need output newline with write.\n\nDefine main :-\n  read_line_codes(S),\n  read_line_codes(T),\n  ( S == T -> writeln(1) ; writeln(0) ).\n\nBut sorting: string_codes(S,CodesS), msort(CodesS, SS), same T, compare.\n\nStrip CR: We read string with read_line_to_string(user_input, Line). If end_of_file, return \"\". Need strip trailing \\r. In SWI string_concat(S, \"\\r\", Line)? That only one. Simpler convert to codes, reverse remove 0'\\r at end? Could use string_codes, append(Prefix, [13], Codes) maybe nondet if multiple? Need only trailing one. Use reverse C [13|Rest] then reverse Rest. Actually line may end with CR. Implement:\n\nstrip_cr(S0,S) :-\n string_codes(S0,C0),\n ( C0 = [] -> C=C0\n ; reverse(C0, [13|RevRest]) -> reverse(RevRest, C)\n ; C=C0\n ),\n string_codes(S,C).\n\nBut reverse(C0, [13|RevRest]) works. Use -> with variable? Need if. Or use last? We can use append(C, [13], Codes), but if multiple possible. But only last. append(C,[13],C0) yields C = prefix removing single trailing 13, good. But if no trailing fails. Use once((append(C, [13], C0))). Need deterministic.\n\nAlternative use string_length and sub_string. But codes easiest.\n\nread_line_codes(S) :-\n   read_line_to_string(user_input, Line),\n   ( Line == end_of_file -> S = \"\" ; strip_cr(Line,S) ).\n\nIn SWI, read_line_to_string returns \"end_of_file\" atom? Actually read_line_to_string(Stream, String) returns String = end_of_file. Yes atom.\n\nThen sorted equal:\nanagram(S,T) :- string_codes(S, CS0), msort(CS0, CS), string_codes(T, CT0), msort(CT0, CT), CS == CT.\n\nNeed compare sorted code lists with ==. msort removes duplicates? Wait msort sorts without removing duplicates. In SWI, msort/2 sorts and removes duplicates? Let's recall Prolog: sort/2 removes duplicates; msort/2 sorts but does not remove duplicates? ISO msort? SWI: msort(+List, -Sorted) sorts without removing duplicates. Yes.\n\nUse sort? No, because duplicate counts matters. use msort.\n\nMain:\nmain :-\n    read_line_codes(S),\n    read_line_codes(T),\n    ( anagram(S,T) -> writeln(1) ; writeln(0) ).\n\nNeed avoid multiple solutions. msort deterministic. Good.\n\nPotential issue if input line empty? Spec length >=1. But source can handle empty. Our read_line_to_string for empty line returns \"\" likely. Good.\n\nNeed ensure no initialization directives. Only main/0.\n\nShould we include module? \"Prolog: SWI-Prolog, define main/0; evaluator invokes main; do not add initialization directives.\" We can just write predicates. No module necessary. Could include main. Use standard built-ins.\n\nPotential issue read_line_to_string includes newline? SWI: read_line_to_string/2 reads up to newline, removes newline. Good.\n\nBut CRLF: Does read_line_to_string strip CR? I think it returns string without newline but may include \\r. We strip.\n\nNeed think about Prolog strings vs codes. Double quoted strings in SWI are string by default (depending flags). We can use string_codes. In SWI-7+, double quotes are strings. Fine.\n\nCould implement read_line_codes without read_line_to_string? Use read_line_to_codes? SWI has read_line_to_codes/2? It returns codes excluding newline. But not strip CR. Could use read_line_to_string. Good.\n\nNeed final exactly code block.\n\nLet's craft:\n\nstrip_trailing_cr(S0, S) :-\n    string_codes(S0, Codes0),\n    (   append(Codes, [13], Codes0)\n    ->  string_codes(S, Codes)\n    ;   S = S0\n    ).\n\nBut append(Codes, [13], Codes0) can be nondet? If Codes0 ends with [13], unique split? append/3 with second fixed [13] and third known: It will find one solution? Actually if list ends with multiple 13, append(Codes, [13], Codes0) has one solution where last element is 13, because append length is len-1. Unique. So deterministic? append with one variable list and fixed tail may be det? It can produce one. Fine.\n\nread_line_codes(S) :-\n    read_line_to_string(user_input, Line),\n    (   Line == end_of_file\n    ->  S = \"\"\n    ;   strip_trailing_cr(Line, S)\n    ).\n\nanagram(S,T) :-\n string_codes(S, CS0), msort(CS0, CS),\n string_codes(T, CT0), msort(CT0, CT),\n CS == CT.\n\nmain :- ...\n\nNeed note: In SWI, double quoted \"\" inside code is string? Actually empty double quoted string is atom? In SWI, empty double quotes are empty string? It's string. Fine. Could use S = \"\".\n\nPotential issue if line has trailing CR and S0 = \"\\r\"? append([], [13], [13]) gives S = \"\". Good.\n\nCould there be trailing \\r\\n and read_line_to_string might strip both? If strips \\r then no harm.\n\nNeed maybe handle EOF in second line? If EOF, line = end_of_file -> S = \"\". Good.\n\nNeed output newline. writeln(1) prints 1 newline. Good.\n\nNeed no explanation. Final code block only.\n\nBut let's consider if SWI's read_line_to_string returns an atom for end_of_file; comparing Line == end_of_file works. If input line is \"end_of_file\" string? No.\n\nNo module main. Good.\n\nLet's final."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 572,
+      "total_tokens": 2353,
+      "completion_tokens": 1781,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1564
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 11.829241500003263,
+  "received_at": "2026-11-18T07:14:00.053138+00:00",
+  "logical_request_id": "7c7acb43636301addc8a0ac1eb67ab0884a7dcd0fbdbf3c2cd5c5e9d117ac1fe",
+  "execution_class": "direct_api"
+}

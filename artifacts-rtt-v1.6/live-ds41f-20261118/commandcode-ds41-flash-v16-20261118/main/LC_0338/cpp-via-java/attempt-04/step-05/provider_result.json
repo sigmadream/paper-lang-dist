@@ -1,0 +1,86 @@
+{
+  "text": "```java\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        if (line == null) return;\n\n        String trimmed = line.trim();\n        if (trimmed.isEmpty()) return;\n\n        int n = Integer.parseInt(trimmed);\n\n        int[] counts = new int[n + 1];\n        for (int i = 1; i <= n; ++i) {\n            counts[i] = counts[i / 2] + (i % 2);\n        }\n\n        StringBuilder out = new StringBuilder();\n        for (int i = 0; i <= n; ++i) {\n            if (i > 0) out.append(' ');\n            out.append(counts[i]);\n        }\n        out.append('\\n');\n        System.out.print(out.toString());\n    }\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 639,
+    "total_tokens": 847,
+    "completion_tokens": 208,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 7
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 639,
+    "total_tokens": 847,
+    "completion_tokens": 208,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 7
+    }
+  },
+  "cost_usd": 0.00044129999999999994,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-5942ef8bf57d0f899aed271743c3bf76",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0338\\cpp-via-java\\attempt-04\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-5942ef8bf57d0f899aed271743c3bf76",
+    "object": "chat.completion",
+    "created": 1794988702,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```java\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        if (line == null) return;\n\n        String trimmed = line.trim();\n        if (trimmed.isEmpty()) return;\n\n        int n = Integer.parseInt(trimmed);\n\n        int[] counts = new int[n + 1];\n        for (int i = 1; i <= n; ++i) {\n            counts[i] = counts[i / 2] + (i % 2);\n        }\n\n        StringBuilder out = new StringBuilder();\n        for (int i = 0; i <= n; ++i) {\n            if (i > 0) out.append(' ');\n            out.append(counts[i]);\n        }\n        out.append('\\n');\n        System.out.print(out.toString());\n    }\n}\n```",
+          "reasoning_content": "Translate to Java. Straightforward."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 639,
+      "total_tokens": 847,
+      "completion_tokens": 208,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 7
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.0091197999427095,
+  "received_at": "2026-11-18T07:58:22.772017+00:00",
+  "logical_request_id": "245bd8aeafc87eb83fad3db820e8fc2690ae303dcb61498533796af6f4d4ba4a",
+  "execution_class": "direct_api"
+}

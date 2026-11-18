@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nvalid :: String -> Bool\nvalid = go 0\n  where\n    go balance [] = balance == 0\n    go balance (c:cs)\n      | c == '(' = go (balance + 1) cs\n      | c == ')' = if balance == 0 then False else go (balance - 1) cs\n      | otherwise = False\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (tStr : rest) -> do\n      let t = read tStr :: Int\n          strings = take t rest\n      mapM_ output strings\n  where\n    output s = putStrLn (if valid s then \"YES\" else \"NO\")\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 625,
+    "total_tokens": 1062,
+    "completion_tokens": 437,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 261
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 625,
+    "total_tokens": 1062,
+    "completion_tokens": 437,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 261
+    }
+  },
+  "cost_usd": 0.000599004,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-8005ac25b119e6f71bfad9b99638e524",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-haskell\\attempt-01\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-8005ac25b119e6f71bfad9b99638e524",
+    "object": "chat.completion",
+    "created": 1794994818,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nvalid :: String -> Bool\nvalid = go 0\n  where\n    go balance [] = balance == 0\n    go balance (c:cs)\n      | c == '(' = go (balance + 1) cs\n      | c == ')' = if balance == 0 then False else go (balance - 1) cs\n      | otherwise = False\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (tStr : rest) -> do\n      let t = read tStr :: Int\n          strings = take t rest\n      mapM_ output strings\n  where\n    output s = putStrLn (if valid s then \"YES\" else \"NO\")\n```",
+          "reasoning_content": "We need answer only Haskell file fenced. Need translate. Need consider stdin behavior. T then T strings. Haskell module Main main. Use getContents lines, parse. Need preserve every valid input spec. Could use words because strings no spaces. Parse T. For each next T take strings, compute valid.\n\nNeed output YES/NO each line. Haskell:\n\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> pure ()\n    (tStr:_) ->\n      let t = read tStr :: Int\n          ss = take t (drop 1 tokens)\n      in mapM_ (putStrLn . (\\s -> if valid s then \"YES\" else \"NO\")) ss\n\nvalid :: String -> Bool\nvalid = go 0\n where\n  go bal [] = bal == 0\n  go bal (c:cs)\n    | c == '(' = go (bal+1) cs\n    | c == ')' = if bal == 0 then False else go (bal-1) cs\n    | otherwise = False\n\nNeed ensure no hard-code. Output exactly. Haskell string. Use module Main and main. Fine.\n\nNeed only code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 625,
+      "total_tokens": 1062,
+      "completion_tokens": 437,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 261
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.75627130002249,
+  "received_at": "2026-11-18T09:40:20.332031+00:00",
+  "logical_request_id": "a4491a630b61d57a55a6aa77052e44fe3dbcb77b93b0a30c12b97b3ad31ad46b",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,3628 @@
+# Command Code 두 모델 실제 실험 실행 보고
+
+2026-11-17 정리 안내: 유료 실행은 중지하였고 두 모델 전체 실험은 완료되지 않았습니다. GLM은 300슬롯 저장, DeepSeek는 4슬롯 저장 후 중단 상태입니다. HTTP 524 뒤 자동 재전송이 두 모델에서 각 1건 발견되어 아래 기존 원관측 집계와 별도 감사 후 판정을 구분해야 합니다. 최신 해석은 [GLM 결과 정리](glm-results.md), [524 사고 감사](incident-524.md), [DeepSeek 다음 실행 인계](deepseek-handoff.md), [자료 정리 검증 결과](handoff-verification.json)를 확인해 주십시오. 아래 집계와 기존 공식 원자료는 사고 감사 전 표시값으로 보존하며, 재전송 이후 응답을 첫 생성으로 해석하지 않습니다.
+
+실제 저장 관측과 감사 결과만 집계합니다. 300슬롯 수집 종료와 임계치별 완전성은 구분합니다.
+
+| 모델 | 단계 | 실제/계획 슬롯 | 구조 감사 | 임계치별 완전성 |
+|---|---|---|---|---|
+| glm53 | pilot | 12/12 | True | {"0.80": true, "0.85": true, "0.90": true} |
+| glm53 | main | 300/300 | True | {"0.80": false, "0.85": false, "0.90": false} |
+| deepseek_v4_pro | pilot | 12/12 | True | {"0.80": true, "0.85": true, "0.90": true} |
+| deepseek_v4_pro | main | 4/300 | False | {} |
+
+## 생성 조건과 계약
+
+GLM은 temperature 0.6·top_p 0.95·출력 상한 16384·reasoning_effort low를 요청합니다. DeepSeek는 공식 추론 모드의 sampling 옵션 무시 제약에 따라 출력 상한 16384·reasoning_effort low만 요청합니다. 두 모델 모두 seed 지원 근거가 없어 전달하지 않으며 실효 설정 미보고는 null입니다. 따라서 모델별 별도 프로파일이며 동일한 low를 동일한 실제 추론량으로 주장하지 않습니다.
+
+지원 근거·조회일은 execution-plan.md와 sources.json, 동결 소스·설정·환경·자료 근거는 source-manifest.json과 execution-sources/에 있습니다. 본 실험 계약과 캠페인 원자료는 모델별 캠페인 디렉터리에 보존합니다. 기존 smoke 응답을 재사용하지 않습니다.
+
+## 비용과 사용량
+
+모델별 preflight 상한 0.25달러, pilot와 main 상한 각각 50달러로 전체 중단 상한은 200.50달러입니다. 단가에 따른 추정값과 실제 청구 보고값을 구분하며 미보고 청구액은 null입니다. 단계별 원장과 응답 사용량을 그대로 보존합니다.
+
+```json
+{
+  "glm53": {
+    "campaign_id": "commandcode-glm53-v16-20261117",
+    "campaign_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117",
+    "generation": {
+      "temperature": 0.6,
+      "top_p": 0.95,
+      "max_tokens": 16384,
+      "reasoning_effort": "low"
+    },
+    "phases": {
+      "pilot": {
+        "passed": true,
+        "collection_finished": true,
+        "observation_count": 12,
+        "planned": 12,
+        "contract_hash": "ce8b51ee546d54b5e8eb15ee901ee689a40f410538f9bdbc7f6e6f4ae5b373ca",
+        "complete_by_threshold": {
+          "0.80": true,
+          "0.85": true,
+          "0.90": true
+        },
+        "incomplete_slots": 0,
+        "errors": []
+      },
+      "main": {
+        "passed": true,
+        "collection_finished": true,
+        "observation_count": 300,
+        "planned": 300,
+        "contract_hash": "ce8b51ee546d54b5e8eb15ee901ee689a40f410538f9bdbc7f6e6f4ae5b373ca",
+        "complete_by_threshold": {
+          "0.80": false,
+          "0.85": false,
+          "0.90": false
+        },
+        "incomplete_slots": 0,
+        "errors": []
+      }
+    },
+    "ledger": {
+      "logical_requests": 1442,
+      "transport_attempts": 1443,
+      "estimated_cost_usd": 1.8963076399999999,
+      "reported_cost_usd": null,
+      "unknown_cost_requests": 0,
+      "prompt_tokens": 849041,
+      "completion_tokens": 299636
+    },
+    "primary_routes": {
+      "cpp-via-python": {
+        "P": 0.8,
+        "H": 4.866666666666666,
+        "D": 6.083333333333332,
+        "valid": 75,
+        "successes": null
+      },
+      "cpp-via-java": {
+        "P": 0.6266666666666667,
+        "H": 5.191489361702128,
+        "D": 8.284291534631054,
+        "valid": 75,
+        "successes": null
+      },
+      "cpp-via-haskell": {
+        "P": 0.20833333333333334,
+        "H": 5.866666666666666,
+        "D": 28.159999999999997,
+        "valid": 72,
+        "successes": null
+      },
+      "cpp-via-prolog": {
+        "P": 0.0,
+        "H": null,
+        "D": null,
+        "valid": 75,
+        "successes": null
+      }
+    },
+    "recursive_groups": {
+      "descriptive_only": true,
+      "interpretation": "재귀 구현군 3문제와 비교군 12문제의 탐색적 기술통계입니다. 언어 패러다임의 인과 효과나 우월성을 확정하지 않습니다.",
+      "groups": {
+        "recursive": {
+          "problem_ids": [
+            "IPOP_11729",
+            "IPOP_1992",
+            "IPOP_9663"
+          ],
+          "problem_count": 3,
+          "routes": {
+            "cpp-via-haskell": {
+              "P": 0.4,
+              "H": 4.666666666666667,
+              "D": 11.666666666666666,
+              "planned": 15,
+              "recorded": 15,
+              "valid": 15,
+              "success": 6,
+              "invalid": 0,
+              "incomplete": 0,
+              "categories": {
+                "success": 6,
+                "functional_failure": 8,
+                "hop_limit": 1,
+                "invalid": 0,
+                "incomplete": 0
+              },
+              "missing_reason": null,
+              "P_problem_mean": 0.39999999999999997,
+              "per_problem": {
+                "IPOP_11729": {
+                  "P": 0.6,
+                  "H": 4.0,
+                  "D": 6.666666666666667,
+                  "valid": 5,
+                  "success": 3
+                },
+                "IPOP_1992": {
+                  "P": 0.6,
+                  "H": 5.333333333333333,
+                  "D": 8.88888888888889,
+                  "valid": 5,
+                  "success": 3
+                },
+                "IPOP_9663": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                }
+              },
+              "confirmation": {
+                "primary_successes": 6,
+                "passed": 4,
+                "failed": 2,
+                "unavailable": 0,
+                "assessable": 6,
+                "retention_rate": 0.6666666666666666,
+                "unavailable_rate": 0.0
+              },
+              "failure_reasons": {
+                "compile_error": 6,
+                "format_error": 1,
+                "hop_limit": 1,
+                "runtime_error": 1
+              },
+              "stage_pass_rates": [
+                {
+                  "phase": "discovery",
+                  "step": 1,
+                  "direction": "cpp->haskell",
+                  "attempts": 15,
+                  "assessable": 15,
+                  "unavailable": 0,
+                  "passed": 11,
+                  "pass_rate": 0.7333333333333333
+                },
+                {
+                  "phase": "discovery",
+                  "step": 2,
+                  "direction": "haskell->cpp",
+                  "attempts": 11,
+                  "assessable": 11,
+                  "unavailable": 0,
+                  "passed": 11,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 3,
+                  "direction": "cpp->haskell",
+                  "attempts": 11,
+                  "assessable": 11,
+                  "unavailable": 0,
+                  "passed": 9,
+                  "pass_rate": 0.8181818181818182
+                },
+                {
+                  "phase": "discovery",
+                  "step": 4,
+                  "direction": "haskell->cpp",
+                  "attempts": 9,
+                  "assessable": 9,
+                  "unavailable": 0,
+                  "passed": 9,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 5,
+                  "direction": "cpp->haskell",
+                  "attempts": 8,
+                  "assessable": 8,
+                  "unavailable": 0,
+                  "passed": 8,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 6,
+                  "direction": "haskell->cpp",
+                  "attempts": 8,
+                  "assessable": 8,
+                  "unavailable": 0,
+                  "passed": 8,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 7,
+                  "direction": "cpp->haskell",
+                  "attempts": 6,
+                  "assessable": 6,
+                  "unavailable": 0,
+                  "passed": 3,
+                  "pass_rate": 0.5
+                },
+                {
+                  "phase": "discovery",
+                  "step": 8,
+                  "direction": "haskell->cpp",
+                  "attempts": 3,
+                  "assessable": 3,
+                  "unavailable": 0,
+                  "passed": 3,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 9,
+                  "direction": "cpp->haskell",
+                  "attempts": 1,
+                  "assessable": 1,
+                  "unavailable": 0,
+                  "passed": 1,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 10,
+                  "direction": "haskell->cpp",
+                  "attempts": 1,
+                  "assessable": 1,
+                  "unavailable": 0,
+                  "passed": 1,
+                  "pass_rate": 1.0
+                }
+              ],
+              "call_accounting": {
+                "discovery": {
+                  "logical_requests": 73,
+                  "transport_attempts": null,
+                  "known_transport_attempts": 0,
+                  "transport_unknown_requests": 73,
+                  "retries": null,
+                  "cost_usd": 0.1091648,
+                  "known_cost_usd": 0.1091648,
+                  "scope": "관측 단계에 보존된 요청의 집계입니다. 단계 생성 전 실패한 통신과 전체 과금량은 공급자 원장을 별도로 대조해야 합니다."
+                },
+                "confirmation": {
+                  "logical_requests": 0,
+                  "transport_attempts": 0,
+                  "known_transport_attempts": 0,
+                  "transport_unknown_requests": 0,
+                  "retries": 0,
+                  "cost_usd": 0,
+                  "known_cost_usd": 0,
+                  "scope": "관측 단계에 보존된 요청의 집계입니다. 단계 생성 전 실패한 통신과 전체 과금량은 공급자 원장을 별도로 대조해야 합니다."
+                }
+              },
+              "similarities": {
+                "first_restoration": {
+                  "n": 11,
+                  "mean": 0.416654583528804,
+                  "median": 0.35398230088495575,
+                  "q1": 0.3094000944733113,
+                  "q3": 0.550895679662803,
+                  "values": [
+                    0.547945205479452,
+                    0.5538461538461539,
+                    0.625,
+                    1.0,
+                    0.0,
+                    0.35398230088495575,
+                    0.3448275862068966,
+                    0.18181818181818182,
+                    0.34782608695652173,
+                    0.35398230088495575,
+                    0.273972602739726
+                  ]
+                },
+                "adjacent_at_reach": {
+                  "n": 6,
+                  "mean": 0.9353078027222059,
+                  "median": 0.9164632019532613,
+                  "q1": 0.9105415860735009,
+                  "q3": 0.9558239861949958,
+                  "values": [
+                    0.9014084507042254,
+                    0.9180327868852459,
+                    1.0,
+                    0.968421052631579,
+                    0.9148936170212766,
+                    0.9090909090909091
+                  ]
+                },
+                "origin_at_reach": {
+                  "n": 6,
+                  "mean": 0.6018606218465966,
+                  "median": 0.46575502571294997,
+                  "q1": 0.38866930171277997,
+                  "q3": 0.8312211981566819,
+                  "values": [
+                    0.463768115942029,
+                    0.9523809523809523,
+                    1.0,
+                    0.36363636363636365,
+                    0.36363636363636365,
+                    0.46774193548387094
+                  ]
+                },
+                "all_steps": {
+                  "n": 32,
+                  "mean": 0.590548575997917,
+                  "median": 0.5586132177681473,
+                  "q1": 0.35398230088495575,
+                  "q3": 0.9033290653008963,
+                  "values": [
+                    0.547945205479452,
+                    0.39603960396039606,
+                    0.4742268041237113,
+                    0.5538461538461539,
+                    0.44776119402985076,
+                    0.9014084507042254,
+                    0.625,
+                    0.9180327868852459,
+                    0.5633802816901409,
+                    1.0,
+                    0.9523809523809523,
+                    0.0,
+                    0.7317073170731707,
+                    0.0,
+                    0.46601941747572817,
+                    0.3404255319148936,
+                    0.35398230088495575,
+                    0.968421052631579,
+                    0.968421052631579,
+                    0.3448275862068966,
+                    0.18181818181818182,
+                    0.45714285714285713,
+                    0.9148936170212766,
+                    1.0,
+                    0.34782608695652173,
+                    0.6071428571428571,
+                    0.9090909090909091,
+                    0.8666666666666667,
+                    0.35398230088495575,
+                    0.7155963302752294,
+                    0.7155963302752294,
+                    0.273972602739726
+                  ]
+                },
+                "all_steps_scope": "전체 단계 관측값이며 오래 진행한 시도에 더 큰 가중치가 부여됩니다.",
+                "origin_scope": "해당 임계치 성공 시도마다 도달 시점 원본 대비 값 1개입니다."
+              },
+              "unique_states_at_reach": {
+                "n": 6,
+                "mean": 5.666666666666667,
+                "median": 6.0,
+                "q1": 5.0,
+                "q3": 7.0,
+                "values": [
+                  7.0,
+                  5.0,
+                  3.0,
+                  5.0,
+                  7.0,
+                  7.0
+                ]
+              },
+              "translation_steps_total": 73
+            },
+            "cpp-via-java": {
+              "P": 0.6,
+              "H": 5.777777777777778,
+              "D": 9.62962962962963,
+              "planned": 15,
+              "recorded": 15,
+              "valid": 15,
+              "success": 9,
+              "invalid": 0,
+              "incomplete": 0,
+              "categories": {
+                "success": 9,
+                "functional_failure": 5,
+                "hop_limit": 1,
+                "invalid": 0,
+                "incomplete": 0
+              },
+              "missing_reason": null,
+              "P_problem_mean": 0.6,
+              "per_problem": {
+                "IPOP_11729": {
+                  "P": 0.6,
+                  "H": 4.666666666666667,
+                  "D": 7.777777777777779,
+                  "valid": 5,
+                  "success": 3
+                },
+                "IPOP_1992": {
+                  "P": 0.4,
+                  "H": 5.0,
+                  "D": 12.5,
+                  "valid": 5,
+                  "success": 2
+                },
+                "IPOP_9663": {
+                  "P": 0.8,
+                  "H": 7.0,
+                  "D": 8.75,
+                  "valid": 5,
+                  "success": 4
+                }
+              },
+              "confirmation": {
+                "primary_successes": 9,
+                "passed": 3,
+                "failed": 6,
+                "unavailable": 0,
+                "assessable": 9,
+                "retention_rate": 0.3333333333333333,
+                "unavailable_rate": 0.0
+              },
+              "failure_reasons": {
+                "compile_error": 2,
+                "format_error": 1,
+                "hop_limit": 1,
+                "runtime_error": 2
+              },
+              "stage_pass_rates": [
+                {
+                  "phase": "discovery",
+                  "step": 1,
+                  "direction": "cpp->java",
+                  "attempts": 15,
+                  "assessable": 15,
+                  "unavailable": 0,
+                  "passed": 12,
+                  "pass_rate": 0.8
+                },
+                {
+                  "phase": "discovery",
+                  "step": 2,
+                  "direction": "java->cpp",
+                  "attempts": 12,
+                  "assessable": 12,
+                  "unavailable": 0,
+                  "passed": 11,
+                  "pass_rate": 0.9166666666666666
+                },
+                {
+                  "phase": "discovery",
+                  "step": 3,
+                  "direction": "cpp->java",
+                  "attempts": 11,
+                  "assessable": 11,
+                  "unavailable": 0,
+                  "passed": 11,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 4,
+                  "direction": "java->cpp",
+                  "attempts": 11,
+                  "assessable": 11,
+                  "unavailable": 0,
+                  "passed": 11,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 5,
+                  "direction": "cpp->java",
+                  "attempts": 11,
+                  "assessable": 11,
+                  "unavailable": 0,
+                  "passed": 9,
+                  "pass_rate": 0.8181818181818182
+                },
+                {
+                  "phase": "discovery",
+                  "step": 6,
+                  "direction": "java->cpp",
+                  "attempts": 9,
+                  "assessable": 9,
+                  "unavailable": 0,
+                  "passed": 9,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 7,
+                  "direction": "cpp->java",
+                  "attempts": 7,
+                  "assessable": 7,
+                  "unavailable": 0,
+                  "passed": 7,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 8,
+                  "direction": "java->cpp",
+                  "attempts": 7,
+                  "assessable": 7,
+                  "unavailable": 0,
+                  "passed": 7,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 9,
+                  "direction": "cpp->java",
+                  "attempts": 3,
+                  "assessable": 3,
+                  "unavailable": 0,
+                  "passed": 3,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 10,
+                  "direction": "java->cpp",
+                  "attempts": 3,
+                  "assessable": 3,
+                  "unavailable": 0,
+                  "passed": 3,
+                  "pass_rate": 1.0
+                }
+              ],
+              "call_accounting": {
+                "discovery": {
+                  "logical_requests": 89,
+                  "transport_attempts": null,
+                  "known_transport_attempts": 0,
+                  "transport_unknown_requests": 89,
+                  "retries": null,
+                  "cost_usd": 0.15000156,
+                  "known_cost_usd": 0.15000156,
+                  "scope": "관측 단계에 보존된 요청의 집계입니다. 단계 생성 전 실패한 통신과 전체 과금량은 공급자 원장을 별도로 대조해야 합니다."
+                },
+                "confirmation": {
+                  "logical_requests": 0,
+                  "transport_attempts": 0,
+                  "known_transport_attempts": 0,
+                  "transport_unknown_requests": 0,
+                  "retries": 0,
+                  "cost_usd": 0,
+                  "known_cost_usd": 0,
+                  "scope": "관측 단계에 보존된 요청의 집계입니다. 단계 생성 전 실패한 통신과 전체 과금량은 공급자 원장을 별도로 대조해야 합니다."
+                }
+              },
+              "similarities": {
+                "first_restoration": {
+                  "n": 11,
+                  "mean": 0.3386624651279421,
+                  "median": 0.35398230088495575,
+                  "q1": 0.15625,
+                  "q3": 0.5618686868686869,
+                  "values": [
+                    0.0,
+                    0.0,
+                    0.3125,
+                    0.0,
+                    0.35398230088495575,
+                    0.36363636363636365,
+                    0.35398230088495575,
+                    0.5555555555555556,
+                    0.5882352941176471,
+                    0.5681818181818182,
+                    0.6292134831460674
+                  ]
+                },
+                "adjacent_at_reach": {
+                  "n": 9,
+                  "mean": 0.998899889988999,
+                  "median": 1.0,
+                  "q1": 1.0,
+                  "q3": 1.0,
+                  "values": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.9900990099009901
+                  ]
+                },
+                "origin_at_reach": {
+                  "n": 9,
+                  "mean": 0.323593219654299,
+                  "median": 0.35398230088495575,
+                  "q1": 0.0,
+                  "q3": 0.5555555555555556,
+                  "values": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.35398230088495575,
+                    0.33613445378151263,
+                    0.5555555555555556,
+                    0.5555555555555556,
+                    0.5555555555555556,
+                    0.5555555555555556
+                  ]
+                },
+                "all_steps": {
+                  "n": 41,
+                  "mean": 0.6505984616279318,
+                  "median": 0.6407766990291263,
+                  "q1": 0.4262295081967213,
+                  "q3": 1.0,
+                  "values": [
+                    0.0,
+                    1.0,
+                    0.5797101449275363,
+                    0.0,
+                    0.6590909090909091,
+                    0.40404040404040403,
+                    0.36363636363636365,
+                    0.4262295081967213,
+                    0.3125,
+                    0.6779661016949152,
+                    1.0,
+                    0.2727272727272727,
+                    0.0,
+                    1.0,
+                    0.6,
+                    0.35398230088495575,
+                    1.0,
+                    0.36363636363636365,
+                    0.49504950495049505,
+                    1.0,
+                    1.0,
+                    0.35398230088495575,
+                    0.7692307692307693,
+                    0.5555555555555556,
+                    0.6470588235294118,
+                    1.0,
+                    1.0,
+                    0.5882352941176471,
+                    0.6530612244897959,
+                    0.6407766990291263,
+                    1.0,
+                    0.8490566037735849,
+                    0.5681818181818182,
+                    0.8316831683168316,
+                    0.6407766990291263,
+                    1.0,
+                    1.0,
+                    0.6292134831460674,
+                    0.6,
+                    0.9900990099009901,
+                    0.8490566037735849
+                  ]
+                },
+                "all_steps_scope": "전체 단계 관측값이며 오래 진행한 시도에 더 큰 가중치가 부여됩니다.",
+                "origin_scope": "해당 임계치 성공 시도마다 도달 시점 원본 대비 값 1개입니다."
+              },
+              "unique_states_at_reach": {
+                "n": 9,
+                "mean": 6.444444444444445,
+                "median": 7.0,
+                "q1": 5.0,
+                "q3": 7.0,
+                "values": [
+                  5.0,
+                  6.0,
+                  5.0,
+                  5.0,
+                  7.0,
+                  7.0,
+                  8.0,
+                  8.0,
+                  7.0
+                ]
+              },
+              "translation_steps_total": 89
+            },
+            "cpp-via-prolog": {
+              "P": 0.0,
+              "H": null,
+              "D": null,
+              "planned": 15,
+              "recorded": 15,
+              "valid": 15,
+              "success": 0,
+              "invalid": 0,
+              "incomplete": 0,
+              "categories": {
+                "success": 0,
+                "functional_failure": 15,
+                "hop_limit": 0,
+                "invalid": 0,
+                "incomplete": 0
+              },
+              "missing_reason": "no_success",
+              "P_problem_mean": 0.0,
+              "per_problem": {
+                "IPOP_11729": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                },
+                "IPOP_1992": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                },
+                "IPOP_9663": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                }
+              },
+              "confirmation": {
+                "primary_successes": 0,
+                "passed": 0,
+                "failed": 0,
+                "unavailable": 0,
+                "assessable": 0,
+                "retention_rate": null,
+                "unavailable_rate": null
+              },
+              "failure_reasons": {
+                "compile_error": 2,
+                "format_error": 5,
+                "runtime_error": 7,
+                "wrong_answer": 1
+              },
+              "stage_pass_rates": [
+                {
+                  "phase": "discovery",
+                  "step": 1,
+                  "direction": "cpp->prolog",
+                  "attempts": 15,
+                  "assessable": 15,
+                  "unavailable": 0,
+                  "passed": 3,
+                  "pass_rate": 0.2
+                },
+                {
+                  "phase": "discovery",
+                  "step": 2,
+                  "direction": "prolog->cpp",
+                  "attempts": 3,
+                  "assessable": 3,
+                  "unavailable": 0,
+                  "passed": 3,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 3,
+                  "direction": "cpp->prolog",
+                  "attempts": 3,
+                  "assessable": 3,
+                  "unavailable": 0,
+                  "passed": 3,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 4,
+                  "direction": "prolog->cpp",
+                  "attempts": 3,
+                  "assessable": 3,
+                  "unavailable": 0,
+                  "passed": 3,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 5,
+                  "direction": "cpp->prolog",
+                  "attempts": 3,
+                  "assessable": 3,
+                  "unavailable": 0,
+                  "passed": 3,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 6,
+                  "direction": "prolog->cpp",
+                  "attempts": 3,
+                  "assessable": 3,
+                  "unavailable": 0,
+                  "passed": 3,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 7,
+                  "direction": "cpp->prolog",
+                  "attempts": 3,
+                  "assessable": 3,
+                  "unavailable": 0,
+                  "passed": 1,
+                  "pass_rate": 0.3333333333333333
+                },
+                {
+                  "phase": "discovery",
+                  "step": 8,
+                  "direction": "prolog->cpp",
+                  "attempts": 1,
+                  "assessable": 1,
+                  "unavailable": 0,
+                  "passed": 1,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 9,
+                  "direction": "cpp->prolog",
+                  "attempts": 1,
+                  "assessable": 1,
+                  "unavailable": 0,
+                  "passed": 0,
+                  "pass_rate": 0.0
+                }
+              ],
+              "call_accounting": {
+                "discovery": {
+                  "logical_requests": 35,
+                  "transport_attempts": null,
+                  "known_transport_attempts": 0,
+                  "transport_unknown_requests": 35,
+                  "retries": null,
+                  "cost_usd": 0.08530836,
+                  "known_cost_usd": 0.08530836,
+                  "scope": "관측 단계에 보존된 요청의 집계입니다. 단계 생성 전 실패한 통신과 전체 과금량은 공급자 원장을 별도로 대조해야 합니다."
+                },
+                "confirmation": {
+                  "logical_requests": 0,
+                  "transport_attempts": 0,
+                  "known_transport_attempts": 0,
+                  "transport_unknown_requests": 0,
+                  "retries": 0,
+                  "cost_usd": 0,
+                  "known_cost_usd": 0,
+                  "scope": "관측 단계에 보존된 요청의 집계입니다. 단계 생성 전 실패한 통신과 전체 과금량은 공급자 원장을 별도로 대조해야 합니다."
+                }
+              },
+              "similarities": {
+                "first_restoration": {
+                  "n": 3,
+                  "mean": 0.34314911926852226,
+                  "median": 0.43243243243243246,
+                  "q1": 0.21621621621621623,
+                  "q3": 0.5147236789027834,
+                  "values": [
+                    0.5970149253731343,
+                    0.0,
+                    0.43243243243243246
+                  ]
+                },
+                "adjacent_at_reach": {
+                  "n": 0,
+                  "mean": null,
+                  "median": null,
+                  "q1": null,
+                  "q3": null,
+                  "values": []
+                },
+                "origin_at_reach": {
+                  "n": 0,
+                  "mean": null,
+                  "median": null,
+                  "q1": null,
+                  "q3": null,
+                  "values": []
+                },
+                "all_steps": {
+                  "n": 10,
+                  "mean": 0.22727977308367908,
+                  "median": 0.22638297872340424,
+                  "q1": 0.0,
+                  "q3": 0.4054383116883117,
+                  "values": [
+                    0.5970149253731343,
+                    0.0,
+                    0.2127659574468085,
+                    0.0,
+                    0.24,
+                    0.0,
+                    0.43243243243243246,
+                    0.4155844155844156,
+                    0.375,
+                    0.0
+                  ]
+                },
+                "all_steps_scope": "전체 단계 관측값이며 오래 진행한 시도에 더 큰 가중치가 부여됩니다.",
+                "origin_scope": "해당 임계치 성공 시도마다 도달 시점 원본 대비 값 1개입니다."
+              },
+              "unique_states_at_reach": {
+                "n": 0,
+                "mean": null,
+                "median": null,
+                "q1": null,
+                "q3": null,
+                "values": []
+              },
+              "translation_steps_total": 35
+            },
+            "cpp-via-python": {
+              "P": 0.5333333333333333,
+              "H": 4.5,
+              "D": 8.4375,
+              "planned": 15,
+              "recorded": 15,
+              "valid": 15,
+              "success": 8,
+              "invalid": 0,
+              "incomplete": 0,
+              "categories": {
+                "success": 8,
+                "functional_failure": 5,
+                "hop_limit": 2,
+                "invalid": 0,
+                "incomplete": 0
+              },
+              "missing_reason": null,
+              "P_problem_mean": 0.5333333333333333,
+              "per_problem": {
+                "IPOP_11729": {
+                  "P": 0.6,
+                  "H": 4.666666666666667,
+                  "D": 7.777777777777779,
+                  "valid": 5,
+                  "success": 3
+                },
+                "IPOP_1992": {
+                  "P": 1.0,
+                  "H": 4.4,
+                  "D": 4.4,
+                  "valid": 5,
+                  "success": 5
+                },
+                "IPOP_9663": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                }
+              },
+              "confirmation": {
+                "primary_successes": 8,
+                "passed": 2,
+                "failed": 6,
+                "unavailable": 0,
+                "assessable": 8,
+                "retention_rate": 0.25,
+                "unavailable_rate": 0.0
+              },
+              "failure_reasons": {
+                "hop_limit": 2,
+                "timeout": 5
+              },
+              "stage_pass_rates": [
+                {
+                  "phase": "discovery",
+                  "step": 1,
+                  "direction": "cpp->python",
+                  "attempts": 15,
+                  "assessable": 15,
+                  "unavailable": 0,
+                  "passed": 10,
+                  "pass_rate": 0.6666666666666666
+                },
+                {
+                  "phase": "discovery",
+                  "step": 2,
+                  "direction": "python->cpp",
+                  "attempts": 10,
+                  "assessable": 10,
+                  "unavailable": 0,
+                  "passed": 10,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 3,
+                  "direction": "cpp->python",
+                  "attempts": 10,
+                  "assessable": 10,
+                  "unavailable": 0,
+                  "passed": 10,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 4,
+                  "direction": "python->cpp",
+                  "attempts": 10,
+                  "assessable": 10,
+                  "unavailable": 0,
+                  "passed": 10,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 5,
+                  "direction": "cpp->python",
+                  "attempts": 9,
+                  "assessable": 9,
+                  "unavailable": 0,
+                  "passed": 8,
+                  "pass_rate": 0.8888888888888888
+                },
+                {
+                  "phase": "discovery",
+                  "step": 6,
+                  "direction": "python->cpp",
+                  "attempts": 8,
+                  "assessable": 8,
+                  "unavailable": 0,
+                  "passed": 8,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 7,
+                  "direction": "cpp->python",
+                  "attempts": 4,
+                  "assessable": 4,
+                  "unavailable": 0,
+                  "passed": 4,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 8,
+                  "direction": "python->cpp",
+                  "attempts": 4,
+                  "assessable": 4,
+                  "unavailable": 0,
+                  "passed": 4,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 9,
+                  "direction": "cpp->python",
+                  "attempts": 3,
+                  "assessable": 3,
+                  "unavailable": 0,
+                  "passed": 3,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 10,
+                  "direction": "python->cpp",
+                  "attempts": 3,
+                  "assessable": 3,
+                  "unavailable": 0,
+                  "passed": 3,
+                  "pass_rate": 1.0
+                }
+              ],
+              "call_accounting": {
+                "discovery": {
+                  "logical_requests": 76,
+                  "transport_attempts": null,
+                  "known_transport_attempts": 0,
+                  "transport_unknown_requests": 76,
+                  "retries": null,
+                  "cost_usd": 0.11106856000000001,
+                  "known_cost_usd": 0.11106856000000001,
+                  "scope": "관측 단계에 보존된 요청의 집계입니다. 단계 생성 전 실패한 통신과 전체 과금량은 공급자 원장을 별도로 대조해야 합니다."
+                },
+                "confirmation": {
+                  "logical_requests": 0,
+                  "transport_attempts": 0,
+                  "known_transport_attempts": 0,
+                  "transport_unknown_requests": 0,
+                  "retries": 0,
+                  "cost_usd": 0,
+                  "known_cost_usd": 0,
+                  "scope": "관측 단계에 보존된 요청의 집계입니다. 단계 생성 전 실패한 통신과 전체 과금량은 공급자 원장을 별도로 대조해야 합니다."
+                }
+              },
+              "similarities": {
+                "first_restoration": {
+                  "n": 10,
+                  "mean": 0.4609724623542424,
+                  "median": 0.35398230088495575,
+                  "q1": 0.3427328633568322,
+                  "q3": 0.5699177438307873,
+                  "values": [
+                    0.3055555555555556,
+                    0.5405405405405406,
+                    0.625,
+                    0.5797101449275363,
+                    0.9523809523809523,
+                    0.35398230088495575,
+                    0.35398230088495575,
+                    0.35398230088495575,
+                    0.205607476635514,
+                    0.3389830508474576
+                  ]
+                },
+                "adjacent_at_reach": {
+                  "n": 8,
+                  "mean": 0.9940476190476191,
+                  "median": 1.0,
+                  "q1": 1.0,
+                  "q3": 1.0,
+                  "values": [
+                    1.0,
+                    1.0,
+                    0.9523809523809523,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                  ]
+                },
+                "origin_at_reach": {
+                  "n": 8,
+                  "mean": 0.4508715162122401,
+                  "median": 0.35398230088495575,
+                  "q1": 0.3056391572944717,
+                  "q3": 0.5848214285714286,
+                  "values": [
+                    0.625,
+                    0.5714285714285714,
+                    0.9523809523809523,
+                    0.35398230088495575,
+                    0.35398230088495575,
+                    0.205607476635514,
+                    0.205607476635514,
+                    0.3389830508474576
+                  ]
+                },
+                "all_steps": {
+                  "n": 35,
+                  "mean": 0.6240806459323025,
+                  "median": 0.5797101449275363,
+                  "q1": 0.35398230088495575,
+                  "q3": 0.9352068696330991,
+                  "values": [
+                    0.3055555555555556,
+                    0.3225806451612903,
+                    0.0,
+                    0.5797101449275363,
+                    0.5797101449275363,
+                    0.5405405405405406,
+                    0.5333333333333333,
+                    0.34285714285714286,
+                    0.35294117647058826,
+                    0.45614035087719296,
+                    0.625,
+                    1.0,
+                    0.3764705882352941,
+                    0.5797101449275363,
+                    0.7536231884057971,
+                    0.7428571428571429,
+                    1.0,
+                    0.7428571428571429,
+                    0.9523809523809523,
+                    0.9180327868852459,
+                    0.35398230088495575,
+                    1.0,
+                    0.7572815533980582,
+                    0.35398230088495575,
+                    1.0,
+                    0.4842105263157895,
+                    0.35398230088495575,
+                    0.5652173913043478,
+                    1.0,
+                    0.7252747252747253,
+                    0.205607476635514,
+                    1.0,
+                    1.0,
+                    0.3389830508474576,
+                    1.0
+                  ]
+                },
+                "all_steps_scope": "전체 단계 관측값이며 오래 진행한 시도에 더 큰 가중치가 부여됩니다.",
+                "origin_scope": "해당 임계치 성공 시도마다 도달 시점 원본 대비 값 1개입니다."
+              },
+              "unique_states_at_reach": {
+                "n": 8,
+                "mean": 5.0,
+                "median": 5.0,
+                "q1": 3.75,
+                "q3": 5.5,
+                "values": [
+                  3.0,
+                  8.0,
+                  3.0,
+                  5.0,
+                  5.0,
+                  7.0,
+                  5.0,
+                  4.0
+                ]
+              },
+              "translation_steps_total": 76
+            }
+          },
+          "haskell_minus_controls": [
+            {
+              "control": "cpp-via-java",
+              "P": -0.19999999999999996,
+              "H": -1.1111111111111107,
+              "D": 2.0370370370370363
+            },
+            {
+              "control": "cpp-via-prolog",
+              "P": 0.4,
+              "H": null,
+              "D": null
+            },
+            {
+              "control": "cpp-via-python",
+              "P": -0.1333333333333333,
+              "H": 0.16666666666666696,
+              "D": 3.229166666666666
+            }
+          ]
+        },
+        "comparison": {
+          "problem_ids": [
+            "IPOP_2110",
+            "IPOP_2579",
+            "IPOP_5567",
+            "IPOP_10988",
+            "IPOP_1929",
+            "IPOP_2609",
+            "IPOP_9012",
+            "LC_0053",
+            "LC_0062",
+            "LC_0242",
+            "LC_0283",
+            "LC_0338"
+          ],
+          "problem_count": 12,
+          "routes": {
+            "cpp-via-haskell": {
+              "P": 0.15789473684210525,
+              "H": 6.666666666666667,
+              "D": 42.22222222222223,
+              "planned": 60,
+              "recorded": 60,
+              "valid": 57,
+              "success": 9,
+              "invalid": 3,
+              "incomplete": 0,
+              "categories": {
+                "success": 9,
+                "functional_failure": 45,
+                "hop_limit": 3,
+                "invalid": 3,
+                "incomplete": 0
+              },
+              "missing_reason": null,
+              "P_problem_mean": 0.17500000000000002,
+              "per_problem": {
+                "IPOP_2110": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                },
+                "IPOP_2579": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                },
+                "IPOP_5567": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                },
+                "IPOP_10988": {
+                  "P": 0.4,
+                  "H": 10.0,
+                  "D": 25.0,
+                  "valid": 5,
+                  "success": 2
+                },
+                "IPOP_1929": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                },
+                "IPOP_2609": {
+                  "P": 0.5,
+                  "H": 8.0,
+                  "D": 16.0,
+                  "valid": 2,
+                  "success": 1
+                },
+                "IPOP_9012": {
+                  "P": 0.2,
+                  "H": 6.0,
+                  "D": 30.0,
+                  "valid": 5,
+                  "success": 1
+                },
+                "LC_0053": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                },
+                "LC_0062": {
+                  "P": 0.4,
+                  "H": 6.0,
+                  "D": 15.0,
+                  "valid": 5,
+                  "success": 2
+                },
+                "LC_0242": {
+                  "P": 0.2,
+                  "H": 4.0,
+                  "D": 20.0,
+                  "valid": 5,
+                  "success": 1
+                },
+                "LC_0283": {
+                  "P": 0.4,
+                  "H": 5.0,
+                  "D": 12.5,
+                  "valid": 5,
+                  "success": 2
+                },
+                "LC_0338": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                }
+              },
+              "confirmation": {
+                "primary_successes": 9,
+                "passed": 1,
+                "failed": 8,
+                "unavailable": 0,
+                "assessable": 9,
+                "retention_rate": 0.1111111111111111,
+                "unavailable_rate": 0.0
+              },
+              "failure_reasons": {
+                "compile_error": 20,
+                "format_error": 13,
+                "hop_limit": 3,
+                "runtime_error": 2,
+                "similarity_unavailable": 3,
+                "wrong_answer": 10
+              },
+              "stage_pass_rates": [
+                {
+                  "phase": "discovery",
+                  "step": 1,
+                  "direction": "cpp->haskell",
+                  "attempts": 60,
+                  "assessable": 60,
+                  "unavailable": 0,
+                  "passed": 35,
+                  "pass_rate": 0.5833333333333334
+                },
+                {
+                  "phase": "discovery",
+                  "step": 2,
+                  "direction": "haskell->cpp",
+                  "attempts": 35,
+                  "assessable": 35,
+                  "unavailable": 0,
+                  "passed": 35,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 3,
+                  "direction": "cpp->haskell",
+                  "attempts": 35,
+                  "assessable": 35,
+                  "unavailable": 0,
+                  "passed": 30,
+                  "pass_rate": 0.8571428571428571
+                },
+                {
+                  "phase": "discovery",
+                  "step": 4,
+                  "direction": "haskell->cpp",
+                  "attempts": 30,
+                  "assessable": 30,
+                  "unavailable": 0,
+                  "passed": 29,
+                  "pass_rate": 0.9666666666666667
+                },
+                {
+                  "phase": "discovery",
+                  "step": 5,
+                  "direction": "cpp->haskell",
+                  "attempts": 28,
+                  "assessable": 28,
+                  "unavailable": 0,
+                  "passed": 19,
+                  "pass_rate": 0.6785714285714286
+                },
+                {
+                  "phase": "discovery",
+                  "step": 6,
+                  "direction": "haskell->cpp",
+                  "attempts": 19,
+                  "assessable": 19,
+                  "unavailable": 0,
+                  "passed": 19,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 7,
+                  "direction": "cpp->haskell",
+                  "attempts": 15,
+                  "assessable": 15,
+                  "unavailable": 0,
+                  "passed": 10,
+                  "pass_rate": 0.6666666666666666
+                },
+                {
+                  "phase": "discovery",
+                  "step": 8,
+                  "direction": "haskell->cpp",
+                  "attempts": 10,
+                  "assessable": 10,
+                  "unavailable": 0,
+                  "passed": 10,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 9,
+                  "direction": "cpp->haskell",
+                  "attempts": 8,
+                  "assessable": 8,
+                  "unavailable": 0,
+                  "passed": 6,
+                  "pass_rate": 0.75
+                },
+                {
+                  "phase": "discovery",
+                  "step": 10,
+                  "direction": "haskell->cpp",
+                  "attempts": 6,
+                  "assessable": 6,
+                  "unavailable": 0,
+                  "passed": 6,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "confirmation",
+                  "step": 11,
+                  "direction": "cpp->haskell",
+                  "attempts": 2,
+                  "assessable": 2,
+                  "unavailable": 0,
+                  "passed": 2,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "confirmation",
+                  "step": 12,
+                  "direction": "haskell->cpp",
+                  "attempts": 2,
+                  "assessable": 2,
+                  "unavailable": 0,
+                  "passed": 2,
+                  "pass_rate": 1.0
+                }
+              ],
+              "call_accounting": {
+                "discovery": {
+                  "logical_requests": 246,
+                  "transport_attempts": null,
+                  "known_transport_attempts": 0,
+                  "transport_unknown_requests": 246,
+                  "retries": null,
+                  "cost_usd": 0.3026722,
+                  "known_cost_usd": 0.3026722,
+                  "scope": "관측 단계에 보존된 요청의 집계입니다. 단계 생성 전 실패한 통신과 전체 과금량은 공급자 원장을 별도로 대조해야 합니다."
+                },
+                "confirmation": {
+                  "logical_requests": 4,
+                  "transport_attempts": null,
+                  "known_transport_attempts": 0,
+                  "transport_unknown_requests": 4,
+                  "retries": null,
+                  "cost_usd": 0.00242508,
+                  "known_cost_usd": 0.00242508,
+                  "scope": "관측 단계에 보존된 요청의 집계입니다. 단계 생성 전 실패한 통신과 전체 과금량은 공급자 원장을 별도로 대조해야 합니다."
+                }
+              },
+              "similarities": {
+                "first_restoration": {
+                  "n": 35,
+                  "mean": 0.19706465261443507,
+                  "median": 0.0,
+                  "q1": 0.0,
+                  "q3": 0.4256218905472637,
+                  "values": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.37735849056603776,
+                    0.4380952380952381,
+                    0.5909090909090909,
+                    0.0,
+                    0.5098039215686274,
+                    0.5098039215686274,
+                    0.4166666666666667,
+                    0.5909090909090909,
+                    0.36363636363636365,
+                    0.0,
+                    0.25,
+                    0.417910447761194,
+                    0.39436619718309857,
+                    0.43333333333333335,
+                    0.43333333333333335,
+                    0.49122807017543857,
+                    0.43333333333333335,
+                    0.0,
+                    0.0,
+                    0.2465753424657534,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                "adjacent_at_reach": {
+                  "n": 9,
+                  "mean": 0.9673831336622034,
+                  "median": 1.0,
+                  "q1": 0.95,
+                  "q3": 1.0,
+                  "values": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.8727272727272727,
+                    0.8837209302325582,
+                    1.0,
+                    1.0,
+                    0.95,
+                    1.0
+                  ]
+                },
+                "origin_at_reach": {
+                  "n": 9,
+                  "mean": 0.15966009299342632,
+                  "median": 0.0,
+                  "q1": 0.0,
+                  "q3": 0.4126984126984127,
+                  "values": [
+                    0.0,
+                    0.0,
+                    0.5909090909090909,
+                    0.0,
+                    0.4126984126984127,
+                    0.43333333333333335,
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                "all_steps": {
+                  "n": 98,
+                  "mean": 0.3306214875518931,
+                  "median": 0.3291139240506329,
+                  "q1": 0.0,
+                  "q3": 0.586038961038961,
+                  "values": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.6666666666666666,
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.48,
+                    0.4,
+                    0.40816326530612246,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.4032258064516129,
+                    0.46601941747572817,
+                    0.7216494845360825,
+                    0.37735849056603776,
+                    0.21568627450980393,
+                    0.4380952380952381,
+                    0.5909090909090909,
+                    0.0,
+                    0.0,
+                    1.0,
+                    1.0,
+                    0.0,
+                    0.5098039215686274,
+                    0.0,
+                    0.0,
+                    0.5098039215686274,
+                    0.5957446808510638,
+                    0.4166666666666667,
+                    0.7457627118644068,
+                    0.5909090909090909,
+                    0.36363636363636365,
+                    0.23157894736842105,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.8727272727272727,
+                    0.25,
+                    0.0,
+                    0.417910447761194,
+                    0.5423728813559322,
+                    0.47619047619047616,
+                    0.39436619718309857,
+                    0.43333333333333335,
+                    0.6666666666666666,
+                    0.43333333333333335,
+                    0.6666666666666666,
+                    0.6666666666666666,
+                    0.8837209302325582,
+                    0.49122807017543857,
+                    0.43333333333333335,
+                    1.0,
+                    0.6666666666666666,
+                    0.0,
+                    1.0,
+                    0.5714285714285714,
+                    0.0,
+                    0.7555555555555555,
+                    0.2465753424657534,
+                    0.3225806451612903,
+                    0.0,
+                    0.0,
+                    0.3561643835616438,
+                    0.3291139240506329,
+                    0.2903225806451613,
+                    0.0,
+                    0.3291139240506329,
+                    0.0,
+                    0.0,
+                    0.3870967741935484,
+                    0.0,
+                    0.0,
+                    0.95,
+                    0.7012987012987013,
+                    0.0,
+                    0.36923076923076925,
+                    1.0,
+                    0.5925925925925926,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.84,
+                    0.0,
+                    0.0,
+                    0.6885245901639344,
+                    0.0,
+                    0.24444444444444444
+                  ]
+                },
+                "all_steps_scope": "전체 단계 관측값이며 오래 진행한 시도에 더 큰 가중치가 부여됩니다.",
+                "origin_scope": "해당 임계치 성공 시도마다 도달 시점 원본 대비 값 1개입니다."
+              },
+              "unique_states_at_reach": {
+                "n": 9,
+                "mean": 7.222222222222222,
+                "median": 7.0,
+                "q1": 5.0,
+                "q3": 9.0,
+                "values": [
+                  11.0,
+                  9.0,
+                  8.0,
+                  7.0,
+                  9.0,
+                  5.0,
+                  5.0,
+                  5.0,
+                  6.0
+                ]
+              },
+              "translation_steps_total": 250
+            },
+            "cpp-via-java": {
+              "P": 0.6333333333333333,
+              "H": 5.052631578947368,
+              "D": 7.977839335180056,
+              "planned": 60,
+              "recorded": 60,
+              "valid": 60,
+              "success": 38,
+              "invalid": 0,
+              "incomplete": 0,
+              "categories": {
+                "success": 38,
+                "functional_failure": 19,
+                "hop_limit": 3,
+                "invalid": 0,
+                "incomplete": 0
+              },
+              "missing_reason": null,
+              "P_problem_mean": 0.6333333333333333,
+              "per_problem": {
+                "IPOP_2110": {
+                  "P": 0.4,
+                  "H": 4.0,
+                  "D": 10.0,
+                  "valid": 5,
+                  "success": 2
+                },
+                "IPOP_2579": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                },
+                "IPOP_5567": {
+                  "P": 0.8,
+                  "H": 2.5,
+                  "D": 3.125,
+                  "valid": 5,
+                  "success": 4
+                },
+                "IPOP_10988": {
+                  "P": 0.8,
+                  "H": 5.5,
+                  "D": 6.875,
+                  "valid": 5,
+                  "success": 4
+                },
+                "IPOP_1929": {
+                  "P": 1.0,
+                  "H": 4.4,
+                  "D": 4.4,
+                  "valid": 5,
+                  "success": 5
+                },
+                "IPOP_2609": {
+                  "P": 0.8,
+                  "H": 4.5,
+                  "D": 5.625,
+                  "valid": 5,
+                  "success": 4
+                },
+                "IPOP_9012": {
+                  "P": 0.2,
+                  "H": 8.0,
+                  "D": 40.0,
+                  "valid": 5,
+                  "success": 1
+                },
+                "LC_0053": {
+                  "P": 0.4,
+                  "H": 5.0,
+                  "D": 12.5,
+                  "valid": 5,
+                  "success": 2
+                },
+                "LC_0062": {
+                  "P": 1.0,
+                  "H": 4.0,
+                  "D": 4.0,
+                  "valid": 5,
+                  "success": 5
+                },
+                "LC_0242": {
+                  "P": 0.6,
+                  "H": 7.333333333333333,
+                  "D": 12.222222222222221,
+                  "valid": 5,
+                  "success": 3
+                },
+                "LC_0283": {
+                  "P": 0.8,
+                  "H": 5.0,
+                  "D": 6.25,
+                  "valid": 5,
+                  "success": 4
+                },
+                "LC_0338": {
+                  "P": 0.8,
+                  "H": 8.0,
+                  "D": 10.0,
+                  "valid": 5,
+                  "success": 4
+                }
+              },
+              "confirmation": {
+                "primary_successes": 38,
+                "passed": 17,
+                "failed": 21,
+                "unavailable": 0,
+                "assessable": 38,
+                "retention_rate": 0.4473684210526316,
+                "unavailable_rate": 0.0
+              },
+              "failure_reasons": {
+                "compile_error": 5,
+                "hop_limit": 3,
+                "runtime_error": 11,
+                "wrong_answer": 3
+              },
+              "stage_pass_rates": [
+                {
+                  "phase": "discovery",
+                  "step": 1,
+                  "direction": "cpp->java",
+                  "attempts": 60,
+                  "assessable": 60,
+                  "unavailable": 0,
+                  "passed": 44,
+                  "pass_rate": 0.7333333333333333
+                },
+                {
+                  "phase": "discovery",
+                  "step": 2,
+                  "direction": "java->cpp",
+                  "attempts": 44,
+                  "assessable": 44,
+                  "unavailable": 0,
+                  "passed": 44,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 3,
+                  "direction": "cpp->java",
+                  "attempts": 44,
+                  "assessable": 44,
+                  "unavailable": 0,
+                  "passed": 43,
+                  "pass_rate": 0.9772727272727273
+                },
+                {
+                  "phase": "discovery",
+                  "step": 4,
+                  "direction": "java->cpp",
+                  "attempts": 43,
+                  "assessable": 43,
+                  "unavailable": 0,
+                  "passed": 43,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 5,
+                  "direction": "cpp->java",
+                  "attempts": 41,
+                  "assessable": 41,
+                  "unavailable": 0,
+                  "passed": 36,
+                  "pass_rate": 0.8780487804878049
+                },
+                {
+                  "phase": "discovery",
+                  "step": 6,
+                  "direction": "java->cpp",
+                  "attempts": 36,
+                  "assessable": 36,
+                  "unavailable": 0,
+                  "passed": 36,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 7,
+                  "direction": "cpp->java",
+                  "attempts": 18,
+                  "assessable": 18,
+                  "unavailable": 0,
+                  "passed": 17,
+                  "pass_rate": 0.9444444444444444
+                },
+                {
+                  "phase": "discovery",
+                  "step": 8,
+                  "direction": "java->cpp",
+                  "attempts": 17,
+                  "assessable": 17,
+                  "unavailable": 0,
+                  "passed": 17,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 9,
+                  "direction": "cpp->java",
+                  "attempts": 11,
+                  "assessable": 11,
+                  "unavailable": 0,
+                  "passed": 11,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 10,
+                  "direction": "java->cpp",
+                  "attempts": 11,
+                  "assessable": 11,
+                  "unavailable": 0,
+                  "passed": 11,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "confirmation",
+                  "step": 11,
+                  "direction": "cpp->java",
+                  "attempts": 2,
+                  "assessable": 2,
+                  "unavailable": 0,
+                  "passed": 2,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "confirmation",
+                  "step": 12,
+                  "direction": "java->cpp",
+                  "attempts": 2,
+                  "assessable": 2,
+                  "unavailable": 0,
+                  "passed": 2,
+                  "pass_rate": 1.0
+                }
+              ],
+              "call_accounting": {
+                "discovery": {
+                  "logical_requests": 325,
+                  "transport_attempts": null,
+                  "known_transport_attempts": 0,
+                  "transport_unknown_requests": 325,
+                  "retries": null,
+                  "cost_usd": 0.41964996,
+                  "known_cost_usd": 0.41964996,
+                  "scope": "관측 단계에 보존된 요청의 집계입니다. 단계 생성 전 실패한 통신과 전체 과금량은 공급자 원장을 별도로 대조해야 합니다."
+                },
+                "confirmation": {
+                  "logical_requests": 4,
+                  "transport_attempts": null,
+                  "known_transport_attempts": 0,
+                  "transport_unknown_requests": 4,
+                  "retries": null,
+                  "cost_usd": 0.005208480000000001,
+                  "known_cost_usd": 0.005208480000000001,
+                  "scope": "관측 단계에 보존된 요청의 집계입니다. 단계 생성 전 실패한 통신과 전체 과금량은 공급자 원장을 별도로 대조해야 합니다."
+                }
+              },
+              "similarities": {
+                "first_restoration": {
+                  "n": 44,
+                  "mean": 0.410455562589995,
+                  "median": 0.4751222318090308,
+                  "q1": 0.2151959440942724,
+                  "q3": 0.6041459781529295,
+                  "values": [
+                    0.45901639344262296,
+                    0.68,
+                    0.0,
+                    0.6037735849056604,
+                    0.5161290322580645,
+                    0.3561643835616438,
+                    0.6052631578947368,
+                    0.0,
+                    0.6052631578947368,
+                    0.2597402597402597,
+                    0.8,
+                    0.8367346938775511,
+                    0.845360824742268,
+                    0.5909090909090909,
+                    0.6190476190476191,
+                    0.5777777777777777,
+                    0.5777777777777777,
+                    1.0,
+                    0.9397590361445783,
+                    0.8433734939759037,
+                    0.8837209302325582,
+                    0.5633802816901409,
+                    0.417910447761194,
+                    0.34285714285714286,
+                    0.34285714285714286,
+                    0.49122807017543857,
+                    0.49122807017543857,
+                    0.49122807017543857,
+                    0.49122807017543857,
+                    0.5,
+                    0.0,
+                    0.20224719101123595,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.23376623376623376,
+                    0.23376623376623376,
+                    0.21951219512195122,
+                    0.21951219512195122,
+                    0.21951219512195122,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                "adjacent_at_reach": {
+                  "n": 38,
+                  "mean": 0.9745556988502266,
+                  "median": 1.0,
+                  "q1": 0.9564179104477611,
+                  "q3": 1.0,
+                  "values": [
+                    0.96,
+                    1.0,
+                    0.9117647058823529,
+                    0.9859154929577465,
+                    0.9873417721518988,
+                    0.9873417721518988,
+                    0.9302325581395349,
+                    0.9882352941176471,
+                    0.9302325581395349,
+                    0.989247311827957,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.9397590361445783,
+                    1.0,
+                    0.8837209302325582,
+                    0.9734513274336283,
+                    0.9090909090909091,
+                    0.8518518518518519,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.9090909090909091,
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.9552238805970149,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.9523809523809523,
+                    0.9882352941176471
+                  ]
+                },
+                "origin_at_reach": {
+                  "n": 38,
+                  "mean": 0.4202167401239702,
+                  "median": 0.49122807017543857,
+                  "q1": 0.23376623376623376,
+                  "q3": 0.5777777777777777,
+                  "values": [
+                    0.5161290322580645,
+                    0.68,
+                    0.0,
+                    0.5333333333333333,
+                    0.2702702702702703,
+                    0.3561643835616438,
+                    0.2597402597402597,
+                    0.5194805194805194,
+                    0.5194805194805194,
+                    0.845360824742268,
+                    0.845360824742268,
+                    0.6190476190476191,
+                    0.6190476190476191,
+                    0.5777777777777777,
+                    0.5777777777777777,
+                    1.0,
+                    0.9397590361445783,
+                    0.8433734939759037,
+                    0.8837209302325582,
+                    0.4044943820224719,
+                    0.4,
+                    0.36363636363636365,
+                    0.49122807017543857,
+                    0.49122807017543857,
+                    0.49122807017543857,
+                    0.49122807017543857,
+                    0.49122807017543857,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.23684210526315788,
+                    0.23376623376623376,
+                    0.23376623376623376,
+                    0.23376623376623376,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                "all_steps": {
+                  "n": 153,
+                  "mean": 0.6939855664620167,
+                  "median": 0.8,
+                  "q1": 0.5,
+                  "q3": 0.9873417721518988,
+                  "values": [
+                    0.45901639344262296,
+                    0.96,
+                    0.4931506849315068,
+                    0.68,
+                    1.0,
+                    1.0,
+                    0.0,
+                    0.34782608695652173,
+                    0.8405797101449275,
+                    0.9117647058823529,
+                    0.8405797101449275,
+                    0.6037735849056604,
+                    0.5483870967741935,
+                    0.0,
+                    0.7647058823529411,
+                    0.835820895522388,
+                    0.5161290322580645,
+                    0.4931506849315068,
+                    0.9859154929577465,
+                    0.9859154929577465,
+                    0.3561643835616438,
+                    0.9873417721518988,
+                    0.5789473684210527,
+                    0.6052631578947368,
+                    0.8292682926829268,
+                    0.9873417721518988,
+                    0.7804878048780488,
+                    0.0,
+                    0.9302325581395349,
+                    0.8,
+                    0.6052631578947368,
+                    0.9882352941176471,
+                    1.0,
+                    0.2597402597402597,
+                    0.9302325581395349,
+                    0.5681818181818182,
+                    0.8,
+                    0.8367346938775511,
+                    0.989247311827957,
+                    0.845360824742268,
+                    1.0,
+                    0.989247311827957,
+                    0.5909090909090909,
+                    0.6842105263157895,
+                    1.0,
+                    1.0,
+                    0.6190476190476191,
+                    1.0,
+                    1.0,
+                    0.5777777777777777,
+                    1.0,
+                    1.0,
+                    0.5777777777777777,
+                    1.0,
+                    0.0,
+                    1.0,
+                    0.5977011494252874,
+                    0.9397590361445783,
+                    0.8333333333333334,
+                    0.8433734939759037,
+                    1.0,
+                    0.8837209302325582,
+                    0.8433734939759037,
+                    0.875,
+                    0.875,
+                    1.0,
+                    0.5633802816901409,
+                    0.3958333333333333,
+                    0.6608695652173913,
+                    0.9734513274336283,
+                    0.9734513274336283,
+                    0.417910447761194,
+                    0.9090909090909091,
+                    0.4482758620689655,
+                    0.34285714285714286,
+                    0.4482758620689655,
+                    0.34285714285714286,
+                    0.4482758620689655,
+                    0.8518518518518519,
+                    0.9411764705882353,
+                    0.49122807017543857,
+                    1.0,
+                    1.0,
+                    0.49122807017543857,
+                    1.0,
+                    1.0,
+                    0.49122807017543857,
+                    1.0,
+                    1.0,
+                    0.49122807017543857,
+                    1.0,
+                    0.8108108108108109,
+                    0.5,
+                    0.9090909090909091,
+                    1.0,
+                    0.0,
+                    0.6534653465346535,
+                    0.672566371681416,
+                    0.6181818181818182,
+                    0.6542056074766355,
+                    0.20224719101123595,
+                    0.3584905660377358,
+                    0.8141592920353983,
+                    1.0,
+                    0.8333333333333334,
+                    0.0,
+                    0.5,
+                    0.7272727272727273,
+                    0.6534653465346535,
+                    0.6181818181818182,
+                    0.0,
+                    1.0,
+                    0.9333333333333333,
+                    0.0,
+                    0.43564356435643564,
+                    0.6306306306306306,
+                    0.8235294117647058,
+                    1.0,
+                    1.0,
+                    0.23376623376623376,
+                    0.9552238805970149,
+                    0.23376623376623376,
+                    1.0,
+                    1.0,
+                    0.21951219512195122,
+                    0.5205479452054794,
+                    1.0,
+                    0.21951219512195122,
+                    0.684931506849315,
+                    1.0,
+                    1.0,
+                    0.21951219512195122,
+                    0.5277777777777778,
+                    0.0,
+                    0.6792452830188679,
+                    0.6285714285714286,
+                    1.0,
+                    0.8372093023255814,
+                    0.0,
+                    0.7719298245614035,
+                    0.6376811594202898,
+                    0.8470588235294118,
+                    1.0,
+                    0.8372093023255814,
+                    0.0,
+                    0.5230769230769231,
+                    0.7435897435897436,
+                    0.9523809523809523,
+                    0.7380952380952381,
+                    0.0,
+                    0.6376811594202898,
+                    0.9882352941176471,
+                    0.8372093023255814
+                  ]
+                },
+                "all_steps_scope": "전체 단계 관측값이며 오래 진행한 시도에 더 큰 가중치가 부여됩니다.",
+                "origin_scope": "해당 임계치 성공 시도마다 도달 시점 원본 대비 값 1개입니다."
+              },
+              "unique_states_at_reach": {
+                "n": 38,
+                "mean": 5.868421052631579,
+                "median": 5.0,
+                "q1": 5.0,
+                "q3": 7.0,
+                "values": [
+                  5.0,
+                  5.0,
+                  9.0,
+                  7.0,
+                  5.0,
+                  7.0,
+                  5.0,
+                  5.0,
+                  5.0,
+                  5.0,
+                  5.0,
+                  7.0,
+                  5.0,
+                  5.0,
+                  3.0,
+                  3.0,
+                  3.0,
+                  5.0,
+                  3.0,
+                  9.0,
+                  5.0,
+                  7.0,
+                  5.0,
+                  5.0,
+                  4.0,
+                  5.0,
+                  5.0,
+                  8.0,
+                  5.0,
+                  10.0,
+                  5.0,
+                  4.0,
+                  7.0,
+                  6.0,
+                  9.0,
+                  11.0,
+                  9.0,
+                  7.0
+                ]
+              },
+              "translation_steps_total": 329
+            },
+            "cpp-via-prolog": {
+              "P": 0.0,
+              "H": null,
+              "D": null,
+              "planned": 60,
+              "recorded": 60,
+              "valid": 60,
+              "success": 0,
+              "invalid": 0,
+              "incomplete": 0,
+              "categories": {
+                "success": 0,
+                "functional_failure": 60,
+                "hop_limit": 0,
+                "invalid": 0,
+                "incomplete": 0
+              },
+              "missing_reason": "no_success",
+              "P_problem_mean": 0.0,
+              "per_problem": {
+                "IPOP_2110": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                },
+                "IPOP_2579": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                },
+                "IPOP_5567": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                },
+                "IPOP_10988": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                },
+                "IPOP_1929": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                },
+                "IPOP_2609": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                },
+                "IPOP_9012": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                },
+                "LC_0053": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                },
+                "LC_0062": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                },
+                "LC_0242": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                },
+                "LC_0283": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                },
+                "LC_0338": {
+                  "P": 0.0,
+                  "H": null,
+                  "D": null,
+                  "valid": 5,
+                  "success": 0
+                }
+              },
+              "confirmation": {
+                "primary_successes": 0,
+                "passed": 0,
+                "failed": 0,
+                "unavailable": 0,
+                "assessable": 0,
+                "retention_rate": null,
+                "unavailable_rate": null
+              },
+              "failure_reasons": {
+                "compile_error": 9,
+                "format_error": 17,
+                "runtime_error": 23,
+                "wrong_answer": 11
+              },
+              "stage_pass_rates": [
+                {
+                  "phase": "discovery",
+                  "step": 1,
+                  "direction": "cpp->prolog",
+                  "attempts": 60,
+                  "assessable": 60,
+                  "unavailable": 0,
+                  "passed": 11,
+                  "pass_rate": 0.18333333333333332
+                },
+                {
+                  "phase": "discovery",
+                  "step": 2,
+                  "direction": "prolog->cpp",
+                  "attempts": 11,
+                  "assessable": 11,
+                  "unavailable": 0,
+                  "passed": 11,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 3,
+                  "direction": "cpp->prolog",
+                  "attempts": 11,
+                  "assessable": 11,
+                  "unavailable": 0,
+                  "passed": 5,
+                  "pass_rate": 0.45454545454545453
+                },
+                {
+                  "phase": "discovery",
+                  "step": 4,
+                  "direction": "prolog->cpp",
+                  "attempts": 5,
+                  "assessable": 5,
+                  "unavailable": 0,
+                  "passed": 5,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 5,
+                  "direction": "cpp->prolog",
+                  "attempts": 5,
+                  "assessable": 5,
+                  "unavailable": 0,
+                  "passed": 2,
+                  "pass_rate": 0.4
+                },
+                {
+                  "phase": "discovery",
+                  "step": 6,
+                  "direction": "prolog->cpp",
+                  "attempts": 2,
+                  "assessable": 2,
+                  "unavailable": 0,
+                  "passed": 2,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 7,
+                  "direction": "cpp->prolog",
+                  "attempts": 2,
+                  "assessable": 2,
+                  "unavailable": 0,
+                  "passed": 1,
+                  "pass_rate": 0.5
+                },
+                {
+                  "phase": "discovery",
+                  "step": 8,
+                  "direction": "prolog->cpp",
+                  "attempts": 1,
+                  "assessable": 1,
+                  "unavailable": 0,
+                  "passed": 1,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 9,
+                  "direction": "cpp->prolog",
+                  "attempts": 1,
+                  "assessable": 1,
+                  "unavailable": 0,
+                  "passed": 0,
+                  "pass_rate": 0.0
+                }
+              ],
+              "call_accounting": {
+                "discovery": {
+                  "logical_requests": 98,
+                  "transport_attempts": null,
+                  "known_transport_attempts": 0,
+                  "transport_unknown_requests": 98,
+                  "retries": null,
+                  "cost_usd": 0.21412504000000002,
+                  "known_cost_usd": 0.21412504000000002,
+                  "scope": "관측 단계에 보존된 요청의 집계입니다. 단계 생성 전 실패한 통신과 전체 과금량은 공급자 원장을 별도로 대조해야 합니다."
+                },
+                "confirmation": {
+                  "logical_requests": 0,
+                  "transport_attempts": 0,
+                  "known_transport_attempts": 0,
+                  "transport_unknown_requests": 0,
+                  "retries": 0,
+                  "cost_usd": 0,
+                  "known_cost_usd": 0,
+                  "scope": "관측 단계에 보존된 요청의 집계입니다. 단계 생성 전 실패한 통신과 전체 과금량은 공급자 원장을 별도로 대조해야 합니다."
+                }
+              },
+              "similarities": {
+                "first_restoration": {
+                  "n": 11,
+                  "mean": 0.10760427113444634,
+                  "median": 0.0,
+                  "q1": 0.0,
+                  "q3": 0.17391304347826086,
+                  "values": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.417910447761194,
+                    0.417910447761194,
+                    0.34782608695652173,
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                "adjacent_at_reach": {
+                  "n": 0,
+                  "mean": null,
+                  "median": null,
+                  "q1": null,
+                  "q3": null,
+                  "values": []
+                },
+                "origin_at_reach": {
+                  "n": 0,
+                  "mean": null,
+                  "median": null,
+                  "q1": null,
+                  "q3": null,
+                  "values": []
+                },
+                "all_steps": {
+                  "n": 19,
+                  "mean": 0.06229720960415314,
+                  "median": 0.0,
+                  "q1": 0.0,
+                  "q3": 0.0,
+                  "values": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.417910447761194,
+                    0.0,
+                    0.417910447761194,
+                    0.0,
+                    0.34782608695652173,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                "all_steps_scope": "전체 단계 관측값이며 오래 진행한 시도에 더 큰 가중치가 부여됩니다.",
+                "origin_scope": "해당 임계치 성공 시도마다 도달 시점 원본 대비 값 1개입니다."
+              },
+              "unique_states_at_reach": {
+                "n": 0,
+                "mean": null,
+                "median": null,
+                "q1": null,
+                "q3": null,
+                "values": []
+              },
+              "translation_steps_total": 98
+            },
+            "cpp-via-python": {
+              "P": 0.8666666666666667,
+              "H": 4.923076923076923,
+              "D": 5.680473372781065,
+              "planned": 60,
+              "recorded": 60,
+              "valid": 60,
+              "success": 52,
+              "invalid": 0,
+              "incomplete": 0,
+              "categories": {
+                "success": 52,
+                "functional_failure": 2,
+                "hop_limit": 6,
+                "invalid": 0,
+                "incomplete": 0
+              },
+              "missing_reason": null,
+              "P_problem_mean": 0.8666666666666667,
+              "per_problem": {
+                "IPOP_2110": {
+                  "P": 0.8,
+                  "H": 4.5,
+                  "D": 5.625,
+                  "valid": 5,
+                  "success": 4
+                },
+                "IPOP_2579": {
+                  "P": 1.0,
+                  "H": 5.6,
+                  "D": 5.6,
+                  "valid": 5,
+                  "success": 5
+                },
+                "IPOP_5567": {
+                  "P": 1.0,
+                  "H": 2.0,
+                  "D": 2.0,
+                  "valid": 5,
+                  "success": 5
+                },
+                "IPOP_10988": {
+                  "P": 1.0,
+                  "H": 4.8,
+                  "D": 4.8,
+                  "valid": 5,
+                  "success": 5
+                },
+                "IPOP_1929": {
+                  "P": 0.8,
+                  "H": 4.5,
+                  "D": 5.625,
+                  "valid": 5,
+                  "success": 4
+                },
+                "IPOP_2609": {
+                  "P": 1.0,
+                  "H": 4.0,
+                  "D": 4.0,
+                  "valid": 5,
+                  "success": 5
+                },
+                "IPOP_9012": {
+                  "P": 0.8,
+                  "H": 4.0,
+                  "D": 5.0,
+                  "valid": 5,
+                  "success": 4
+                },
+                "LC_0053": {
+                  "P": 0.6,
+                  "H": 8.666666666666666,
+                  "D": 14.444444444444445,
+                  "valid": 5,
+                  "success": 3
+                },
+                "LC_0062": {
+                  "P": 1.0,
+                  "H": 4.4,
+                  "D": 4.4,
+                  "valid": 5,
+                  "success": 5
+                },
+                "LC_0242": {
+                  "P": 0.6,
+                  "H": 8.0,
+                  "D": 13.333333333333334,
+                  "valid": 5,
+                  "success": 3
+                },
+                "LC_0283": {
+                  "P": 1.0,
+                  "H": 5.2,
+                  "D": 5.2,
+                  "valid": 5,
+                  "success": 5
+                },
+                "LC_0338": {
+                  "P": 0.8,
+                  "H": 6.0,
+                  "D": 7.5,
+                  "valid": 5,
+                  "success": 4
+                }
+              },
+              "confirmation": {
+                "primary_successes": 52,
+                "passed": 28,
+                "failed": 23,
+                "unavailable": 1,
+                "assessable": 51,
+                "retention_rate": 0.5490196078431373,
+                "unavailable_rate": 0.019230769230769232
+              },
+              "failure_reasons": {
+                "hop_limit": 6,
+                "wrong_answer": 2
+              },
+              "stage_pass_rates": [
+                {
+                  "phase": "discovery",
+                  "step": 1,
+                  "direction": "cpp->python",
+                  "attempts": 60,
+                  "assessable": 60,
+                  "unavailable": 0,
+                  "passed": 60,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 2,
+                  "direction": "python->cpp",
+                  "attempts": 60,
+                  "assessable": 60,
+                  "unavailable": 0,
+                  "passed": 60,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 3,
+                  "direction": "cpp->python",
+                  "attempts": 60,
+                  "assessable": 60,
+                  "unavailable": 0,
+                  "passed": 60,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 4,
+                  "direction": "python->cpp",
+                  "attempts": 60,
+                  "assessable": 60,
+                  "unavailable": 0,
+                  "passed": 59,
+                  "pass_rate": 0.9833333333333333
+                },
+                {
+                  "phase": "discovery",
+                  "step": 5,
+                  "direction": "cpp->python",
+                  "attempts": 54,
+                  "assessable": 54,
+                  "unavailable": 0,
+                  "passed": 54,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 6,
+                  "direction": "python->cpp",
+                  "attempts": 54,
+                  "assessable": 54,
+                  "unavailable": 0,
+                  "passed": 54,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 7,
+                  "direction": "cpp->python",
+                  "attempts": 26,
+                  "assessable": 26,
+                  "unavailable": 0,
+                  "passed": 26,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 8,
+                  "direction": "python->cpp",
+                  "attempts": 26,
+                  "assessable": 26,
+                  "unavailable": 0,
+                  "passed": 26,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 9,
+                  "direction": "cpp->python",
+                  "attempts": 15,
+                  "assessable": 15,
+                  "unavailable": 0,
+                  "passed": 15,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "discovery",
+                  "step": 10,
+                  "direction": "python->cpp",
+                  "attempts": 15,
+                  "assessable": 15,
+                  "unavailable": 0,
+                  "passed": 14,
+                  "pass_rate": 0.9333333333333333
+                },
+                {
+                  "phase": "confirmation",
+                  "step": 11,
+                  "direction": "cpp->python",
+                  "attempts": 3,
+                  "assessable": 3,
+                  "unavailable": 0,
+                  "passed": 3,
+                  "pass_rate": 1.0
+                },
+                {
+                  "phase": "confirmation",
+                  "step": 12,
+                  "direction": "python->cpp",
+                  "attempts": 3,
+                  "assessable": 3,
+                  "unavailable": 0,
+                  "passed": 3,
+                  "pass_rate": 1.0
+                }
+              ],
+              "call_accounting": {
+                "discovery": {
+                  "logical_requests": 430,
+                  "transport_attempts": null,
+                  "known_transport_attempts": 0,
+                  "transport_unknown_requests": 430,
+                  "retries": null,
+                  "cost_usd": 0.40493100000000004,
+                  "known_cost_usd": 0.40493100000000004,
+                  "scope": "관측 단계에 보존된 요청의 집계입니다. 단계 생성 전 실패한 통신과 전체 과금량은 공급자 원장을 별도로 대조해야 합니다."
+                },
+                "confirmation": {
+                  "logical_requests": 6,
+                  "transport_attempts": null,
+                  "known_transport_attempts": 0,
+                  "transport_unknown_requests": 6,
+                  "retries": null,
+                  "cost_usd": 0.00555864,
+                  "known_cost_usd": 0.00555864,
+                  "scope": "관측 단계에 보존된 요청의 집계입니다. 단계 생성 전 실패한 통신과 전체 과금량은 공급자 원장을 별도로 대조해야 합니다."
+                }
+              },
+              "similarities": {
+                "first_restoration": {
+                  "n": 60,
+                  "mean": 0.4064666060661498,
+                  "median": 0.43333333333333335,
+                  "q1": 0.2408739908739909,
+                  "q3": 0.5764112903225806,
+                  "values": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.3561643835616438,
+                    0.3132530120481928,
+                    0.6052631578947368,
+                    0.6052631578947368,
+                    0.575,
+                    0.7916666666666666,
+                    0.3191489361702128,
+                    0.8282828282828283,
+                    0.5806451612903226,
+                    0.7708333333333334,
+                    0.5172413793103449,
+                    0.7368421052631579,
+                    0.5172413793103449,
+                    0.5172413793103449,
+                    0.5172413793103449,
+                    0.5294117647058824,
+                    0.5294117647058824,
+                    0.5294117647058824,
+                    0.5294117647058824,
+                    0.5294117647058824,
+                    0.9302325581395349,
+                    0.9302325581395349,
+                    0.9302325581395349,
+                    0.9090909090909091,
+                    0.9302325581395349,
+                    0.2903225806451613,
+                    0.5970149253731343,
+                    0.5970149253731343,
+                    0.6060606060606061,
+                    0.5714285714285714,
+                    0.2647058823529412,
+                    0.27692307692307694,
+                    0.2647058823529412,
+                    0.38095238095238093,
+                    0.2647058823529412,
+                    0.43333333333333335,
+                    0.43333333333333335,
+                    0.49122807017543857,
+                    0.43333333333333335,
+                    0.43333333333333335,
+                    0.2647058823529412,
+                    0.0,
+                    0.4375,
+                    0.0,
+                    0.32786885245901637,
+                    0.23376623376623376,
+                    0.24324324324324326,
+                    0.23376623376623376,
+                    0.2465753424657534,
+                    0.23376623376623376,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                "adjacent_at_reach": {
+                  "n": 52,
+                  "mean": 0.9734572527432508,
+                  "median": 1.0,
+                  "q1": 0.9362618432385874,
+                  "q3": 1.0,
+                  "values": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.9052631578947369,
+                    0.9382716049382716,
+                    0.9024390243902439,
+                    0.9885057471264368,
+                    1.0,
+                    0.9111111111111111,
+                    0.989247311827957,
+                    0.9454545454545454,
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.9818181818181818,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.9302325581395349,
+                    0.9302325581395349,
+                    0.9302325581395349,
+                    0.9090909090909091,
+                    0.9302325581395349,
+                    1.0,
+                    1.0,
+                    0.9552238805970149,
+                    0.9295774647887324,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.8936170212765957,
+                    0.9253731343283582,
+                    0.8524590163934426,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.9777777777777777,
+                    0.9787234042553191,
+                    1.0,
+                    0.9148936170212766
+                  ]
+                },
+                "origin_at_reach": {
+                  "n": 52,
+                  "mean": 0.40592430108259825,
+                  "median": 0.43333333333333335,
+                  "q1": 0.24324324324324326,
+                  "q3": 0.5339009287925697,
+                  "values": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.3561643835616438,
+                    0.325,
+                    0.3561643835616438,
+                    0.3561643835616438,
+                    0.5473684210526316,
+                    0.8282828282828283,
+                    0.8282828282828283,
+                    0.35051546391752575,
+                    0.7368421052631579,
+                    0.5172413793103449,
+                    0.5172413793103449,
+                    0.5172413793103449,
+                    0.42857142857142855,
+                    0.5294117647058824,
+                    0.5294117647058824,
+                    0.5294117647058824,
+                    0.5294117647058824,
+                    0.5294117647058824,
+                    0.9302325581395349,
+                    0.9302325581395349,
+                    0.9302325581395349,
+                    0.9090909090909091,
+                    0.9302325581395349,
+                    0.5970149253731343,
+                    0.5970149253731343,
+                    0.5970149253731343,
+                    0.5970149253731343,
+                    0.2647058823529412,
+                    0.4375,
+                    0.2647058823529412,
+                    0.43333333333333335,
+                    0.43333333333333335,
+                    0.43333333333333335,
+                    0.43333333333333335,
+                    0.43333333333333335,
+                    0.0,
+                    0.4307692307692308,
+                    0.25,
+                    0.24324324324324326,
+                    0.24324324324324326,
+                    0.24324324324324326,
+                    0.0,
+                    0.23376623376623376,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                "all_steps": {
+                  "n": 215,
+                  "mean": 0.6345326993056996,
+                  "median": 0.6593406593406593,
+                  "q1": 0.41276595744680855,
+                  "q3": 0.9782505910165484,
+                  "values": [
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    1.0,
+                    0.0,
+                    0.723404255319149,
+                    1.0,
+                    1.0,
+                    0.0,
+                    1.0,
+                    1.0,
+                    0.3561643835616438,
+                    1.0,
+                    0.925,
+                    0.3132530120481928,
+                    0.9052631578947369,
+                    0.8705882352941177,
+                    0.6052631578947368,
+                    0.9382716049382716,
+                    0.6666666666666666,
+                    0.6052631578947368,
+                    0.8470588235294118,
+                    0.9024390243902439,
+                    1.0,
+                    0.575,
+                    0.6593406593406593,
+                    0.5977011494252874,
+                    0.5977011494252874,
+                    0.7916666666666666,
+                    0.8222222222222222,
+                    0.2826086956521739,
+                    0.8210526315789474,
+                    0.5376344086021505,
+                    0.3191489361702128,
+                    0.9885057471264368,
+                    0.9425287356321839,
+                    0.8282828282828283,
+                    1.0,
+                    0.8260869565217391,
+                    0.5806451612903226,
+                    0.9111111111111111,
+                    0.8602150537634409,
+                    0.7708333333333334,
+                    0.6739130434782609,
+                    0.989247311827957,
+                    0.28888888888888886,
+                    0.5172413793103449,
+                    0.4642857142857143,
+                    0.9454545454545454,
+                    0.5263157894736842,
+                    0.7368421052631579,
+                    0.5263157894736842,
+                    1.0,
+                    0.43333333333333335,
+                    0.5172413793103449,
+                    1.0,
+                    0.5263157894736842,
+                    0.5172413793103449,
+                    1.0,
+                    0.5263157894736842,
+                    0.5172413793103449,
+                    0.31746031746031744,
+                    0.0,
+                    0.9818181818181818,
+                    0.9818181818181818,
+                    0.5294117647058824,
+                    1.0,
+                    1.0,
+                    0.5294117647058824,
+                    1.0,
+                    1.0,
+                    0.5294117647058824,
+                    1.0,
+                    0.5294117647058824,
+                    1.0,
+                    0.0,
+                    0.5294117647058824,
+                    1.0,
+                    1.0,
+                    0.9302325581395349,
+                    0.8,
+                    0.9302325581395349,
+                    1.0,
+                    0.9302325581395349,
+                    1.0,
+                    0.9090909090909091,
+                    0.8941176470588236,
+                    0.9302325581395349,
+                    1.0,
+                    0.2903225806451613,
+                    0.5970149253731343,
+                    1.0,
+                    0.8918918918918919,
+                    0.5970149253731343,
+                    1.0,
+                    0.8484848484848485,
+                    0.6060606060606061,
+                    0.9552238805970149,
+                    0.782608695652174,
+                    0.5714285714285714,
+                    0.9295774647887324,
+                    0.9577464788732394,
+                    0.2647058823529412,
+                    0.8076923076923077,
+                    0.8076923076923077,
+                    1.0,
+                    0.56,
+                    0.27692307692307694,
+                    0.4,
+                    0.0,
+                    0.6382978723404256,
+                    1.0,
+                    0.6122448979591837,
+                    0.2647058823529412,
+                    0.6274509803921569,
+                    0.625,
+                    0.0,
+                    0.35714285714285715,
+                    0.38095238095238093,
+                    0.6521739130434783,
+                    0.6521739130434783,
+                    0.5714285714285714,
+                    0.6792452830188679,
+                    0.2647058823529412,
+                    0.4,
+                    0.4,
+                    1.0,
+                    0.9122807017543859,
+                    0.43333333333333335,
+                    1.0,
+                    1.0,
+                    0.43333333333333335,
+                    1.0,
+                    1.0,
+                    0.49122807017543857,
+                    0.8108108108108109,
+                    1.0,
+                    1.0,
+                    0.43333333333333335,
+                    1.0,
+                    1.0,
+                    0.43333333333333335,
+                    1.0,
+                    1.0,
+                    0.2647058823529412,
+                    0.36666666666666664,
+                    0.27692307692307694,
+                    0.7272727272727273,
+                    0.6451612903225806,
+                    0.0,
+                    0.425531914893617,
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.4375,
+                    0.7916666666666666,
+                    0.0,
+                    0.6666666666666666,
+                    0.7352941176470589,
+                    0.0,
+                    0.0,
+                    0.8936170212765957,
+                    0.5217391304347826,
+                    0.0,
+                    0.32786885245901637,
+                    0.0,
+                    0.0,
+                    0.65625,
+                    0.9253731343283582,
+                    1.0,
+                    0.23376623376623376,
+                    0.5625,
+                    0.8524590163934426,
+                    1.0,
+                    0.24324324324324326,
+                    1.0,
+                    0.8666666666666667,
+                    0.23376623376623376,
+                    0.7076923076923077,
+                    1.0,
+                    0.7076923076923077,
+                    0.2465753424657534,
+                    0.7936507936507936,
+                    1.0,
+                    0.3283582089552239,
+                    0.23376623376623376,
+                    1.0,
+                    1.0,
+                    0.0,
+                    0.9777777777777777,
+                    0.5217391304347826,
+                    0.0,
+                    0.625,
+                    0.625,
+                    0.7111111111111111,
+                    0.5217391304347826,
+                    0.0,
+                    0.5217391304347826,
+                    0.9787234042553191,
+                    0.5,
+                    0.0,
+                    1.0,
+                    0.7111111111111111,
+                    0.0,
+                    0.5,
+                    0.43636363636363634,
+                    0.35443037974683544,
+                    0.9148936170212766,
+                    0.3055555555555556
+                  ]
+                },
+                "all_steps_scope": "전체 단계 관측값이며 오래 진행한 시도에 더 큰 가중치가 부여됩니다.",
+                "origin_scope": "해당 임계치 성공 시도마다 도달 시점 원본 대비 값 1개입니다."
+              },
+              "unique_states_at_reach": {
+                "n": 52,
+                "mean": 5.576923076923077,
+                "median": 5.0,
+                "q1": 4.0,
+                "q3": 7.0,
+                "values": [
+                  6.0,
+                  5.0,
+                  4.0,
+                  7.0,
+                  4.0,
+                  4.0,
+                  5.0,
+                  5.0,
+                  7.0,
+                  5.0,
+                  5.0,
+                  5.0,
+                  7.0,
+                  7.0,
+                  6.0,
+                  5.0,
+                  5.0,
+                  9.0,
+                  4.0,
+                  4.0,
+                  5.0,
+                  4.0,
+                  4.0,
+                  3.0,
+                  3.0,
+                  3.0,
+                  3.0,
+                  3.0,
+                  5.0,
+                  5.0,
+                  4.0,
+                  5.0,
+                  8.0,
+                  10.0,
+                  8.0,
+                  5.0,
+                  5.0,
+                  7.0,
+                  5.0,
+                  5.0,
+                  8.0,
+                  7.0,
+                  11.0,
+                  6.0,
+                  5.0,
+                  6.0,
+                  7.0,
+                  5.0,
+                  5.0,
+                  7.0,
+                  4.0,
+                  10.0
+                ]
+              },
+              "translation_steps_total": 436
+            }
+          },
+          "haskell_minus_controls": [
+            {
+              "control": "cpp-via-java",
+              "P": -0.47543859649122805,
+              "H": 1.6140350877192988,
+              "D": 34.24438288704217
+            },
+            {
+              "control": "cpp-via-prolog",
+              "P": 0.15789473684210525,
+              "H": null,
+              "D": null
+            },
+            {
+              "control": "cpp-via-python",
+              "P": -0.7087719298245614,
+              "H": 1.7435897435897436,
+              "D": 36.54174884944116
+            }
+          ]
+        }
+      }
+    },
+    "reproducibility": {
+      "compared_files": [
+        "call_usage.csv",
+        "code_annotations.csv",
+        "comparisons.csv",
+        "completion_audit.json",
+        "confirmation.csv",
+        "evidence.json",
+        "failures.csv",
+        "figure_inputs.csv",
+        "model_metadata.json",
+        "observations.csv",
+        "problems.csv",
+        "recursive_groups.csv",
+        "similarities.csv",
+        "stages.csv",
+        "summary.json",
+        "thresholds.csv"
+      ],
+      "complete_by_threshold": {
+        "0.80": false,
+        "0.85": false,
+        "0.90": false
+      },
+      "csv_exactly_equal": true,
+      "excluded_from_comparison": [
+        "그림 렌더링 바이트와 PDF 비수치 메타데이터",
+        "재현 검증 결과 파일 자체"
+      ],
+      "figure_inputs_exactly_equal": true,
+      "network_disabled": true,
+      "passed": true,
+      "scope": "수치 재생성의 동일성 검증이며 자료 수집의 완전성·가설 지지와 별개입니다.",
+      "sdk_disabled": true,
+      "sha256": {
+        "call_usage.csv": "ab21f406e08f3d999e329ac52abc37bc6a9086f12244298d367d4d3a9eb5e1bd",
+        "code_annotations.csv": "cf0408c60192bbdb06cb8d280832b6969d10b3220e50b62343270b984f90ae04",
+        "comparisons.csv": "354e4df4424ab3f6ef7f87e1aadcadebcdd336bf91d4014968adedb5b9bc7ecd",
+        "completion_audit.json": "ddf185b50e58aef1fc77e3ae47c9eb8f357cf77be1b7f2cb0903fcc78414397a",
+        "confirmation.csv": "02b270b39fe6b7b3261239971b9e80b5a6f90ac28d5d00f6294783c8045bae56",
+        "evidence.json": "5bedeae86f3438e63bd47e97dd0084c9b97fb79c0a93b8d77d936d986394cea5",
+        "failures.csv": "012fba256f181deb6835242aa649eaa8f04cf0149653ad18c768b13b69c20d92",
+        "figure_inputs.csv": "bb18e3b1e5426f07c08a42f783a39849d5194a958f18aeb5f21ab5067bc81202",
+        "model_metadata.json": "9608a244a036be0a6386fda892e2fa192171f8b47d66131c06f6eceaad3ffe5c",
+        "observations.csv": "14607655d3f72000003c5cfcaa051af0b7f94e350cb9d08af2cb41e88a8b1aed",
+        "problems.csv": "8790640cc800b60fcefd347c7ce15fb2f6c9ab3349d899291498273633215e80",
+        "recursive_groups.csv": "720a730428d989fb2607ac1f2376a5aeb5b2f635d0a2c9ca558467e10a5b607b",
+        "similarities.csv": "e01227ba3374f2c8c3f72d30abc90a3a1dab647acc495089be11e84b971be471",
+        "stages.csv": "f576bff5f57e38cb8e42ac3b2e8827556a4391a6e26abf88be5a0b8193c84eb3",
+        "summary.json": "de1e4c40f5a01ac82d843d16416db80bd58b22965766b271ed6fcc96a618ab45",
+        "thresholds.csv": "c3994ddec89f5a928ac1e926d72d459a662f6cf59594f589a6f11b0fe0ef8788"
+      },
+      "subprocess_disabled": true,
+      "summary_exactly_equal": true
+    }
+  },
+  "deepseek_v4_pro": {
+    "campaign_id": "commandcode-deepseek_v4_pro-v16-20261117",
+    "campaign_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-deepseek_v4_pro-v16-20261117",
+    "generation": {
+      "max_tokens": 16384,
+      "reasoning_effort": "low"
+    },
+    "phases": {
+      "pilot": {
+        "passed": true,
+        "collection_finished": true,
+        "observation_count": 12,
+        "planned": 12,
+        "contract_hash": "c3a8248256425121a33a1e2342fc9258e6f9146eadadcc9e82877fd98ff543e6",
+        "complete_by_threshold": {
+          "0.80": true,
+          "0.85": true,
+          "0.90": true
+        },
+        "incomplete_slots": 0,
+        "errors": []
+      },
+      "main": {
+        "observation_count": 4,
+        "planned": 300,
+        "passed": false,
+        "complete_by_threshold": {}
+      }
+    },
+    "ledger": {
+      "logical_requests": 99,
+      "transport_attempts": 100,
+      "estimated_cost_usd": 0.5459288560000002,
+      "reported_cost_usd": null,
+      "unknown_cost_requests": 1,
+      "prompt_tokens": 61045,
+      "completion_tokens": 122998
+    },
+    "blocker": {
+      "at": "2026-11-17T09:37:35.465304+00:00",
+      "stage": "main",
+      "reason": "ambiguous_http_524_automatically_retried",
+      "description": "HTTP 524? ? ?? ?? ACK ? ?? ???? ?? ??? ?????? ?? ???? ???? ??? ? ????. ??? ?? ????? ???? ??????? ??????. ??? ?????? ??? ?? ??? ???? ?????.",
+      "official_source": "https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-524/",
+      "checked_date": "2026-11-17",
+      "stopped_process_id": 16572,
+      "observations_preserved": true,
+      "saved_main_observations": 4,
+      "planned_main_observations": 300,
+      "http_errors": [
+        {
+          "call_id": "8000eb404203af008081cb58606aafea1e725666e16a244ab3463121139a9302",
+          "attempt_id": "0b1334346b10407195a4553fff7e4d95",
+          "at": "2026-11-17T09:18:54.841185+00:00",
+          "http_status": 524,
+          "attempt": 1,
+          "status": "http_error",
+          "logical_request": {
+            "campaign": "commandcode-deepseek_v4_pro-v16-20261117",
+            "phase": "main",
+            "problem": "IPOP_9012",
+            "route": "cpp-via-prolog",
+            "repeat": 4,
+            "step": 3
+          }
+        }
+      ],
+      "stopped_requests": [
+        {
+          "call_id": "d193f8f645db4a17a41b779642ad89cf3e3c5e188072a6f008dd6f00f4b74d57",
+          "folder": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-deepseek_v4_pro-v16-20261117\\main\\LC_0283\\cpp-via-haskell\\attempt-03\\step-07",
+          "logical_request": {
+            "campaign": "commandcode-deepseek_v4_pro-v16-20261117",
+            "phase": "main",
+            "problem": "LC_0283",
+            "route": "cpp-via-haskell",
+            "repeat": 3,
+            "step": 7
+          },
+          "original_status": "inflight",
+          "stopped_status": "unknown",
+          "reserved_usd": 0.25,
+          "response_body_saved": false
+        }
+      ],
+      "known_response_cost_estimated_usd": 0.17457924,
+      "uncertain_transport_reserved_usd": 0.25,
+      "pending_reserved_usd": 0.25,
+      "logical_requests": 31,
+      "transport_attempts": 32
+    }
+  }
+}
+```
+
+## 실행과 한계
+
+실행 명령은 `uv run --env-file C:/Users/sigma/works/paper-lang-dist/.env --no-sync python scripts/run_commandcode_v16.py --run`입니다. 키는 하위 프로세스 메모리에만 보관하고 공급자 호출 직후 환경에서 제거하며 평가·JPlag에는 전달하지 않습니다. 진행·명령 종료 상태는 progress.jsonl과 run.log에 보관합니다. 각 본 실험의 공식 보고 디렉터리에 주 임계치 P/H/D, 민감도, 확인, 재귀군과 원자료 근거를 제공합니다.
+
+차단 사유가 있으면 해당 campaign의 blocker.json에 실제 근거를 남깁니다. 무효 슬롯을 교체하거나 실패 관측을 삭제하지 않으며 파일럿의 모든 임계치가 완전하지 않으면 본 실험을 동결하지 않습니다.

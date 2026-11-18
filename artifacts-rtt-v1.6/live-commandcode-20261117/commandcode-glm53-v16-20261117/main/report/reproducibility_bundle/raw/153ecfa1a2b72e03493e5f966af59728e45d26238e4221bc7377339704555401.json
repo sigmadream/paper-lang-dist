@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport qualified Data.IntSet as Set\nimport qualified Data.IntMap.Strict as Map\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  contents <- getContents\n  let allNums = map read (words contents) :: [Int]\n  case allNums of\n    (n:m:rest) -> do\n      let adj = foldl' addEdge (Map.empty) (pairs rest)\n          pairs (a:b:xs) = (a,b) : pairs xs\n          pairs _ = []\n          addEdge g (a,b) = Map.insertWith (++) a [b] (Map.insertWith (++) b [a] g)\n          start = Set.singleton 1\n          dist1 = Map.fromList [(1, 0)]\n          bfs = go [1] adj Map.empty\n          go [] _ d = d\n          go (c:cs) g d = go cs' g d'\n            where\n              cdist = Map.findWithDefault (-1) c d\n              nbrs = Map.findWithDefault [] c g\n              (cs', d') = foldl' step (cs, d) nbrs\n              step (q, dd) x\n                | Map.member x dd = (q, dd)\n                | otherwise = (q ++ [x], Map.insert x (cdist + 1) dd)\n          dists = bfs (Map.singleton 1 0)\n          ans = length [ v | (v, dv) <- Map.toList dists, dv == 1 || dv == 2 ]\n      print ans\n    _ -> return 0 >> print 0\n  where\n    _ = ()\n```\n\nWait — my draft above has issues. Here is the corrected version:\n\n```haskell\nmodule Main (main) where\n\nimport qualified Data.IntMap.Strict as Map\nimport qualified Data.IntSet as Set\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  contents <- getContents\n  let nums = map read (words contents) :: [Int]\n  case nums of\n    (n:m:rest) -> do\n      let edges = chunk rest\n          adj = foldl' addEdge Map.empty edges\n          addEdge g (a,b) =\n            Map.insertWith (++) a [b] (Map.insertWith (++) b [a] g)\n          chunk (a:b:xs) = (a,b) : chunk xs\n          chunk _ = []\n          dists = bfs adj\n          ans = length [ () | (v, dv) <- Map.toList dists, dv == 1 || dv == 2 ]\n      putStrLn (show ans)\n    _ -> return ()\n\nbfs :: Map.IntMap [Int] -> Map.IntMap Int\nbfs adj = go [1] (Map.singleton 1 0)\n  where\n    go [] d = d\n    go (c:cs) d =\n      let cdist = d Map.! c\n          nbrs = Map.findWithDefault [] c adj\n          (cs', d') = foldl' step (cs, d) nbrs\n          step (q, dd) x\n            | Map.member x dd = (q, dd)\n            | otherwise = (q ++ [x], Map.insert x (cdist + 1) dd)\n      in go cs' d'\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794896848,
+    "id": "29aee610-c166-47e6-b668-3c3fc4821444",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 717,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_f5050c7b86a64971b9928dbafcb76e36",
+      "trace_id": "bbc4e249aab642b792ed6e5fb327cd44"
+    },
+    "usage": {
+      "completion_tokens": 717,
+      "prompt_tokens": 696,
+      "prompt_tokens_details": {
+        "cached_tokens": 640
+      },
+      "total_tokens": 1413
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0033996000000000005,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 4.680996700015385,
+  "logical_request_id": "6388a90c3459fc7a703ddde57d5fb700a4ea72bd6fb2e03966ab0da5c071b169",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_5567\\cpp-via-haskell\\attempt-02\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T06:27:27.780739+00:00",
+  "request_id": "29aee610-c166-47e6-b668-3c3fc4821444",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```haskell\nmodule Main (main) where\n\nimport qualified Data.IntSet as Set\nimport qualified Data.IntMap.Strict as Map\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  contents <- getContents\n  let allNums = map read (words contents) :: [Int]\n  case allNums of\n    (n:m:rest) -> do\n      let adj = foldl' addEdge (Map.empty) (pairs rest)\n          pairs (a:b:xs) = (a,b) : pairs xs\n          pairs _ = []\n          addEdge g (a,b) = Map.insertWith (++) a [b] (Map.insertWith (++) b [a] g)\n          start = Set.singleton 1\n          dist1 = Map.fromList [(1, 0)]\n          bfs = go [1] adj Map.empty\n          go [] _ d = d\n          go (c:cs) g d = go cs' g d'\n            where\n              cdist = Map.findWithDefault (-1) c d\n              nbrs = Map.findWithDefault [] c g\n              (cs', d') = foldl' step (cs, d) nbrs\n              step (q, dd) x\n                | Map.member x dd = (q, dd)\n                | otherwise = (q ++ [x], Map.insert x (cdist + 1) dd)\n          dists = bfs (Map.singleton 1 0)\n          ans = length [ v | (v, dv) <- Map.toList dists, dv == 1 || dv == 2 ]\n      print ans\n    _ -> return 0 >> print 0\n  where\n    _ = ()\n```\n\nWait — my draft above has issues. Here is the corrected version:\n\n```haskell\nmodule Main (main) where\n\nimport qualified Data.IntMap.Strict as Map\nimport qualified Data.IntSet as Set\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  contents <- getContents\n  let nums = map read (words contents) :: [Int]\n  case nums of\n    (n:m:rest) -> do\n      let edges = chunk rest\n          adj = foldl' addEdge Map.empty edges\n          addEdge g (a,b) =\n            Map.insertWith (++) a [b] (Map.insertWith (++) b [a] g)\n          chunk (a:b:xs) = (a,b) : chunk xs\n          chunk _ = []\n          dists = bfs adj\n          ans = length [ () | (v, dv) <- Map.toList dists, dv == 1 || dv == 2 ]\n      putStrLn (show ans)\n    _ -> return ()\n\nbfs :: Map.IntMap [Int] -> Map.IntMap Int\nbfs adj = go [1] (Map.singleton 1 0)\n  where\n    go [] d = d\n    go (c:cs) d =\n      let cdist = d Map.! c\n          nbrs = Map.findWithDefault [] c adj\n          (cs', d') = foldl' step (cs, d) nbrs\n          step (q, dd) x\n            | Map.member x dd = (q, dd)\n            | otherwise = (q ++ [x], Map.insert x (cdist + 1) dd)\n      in go cs' d'\n```",
+  "usage": {
+    "completion_tokens": 717,
+    "prompt_tokens": 696,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 1413
+  },
+  "usage_raw": {
+    "completion_tokens": 717,
+    "prompt_tokens": 696,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 1413
+  }
+}

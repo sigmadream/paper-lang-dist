@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n#include <string>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    std::vector<int> a(n);\n    for (int i = 0; i < n; ++i) {\n        std::cin >> a[i];\n    }\n\n    int write = 0;\n    for (int read = 0; read < n; ++read) {\n        if (a[read] != 0) {\n            std::swap(a[write], a[read]);\n            ++write;\n        }\n    }\n\n    for (int i = 0; i < n; ++i) {\n        if (i > 0) std::cout << ' ';\n        std::cout << a[i];\n    }\n    std::cout << '\\n';\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 575,
+    "total_tokens": 786,
+    "completion_tokens": 211,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 7
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 575,
+    "total_tokens": 786,
+    "completion_tokens": 211,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 7
+    }
+  },
+  "cost_usd": 0.0004257,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-c7b3fa794b798daa43e8bcbb346dab4e",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-python\\attempt-01\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-c7b3fa794b798daa43e8bcbb346dab4e",
+    "object": "chat.completion",
+    "created": 1794999936,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <string>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    std::vector<int> a(n);\n    for (int i = 0; i < n; ++i) {\n        std::cin >> a[i];\n    }\n\n    int write = 0;\n    for (int read = 0; read < n; ++read) {\n        if (a[read] != 0) {\n            std::swap(a[write], a[read]);\n            ++write;\n        }\n    }\n\n    for (int i = 0; i < n; ++i) {\n        if (i > 0) std::cout << ' ';\n        std::cout << a[i];\n    }\n    std::cout << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "Need translate to C++17."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 575,
+      "total_tokens": 786,
+      "completion_tokens": 211,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 7
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.5358403000282124,
+  "received_at": "2026-11-18T11:05:37.722582+00:00",
+  "logical_request_id": "90a6c1bd4edbefeca54708e43600e6fa94b9e388eb99958126386902fded4954",
+  "execution_class": "direct_api"
+}

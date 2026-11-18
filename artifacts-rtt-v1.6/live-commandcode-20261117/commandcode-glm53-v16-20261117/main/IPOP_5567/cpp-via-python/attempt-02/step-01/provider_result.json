@@ -1,0 +1,94 @@
+{
+  "text": "```python\nimport sys\nfrom collections import deque\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    idx = 0\n    n = int(data[idx]); idx += 1\n    m = int(data[idx]); idx += 1\n    adj = [[] for _ in range(n + 1)]\n    for _ in range(m):\n        u = int(data[idx]); idx += 1\n        v = int(data[idx]); idx += 1\n        adj[u].append(v)\n        adj[v].append(u)\n    dist = [-1] * (n + 1)\n    dist[1] = 0\n    q = deque([1])\n    ans = 0\n    while q:\n        curr = q.popleft()\n        for nxt in adj[curr]:\n            if dist[nxt] == -1:\n                dist[nxt] = dist[curr] + 1\n                q.append(nxt)\n                if dist[nxt] <= 2:\n                    ans += 1\n    print(ans)\n\nmain()\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 226,
+    "prompt_tokens": 694,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 920
+  },
+  "usage_raw": {
+    "completion_tokens": 226,
+    "prompt_tokens": 694,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 920
+  },
+  "cost_usd": 0.0015282400000000002,
+  "cost_source": "estimated",
+  "request_id": "d16f5a24-fc72-47b2-9957-2be52cf0d572",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_5567\\cpp-via-python\\attempt-02\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```python\nimport sys\nfrom collections import deque\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    idx = 0\n    n = int(data[idx]); idx += 1\n    m = int(data[idx]); idx += 1\n    adj = [[] for _ in range(n + 1)]\n    for _ in range(m):\n        u = int(data[idx]); idx += 1\n        v = int(data[idx]); idx += 1\n        adj[u].append(v)\n        adj[v].append(u)\n    dist = [-1] * (n + 1)\n    dist[1] = 0\n    q = deque([1])\n    ans = 0\n    while q:\n        curr = q.popleft()\n        for nxt in adj[curr]:\n            if dist[nxt] == -1:\n                dist[nxt] = dist[curr] + 1\n                q.append(nxt)\n                if dist[nxt] <= 2:\n                    ans += 1\n    print(ans)\n\nmain()\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794900299,
+    "id": "d16f5a24-fc72-47b2-9957-2be52cf0d572",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 226,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_ac2a88250f1e4e1abf9005a741c76316",
+      "trace_id": "cde07e628c2948299c2c23e442de37bd"
+    },
+    "usage": {
+      "completion_tokens": 226,
+      "prompt_tokens": 694,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 920
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.5511116000125185,
+  "received_at": "2026-11-17T07:24:58.756756+00:00",
+  "logical_request_id": "c30e6cd0128e8306db482478aff985aa0c3db427fa39c7de58bdd75cb6510f7b",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Control.Monad (forM_, when)\nimport Control.Monad.ST (ST)\nimport Data.Array.ST (STUArray, newArray, readArray, runSTUArray, writeArray)\nimport Data.Array.Unboxed ((!))\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    case map read (words input) :: [Int] of\n        (m : n : _) ->\n            let isPrime = sieve n\n            in putStr $ unlines [show i | i <- [m .. n], isPrime ! i]\n        _ -> return ()\n\nsieve :: Int -> Data.Array.Unboxed.UArray Int Bool\nsieve n = runSTUArray $ do\n    arr <- newArray (0, n) True :: ST s (STUArray s Int Bool)\n    when (n >= 0) $ writeArray arr 0 False\n    when (n >= 1) $ writeArray arr 1 False\n    let limit = (floor (sqrt (fromIntegral n :: Double))) :: Int\n    forM_ [2 .. limit] $ \\i -> do\n        p <- readArray arr i\n        when p $ forM_ [i * i, i * i + i .. n] $ \\j ->\n            writeArray arr j False\n    return arr\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 567,
+    "total_tokens": 1644,
+    "completion_tokens": 1077,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 779
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 567,
+    "total_tokens": 1644,
+    "completion_tokens": 1077,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 779
+    }
+  },
+  "cost_usd": 0.001424868,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-b7566e4854e4592245e51bf53f5f1a32",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_1929\\cpp-via-haskell\\attempt-02\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-b7566e4854e4592245e51bf53f5f1a32",
+    "object": "chat.completion",
+    "created": 1794996847,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Control.Monad (forM_, when)\nimport Control.Monad.ST (ST)\nimport Data.Array.ST (STUArray, newArray, readArray, runSTUArray, writeArray)\nimport Data.Array.Unboxed ((!))\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    case map read (words input) :: [Int] of\n        (m : n : _) ->\n            let isPrime = sieve n\n            in putStr $ unlines [show i | i <- [m .. n], isPrime ! i]\n        _ -> return ()\n\nsieve :: Int -> Data.Array.Unboxed.UArray Int Bool\nsieve n = runSTUArray $ do\n    arr <- newArray (0, n) True :: ST s (STUArray s Int Bool)\n    when (n >= 0) $ writeArray arr 0 False\n    when (n >= 1) $ writeArray arr 1 False\n    let limit = (floor (sqrt (fromIntegral n :: Double))) :: Int\n    forM_ [2 .. limit] $ \\i -> do\n        p <- readArray arr i\n        when p $ forM_ [i * i, i * i + i .. n] $ \\j ->\n            writeArray arr j False\n    return arr\n```",
+          "reasoning_content": "We need answer exactly one fenced code block with Haskell source. Need translate preserving behavior. Need think about Haskell efficient sieve up to 1e6. Main reads two ints. Output primes in [m,n] ascending one per line. Need standard libs only. Could implement listArray sieve or mutable IOArray? Simple efficient enough. Need preserve stdin/stdout. Haskell code.\n\nWe need output exactly code block no explanation. Need consider input possibly no? Specification valid. Use interact or getContents. Need memory okay. We'll produce module Main where, main :: IO ().\n\nImplement sieve using Data.Array.ST and Data.Array.Unboxed? Standard GHC includes array package, but \"standard libraries shipped\" includes base, array maybe. To be safe use Data.Array.Unboxed (array package) is standard. Could use list-based sieve? N=1e6, list of booleans and loops. Simpler with STUArray. Need import Control.Monad, Data.Array.ST, Data.Array.Unboxed? Let's craft efficient.\n\nOption:\n\nimport Control.Monad (forM_, when)\nimport Control.Monad.ST\nimport Data.Array.ST\nimport Data.Array.Unboxed\nimport Data.List (intercalate)\n\nmain = do\n  input <- getContents\n  case map read (words input) of\n    (m:n:_) -> do\n       let primes = sieve n\n       putStr $ unlines $ map show [i | i <- [m..n], primes ! i]\n    _ -> return ()\n\nsieve :: Int -> UArray Int Bool\nsieve n = runSTUArray $ do\n  arr <- newArray (0,n) True :: ST s (STUArray s Int Bool)\n  when (n >= 0) $ writeArray arr 0 False\n  when (n >= 1) $ writeArray arr 1 False\n  let limit = floor (sqrt (fromIntegral n)) :: Int\n  forM_ [2..limit] $ \\i -> do\n     p <- readArray arr i\n     when p $ forM_ [i*i, i*i+i .. n] $ \\j -> writeArray arr j False\n  return arr\n\nNeed `runSTUArray` from Data.Array.ST maybe works. UArray bounds 0,n. n>=1. For n=1, limit 1 no loop, writes 0,1 false if n>=1. But newArray (0,n), n can be 1. If n=0 not per spec. Fine.\n\nNeed ensure compile: runSTUArray type (forall s. ST s (STUArray s i e)) -> UArray i e. import Data.Array.ST. Data.Array.Unboxed for UArray and (!) operator? Prelude doesn't include ! for UArray, import Data.Array.Unboxed ((!)). Actually Data.Array.Unboxed exports (!), UArray. Need import Data.Array.Unboxed.\n\nCould avoid sqrt type issues. `limit = (floor (sqrt (fromIntegral n :: Double))) :: Int`.\n\nPotential issue forM_ [i*i, i*i+i .. n] when i*i > n? loop i <= limit ensures i*i <= n? floor sqrt n, yes i*i <= n maybe. Good.\n\nOutput `unlines` adds trailing newline. For no primes? spec at least one. Good. Reading all words. Could use case. If input has \"3 16\\n\", map read works with Int inferred from sieve n? In pattern m:n:_: n Int. Good.\n\nNeed exactly one complete source file in fenced block. No explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 567,
+      "total_tokens": 1644,
+      "completion_tokens": 1077,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 779
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 10.013018700061366,
+  "received_at": "2026-11-18T10:14:15.847173+00:00",
+  "logical_request_id": "bed3cfc69a290e0ded34137764f0ed379abd5eca87516ff0560ac8b826e2a4ad",
+  "execution_class": "direct_api"
+}

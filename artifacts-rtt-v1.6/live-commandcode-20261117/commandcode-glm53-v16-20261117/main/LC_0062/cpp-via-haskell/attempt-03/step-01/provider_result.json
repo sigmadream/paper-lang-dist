@@ -1,0 +1,94 @@
+{
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  line <- getLine\n  let (mS, nS) = span (/= ' ') (dropWhile (== ' ') line)\n      m = read mS :: Int\n      n = read (dropWhile (== ' ') nS) :: Int\n      dp0 = replicate n 1 :: [Integer]\n      step dp = scanl1 (+) dp\n      dp = iterate step dp0 !! (m - 1)\n  print (last dp)\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 128,
+    "prompt_tokens": 591,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 719
+  },
+  "usage_raw": {
+    "completion_tokens": 128,
+    "prompt_tokens": 591,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 719
+  },
+  "cost_usd": 0.0007339600000000001,
+  "cost_source": "estimated",
+  "request_id": "6324804c-77e1-4847-b9df-434addbb8a83",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0062\\cpp-via-haskell\\attempt-03\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  line <- getLine\n  let (mS, nS) = span (/= ' ') (dropWhile (== ' ') line)\n      m = read mS :: Int\n      n = read (dropWhile (== ' ') nS) :: Int\n      dp0 = replicate n 1 :: [Integer]\n      step dp = scanl1 (+) dp\n      dp = iterate step dp0 !! (m - 1)\n  print (last dp)\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794900888,
+    "id": "6324804c-77e1-4847-b9df-434addbb8a83",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 128,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_7704ad10a2894ed0ab081f65a83969da",
+      "trace_id": "6a7d577b30af486997f92a310a0ce1e3"
+    },
+    "usage": {
+      "completion_tokens": 128,
+      "prompt_tokens": 591,
+      "prompt_tokens_details": {
+        "cached_tokens": 576
+      },
+      "total_tokens": 719
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.082545700017363,
+  "received_at": "2026-11-17T07:34:47.767026+00:00",
+  "logical_request_id": "3d0184eaaf5657bb4eb7df5d542a2b87ab99c9d2f435948cece59bbf536ebb8f",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nvoid hanoi(int n, int from, int by, int to) {\n    if (n == 1) {\n        cout << from << ' ' << to << '\\n';\n        return;\n    }\n    hanoi(n - 1, from, to, by);\n    cout << from << ' ' << to << '\\n';\n    hanoi(n - 1, by, from, to);\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int N;\n    if (!(cin >> N)) return 0;\n\n    cout << ((1LL << N) - 1) << '\\n';\n    hanoi(N, 1, 2, 3);\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer with C++17 source only in fenced code block. Need translate Prolog. Compute N read, output (1<<N)-1 and moves recursively. N<=20, 2^20-1 ~1,048,575 moves, output large. C++ use ios fast and maybe buffered. Recursion depth 20 fine, but number of calls ~2M. Use recursive function writing to ostream with sync off. Need exact output including newline. If no input do nothing. Read int N; if fail return 0. Count use 1LL << N then -1. Moves from 1 to 3 via 2.\n\nNeed ensure output order: hanoi(N,1,2,3): hanoi(N-1,from,to,by); move from->to; hanoi(N-1,by,from,to). Yes.\n\nCould optimize using string buffer to avoid ostream overhead. But 1M lines okay with sync off. Use std::cout << from << ' ' << to << '\\n'; maybe fine. Could reserve string. Simpler robust. We need only source fenced. No explanation.\n\nPotential issue count for N=20 fits int but use long long. Count = (1LL<<N)-1. Output.\n\nImplement:\n\n#include <bits/stdc++.h>\nusing namespace std;\nvoid hanoi(int n,int from,int by,int to){\n if(n==1){ cout<<from<<' '<<to<<'\\n'; return;}\n hanoi(n-1,from,to,by);\n cout<<from<<' '<<to<<'\\n';\n hanoi(n-1,by,from,to);\n}\nint main(){ios...; int N; if(!(cin>>N)) return 0; cout<<((1LL<<N)-1)<<'\\n'; hanoi(N,1,2,3); return 0;}\n\nThis preserves. Could no hard code examples. Good.\n\nNeed exactly code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794990886,
+    "id": "chatcmpl-d6d6813cb8f442014f1c9e2d0427d1c5",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 585,
+      "completion_tokens_details": {
+        "reasoning_tokens": 413
+      },
+      "prompt_tokens": 676,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1261
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0009048,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.3290812999475747,
+  "logical_request_id": "af59b215b2d32d8be1e845066a41c90a85542aa7de9756970b6da3fbca84f00f",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_11729\\cpp-via-prolog\\attempt-05\\step-08\\response_body.txt",
+  "received_at": "2026-11-18T08:34:48.586344+00:00",
+  "request_id": "chatcmpl-d6d6813cb8f442014f1c9e2d0427d1c5",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nvoid hanoi(int n, int from, int by, int to) {\n    if (n == 1) {\n        cout << from << ' ' << to << '\\n';\n        return;\n    }\n    hanoi(n - 1, from, to, by);\n    cout << from << ' ' << to << '\\n';\n    hanoi(n - 1, by, from, to);\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int N;\n    if (!(cin >> N)) return 0;\n\n    cout << ((1LL << N) - 1) << '\\n';\n    hanoi(N, 1, 2, 3);\n\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 585,
+    "completion_tokens_details": {
+      "reasoning_tokens": 413
+    },
+    "prompt_tokens": 676,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1261
+  },
+  "usage_raw": {
+    "completion_tokens": 585,
+    "completion_tokens_details": {
+      "reasoning_tokens": 413
+    },
+    "prompt_tokens": 676,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1261
+  }
+}

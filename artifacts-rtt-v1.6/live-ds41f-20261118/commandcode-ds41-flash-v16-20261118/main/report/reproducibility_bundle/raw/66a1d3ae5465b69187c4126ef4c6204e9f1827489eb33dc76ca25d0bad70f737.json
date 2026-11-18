@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case map read (words input) :: [Integer] of\n    (a:b:_) -> do\n      let g = gcd a b\n      putStrLn (show g)\n      putStrLn (show ((a `div` g) * b))\n    _ -> return ()\n```",
+          "reasoning_content": "We need answer with Haskell source only, fenced code block. Need translate preserving input output. Need main IO. Use gcd standard? Prelude gcd. Read two ints, output gcd and lcm. Careful lcm computed (a `div` g)*b. Need handle stdin. One file module Main where main :: IO (). Could use interact or getContents. Output lines.\n\nNeed return exactly one complete source file in code block no explanation. Let's craft.\n\nPotential Haskell:\n\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case map read (words input) :: [Integer] of\n    (a:b:_) -> do\n      let g = gcd a b\n      putStrLn (show g)\n      putStrLn (show ((a `div` g) * b))\n    _ -> return ()\n\nThis is fine. Could avoid type ambiguity. Specification A,B up to 10000, Int. Use Int. Need no extra output. Use `words`, `read`. If no input, return. Standard. Ensure complete. final with code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794999668,
+    "id": "chatcmpl-bb69d704262751ee82ba68e0cbbefd1f",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 313,
+      "completion_tokens_details": {
+        "reasoning_tokens": 228
+      },
+      "prompt_tokens": 488,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 801
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.000409104,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.841027699992992,
+  "logical_request_id": "3b1d1d903e91bbcf528353947b9757423369df92c29f5a78318930e1d4b4ea4f",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2609\\cpp-via-haskell\\attempt-05\\step-01\\response_body.txt",
+  "received_at": "2026-11-18T11:01:10.781619+00:00",
+  "request_id": "chatcmpl-bb69d704262751ee82ba68e0cbbefd1f",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case map read (words input) :: [Integer] of\n    (a:b:_) -> do\n      let g = gcd a b\n      putStrLn (show g)\n      putStrLn (show ((a `div` g) * b))\n    _ -> return ()\n```",
+  "usage": {
+    "completion_tokens": 313,
+    "completion_tokens_details": {
+      "reasoning_tokens": 228
+    },
+    "prompt_tokens": 488,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 801
+  },
+  "usage_raw": {
+    "completion_tokens": 313,
+    "completion_tokens_details": {
+      "reasoning_tokens": 228
+    },
+    "prompt_tokens": 488,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 801
+  }
+}

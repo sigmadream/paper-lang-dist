@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```java\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        if (line == null) return;\n\n        line = line.trim();\n        if (line.isEmpty()) return;\n\n        int n = Integer.parseInt(line);\n\n        int[] counts = new int[n + 1];\n        for (int i = 1; i <= n; ++i) {\n            counts[i] = counts[i / 2] + (i % 2);\n        }\n\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i <= n; ++i) {\n            if (i > 0) sb.append(' ');\n            sb.append(counts[i]);\n        }\n        sb.append('\\n');\n        System.out.print(sb);\n    }\n}\n```",
+          "reasoning_content": "Translate to Java 17, class Main. Need preserve stdin/stdout behavior. Read first line, trim, parse int, output counts. Edge: if no input return. Empty line return. n could be... constraints 0..100000. stoi handles leading whitespace but we trim. Just implement.\n\nOutput order: space-separated numbers, trailing newline.\n\nLet me write code.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794993423,
+    "id": "chatcmpl-194002ceeeeb65248a7877ad26424157",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 278,
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      },
+      "prompt_tokens": 623,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 901
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00048286799999999996,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.6628896999172866,
+  "logical_request_id": "58405b72cf80f07132dd48d8e0ce46ede19d5cbfaa9376c3616af261a3420449",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0338\\cpp-via-java\\attempt-05\\step-09\\response_body.txt",
+  "received_at": "2026-11-18T09:17:04.518916+00:00",
+  "request_id": "chatcmpl-194002ceeeeb65248a7877ad26424157",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```java\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        if (line == null) return;\n\n        line = line.trim();\n        if (line.isEmpty()) return;\n\n        int n = Integer.parseInt(line);\n\n        int[] counts = new int[n + 1];\n        for (int i = 1; i <= n; ++i) {\n            counts[i] = counts[i / 2] + (i % 2);\n        }\n\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i <= n; ++i) {\n            if (i > 0) sb.append(' ');\n            sb.append(counts[i]);\n        }\n        sb.append('\\n');\n        System.out.print(sb);\n    }\n}\n```",
+  "usage": {
+    "completion_tokens": 278,
+    "completion_tokens_details": {
+      "reasoning_tokens": 81
+    },
+    "prompt_tokens": 623,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 901
+  },
+  "usage_raw": {
+    "completion_tokens": 278,
+    "completion_tokens_details": {
+      "reasoning_tokens": 81
+    },
+    "prompt_tokens": 623,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 901
+  }
+}

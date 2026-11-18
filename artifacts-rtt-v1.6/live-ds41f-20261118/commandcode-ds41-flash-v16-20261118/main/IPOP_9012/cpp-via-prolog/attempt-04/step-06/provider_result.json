@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <string>\n#include <cctype>\n\nstatic std::string trim(const std::string& s) {\n    size_t start = 0;\n    while (start < s.size() && std::isspace(static_cast<unsigned char>(s[start]))) {\n        ++start;\n    }\n    size_t end = s.size();\n    while (end > start && std::isspace(static_cast<unsigned char>(s[end - 1]))) {\n        --end;\n    }\n    return s.substr(start, end - start);\n}\n\nstatic bool validParens(const std::string& s) {\n    int balance = 0;\n    for (unsigned char c : s) {\n        if (c == '(') {\n            ++balance;\n        } else if (c == ')') {\n            if (balance > 0) {\n                --balance;\n            } else {\n                return false;\n            }\n        }\n    }\n    return balance == 0;\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int T;\n    if (!(std::cin >> T)) {\n        return 0;\n    }\n    std::string dummy;\n    std::getline(std::cin, dummy);\n\n    for (int i = 0; i < T; ++i) {\n        std::string line;\n        if (!std::getline(std::cin, line)) {\n            break;\n        }\n        line = trim(line);\n        std::cout << (validParens(line) ? \"YES\" : \"NO\") << '\\n';\n    }\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 1008,
+    "total_tokens": 1920,
+    "completion_tokens": 912,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 562
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 1008,
+    "total_tokens": 1920,
+    "completion_tokens": 912,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 562
+    }
+  },
+  "cost_usd": 0.0013967999999999997,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-e2acb791a96a6deae3769fbb8aa0c4bc",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-prolog\\attempt-04\\step-06\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-e2acb791a96a6deae3769fbb8aa0c4bc",
+    "object": "chat.completion",
+    "created": 1794976952,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\n#include <cctype>\n\nstatic std::string trim(const std::string& s) {\n    size_t start = 0;\n    while (start < s.size() && std::isspace(static_cast<unsigned char>(s[start]))) {\n        ++start;\n    }\n    size_t end = s.size();\n    while (end > start && std::isspace(static_cast<unsigned char>(s[end - 1]))) {\n        --end;\n    }\n    return s.substr(start, end - start);\n}\n\nstatic bool validParens(const std::string& s) {\n    int balance = 0;\n    for (unsigned char c : s) {\n        if (c == '(') {\n            ++balance;\n        } else if (c == ')') {\n            if (balance > 0) {\n                --balance;\n            } else {\n                return false;\n            }\n        }\n    }\n    return balance == 0;\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int T;\n    if (!(std::cin >> T)) {\n        return 0;\n    }\n    std::string dummy;\n    std::getline(std::cin, dummy);\n\n    for (int i = 0; i < T; ++i) {\n        std::string line;\n        if (!std::getline(std::cin, line)) {\n            break;\n        }\n        line = trim(line);\n        std::cout << (validParens(line) ? \"YES\" : \"NO\") << '\\n';\n    }\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block with C++ translation. Need preserve behavior. Need understand source quirks. It reads first line, trims whitespace, number_string T. Then process T lines. For each line read string, trim leading/trailing spaces (space_code includes 9-13,32), valid_parens.\n\nvalid_parens: string_codes, valid_codes. It iterates codes: if '(' (40) increment; if ')' (41) if balance>0 decrement else false. Any other char ignored, not error. At end valid iff balance=0. Trimming whitespace only. For valid inputs only parentheses strings length 2..50, no internal spaces likely. Need output YES/NO.\n\nBut preserve complete stdin/stdout behavior for every valid input spec. So C++ simple. T first line. Then T lines. Need trim whitespace? Since valid input no spaces but can trim. Use getline. First line parse integer ignoring spaces. Then loop T. For each line, maybe trim leading/trailing whitespace. Then evaluate paren. Output YES if valid else NO. Potential EOF behavior not relevant.\n\nNeed be careful about example first line \"6\\n...\". Output matches.\n\nWhat about T lines may contain empty? length 2..50. Fine.\n\nNeed include standard only. main.\n\nCould implement trim with isspace? Source space_code includes \\t\\n\\v\\f\\r and space, equivalent isspace in C locale except maybe. Use std::isspace unsigned char. Need parse T from trimmed first line. If line empty? not valid. Use std::stoi? But if malformed would throw, source checks number_string. But valid input T positive integer. Use stream? We can just read T with cin >> T then ignore newline. That handles leading whitespace. But then reading lines with getline. This simpler. However if first line has leading spaces, cin >> T works. Then ignore rest of line. Then for each line getline. If there is leading spaces before T and then newline, fine. We read T then ignore until newline. Then read each string line. Need trim each line leading/trailing isspace. Then process.\n\nPotential issue if there are blank lines? Spec no. But source process reads exactly T lines; if blank line, trims to empty, valid_parens empty -> balance 0 => YES? Wait valid_parens empty: valid_codes([],0,Ok) -> Balance=:=0 true -> Ok true, so empty line would output YES. But valid inputs length 2..50. Not matter. But to preserve behavior for all valid inputs enough.\n\nNeed output exactly one code block. Done."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 1008,
+      "total_tokens": 1920,
+      "completion_tokens": 912,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 562
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 6.493900900008157,
+  "received_at": "2026-11-18T04:42:36.411544+00:00",
+  "logical_request_id": "f606e1cf12df1265526183d408d5d3f54217a3bf5c764da5f3ce7df69e4e88e6",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nimport Data.Bits\n\nmain :: IO ()\nmain = do\n  s <- getContents\n  case reads s :: [(Int, String)] of\n    [(n, _)] -> print (solve n)\n    _ -> return ()\n\nsolve :: Int -> Int\nsolve n = go 0 0 0 0\n  where\n    full = (1 `shiftL` n) - 1\n\n    go r cols d1 d2\n      | r == n = 1\n      | otherwise =\n          sum\n            [ go\n                (r + 1)\n                (cols .|. b)\n                (((d1 .|. b) `shiftL` 1) .&. full)\n                ((d2 .|. b) `shiftR` 1)\n            | b <- bitList (full .&. complement (cols .|. d1 .|. d2))\n            ]\n\nbitList :: Int -> [Int]\nbitList 0 = []\nbitList x =\n  let b = x .&. negate x\n  in b : bitList (x `xor` b)\n```",
+          "reasoning_content": "We need translate C++ to Haskell. Need preserve behavior. Simple N-Queens bitmask. Read N, output count. Haskell main.\n\nNeed be careful N<15 so Int fine. Use IORef? Better pure recursion.\n\nHaskell:\nmodule Main where\nimport Control.Monad (unless)\nimport Data.Bits\nimport Text.Read (readMaybe)\n\nmain :: IO ()\nmain = do\n  s <- getContents\n  case reads s :: [(Int,String)] of\n    [(n,_)] -> print (solve n)\n    _ -> return ()\n\nsolve n = go 0 0 0 0\n  where\n    full = (1 `shiftL` n) - 1\n    go r cols d1 d2\n      | r == n = 1\n      | otherwise = let avail = full .&. complement (cols .|. d1 .|. d2)\n                        step acc 0 = acc\n                        step acc avail = ...\nNeed loop over bits.\n\nCould use list fold:\n    go r cols d1 d2\n      | r == n = 1\n      | otherwise = sum [ go (r+1) (cols .|. b) (((d1 .|. b) `shiftL` 1) .&. full) ((d2 .|. b) `shiftR` 1) | b <- bits avail ]\nbits x = ... recursion.\n\nBut N up to 14, count ~365596? No, N=14 count 365596. Fine. Actually N-queen N=14 count 365596. Haskell fine.\n\nNeed account complement issues: use full .&. complement (cols .|. d1 .|. d2) as in C++ full & ~(...). Since full bounded, safe.\n\nCould write bits function.\n\nPotential performance okay.\n\nNeed no explanation, one fenced code block.\n\nLet's craft:\n\nmodule Main where\nimport Data.Bits\n\nmain :: IO ()\nmain = do\n  s <- getContents\n  case reads s :: [(Int, String)] of\n    [(n, _)] -> print (solve n)\n    _ -> return ()\n\nsolve :: Int -> Int\nsolve n = go 0 0 0 0\n  where\n    full = (1 `shiftL` n) - 1\n    go r cols d1 d2\n      | r == n = 1\n      | otherwise = sum [ go (r + 1) (cols .|. b)\n                             (((d1 .|. b) `shiftL` 1) .&. full)\n                             ((d2 .|. b) `shiftR` 1)\n                        | b <- bitList (full .&. complement (cols .|. d1 .|. d2))\n                      ]\n\nbitList :: Int -> [Int]\nbitList 0 = []\nbitList x = let b = x .&. negate x in b : bitList (x `xor` b)\n\nCheck `negate x` for Int is two's complement. `x .&. negate x` gives lowest set bit. Fine. `xor` imported.\n\nAlternatively Data.Bits includes (.&.), (.|.), xor, complement, shiftL, shiftR. `negate` from Prelude.\n\nNeed `reads` with s containing \"8\\n\" -> [(8,\"\\n\")] yes.\n\nOne subtlety: Haskell Int on 64-bit. N<15 fine.\n\nNeed maybe handle EOF empty. Fine.\n\nFinal only code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794996104,
+    "id": "chatcmpl-9d468ca173758691ed98aef558a8aca0",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 991,
+      "completion_tokens_details": {
+        "reasoning_tokens": 744
+      },
+      "prompt_tokens": 590,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1581
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0013662000000000001,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 8.150458000018261,
+  "logical_request_id": "849ce8e2cb6273f80ee24605389b6c0c8fae408f713226c1d4368f77e1ea906f",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9663\\cpp-via-haskell\\attempt-02\\step-03\\response_body.txt",
+  "received_at": "2026-11-18T10:01:51.057497+00:00",
+  "request_id": "chatcmpl-9d468ca173758691ed98aef558a8aca0",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nimport Data.Bits\n\nmain :: IO ()\nmain = do\n  s <- getContents\n  case reads s :: [(Int, String)] of\n    [(n, _)] -> print (solve n)\n    _ -> return ()\n\nsolve :: Int -> Int\nsolve n = go 0 0 0 0\n  where\n    full = (1 `shiftL` n) - 1\n\n    go r cols d1 d2\n      | r == n = 1\n      | otherwise =\n          sum\n            [ go\n                (r + 1)\n                (cols .|. b)\n                (((d1 .|. b) `shiftL` 1) .&. full)\n                ((d2 .|. b) `shiftR` 1)\n            | b <- bitList (full .&. complement (cols .|. d1 .|. d2))\n            ]\n\nbitList :: Int -> [Int]\nbitList 0 = []\nbitList x =\n  let b = x .&. negate x\n  in b : bitList (x `xor` b)\n```",
+  "usage": {
+    "completion_tokens": 991,
+    "completion_tokens_details": {
+      "reasoning_tokens": 744
+    },
+    "prompt_tokens": 590,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1581
+  },
+  "usage_raw": {
+    "completion_tokens": 991,
+    "completion_tokens_details": {
+      "reasoning_tokens": 744
+    },
+    "prompt_tokens": 590,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1581
+  }
+}

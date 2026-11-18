@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```prolog\nmain :-\n    read_string(user_input, end_of_file, Input),\n    split_string(Input, \" \\n\\r\\t\", \" \\n\\r\\t\", Tokens),\n    ( Tokens = [] -> true\n    ; Tokens = [NTok | RestTokens],\n      token_to_int(NTok, N),\n      take(N, RestTokens, ValueTokens),\n      maplist(token_to_int, ValueTokens, Values),\n      Values = [First | Rest],\n      kadane(Rest, First, First, Best),\n      format(\"~d~n\", [Best])\n    ).\n\ntoken_to_int(Token, Number) :-\n    number_string(Number, Token).\n\ntake(0, _, []) :- !.\ntake(N, [X | Xs], [X | Ys]) :-\n    N > 0,\n    N1 is N - 1,\n    take(N1, Xs, Ys).\n\nkadane([], _, Best, Best).\nkadane([X | Xs], Current, Best, Final) :-\n    Current1 is max(X, Current + X),\n    Best1 is max(Best, Current1),\n    kadane(Xs, Current1, Best1, Final).\n```",
+          "reasoning_content": "We need answer exactly one fenced code block, Prolog source. Need translate C++ to SWI-Prolog main/0. Preserve stdin stdout. Need think about Prolog I/O parsing tokens. Need read all input? Specification first N then N ints. Need output max subarray. Need use standard SWI. main/0. No initialization directives. Need one complete source file in fenced block. We need ensure behavior. In SWI, read integers from stdin. Could use read_line_to_string? Simpler: read whole input using read_string(user_input, _, S) maybe SWI has read_string/3? Yes SWI-Prolog read_string/3? It reads at most length from stream. There is read_string(+Stream, +Length, -String) where Length can be end_of_file? Hmm SWI has read_string/3: read_string(Stream, Length, String), Length integer or end_of_file? To read all, use read_string(user_input, _, String) with `_`? I think read_string/3 requires length integer or `end_of_file`? Let's recall SWI-Prolog: read_string(+Stream, +Length, -String). Length can be integer, or `end_of_file`? Actually there is read_string/3 with length \"end_of_file\" to read to end? I use `read_string(user_input, _, String)`? Hmm no. There is `read_string(user_input, \"\", \"\\n\", _, String)` in older? Let's avoid complexities.\n\nUse `read_line_to_string(user_input, Line)` to read N line then second line, parse split. Need handle if values across lines? Spec says next line N integers, but robust can parse all tokens. Could read all tokens using `read_token`? SWI `read_token/2`? There's `read_term` etc. We can use `read_line_to_string` to get lines, split by whitespace. Or use `read(Term)` repeatedly for integers; if input is whitespace separated, `read(N)` reads integer? In Prolog, `read/1` reads a term, e.g., `-2` parsed as number? Yes. The first line 9. Then `read(X)` reads integers. But `read/1` expects full term ending with period. The input does not have periods, so not work. `read_term` same. Need tokenizer.\n\nCould use `library(readutil)` with `read_line_to_codes/2` or `read_line_to_string/2`. Need parse. N line then values line. But robust: read all lines, collect integer tokens. We can read all chars? Use `read_string`? Let's determine SWI-Prolog read_string. SWI has `read_string/3` from library? Actually built-in read_string/3: read_string(Stream, Length, String). Length can be integer, or `end_of_file`? Manual: read_string(+Stream, ?Length, -String) Read a string of at most Length characters. If Length is `end_of_file`, reads to end. There is also read_string/5. I recall examples: `read_string(user_input, \"\\n\", \"\\r\", _, String)` is read_line_to_string? Hmm maybe in SWI, `read_string(Stream, Len, String)` with Len = `end_of_file`. Let's check memory: SWI-Prolog built-in `read_string/3` is \"Read a string from Stream. Length is the number of characters to read, or the atom `end_of_file` to read to the end. The resulting string is a list of character codes? Actually SWI strings are atomic string objects.\" Example: `read_string(user, 5, S).` yes. `read_string(user, _, S)` probably invalid. Could use `read_string(user_input, end_of_file, S)`? I have used `read_string(current_input, _, String)` in many coding? Wait in SWI, `read_string/3` signature: `read_string(+Stream, +Len, -String)` where Len is integer or `end_of_file`. So use `read_string(user_input, end_of_file, S)`? That reads all remaining. Then parse string by split on whitespace. Need convert numeric tokens.\n\nCould use `atomic_list_concat`? To split string into tokens, use `split_string(String, \" \\n\\r\\t\", \" \\n\\r\\t\", Tokens)` where Tokens are strings? `split_string/4`: split_string(+String, +SepChars, +PadChars, -SubStrings). SubStrings list of strings. Then `maplist(number_string, Nums, Tokens)`? `number_string/2` can parse string to number? In SWI yes number_string(?Number, ?String) bidirectional. For Tokens as strings. Then first N and rest. Need handle empty input. But given valid.\n\nAlternative use `read_line_to_string` twice and split. But robust to line wrapping.\n\nLet's recall SWI's `split_string/4` available by default? Yes.\n\nNeed define main/0. Need avoid printing extra. Could do:\n:- use_module(library(readutil)). % But \"standard libraries shipped\". This is okay. But do we need? For read_string built-in maybe no import. split_string built-in. `number_string` built-in.\n\nmain :-\n    read_string(user_input, end_of_file, Input),\n    split_string(Input, \" \\n\\r\\t\", \" \\n\\r\\t\", Tokens0),\n    ( Tokens0 = [] -> true ; ... ).\n\nBut if Input empty, read_string maybe throws? valid non-empty.\n\nNeed parse first token as N and values. Since we can ignore N or use to take first N values. `atom_to_term`? number_string. Tokens are strings. `number_string(N, T0)` for first. But if T0 string \"9\". Then Values strings. Use `maplist(number_string, Values, Rest)` maybe. Wait number_string(N, T) works if T is string. Need ensure. In SWI, `number_string(9, \"9\")` true? I think yes. If not, use `atom_number`. `number_string/2` is ISO? SWI has `number_string/2`. `atom_number/2` accepts atom. Could use `atom_string(A, T), atom_number(A, N)`. More compatible? SWI has atom_string/2. Use `maplist(token_to_int, Tokens, Nums)`. token_to_int(S, N) :- atom_string(A, S), atom_number(A, N). But if S is string. `atom_string(A, \"9\")` yields A='9'. then atom_number('9', 9). Good. Or use `number_string(N, S)`.\n\nThen first N and list of values. We can ignore N and process all remaining values; if N=0 not allowed. Need max subarray. Use Kadane.\n\nProlog implementation:\nmax_subarray([X|Xs], Best) :-\n    Current0 = X,\n    Best0 = X,\n    max_subarray_loop(Xs, Current0, Best0, Best).\n\nmax_subarray_loop([], _, Best, Best).\nmax_subarray_loop([X|Xs], Cur, Best, Final) :-\n    Cur1 is max(X, Cur + X),\n    Best1 is max(Best, Cur1),\n    max_subarray_loop(Xs, Cur1, Best1, Final).\n\nNeed handle list nonempty. If N=1 works.\n\nParsing:\nmain :-\n    read_string(user_input, end_of_file, Input),\n    split_string(Input, \" \\n\\r\\t\", \" \\n\\r\\t\", Tokens),\n    Tokens = [NTok|ValueTokens],\n    token_to_int(NTok, N),\n    length(ValueTokens, L),\n    ( L > N -> length(Vals, N), append(Vals, _, ValueTokens) ; Vals = ValueTokens ), % to respect N? Maybe if extra tokens? valid. But careful `length(Vals,N)` and append with ValueTokens. We can just take N using `take_first(N, ValueTokens, Vals)`. But no need if valid. Still preserve N. Implement `take(N, List, Prefix)`. But if N valid. Use in code? Simpler parse all values after N; if exactly N. If there are extra, ignore? Spec no extra. Could process all rest; if extra invalid. Fine.\n    maplist(token_to_int, ValueTokens, Values),\n    Values = [First|Rest],\n    max_subarray(Rest, First, First, Best),\n    format(\"~d~n\", [Best]).\nNeed define loop with first. Or use max_subarray(Values, Best).\n\nPotential issue with `max/2` arithmetic function? In Prolog, `max(X, Y)` evaluates via arithmetic? In SWI, `max/2` is arithmetic function, yes can use `X1 is max(A,B)`. Good.\n\nNeed token_to_int. Using number_string:\ntoken_to_int(Token, N) :- number_string(N, Token). Is Token string. I think works. But maybe number_string/2 expects string or number, but token can be string. Let's verify mentally: SWI `number_string(Number, String)` \"True if String is the representation of Number\". It accepts string. Yes.\n\nPotential issue: `read_string(user_input, end_of_file, Input)` may require length `end_of_file`? Let's ensure. SWI-Prolog `read_string/3`: \"read_string(+Stream, +Length, -String) Read a string of at most Length characters from Stream. If Length is end_of_file, read to the end.\" I think yes. Example in SWI docs: read_string(Stream, 100, String). Also `read_string(user_input, _, String)`? Wait I recall there is a common idiom in SWI: `read_string(user_input, _, S)` to read all? Hmm no, underscore as length might mean \"read until newline\"? Let's not rely. Use `read_line_to_string` from library(readutil) repeatedly to read all lines, concatenate. That is definitely in SWI. Since standard library shipped. Could implement read_all_lines:\n:- use_module(library(readutil)).\nread_all_lines(Codes) ... but read_line_to_string returns string or end_of_file. \nread_all([], \"\")? Let's write:\nread_all(Acc, Final) :-\n    read_line_to_string(user_input, Line),\n    ( Line == end_of_file -> Final = Acc\n    ; atom_concat(Acc, Line, Acc2),\n      atom_concat(Acc2, \"\\n\", Acc3),\n      read_all(Acc3, Final)\n    ).\nBut Line is string, `atom_concat` works with strings? In SWI, `atom_concat/3` accepts atoms; strings maybe coerced? Better use `string_concat/3`. SWI has `string_concat/3`. Or accumulate list of strings and use `atomics_to_string/2`. `read_line_to_string` returns string. Use `atomics_to_string([Line|Lines], \"\\n\", String)`? SWI has atomics_to_string/3? Actually `atomics_to_string(List, Separator, String)`. But simpler: use `read_string` if confident.\n\nLet's confirm SWI built-ins. I have used in Prolog solutions:\nmain :-\n    read_file_to_string('/dev/stdin', S, []),\n...\nBut cannot assume filesystem? /dev/stdin may exist on Linux. But better standard.\n\nCould use `current_input(Stream), read_string(Stream, _, String)`? Hmm.\n\nLet's recall exact SWI `read_string/3`: From SWI manual: `read_string(+Stream, +Length, -String)` where Length is an integer number of characters or the atom `end_of_file`. \"If Length is end_of_file, read the entire stream into a string.\" I think correct. Use that. Then `split_string/4`. Need import? built-in.\n\nNeed ensure output ordering/format: single integer newline.\n\nNeed no initialization directives. `:- use_module` is a directive, but allowed? Problem says \"do not add initialization directives.\" `use_module` is not initialization, it's import. But perhaps avoid any directive. We can avoid use_module if read_string built-in. `read_string` is built-in? Yes. `split_string` built-in. `number_string` built-in. So no directives. Define main/0 only plus helper predicates.\n\nNeed \"Return exactly one complete source file in one fenced code block, with no explanation.\" So final only code block. Need ensure code compiles. Let's formulate.\n\n```\nmain :-\n    read_string(user_input, end_of_file, Input),\n    split_string(Input, \" \\n\\r\\t\", \" \\n\\r\\t\", Tokens),\n    ( Tokens = [] -> true\n    ; Tokens = [NTok | RestTokens],\n      token_to_int(NTok, N),\n      take(N, RestTokens, ValueTokens),\n      maplist(token_to_int, ValueTokens, Values),\n      Values = [First|Rest],\n      kadane(Rest, First, First, Best),\n      format(\"~d~n\", [Best])\n    ).\n\ntoken_to_int(Token, Number) :-\n    number_string(Number, Token).\n\ntake(0, _, []) :- !.\ntake(N, [X|Xs], [X|Ys]) :-\n    N > 0,\n    N1 is N - 1,\n    take(N1, Xs, Ys).\n\nkadane([], _, Best, Best).\nkadane([X|Xs], Current, Best, Final) :-\n    Current1 is max(X, Current + X),\n    Best1 is max(Best, Current1),\n    kadane(Xs, Current1, Best1, Final).\n```\n\nNeed if Tokens empty output? valid input. If empty, true without output maybe. But valid. Could omit empty. However, if `N` maybe first token. `take(N, RestTokens, ValueTokens)`: If N greater than length, fails. Valid. If N exactly. Good.\n\nPotential issue `number_string(Number, Token)` with Token strings. Let's verify. If Token is string \"9\", number_string(9, \"9\") should work. For negative \"-2\", works.\n\nPotential issue `read_string(user_input, end_of_file, Input)` might produce a string, but in Prolog strings are represented as list of codes? In SWI, double quoted are strings by default, but read_string returns a string object. `split_string` accepts string. `number_string` second argument can be string. Good.\n\nPotential issue with `split_string(Input, \" \\n\\r\\t\", \" \\n\\r\\t\", Tokens)`: second and third args are strings of separator and pad chars. Correct.\n\nPotential issue `take(0, _, []) :- !.` and N maybe 0 not allowed. fine.\n\nNeed consider max subarray with first. If Values list nonempty. If N=1, Rest=[], kadane([], First, First, Best), Best=First. Good.\n\nCould simplify ignore N: process RestTokens all. But using N good.\n\nNeed check Prolog arithmetic `max` with negative works. `Current + X` evaluated. `max(X, Current + X)` as arithmetic function. In SWI, `max/2` is arithmetic. yes.\n\nNeed maybe use `Current1 is max(X, Current + X)`. If X and Current are integers, okay. `Best1 is max(Best, Current1)`. okay.\n\nNeed no extra output. format outputs newline.\n\nNow final code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794984001,
+    "id": "chatcmpl-28628fd88688468915823b3163d1467b",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 3615,
+      "completion_tokens_details": {
+        "reasoning_tokens": 3352
+      },
+      "prompt_tokens": 590,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 4205
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.004515,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 29.922373699955642,
+  "logical_request_id": "6233efab2391881331e29f1a3d549453a8d0f3d8c8f6663f89d66f4299d3f1de",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-prolog\\attempt-05\\step-03\\response_body.txt",
+  "received_at": "2026-11-18T06:40:28.198375+00:00",
+  "request_id": "chatcmpl-28628fd88688468915823b3163d1467b",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```prolog\nmain :-\n    read_string(user_input, end_of_file, Input),\n    split_string(Input, \" \\n\\r\\t\", \" \\n\\r\\t\", Tokens),\n    ( Tokens = [] -> true\n    ; Tokens = [NTok | RestTokens],\n      token_to_int(NTok, N),\n      take(N, RestTokens, ValueTokens),\n      maplist(token_to_int, ValueTokens, Values),\n      Values = [First | Rest],\n      kadane(Rest, First, First, Best),\n      format(\"~d~n\", [Best])\n    ).\n\ntoken_to_int(Token, Number) :-\n    number_string(Number, Token).\n\ntake(0, _, []) :- !.\ntake(N, [X | Xs], [X | Ys]) :-\n    N > 0,\n    N1 is N - 1,\n    take(N1, Xs, Ys).\n\nkadane([], _, Best, Best).\nkadane([X | Xs], Current, Best, Final) :-\n    Current1 is max(X, Current + X),\n    Best1 is max(Best, Current1),\n    kadane(Xs, Current1, Best1, Final).\n```",
+  "usage": {
+    "completion_tokens": 3615,
+    "completion_tokens_details": {
+      "reasoning_tokens": 3352
+    },
+    "prompt_tokens": 590,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 4205
+  },
+  "usage_raw": {
+    "completion_tokens": 3615,
+    "completion_tokens_details": {
+      "reasoning_tokens": 3352
+    },
+    "prompt_tokens": 590,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 4205
+  }
+}

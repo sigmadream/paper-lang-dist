@@ -1,0 +1,249 @@
+{
+  "source": "import sys\n\ndef main():\n    data = sys.stdin.read().split()\n    if len(data) < 2:\n        return\n    m, n = map(int, data[:2])\n\n    dp = [1] * n\n    for _ in range(1, m):\n        for j in range(1, n):\n            dp[j] += dp[j - 1]\n\n    print(dp[-1])\n\nif __name__ == \"__main__\":\n    main()",
+  "evaluation_status": "success",
+  "sym_adj": null,
+  "sym_origin": null,
+  "sym_status": null,
+  "timing": {
+    "elapsed_seconds": 17.14057980000507,
+    "confirmation_seconds": 0,
+    "checkpoint_monotonic": 588656.1625199,
+    "active_kind": "discovery",
+    "stage": "evaluation",
+    "deadline_reason": null
+  },
+  "deadline_reason": null,
+  "accepted_within_deadline": true,
+  "source_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-01\\step-03\\source.py",
+  "evaluation": {
+    "contract": {
+      "source": "66ce5263ef62d34c5572c07bb3568f4765852738813a68e998bcb4bf94b2147b",
+      "language": "python",
+      "runtime": {
+        "tools": {
+          "cpp": "C:\\Users\\sigma\\scoop\\apps\\perl\\5.42.3.1\\c\\bin\\g++.exe",
+          "python": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+          "java": "C:\\Users\\sigma\\scoop\\apps\\openjdk\\current\\bin\\javac.EXE",
+          "haskell": "C:\\Users\\sigma\\scoop\\apps\\ghcup\\current\\ghcup\\bin\\ghc.EXE",
+          "prolog": "C:\\Users\\sigma\\scoop\\shims\\swipl.EXE"
+        },
+        "compile_timeout": 180,
+        "fixture_timeout": 5,
+        "minimum_evaluation_cases": 13
+      },
+      "inputs": {
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case01.inp": "2b0f5fbcc0989e147be531c252d960cdf037cd28b8357c6a9d1cb2b6208eea2e",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case01.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case02.inp": "d1f48990b21a631dbfd915129333dab1d5c5d1f5da5b6922c3244fa41e477a3f",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case02.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case03.inp": "2fb95080b644f991e4d9097e92a6a597533619bbb6cb20c0e9174f3588c7e6d5",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case03.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case04.inp": "8f5e5488b2fb251fe67a0bd2d8e7b4d115f4119ca02279ee63d71e510cfc41a0",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case04.out": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case05.inp": "cb18234ae48c1f9505aeff02c51a2e8f0e30adc177ce3ec32857c8d02973e14f",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case05.out": "7fb2aaeaf3eef66b52db104118c30f62899f5f0df520350a94a8fcb843c0dfdf",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case06.inp": "5655ae615032182a94dfc38d5fe5d4bd91e8fa30326c331d924acd4c5e8cf2a5",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case06.out": "7fb2aaeaf3eef66b52db104118c30f62899f5f0df520350a94a8fcb843c0dfdf",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case07.inp": "4792bfc609ba200bbecbd173be211832789c0f96bb66b66eab32b2b3364cba4d",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case07.out": "8ce88a8842c1584e3d6871e84e166e3b513c3ce2a9da6166760c7af1645dea29",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case08.inp": "7606e496b62130c1c84ed6e69900679c10c09f885d1e22743b80eb497c6f350d",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case08.out": "e2bb232cac786f7284bb237d193407e94f32ee0fbf64d27d0ae8b1642de44923",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case09.inp": "8476bed6191a0c28f5d68630ec86142895120bc0bbf49e258de7af148ac8b1ec",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case09.out": "15be601faf86e0f98cd5245b9402e650ab9ea7fc4d0ed81f0d53bf6f6ea22593",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case10.inp": "a9399ddf6205c9441777bc8ad192a753cecdce1eac70cf22d77d9e77389457b6",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case10.out": "90b53df56816c127246136d4403aba3b26cec599b2b950fb2ba78d6c1fb4e6bf",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case11.inp": "9a19cace9ef934e05087947a309739568c3952819a1f1d077c74767736799c48",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case11.out": "8a1c98d8689c5835bfaee427e003ee24ed59a2b9ed7d55837ab6c3d4c57c8ee5",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case12.inp": "e2354581a09e8676122c728d8c0d3282f17b45ca1f1135b9cbb09a73335829c9",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case12.out": "ea34a3aede585cbcd5a2dc30e7750ca98f6bbb83e489fbb3cb3352e49ada43a6",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case13.inp": "381f140d25fa471ab2c90302ae06692ae832215fde33f2e45d61338067176e7f",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6\\LC_0062\\evaluation\\case13.out": "101c384d6b5f22de4bf0ee5d16416cd68a1d03e49a2917d9f2a36fcd87ef272f"
+      }
+    },
+    "compile": {
+      "command": [
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+        "-m",
+        "py_compile",
+        "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-01\\step-03\\evaluation\\Main.py"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "timed_out": false,
+      "seconds": 0.17854740004986525
+    },
+    "cases": [
+      {
+        "case": "case01",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-01\\step-03\\evaluation\\Main.py"
+        ],
+        "exit_code": 0,
+        "stdout": "1\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.06574720004573464
+      },
+      {
+        "case": "case02",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-01\\step-03\\evaluation\\Main.py"
+        ],
+        "exit_code": 0,
+        "stdout": "1\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.06383789994288236
+      },
+      {
+        "case": "case03",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-01\\step-03\\evaluation\\Main.py"
+        ],
+        "exit_code": 0,
+        "stdout": "1\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.0636790000135079
+      },
+      {
+        "case": "case04",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-01\\step-03\\evaluation\\Main.py"
+        ],
+        "exit_code": 0,
+        "stdout": "2\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.06512290006503463
+      },
+      {
+        "case": "case05",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-01\\step-03\\evaluation\\Main.py"
+        ],
+        "exit_code": 0,
+        "stdout": "5\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.06453319999855012
+      },
+      {
+        "case": "case06",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-01\\step-03\\evaluation\\Main.py"
+        ],
+        "exit_code": 0,
+        "stdout": "5\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.06610059994272888
+      },
+      {
+        "case": "case07",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-01\\step-03\\evaluation\\Main.py"
+        ],
+        "exit_code": 0,
+        "stdout": "20\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.06281949998810887
+      },
+      {
+        "case": "case08",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-01\\step-03\\evaluation\\Main.py"
+        ],
+        "exit_code": 0,
+        "stdout": "15\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.06806810002308339
+      },
+      {
+        "case": "case09",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-01\\step-03\\evaluation\\Main.py"
+        ],
+        "exit_code": 0,
+        "stdout": "48620\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.06560570001602173
+      },
+      {
+        "case": "case10",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-01\\step-03\\evaluation\\Main.py"
+        ],
+        "exit_code": 0,
+        "stdout": "100\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.06133359996601939
+      },
+      {
+        "case": "case11",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-01\\step-03\\evaluation\\Main.py"
+        ],
+        "exit_code": 0,
+        "stdout": "455\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.059719800017774105
+      },
+      {
+        "case": "case12",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-01\\step-03\\evaluation\\Main.py"
+        ],
+        "exit_code": 0,
+        "stdout": "3003\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.06377700006123632
+      },
+      {
+        "case": "case13",
+        "status": "success",
+        "command": [
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+          "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-01\\step-03\\evaluation\\Main.py"
+        ],
+        "exit_code": 0,
+        "stdout": "1166803110\n",
+        "stderr": "",
+        "timed_out": false,
+        "seconds": 0.11200949992053211
+      }
+    ],
+    "status": "success"
+  }
+}

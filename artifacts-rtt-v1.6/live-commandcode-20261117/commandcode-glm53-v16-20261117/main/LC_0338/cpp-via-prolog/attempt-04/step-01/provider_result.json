@@ -1,0 +1,94 @@
+{
+  "text": "```prolog\n:- module(main, []).\n:- use_module(library(readutil)).\n\ncount_bits(0, C, [C]) :- !.\ncount_bits(I, C, [C|Rest]) :-\n    C1 is C + I mod 2,\n    I1 is I - 1,\n    count_bits(I1, C1, Rest).\n\nbuild(N, List) :- count_bits(N, 0, List).\n\nprint_list([]) :- nl.\nprint_list([X]) :- !, format(\"~w~n\", [X]).\nprint_list([X|T]) :-\n    format(\"~w \", [X]),\n    print_list(T).\n\nmain :-\n    current_input(In),\n    read_line_to_string(In, Line),\n    ( Line == end_of_file -> N = 0\n    ; split_string(Line, \" \\t\", \" \\t\", Parts),\n      ( Parts == [] -> N = 0\n      ; nth0(0, Parts, P),\n        atom_number(P, N)\n      )\n    ),\n    build(N, List),\n    print_list(List).\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 226,
+    "prompt_tokens": 578,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 804
+  },
+  "usage_raw": {
+    "completion_tokens": 226,
+    "prompt_tokens": 578,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 804
+  },
+  "cost_usd": 0.00114696,
+  "cost_source": "estimated",
+  "request_id": "edeca9a6-a9d9-4d9b-9330-025e983a3291",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0338\\cpp-via-prolog\\attempt-04\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, []).\n:- use_module(library(readutil)).\n\ncount_bits(0, C, [C]) :- !.\ncount_bits(I, C, [C|Rest]) :-\n    C1 is C + I mod 2,\n    I1 is I - 1,\n    count_bits(I1, C1, Rest).\n\nbuild(N, List) :- count_bits(N, 0, List).\n\nprint_list([]) :- nl.\nprint_list([X]) :- !, format(\"~w~n\", [X]).\nprint_list([X|T]) :-\n    format(\"~w \", [X]),\n    print_list(T).\n\nmain :-\n    current_input(In),\n    read_line_to_string(In, Line),\n    ( Line == end_of_file -> N = 0\n    ; split_string(Line, \" \\t\", \" \\t\", Parts),\n      ( Parts == [] -> N = 0\n      ; nth0(0, Parts, P),\n        atom_number(P, N)\n      )\n    ),\n    build(N, List),\n    print_list(List).\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794900204,
+    "id": "edeca9a6-a9d9-4d9b-9330-025e983a3291",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 226,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_0b3884454bb44c389d6e656015187655",
+      "trace_id": "5e8445e70f5b4b44b2bee460f67f811a"
+    },
+    "usage": {
+      "completion_tokens": 226,
+      "prompt_tokens": 578,
+      "prompt_tokens_details": {
+        "cached_tokens": 576
+      },
+      "total_tokens": 804
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.8950409999815747,
+  "received_at": "2026-11-17T07:23:24.175435+00:00",
+  "logical_request_id": "5bb0851792bcd5fe5963fc8ea6f34b292e420d5eee1304f27f5b6a48c5cbbd4d",
+  "execution_class": "direct_api"
+}

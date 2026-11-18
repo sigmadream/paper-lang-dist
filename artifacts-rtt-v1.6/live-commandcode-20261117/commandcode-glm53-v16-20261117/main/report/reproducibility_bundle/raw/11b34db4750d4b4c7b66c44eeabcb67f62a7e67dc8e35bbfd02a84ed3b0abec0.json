@@ -1,0 +1,95 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport qualified Data.Vector as V\nimport Data.Vector ((!), (//))\nimport qualified Data.Vector as Vec\n\nmain :: IO ()\nmain = do\n  contents <- getContents\n  let (nStr:rest) = lines contents\n      n = read nStr :: Int\n      scores = map read (take n rest) :: [Int]\n      score = Vec.fromList (0 : scores) :: Vec.Vector Int\n  if n == 1\n    then print (score ! 1)\n    else if n == 2\n      then print (score ! 1 + score ! 2)\n      else do\n        let dp0 = 0\n            dp1 = score ! 1\n            dp2 = score ! 1 + score ! 2\n            go i dpIm1 dpIm2 dpIm3\n              | i > n = dpIm1\n              | otherwise =\n                  let v = max dpIm2 (dpIm3 + score ! (i - 1)) + score ! i\n                  in go (i + 1) v dpIm1 dpIm2\n        print (go 3 dp2 dp1 dp0)\n```",
+          "reasoning_content": "Note: dp[3] uses dp[0]+score[2]+score[3] = score[2]+score[3]. Standard.\n\nHaskell:\n\ndp i: use arrays.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794897633,
+    "id": "624d6dd6-5db3-40d3-b5f5-eaf61bdf281f",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 296,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_c2c4066a55e243bc963dd8747ac377d2",
+      "trace_id": "001e10f05fff49d89b3fa18c72a05acf"
+    },
+    "usage": {
+      "completion_tokens": 296,
+      "prompt_tokens": 673,
+      "prompt_tokens_details": {
+        "cached_tokens": 640
+      },
+      "total_tokens": 969
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.001515,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 5.301565999980085,
+  "logical_request_id": "0e94c78c7b137e9fb9b0f7c7f24b6c7030a6e87834139d0beb8e1920ae2d1246",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_2579\\cpp-via-haskell\\attempt-04\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T06:40:32.819308+00:00",
+  "request_id": "624d6dd6-5db3-40d3-b5f5-eaf61bdf281f",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```haskell\nmodule Main (main) where\n\nimport qualified Data.Vector as V\nimport Data.Vector ((!), (//))\nimport qualified Data.Vector as Vec\n\nmain :: IO ()\nmain = do\n  contents <- getContents\n  let (nStr:rest) = lines contents\n      n = read nStr :: Int\n      scores = map read (take n rest) :: [Int]\n      score = Vec.fromList (0 : scores) :: Vec.Vector Int\n  if n == 1\n    then print (score ! 1)\n    else if n == 2\n      then print (score ! 1 + score ! 2)\n      else do\n        let dp0 = 0\n            dp1 = score ! 1\n            dp2 = score ! 1 + score ! 2\n            go i dpIm1 dpIm2 dpIm3\n              | i > n = dpIm1\n              | otherwise =\n                  let v = max dpIm2 (dpIm3 + score ! (i - 1)) + score ! i\n                  in go (i + 1) v dpIm1 dpIm2\n        print (go 3 dp2 dp1 dp0)\n```",
+  "usage": {
+    "completion_tokens": 296,
+    "prompt_tokens": 673,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 969
+  },
+  "usage_raw": {
+    "completion_tokens": 296,
+    "prompt_tokens": 673,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 969
+  }
+}

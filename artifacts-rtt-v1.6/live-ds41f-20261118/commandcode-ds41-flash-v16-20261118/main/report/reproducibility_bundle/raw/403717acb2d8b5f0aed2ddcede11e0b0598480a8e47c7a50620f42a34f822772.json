@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    long long n;\n    if (!(cin >> n)) return 0;\n\n    vector<long long> a;\n    a.reserve((size_t)max(0LL, n));\n    for (long long i = 0; i < n; ++i) {\n        long long x;\n        if (!(cin >> x)) break;\n        a.push_back(x);\n    }\n\n    if (a.empty()) return 0;\n\n    long long cur = a[0];\n    long long best = a[0];\n\n    for (size_t i = 1; i < a.size(); ++i) {\n        cur = max(a[i], cur + a[i]);\n        best = max(best, cur);\n    }\n\n    cout << best << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need translate Haskell to C++17. Preserve behavior. Need consider empty? N>=1. If no tokens, return. Output max subarray sum as integer. Elements range fits int but sum up to 1e9, int fine (100000*10000=1e9). Use long long safe.\n\nNeed handle input tokens. n then n numbers. Print.\n\nEdge: Haskell reads all, takes n rest. If fewer, still. We'll mimic.\n\nWrite C++ main. Use ios fast.\n\nReturn one fenced code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794995071,
+    "id": "chatcmpl-036fc8af0810ade700bbb3a622b992c1",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 312,
+      "completion_tokens_details": {
+        "reasoning_tokens": 113
+      },
+      "prompt_tokens": 567,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 879
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0005445,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.556473599979654,
+  "logical_request_id": "e4841cc997d4c93d4bd793c750be5c25b99b58343f0fc79546d0a7d3b4d42a4d",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-haskell\\attempt-04\\step-02\\response_body.txt",
+  "received_at": "2026-11-18T09:44:33.001828+00:00",
+  "request_id": "chatcmpl-036fc8af0810ade700bbb3a622b992c1",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    long long n;\n    if (!(cin >> n)) return 0;\n\n    vector<long long> a;\n    a.reserve((size_t)max(0LL, n));\n    for (long long i = 0; i < n; ++i) {\n        long long x;\n        if (!(cin >> x)) break;\n        a.push_back(x);\n    }\n\n    if (a.empty()) return 0;\n\n    long long cur = a[0];\n    long long best = a[0];\n\n    for (size_t i = 1; i < a.size(); ++i) {\n        cur = max(a[i], cur + a[i]);\n        best = max(best, cur);\n    }\n\n    cout << best << '\\n';\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 312,
+    "completion_tokens_details": {
+      "reasoning_tokens": 113
+    },
+    "prompt_tokens": 567,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 879
+  },
+  "usage_raw": {
+    "completion_tokens": 312,
+    "completion_tokens_details": {
+      "reasoning_tokens": 113
+    },
+    "prompt_tokens": 567,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 879
+  }
+}

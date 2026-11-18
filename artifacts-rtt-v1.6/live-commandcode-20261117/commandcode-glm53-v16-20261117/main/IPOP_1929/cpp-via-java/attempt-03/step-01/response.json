@@ -1,0 +1,94 @@
+{
+  "text": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StreamTokenizer st = new StreamTokenizer(br);\n        st.nextToken(); int m = (int) st.nval;\n        st.nextToken(); int n = (int) st.nval;\n\n        boolean[] isPrime = new boolean[n + 1];\n        Arrays.fill(isPrime, true);\n        if (n >= 0) isPrime[0] = false;\n        if (n >= 1) isPrime[1] = false;\n\n        for (int i = 2; (long) i * i <= n; i++) {\n            if (isPrime[i]) {\n                for (int j = i * i; j <= n; j += i) {\n                    isPrime[j] = false;\n                }\n            }\n        }\n\n        StringBuilder sb = new StringBuilder();\n        for (int i = m; i <= n; i++) {\n            if (isPrime[i]) sb.append(i).append('\\n');\n        }\n        System.out.print(sb);\n    }\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 242,
+    "prompt_tokens": 561,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 803
+  },
+  "usage_raw": {
+    "completion_tokens": 242,
+    "prompt_tokens": 561,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 803
+  },
+  "cost_usd": 0.0017042800000000003,
+  "cost_source": "estimated",
+  "request_id": "2392cd6b-004e-4297-99c1-a55c60b83134",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_1929\\cpp-via-java\\attempt-03\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StreamTokenizer st = new StreamTokenizer(br);\n        st.nextToken(); int m = (int) st.nval;\n        st.nextToken(); int n = (int) st.nval;\n\n        boolean[] isPrime = new boolean[n + 1];\n        Arrays.fill(isPrime, true);\n        if (n >= 0) isPrime[0] = false;\n        if (n >= 1) isPrime[1] = false;\n\n        for (int i = 2; (long) i * i <= n; i++) {\n            if (isPrime[i]) {\n                for (int j = i * i; j <= n; j += i) {\n                    isPrime[j] = false;\n                }\n            }\n        }\n\n        StringBuilder sb = new StringBuilder();\n        for (int i = m; i <= n; i++) {\n            if (isPrime[i]) sb.append(i).append('\\n');\n        }\n        System.out.print(sb);\n    }\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794897436,
+    "id": "2392cd6b-004e-4297-99c1-a55c60b83134",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 242,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_81b3e0175bb94bddbad2ee5f1586e159",
+      "trace_id": "fb341ba1c3c142879035f58e4da6a724"
+    },
+    "usage": {
+      "completion_tokens": 242,
+      "prompt_tokens": 561,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 803
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.456796900019981,
+  "received_at": "2026-11-17T06:37:15.841289+00:00",
+  "logical_request_id": "93cdb8bd0b35121533d5275c81dac2a8a659ab81a4dd4d476b62ba2063f6a724",
+  "execution_class": "direct_api"
+}

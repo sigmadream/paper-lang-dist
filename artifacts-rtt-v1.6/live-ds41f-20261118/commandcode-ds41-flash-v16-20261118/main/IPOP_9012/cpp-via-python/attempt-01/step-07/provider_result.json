@@ -1,0 +1,86 @@
+{
+  "text": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n\n    t = int(data[0])\n    answers = []\n\n    for i in range(1, t + 1):\n        s = data[i]\n        balance = 0\n        valid = True\n\n        for ch in s:\n            if ch == '(':\n                balance += 1\n            else:\n                balance -= 1\n\n            if balance < 0:\n                valid = False\n                break\n\n        if balance != 0:\n            valid = False\n\n        answers.append(\"YES\" if valid else \"NO\")\n\n    sys.stdout.write(\"\\n\".join(answers))\n\nif __name__ == \"__main__\":\n    main()\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 710,
+    "total_tokens": 993,
+    "completion_tokens": 283,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 124
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 710,
+    "total_tokens": 993,
+    "completion_tokens": 283,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 124
+    }
+  },
+  "cost_usd": 0.0005525999999999999,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-a80017e0a62565e0b8bc03ca59442a5f",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-python\\attempt-01\\step-07\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-a80017e0a62565e0b8bc03ca59442a5f",
+    "object": "chat.completion",
+    "created": 1794987974,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n\n    t = int(data[0])\n    answers = []\n\n    for i in range(1, t + 1):\n        s = data[i]\n        balance = 0\n        valid = True\n\n        for ch in s:\n            if ch == '(':\n                balance += 1\n            else:\n                balance -= 1\n\n            if balance < 0:\n                valid = False\n                break\n\n        if balance != 0:\n            valid = False\n\n        answers.append(\"YES\" if valid else \"NO\")\n\n    sys.stdout.write(\"\\n\".join(answers))\n\nif __name__ == \"__main__\":\n    main()\n```",
+          "reasoning_content": "We need answer exactly code block python. Need translate. No explanation. Need consider stdin behavior. Simple. Need output each line. Use sys.stdin. Preserve valid inputs. Implement.\n\nNeed decide if input may have blank lines? Spec T then T strings. C++ >> skips whitespace so robust. Use split. If no data return. t=int(data[0]); iterate next t tokens. Print YES/NO each line. Use sys.stdout.write('\\n'.join(ans)). No trailing newline? C++ no trailing newline after last. That's fine. Usually accepted. Need exactly complete source."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 710,
+      "total_tokens": 993,
+      "completion_tokens": 283,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 124
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.8235516999848187,
+  "received_at": "2026-11-18T07:46:15.253312+00:00",
+  "logical_request_id": "9b4be54caa0eb45adf7ffd0966d6ca661450f0ce0b0c557e197dcfda1893de98",
+  "execution_class": "direct_api"
+}

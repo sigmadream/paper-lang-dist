@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int M, N;\n    if (!(std::cin >> M >> N)) {\n        return 0;\n    }\n\n    std::vector<long long> row(N, 1);\n\n    for (int i = 1; i < M; ++i) {\n        for (int j = 1; j < N; ++j) {\n            row[j] += row[j - 1];\n        }\n    }\n\n    std::cout << row[N - 1] << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block C++17. Need translate. Simple unique paths M,N read. DP. Constraints answer <=2e9 int okay but use long long. Need preserve stdin behavior valid input. Return one complete source file fenced. No explanation. Need exactly. C++17 main. Include bits? standard. Use iostream. If reading fail do nothing? Program spec valid input. Could output Ans.\n\nNeed careful M rows N cols, number paths from top-left to bottom-right with M rows N cols = C(M+N-2, M-1). But DP.\n\nImplementation:\n#include <bits/stdc++.h>\nusing namespace std;\nint main(){ios::sync_with_stdio(false);cin.tie(nullptr); long long M,N; if(!(cin>>M>>N)) return 0; vector<long long> row(N,1); for(int i=1;i<M;i++){ for(int j=1;j<N;j++){ row[j]+=row[j-1]; }} cout<<row[N-1]<<\"\\n\"; return 0; }\nNeed handle M,N as int. N>=1. If N maybe 100. Good. If M=1 row[N-1]=1. Good. Use std::vector. No hardcode. final.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794993189,
+    "id": "chatcmpl-ac6002ab2ea246ca0d48cb9f500950fc",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 408,
+      "completion_tokens_details": {
+        "reasoning_tokens": 263
+      },
+      "prompt_tokens": 853,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 1261
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0006326039999999999,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.972928600036539,
+  "logical_request_id": "6b7f92b7d72f6b481b42d649d017075b4c472646cb79bc8a49d16098aebdef02",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-prolog\\attempt-02\\step-06\\response_body.txt",
+  "received_at": "2026-11-18T09:13:11.336641+00:00",
+  "request_id": "chatcmpl-ac6002ab2ea246ca0d48cb9f500950fc",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int M, N;\n    if (!(std::cin >> M >> N)) {\n        return 0;\n    }\n\n    std::vector<long long> row(N, 1);\n\n    for (int i = 1; i < M; ++i) {\n        for (int j = 1; j < N; ++j) {\n            row[j] += row[j - 1];\n        }\n    }\n\n    std::cout << row[N - 1] << '\\n';\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 408,
+    "completion_tokens_details": {
+      "reasoning_tokens": 263
+    },
+    "prompt_tokens": 853,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1261
+  },
+  "usage_raw": {
+    "completion_tokens": 408,
+    "completion_tokens_details": {
+      "reasoning_tokens": 263
+    },
+    "prompt_tokens": 853,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1261
+  }
+}

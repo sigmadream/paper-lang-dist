@@ -1,0 +1,94 @@
+{
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    long long n;\n    cin >> n;\n    vector<int> counts(n + 1, 0);\n    for (long long i = 1; i <= n; ++i)\n        counts[i] = counts[i / 2] + (int)(i % 2);\n    for (size_t i = 0; i < counts.size(); ++i) {\n        if (i) cout << ' ';\n        cout << counts[i];\n    }\n    cout << '\\n';\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 129,
+    "prompt_tokens": 466,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 595
+  },
+  "usage_raw": {
+    "completion_tokens": 129,
+    "prompt_tokens": 466,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 595
+  },
+  "cost_usd": 0.0010740799999999998,
+  "cost_source": "estimated",
+  "request_id": "76aa31a2-254e-4e09-a15f-6e6374a8ca4e",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0338\\cpp-via-python\\attempt-05\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    long long n;\n    cin >> n;\n    vector<int> counts(n + 1, 0);\n    for (long long i = 1; i <= n; ++i)\n        counts[i] = counts[i / 2] + (int)(i % 2);\n    for (size_t i = 0; i < counts.size(); ++i) {\n        if (i) cout << ' ';\n        cout << counts[i];\n    }\n    cout << '\\n';\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794898120,
+    "id": "76aa31a2-254e-4e09-a15f-6e6374a8ca4e",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 129,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_5343e524d1d34c42b09f09269119383d",
+      "trace_id": "eb89bf487de24b55ae416032a9d71595"
+    },
+    "usage": {
+      "completion_tokens": 129,
+      "prompt_tokens": 466,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 595
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.5848459000117145,
+  "received_at": "2026-11-17T06:48:40.388203+00:00",
+  "logical_request_id": "30dbde95be12ec326c6d895f4929bbf0e56c0ec76c970a1a3ac77a313f6e03d8",
+  "execution_class": "direct_api"
+}

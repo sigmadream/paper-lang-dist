@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```java\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String s = br.readLine();\n        if (s == null) return;\n        int b = 0, e = s.length();\n        while (e > 0 && (s.charAt(e-1)=='\\r' || s.charAt(e-1)=='\\n' || s.charAt(e-1)==' ' || s.charAt(e-1)=='\\t')) e--;\n        while (b < e && (s.charAt(b)==' ' || s.charAt(b)=='\\t' || s.charAt(b)=='\\r' || s.charAt(b)=='\\n')) b++;\n        String t = s.substring(b, e);\n        boolean valid = true;\n        for (int i = 0; i < t.length()/2; i++) {\n            if (t.charAt(i) != t.charAt(t.length()-1-i)) { valid = false; break; }\n        }\n        System.out.println(valid ? 1 : 0);\n    }\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794896816,
+    "id": "f1f43095-f703-4222-8065-fd7bd4a1eb75",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 228,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_e348c96f8b134318885b5d9d6cf36207",
+      "trace_id": "8d3ff0e0ba2d43ccb0d5e96b70610800"
+    },
+    "usage": {
+      "completion_tokens": 228,
+      "prompt_tokens": 568,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 796
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00165248,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.9160674000158906,
+  "logical_request_id": "5adb305156b6dfd25779feb9140a381a606f8c92fe94d2ab515d61b9a8cc10a4",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_10988\\cpp-via-java\\attempt-05\\step-03\\response_body.txt",
+  "received_at": "2026-11-17T06:26:55.753779+00:00",
+  "request_id": "f1f43095-f703-4222-8065-fd7bd4a1eb75",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```java\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String s = br.readLine();\n        if (s == null) return;\n        int b = 0, e = s.length();\n        while (e > 0 && (s.charAt(e-1)=='\\r' || s.charAt(e-1)=='\\n' || s.charAt(e-1)==' ' || s.charAt(e-1)=='\\t')) e--;\n        while (b < e && (s.charAt(b)==' ' || s.charAt(b)=='\\t' || s.charAt(b)=='\\r' || s.charAt(b)=='\\n')) b++;\n        String t = s.substring(b, e);\n        boolean valid = true;\n        for (int i = 0; i < t.length()/2; i++) {\n            if (t.charAt(i) != t.charAt(t.length()-1-i)) { valid = false; break; }\n        }\n        System.out.println(valid ? 1 : 0);\n    }\n}\n```",
+  "usage": {
+    "completion_tokens": 228,
+    "prompt_tokens": 568,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 796
+  },
+  "usage_raw": {
+    "completion_tokens": 228,
+    "prompt_tokens": 568,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 796
+  }
+}

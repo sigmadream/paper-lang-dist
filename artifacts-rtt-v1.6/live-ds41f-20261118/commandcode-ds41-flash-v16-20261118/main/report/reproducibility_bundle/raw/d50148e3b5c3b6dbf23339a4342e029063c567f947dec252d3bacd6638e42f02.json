@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    std::vector<long long> a(n);\n    for (int i = 0; i < n; ++i) std::cin >> a[i];\n\n    long long cur = a[0];\n    long long best = a[0];\n    for (int i = 1; i < n; ++i) {\n        cur = std::max(a[i], cur + a[i]);\n        best = std::max(best, cur);\n    }\n\n    std::cout << best << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need translate Python to C++17, preserving behavior. Simple. Output just code block.\n\nEdge: n>=1 per spec. But should handle missing data? C++ reads n then n ints. Use long long? Elements up to 10000, n up to 100000, max sum 1e9 fits int, but use long long safe. Output integer.\n\nBehavior: read all tokens. If no data return. n = first. Then read n ints. cur=a[0], best. Loop. Print best.\n\nImplement.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794992625,
+    "id": "chatcmpl-e85f70b4bdbaa6a62c6fed4efd54c8e8",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 282,
+      "completion_tokens_details": {
+        "reasoning_tokens": 113
+      },
+      "prompt_tokens": 515,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 797
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0004929,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 4.010241899988614,
+  "logical_request_id": "4f647bf8e0914bd95a749cd1bcd20b263bdf118535f5f0dca6eaaadd12541002",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-python\\attempt-05\\step-02\\response_body.txt",
+  "received_at": "2026-11-18T09:03:45.972707+00:00",
+  "request_id": "chatcmpl-e85f70b4bdbaa6a62c6fed4efd54c8e8",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    std::vector<long long> a(n);\n    for (int i = 0; i < n; ++i) std::cin >> a[i];\n\n    long long cur = a[0];\n    long long best = a[0];\n    for (int i = 1; i < n; ++i) {\n        cur = std::max(a[i], cur + a[i]);\n        best = std::max(best, cur);\n    }\n\n    std::cout << best << '\\n';\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 282,
+    "completion_tokens_details": {
+      "reasoning_tokens": 113
+    },
+    "prompt_tokens": 515,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 797
+  },
+  "usage_raw": {
+    "completion_tokens": 282,
+    "completion_tokens_details": {
+      "reasoning_tokens": 113
+    },
+    "prompt_tokens": 515,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 797
+  }
+}

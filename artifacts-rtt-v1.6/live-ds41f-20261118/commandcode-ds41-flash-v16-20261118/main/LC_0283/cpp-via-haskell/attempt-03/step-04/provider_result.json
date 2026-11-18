@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    std::vector<int> vals(n);\n    for (int i = 0; i < n; ++i) {\n        std::cin >> vals[i];\n    }\n\n    std::vector<int> result;\n    result.reserve(n);\n\n    int zeroCount = 0;\n    for (int x : vals) {\n        if (x == 0) {\n            ++zeroCount;\n        } else {\n            result.push_back(x);\n        }\n    }\n\n    result.insert(result.end(), zeroCount, 0);\n\n    for (std::size_t i = 0; i < result.size(); ++i) {\n        if (i > 0) {\n            std::cout << ' ';\n        }\n        std::cout << result[i];\n    }\n    std::cout << '\\n';\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 572,
+    "total_tokens": 1046,
+    "completion_tokens": 474,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 247
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 572,
+    "total_tokens": 1046,
+    "completion_tokens": 474,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 247
+    }
+  },
+  "cost_usd": 0.0007404,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-84a8c488b099d4b256537759b8cb6f56",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-haskell\\attempt-03\\step-04\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-84a8c488b099d4b256537759b8cb6f56",
+    "object": "chat.completion",
+    "created": 1794977223,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    std::vector<int> vals(n);\n    for (int i = 0; i < n; ++i) {\n        std::cin >> vals[i];\n    }\n\n    std::vector<int> result;\n    result.reserve(n);\n\n    int zeroCount = 0;\n    for (int x : vals) {\n        if (x == 0) {\n            ++zeroCount;\n        } else {\n            result.push_back(x);\n        }\n    }\n\n    result.insert(result.end(), zeroCount, 0);\n\n    for (std::size_t i = 0; i < result.size(); ++i) {\n        if (i > 0) {\n            std::cout << ' ';\n        }\n        std::cout << result[i];\n    }\n    std::cout << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block cpp. Need translate. Need preserve stdin stdout. Input first N then N ints. Output nonzeros in original order then zeros. Edge N maybe? constraints. Need main. C++17. One complete file fenced. No explanation. Need consider empty? Specification valid input N>=1. We can handle. Output as space separated. Use vector. Partition zeros count, output nonzeros then zeros. Could do stable algorithm. Need exact: output integer array with spaces. If N=0? not valid, but source if xs empty return no output. For n=0 rest empty result empty putStrLn \"\" outputs newline. Actually source xs [0]? n=0 rest[] vals[] partition => result [], putStrLn \"\" newline. But constraints 1. Could mimic. For all valid. Need output newline. Use ios. For each element if nonzero push; then zeros count. Output with spaces no trailing? intercalate no trailing. If result empty, put newline. implement.\n\nNeed ensure reading all ints. n maybe available. vals take n rest. If fewer? valid. Use int. Code.\n\nFinal fenced code block only."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 572,
+      "total_tokens": 1046,
+      "completion_tokens": 474,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 247
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.83042870007921,
+  "received_at": "2026-11-18T04:47:04.931711+00:00",
+  "logical_request_id": "070992956f7bf73ceadb1c51ea96215fbb19f12c02be28094955a5e63b327eea",
+  "execution_class": "direct_api"
+}

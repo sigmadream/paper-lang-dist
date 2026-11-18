@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    t = int(data[0])\n    out = []\n    for i in range(1, t + 1):\n        s = data[i]\n        bal = 0\n        valid = True\n        for c in s:\n            if c == '(':\n                bal += 1\n            else:\n                bal -= 1\n            if bal < 0:\n                valid = False\n                break\n        if bal != 0:\n            valid = False\n        out.append(\"YES\" if valid else \"NO\")\n    print(\"\\n\".join(out))\n\nmain()\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794897029,
+    "id": "00d48187-86e0-496e-a21b-445bdda94b33",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 147,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_15ca70806e634eeaaa5f064c1ae95d8c",
+      "trace_id": "b264a67f98fa4dd3bd6b62de1fbcbcd5"
+    },
+    "usage": {
+      "completion_tokens": 147,
+      "prompt_tokens": 611,
+      "prompt_tokens_details": {
+        "cached_tokens": 576
+      },
+      "total_tokens": 758
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0008455600000000001,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.3230468000401743,
+  "logical_request_id": "f729085370099d5f61a16bd39b3e5c01b9290bb4358175a6e17047c886c4e9c8",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_9012\\cpp-via-python\\attempt-02\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T06:30:28.609150+00:00",
+  "request_id": "00d48187-86e0-496e-a21b-445bdda94b33",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    t = int(data[0])\n    out = []\n    for i in range(1, t + 1):\n        s = data[i]\n        bal = 0\n        valid = True\n        for c in s:\n            if c == '(':\n                bal += 1\n            else:\n                bal -= 1\n            if bal < 0:\n                valid = False\n                break\n        if bal != 0:\n            valid = False\n        out.append(\"YES\" if valid else \"NO\")\n    print(\"\\n\".join(out))\n\nmain()\n```",
+  "usage": {
+    "completion_tokens": 147,
+    "prompt_tokens": 611,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 758
+  },
+  "usage_raw": {
+    "completion_tokens": 147,
+    "prompt_tokens": 611,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 758
+  }
+}

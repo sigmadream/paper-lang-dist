@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nsolve :: [String] -> Int -> Int -> Int -> String\nsolve grid r c size =\n    let first = (grid !! r) !! c\n        same = all (\\i -> all (\\j -> (grid !! i) !! j == first) [c .. c + size - 1])\n                   [r .. r + size - 1]\n    in if same\n       then [first]\n       else let half = size `div` 2\n                tl = solve grid r c half\n                tr = solve grid r (c + half) half\n                bl = solve grid (r + half) c half\n                br = solve grid (r + half) (c + half) half\n            in \"(\" ++ tl ++ tr ++ bl ++ br ++ \")\"\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let ls = lines input\n    case ls of\n        [] -> return ()\n        (nstr:rest) -> do\n            let n = read nstr :: Int\n                grid = take n rest\n            putStrLn (solve grid 0 0 n)\n```",
+          "reasoning_content": "We need answer only code block Haskell. Need translate. Must preserve stdin. Use getLine. N up to 64. Implement solve grid r c size. Haskell indexing strings O(1) list? String index O(n) but small. Could use Array. Need produce exactly one file fenced. No explanation. Ensure main. Handle empty input maybe. Use interact? Simple.\n\nNeed be careful input lines. read n, then take n lines. Define grid :: [String]. recursion.\n\nCould use Data.Array for efficiency. But strings fine 64^2 and square check O(n^2 log). okay.\n\nImplementation:\n\nmodule Main where\nimport System.IO\n\nsolve :: [String] -> Int -> Int -> Int -> String\nsolve grid r c size =\n  let first = (grid !! r) !! c\n      same = all (\\i -> all (\\j -> (grid !! i) !! j == first) [c..c+size-1]) [r..r+size-1]\n  in if same then [first]\n     else let half = size `div` 2\n              tl = solve grid r c half\n...\n     in \"(\" ++ tl ++ tr ++ bl ++ br ++ \")\"\n\nmain = do\n  input <- getContents\n  let ls = lines input\n  case ls of\n    [] -> return ()\n    (nstr:rest) -> do\n      let n = read nstr :: Int\n          grid = take n rest\n      putStrLn (solve grid 0 0 n)\n\nEdge: input may have trailing. Good. If grid line length. Good.\n\nWill use Data.List? all Prelude. Fine.\n\nNeed final only fenced.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794986554,
+    "id": "chatcmpl-ef2c53fde4eb71b306a709ea012a1a28",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 596,
+      "completion_tokens_details": {
+        "reasoning_tokens": 351
+      },
+      "prompt_tokens": 765,
+      "prompt_tokens_details": {
+        "cached_tokens": 640
+      },
+      "total_tokens": 1361
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00075654,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 5.351600999943912,
+  "logical_request_id": "0f34be662e3d003698c8df12cd0c9019879af609876449707e64cf87eaa454e7",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_1992\\cpp-via-haskell\\attempt-02\\step-01\\response_body.txt",
+  "received_at": "2026-11-18T07:22:37.830727+00:00",
+  "request_id": "chatcmpl-ef2c53fde4eb71b306a709ea012a1a28",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nsolve :: [String] -> Int -> Int -> Int -> String\nsolve grid r c size =\n    let first = (grid !! r) !! c\n        same = all (\\i -> all (\\j -> (grid !! i) !! j == first) [c .. c + size - 1])\n                   [r .. r + size - 1]\n    in if same\n       then [first]\n       else let half = size `div` 2\n                tl = solve grid r c half\n                tr = solve grid r (c + half) half\n                bl = solve grid (r + half) c half\n                br = solve grid (r + half) (c + half) half\n            in \"(\" ++ tl ++ tr ++ bl ++ br ++ \")\"\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let ls = lines input\n    case ls of\n        [] -> return ()\n        (nstr:rest) -> do\n            let n = read nstr :: Int\n                grid = take n rest\n            putStrLn (solve grid 0 0 n)\n```",
+  "usage": {
+    "completion_tokens": 596,
+    "completion_tokens_details": {
+      "reasoning_tokens": 351
+    },
+    "prompt_tokens": 765,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 1361
+  },
+  "usage_raw": {
+    "completion_tokens": 596,
+    "completion_tokens_details": {
+      "reasoning_tokens": 351
+    },
+    "prompt_tokens": 765,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 1361
+  }
+}

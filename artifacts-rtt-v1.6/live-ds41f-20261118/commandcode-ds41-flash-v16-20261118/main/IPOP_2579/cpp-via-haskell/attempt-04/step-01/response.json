@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  contents <- getContents\n  let numbers = map read (words contents) :: [Int]\n  case numbers of\n    [] -> pure ()\n    (n : rest) -> print (solve n rest)\n\nsolve :: Int -> [Int] -> Int\nsolve n xs =\n  let scores = take n xs\n  in case n of\n       1 -> case scores of\n              (s1 : _) -> s1\n              _ -> 0\n       2 -> case scores of\n              (s1 : s2 : _) -> s1 + s2\n              _ -> 0\n       _ -> case scores of\n              (s1 : s2 : remaining) ->\n                let go a b c prev (x : more) =\n                      let nxt = max b (a + prev) + x\n                      in go b c nxt x more\n                    go _ _ c _ [] = c\n                in go 0 s1 (s1 + s2) s2 remaining\n              _ -> 0\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 668,
+    "total_tokens": 4169,
+    "completion_tokens": 3501,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 3267
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 668,
+    "total_tokens": 4169,
+    "completion_tokens": 3501,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 3267
+    }
+  },
+  "cost_usd": 0.0044015999999999994,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-82bf82925f702af7ddee6dc67efea2c2",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2579\\cpp-via-haskell\\attempt-04\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-82bf82925f702af7ddee6dc67efea2c2",
+    "object": "chat.completion",
+    "created": 1794983773,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  contents <- getContents\n  let numbers = map read (words contents) :: [Int]\n  case numbers of\n    [] -> pure ()\n    (n : rest) -> print (solve n rest)\n\nsolve :: Int -> [Int] -> Int\nsolve n xs =\n  let scores = take n xs\n  in case n of\n       1 -> case scores of\n              (s1 : _) -> s1\n              _ -> 0\n       2 -> case scores of\n              (s1 : s2 : _) -> s1 + s2\n              _ -> 0\n       _ -> case scores of\n              (s1 : s2 : remaining) ->\n                let go a b c prev (x : more) =\n                      let nxt = max b (a + prev) + x\n                      in go b c nxt x more\n                    go _ _ c _ [] = c\n                in go 0 s1 (s1 + s2) s2 remaining\n              _ -> 0\n```",
+          "reasoning_content": "We need answer exactly one fenced code block Haskell. Need preserve behavior. Need consider N>=1. Output dp[n]. Haskell read stdin. Implement main.\n\nNeed be careful input parsing. Scores list. N then N scores. Compute.\n\nCould use list indexing? Simpler recursive DP maybe. Need n up to 300. We can use array or list. Need produce stdout newline.\n\nWe can implement using Data.Array? Standard. Or build list dp. Haskell lazy list? dp recurrence needs scores array indexing. We can make scores list, and calculate dp sequentially. Since n up to 300, can use Array. But easiest with list of scores and recursive function where dp for i uses score i etc. Need score list indexing.\n\nOption: read all ints. let n = head xs; s = tail. Use Data.Array listArray (1,n) s. dp array maybe listArray with list comprehension [1..n] where f i. But dp[i] references dp[i-2], dp[i-3], scores[i-1], dp[1], dp[2]. Could use recursive array with lazy eval. Data.Array supports lazy? Data.Array (lazy) yes, but listArray and (!) can define self-referential? Haskell lazy arrays allow knot tying? Data.Array is lazy in elements. dp = listArray (1,n) [ ... | i <- [1..n]] with f i. Need guard for i. For i=1 score1. i=2 score1+score2. i>=3 max dp!(i-2) (dp!(i-3)+score!(i-1)) + score!i. But for i=3, dp[0]? pattern only i>=3 uses dp[i-3] = dp[0] for i=3, but original dp[0]=0 and formula max(dp[1], dp[0]+score[2]) + score3. We need define dp range (1,n) and special i=3 uses base dp0=0, score2. But for i=3, dp[i-3]=dp0 = 0. So in formula handle i==3 for dp0. Or define dp (0,n) with dp0=0; dp1; dp2. listArray (0,n). Then safe. Need n>=1. For i 1..n.\n\nCould use recursive list of dp values instead of array. Let's derive with scores array.\n\nNeed import Control.Monad? Simpler:\n\nmodule Main where\nimport qualified Data.Array as A\nimport Data.List (map)\nmain = do\n  input <- getContents\n  let vals = map read (words input) :: [Int]\n  case vals of\n    [] -> return ()\n    (n:rest) -> do\n       let sc = A.listArray (1, max 1 n) (take n rest) -- if n=0? but N>=1. If n>=1.\n           dp = A.listArray (0,n) [f i | i <- [0..n]]\n           f 0 = 0\n           f 1 = sc A.! 1\n           f 2 = (sc A.! 1) + (sc A.! 2)\n           f i = max (dp A.! (i-2)) ((dp A.! (i-3)) + (sc A.! (i-1))) + (sc A.! i)\n       print (dp A.! n)\n\nNeed ensure for n=1, list [0..1], f 2 not evaluated. However f 2 pattern present but not evaluated. sc array bounds (1,max 1 n) = (1,1). okay. For n=1 f0, f1. Good. For n=2 sc (1,2), dp [0..2], f2 uses sc!2 OK. For n=1 no f2 evaluated. If n maybe 0 not allowed. But could handle n==0. If vals empty, no output. If n=0, sc listArray (1,0) []? Actually max 1 0 =1, take 0 rest = [], listArray (1,1) [] invalid when evaluated maybe. But N>=1. Could still robust handle n==0 output 0. But spec N>=1. Simpler.\n\nPotential issue self-referential dp in let with array. Haskell lazy arrays should allow if no strictness and no cycle? f i references dp lower index, so it's fine. But due to listArray constructs whole array, dp!i might force entire? Data.Array listArray is lazy in elements, indexing should not force all. However f i references dp itself, works. Alternative avoid self-reference by using list with zip? Could be safe.\n\nBut check Haskell's Data.Array (not Data.Array.Unboxed) is lazy. The array elements are thunks. Self reference dp defined as listArray with elements f i where f references dp. That is knot. Should work because f i only references lower indices. No infinite.\n\nNeed consider original dp[2] when n>=2 = score[1]+score[2]. Yes.\n\nCould also implement using list of scores and a tail recursive function with last three dp values? But recurrence needs dp[i-3] and dp[i-2], so keep three previous. Also need score[i-1]. This might be more straightforward and avoid arrays. Let's derive.\n\ndp0=0\ndp1=s1\ndp2=s1+s2\nfor i>=3: dp_i = max(dp_{i-2}, dp_{i-3} + s_{i-1}) + s_i.\n\nNeed iterate i from 3 to n, maintaining dp_{i-3}, dp_{i-2}, dp_{i-1}? At i, need dp i-3, dp i-2. We can maintain last three values (a=dp i-3, b=dp i-2, c=dp i-1) then next = max b (a + score[i-1]) + score[i]. Then shift a=b,b=c,c=next for next i. Need scores indexed. We can consume scores list.\n\nFor n=1: output s1. n=2: output s1+s2. n>=3: Need list scores s1,s2,s3,...\nInitial a=dp0=0, b=dp1=s1, c=dp2=s1+s2. For i=3, need score2? s_{i-1}=s2, score3 s3. We can process with remaining scores from s3 onwards and previous score s2. At i=3, previousScore = s2, current = s3, a=dp0, b=dp1, c=dp2. next = max b (a+prevScore)+current. Then for i=4, shift a=b=dp1, b=c=dp2, c=next=dp3. Need prevScore=s3, current=s4. So process list of scores from third onwards, with prev = second, a,b,c as above. We can implement recursively over score list.\n\nBut careful initial for n=3: scores [s1,s2,s3], a=0, b=s1, c=s1+s2, prev=s2, rest=[s3]. Loop step current=s3 next... result. Good.\n\nFor n>3, rest [s3,s4...], prev starts s2, then prev=current. We also need shift a b c. At each iteration i, a=dp i-3, b=dp i-2, c=dp i-1. next = max b (a+prev) + current. Then new a=b, b=c, c=next. prev=current. Continue.\n\nThis avoids arrays. Need parse n and scores. Need handle n=1, n=2. Could perhaps general fold. We can implement.\n\nHaskell code:\n\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let nums = map read (words input) :: [Int]\n  case nums of\n    [] -> return ()\n    (n:rest) ->\n      let scores = take n rest\n          answer = case n of\n            1 -> head scores\n            2 -> sum scores\n            _ -> let s1 = scores !! 0\n                     s2 = scores !! 1\n                     a0 = 0\n                     b0 = s1\n                     c0 = s1 + s2\n                     go a b c prev (x:xs) =\n                       let nxt = max b (a + prev) + x\n                       in go b c nxt x xs\n                     go _ _ c _ [] = c\n                 in go a0 b0 c0 s2 (drop 2 scores)\n      in print answer\n\nNeed ensure if n=0 but not. If n=1 scores has at least 1. If input valid. For n>=3, drop 2 scores gives [s3..]. go initial a0=dp0, b0=dp1, c0=dp2, prev=s2. At first x=s3 computes dp3, then go b0 c0 dp3 s3 rest. At end c is last dp. Good.\n\nNeed final source only fenced code block. Could include type signatures? Fine.\n\nPotential subtlety: print adds newline. Original outputs newline. Good.\n\nNeed exactly one complete source file in fenced code block. No explanation. Use Haskell module Main and main. Standard libs only.\n\nCheck examples: n=1 scores [10] answer head 10. n=8. Let's simulate quickly: scores 10 30 10 50 10 30 10 50. dp0=0 dp1=10 dp2=40. i3: max(dp1=10, dp0+30=30)+10=40. i4: max(dp2=40, dp1+50=60)+50=110. i5: max(dp3=40, dp2+10=50)+10=60. i6: max(dp4=110, dp3+30=70)+30=140. i7: max(dp5=60, dp4+10=120)+10=130. i8: max(dp6=140, dp5+50=110)+50=190? Wait example output 170. Did I compute? Let's recalc original recurrence: dp[index]=max(dp[index-2], dp[index-3]+score[index-1])+score[index].\nscores: 10,30,10,50,10,30,10,50\ndp1=10\ndp2=40\ndp3=max(dp1=10, dp0+score2=30)+score3=30+10=40\ndp4=max(dp2=40, dp1+score3=20)+score4=40+50=90. I earlier used dp1+50? Wait formula for i=4: dp[i-3]+score[i-1] = dp1 + score3 = 10+10=20, max 40 ->90. I mistakenly used score4 50. So dp4=90.\ndp5=max(dp3=40, dp2+score4=40+50=90)+10=100.\ndp6=max(dp4=90, dp3+score5=40+10=50)+30=120.\ndp7=max(dp5=100, dp4+score6=90+30=120)+10=130.\ndp8=max(dp6=120, dp5+score7=100+10=110)+50=170. Yes.\n\nOur go: i3: a0=0 b=10 c=40 prev=s2=30 current s3=10 -> max b10 (a+prev=30)+10=40. shift a=10 b=40 c=40 prev=10.\ni4 current=s4=50: max b40 (a+prev=10+10=20)+50=90. shift a=40 b=40 c=90 prev=50.\ni5 curr=10: max b40 (a+prev=40+50=90)+10=100? Wait formula uses a=dp i-3 = dp2? For i=5 a should dp2=40, prev score i-1=score4=50, max b=dp3=40? Actually b=dp i-2=dp3=40, a=dp i-3=dp2=40. max 40, 40+50=90 +10=100. yes.\ni6 curr=30: a=dp3=40,b=dp4=90,prev=10 -> max90,50 +30=120. etc. Good.\n\nNeed final. But let's consider input parsing: map read on words. If trailing spaces fine. If n larger than scores invalid. Valid.\n\nPotential issue using `sum scores` for n=2 sum all scores if n=2 scores length exactly 2. Fine. For n=1 head. Could use pattern matching to avoid partial. But valid.\n\nMaybe evaluator expects no explanation. Use code block with haskell.\n\nNeed ensure no `main` ambiguity. Module Main.\n\nWe can write:\n\nmodule Main where\n\nmain :: IO ()\nmain = do\n  contents <- getContents\n  let numbers = map read (words contents) :: [Int]\n  case numbers of\n    [] -> pure ()\n    (n : rest) -> print (solve n rest)\n\nsolve :: Int -> [Int] -> Int\nsolve n xs =\n  let scores = take n xs\n  in case n of\n       1 -> case scores of (a:_) -> a; _ -> 0\n       2 -> case scores of (a:b:_) -> a+b; _ -> 0\n       _ -> case scores of\n              (s1:s2:restScores) ->\n                let go a b c prev (x:more) =\n                      let nxt = max b (a + prev) + x\n                      in go b c nxt x more\n                    go _ _ c _ [] = c\n                in go 0 s1 (s1 + s2) s2 restScores\n              _ -> 0\n\nNeed check for n>=3 scores pattern s1:s2:restScores, restScores = [s3..]. go initial c=s1+s2 dp2. At x=s3, a=0,b=s1,c=s1+s2, prev=s2 => dp3. go b c nxt x more: after first, a=s1, b=s1+s2, c=dp3, prev=s3. For next i=4, need a=dp1, b=dp2, c=dp3, prev=s3. Correct. At end if restScores empty (n=2 but not in n>=3) returns c? For n=3 restScores [s3], go processes one then more=[] => go b c nxt s3 [] = c (which is nxt=dp3). Good.\n\nPotential issue base `go _ _ c _ [] = c` conflicts? It's okay. Need maybe naming `next` not reserved? `nxt`.\n\nThis is clearer. Use standard Prelude only. No imports. It returns 0 for invalid but okay.\n\nNeed only complete source. final with code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 668,
+      "total_tokens": 4169,
+      "completion_tokens": 3501,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 3267
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 26.51721869991161,
+  "received_at": "2026-11-18T06:36:38.455123+00:00",
+  "logical_request_id": "1d07bf9538b0285c0b3b1487f85ef3b395a8441414365fb4b9ebebf7ef24e747",
+  "execution_class": "direct_api"
+}

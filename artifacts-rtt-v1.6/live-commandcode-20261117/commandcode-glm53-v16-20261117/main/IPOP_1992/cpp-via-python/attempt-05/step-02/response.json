@@ -1,0 +1,94 @@
+{
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint n;\nvector<string> grid;\nstring out;\n\nvoid solve(int r, int c, int size) {\n    char first = grid[r][c];\n    bool same = true;\n    for (int i = r; i < r + size && same; ++i)\n        for (int j = c; j < c + size; ++j)\n            if (grid[i][j] != first) { same = false; break; }\n    if (same) { out += first; return; }\n    int half = size / 2;\n    out += '(';\n    solve(r, c, half);\n    solve(r, c + half, half);\n    solve(r + half, c, half);\n    solve(r + half, c + half, half);\n    out += ')';\n}\n\nint main() {\n    if (!(cin >> n)) return 0;\n    grid.resize(n);\n    for (int i = 0; i < n; ++i) cin >> grid[i];\n    solve(0, 0, n);\n    cout << out << \"\\n\";\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 247,
+    "prompt_tokens": 671,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 918
+  },
+  "usage_raw": {
+    "completion_tokens": 247,
+    "prompt_tokens": 671,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 918
+  },
+  "cost_usd": 0.0012966000000000002,
+  "cost_source": "estimated",
+  "request_id": "37dc7a92-99a9-4335-b8ab-0873c1f8e77f",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_1992\\cpp-via-python\\attempt-05\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint n;\nvector<string> grid;\nstring out;\n\nvoid solve(int r, int c, int size) {\n    char first = grid[r][c];\n    bool same = true;\n    for (int i = r; i < r + size && same; ++i)\n        for (int j = c; j < c + size; ++j)\n            if (grid[i][j] != first) { same = false; break; }\n    if (same) { out += first; return; }\n    int half = size / 2;\n    out += '(';\n    solve(r, c, half);\n    solve(r, c + half, half);\n    solve(r + half, c, half);\n    solve(r + half, c + half, half);\n    out += ')';\n}\n\nint main() {\n    if (!(cin >> n)) return 0;\n    grid.resize(n);\n    for (int i = 0; i < n; ++i) cin >> grid[i];\n    solve(0, 0, n);\n    cout << out << \"\\n\";\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794902519,
+    "id": "37dc7a92-99a9-4335-b8ab-0873c1f8e77f",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 247,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_b9c812c62d904caf944a331e72fe6eae",
+      "trace_id": "0e909647c56941e48fb49f9bebc1830f"
+    },
+    "usage": {
+      "completion_tokens": 247,
+      "prompt_tokens": 671,
+      "prompt_tokens_details": {
+        "cached_tokens": 640
+      },
+      "total_tokens": 918
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.342530700028874,
+  "received_at": "2026-11-17T08:01:58.581940+00:00",
+  "logical_request_id": "686833503121bc4d2df341f4bca9af6bc3b12a6f678f921ff1a9ccb182ea05b3",
+  "execution_class": "direct_api"
+}

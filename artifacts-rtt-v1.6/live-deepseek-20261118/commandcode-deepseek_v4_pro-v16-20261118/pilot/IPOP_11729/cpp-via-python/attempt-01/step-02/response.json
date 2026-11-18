@@ -1,0 +1,107 @@
+{
+  "text": "```cpp\n#include <iostream>\n\nvoid hanoi(int count, int start, int mid, int end) {\n    if (count == 1) {\n        std::cout << start << ' ' << end << '\\n';\n        return;\n    }\n    hanoi(count - 1, start, end, mid);\n    std::cout << start << ' ' << end << '\\n';\n    hanoi(count - 1, mid, start, end);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    std::cout << ((1LL << n) - 1) << '\\n';\n    hanoi(n, 1, 2, 3);\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4-pro",
+  "actual_model": "deepseek/deepseek-v4-pro",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4-pro",
+    "actual": "deepseek/deepseek-v4-pro",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 584,
+    "completion_tokens": 596,
+    "total_tokens": 1180,
+    "prompt_tokens_details": {
+      "cached_tokens": 384,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 416,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "usage_raw": {
+    "prompt_tokens": 584,
+    "completion_tokens": 596,
+    "total_tokens": 1180,
+    "prompt_tokens_details": {
+      "cached_tokens": 384,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 416,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "cost_usd": 0.002641056,
+  "cost_source": "estimated",
+  "request_id": "gen_01M7P6NEGT9DM1GTYM7SAA175A",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-deepseek-20261118\\commandcode-deepseek_v4_pro-v16-20261118\\pilot\\IPOP_11729\\cpp-via-python\\attempt-01\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "gen_01M7P6NEGT9DM1GTYM7SAA175A",
+    "object": "chat.completion",
+    "created": 1794967788,
+    "model": "deepseek/deepseek-v4-pro",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n\nvoid hanoi(int count, int start, int mid, int end) {\n    if (count == 1) {\n        std::cout << start << ' ' << end << '\\n';\n        return;\n    }\n    hanoi(count - 1, start, end, mid);\n    std::cout << start << ' ' << end << '\\n';\n    hanoi(count - 1, mid, start, end);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    std::cout << ((1LL << n) - 1) << '\\n';\n    hanoi(n, 1, 2, 3);\n\n    return 0;\n}\n```",
+          "reasoning": "We need translate Python to C++. Need output exactly one complete source file in fenced code block, no explanation. We need preserve stdin/stdout behavior.\n\nWe have Python code:\n- read all stdin, strip, split; if no data return.\n- n = first token int.\n- print((1<<n)-1)\n- hanoi recursive writes via sys.stdout.write to stdout. Same as print effectively: each move line \"start end\\n\".\n\nC++17 main.\n\nNeed consider constraints N<=20. Number moves up to 2^20-1 = 1,048,575. int fine but 1<<20 = 1048576 within int. Could use int64. Need output moves. Recursion depth n <=20 safe. Use ios::sync_with_stdio(false); cin.tie(nullptr). But need read all? Can just read int n. If input has extra whitespace/newline, fine. If no input? Problem input always N, but preserve if no data return quietly. So read token: if (!(cin >> n)) return 0; Then output (1LL<<n)-1 maybe. But \"print((1 << n) - 1)\" for n<=20 int fine. Use int64_t.\n\nNeed implement hanoi lambda or function. Since function needs output, can define function taking ostream? But simple cout. We'll define recursive function: void hanoi(int count, int start, int mid, int end) { if count==1 { cout << start << ' ' << end << '\\n'; return; } hanoi(...)... } Use cout.\n\nPotential performance: up to 1 million lines, cout with sync off fine.\n\nNeed exactly one code block. Ensure includes <iostream>, maybe <cstdint>. Use int main. Use std::int64_t in <cstdint>. Or just long long. C++17. We don't need vector. We'll output line.\n\nLet's craft code.\n\nOutput exactly one fenced code block with cpp. No explanation.",
+          "reasoning_details": [
+            {
+              "type": "reasoning.text",
+              "text": "We need translate Python to C++. Need output exactly one complete source file in fenced code block, no explanation. We need preserve stdin/stdout behavior.\n\nWe have Python code:\n- read all stdin, strip, split; if no data return.\n- n = first token int.\n- print((1<<n)-1)\n- hanoi recursive writes via sys.stdout.write to stdout. Same as print effectively: each move line \"start end\\n\".\n\nC++17 main.\n\nNeed consider constraints N<=20. Number moves up to 2^20-1 = 1,048,575. int fine but 1<<20 = 1048576 within int. Could use int64. Need output moves. Recursion depth n <=20 safe. Use ios::sync_with_stdio(false); cin.tie(nullptr). But need read all? Can just read int n. If input has extra whitespace/newline, fine. If no input? Problem input always N, but preserve if no data return quietly. So read token: if (!(cin >> n)) return 0; Then output (1LL<<n)-1 maybe. But \"print((1 << n) - 1)\" for n<=20 int fine. Use int64_t.\n\nNeed implement hanoi lambda or function. Since function needs output, can define function taking ostream? But simple cout. We'll define recursive function: void hanoi(int count, int start, int mid, int end) { if count==1 { cout << start << ' ' << end << '\\n'; return; } hanoi(...)... } Use cout.\n\nPotential performance: up to 1 million lines, cout with sync off fine.\n\nNeed exactly one code block. Ensure includes <iostream>, maybe <cstdint>. Use int main. Use std::int64_t in <cstdint>. Or just long long. C++17. We don't need vector. We'll output line.\n\nLet's craft code.\n\nOutput exactly one fenced code block with cpp. No explanation.",
+              "format": "unknown",
+              "index": 0
+            }
+          ]
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 584,
+      "completion_tokens": 596,
+      "total_tokens": 1180,
+      "prompt_tokens_details": {
+        "cached_tokens": 384,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 416,
+        "image_tokens": 0
+      },
+      "cache_creation_input_tokens": 0
+    },
+    "system_fingerprint": "fp_6altr0h0o2"
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 8.663621500018053,
+  "received_at": "2026-11-18T02:09:47.126255+00:00",
+  "logical_request_id": "3cf616ba08068f2ef83a16343b846af1e8d36173f312451eb28813b58cdafc5c",
+  "execution_class": "direct_api"
+}

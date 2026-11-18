@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    (mStr : nStr : _) -> do\n      let m = read mStr :: Integer\n          n = read nStr :: Integer\n      print (uniquePaths m n)\n    _ -> pure ()\n\nuniquePaths :: Integer -> Integer -> Integer\nuniquePaths m n =\n  let k = min (m - 1) (n - 1)\n      r = m + n - 2\n      numerator = product [r - k + 1 .. r]\n      denominator = product [1 .. k]\n  in numerator `div` denominator\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 549,
+    "total_tokens": 1575,
+    "completion_tokens": 1026,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 878
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 549,
+    "total_tokens": 1575,
+    "completion_tokens": 1026,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 878
+    }
+  },
+  "cost_usd": 0.0012830040000000001,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-7a3bcf2f5a8a8df557b6edcb6e254e61",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-haskell\\attempt-02\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-7a3bcf2f5a8a8df557b6edcb6e254e61",
+    "object": "chat.completion",
+    "created": 1794995676,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    (mStr : nStr : _) -> do\n      let m = read mStr :: Integer\n          n = read nStr :: Integer\n      print (uniquePaths m n)\n    _ -> pure ()\n\nuniquePaths :: Integer -> Integer -> Integer\nuniquePaths m n =\n  let k = min (m - 1) (n - 1)\n      r = m + n - 2\n      numerator = product [r - k + 1 .. r]\n      denominator = product [1 .. k]\n  in numerator `div` denominator\n```",
+          "reasoning_content": "We need answer with Haskell source only fenced code block. Need preserve behavior. Need think about inputs M N, output number paths. Source uses long long dp n initialized 1, loops. For m,n >=1. Need Haskell read two ints perhaps EOF? Valid inputs specified first line M N. We can read <$> getLine or getContents. Use Integer to be safe. Compute if n maybe 0? constraints >=1. Output dp[n-1]. Simple dynamic. Could use combin formula but loop. Need exact one code block no explanation.\n\nNeed ensure module Main and main :: IO (). Use getContents, words. If no input, source returns 0 no output. We can preserve? For valid input. Could handle empty. Haskell:\n\nmodule Main where\nmain :: IO ()\nmain = do\n  s <- getContents\n  case map read (words s) :: [Integer] of\n    (m:n:_) -> print (paths m n)\n    _ -> return ()\npaths m n = foldl step initial [2..m]\n where initial = replicate (fromIntegral n) 1 :: [Integer]\n       step dp _ = scanl1 (+) dp? Wait source loop i from 1 to m-1, for each row update dp[j] += dp[j-1] in increasing j, leaving dp[0]=1. This is equivalent row accumulations. After first row: [1,2,3...] Actually initial all 1; for i=1: j 1..n-1: dp[j]+=dp[j-1] => [1,2,3,... n]. Repeating m-1 times yields binomial C(m+n-2, n-1). Need Haskell.\n\nCould simpler formula: choose (m+n-2) (min (m-1) (n-1)). Since final answer <=2e9 but intermediate choose can huge? m,n <=100, C(198,99) ~9e58, Integer safe. Use product [k+1..k+r] `div` product [1..r]. Or dynamic with Integer. The algorithmic constraints? \"Preserve required algorithmic constraints\" likely answer correct. Use Integer.\n\nNeed output no trailing? print adds newline. Fine.\n\nPotential issue if n=0 source dp(n) and access negative. invalid.\n\nNeed only code block. Use exact source.\n\nMaybe implement DP matching. To avoid fromIntegral. Use replicate (fromIntegral n) 1. m,n Integer. fromIntegral to Int safe <=100.\n\npaths m n = last (iterate next initial !! (m-1))? Simpler formula.\n\nHaskell complete:\n\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    (mStr:nStr:_) -> do\n      let m = read mStr :: Integer\n          n = read nStr :: Integer\n      print (uniquePaths m n)\n    _ -> pure ()\n\nuniquePaths :: Integer -> Integer -> Integer\nuniquePaths m n =\n  let k = min (m - 1) (n - 1)\n      r = m + n - 2\n      numerator = product [r - k + 1 .. r]\n      denominator = product [1 .. k]\n  in numerator `div` denominator\n\nWait choose(r,k). product [r-k+1..r]. For m=3,n=7 r=8, k=2 => product [7,8]=56 /2 =28. Good. If k=0 e.g m=1 n arbitrary: product [r+1..r]? Haskell [r+1..r] empty? If start > end empty yes, product []=1. denominator product [1..0] =1. Good. But expression [r - k + 1 .. r] when k=0 start r+1 end r, [r+1..r] = [] because default step +1. Fine.\n\nNeed ensure if m,n Integer. Good.\n\nBut target preserving stdin/stdout for every valid input. It outputs integer. Yes.\n\nQuestion says \"Return exactly one complete source file in one fenced code block, with no explanation.\" We comply.\n\n"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 549,
+      "total_tokens": 1575,
+      "completion_tokens": 1026,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 878
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 6.79413250007201,
+  "received_at": "2026-11-18T09:54:41.710986+00:00",
+  "logical_request_id": "9ecc04742d43175acb25b1acab98d7c128ba3072f06efc9a0a8948af47211156",
+  "execution_class": "direct_api"
+}

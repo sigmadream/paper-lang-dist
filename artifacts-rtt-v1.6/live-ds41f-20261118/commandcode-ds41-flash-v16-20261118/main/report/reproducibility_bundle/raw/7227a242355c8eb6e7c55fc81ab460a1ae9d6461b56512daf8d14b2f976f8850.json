@@ -1,0 +1,67 @@
+{
+  "payload": {
+    "generation": {
+      "max_tokens": 16384,
+      "reasoning_effort": "low"
+    },
+    "logical_request": {
+      "campaign": "commandcode-ds41-flash-v16-20261118",
+      "phase": "main",
+      "problem": "LC_0242",
+      "repeat": 5,
+      "route": "cpp-via-haskell",
+      "step": 6
+    },
+    "messages": [
+      {
+        "content": "Translate the supplied program to the requested language, preserving its complete stdin/stdout behavior for every valid input in the specification. Return exactly one complete source file in one fenced code block, with no explanation. Use only the standard libraries shipped with the specified toolchain. C++: C++17 with main(). Haskell: GHC, module Main and main :: IO (). Prolog: SWI-Prolog, define main/0; the evaluator invokes main; do not add initialization directives. Python: Python 3, one script that reads stdin and writes stdout. Java: Java 17, one file declaring public class Main with public static void main. Preserve required algorithmic constraints and output ordering. Do not hard-code examples.",
+        "role": "system"
+      },
+      {
+        "content": "Source language: haskell\nTarget language: cpp\nSpecification:\n# LC_0242: Valid Anagram\n\n두 소문자 문자열의 문자별 개수가 모두 같으면 1, 아니면 0을 출력한다.\n\n## 제약\n\n각 문자열 길이 1..50000; 영문 소문자.\n\n## 표준입출력 계약\n\n첫 줄 s, 다음 줄 t. 각 줄은 문자열 하나다.\n출력은 정수 하나 또는 공백으로 구분한 정수 배열이다. 참/거짓은 각각 1/0으로 출력한다. 인덱스는 0부터 시작한다.\n\n예제 입력과 출력은 프롬프트의 별도 예제 구역에 제시한다. 문제 명세의 모든 유효 입력에 대한 동작을 보존한다.\n\n[공식 명세](https://leetcode.com/problems/valid-anagram/)\n\nPublic examples:\n[{\"input\": \"anagram\\nnagaram\\n\", \"output\": \"1\\n\"}]\nSource code:\nmodule Main where\n\nimport Data.List (sort)\nimport Data.Char (isSpace)\nimport System.IO\n\nstripTrailing :: String -> String\nstripTrailing = reverse . dropWhile isSpace . reverse\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let ls = lines input\n    case ls of\n        (s:t:_) -> do\n            let s' = sort (stripTrailing s)\n                t' = sort (stripTrailing t)\n            putStrLn (if s' == t' then \"1\" else \"0\")\n        [s] -> do\n            let s' = sort (stripTrailing s)\n            putStrLn \"0\"\n        _ -> return ()",
+        "role": "user"
+      }
+    ],
+    "model": "deepseek/deepseek-v4.1-flash"
+  },
+  "provider": {
+    "allowed_response_models": [],
+    "auth": {
+      "api_key_env": "CMD_API_KEY",
+      "type": "bearer"
+    },
+    "base_url": "https://api.commandcode.ai/provider/v1",
+    "cost_cap_usd": 48.62,
+    "generation": {
+      "max_tokens": 16384,
+      "reasoning_effort": "low"
+    },
+    "generation_profile": {
+      "name": "commandcode-ds41-flash-v16-low-16384",
+      "option_values": {
+        "reasoning_effort": [
+          "low"
+        ]
+      },
+      "supported_options": [
+        "max_tokens",
+        "reasoning_effort"
+      ]
+    },
+    "max_calls": 3600,
+    "max_input_tokens": 32768,
+    "max_request_cost_usd": 0.25,
+    "max_transport_attempts": 10800,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "pricing": {
+      "cached_input_per_million": 0.006,
+      "input_per_million": 0.3,
+      "output_per_million": 1.2
+    },
+    "protocol": "chat_completions",
+    "provider": "compatible",
+    "request_path": "/chat/completions",
+    "request_timeout": 180,
+    "retries": 2
+  }
+}

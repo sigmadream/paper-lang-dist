@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n    long long n, c;\n    cin >> n >> c;\n    vector<long long> a(n);\n    for (auto &x : a) cin >> x;\n    sort(a.begin(), a.end());\n    long long left = 1, right = a.back() - a.front(), ans = 0;\n    while (left <= right) {\n        long long mid = (left + right) / 2;\n        long long count = 1;\n        long long prev = a[0];\n        for (size_t i = 1; i < a.size(); ++i) {\n            if (a[i] - prev >= mid) {\n                count++;\n                prev = a[i];\n            }\n        }\n        if (count >= c) {\n            ans = mid;\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n    cout << ans << \"\\n\";\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794898336,
+    "id": "6a43cb8c-b6b4-4d83-8b65-2142d2413c64",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 233,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_ec18086676d94e5cb0e5e9b78f104571",
+      "trace_id": "961b5c4a3e564bd081b9ceba9f150c96"
+    },
+    "usage": {
+      "completion_tokens": 233,
+      "prompt_tokens": 605,
+      "prompt_tokens_details": {
+        "cached_tokens": 448
+      },
+      "total_tokens": 838
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00136148,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.5594814000069164,
+  "logical_request_id": "ce0a10cce6d4ccc5324f3cf402d76787dfc3517c3c6fdd2a21773d907cbaba52",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_2110\\cpp-via-python\\attempt-02\\step-04\\response_body.txt",
+  "received_at": "2026-11-17T06:52:15.686518+00:00",
+  "request_id": "6a43cb8c-b6b4-4d83-8b65-2142d2413c64",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n    long long n, c;\n    cin >> n >> c;\n    vector<long long> a(n);\n    for (auto &x : a) cin >> x;\n    sort(a.begin(), a.end());\n    long long left = 1, right = a.back() - a.front(), ans = 0;\n    while (left <= right) {\n        long long mid = (left + right) / 2;\n        long long count = 1;\n        long long prev = a[0];\n        for (size_t i = 1; i < a.size(); ++i) {\n            if (a[i] - prev >= mid) {\n                count++;\n                prev = a[i];\n            }\n        }\n        if (count >= c) {\n            ans = mid;\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n    cout << ans << \"\\n\";\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 233,
+    "prompt_tokens": 605,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 838
+  },
+  "usage_raw": {
+    "completion_tokens": 233,
+    "prompt_tokens": 605,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 838
+  }
+}

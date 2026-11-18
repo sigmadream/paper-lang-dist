@@ -1,0 +1,94 @@
+{
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.List (isInfixOf)\n\nmain :: IO ()\nmain = do\n    m <- getLine\n    let s = takeWhile (`elem` ['a'..'z']) m\n    if not (null s)\n        then putStrLn (if s == reverse s then \"1\" else \"0\")\n        else return ()\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 82,
+    "prompt_tokens": 437,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 519
+  },
+  "usage_raw": {
+    "completion_tokens": 82,
+    "prompt_tokens": 437,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 519
+  },
+  "cost_usd": 0.0008266800000000001,
+  "cost_source": "estimated",
+  "request_id": "cbdb183f-ecc3-4661-9218-d89982fdda23",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_10988\\cpp-via-haskell\\attempt-03\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.List (isInfixOf)\n\nmain :: IO ()\nmain = do\n    m <- getLine\n    let s = takeWhile (`elem` ['a'..'z']) m\n    if not (null s)\n        then putStrLn (if s == reverse s then \"1\" else \"0\")\n        else return ()\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794899692,
+    "id": "cbdb183f-ecc3-4661-9218-d89982fdda23",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 82,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_5b2051dcd21648469ae0a11ee2100edb",
+      "trace_id": "bd9b94e9f73741e68febdcee9ba4ae43"
+    },
+    "usage": {
+      "completion_tokens": 82,
+      "prompt_tokens": 437,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 519
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.3455514999805018,
+  "received_at": "2026-11-17T07:14:51.637872+00:00",
+  "logical_request_id": "4aee6589e337dbaa644e143404dc90ebda91fb74e47a63db679d15bf76febd4f",
+  "execution_class": "direct_api"
+}

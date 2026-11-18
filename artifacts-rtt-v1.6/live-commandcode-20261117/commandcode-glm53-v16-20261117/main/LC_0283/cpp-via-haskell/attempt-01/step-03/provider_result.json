@@ -1,0 +1,94 @@
+{
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.List (intercalate)\nimport System.Exit (exitSuccess)\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case mapM readMaybeInt (words input) of\n    Nothing -> exitSuccess\n    Just xs -> case xs of\n      (n:rest) -> do\n        let a = take n rest\n            nonZeros = filter (/= 0) a\n            result = nonZeros ++ replicate (n - length nonZeros) 0\n        putStrLn (intercalate \" \" (map show result))\n      _ -> return ()\n\nreadMaybeInt :: String -> Maybe Int\nreadMaybeInt s = case reads s of\n  [(x, \"\")] -> Just x\n  _ -> Nothing\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 171,
+    "prompt_tokens": 632,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "total_tokens": 803
+  },
+  "usage_raw": {
+    "completion_tokens": 171,
+    "prompt_tokens": 632,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "total_tokens": 803
+  },
+  "cost_usd": 0.00105352,
+  "cost_source": "estimated",
+  "request_id": "004d09e8-4a3a-4b67-81ba-acff1c3fb833",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0283\\cpp-via-haskell\\attempt-01\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.List (intercalate)\nimport System.Exit (exitSuccess)\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case mapM readMaybeInt (words input) of\n    Nothing -> exitSuccess\n    Just xs -> case xs of\n      (n:rest) -> do\n        let a = take n rest\n            nonZeros = filter (/= 0) a\n            result = nonZeros ++ replicate (n - length nonZeros) 0\n        putStrLn (intercalate \" \" (map show result))\n      _ -> return ()\n\nreadMaybeInt :: String -> Maybe Int\nreadMaybeInt s = case reads s of\n  [(x, \"\")] -> Just x\n  _ -> Nothing\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794902053,
+    "id": "004d09e8-4a3a-4b67-81ba-acff1c3fb833",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 171,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_1b3e9fef6aa14633930200dc59f807a7",
+      "trace_id": "5822fe1761974282baa1807062f27557"
+    },
+    "usage": {
+      "completion_tokens": 171,
+      "prompt_tokens": 632,
+      "prompt_tokens_details": {
+        "cached_tokens": 512
+      },
+      "total_tokens": 803
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.554005199985113,
+  "received_at": "2026-11-17T07:54:12.974015+00:00",
+  "logical_request_id": "adbee9d3f5d21782f729777835b4d9e054f6b438095236a2737b7d275048e9a2",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,94 @@
+{
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nvoid hanoi(int n, int start, int mid, int end, vector<pair<int,int>>& moves) {\n    if (n == 1) { moves.push_back({start, end}); return; }\n    hanoi(n - 1, start, end, mid, moves);\n    moves.push_back({start, end});\n    hanoi(n - 1, mid, start, end, moves);\n}\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    vector<pair<int,int>> moves;\n    hanoi(n, 1, 2, 3, moves);\n    string out = to_string(moves.size());\n    for (auto& [a, b] : moves) {\n        out += '\\n';\n        out += to_string(a);\n        out += ' ';\n        out += to_string(b);\n    }\n    out += '\\n';\n    cout << out;\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 213,
+    "prompt_tokens": 634,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 847
+  },
+  "usage_raw": {
+    "completion_tokens": 213,
+    "prompt_tokens": 634,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 847
+  },
+  "cost_usd": 0.0011681600000000001,
+  "cost_source": "estimated",
+  "request_id": "be2b6ab1-e98c-4b44-b1d2-64e1a35fb658",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_11729\\cpp-via-python\\attempt-02\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nvoid hanoi(int n, int start, int mid, int end, vector<pair<int,int>>& moves) {\n    if (n == 1) { moves.push_back({start, end}); return; }\n    hanoi(n - 1, start, end, mid, moves);\n    moves.push_back({start, end});\n    hanoi(n - 1, mid, start, end, moves);\n}\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    vector<pair<int,int>> moves;\n    hanoi(n, 1, 2, 3, moves);\n    string out = to_string(moves.size());\n    for (auto& [a, b] : moves) {\n        out += '\\n';\n        out += to_string(a);\n        out += ' ';\n        out += to_string(b);\n    }\n    out += '\\n';\n    cout << out;\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794896354,
+    "id": "be2b6ab1-e98c-4b44-b1d2-64e1a35fb658",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 213,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_784037bf73d2484590085daf425fccbb",
+      "trace_id": "b9583b9d8f2d4affa522ebd812d1ed6c"
+    },
+    "usage": {
+      "completion_tokens": 213,
+      "prompt_tokens": 634,
+      "prompt_tokens_details": {
+        "cached_tokens": 576
+      },
+      "total_tokens": 847
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.1913728999788873,
+  "received_at": "2026-11-17T06:19:14.230236+00:00",
+  "logical_request_id": "a2f969c4aa8c7cad3a4c364ac47c15b07f6a09d3ad7be9ab60099403f326acbe",
+  "execution_class": "direct_api"
+}

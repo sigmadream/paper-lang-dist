@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Data.List (foldl')\nimport Text.Read (readMaybe)\n\ntakeParsed :: Int -> [String] -> [Integer]\ntakeParsed k _ | k <= 0 = []\ntakeParsed _ [] = []\ntakeParsed k (s:ss) =\n  case readMaybe s :: Maybe Integer of\n    Nothing -> []\n    Just x  -> x : takeParsed (k - 1) ss\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let ws = words input\n  case ws of\n    [] -> return ()\n    (nw : rest) ->\n      case readMaybe nw :: Maybe Integer of\n        Nothing -> return ()\n        Just n -> do\n          let k = if n <= 0 then 0 else fromInteger n\n              nums = takeParsed k rest\n          case nums of\n            [] -> putStrLn \"0\"\n            (x:xs) -> do\n              let step (cur, best) v =\n                    let cur' = max v (cur + v)\n                        best' = max best cur'\n                    in (cur', best')\n                  (_, ans) = foldl' step (x, x) xs\n              print ans\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 627,
+    "total_tokens": 2150,
+    "completion_tokens": 1523,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1257
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 627,
+    "total_tokens": 2150,
+    "completion_tokens": 1523,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1257
+    }
+  },
+  "cost_usd": 0.001978068,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-e87ffb9257f5ed12e3083bf2af9fb85b",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-haskell\\attempt-02\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-e87ffb9257f5ed12e3083bf2af9fb85b",
+    "object": "chat.completion",
+    "created": 1794992678,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Data.List (foldl')\nimport Text.Read (readMaybe)\n\ntakeParsed :: Int -> [String] -> [Integer]\ntakeParsed k _ | k <= 0 = []\ntakeParsed _ [] = []\ntakeParsed k (s:ss) =\n  case readMaybe s :: Maybe Integer of\n    Nothing -> []\n    Just x  -> x : takeParsed (k - 1) ss\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let ws = words input\n  case ws of\n    [] -> return ()\n    (nw : rest) ->\n      case readMaybe nw :: Maybe Integer of\n        Nothing -> return ()\n        Just n -> do\n          let k = if n <= 0 then 0 else fromInteger n\n              nums = takeParsed k rest\n          case nums of\n            [] -> putStrLn \"0\"\n            (x:xs) -> do\n              let step (cur, best) v =\n                    let cur' = max v (cur + v)\n                        best' = max best cur'\n                    in (cur', best')\n                  (_, ans) = foldl' step (x, x) xs\n              print ans\n```",
+          "reasoning_content": "We need answer exactly one code block Haskell. Need preserve behavior. Need consider input format N then N ints possibly partial. Original: reads n; if n<=0 no vector; reads n times with cin>>x, break on failure. If a empty output 0. Else Kadane. Need Haskell main reading stdin. Need handle partial? Valid inputs in spec likely full. But preserve behavior for every valid input. Could implement robust parse. Output integer newline.\n\nNeed one source file. Use getContents, words. Parse maybe all integers. First token n. Then take n subsequent as list but original breaks at failure. Since getContents full. Need if n maybe long long? N constraint int. Use Integer perhaps. Calculate max sum. Tokens are integers. If no tokens, original cin>>n failure returns 0 no output. Haskell should output nothing if no first token. If tokens but no numbers after and n>0, a empty output 0. If n negative? Original loop i=0; i<n false, empty output 0. Good.\n\nImplement readInteger safely using reads. Need read n; if fail? Input valid. If no tokens return. Let tokens=words input. first token parse. If n<=0 output 0? Wait if n positive but no following tokens, a empty -> 0. If n<=0, empty -> 0. Yes. But if n positive and some available less than n, original breaks at first failure (actually if cin>>x fails breaks), includes prior. Our take n of parsed ints. If some tokens invalid? Valid.\n\nKadane with Integer. Since best and cur. For non-empty. foldl.\n\nNeed watch Haskell lazy. Simple.\n\nCode:\n\nmodule Main where\nimport System.IO\nimport Data.List (foldl')\nimport Text.Read (readMaybe)\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let ws = words input\n  case ws of\n    [] -> return ()\n    (nw:rest) -> case readMaybe nw :: Maybe Integer of\n      Nothing -> return ()\n      Just n -> do\n         let nums = take (max 0 (fromInteger? n)) ... Need if n huge but okay. take expects Int. N <=100000. But for arbitrary can use take (fromIntegral n) if n positive. If n negative, take negative -> [] in Haskell? take n when n<=0 returns []. So can do take (fromIntegral n) but fromIntegral negative fine, huge overflow maybe irrelevant. Use if n <= 0 then [] else take (fromInteger n) parsed.\n         parse each rest with readMaybe :: Maybe Integer. Need stop at first invalid? Original would stop at first fail. But valid tokens. Could implement parsing all valid. If invalid token in middle, original break at that point, our filter would skip? Better we can parse until failure. But not needed for valid inputs. To preserve: define parseList :: [String] -> [Integer] that maps readMaybe and takeWhile isJust. But readMaybe Nothing for invalid. Use mapMaybe? Need stop at first failure not skip. We can recursively parse until Nothing. takeN.\n\nSince n positive. We need numbers maybe only first n available. Original reads exactly n successful ints or until fail. So parse tokens sequentially until either count n reached or invalid. Define takeParsed :: Integer -> [String] -> [Integer]; takeParsed k _ | k<=0=[]; takeParsed _ []=[]; takeParsed k (t:ts) = case readMaybe t of Nothing -> []; Just x -> x : takeParsed (k-1) ts.\n\nNeed parse n token readMaybe. If nw invalid, original cin>>n fails returns 0 no output. Good.\n\nThen if null nums output \"0\\n\". Else:\ncur = head nums\nbest=cur\nfold over tail:\nstep (cur,best) v = let cur' = max v (cur+v); best'=max best cur' in (cur',best')\nprint (snd (foldl' step (head nums, head nums) (tail nums)))? Need use foldl' from Data.List.\nCould avoid head/tail.\n\nCode.\n\nPotential issue Haskell `print` outputs integer with newline. Good.\n\nNeed exactly one complete source file in fenced code block no explanation. Include imports.\n\nLet's craft. \n```haskell\nmodule Main where\n\nimport Data.List (foldl')\nimport Text.Read (readMaybe)\n\ntakeParsed :: Int -> [String] -> [Integer]\ntakeParsed k _ | k <= 0 = []\ntakeParsed _ [] = []\ntakeParsed k (s:ss) =\n  case readMaybe s :: Maybe Integer of\n    Nothing -> []\n    Just x  -> x : takeParsed (k - 1) ss\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let ws = words input\n  case ws of\n    [] -> return ()\n    (nw : rest) ->\n      case readMaybe nw :: Maybe Integer of\n        Nothing -> return ()\n        Just n -> do\n          let k = if n <= 0 then 0 else fromInteger n\n              nums = takeParsed k rest\n          case nums of\n            [] -> putStrLn \"0\"\n            (x:xs) -> do\n              let step (cur, best) v =\n                    let cur' = max v (cur + v)\n                        best' = max best cur'\n                    in (cur', best')\n                  (_, ans) = foldl' step (x, x) xs\n              print ans\n```\nNeed fromInteger n to Int may overflow if huge. Not spec. Could use Integer takeParsed? Avoid. But robust for N. Fine. Haskell fromInteger negative? if n<=0 else fromInteger n. N 100000. Good.\n\nCould there be issue `print ans` where ans Integer? It has Show. Good.\n\nNeed no extra."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 627,
+      "total_tokens": 2150,
+      "completion_tokens": 1523,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1257
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 12.185294199967757,
+  "received_at": "2026-11-18T09:04:48.452246+00:00",
+  "logical_request_id": "90d51a7c945a22b6def68be1acb00f306ee434836975e8045cff60e309c0ffe4",
+  "execution_class": "direct_api"
+}

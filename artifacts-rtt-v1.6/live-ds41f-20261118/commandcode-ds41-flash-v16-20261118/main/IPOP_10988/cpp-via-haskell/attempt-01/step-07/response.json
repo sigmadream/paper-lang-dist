@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    s <- getLine\n    putStrLn (if s == reverse s then \"1\" else \"0\")\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 453,
+    "total_tokens": 593,
+    "completion_tokens": 140,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 97
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 453,
+    "total_tokens": 593,
+    "completion_tokens": 140,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 97
+    }
+  },
+  "cost_usd": 0.00030389999999999996,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-3ca77cc36ef508270140618f6250f723",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-01\\step-07\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-3ca77cc36ef508270140618f6250f723",
+    "object": "chat.completion",
+    "created": 1795001109,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    s <- getLine\n    putStrLn (if s == reverse s then \"1\" else \"0\")\n```",
+          "reasoning_content": "We need answer exactly one fenced code block Haskell. Need translate. Simple.\n\nNeed preserve stdin/stdout. Read string, palindrome. Could use getLine. Input lowercase string length 1..100, possibly newline. Use interact? Need output 1 or 0 newline. Haskell main = do s <- getLine; putStrLn (if s == reverse s then \"1\" else \"0\"). Ensure complete module Main. Fenced code block. No explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 453,
+      "total_tokens": 593,
+      "completion_tokens": 140,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 97
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.59571479994338,
+  "received_at": "2026-11-18T11:25:10.867975+00:00",
+  "logical_request_id": "dc6b26e8e1c6c589fe0358f098e2923beaa163a12d7722cc29f72bdf0099b13a",
+  "execution_class": "direct_api"
+}

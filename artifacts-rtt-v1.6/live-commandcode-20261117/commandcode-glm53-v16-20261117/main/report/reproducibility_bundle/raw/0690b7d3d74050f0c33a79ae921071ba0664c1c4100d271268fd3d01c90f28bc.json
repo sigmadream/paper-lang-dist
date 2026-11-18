@@ -1,0 +1,95 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  line <- getLine\n  let (mStr, rest) = break (== ' ') line\n      nStr = dropWhile (== ' ') rest\n      m = read mStr :: Integer\n      n = read nStr :: Integer\n      dp0 = replicate (fromIntegral n) 1 :: [Integer]\n      step dp = tail (scanl (+) 1 dp)\n      dpFinal = iterate step dp0 !! (fromIntegral m - 1)\n  print (last dpFinal)\n```",
+          "reasoning_content": "Edge case n=1: dp[n-1]=dp[0]=1. Haskell: read two ints, compute with foldl loop.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794900899,
+    "id": "fe365596-0c35-47fc-8215-dbf9ab7b4095",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 164,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_145e92a6305d4ddbb22a9a388d9a7193",
+      "trace_id": "fd0c14a7e2cf40f7a85ba594fd3d47e9"
+    },
+    "usage": {
+      "completion_tokens": 164,
+      "prompt_tokens": 499,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 663
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00127428,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.0743469999870285,
+  "logical_request_id": "e9417acf14dafa85aa5eeab409354fb72937d5bdf7d1e7c512a8d3d44a6b9474",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0062\\cpp-via-haskell\\attempt-03\\step-03\\response_body.txt",
+  "received_at": "2026-11-17T07:34:58.558048+00:00",
+  "request_id": "fe365596-0c35-47fc-8215-dbf9ab7b4095",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  line <- getLine\n  let (mStr, rest) = break (== ' ') line\n      nStr = dropWhile (== ' ') rest\n      m = read mStr :: Integer\n      n = read nStr :: Integer\n      dp0 = replicate (fromIntegral n) 1 :: [Integer]\n      step dp = tail (scanl (+) 1 dp)\n      dpFinal = iterate step dp0 !! (fromIntegral m - 1)\n  print (last dpFinal)\n```",
+  "usage": {
+    "completion_tokens": 164,
+    "prompt_tokens": 499,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 663
+  },
+  "usage_raw": {
+    "completion_tokens": 164,
+    "prompt_tokens": 499,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 663
+  }
+}

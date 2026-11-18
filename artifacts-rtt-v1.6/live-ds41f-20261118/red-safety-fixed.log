@@ -1,0 +1,324 @@
+FFFFFFFFFF                                                               [100%]
+================================== FAILURES ===================================
+____________________ test_flash_rejects_wrong_peak_pricing ____________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002A3D3054C30>
+
+    def test_flash_rejects_wrong_peak_pricing(monkeypatch):
+        from scripts import run_deepseek_v41_flash_20261118 as runner
+    
+        cfg = runner.core.load_hops_config(*runner.config_paths())
+        cfg["execution_wrapper"]["sha256"] = runner.digest(
+            open(runner.__file__, "rb").read()
+        )
+        cfg["llm"]["pricing"]["input_per_million"] = 0.15
+        monkeypatch.setattr(runner.core, "load_hops_config", lambda *args: cfg)
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+.test-tmp\v16-orchestration\test_flash_safety.py:25: Failed
+_______________ test_flash_budget_recomputes_both_prior_ledgers _______________
+
+    def test_flash_budget_recomputes_both_prior_ledgers():
+        from scripts import run_deepseek_v41_flash_20261118 as runner
+    
+>       evidence = runner.prior_budget_evidence()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.run_deepseek_v41_flash_20261118' has no attribute 'prior_budget_evidence'
+
+.test-tmp\v16-orchestration\test_flash_safety.py:32: AttributeError
+_ test_flash_wrong_model_is_preserved_and_never_accepted[deepseek/deepseek-v4-pro] _
+
+tmp_path = WindowsPath('C:/Users/sigma/AppData/Local/Temp/pytest-of-sigma/pytest-243/test_flash_wrong_model_is_pres0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002A3D330A3F0>
+actual_model = 'deepseek/deepseek-v4-pro'
+
+    @pytest.mark.parametrize("actual_model", ["deepseek/deepseek-v4-pro", "deepseek/deepseek-v4.1-flash-fast", "deepseek/deepseek-v4.1-flash-ultrafast"])
+    def test_flash_wrong_model_is_preserved_and_never_accepted(tmp_path, monkeypatch, actual_model):
+        from scripts import run_deepseek_v41_flash_20261118 as runner
+        from rttdist.providers import ProviderError
+    
+        cfg = runner.core.load_hops_config(*runner.config_paths())["llm"]
+        monkeypatch.setattr(runner, "ROOT", tmp_path)
+        monkeypatch.setattr(runner, "OUTPUT", tmp_path / "artifacts-rtt-v1.6/live-ds41f-20261118")
+        monkeypatch.setattr(runner, "assert_sources", lambda: {})
+        calls = []
+    
+        def send(req, timeout):
+            wire = json.loads(req.data)
+            assert wire["model"] == "deepseek/deepseek-v4.1-flash"
+            assert wire["max_tokens"] == 16384 and wire["reasoning_effort"] == "low"
+            assert not {"temperature", "top_p", "seed"} & wire.keys()
+            assert req.full_url == "https://api.commandcode.ai/provider/v1/chat/completions"
+            calls.append(1)
+            return io.BytesIO(json.dumps({"model": actual_model, "choices": [{"message": {"content": "OK"}, "finish_reason": "stop"}], "usage": {"prompt_tokens": 1000, "completion_tokens": 100, "prompt_tokens_details": {"cached_tokens": 200}}}).encode())
+    
+        monkeypatch.setattr("rttdist.providers.request.urlopen", send)
+        folder = runner.OUTPUT / runner.CAMPAIGN_ID / "preflight"
+        provider = runner.IsolatedProvider(runner.real_provider_factory(runner.phase_settings(cfg, "preflight"), folder / "provider_ledger.jsonl"), "memory-only-test")
+        for _ in range(2):
+            with pytest.raises(ProviderError):
+>               provider.complete({"messages": []}, folder / "request")
+
+.test-tmp\v16-orchestration\test_flash_safety.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\run_deepseek_v41_flash_20261118.py:89: in complete
+    return self.provider.complete(payload, folder)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\rttdist\providers.py:1111: in complete
+    with file_lock(call_lock, blocking=False):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\..\..\scoop\persist\uv\python\versions\cpython-3.15-windows-x86_64-none\Lib\contextlib.py:203: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+src\rttdist\providers.py:450: in file_lock
+    stream = path.open("a+b")
+             ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/sigma/AppData/Local/Temp/pytest-of-sigma/pytest-243/test_flash_wrong_model_is_pres0/artifacts-rt...-20261118/preflight/provider_ledger.jsonl.calls/c41abbea041862d302a88030195a6fcb4a7c6b07c8ba2621a39a278747ad896a.lock')
+mode = 'a+b', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\sigma\\AppData\\Local\\Temp\\pytest-of-sigma\\pytest-243\\test_flash_wrong_model_is_pres0\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\preflight\\provider_ledger.jsonl.calls\\c41abbea041862d302a88030195a6fcb4a7c6b07c8ba2621a39a278747ad896a.lock'
+
+..\..\..\..\scoop\persist\uv\python\versions\cpython-3.15-windows-x86_64-none\Lib\pathlib\__init__.py:970: FileNotFoundError
+_ test_flash_wrong_model_is_preserved_and_never_accepted[deepseek/deepseek-v4.1-flash-fast] _
+
+tmp_path = WindowsPath('C:/Users/sigma/AppData/Local/Temp/pytest-of-sigma/pytest-243/test_flash_wrong_model_is_pres1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002A3D32BE0F0>
+actual_model = 'deepseek/deepseek-v4.1-flash-fast'
+
+    @pytest.mark.parametrize("actual_model", ["deepseek/deepseek-v4-pro", "deepseek/deepseek-v4.1-flash-fast", "deepseek/deepseek-v4.1-flash-ultrafast"])
+    def test_flash_wrong_model_is_preserved_and_never_accepted(tmp_path, monkeypatch, actual_model):
+        from scripts import run_deepseek_v41_flash_20261118 as runner
+        from rttdist.providers import ProviderError
+    
+        cfg = runner.core.load_hops_config(*runner.config_paths())["llm"]
+        monkeypatch.setattr(runner, "ROOT", tmp_path)
+        monkeypatch.setattr(runner, "OUTPUT", tmp_path / "artifacts-rtt-v1.6/live-ds41f-20261118")
+        monkeypatch.setattr(runner, "assert_sources", lambda: {})
+        calls = []
+    
+        def send(req, timeout):
+            wire = json.loads(req.data)
+            assert wire["model"] == "deepseek/deepseek-v4.1-flash"
+            assert wire["max_tokens"] == 16384 and wire["reasoning_effort"] == "low"
+            assert not {"temperature", "top_p", "seed"} & wire.keys()
+            assert req.full_url == "https://api.commandcode.ai/provider/v1/chat/completions"
+            calls.append(1)
+            return io.BytesIO(json.dumps({"model": actual_model, "choices": [{"message": {"content": "OK"}, "finish_reason": "stop"}], "usage": {"prompt_tokens": 1000, "completion_tokens": 100, "prompt_tokens_details": {"cached_tokens": 200}}}).encode())
+    
+        monkeypatch.setattr("rttdist.providers.request.urlopen", send)
+        folder = runner.OUTPUT / runner.CAMPAIGN_ID / "preflight"
+        provider = runner.IsolatedProvider(runner.real_provider_factory(runner.phase_settings(cfg, "preflight"), folder / "provider_ledger.jsonl"), "memory-only-test")
+        for _ in range(2):
+            with pytest.raises(ProviderError):
+>               provider.complete({"messages": []}, folder / "request")
+
+.test-tmp\v16-orchestration\test_flash_safety.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\run_deepseek_v41_flash_20261118.py:89: in complete
+    return self.provider.complete(payload, folder)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\rttdist\providers.py:1111: in complete
+    with file_lock(call_lock, blocking=False):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\..\..\scoop\persist\uv\python\versions\cpython-3.15-windows-x86_64-none\Lib\contextlib.py:203: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+src\rttdist\providers.py:450: in file_lock
+    stream = path.open("a+b")
+             ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/sigma/AppData/Local/Temp/pytest-of-sigma/pytest-243/test_flash_wrong_model_is_pres1/artifacts-rt...-20261118/preflight/provider_ledger.jsonl.calls/dde7c16f6771efebfe7804dda5b15e80373c0e35b5a35641964078349cffc426.lock')
+mode = 'a+b', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\sigma\\AppData\\Local\\Temp\\pytest-of-sigma\\pytest-243\\test_flash_wrong_model_is_pres1\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\preflight\\provider_ledger.jsonl.calls\\dde7c16f6771efebfe7804dda5b15e80373c0e35b5a35641964078349cffc426.lock'
+
+..\..\..\..\scoop\persist\uv\python\versions\cpython-3.15-windows-x86_64-none\Lib\pathlib\__init__.py:970: FileNotFoundError
+_ test_flash_wrong_model_is_preserved_and_never_accepted[deepseek/deepseek-v4.1-flash-ultrafast] _
+
+tmp_path = WindowsPath('C:/Users/sigma/AppData/Local/Temp/pytest-of-sigma/pytest-243/test_flash_wrong_model_is_pres2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002A3D329ABE0>
+actual_model = 'deepseek/deepseek-v4.1-flash-ultrafast'
+
+    @pytest.mark.parametrize("actual_model", ["deepseek/deepseek-v4-pro", "deepseek/deepseek-v4.1-flash-fast", "deepseek/deepseek-v4.1-flash-ultrafast"])
+    def test_flash_wrong_model_is_preserved_and_never_accepted(tmp_path, monkeypatch, actual_model):
+        from scripts import run_deepseek_v41_flash_20261118 as runner
+        from rttdist.providers import ProviderError
+    
+        cfg = runner.core.load_hops_config(*runner.config_paths())["llm"]
+        monkeypatch.setattr(runner, "ROOT", tmp_path)
+        monkeypatch.setattr(runner, "OUTPUT", tmp_path / "artifacts-rtt-v1.6/live-ds41f-20261118")
+        monkeypatch.setattr(runner, "assert_sources", lambda: {})
+        calls = []
+    
+        def send(req, timeout):
+            wire = json.loads(req.data)
+            assert wire["model"] == "deepseek/deepseek-v4.1-flash"
+            assert wire["max_tokens"] == 16384 and wire["reasoning_effort"] == "low"
+            assert not {"temperature", "top_p", "seed"} & wire.keys()
+            assert req.full_url == "https://api.commandcode.ai/provider/v1/chat/completions"
+            calls.append(1)
+            return io.BytesIO(json.dumps({"model": actual_model, "choices": [{"message": {"content": "OK"}, "finish_reason": "stop"}], "usage": {"prompt_tokens": 1000, "completion_tokens": 100, "prompt_tokens_details": {"cached_tokens": 200}}}).encode())
+    
+        monkeypatch.setattr("rttdist.providers.request.urlopen", send)
+        folder = runner.OUTPUT / runner.CAMPAIGN_ID / "preflight"
+        provider = runner.IsolatedProvider(runner.real_provider_factory(runner.phase_settings(cfg, "preflight"), folder / "provider_ledger.jsonl"), "memory-only-test")
+        for _ in range(2):
+            with pytest.raises(ProviderError):
+>               provider.complete({"messages": []}, folder / "request")
+
+.test-tmp\v16-orchestration\test_flash_safety.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\run_deepseek_v41_flash_20261118.py:89: in complete
+    return self.provider.complete(payload, folder)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\rttdist\providers.py:1111: in complete
+    with file_lock(call_lock, blocking=False):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\..\..\scoop\persist\uv\python\versions\cpython-3.15-windows-x86_64-none\Lib\contextlib.py:203: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+src\rttdist\providers.py:450: in file_lock
+    stream = path.open("a+b")
+             ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/sigma/AppData/Local/Temp/pytest-of-sigma/pytest-243/test_flash_wrong_model_is_pres2/artifacts-rt...-20261118/preflight/provider_ledger.jsonl.calls/7a69260b8d3bea008c224d5047ca60d852f278d450a365c1251a9ca0c864dd34.lock')
+mode = 'a+b', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\sigma\\AppData\\Local\\Temp\\pytest-of-sigma\\pytest-243\\test_flash_wrong_model_is_pres2\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\preflight\\provider_ledger.jsonl.calls\\7a69260b8d3bea008c224d5047ca60d852f278d450a365c1251a9ca0c864dd34.lock'
+
+..\..\..\..\scoop\persist\uv\python\versions\cpython-3.15-windows-x86_64-none\Lib\pathlib\__init__.py:970: FileNotFoundError
+_______ test_flash_review_rejects_missing_campaign_binding[campaign_id] _______
+
+flash_review = (<module 'scripts.run_deepseek_v41_flash_20261118' from 'C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleb...e-manifest.json', 'prepared_manifest_sha256': '22f1337e6d79add62540ff483dd662d2ef313b98bbfe4bb8e5975685135aaa67', ...})
+field = 'campaign_id'
+
+    @pytest.mark.parametrize("field", ["campaign_id", "model_id", "prepared_manifest_sha256", "reviewer_session_id"])
+    def test_flash_review_rejects_missing_campaign_binding(flash_review, field):
+        runner, evidence = flash_review
+        path = runner.OUTPUT / "검토.json"
+        runner.write_json(path, evidence)
+        runner.require_review(path)
+        del evidence[field]
+        runner.write_json(path, evidence)
+>       with pytest.raises(ValueError, match="검토"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+.test-tmp\v16-orchestration\test_flash_safety.py:122: Failed
+________ test_flash_review_rejects_missing_campaign_binding[model_id] _________
+
+flash_review = (<module 'scripts.run_deepseek_v41_flash_20261118' from 'C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleb...e-manifest.json', 'prepared_manifest_sha256': '22f1337e6d79add62540ff483dd662d2ef313b98bbfe4bb8e5975685135aaa67', ...})
+field = 'model_id'
+
+    @pytest.mark.parametrize("field", ["campaign_id", "model_id", "prepared_manifest_sha256", "reviewer_session_id"])
+    def test_flash_review_rejects_missing_campaign_binding(flash_review, field):
+        runner, evidence = flash_review
+        path = runner.OUTPUT / "검토.json"
+        runner.write_json(path, evidence)
+        runner.require_review(path)
+        del evidence[field]
+        runner.write_json(path, evidence)
+>       with pytest.raises(ValueError, match="검토"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+.test-tmp\v16-orchestration\test_flash_safety.py:122: Failed
+_ test_flash_review_rejects_missing_campaign_binding[prepared_manifest_sha256] _
+
+flash_review = (<module 'scripts.run_deepseek_v41_flash_20261118' from 'C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleb...-flash', 'passed': True, 'prepared_manifest_path': 'artifacts-rtt-v1.6/live-ds41f-20261118/source-manifest.json', ...})
+field = 'prepared_manifest_sha256'
+
+    @pytest.mark.parametrize("field", ["campaign_id", "model_id", "prepared_manifest_sha256", "reviewer_session_id"])
+    def test_flash_review_rejects_missing_campaign_binding(flash_review, field):
+        runner, evidence = flash_review
+        path = runner.OUTPUT / "검토.json"
+        runner.write_json(path, evidence)
+        runner.require_review(path)
+        del evidence[field]
+        runner.write_json(path, evidence)
+>       with pytest.raises(ValueError, match="검토"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+.test-tmp\v16-orchestration\test_flash_safety.py:122: Failed
+___ test_flash_review_rejects_missing_campaign_binding[reviewer_session_id] ___
+
+flash_review = (<module 'scripts.run_deepseek_v41_flash_20261118' from 'C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleb...-flash', 'passed': True, 'prepared_manifest_path': 'artifacts-rtt-v1.6/live-ds41f-20261118/source-manifest.json', ...})
+field = 'reviewer_session_id'
+
+    @pytest.mark.parametrize("field", ["campaign_id", "model_id", "prepared_manifest_sha256", "reviewer_session_id"])
+    def test_flash_review_rejects_missing_campaign_binding(flash_review, field):
+        runner, evidence = flash_review
+        path = runner.OUTPUT / "검토.json"
+        runner.write_json(path, evidence)
+        runner.require_review(path)
+        del evidence[field]
+        runner.write_json(path, evidence)
+>       with pytest.raises(ValueError, match="검토"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+.test-tmp\v16-orchestration\test_flash_safety.py:122: Failed
+__________ test_flash_review_rejects_partial_sources_and_self_review __________
+
+flash_review = (<module 'scripts.run_deepseek_v41_flash_20261118' from 'C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleb...-flash', 'passed': True, 'prepared_manifest_path': 'artifacts-rtt-v1.6/live-ds41f-20261118/source-manifest.json', ...})
+
+    def test_flash_review_rejects_partial_sources_and_self_review(flash_review):
+        runner, evidence = flash_review
+        path = runner.OUTPUT / "검토.json"
+        changed = deepcopy(evidence)
+        changed["source_hashes"] = {"src/rttdist/providers.py": evidence["source_hashes"]["src/rttdist/providers.py"]}
+        runner.write_json(path, changed)
+>       with pytest.raises(ValueError, match="검토"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+.test-tmp\v16-orchestration\test_flash_safety.py:132: Failed
+=========================== short test summary info ===========================
+FAILED .test-tmp/v16-orchestration/test_flash_safety.py::test_flash_rejects_wrong_peak_pricing
+FAILED .test-tmp/v16-orchestration/test_flash_safety.py::test_flash_budget_recomputes_both_prior_ledgers
+FAILED .test-tmp/v16-orchestration/test_flash_safety.py::test_flash_wrong_model_is_preserved_and_never_accepted[deepseek/deepseek-v4-pro]
+FAILED .test-tmp/v16-orchestration/test_flash_safety.py::test_flash_wrong_model_is_preserved_and_never_accepted[deepseek/deepseek-v4.1-flash-fast]
+FAILED .test-tmp/v16-orchestration/test_flash_safety.py::test_flash_wrong_model_is_preserved_and_never_accepted[deepseek/deepseek-v4.1-flash-ultrafast]
+FAILED .test-tmp/v16-orchestration/test_flash_safety.py::test_flash_review_rejects_missing_campaign_binding[campaign_id]
+FAILED .test-tmp/v16-orchestration/test_flash_safety.py::test_flash_review_rejects_missing_campaign_binding[model_id]
+FAILED .test-tmp/v16-orchestration/test_flash_safety.py::test_flash_review_rejects_missing_campaign_binding[prepared_manifest_sha256]
+FAILED .test-tmp/v16-orchestration/test_flash_safety.py::test_flash_review_rejects_missing_campaign_binding[reviewer_session_id]
+FAILED .test-tmp/v16-orchestration/test_flash_safety.py::test_flash_review_rejects_partial_sources_and_self_review
+10 failed in 0.83s

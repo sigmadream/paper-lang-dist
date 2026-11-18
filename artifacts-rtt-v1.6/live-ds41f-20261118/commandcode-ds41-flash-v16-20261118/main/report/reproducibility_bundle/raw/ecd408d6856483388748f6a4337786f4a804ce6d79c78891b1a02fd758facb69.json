@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <string>\n#include <cstdint>\n\nstatic void hanoi(int n, int start, int mid, int end, std::string& moves) {\n    if (n == 1) {\n        moves += std::to_string(start);\n        moves += ' ';\n        moves += std::to_string(end);\n        moves += '\\n';\n        return;\n    }\n\n    hanoi(n - 1, start, end, mid, moves);\n\n    moves += std::to_string(start);\n    moves += ' ';\n    moves += std::to_string(end);\n    moves += '\\n';\n\n    hanoi(n - 1, mid, start, end, moves);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    std::string moves;\n    moves.reserve((1u << n) * 5);\n\n    hanoi(n, 1, 2, 3, moves);\n\n    const std::uint64_t count = (1ULL << n) - 1;\n\n    std::string output;\n    output.reserve(32 + moves.size());\n    output += std::to_string(count);\n    output += '\\n';\n    output += moves;\n\n    std::cout << output;\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer exactly one fenced code block C++ source. Need translate. Need preserve behavior. N up to 20, moves 2^20-1 ~1,048,575, output text. C++ build string vector or ostringstream. Need main. Use ios. Recursion.\n\nNeed consider no input return. Read long long/int n. Output count then moves. Efficient. Use std::string out; reserve maybe n small. For 20 moves ~1M lines ~4MB, fine. Could use ostringstream or string append. Need count = (1ULL<<n)-1 for n<=20 fits int. But preserve if maybe? Spec 1..20. Use size_t. Generate lines with std::to_string(start)+\" \"+std::to_string(end)+\"\\n\". Recursive function appends. Need output first count newline then moves. Ensure trailing newline. If no data return. Since N valid. Code.\n\nNeed no explanation. Fenced cpp.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794995761,
+    "id": "chatcmpl-995610cd0ebe07f3ec95720678cad12c",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 502,
+      "completion_tokens_details": {
+        "reasoning_tokens": 207
+      },
+      "prompt_tokens": 633,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1135
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0007922999999999999,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 4.191430499893613,
+  "logical_request_id": "b6f4f9a2c4873ede299c2e41d5a17a1dffb76f29fd57f7fc359cd6daee2fcef4",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_11729\\cpp-via-python\\attempt-04\\step-02\\response_body.txt",
+  "received_at": "2026-11-18T09:56:03.563694+00:00",
+  "request_id": "chatcmpl-995610cd0ebe07f3ec95720678cad12c",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <string>\n#include <cstdint>\n\nstatic void hanoi(int n, int start, int mid, int end, std::string& moves) {\n    if (n == 1) {\n        moves += std::to_string(start);\n        moves += ' ';\n        moves += std::to_string(end);\n        moves += '\\n';\n        return;\n    }\n\n    hanoi(n - 1, start, end, mid, moves);\n\n    moves += std::to_string(start);\n    moves += ' ';\n    moves += std::to_string(end);\n    moves += '\\n';\n\n    hanoi(n - 1, mid, start, end, moves);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    std::string moves;\n    moves.reserve((1u << n) * 5);\n\n    hanoi(n, 1, 2, 3, moves);\n\n    const std::uint64_t count = (1ULL << n) - 1;\n\n    std::string output;\n    output.reserve(32 + moves.size());\n    output += std::to_string(count);\n    output += '\\n';\n    output += moves;\n\n    std::cout << output;\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 502,
+    "completion_tokens_details": {
+      "reasoning_tokens": 207
+    },
+    "prompt_tokens": 633,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1135
+  },
+  "usage_raw": {
+    "completion_tokens": 502,
+    "completion_tokens_details": {
+      "reasoning_tokens": 207
+    },
+    "prompt_tokens": 633,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1135
+  }
+}

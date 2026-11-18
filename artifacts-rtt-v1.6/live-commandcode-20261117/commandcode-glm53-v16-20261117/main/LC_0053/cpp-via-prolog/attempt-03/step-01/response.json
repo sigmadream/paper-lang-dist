@@ -1,0 +1,94 @@
+{
+  "text": "```prolog\n:- module(main, [main/0]).\n:- set_prolog_flag(double_quotes, string).\n\nread_ints(N, L) :-\n    read_line_to_codes(user_input, C),\n    C \\= end_of_file,\n    ( C == [] -> read_ints(N, L) ; true ),\n    ( var(C) -> true ; true ),\n    parse_ints(C, L0),\n    length(L0, N),\n    L = L0.\n\nparse_ints(C, L) :-\n    phrase(ints(L), C).\n\nints([]) --> [].\nints([X|T]) --> ws, integer(X), ints(T).\n\nws --> [C], { C == 32 ; C == 9 ; C == 10 ; C == 13 }, !, ws.\nws --> [].\n\ninteger(I) --> digits(D), { number_codes(I, D) }, ( sign before? ).\n\n```\n\nLet me write it correctly:\n\n```prolog\n:- module(main, [main/0]).\n\nmain :-\n    read_line_to_codes(user_input, Line1),\n    ( Line1 == end_of_file -> true ;\n      parse_ints(Line1, [N]),\n      read_line_to_codes(user_input, Line2),\n      ( Line2 == end_of_file -> L = [] ; parse_ints(Line2, L) ),\n      ( length(L, N) -> true ; collect_more(N, L, A) ),\n      max_subarray(A, Best),\n      format(\"~d~n\", [Best]) ).\n\ncollect_more(N, L, A) :-\n    append(L, _, A),\n    length(A, N),\n    read_all_rest(A).\n\nread_all_rest(A) :-\n    read_all_rest([], A).\n\nread_all_rest(Acc, A) :-\n    read_line_to_codes(user_input, C),\n    ( C == end_of_file -> A = Acc ;\n      parse_ints(C, L),\n      append(Acc, L, Acc2),\n      read_all_rest(Acc2, A) ).\n\nparse_ints(C, L) :- phrase(int_list(L), C).\n\nint_list([]) --> [].\nint_list([X|T]) --> ws, int(X), int_list(T).\n\nws --> [C], { memberchk(C, \" \\t\\r\\n\") }, ws.\nws --> [].\n\nint(X) --> \"-\", digits(D), { number_codes(N, D), X is -N }, !.\nint(X) --> digits(D), { number_codes(X, D) }, !.\n\ndigits([D|T]) --> [C], { C >= 0'0, C =< 0'9, D = C }, !, digits(T).\ndigits([]) --> [].\n\nmax_subarray([F|Rest], Best) :-\n    max_sub(Rest, F, F, Best).\nmax_sub([], _, Best, Best).\nmax_sub([X|T], Cur, B0, Best) :-\n    C1 is max(X, Cur + X),\n    B1 is max(B0, C1),\n    max_sub(T, C1, B1, Best).\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 642,
+    "prompt_tokens": 602,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1244
+  },
+  "usage_raw": {
+    "completion_tokens": 642,
+    "prompt_tokens": 602,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1244
+  },
+  "cost_usd": 0.00352168,
+  "cost_source": "estimated",
+  "request_id": "47993521-cf6c-4bca-bfb7-dba55cf71464",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0053\\cpp-via-prolog\\attempt-03\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n:- set_prolog_flag(double_quotes, string).\n\nread_ints(N, L) :-\n    read_line_to_codes(user_input, C),\n    C \\= end_of_file,\n    ( C == [] -> read_ints(N, L) ; true ),\n    ( var(C) -> true ; true ),\n    parse_ints(C, L0),\n    length(L0, N),\n    L = L0.\n\nparse_ints(C, L) :-\n    phrase(ints(L), C).\n\nints([]) --> [].\nints([X|T]) --> ws, integer(X), ints(T).\n\nws --> [C], { C == 32 ; C == 9 ; C == 10 ; C == 13 }, !, ws.\nws --> [].\n\ninteger(I) --> digits(D), { number_codes(I, D) }, ( sign before? ).\n\n```\n\nLet me write it correctly:\n\n```prolog\n:- module(main, [main/0]).\n\nmain :-\n    read_line_to_codes(user_input, Line1),\n    ( Line1 == end_of_file -> true ;\n      parse_ints(Line1, [N]),\n      read_line_to_codes(user_input, Line2),\n      ( Line2 == end_of_file -> L = [] ; parse_ints(Line2, L) ),\n      ( length(L, N) -> true ; collect_more(N, L, A) ),\n      max_subarray(A, Best),\n      format(\"~d~n\", [Best]) ).\n\ncollect_more(N, L, A) :-\n    append(L, _, A),\n    length(A, N),\n    read_all_rest(A).\n\nread_all_rest(A) :-\n    read_all_rest([], A).\n\nread_all_rest(Acc, A) :-\n    read_line_to_codes(user_input, C),\n    ( C == end_of_file -> A = Acc ;\n      parse_ints(C, L),\n      append(Acc, L, Acc2),\n      read_all_rest(Acc2, A) ).\n\nparse_ints(C, L) :- phrase(int_list(L), C).\n\nint_list([]) --> [].\nint_list([X|T]) --> ws, int(X), int_list(T).\n\nws --> [C], { memberchk(C, \" \\t\\r\\n\") }, ws.\nws --> [].\n\nint(X) --> \"-\", digits(D), { number_codes(N, D), X is -N }, !.\nint(X) --> digits(D), { number_codes(X, D) }, !.\n\ndigits([D|T]) --> [C], { C >= 0'0, C =< 0'9, D = C }, !, digits(T).\ndigits([]) --> [].\n\nmax_subarray([F|Rest], Best) :-\n    max_sub(Rest, F, F, Best).\nmax_sub([], _, Best, Best).\nmax_sub([X|T], Cur, B0, Best) :-\n    C1 is max(X, Cur + X),\n    B1 is max(B0, C1),\n    max_sub(T, C1, B1, Best).\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794898643,
+    "id": "47993521-cf6c-4bca-bfb7-dba55cf71464",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 642,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_3c25827ba71c480dbb3ecd38d82f7de4",
+      "trace_id": "c3188644377742bc81eb8be45eb83fcd"
+    },
+    "usage": {
+      "completion_tokens": 642,
+      "prompt_tokens": 602,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 1244
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 6.230344199982937,
+  "received_at": "2026-11-17T06:57:23.185461+00:00",
+  "logical_request_id": "0d5d5005f222c901b4d6c4427dfd996da860b3533836a98f6f2f5ed06adf8a2e",
+  "execution_class": "direct_api"
+}

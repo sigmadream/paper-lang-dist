@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(clpfd)).\n\nmain :-\n    read_line_to_string(user_input, Line),\n    split_string(Line, \" \", \" \", Parts),\n    maplist(number_string, [M, N], Parts),\n    unique_paths(M, N, Answer),\n    format(\"~d~n\", [Answer]).\n\nunique_paths(1, _, 1) :- !.\nunique_paths(_, 1, 1) :- !.\nunique_paths(M, N, R) :-\n    MM is M - 1, NN is N - 1,\n    findall(dp, (true, false), _), % placeholder removed below\n    dp_loop(MM, NN, R).\n\ndp_loop(1, _, R) :- !, R = 1.\ndp_loop(_, 0, R) :- !, R = 1.\ndp_loop(M, N, R) :-\n    length(Row, N),\n    maplist(=(1), Row),\n    M1 is M - 1,\n    iterate(M1, Row, Final),\n    last(Final, R).\n\niterate(0, Row, Row) :- !.\niterate(I, Row, Out) :-\n    I > 0,\n    prefix_sum(Row, NewRow),\n    I1 is I - 1,\n    iterate(I1, NewRow, Out).\n\nprefix_sum(Row, NewRow) :-\n    prefix_sum_(Row, 0, NewRow).\n\nprefix_sum_([], _, []).\nprefix_sum_([H|T], Acc, [H2|T2]) :-\n    Acc2 is Acc + H,\n    H2 = Acc2,\n    prefix_sum_(T, Acc2, T2).\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794899823,
+    "id": "b0087c9d-fae2-4794-a9e3-96fe62cebe90",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 364,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_4de59842e46b4bab885ee3b45357031c",
+      "trace_id": "ffcdaccafd734f418d1db88d8ece2b03"
+    },
+    "usage": {
+      "completion_tokens": 364,
+      "prompt_tokens": 590,
+      "prompt_tokens_details": {
+        "cached_tokens": 576
+      },
+      "total_tokens": 954
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00177096,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.0909527999465354,
+  "logical_request_id": "abaa9fd1fd8d6e0d245bef0de5628ac34bea8c57e989346bc15b198ae96b9760",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0062\\cpp-via-prolog\\attempt-05\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T07:17:02.977534+00:00",
+  "request_id": "b0087c9d-fae2-4794-a9e3-96fe62cebe90",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(clpfd)).\n\nmain :-\n    read_line_to_string(user_input, Line),\n    split_string(Line, \" \", \" \", Parts),\n    maplist(number_string, [M, N], Parts),\n    unique_paths(M, N, Answer),\n    format(\"~d~n\", [Answer]).\n\nunique_paths(1, _, 1) :- !.\nunique_paths(_, 1, 1) :- !.\nunique_paths(M, N, R) :-\n    MM is M - 1, NN is N - 1,\n    findall(dp, (true, false), _), % placeholder removed below\n    dp_loop(MM, NN, R).\n\ndp_loop(1, _, R) :- !, R = 1.\ndp_loop(_, 0, R) :- !, R = 1.\ndp_loop(M, N, R) :-\n    length(Row, N),\n    maplist(=(1), Row),\n    M1 is M - 1,\n    iterate(M1, Row, Final),\n    last(Final, R).\n\niterate(0, Row, Row) :- !.\niterate(I, Row, Out) :-\n    I > 0,\n    prefix_sum(Row, NewRow),\n    I1 is I - 1,\n    iterate(I1, NewRow, Out).\n\nprefix_sum(Row, NewRow) :-\n    prefix_sum_(Row, 0, NewRow).\n\nprefix_sum_([], _, []).\nprefix_sum_([H|T], Acc, [H2|T2]) :-\n    Acc2 is Acc + H,\n    H2 = Acc2,\n    prefix_sum_(T, Acc2, T2).\n```",
+  "usage": {
+    "completion_tokens": 364,
+    "prompt_tokens": 590,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 954
+  },
+  "usage_raw": {
+    "completion_tokens": 364,
+    "prompt_tokens": 590,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 954
+  }
+}

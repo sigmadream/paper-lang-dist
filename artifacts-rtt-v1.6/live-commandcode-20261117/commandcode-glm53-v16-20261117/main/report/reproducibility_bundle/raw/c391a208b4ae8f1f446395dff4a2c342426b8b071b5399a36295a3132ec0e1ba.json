@@ -1,0 +1,95 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.List (sort)\n\nreadInts :: IO [Int]\nreadInts = do\n  s <- BS.getContents\n  return $ map (fst . fromJust' . BS.readInt) (BS.words s)\n  where\n    fromJust' (Just x) = x\n    fromJust' Nothing = error \"bad input\"\n\nfeasible :: [Int] -> Int -> Int -> Bool\nfeasible a mid c = go (tail a) (head a) 1\n  where\n    go [] _ cnt = cnt >= c\n    go (x:xs) prev cnt\n      | x - prev >= mid = go xs x (cnt + 1)\n      | otherwise = go xs prev cnt\n\nbinarySearch :: [Int] -> Int -> Int -> Int -> Int -> Int\nbinarySearch a lo hi c ans\n  | lo > hi = ans\n  | feasible a mid c = binarySearch a (mid + 1) hi c mid\n  | otherwise = binarySearch a lo (mid - 1) c ans\n  where\n    mid = lo + (hi - lo) `div` 2\n\nmain :: IO ()\nmain = do\n  xs <- readInts\n  case xs of\n    (n:c:rest) -> do\n      let a = take n rest\n          s = sort a\n          lo = 1\n          hi = last s - head s\n          ans = binarySearch s lo hi c 0\n      print ans\n    _ -> return ()\n```",
+          "reasoning_content": "Haskell binary search, careful with Int overflow (coordinates up to 1e9 fine).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794898611,
+    "id": "ea4ab38b-3035-4d1b-ba3a-6e0cf0d4ff76",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 362,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_d1b857d355184569a7624299c9f038c5",
+      "trace_id": "0c6d1d6cf03b42b2b4e9fdf91b328c66"
+    },
+    "usage": {
+      "completion_tokens": 362,
+      "prompt_tokens": 686,
+      "prompt_tokens_details": {
+        "cached_tokens": 640
+      },
+      "total_tokens": 1048
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0018236,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.8768342999974266,
+  "logical_request_id": "047fff8ba013bc6cbd87460aa770e6b974a0c7710a1caed6407a6648a2b0c76c",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_2110\\cpp-via-haskell\\attempt-03\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T06:56:50.615673+00:00",
+  "request_id": "ea4ab38b-3035-4d1b-ba3a-6e0cf0d4ff76",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```haskell\nmodule Main (main) where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.List (sort)\n\nreadInts :: IO [Int]\nreadInts = do\n  s <- BS.getContents\n  return $ map (fst . fromJust' . BS.readInt) (BS.words s)\n  where\n    fromJust' (Just x) = x\n    fromJust' Nothing = error \"bad input\"\n\nfeasible :: [Int] -> Int -> Int -> Bool\nfeasible a mid c = go (tail a) (head a) 1\n  where\n    go [] _ cnt = cnt >= c\n    go (x:xs) prev cnt\n      | x - prev >= mid = go xs x (cnt + 1)\n      | otherwise = go xs prev cnt\n\nbinarySearch :: [Int] -> Int -> Int -> Int -> Int -> Int\nbinarySearch a lo hi c ans\n  | lo > hi = ans\n  | feasible a mid c = binarySearch a (mid + 1) hi c mid\n  | otherwise = binarySearch a lo (mid - 1) c ans\n  where\n    mid = lo + (hi - lo) `div` 2\n\nmain :: IO ()\nmain = do\n  xs <- readInts\n  case xs of\n    (n:c:rest) -> do\n      let a = take n rest\n          s = sort a\n          lo = 1\n          hi = last s - head s\n          ans = binarySearch s lo hi c 0\n      print ans\n    _ -> return ()\n```",
+  "usage": {
+    "completion_tokens": 362,
+    "prompt_tokens": 686,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 1048
+  },
+  "usage_raw": {
+    "completion_tokens": 362,
+    "prompt_tokens": 686,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 1048
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(apply)).\n:- use_module(library(pio)).\n\nmain :-\n    read_line_to_codes(user_input, L1),\n    ( L1 == end_of_file -> true\n    ; number_codes(N, L1),\n      read_line_to_codes(user_input, L2),\n      ( L2 == end_of_file -> M = 0\n      ; number_codes(M, L2),\n        read_edges(M, Edges0),\n        append(Edges0, Flat),\n        !,\n        count_dist12(Flat, N, Count),\n        format(\"~d~n\", [Count])\n      )\n    ).\n\nread_edges(0, []).\nread_edges(M, Edges) :-\n    M > 0,\n    read_line_to_codes(user_input, L),\n    ( L == end_of_file -> Edges = []\n    ; parse_pair(L, A, B),\n      M1 is M - 1,\n      read_edges(M1, Rest),\n      Edges = [A, B | Rest]\n    ).\n\nparse_pair(L, A, B) :-\n    append(ACodes, [0' | Rest], L),\n    ACodes \\= [],\n    number_codes(A, ACodes),\n    number_codes(B, Rest),\n    B \\= 0.\n\nparse_pair(L, A, B) :-\n    append(ACodes, [0'\\t | Rest], L),\n    ACodes \\= [],\n    number_codes(A, ACodes),\n    number_codes(B, Rest),\n    B \\= 0.\n\nparse_pair(L, A, B) :-\n    append(ACodes, [0'\\r | Rest], L),\n    ACodes \\= [],\n    number_codes(A, ACodes),\n    number_codes(B, Rest),\n    B \\= 0.\n\ncount_dist12(Flat, N, Count) :-\n    length(Dist, N),\n    maplist(=(inf), Dist),\n    bfs(Flat, Dist, N, Count).\n\nbfs(Flat, Dist, N, Count) :-\n    nb_setarg(1, Dist, 0),\n    queue_step([1], Flat, Dist, N, 0, Count).\n\nqueue_step([], _, _, _, Count, Count).\nqueue_step([Curr|Q], Flat, Dist, N, Acc, Count) :-\n    arg(Curr, Dist, D),\n    findall(Nx,\n            ( member2(Flat, Curr, Nx),\n              arg(Nx, Dist, inf) ),\n            New),\n    length(New, L),\n    NewAcc is Acc + L,\n    forall(member(Nx, New),\n           ( D1 is D + 1, nb_setarg(Nx, Dist, D1) )),\n    append(Q, New, Q2),\n    queue_step(Q2, Flat, Dist, N, NewAcc, Count).\n\nmember2(Flat, U, V) :-\n    nth0(I, Flat, U),\n    P is I mod 2,\n    P == 0,\n    J is I + 1,\n    nth0(J, Flat, V).\nmember2(Flat, U, V) :-\n    nth0(I, Flat, V),\n    P is I mod 2,\n    P == 0,\n    J is I + 1,\n    nth0(J, Flat, U).\n```\n\nThis approach is inefficient for N=500, M=10000. Let me provide a cleaner, more efficient version using adjacency from dynamic assertions:\n\n```prolog\n:- module(main, [main/0]).\n:- use_module(library(apply)).\n:- use_module(library(pio)).\n\n:- dynamic edge/2.\n\nmain :-\n    cleanup,\n    read_line_to_codes(user_input, L1),\n    L1 \\== end_of_file,\n    number_codes(N, L1),\n    read_line_to_codes(user_input, L2),\n    ( L2 == end_of_file -> M = 0 ; number_codes(M, L2) ),\n    read_all_edges(M),\n    setof(F, friend_of_one(F), Fs1),\n    !,\n    setof(F, friend_of_friend(F), Fs2),\n    !,\n    count_union(Fs1, Fs2, N, Count),\n    format(\"~d~n\", [Count]).\nmain :-\n    format(\"0~n\").\n\ncleanup :-\n    retractall(edge(_, _)).\n\nread_all_edges(0).\nread_all_edges(M) :-\n    M > 0,\n    read_line_to_codes(user_input, L),\n    ( L == end_of_file -> true\n    ; parse_pair(L, A, B),\n      assertz(edge(A, B)),\n      assertz(edge(B, A)),\n      M1 is M - 1,\n      read_all_edges(M1)\n    ).\n\nparse_pair(L, A, B) :-\n    append(ACodes, [C|Rest], L),\n    member(C, [0' , 0'\\t, 0'\\r]),\n    ACodes \\= [],\n    number_codes(A, ACodes),\n    number_codes(B, Rest),\n    B \\= 0.\n\nfriend_of_one(F) :- edge(1, F).\n\nfriend_of_friend(F) :- edge(1, X), edge(X, F), F \\= 1.\n\ncount_union(Fs1, Fs2, _N, Count) :-\n    append(Fs1, Fs2, All),\n    sort(All, Sorted),\n    length(Sorted, Count).\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794902670,
+    "id": "9a7fba63-e811-45eb-99d4-5bb4f03dd13c",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 1135,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_3008bb4e6e584e919de6d8f9b1eb7c8a",
+      "trace_id": "dcf6489a950948c882227bad1a5fead4"
+    },
+    "usage": {
+      "completion_tokens": 1135,
+      "prompt_tokens": 695,
+      "prompt_tokens_details": {
+        "cached_tokens": 640
+      },
+      "total_tokens": 1830
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0052374,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 10.152254299959168,
+  "logical_request_id": "5bea25d6776a29ccbda7df46bd07539d2e1364d2d156fc3e112a7c2166fa9e7f",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_5567\\cpp-via-prolog\\attempt-05\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T08:04:30.099195+00:00",
+  "request_id": "9a7fba63-e811-45eb-99d4-5bb4f03dd13c",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(apply)).\n:- use_module(library(pio)).\n\nmain :-\n    read_line_to_codes(user_input, L1),\n    ( L1 == end_of_file -> true\n    ; number_codes(N, L1),\n      read_line_to_codes(user_input, L2),\n      ( L2 == end_of_file -> M = 0\n      ; number_codes(M, L2),\n        read_edges(M, Edges0),\n        append(Edges0, Flat),\n        !,\n        count_dist12(Flat, N, Count),\n        format(\"~d~n\", [Count])\n      )\n    ).\n\nread_edges(0, []).\nread_edges(M, Edges) :-\n    M > 0,\n    read_line_to_codes(user_input, L),\n    ( L == end_of_file -> Edges = []\n    ; parse_pair(L, A, B),\n      M1 is M - 1,\n      read_edges(M1, Rest),\n      Edges = [A, B | Rest]\n    ).\n\nparse_pair(L, A, B) :-\n    append(ACodes, [0' | Rest], L),\n    ACodes \\= [],\n    number_codes(A, ACodes),\n    number_codes(B, Rest),\n    B \\= 0.\n\nparse_pair(L, A, B) :-\n    append(ACodes, [0'\\t | Rest], L),\n    ACodes \\= [],\n    number_codes(A, ACodes),\n    number_codes(B, Rest),\n    B \\= 0.\n\nparse_pair(L, A, B) :-\n    append(ACodes, [0'\\r | Rest], L),\n    ACodes \\= [],\n    number_codes(A, ACodes),\n    number_codes(B, Rest),\n    B \\= 0.\n\ncount_dist12(Flat, N, Count) :-\n    length(Dist, N),\n    maplist(=(inf), Dist),\n    bfs(Flat, Dist, N, Count).\n\nbfs(Flat, Dist, N, Count) :-\n    nb_setarg(1, Dist, 0),\n    queue_step([1], Flat, Dist, N, 0, Count).\n\nqueue_step([], _, _, _, Count, Count).\nqueue_step([Curr|Q], Flat, Dist, N, Acc, Count) :-\n    arg(Curr, Dist, D),\n    findall(Nx,\n            ( member2(Flat, Curr, Nx),\n              arg(Nx, Dist, inf) ),\n            New),\n    length(New, L),\n    NewAcc is Acc + L,\n    forall(member(Nx, New),\n           ( D1 is D + 1, nb_setarg(Nx, Dist, D1) )),\n    append(Q, New, Q2),\n    queue_step(Q2, Flat, Dist, N, NewAcc, Count).\n\nmember2(Flat, U, V) :-\n    nth0(I, Flat, U),\n    P is I mod 2,\n    P == 0,\n    J is I + 1,\n    nth0(J, Flat, V).\nmember2(Flat, U, V) :-\n    nth0(I, Flat, V),\n    P is I mod 2,\n    P == 0,\n    J is I + 1,\n    nth0(J, Flat, U).\n```\n\nThis approach is inefficient for N=500, M=10000. Let me provide a cleaner, more efficient version using adjacency from dynamic assertions:\n\n```prolog\n:- module(main, [main/0]).\n:- use_module(library(apply)).\n:- use_module(library(pio)).\n\n:- dynamic edge/2.\n\nmain :-\n    cleanup,\n    read_line_to_codes(user_input, L1),\n    L1 \\== end_of_file,\n    number_codes(N, L1),\n    read_line_to_codes(user_input, L2),\n    ( L2 == end_of_file -> M = 0 ; number_codes(M, L2) ),\n    read_all_edges(M),\n    setof(F, friend_of_one(F), Fs1),\n    !,\n    setof(F, friend_of_friend(F), Fs2),\n    !,\n    count_union(Fs1, Fs2, N, Count),\n    format(\"~d~n\", [Count]).\nmain :-\n    format(\"0~n\").\n\ncleanup :-\n    retractall(edge(_, _)).\n\nread_all_edges(0).\nread_all_edges(M) :-\n    M > 0,\n    read_line_to_codes(user_input, L),\n    ( L == end_of_file -> true\n    ; parse_pair(L, A, B),\n      assertz(edge(A, B)),\n      assertz(edge(B, A)),\n      M1 is M - 1,\n      read_all_edges(M1)\n    ).\n\nparse_pair(L, A, B) :-\n    append(ACodes, [C|Rest], L),\n    member(C, [0' , 0'\\t, 0'\\r]),\n    ACodes \\= [],\n    number_codes(A, ACodes),\n    number_codes(B, Rest),\n    B \\= 0.\n\nfriend_of_one(F) :- edge(1, F).\n\nfriend_of_friend(F) :- edge(1, X), edge(X, F), F \\= 1.\n\ncount_union(Fs1, Fs2, _N, Count) :-\n    append(Fs1, Fs2, All),\n    sort(All, Sorted),\n    length(Sorted, Count).\n```",
+  "usage": {
+    "completion_tokens": 1135,
+    "prompt_tokens": 695,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 1830
+  },
+  "usage_raw": {
+    "completion_tokens": 1135,
+    "prompt_tokens": 695,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 1830
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "text": "```haskell\nmodule Main (main) where\n\nimport qualified Data.Vector as V\n\nmain :: IO ()\nmain = do\n  inp <- getContents\n  let (nLine:rest) = lines inp\n      n = read nLine :: Int\n      score = V.fromList (0 : map read (take n rest) :: [Int])\n      dp = V.create (n + 1) 0\n      dp' = go 1 dp\n      go i v\n        | i > n = v\n        | i == 1 = go 2 (V.update v [(1, score V.! 1)])\n        | i == 2 = go 3 (V.update v [(2, score V.! 1 + score V.! 2)])\n        | otherwise =\n            let best = max (v V.! (i - 2)) (v V.! (i - 3) + score V.! (i - 1))\n            in go (i + 1) (V.update v [(i, best + score V.! i)])\n  print (dp' V.! n)\n```\n\nWait — `V.create` and `V.update` aren't standard `Data.Vector` API. Let me provide a correct, self-contained version using immutable vectors properly.\n\n```haskell\nmodule Main (main) where\n\nimport qualified Data.Vector as V\n\nmain :: IO ()\nmain = do\n  inp <- getContents\n  let allLines = lines inp\n      n = read (head allLines) :: Int\n      score = V.fromList (0 : map read (take n (tail allLines)) :: [Int])\n      dp = V.create (n + 1) 0\n      dp' = go 1 dp\n      go i v\n        | i > n = v\n        | i == 1 = go 2 (v V.// [(1, score V.! 1)])\n        | i == 2 = go 3 (v V.// [(2, score V.! 1 + score V.! 2)])\n        | otherwise =\n            let v' = v V.// [(i, max (v V.! (i - 2)) (v V.! (i - 3) + score V.! (i - 1)) + score V.! i)]\n            in go (i + 1) v'\n  print (dp' V.! n)\n```\n\n`V.create` still doesn't exist. Final corrected version:\n\n```haskell\nmodule Main (main) where\n\nimport qualified Data.Vector as V\n\nmain :: IO ()\nmain = do\n  inp <- getContents\n  let allLines = lines inp\n      n = read (head allLines) :: Int\n      score = V.fromList (0 : map read (take n (tail allLines)) :: [Int])\n      initial = V.replicate (n + 1) 0\n      dp = go 1 initial\n      go i v\n        | i > n = v\n        | i == 1 = go 2 (v V.// [(1, score V.! 1)])\n        | i == 2 = go 3 (v V.// [(2, score V.! 1 + score V.! 2)])\n        | otherwise =\n            let v' = v V.// [(i, max (v V.! (i - 2)) (v V.! (i - 3) + score V.! (i - 1)) + score V.! i)]\n            in go (i + 1) v'\n  print (dp V.! n)\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 863,
+    "prompt_tokens": 673,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 1536
+  },
+  "usage_raw": {
+    "completion_tokens": 863,
+    "prompt_tokens": 673,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 1536
+  },
+  "cost_usd": 0.0040098,
+  "cost_source": "estimated",
+  "request_id": "3c98c44f-8506-4bd2-adfa-3b3eb3f00fc6",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_2579\\cpp-via-haskell\\attempt-03\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport qualified Data.Vector as V\n\nmain :: IO ()\nmain = do\n  inp <- getContents\n  let (nLine:rest) = lines inp\n      n = read nLine :: Int\n      score = V.fromList (0 : map read (take n rest) :: [Int])\n      dp = V.create (n + 1) 0\n      dp' = go 1 dp\n      go i v\n        | i > n = v\n        | i == 1 = go 2 (V.update v [(1, score V.! 1)])\n        | i == 2 = go 3 (V.update v [(2, score V.! 1 + score V.! 2)])\n        | otherwise =\n            let best = max (v V.! (i - 2)) (v V.! (i - 3) + score V.! (i - 1))\n            in go (i + 1) (V.update v [(i, best + score V.! i)])\n  print (dp' V.! n)\n```\n\nWait — `V.create` and `V.update` aren't standard `Data.Vector` API. Let me provide a correct, self-contained version using immutable vectors properly.\n\n```haskell\nmodule Main (main) where\n\nimport qualified Data.Vector as V\n\nmain :: IO ()\nmain = do\n  inp <- getContents\n  let allLines = lines inp\n      n = read (head allLines) :: Int\n      score = V.fromList (0 : map read (take n (tail allLines)) :: [Int])\n      dp = V.create (n + 1) 0\n      dp' = go 1 dp\n      go i v\n        | i > n = v\n        | i == 1 = go 2 (v V.// [(1, score V.! 1)])\n        | i == 2 = go 3 (v V.// [(2, score V.! 1 + score V.! 2)])\n        | otherwise =\n            let v' = v V.// [(i, max (v V.! (i - 2)) (v V.! (i - 3) + score V.! (i - 1)) + score V.! i)]\n            in go (i + 1) v'\n  print (dp' V.! n)\n```\n\n`V.create` still doesn't exist. Final corrected version:\n\n```haskell\nmodule Main (main) where\n\nimport qualified Data.Vector as V\n\nmain :: IO ()\nmain = do\n  inp <- getContents\n  let allLines = lines inp\n      n = read (head allLines) :: Int\n      score = V.fromList (0 : map read (take n (tail allLines)) :: [Int])\n      initial = V.replicate (n + 1) 0\n      dp = go 1 initial\n      go i v\n        | i > n = v\n        | i == 1 = go 2 (v V.// [(1, score V.! 1)])\n        | i == 2 = go 3 (v V.// [(2, score V.! 1 + score V.! 2)])\n        | otherwise =\n            let v' = v V.// [(i, max (v V.! (i - 2)) (v V.! (i - 3) + score V.! (i - 1)) + score V.! i)]\n            in go (i + 1) v'\n  print (dp V.! n)\n```",
+          "reasoning_content": "Note: source uses dp[n-3]+score[n-1] which is unusual but preserve exactly. Just translate directly.\n\ndp[i] = max(dp[i-2], dp[i-3]+score[i-1]) + score[i], with dp[1]=s1, dp[2]=s1+s2. For n=1..2 handled. Implement in Haskell.\n\nEdge: n could be... 1<=N. Fine.\n\nWrite:\n\nmain = read lines, compute via arrays.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794900885,
+    "id": "3c98c44f-8506-4bd2-adfa-3b3eb3f00fc6",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 863,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_b44e6e899f70484b968a901e222e8f41",
+      "trace_id": "69fcf44c4b824a21a87916bd1aa3dff8"
+    },
+    "usage": {
+      "completion_tokens": 863,
+      "prompt_tokens": 673,
+      "prompt_tokens_details": {
+        "cached_tokens": 640
+      },
+      "total_tokens": 1536
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 20.23281620000489,
+  "received_at": "2026-11-17T07:34:45.234416+00:00",
+  "logical_request_id": "530d32fb38288be4808cbf46d7550d879818fedf5921397a3b91ce65ec9d288b",
+  "execution_class": "direct_api"
+}

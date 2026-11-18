@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    long long m, n;\n    if (!(std::cin >> m >> n)) {\n        return 0;\n    }\n\n    std::vector<long long> dp(static_cast<size_t>(n), 1);\n\n    for (long long i = 1; i < m; ++i) {\n        for (long long j = 1; j < n; ++j) {\n            dp[static_cast<size_t>(j)] += dp[static_cast<size_t>(j - 1)];\n        }\n    }\n\n    std::cout << dp[static_cast<size_t>(n - 1)] << '\\n';\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 496,
+    "total_tokens": 808,
+    "completion_tokens": 312,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 136
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 496,
+    "total_tokens": 808,
+    "completion_tokens": 312,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 136
+    }
+  },
+  "cost_usd": 0.0005231999999999999,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-b07dc5a6b3733922ff9bbf3c6485a891",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-python\\attempt-05\\step-06\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-b07dc5a6b3733922ff9bbf3c6485a891",
+    "object": "chat.completion",
+    "created": 1794999914,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    long long m, n;\n    if (!(std::cin >> m >> n)) {\n        return 0;\n    }\n\n    std::vector<long long> dp(static_cast<size_t>(n), 1);\n\n    for (long long i = 1; i < m; ++i) {\n        for (long long j = 1; j < n; ++j) {\n            dp[static_cast<size_t>(j)] += dp[static_cast<size_t>(j - 1)];\n        }\n    }\n\n    std::cout << dp[static_cast<size_t>(n - 1)] << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need translate Python to C++17. Simple. Need output exactly one code block, no explanation.\n\nNeed preserve behavior: read m n, compute unique paths. Constraints small. Use long long though answer <=2e9. If missing input, source returns; but only valid inputs need. Still can mirror: if not two tokens return.\n\nWrite C++.\n\ndp vector<long long> size n initialized 1. loop i=1..m-1, j=1..n-1 dp[j]+=dp[j-1]; print dp[n-1].\n\nNeed handle n>=1 per constraints. If fewer tokens return. Use ios.\n\nFinal code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 496,
+      "total_tokens": 808,
+      "completion_tokens": 312,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 136
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.344077399931848,
+  "received_at": "2026-11-18T11:05:17.472548+00:00",
+  "logical_request_id": "6fe1d310892bbc352d479debd3c0ac75a36b033499b663854bd149be50d88ae9",
+  "execution_class": "direct_api"
+}

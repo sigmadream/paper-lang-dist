@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n\nmain :-\n    current_input(In),\n    read_line_to_codes(In, Line1),\n    parse_int(Line1, N),\n    read_line_to_codes(In, Line2),\n    parse_ints(Line2, N, A),\n    partition_nonzero(A, NonZero, Zeros),\n    append(NonZero, Zeros, Result),\n    atomic_list_concat(Result, ' ', Atom),\n    format(\"~w~n\", [Atom]).\n\nparse_int(Codes, N) :-\n    number_codes(N, Codes).\n\nparse_ints(_, 0, []) :- !.\nparse_ints(Codes, N, [X|Xs]) :-\n    parse_token(Codes, X, Rest),\n    N1 is N - 1,\n    parse_ints(Rest, N1, Xs).\n\nparse_token([], 0, []) :- !.\nparse_token([C|Cs], X, Rest) :-\n    (   C == 32\n    ->  parse_token(Cs, X, Rest)\n    ;   take_number([C|Cs], X, Rest)\n    ).\n\ntake_number(Codes, X, Rest) :-\n    take_digits(Codes, Digits, Rest),\n    Digits \\= [],\n    number_codes(X, Digits).\n\ntake_digits([], [], []).\ntake_digits([C|Cs], [C|Ds], Rest) :-\n    (   C == 32\n    ->  Rest = []\n    ;   take_digits(Cs, Ds, Rest)\n    ).\n\npartition_nonzero([], [], []).\npartition_nonzero([X|Xs], [X|NonZero], Zeros) :-\n    X \\== 0,\n    !,\n    partition_nonzero(Xs, NonZero, Zeros).\npartition_nonzero([X|Xs], NonZero, [X|Zeros]) :-\n    partition_nonzero(Xs, NonZero, Zeros).\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794896851,
+    "id": "6513fd82-8e28-4eb2-bb42-c60ed17487e2",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 402,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_2d096dff6d954d61a44f0fedb6c7b695",
+      "trace_id": "066129502ff94110be1a119d1a749744"
+    },
+    "usage": {
+      "completion_tokens": 402,
+      "prompt_tokens": 653,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 1055
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0025370799999999997,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.224584400013555,
+  "logical_request_id": "5d97c94db02c0f88e99cfc1fecbfdb72fc317021c0522d40948800423521cb13",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0283\\cpp-via-prolog\\attempt-02\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T06:27:31.219313+00:00",
+  "request_id": "6513fd82-8e28-4eb2-bb42-c60ed17487e2",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```prolog\n:- module(main, [main/0]).\n\nmain :-\n    current_input(In),\n    read_line_to_codes(In, Line1),\n    parse_int(Line1, N),\n    read_line_to_codes(In, Line2),\n    parse_ints(Line2, N, A),\n    partition_nonzero(A, NonZero, Zeros),\n    append(NonZero, Zeros, Result),\n    atomic_list_concat(Result, ' ', Atom),\n    format(\"~w~n\", [Atom]).\n\nparse_int(Codes, N) :-\n    number_codes(N, Codes).\n\nparse_ints(_, 0, []) :- !.\nparse_ints(Codes, N, [X|Xs]) :-\n    parse_token(Codes, X, Rest),\n    N1 is N - 1,\n    parse_ints(Rest, N1, Xs).\n\nparse_token([], 0, []) :- !.\nparse_token([C|Cs], X, Rest) :-\n    (   C == 32\n    ->  parse_token(Cs, X, Rest)\n    ;   take_number([C|Cs], X, Rest)\n    ).\n\ntake_number(Codes, X, Rest) :-\n    take_digits(Codes, Digits, Rest),\n    Digits \\= [],\n    number_codes(X, Digits).\n\ntake_digits([], [], []).\ntake_digits([C|Cs], [C|Ds], Rest) :-\n    (   C == 32\n    ->  Rest = []\n    ;   take_digits(Cs, Ds, Rest)\n    ).\n\npartition_nonzero([], [], []).\npartition_nonzero([X|Xs], [X|NonZero], Zeros) :-\n    X \\== 0,\n    !,\n    partition_nonzero(Xs, NonZero, Zeros).\npartition_nonzero([X|Xs], NonZero, [X|Zeros]) :-\n    partition_nonzero(Xs, NonZero, Zeros).\n```",
+  "usage": {
+    "completion_tokens": 402,
+    "prompt_tokens": 653,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1055
+  },
+  "usage_raw": {
+    "completion_tokens": 402,
+    "prompt_tokens": 653,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1055
+  }
+}

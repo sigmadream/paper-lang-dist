@@ -1,0 +1,95 @@
+{
+  "text": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(dcg/basics)).\n\nmain :-\n    current_input(In),\n    read_line_to_codes(In, L1),\n    ( L1 == end_of_file -> true\n    ; number_codes(N, L1),\n      read_line_to_codes(In, L2),\n      number_codes(M, L2),\n      read_edges(M, In, Edges),\n      length(Dist, N),\n      maplist(=(-1), Dist),\n      nth0(1, Dist, 0, Dist0),\n      bfs([1], Edges, Dist0, 0, Ans),\n      format(\"~d~n\", [Ans])\n    ).\n\nread_edges(0, _, []) :- !.\nread_edges(M, In, [u-v|Es]) :-\n    read_line_to_codes(In, L),\n    append(Us, [0' | Rest], L),\n    append(Vs, [0' | _], Rest),\n    number_codes(U, Us),\n    number_codes(V, Vs),\n    M1 is M - 1,\n    read_edges(M1, In, Es).\n\nbfs([], _, _, Ans, Ans).\nbfs([C|Q], Edges, Dist, Acc, Ans) :-\n    nth0(C, Dist, DC),\n    ( DC =< 2 ->\n        findall(Nx, (member(u-v, Edges), (u == C, v = Nx ; v == C, u = Nx)), Ns0),\n        sort(Ns0, Ns),\n        process(Ns, Q, Dist, DC, Acc, Q2, Dist2, Acc2),\n        bfs(Q2, Edges, Dist2, Acc2, Ans)\n    ; bfs(Q, Edges, Dist, Acc, Ans)\n    ).\n\nprocess([], Q, Dist, _, Acc, Q, Dist, Acc).\nprocess([N|Ns], Q, Dist, DC, Acc, Q3, Dist3, Acc3) :-\n    nth0(N, Dist, DN),\n    ( DN == -1 ->\n        DN1 is DC + 1,\n        nth0(N, Dist, DN1, Dist1),\n        Acc1 is Acc + 1,\n        process(Ns, [N|Q], Dist1, DC, Acc1, Q3, Dist3, Acc3)\n    ; process(Ns, Q, Dist, DC, Acc, Q3, Dist3, Acc3)\n    ).\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 549,
+    "prompt_tokens": 695,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1244
+  },
+  "usage_raw": {
+    "completion_tokens": 549,
+    "prompt_tokens": 695,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1244
+  },
+  "cost_usd": 0.0033886000000000003,
+  "cost_source": "estimated",
+  "request_id": "31891e28-49af-4d17-a5fe-9415ce1cf418",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_5567\\cpp-via-prolog\\attempt-03\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(dcg/basics)).\n\nmain :-\n    current_input(In),\n    read_line_to_codes(In, L1),\n    ( L1 == end_of_file -> true\n    ; number_codes(N, L1),\n      read_line_to_codes(In, L2),\n      number_codes(M, L2),\n      read_edges(M, In, Edges),\n      length(Dist, N),\n      maplist(=(-1), Dist),\n      nth0(1, Dist, 0, Dist0),\n      bfs([1], Edges, Dist0, 0, Ans),\n      format(\"~d~n\", [Ans])\n    ).\n\nread_edges(0, _, []) :- !.\nread_edges(M, In, [u-v|Es]) :-\n    read_line_to_codes(In, L),\n    append(Us, [0' | Rest], L),\n    append(Vs, [0' | _], Rest),\n    number_codes(U, Us),\n    number_codes(V, Vs),\n    M1 is M - 1,\n    read_edges(M1, In, Es).\n\nbfs([], _, _, Ans, Ans).\nbfs([C|Q], Edges, Dist, Acc, Ans) :-\n    nth0(C, Dist, DC),\n    ( DC =< 2 ->\n        findall(Nx, (member(u-v, Edges), (u == C, v = Nx ; v == C, u = Nx)), Ns0),\n        sort(Ns0, Ns),\n        process(Ns, Q, Dist, DC, Acc, Q2, Dist2, Acc2),\n        bfs(Q2, Edges, Dist2, Acc2, Ans)\n    ; bfs(Q, Edges, Dist, Acc, Ans)\n    ).\n\nprocess([], Q, Dist, _, Acc, Q, Dist, Acc).\nprocess([N|Ns], Q, Dist, DC, Acc, Q3, Dist3, Acc3) :-\n    nth0(N, Dist, DN),\n    ( DN == -1 ->\n        DN1 is DC + 1,\n        nth0(N, Dist, DN1, Dist1),\n        Acc1 is Acc + 1,\n        process(Ns, [N|Q], Dist1, DC, Acc1, Q3, Dist3, Acc3)\n    ; process(Ns, Q, Dist, DC, Acc, Q3, Dist3, Acc3)\n    ).\n```",
+          "reasoning_content": "Note example \"1\\n0\": N=1, M=0 — but spec says N>=2. Handle anyway.\n\nWrite Prolog BFS.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794899079,
+    "id": "31891e28-49af-4d17-a5fe-9415ce1cf418",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 549,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_3c86d79ad31541e8adc3729939fe39fc",
+      "trace_id": "d6b7ca036bfd407bb9ede02837365e35"
+    },
+    "usage": {
+      "completion_tokens": 549,
+      "prompt_tokens": 695,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1244
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 5.268762000021525,
+  "received_at": "2026-11-17T07:04:38.986131+00:00",
+  "logical_request_id": "7fb15856cefcc412f46379f0fd2d651b85e66c11c8eafa25cdc98be86b336b22",
+  "execution_class": "direct_api"
+}

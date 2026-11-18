@@ -1,0 +1,86 @@
+{
+  "text": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.buffer.read().split()\n    if not data:\n        return\n\n    n = int(data[0])\n    a = list(map(int, data[1:1 + n]))\n\n    cur = a[0]\n    best = a[0]\n\n    for i in range(1, n):\n        cur = max(a[i], cur + a[i])\n        best = max(best, cur)\n\n    print(best)\n\nif __name__ == \"__main__\":\n    main()\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 571,
+    "total_tokens": 710,
+    "completion_tokens": 139,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 24
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 571,
+    "total_tokens": 710,
+    "completion_tokens": 139,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 24
+    }
+  },
+  "cost_usd": 0.0003381,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-d781a8cb8f383203bed5768c33eaa5ec",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-python\\attempt-05\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-d781a8cb8f383203bed5768c33eaa5ec",
+    "object": "chat.completion",
+    "created": 1794992633,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.buffer.read().split()\n    if not data:\n        return\n\n    n = int(data[0])\n    a = list(map(int, data[1:1 + n]))\n\n    cur = a[0]\n    best = a[0]\n\n    for i in range(1, n):\n        cur = max(a[i], cur + a[i])\n        best = max(best, cur)\n\n    print(best)\n\nif __name__ == \"__main__\":\n    main()\n```",
+          "reasoning_content": "We need answer only code block, Python translation. Need preserve. Need be careful input format. Simple. No explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 571,
+      "total_tokens": 710,
+      "completion_tokens": 139,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 24
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.7989248000085354,
+  "received_at": "2026-11-18T09:03:53.663527+00:00",
+  "logical_request_id": "267f1048b821d986d7e332d4844f6e5f917f9511ea59ed82dad1523afe0f5a4f",
+  "execution_class": "direct_api"
+}

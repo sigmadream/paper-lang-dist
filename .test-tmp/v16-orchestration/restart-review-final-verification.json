@@ -1,0 +1,48 @@
+{
+  "pytest": {
+    "command": [
+      "uv",
+      "run",
+      "--no-sync",
+      "pytest",
+      "-q"
+    ],
+    "exitcode": 0
+  },
+  "pytest_summary": "531 passed, 1166 warnings in 161.11s (0:02:41)",
+  "warning_classes": [
+    "MatplotlibDeprecationWarning"
+  ],
+  "format_checks": {
+    "black": {
+      "command": [
+        "uv",
+        "run",
+        "--no-sync",
+        "black",
+        "--check",
+        "src/rttdist/providers.py",
+        "tests/integration/test_legacy_unknown_crash.py",
+        "scripts/run_deepseek_v16_20261118.py",
+        "tests/integration/test_deepseek_restart_runner.py"
+      ],
+      "exitcode": 0
+    },
+    "diff": {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitcode": 0
+    }
+  },
+  "hashed_file_count": 67,
+  "changed_files": [],
+  "unchanged_legacy_file_count": 21,
+  "changed_legacy_files": [],
+  "legacy_reproduction_exitcode": 0,
+  "offline_core_check_exitcode": 0,
+  "unresolved_execution_blockers": [],
+  "live_api_executed": false
+}

@@ -1,0 +1,23 @@
+# 모델별 프로토콜과 접근 권한을 확인해 주세요.
+# https://opencode.ai/docs/console/api/inference/
+# https://opencode.ai/docs/console/harnesses
+provider: opencode
+protocol: chat_completions
+base_url: https://opencode.ai/inference/openai/v1
+request_path: /chat/completions
+auth:
+  type: bearer
+  api_key_env: OPENCODE_API_KEY
+model: null
+allowed_response_models: []
+generation_profile:
+  name: opencode-console-explicit
+  supported_options: [temperature, top_p, max_tokens]
+generation:
+  temperature: 0.6
+  top_p: 0.95
+  max_tokens: 16384
+request_timeout: 120
+retries: 2
+max_calls: 3600
+max_transport_attempts: 10800

@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Data.List (sort)\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    (s:t:_) -> putStrLn (if sort s == sort t then \"1\" else \"0\")\n    _ -> return ()\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 487,
+    "total_tokens": 766,
+    "completion_tokens": 279,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 212
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 487,
+    "total_tokens": 766,
+    "completion_tokens": 279,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 212
+    }
+  },
+  "cost_usd": 0.0004809,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-6aa5672b7160768dc6c87ecf1759d7d3",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0242\\cpp-via-haskell\\attempt-01\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-6aa5672b7160768dc6c87ecf1759d7d3",
+    "object": "chat.completion",
+    "created": 1794987496,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Data.List (sort)\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    (s:t:_) -> putStrLn (if sort s == sort t then \"1\" else \"0\")\n    _ -> return ()\n```",
+          "reasoning_content": "We need answer exactly one fenced code block Haskell. Need translate. Need preserve stdin/stdout. Read two lines/strings. s and t lowercase. Sort compare output 1/0. In Haskell main. Need handle whitespace? C++ cin >> s >> t reads whitespace-delimited tokens. So Haskell getLine? Spec each line. Could use words on entire stdin to get first two tokens. That matches cin >>. Output newline. Use sort or count. length up to 50000 okay. Haskell standard Data.List sort. Code.\n\nNeed return exactly complete source file fenced no explanation. Ensure module Main main. Could do:\n\nimport System.IO\nimport Data.List (sort)\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    (s:t:_) -> putStrLn (if sort s == sort t then \"1\" else \"0\")\n    _ -> return ()\n\nThis handles. Need exactly one complete source file. Use code block labeled haskell. Done."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 487,
+      "total_tokens": 766,
+      "completion_tokens": 279,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 212
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.43696830002591,
+  "received_at": "2026-11-18T07:38:17.844871+00:00",
+  "logical_request_id": "d074fdeaaa7d1807becf417dda8193e96c07594ee0608dd99540e88c54fdc13f",
+  "execution_class": "direct_api"
+}

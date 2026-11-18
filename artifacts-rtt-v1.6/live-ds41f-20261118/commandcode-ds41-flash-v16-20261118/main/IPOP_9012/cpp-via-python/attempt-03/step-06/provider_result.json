@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::vector<std::string> data;\n    std::string token;\n    while (std::cin >> token) {\n        data.push_back(token);\n    }\n\n    if (data.empty()) {\n        return 0;\n    }\n\n    int t = std::stoi(data[0]);\n    std::vector<std::string> out;\n\n    for (int i = 0; i < t; ++i) {\n        std::string s = (i + 1 < static_cast<int>(data.size())) ? data[i + 1] : \"\";\n        int balance = 0;\n        bool valid = true;\n\n        for (char c : s) {\n            if (c == '(') {\n                ++balance;\n            } else {\n                --balance;\n            }\n\n            if (balance < 0) {\n                valid = false;\n                break;\n            }\n        }\n\n        if (balance != 0) {\n            valid = false;\n        }\n\n        out.push_back(valid ? \"YES\" : \"NO\");\n    }\n\n    for (size_t i = 0; i < out.size(); ++i) {\n        std::cout << out[i];\n        if (i + 1 < out.size()) {\n            std::cout << '\\n';\n        }\n    }\n    if (!out.empty()) {\n        std::cout << '\\n';\n    }\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 626,
+    "total_tokens": 1257,
+    "completion_tokens": 631,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 306
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 626,
+    "total_tokens": 1257,
+    "completion_tokens": 631,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 306
+    }
+  },
+  "cost_usd": 0.000832104,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-d8cea532e128b6789dc67eb565e001e6",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-python\\attempt-03\\step-06\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-d8cea532e128b6789dc67eb565e001e6",
+    "object": "chat.completion",
+    "created": 1794997647,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::vector<std::string> data;\n    std::string token;\n    while (std::cin >> token) {\n        data.push_back(token);\n    }\n\n    if (data.empty()) {\n        return 0;\n    }\n\n    int t = std::stoi(data[0]);\n    std::vector<std::string> out;\n\n    for (int i = 0; i < t; ++i) {\n        std::string s = (i + 1 < static_cast<int>(data.size())) ? data[i + 1] : \"\";\n        int balance = 0;\n        bool valid = true;\n\n        for (char c : s) {\n            if (c == '(') {\n                ++balance;\n            } else {\n                --balance;\n            }\n\n            if (balance < 0) {\n                valid = false;\n                break;\n            }\n        }\n\n        if (balance != 0) {\n            valid = false;\n        }\n\n        out.push_back(valid ? \"YES\" : \"NO\");\n    }\n\n    for (size_t i = 0; i < out.size(); ++i) {\n        std::cout << out[i];\n        if (i + 1 < out.size()) {\n            std::cout << '\\n';\n        }\n    }\n    if (!out.empty()) {\n        std::cout << '\\n';\n    }\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer with one complete C++ source file fenced. Need translate. Must preserve behavior. Need ensure if fewer strings than T: Python uses \"\" for missing => balance 0 valid true => YES. Is that required? \"for every valid input in specification\" valid inputs have T strings, so not matter. But preserve complete stdin/stdout behavior for every valid input. Could implement same with tokens vector and missing default \"\". Need C++17 main.\n\nNeed output exactly. Use ios.\n\nPotential issue if extra tokens? Only uses first T. Python data split. If T positive. We can replicate: read all tokens via cin >> s, store vector. If no data return. t = stoi(tokens[0]). For i 0..t-1, s = (i+1 < size)? tokens[i+1] : \"\". Compute. Output lines with newline. For out non-empty always T positive maybe >0. If t could be 0? spec positive. Python out empty if t=0 writes nothing. C++ handle. Build output string; if out not empty add newline. Or print each with newline? If T=0, Python writes nothing. If we just loop no output same. For t>0 print after each newline. Equivalent. But to preserve exact for arbitrary, handle. Use bool first? Simpler: vector<string> out; join.\n\nNeed return exactly one complete source file in code block no explanation. final with code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 626,
+      "total_tokens": 1257,
+      "completion_tokens": 631,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 306
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.577401699963957,
+  "received_at": "2026-11-18T10:27:30.503862+00:00",
+  "logical_request_id": "74902280077b79bca806994946a470e92bdcb98e2e30c6315e88f74d87aeccc6",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,94 @@
+{
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint n;\nvector<string> grid;\n\nstring solve(int r, int c, int size) {\n    char first = grid[r][c];\n    bool same = true;\n    for (int i = r; i < r + size && same; i++)\n        for (int j = c; j < c + size; j++)\n            if (grid[i][j] != first) { same = false; break; }\n    if (same) return string(1, first);\n    int half = size / 2;\n    return \"(\" + solve(r, c, half) + solve(r, c + half, half)\n            + solve(r + half, c, half) + solve(r + half, c + half, half) + \")\";\n}\n\nint main() {\n    if (!(cin >> n)) return 0;\n    grid.resize(n);\n    for (int i = 0; i < n; i++) {\n        string line;\n        while (line.empty() && getline(cin, line)) {\n            // trim\n            size_t a = line.find_first_not_of(\" \\t\\r\\n\");\n            if (a == string::npos) { line.clear(); continue; }\n            size_t b = line.find_last_not_of(\" \\t\\r\\n\");\n            line = line.substr(a, b - a + 1);\n            break;\n        }\n        grid[i] = line;\n    }\n    cout << solve(0, 0, n) << \"\\n\";\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 328,
+    "prompt_tokens": 780,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 1108
+  },
+  "usage_raw": {
+    "completion_tokens": 328,
+    "prompt_tokens": 780,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 1108
+  },
+  "cost_usd": 0.00202448,
+  "cost_source": "estimated",
+  "request_id": "01fa1090-a8e1-499a-bdc8-35e7e8d4ec3f",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_1992\\cpp-via-java\\attempt-05\\step-04\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint n;\nvector<string> grid;\n\nstring solve(int r, int c, int size) {\n    char first = grid[r][c];\n    bool same = true;\n    for (int i = r; i < r + size && same; i++)\n        for (int j = c; j < c + size; j++)\n            if (grid[i][j] != first) { same = false; break; }\n    if (same) return string(1, first);\n    int half = size / 2;\n    return \"(\" + solve(r, c, half) + solve(r, c + half, half)\n            + solve(r + half, c, half) + solve(r + half, c + half, half) + \")\";\n}\n\nint main() {\n    if (!(cin >> n)) return 0;\n    grid.resize(n);\n    for (int i = 0; i < n; i++) {\n        string line;\n        while (line.empty() && getline(cin, line)) {\n            // trim\n            size_t a = line.find_first_not_of(\" \\t\\r\\n\");\n            if (a == string::npos) { line.clear(); continue; }\n            size_t b = line.find_last_not_of(\" \\t\\r\\n\");\n            line = line.substr(a, b - a + 1);\n            break;\n        }\n        grid[i] = line;\n    }\n    cout << solve(0, 0, n) << \"\\n\";\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794902650,
+    "id": "01fa1090-a8e1-499a-bdc8-35e7e8d4ec3f",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 328,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_005fd9ac65d44a4282d5187913b953c6",
+      "trace_id": "3c86c9f1d27e46ffbd8efe9acc2b25e1"
+    },
+    "usage": {
+      "completion_tokens": 328,
+      "prompt_tokens": 780,
+      "prompt_tokens_details": {
+        "cached_tokens": 448
+      },
+      "total_tokens": 1108
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.381341599975713,
+  "received_at": "2026-11-17T08:04:09.807171+00:00",
+  "logical_request_id": "b5dbd32fadb90f6984cf14646478964ec84a3621b601d6db42551a8591d6842f",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n      n = read (head tokens) :: Int\n      xs = take n (map read (tail tokens) :: [Int])\n      nonZeros = filter (/= 0) xs\n      result = nonZeros ++ replicate (n - length nonZeros) 0\n  putStrLn (unwords (map show result))\n```",
+          "reasoning_content": "We need answer only fenced code block, Haskell source, module Main main. Need translate preserving stdin/stdout. Need think about parsing. Input first line N, next line N integers possibly whitespace/newlines. Output integers space-separated newline. Need handle valid inputs per spec. N >=1. Use getContents, words, read. Build non-zeros ++ replicate zeros. Print unwords map show. Need avoid issues? Use main = do input <- getContents; let (nStr:rest)=words input; n=read nStr::Int; xs=take n (map read rest::[Int]); result = filter (/=0) xs ++ replicate (n - length (filter (/=0) xs)) 0. Simpler let nonzero = filter (/=0) xs; result = nonzero ++ replicate (n-length nonzero) 0. putStrLn (unwords (map show result)). If N maybe absent? valid. Could pattern match fail if empty but valid. We can be robust. Haskell standard libs only. Return fenced code.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794998299,
+    "id": "chatcmpl-9adbf6d6101156b413767e61e34061dc",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 324,
+      "completion_tokens_details": {
+        "reasoning_tokens": 221
+      },
+      "prompt_tokens": 676,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 1000
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0005539680000000001,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 6.472390700015239,
+  "logical_request_id": "b3b0bb4476accea58c28496886d3678817a6b4245669eaa990f31b8921a31a16",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-haskell\\attempt-04\\step-07\\response_body.txt",
+  "received_at": "2026-11-18T10:38:22.125855+00:00",
+  "request_id": "chatcmpl-9adbf6d6101156b413767e61e34061dc",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n      n = read (head tokens) :: Int\n      xs = take n (map read (tail tokens) :: [Int])\n      nonZeros = filter (/= 0) xs\n      result = nonZeros ++ replicate (n - length nonZeros) 0\n  putStrLn (unwords (map show result))\n```",
+  "usage": {
+    "completion_tokens": 324,
+    "completion_tokens_details": {
+      "reasoning_tokens": 221
+    },
+    "prompt_tokens": 676,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1000
+  },
+  "usage_raw": {
+    "completion_tokens": 324,
+    "completion_tokens_details": {
+      "reasoning_tokens": 221
+    },
+    "prompt_tokens": 676,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1000
+  }
+}

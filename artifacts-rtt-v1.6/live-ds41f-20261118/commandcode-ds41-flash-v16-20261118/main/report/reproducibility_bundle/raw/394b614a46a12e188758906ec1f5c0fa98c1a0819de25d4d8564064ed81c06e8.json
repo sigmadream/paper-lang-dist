@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <string>\nusing namespace std;\n\nbool valid(const string& s) {\n    int balance = 0;\n    for (char c : s) {\n        if (c == '(') {\n            ++balance;\n        } else if (c == ')') {\n            if (balance == 0) return false;\n            --balance;\n        } else {\n            return false;\n        }\n    }\n    return balance == 0;\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int t;\n    if (!(cin >> t)) return 0;\n\n    while (t--) {\n        string s;\n        cin >> s;\n        cout << (valid(s) ? \"YES\" : \"NO\") << '\\n';\n    }\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer exactly one fenced code block C++17, no explanation. Need translate. Simple. Ensure stdin behavior. Read T then strings whitespace. Print YES/NO. Valid check balance nonnegative and zero. Need handle no input maybe. C++.\n\nNeed final only code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794994793,
+    "id": "chatcmpl-d8478aaf2aa1ed6a14e936f3c6869d55",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 234,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 613,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 847
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0004647,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.7911503999494016,
+  "logical_request_id": "1fc5a3a43df8c2c0e7ac6e476c048fe9ed81102f1bdc8ef5d070b1d66a425450",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-haskell\\attempt-01\\step-02\\response_body.txt",
+  "received_at": "2026-11-18T09:39:53.567674+00:00",
+  "request_id": "chatcmpl-d8478aaf2aa1ed6a14e936f3c6869d55",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <string>\nusing namespace std;\n\nbool valid(const string& s) {\n    int balance = 0;\n    for (char c : s) {\n        if (c == '(') {\n            ++balance;\n        } else if (c == ')') {\n            if (balance == 0) return false;\n            --balance;\n        } else {\n            return false;\n        }\n    }\n    return balance == 0;\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int t;\n    if (!(cin >> t)) return 0;\n\n    while (t--) {\n        string s;\n        cin >> s;\n        cout << (valid(s) ? \"YES\" : \"NO\") << '\\n';\n    }\n\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 234,
+    "completion_tokens_details": {
+      "reasoning_tokens": 60
+    },
+    "prompt_tokens": 613,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 847
+  },
+  "usage_raw": {
+    "completion_tokens": 234,
+    "completion_tokens_details": {
+      "reasoning_tokens": 60
+    },
+    "prompt_tokens": 613,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 847
+  }
+}

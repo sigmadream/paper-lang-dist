@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <vector>\nint main() {\n    long long n;\n    if (!(std::cin >> n)) return 0;\n    std::vector<int> counts(n + 1, 0);\n    for (long long i = 1; i <= n; ++i) {\n        counts[i] = counts[i / 2] + (int)(i % 2);\n    }\n    for (long long i = 0; i <= n; ++i) {\n        if (i) std::cout << ' ';\n        std::cout << counts[i];\n    }\n    std::cout << '\\n';\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 530,
+    "total_tokens": 729,
+    "completion_tokens": 199,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 54
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 530,
+    "total_tokens": 729,
+    "completion_tokens": 199,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 54
+    }
+  },
+  "cost_usd": 0.00039779999999999997,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-47d410eab396b1a9a760be1d3f601070",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0338\\cpp-via-haskell\\attempt-03\\step-06\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-47d410eab396b1a9a760be1d3f601070",
+    "object": "chat.completion",
+    "created": 1794984330,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\nint main() {\n    long long n;\n    if (!(std::cin >> n)) return 0;\n    std::vector<int> counts(n + 1, 0);\n    for (long long i = 1; i <= n; ++i) {\n        counts[i] = counts[i / 2] + (int)(i % 2);\n    }\n    for (long long i = 0; i <= n; ++i) {\n        if (i) std::cout << ' ';\n        std::cout << counts[i];\n    }\n    std::cout << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need translate Haskell to C++17. Output numbers 0..N popcount, space-separated, newline. N up to 100000. Use DP without builtin popcount. Edge: if no input, output nothing.\n\nLet me write."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 530,
+      "total_tokens": 729,
+      "completion_tokens": 199,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 54
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.030387399950996,
+  "received_at": "2026-11-18T06:45:32.747891+00:00",
+  "logical_request_id": "ca7e0b764880ffda65ed16125d97325060bccf21e4afc238d5c1f54f7179d8bb",
+  "execution_class": "direct_api"
+}

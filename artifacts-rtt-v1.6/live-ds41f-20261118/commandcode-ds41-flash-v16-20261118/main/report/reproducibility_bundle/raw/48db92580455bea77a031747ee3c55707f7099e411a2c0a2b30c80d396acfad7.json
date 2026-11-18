@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    long long m, n;\n    if (!(std::cin >> m >> n)) return 0;\n\n    std::vector<long long> dp(n, 1);\n\n    for (long long i = 1; i < m; ++i) {\n        for (long long j = 1; j < n; ++j) {\n            dp[j] += dp[j - 1];\n        }\n    }\n\n    std::cout << dp[n - 1] << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer exactly one fenced code block C++17. Need translate. Need consider behavior. Java: reads ints if none return. m n, dp size n long initialized 1. loops. print dp[n-1]. Constraints n>=1. C++ main reads. If no input return. Use long long? final <=2e9 but dp intermediate? unique paths <=2e9 for valid. Java long. Use long long. Print. Need exact source. No explanation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794980944,
+    "id": "chatcmpl-2452c0878a0a901fb0b6fe9370f59b47",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 228,
+      "completion_tokens_details": {
+        "reasoning_tokens": 101
+      },
+      "prompt_tokens": 540,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 768
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00043559999999999996,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.2768139999825507,
+  "logical_request_id": "11d73e3a85a3b6a6837c087e84de8a339ca98b429d1b180252c0691ab7a36259",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-java\\attempt-02\\step-04\\response_body.txt",
+  "received_at": "2026-11-18T05:49:05.647684+00:00",
+  "request_id": "chatcmpl-2452c0878a0a901fb0b6fe9370f59b47",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    long long m, n;\n    if (!(std::cin >> m >> n)) return 0;\n\n    std::vector<long long> dp(n, 1);\n\n    for (long long i = 1; i < m; ++i) {\n        for (long long j = 1; j < n; ++j) {\n            dp[j] += dp[j - 1];\n        }\n    }\n\n    std::cout << dp[n - 1] << '\\n';\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 228,
+    "completion_tokens_details": {
+      "reasoning_tokens": 101
+    },
+    "prompt_tokens": 540,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 768
+  },
+  "usage_raw": {
+    "completion_tokens": 228,
+    "completion_tokens_details": {
+      "reasoning_tokens": 101
+    },
+    "prompt_tokens": 540,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 768
+  }
+}

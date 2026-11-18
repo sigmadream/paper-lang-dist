@@ -1,0 +1,22 @@
+# Coding Plan 전용 예제이며 일반 API 예산·인증과 구분해 주세요.
+# https://docs.z.ai/api-reference/introduction
+provider: zai_coding
+protocol: chat_completions
+base_url: https://api.z.ai/api/coding/paas/v4
+request_path: /chat/completions
+auth:
+  type: bearer
+  api_key_env: ZAI_CODING_API_KEY
+model: null
+allowed_response_models: []
+generation_profile:
+  name: zai-coding-explicit
+  supported_options: [temperature, top_p, max_tokens, thinking]
+generation:
+  temperature: 0.6
+  top_p: 0.95
+  max_tokens: 16384
+request_timeout: 120
+retries: 2
+max_calls: 3600
+max_transport_attempts: 10800

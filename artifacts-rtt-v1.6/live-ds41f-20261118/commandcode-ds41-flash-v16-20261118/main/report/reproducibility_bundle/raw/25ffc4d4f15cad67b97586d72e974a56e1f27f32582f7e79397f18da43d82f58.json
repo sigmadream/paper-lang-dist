@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <string>\nusing namespace std;\n\nstring solve(const vector<string>& grid, int r, int c, int size) {\n    char first = grid[r][c];\n    bool same = true;\n\n    for (int i = r; i < r + size && same; ++i) {\n        for (int j = c; j < c + size; ++j) {\n            if (grid[i][j] != first) {\n                same = false;\n                break;\n            }\n        }\n    }\n\n    if (same) return string(1, first);\n\n    int half = size / 2;\n    string tl = solve(grid, r, c, half);\n    string tr = solve(grid, r, c + half, half);\n    string bl = solve(grid, r + half, c, half);\n    string br = solve(grid, r + half, c + half, half);\n\n    return \"(\" + tl + tr + bl + br + \")\";\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<string> grid(n);\n    for (int i = 0; i < n; ++i) cin >> grid[i];\n\n    cout << solve(grid, 0, 0, n) << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer code only, fenced cpp. Need translate. Simple. Need ensure exact behavior. Include bits? Just iostream string vector. main.\n\nPotential concern sample output weird but algorithm standard. Implement recursively.\n\nLet's craft concise.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794987463,
+    "id": "chatcmpl-3c46eff4ea2286ecfdd0f951f0ba9250",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 350,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 693,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1043
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0006279,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.940476799965836,
+  "logical_request_id": "617441b912f69811f872f62de32a52fb0bea75e2bf33d1d47341f2332d8776a1",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_1992\\cpp-via-python\\attempt-04\\step-04\\response_body.txt",
+  "received_at": "2026-11-18T07:37:44.369810+00:00",
+  "request_id": "chatcmpl-3c46eff4ea2286ecfdd0f951f0ba9250",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n#include <string>\nusing namespace std;\n\nstring solve(const vector<string>& grid, int r, int c, int size) {\n    char first = grid[r][c];\n    bool same = true;\n\n    for (int i = r; i < r + size && same; ++i) {\n        for (int j = c; j < c + size; ++j) {\n            if (grid[i][j] != first) {\n                same = false;\n                break;\n            }\n        }\n    }\n\n    if (same) return string(1, first);\n\n    int half = size / 2;\n    string tl = solve(grid, r, c, half);\n    string tr = solve(grid, r, c + half, half);\n    string bl = solve(grid, r + half, c, half);\n    string br = solve(grid, r + half, c + half, half);\n\n    return \"(\" + tl + tr + bl + br + \")\";\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<string> grid(n);\n    for (int i = 0; i < n; ++i) cin >> grid[i];\n\n    cout << solve(grid, 0, 0, n) << '\\n';\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 350,
+    "completion_tokens_details": {
+      "reasoning_tokens": 49
+    },
+    "prompt_tokens": 693,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1043
+  },
+  "usage_raw": {
+    "completion_tokens": 350,
+    "completion_tokens_details": {
+      "reasoning_tokens": 49
+    },
+    "prompt_tokens": 693,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1043
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Data.List (sort)\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    (s:t:_) -> putStrLn (if sort s == sort t then \"1\" else \"0\")\n    _ -> return ()\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 596,
+    "total_tokens": 922,
+    "completion_tokens": 326,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 259
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 596,
+    "total_tokens": 922,
+    "completion_tokens": 326,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 259
+    }
+  },
+  "cost_usd": 0.000457104,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-c5b502a944b7a03f771a6256a94d2966",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0242\\cpp-via-haskell\\attempt-03\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-c5b502a944b7a03f771a6256a94d2966",
+    "object": "chat.completion",
+    "created": 1794986701,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Data.List (sort)\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    (s:t:_) -> putStrLn (if sort s == sort t then \"1\" else \"0\")\n    _ -> return ()\n```",
+          "reasoning_content": "We need answer only one fenced code block, Haskell source. Need translate preserving behavior. Need consider input: first line s next t, strings no spaces (lowercase). Use getContents words. Main.\n\nImplement valid anagram. Could use sort or counting. Constraints 50k fine.\n\nNeed output 1/0 newline.\n\nPotential empty? spec length >=1 but handle parse. If read two words. Could use interact. Main :: IO ().\n\nUse Data.List.sort maybe fine O(n log n). Better counting with array? Standard libraries only. Simpler:\n\nimport System.IO\nimport Data.List (sort)\n\nmain = do\n  input <- getContents\n  case words input of\n    (s:t:_) -> putStrLn (if sort s == sort t then \"1\" else \"0\")\n    _ -> return ()\n\nBut if s size != t size sort comparison false anyway. Behavior if missing? Source returns 0 no output if fail. Our _ return (). Fine. If extra tokens ignore.\n\nNeed exactly source file fenced. No explanation. Ensure module Main? Requirement module Main and main :: IO (). Add module Main where. Could compile.\n\nWe need think about lazy input and words. getContents + words handles. Fine.\n\nReturn code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 596,
+      "total_tokens": 922,
+      "completion_tokens": 326,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 259
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.7289438999723643,
+  "received_at": "2026-11-18T07:25:02.751057+00:00",
+  "logical_request_id": "152b47492465f65f35774057a2ef79142564e1ce472dadf30511c49833f6dcf1",
+  "execution_class": "direct_api"
+}

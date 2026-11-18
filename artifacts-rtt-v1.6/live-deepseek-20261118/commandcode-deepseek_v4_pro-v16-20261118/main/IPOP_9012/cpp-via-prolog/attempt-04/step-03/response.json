@@ -1,0 +1,107 @@
+{
+  "text": "```prolog\nmain :-\n    read_line_to_string(user_input, TLine),\n    (   TLine == end_of_file\n    ->  true\n    ;   number_string(T, TLine),\n        process(T)\n    ).\n\nprocess(0).\nprocess(N) :-\n    N > 0,\n    read_line_to_string(user_input, Line),\n    (   Line == end_of_file\n    ->  true\n    ;   (   is_valid(Line)\n        ->  format('YES~n')\n        ;   format('NO~n')\n        ),\n        N1 is N-1,\n        process(N1)\n    ).\n\nis_valid(Line) :-\n    string_chars(Line, Chars),\n    check_balance(Chars, 0).\n\ncheck_balance([], 0).\ncheck_balance(['('|Rest], Bal) :-\n    Bal1 is Bal + 1,\n    check_balance(Rest, Bal1).\ncheck_balance([')'|Rest], Bal) :-\n    Bal > 0,\n    Bal1 is Bal - 1,\n    check_balance(Rest, Bal1).\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4-pro",
+  "actual_model": "deepseek/deepseek-v4-pro",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4-pro",
+    "actual": "deepseek/deepseek-v4-pro",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 620,
+    "completion_tokens": 1503,
+    "total_tokens": 2123,
+    "prompt_tokens_details": {
+      "cached_tokens": 384,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1265,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "usage_raw": {
+    "prompt_tokens": 620,
+    "completion_tokens": 1503,
+    "total_tokens": 2123,
+    "prompt_tokens_details": {
+      "cached_tokens": 384,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1265,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "cost_usd": 0.006280296,
+  "cost_source": "estimated",
+  "request_id": "gen_01M7P6ZXCMPH5KH0HTJMM80TP7",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-deepseek-20261118\\commandcode-deepseek_v4_pro-v16-20261118\\main\\IPOP_9012\\cpp-via-prolog\\attempt-04\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "gen_01M7P6ZXCMPH5KH0HTJMM80TP7",
+    "object": "chat.completion",
+    "created": 1794968142,
+    "model": "deepseek/deepseek-v4-pro",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```prolog\nmain :-\n    read_line_to_string(user_input, TLine),\n    (   TLine == end_of_file\n    ->  true\n    ;   number_string(T, TLine),\n        process(T)\n    ).\n\nprocess(0).\nprocess(N) :-\n    N > 0,\n    read_line_to_string(user_input, Line),\n    (   Line == end_of_file\n    ->  true\n    ;   (   is_valid(Line)\n        ->  format('YES~n')\n        ;   format('NO~n')\n        ),\n        N1 is N-1,\n        process(N1)\n    ).\n\nis_valid(Line) :-\n    string_chars(Line, Chars),\n    check_balance(Chars, 0).\n\ncheck_balance([], 0).\ncheck_balance(['('|Rest], Bal) :-\n    Bal1 is Bal + 1,\n    check_balance(Rest, Bal1).\ncheck_balance([')'|Rest], Bal) :-\n    Bal > 0,\n    Bal1 is Bal - 1,\n    check_balance(Rest, Bal1).\n```",
+          "reasoning": "We need to translate C++ program to Prolog. The program reads T, then T lines of parentheses strings, checks if each is a valid parentheses sequence (balanced and never negative), outputs YES or NO per line.\n\nWe must write a Prolog program (SWI-Prolog) with main/0 defined, reading from standard input (stdin) and writing to standard output. No initialization directives. We need to preserve behavior for all valid inputs per specification. Input length 2..50 per string, T positive integer.\n\nIn Prolog, reading lines from stdin: use read_line_to_string/2? But we need to handle the first line T, then T lines. Could use read/1 for T if input is a term? But input is raw text lines. We can read lines as strings. SWI-Prolog: read_line_to_string/2 reads a line as string or end_of_file. It includes newline removed. We can use string_chars/2 to get char list.\n\nWe'll read first line, parse integer T with number_string/2 or atom_number. Then loop T times: read line, check parentheses validity.\n\nCheck: iterate over character list, maintain balance integer. For each '(' increment, for ')' decrement, if negative fail, at end balance=0.\n\nOutput: print \"YES\" or \"NO\" followed by newline. Use format/2 or write.\n\nEdge cases: strings may contain spaces? Spec says only parentheses, no spaces. But robust? We can just handle char '(' and ')'.\n\nWe'll implement main/0:\n\n- read first line into string maybe end_of_file.\n- convert to integer T. Use string_to_atom? Actually read_line_to_string gives a string, e.g. \"6\". Then number_string(T, Line1).\n- Then loop T times: read_line_to_string(Stream, Line), if end_of_file then stop. But if input has exact T lines after T, fine. If less? Original C++ breaks on EOF, but spec says T lines so okay. Still handle EOF gracefully.\n\n- For each Line, check valid.\n\nValidity predicate: valid(String) :- string_chars(String, Chars), check(Chars, 0). check([], 0). check(['('|Rest], Bal) :- Bal1 is Bal+1, check(Rest, Bal1). check([')'|Rest], Bal) :- Bal > 0, Bal1 is Bal-1, check(Rest, Bal1). Also base when Bal negative? We ensure Bal >0 for ')' so no negative. At end balance 0.\n\nBut careful: string_chars/2 yields chars. Good.\n\nThen output: (valid(Line) -> write('YES') ; write('NO')), nl.\n\nWe need to use a stream alias? The default input is user_input, output user_output. read_line_to_string/2 can be used with current input? read_line_to_string/1 reads from current input? Actually SWI-Prolog has read_line_to_string/1 which reads from current input. Also read_line_to_string/2 takes stream. We can simply use read_line_to_string/1.\n\nSo main:-\n    read_line_to_string(user_input, TLine), % or read_line_to_string(TLine)\n    ( TLine == end_of_file -> true\n    ; number_string(T, TLine),\n      process(T) ).\n\nprocess(0).\nprocess(N) :-\n    N > 0,\n    read_line_to_string(user_input, Line),\n    ( Line == end_of_file -> true\n    ; (is_valid(Line) -> format('YES~n') ; format('NO~n')),\n      N1 is N-1,\n      process(N1) ).\n\nNeed to ensure that if we read end_of_file before T lines, we stop, but fine.\n\nWe can define is_valid/1.\n\nPotential issue: The input strings may be like \"((()))\" with no newline? But spec says each on separate line. So read line is fine.\n\nWe should not include module/imports.\n\nCheck public examples with Prolog execution? We can mentally test.\n\nExample: T=6, lines include some invalid. Output should match.\n\nWe'll produce final answer in a fenced code block with prolog.\n\nWe must ensure main/0 is defined, no initialization directive. So final answer:\n\n```prolog\nmain :-\n    read_line_to_string(user_input, TLine),\n    (   TLine == end_of_file\n    ->  true\n    ;   number_string(T, TLine),\n        process(T)\n    ).\n\nprocess(0).\nprocess(N) :-\n    N > 0,\n    read_line_to_string(user_input, Line),\n    (   Line == end_of_file\n    ->  true\n    ;   (   is_valid(Line)\n        ->  format('YES~n')\n        ;   format('NO~n')\n        ),\n        N1 is N-1,\n        process(N1)\n    ).\n\nis_valid(Line) :-\n    string_chars(Line, Chars),\n    check_balance(Chars, 0).\n\ncheck_balance([], 0).\ncheck_balance(['('|Rest], Bal) :-\n    Bal1 is Bal + 1,\n    check_balance(Rest, Bal1).\ncheck_balance([')'|Rest], Bal) :-\n    Bal > 0,\n    Bal1 is Bal - 1,\n    check_balance(Rest, Bal1).\n```\n\nNeed to consider that input line might not be a valid number? But spec says T positive integer. So fine.\n\nOne nuance: read_line_to_string/2 is used with user_input, but default alias is user_input for input? Yes. Using user_input explicitly is fine.\n\nThe original C++ uses std::cin.ignore() after reading T to consume newline. In Prolog, read_line_to_string reads entire line, including no newline, so after reading first line, next read_line_to_string will read next line correctly. So no need to ignore newline.\n\nWorks.\n\nWe'll output code block.",
+          "reasoning_details": [
+            {
+              "type": "reasoning.text",
+              "text": "We need to translate C++ program to Prolog. The program reads T, then T lines of parentheses strings, checks if each is a valid parentheses sequence (balanced and never negative), outputs YES or NO per line.\n\nWe must write a Prolog program (SWI-Prolog) with main/0 defined, reading from standard input (stdin) and writing to standard output. No initialization directives. We need to preserve behavior for all valid inputs per specification. Input length 2..50 per string, T positive integer.\n\nIn Prolog, reading lines from stdin: use read_line_to_string/2? But we need to handle the first line T, then T lines. Could use read/1 for T if input is a term? But input is raw text lines. We can read lines as strings. SWI-Prolog: read_line_to_string/2 reads a line as string or end_of_file. It includes newline removed. We can use string_chars/2 to get char list.\n\nWe'll read first line, parse integer T with number_string/2 or atom_number. Then loop T times: read line, check parentheses validity.\n\nCheck: iterate over character list, maintain balance integer. For each '(' increment, for ')' decrement, if negative fail, at end balance=0.\n\nOutput: print \"YES\" or \"NO\" followed by newline. Use format/2 or write.\n\nEdge cases: strings may contain spaces? Spec says only parentheses, no spaces. But robust? We can just handle char '(' and ')'.\n\nWe'll implement main/0:\n\n- read first line into string maybe end_of_file.\n- convert to integer T. Use string_to_atom? Actually read_line_to_string gives a string, e.g. \"6\". Then number_string(T, Line1).\n- Then loop T times: read_line_to_string(Stream, Line), if end_of_file then stop. But if input has exact T lines after T, fine. If less? Original C++ breaks on EOF, but spec says T lines so okay. Still handle EOF gracefully.\n\n- For each Line, check valid.\n\nValidity predicate: valid(String) :- string_chars(String, Chars), check(Chars, 0). check([], 0). check(['('|Rest], Bal) :- Bal1 is Bal+1, check(Rest, Bal1). check([')'|Rest], Bal) :- Bal > 0, Bal1 is Bal-1, check(Rest, Bal1). Also base when Bal negative? We ensure Bal >0 for ')' so no negative. At end balance 0.\n\nBut careful: string_chars/2 yields chars. Good.\n\nThen output: (valid(Line) -> write('YES') ; write('NO')), nl.\n\nWe need to use a stream alias? The default input is user_input, output user_output. read_line_to_string/2 can be used with current input? read_line_to_string/1 reads from current input? Actually SWI-Prolog has read_line_to_string/1 which reads from current input. Also read_line_to_string/2 takes stream. We can simply use read_line_to_string/1.\n\nSo main:-\n    read_line_to_string(user_input, TLine), % or read_line_to_string(TLine)\n    ( TLine == end_of_file -> true\n    ; number_string(T, TLine),\n      process(T) ).\n\nprocess(0).\nprocess(N) :-\n    N > 0,\n    read_line_to_string(user_input, Line),\n    ( Line == end_of_file -> true\n    ; (is_valid(Line) -> format('YES~n') ; format('NO~n')),\n      N1 is N-1,\n      process(N1) ).\n\nNeed to ensure that if we read end_of_file before T lines, we stop, but fine.\n\nWe can define is_valid/1.\n\nPotential issue: The input strings may be like \"((()))\" with no newline? But spec says each on separate line. So read line is fine.\n\nWe should not include module/imports.\n\nCheck public examples with Prolog execution? We can mentally test.\n\nExample: T=6, lines include some invalid. Output should match.\n\nWe'll produce final answer in a fenced code block with prolog.\n\nWe must ensure main/0 is defined, no initialization directive. So final answer:\n\n```prolog\nmain :-\n    read_line_to_string(user_input, TLine),\n    (   TLine == end_of_file\n    ->  true\n    ;   number_string(T, TLine),\n        process(T)\n    ).\n\nprocess(0).\nprocess(N) :-\n    N > 0,\n    read_line_to_string(user_input, Line),\n    (   Line == end_of_file\n    ->  true\n    ;   (   is_valid(Line)\n        ->  format('YES~n')\n        ;   format('NO~n')\n        ),\n        N1 is N-1,\n        process(N1)\n    ).\n\nis_valid(Line) :-\n    string_chars(Line, Chars),\n    check_balance(Chars, 0).\n\ncheck_balance([], 0).\ncheck_balance(['('|Rest], Bal) :-\n    Bal1 is Bal + 1,\n    check_balance(Rest, Bal1).\ncheck_balance([')'|Rest], Bal) :-\n    Bal > 0,\n    Bal1 is Bal - 1,\n    check_balance(Rest, Bal1).\n```\n\nNeed to consider that input line might not be a valid number? But spec says T positive integer. So fine.\n\nOne nuance: read_line_to_string/2 is used with user_input, but default alias is user_input for input? Yes. Using user_input explicitly is fine.\n\nThe original C++ uses std::cin.ignore() after reading T to consume newline. In Prolog, read_line_to_string reads entire line, including no newline, so after reading first line, next read_line_to_string will read next line correctly. So no need to ignore newline.\n\nWorks.\n\nWe'll output code block.",
+              "format": "unknown",
+              "index": 0
+            }
+          ]
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 620,
+      "completion_tokens": 1503,
+      "total_tokens": 2123,
+      "prompt_tokens_details": {
+        "cached_tokens": 384,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1265,
+        "image_tokens": 0
+      },
+      "cache_creation_input_tokens": 0
+    },
+    "system_fingerprint": "fp_sge8ne602g"
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 20.627078799996525,
+  "received_at": "2026-11-18T02:15:41.884891+00:00",
+  "logical_request_id": "a8c408d0ad093b0ba644698d21358664d8a2d032b6a6ca5208aefc48b85d01e5",
+  "execution_class": "direct_api"
+}

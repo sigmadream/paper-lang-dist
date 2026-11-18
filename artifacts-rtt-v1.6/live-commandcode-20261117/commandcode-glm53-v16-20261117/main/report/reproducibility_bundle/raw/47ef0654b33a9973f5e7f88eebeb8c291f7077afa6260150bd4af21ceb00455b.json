@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.List (isSuffixOf)\n\nmain :: IO ()\nmain = do\n    s <- getLine\n    let t = takeWhile (>= 'a') . takeWhile (<= 'z') $ s\n        r = reverse t\n    putStrLn (if t == r then \"1\" else \"0\")\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794901171,
+    "id": "241cecae-edf3-4cda-ab3d-2cbf24ed5d50",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 79,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_2156983a95e64b738b704d5df6a4af5f",
+      "trace_id": "5504f25011d34ad8abd2ac438c10ee38"
+    },
+    "usage": {
+      "completion_tokens": 79,
+      "prompt_tokens": 431,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 510
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.00051324,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.3446934999665245,
+  "logical_request_id": "ed190de5689c616827c8d069871c4fd007e59b0d8210eaa71db4e5a2f41ac413",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_10988\\cpp-via-haskell\\attempt-02\\step-03\\response_body.txt",
+  "received_at": "2026-11-17T07:39:31.434899+00:00",
+  "request_id": "241cecae-edf3-4cda-ab3d-2cbf24ed5d50",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.List (isSuffixOf)\n\nmain :: IO ()\nmain = do\n    s <- getLine\n    let t = takeWhile (>= 'a') . takeWhile (<= 'z') $ s\n        r = reverse t\n    putStrLn (if t == r then \"1\" else \"0\")\n```",
+  "usage": {
+    "completion_tokens": 79,
+    "prompt_tokens": 431,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 510
+  },
+  "usage_raw": {
+    "completion_tokens": 79,
+    "prompt_tokens": 431,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 510
+  }
+}

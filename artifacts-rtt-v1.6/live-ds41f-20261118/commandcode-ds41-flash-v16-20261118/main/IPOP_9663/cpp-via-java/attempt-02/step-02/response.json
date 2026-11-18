@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n\nstatic int n;\nstatic int ans = 0;\nstatic bool col[15];\nstatic bool diag1[29];\nstatic bool diag2[29];\n\nvoid solve(int r) {\n    if (r == n) {\n        ++ans;\n        return;\n    }\n    for (int c = 0; c < n; ++c) {\n        if (col[c] || diag1[r + c] || diag2[r - c + n - 1]) continue;\n        col[c] = true;\n        diag1[r + c] = true;\n        diag2[r - c + n - 1] = true;\n\n        solve(r + 1);\n\n        col[c] = false;\n        diag1[r + c] = false;\n        diag2[r - c + n - 1] = false;\n    }\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    if (!(std::cin >> n)) return 0;\n\n    solve(0);\n    std::cout << ans << '\\n';\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 674,
+    "total_tokens": 1006,
+    "completion_tokens": 332,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 86
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 674,
+    "total_tokens": 1006,
+    "completion_tokens": 332,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 86
+    }
+  },
+  "cost_usd": 0.0006006,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-cb7c3a27c680e66cb1a0c5ba38532fb9",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9663\\cpp-via-java\\attempt-02\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-cb7c3a27c680e66cb1a0c5ba38532fb9",
+    "object": "chat.completion",
+    "created": 1794992241,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n\nstatic int n;\nstatic int ans = 0;\nstatic bool col[15];\nstatic bool diag1[29];\nstatic bool diag2[29];\n\nvoid solve(int r) {\n    if (r == n) {\n        ++ans;\n        return;\n    }\n    for (int c = 0; c < n; ++c) {\n        if (col[c] || diag1[r + c] || diag2[r - c + n - 1]) continue;\n        col[c] = true;\n        diag1[r + c] = true;\n        diag2[r - c + n - 1] = true;\n\n        solve(r + 1);\n\n        col[c] = false;\n        diag1[r + c] = false;\n        diag2[r - c + n - 1] = false;\n    }\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    if (!(std::cin >> n)) return 0;\n\n    solve(0);\n    std::cout << ans << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer exactly one complete source file in fenced code block, no explanation. Need translate Java to C++17 preserving. Need be careful N=1 works arrays size 1. Input reading. Return code.\n\nNeed maybe optimize? N<15, standard backtracking counts up to 14: N=14 has 365596, fine. Java arrays. C++.\n\nWe should output fenced code block only."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 674,
+      "total_tokens": 1006,
+      "completion_tokens": 332,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.398877599975094,
+  "received_at": "2026-11-18T08:57:22.544717+00:00",
+  "logical_request_id": "e53d31a95796f68638f917b6ca0ecd74ca320f1d0373314d85a7efaf2aeb2871",
+  "execution_class": "direct_api"
+}

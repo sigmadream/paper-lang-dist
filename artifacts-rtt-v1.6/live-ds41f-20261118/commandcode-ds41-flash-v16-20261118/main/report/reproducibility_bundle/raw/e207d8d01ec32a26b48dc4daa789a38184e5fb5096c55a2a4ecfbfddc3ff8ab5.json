@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nimport System.IO\n\nhanoi :: Int -> Int -> Int -> Int -> Handle -> IO ()\nhanoi n start mid end h\n    | n == 1 = hPutStrLn h (show start ++ \" \" ++ show end)\n    | otherwise = do\n        hanoi (n - 1) start end mid h\n        hPutStrLn h (show start ++ \" \" ++ show end)\n        hanoi (n - 1) mid start end h\n\nmain :: IO ()\nmain = do\n    hSetBuffering stdout (BlockBuffering Nothing)\n    input <- getLine\n    let n = read input :: Int\n    print ((2 ^ n) - 1)\n    hanoi n 1 2 3 stdout\n```",
+          "reasoning_content": "We need answer translate to Haskell. Need provide exact one source file fenced code block no explanation. Need preserve behavior. N<=20, moves 2^N-1 up to 1,048,575. Haskell can generate list and output. Need efficient IO. Need first line count = 2^n - 1, then lines. Could recursively produce strings. Need avoid excessive memory maybe okay? 1M lines. Use Builder? Standard libraries. We can use Data.List, Control.Monad, System.IO. Need output efficiently. Simple putStr unlines (show count : map ...) but millions strings memory? Could use hPutStr with recursion. Need Haskell code.\n\nNeed produce module Main where main :: IO (). Read one Int from stdin. Generate hanoi moves as list of (Int,Int). hanoi n a b c = hanoi (n-1) a c b ++ [(a,c)] ++ hanoi(n-1) b a c. n<=20, list 1M pairs memory ~ maybe 16MB plus strings. Could stream to output recursively. But simple okay? 1M pairs ~ 24MB? Haskell list overhead huge maybe ~100MB. Could be okay? BOJ memory unknown. Better directly output recursively without building list, and compute count 2^n-1. Need write each line via hPutStr? hPutStr per line may be slow. Use hPutStrLn for each move maybe 1M calls; okay maybe with buffer? stdout buffered. But building strings with show. We can define hanoi :: Int -> Int -> Int -> Int -> Handle -> IO () that outputs moves. It recurses. For each base hPutStrLn h (show s ++ \" \" ++ show e) or use hPutStr h (show s), hPutStr \" \", etc. That is multiple calls. Use hPutStrLn h (show s ++ \" \" ++ show e). 1M.\n\nCould use Data.ByteString.Builder for speed, but standard library includes bytestring? GHC ships. But prompt says standard libraries shipped with toolchain; bytestring is core. However simpler no. Need preserve exactly output. First line count. Use print count. Then hanoi. But print count via stdout and then hPutStrLn stdout. Need hSetBuffering stdout (BlockBuffering Nothing). Use getLine/read. If no input? Source returns 0 if !(cin>>n). Haskell getLine may throw. We can handle with getContents? Need valid inputs only per spec. Public. But \"preserve complete stdin/stdout behavior for every valid input\", invalid not matter. Could just readLn. Need no final extra? C++ outputs newline after every move. hPutStrLn does. print count newline. Good.\n\nPotential issue Haskell recursion output for n=20, nested calls depth 20 fine. 1,048,575 lines. okay.\n\nLet's craft:\n\nmodule Main where\nimport System.IO\n\nhanoi :: Int -> Int -> Int -> Int -> Handle -> IO ()\nhanoi n start mid end h\n  | n == 1 = hPutStrLn h (show start ++ \" \" ++ show end)\n  | otherwise = do\n      hanoi (n-1) start end mid h\n      hPutStrLn h (show start ++ \" \" ++ show end)\n      hanoi (n-1) mid start end h\n\nmain :: IO ()\nmain = do\n  hSetBuffering stdout (BlockBuffering Nothing)\n  input <- getLine\n  let n = read input :: Int\n  print ((1 `shiftL` n) - 1) -- need Data.Bits\n  hanoi n 1 2 3 stdout\n\nNeed Data.Bits import. Or compute 2^n -1 via (2^n -1) using ^. `2 ^ n - 1` okay works. No import. But precedence? (2 ^ n) - 1. print ((2 ^ n) - 1). Note for n=20 okay Int.\n\nIf input could have whitespace maybe read getLine okay. For \"3\\n\". Good.\n\nPotential issue `hSetBuffering stdout (BlockBuffering Nothing)` then `print` and hPutStrLn. Fine.\n\nNeed no explanation. One fenced block.\n\nLet's final.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1795001212,
+    "id": "chatcmpl-49d35093a10cba93f753f9f226eaa0c1",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 1074,
+      "completion_tokens_details": {
+        "reasoning_tokens": 906
+      },
+      "prompt_tokens": 670,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1744
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0014898,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 9.447811600053683,
+  "logical_request_id": "48e9cf73b3b69b815c5df7c164fbc62959ca531d5f3e273d7db813543b1b0eba",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_11729\\cpp-via-haskell\\attempt-03\\step-01\\response_body.txt",
+  "received_at": "2026-11-18T11:27:01.225638+00:00",
+  "request_id": "chatcmpl-49d35093a10cba93f753f9f226eaa0c1",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nimport System.IO\n\nhanoi :: Int -> Int -> Int -> Int -> Handle -> IO ()\nhanoi n start mid end h\n    | n == 1 = hPutStrLn h (show start ++ \" \" ++ show end)\n    | otherwise = do\n        hanoi (n - 1) start end mid h\n        hPutStrLn h (show start ++ \" \" ++ show end)\n        hanoi (n - 1) mid start end h\n\nmain :: IO ()\nmain = do\n    hSetBuffering stdout (BlockBuffering Nothing)\n    input <- getLine\n    let n = read input :: Int\n    print ((2 ^ n) - 1)\n    hanoi n 1 2 3 stdout\n```",
+  "usage": {
+    "completion_tokens": 1074,
+    "completion_tokens_details": {
+      "reasoning_tokens": 906
+    },
+    "prompt_tokens": 670,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1744
+  },
+  "usage_raw": {
+    "completion_tokens": 1074,
+    "completion_tokens_details": {
+      "reasoning_tokens": 906
+    },
+    "prompt_tokens": 670,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1744
+  }
+}

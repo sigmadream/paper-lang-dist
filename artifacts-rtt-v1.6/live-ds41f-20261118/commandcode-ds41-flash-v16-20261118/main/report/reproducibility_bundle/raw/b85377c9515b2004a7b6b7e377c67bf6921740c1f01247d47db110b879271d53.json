@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int m, n;\n    if (!(cin >> m >> n)) return 0;\n\n    vector<bool> isPrime(n + 1, true);\n    if (n >= 0) isPrime[0] = false;\n    if (n >= 1) isPrime[1] = false;\n\n    for (long long i = 2; i * i <= n; ++i) {\n        if (isPrime[(int)i]) {\n            for (long long j = i * i; j <= n; j += i) {\n                isPrime[(int)j] = false;\n            }\n        }\n    }\n\n    for (int i = m; i <= n; ++i) {\n        if (isPrime[i]) {\n            cout << i << '\\n';\n        }\n    }\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need translate Java to C++17. Simple sieve up to 1e6. Preserve output. Need return code block only. Use fast IO maybe ios. Note M can be 1. Include bits/stdc++.h, main.\n\nNeed consider n>=1 always since M>=1. Code:\n\n#include <bits/stdc++.h>\nusing namespace std;\nint main(){ios::sync_with_stdio(false);cin.tie(nullptr);\nint m,n; if(!(cin>>m>>n)) return 0;\nvector<bool> isPrime(n+1,true);\nif(n>=0)isPrime[0]=false;\nif(n>=1)isPrime[1]=false;\nfor(long long i=2;i*i<=n;++i) if(isPrime[(int)i]) for(long long j=i*i;j<=n;j+=i) isPrime[(int)j]=false;\nfor(int i=m;i<=n;++i) if(isPrime[i]) cout<<i<<\"\\n\";\nreturn 0;}\nNeed exactly one complete source file in one fenced code block. No explanation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794991481,
+    "id": "chatcmpl-50fc3d121cc0d236f222ba121e70cf32",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 430,
+      "completion_tokens_details": {
+        "reasoning_tokens": 222
+      },
+      "prompt_tokens": 623,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1053
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0007029,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.4588413999881595,
+  "logical_request_id": "a0872254e86d0b6cdbe29e4f12cd30c0692d65e78407b59e9972178e635aa7f9",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_1929\\cpp-via-java\\attempt-02\\step-06\\response_body.txt",
+  "received_at": "2026-11-18T08:44:42.438994+00:00",
+  "request_id": "chatcmpl-50fc3d121cc0d236f222ba121e70cf32",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int m, n;\n    if (!(cin >> m >> n)) return 0;\n\n    vector<bool> isPrime(n + 1, true);\n    if (n >= 0) isPrime[0] = false;\n    if (n >= 1) isPrime[1] = false;\n\n    for (long long i = 2; i * i <= n; ++i) {\n        if (isPrime[(int)i]) {\n            for (long long j = i * i; j <= n; j += i) {\n                isPrime[(int)j] = false;\n            }\n        }\n    }\n\n    for (int i = m; i <= n; ++i) {\n        if (isPrime[i]) {\n            cout << i << '\\n';\n        }\n    }\n\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 430,
+    "completion_tokens_details": {
+      "reasoning_tokens": 222
+    },
+    "prompt_tokens": 623,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1053
+  },
+  "usage_raw": {
+    "completion_tokens": 430,
+    "completion_tokens_details": {
+      "reasoning_tokens": 222
+    },
+    "prompt_tokens": 623,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1053
+  }
+}

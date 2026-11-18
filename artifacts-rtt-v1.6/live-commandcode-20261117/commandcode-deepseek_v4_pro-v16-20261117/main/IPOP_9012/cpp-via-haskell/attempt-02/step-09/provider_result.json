@@ -1,0 +1,107 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Control.Monad (replicateM)\n\nisValid :: String -> Bool\nisValid = go 0\n  where\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '(' = go (bal + 1) cs\n      | c == ')' = bal > 0 && go (bal - 1) cs\n      | otherwise = False\n\nmain :: IO ()\nmain = do\n  tStr <- getLine\n  let t = read tStr :: Int\n  strings <- replicateM t getLine\n  mapM_ (\\s -> putStrLn (if isValid s then \"YES\" else \"NO\")) strings\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4-pro",
+  "actual_model": "deepseek/deepseek-v4-pro",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4-pro",
+    "actual": "deepseek/deepseek-v4-pro",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 608,
+    "completion_tokens": 940,
+    "total_tokens": 1548,
+    "prompt_tokens_details": {
+      "cached_tokens": 384,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 785,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "usage_raw": {
+    "prompt_tokens": 608,
+    "completion_tokens": 940,
+    "total_tokens": 1548,
+    "prompt_tokens_details": {
+      "cached_tokens": 384,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 785,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "cost_usd": 0.004034976,
+  "cost_source": "estimated",
+  "request_id": "gen_01M7MDAVYBT820AH558NY4X44Y",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-deepseek_v4_pro-v16-20261117\\main\\IPOP_9012\\cpp-via-haskell\\attempt-02\\step-09\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "gen_01M7MDAVYBT820AH558NY4X44Y",
+    "object": "chat.completion",
+    "created": 1794907686,
+    "model": "deepseek/deepseek-v4-pro",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Control.Monad (replicateM)\n\nisValid :: String -> Bool\nisValid = go 0\n  where\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '(' = go (bal + 1) cs\n      | c == ')' = bal > 0 && go (bal - 1) cs\n      | otherwise = False\n\nmain :: IO ()\nmain = do\n  tStr <- getLine\n  let t = read tStr :: Int\n  strings <- replicateM t getLine\n  mapM_ (\\s -> putStrLn (if isValid s then \"YES\" else \"NO\")) strings\n```",
+          "reasoning": "We need to translate C++ program to Haskell. The problem: read integer T, then T lines each containing a string of parentheses, output YES if valid parentheses, else NO. The C++ code uses `std::cin >> T` which reads integer, then in loop `std::cin >> input` reads next whitespace-separated token (string) until newline? Actually `>>` skips whitespace and reads a token, so it reads each string without spaces, parentheses only no spaces. That matches typical input: each string is one token per line, no spaces. So Haskell: read T from first line, then read T lines (or tokens) and output results. Use getLine, maybe handle blank lines? Probably not needed, but we can use `getLine`. Since strings contain no spaces, we can read each line and take as string, trimming whitespace. Or we could use `interact` with lines. We'll do: read first line as integer, then read next T lines (ignoring empty ones if any? But spec says exactly T lines, no blank lines). Use `getLine` recursively. Or use `lines` and take first as T and next T lines. Safer to read all lines and process. Output each result on its own line. We'll implement `isValid :: String -> Bool` using fold with balance. If negative at any point return False. Also reject other chars? The algorithm returns False for other chars; in C++ it returns false if char not '(' or ')'. Input only parens, but we can keep same: if char is '(' increment, ')' check balance > 0 then decrement, else return False. At end balance == 0.\n\nWe'll write:\n\n```haskell\nmodule Main where\n\nisValid :: String -> Bool\nisValid = go 0\n  where\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '(' = go (bal+1) cs\n      | c == ')' = bal > 0 && go (bal-1) cs\n      | otherwise = False\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let ls = lines input\n  case ls of\n    [] -> return ()\n    (tStr:rest) -> do\n      let t = read tStr :: Int\n          tests = take t rest\n      mapM_ (putStrLn . (\\s -> if isValid s then \"YES\" else \"NO\")) tests\n```\n\nBut we need to be careful: if there are trailing empty lines, `take t` might include empty lines? But spec says T lines each contain a string of length >=2, so no empty. Fine.\n\nAlternative: use `getLine` to read T and then replicateM T getLine. That's simpler. We'll use `Control.Monad (replicateM)`. We'll handle possible extra spaces by using `words`? But `getLine` reads whole line including possible trailing whitespace? Actually input string only parentheses, no spaces. So `getLine` is fine. We'll implement with `getLine`.\n\n```haskell\nimport Control.Monad (replicateM)\n\nmain :: IO ()\nmain = do\n  tStr <- getLine\n  let t = read tStr\n  strs <- replicateM t getLine\n  mapM_ (putStrLn . result) strs\n  where\n    result s = if isValid s then \"YES\" else \"NO\"\n```\n\nThat's cleaner. Need to define isValid.\n\nWe'll output exactly one fenced code block with Haskell code. Use module Main, main :: IO (). Include import.\n\nWe'll ensure no initialization directives. Use `main`.\n\nNow produce final answer as code block.",
+          "reasoning_details": [
+            {
+              "type": "reasoning.text",
+              "text": "We need to translate C++ program to Haskell. The problem: read integer T, then T lines each containing a string of parentheses, output YES if valid parentheses, else NO. The C++ code uses `std::cin >> T` which reads integer, then in loop `std::cin >> input` reads next whitespace-separated token (string) until newline? Actually `>>` skips whitespace and reads a token, so it reads each string without spaces, parentheses only no spaces. That matches typical input: each string is one token per line, no spaces. So Haskell: read T from first line, then read T lines (or tokens) and output results. Use getLine, maybe handle blank lines? Probably not needed, but we can use `getLine`. Since strings contain no spaces, we can read each line and take as string, trimming whitespace. Or we could use `interact` with lines. We'll do: read first line as integer, then read next T lines (ignoring empty ones if any? But spec says exactly T lines, no blank lines). Use `getLine` recursively. Or use `lines` and take first as T and next T lines. Safer to read all lines and process. Output each result on its own line. We'll implement `isValid :: String -> Bool` using fold with balance. If negative at any point return False. Also reject other chars? The algorithm returns False for other chars; in C++ it returns false if char not '(' or ')'. Input only parens, but we can keep same: if char is '(' increment, ')' check balance > 0 then decrement, else return False. At end balance == 0.\n\nWe'll write:\n\n```haskell\nmodule Main where\n\nisValid :: String -> Bool\nisValid = go 0\n  where\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '(' = go (bal+1) cs\n      | c == ')' = bal > 0 && go (bal-1) cs\n      | otherwise = False\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let ls = lines input\n  case ls of\n    [] -> return ()\n    (tStr:rest) -> do\n      let t = read tStr :: Int\n          tests = take t rest\n      mapM_ (putStrLn . (\\s -> if isValid s then \"YES\" else \"NO\")) tests\n```\n\nBut we need to be careful: if there are trailing empty lines, `take t` might include empty lines? But spec says T lines each contain a string of length >=2, so no empty. Fine.\n\nAlternative: use `getLine` to read T and then replicateM T getLine. That's simpler. We'll use `Control.Monad (replicateM)`. We'll handle possible extra spaces by using `words`? But `getLine` reads whole line including possible trailing whitespace? Actually input string only parentheses, no spaces. So `getLine` is fine. We'll implement with `getLine`.\n\n```haskell\nimport Control.Monad (replicateM)\n\nmain :: IO ()\nmain = do\n  tStr <- getLine\n  let t = read tStr\n  strs <- replicateM t getLine\n  mapM_ (putStrLn . result) strs\n  where\n    result s = if isValid s then \"YES\" else \"NO\"\n```\n\nThat's cleaner. Need to define isValid.\n\nWe'll output exactly one fenced code block with Haskell code. Use module Main, main :: IO (). Include import.\n\nWe'll ensure no initialization directives. Use `main`.\n\nNow produce final answer as code block.",
+              "format": "unknown",
+              "index": 0
+            }
+          ]
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 608,
+      "completion_tokens": 940,
+      "total_tokens": 1548,
+      "prompt_tokens_details": {
+        "cached_tokens": 384,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 785,
+        "image_tokens": 0
+      },
+      "cache_creation_input_tokens": 0
+    },
+    "system_fingerprint": "fp_cu2gclv1mm"
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 22.194735499972012,
+  "received_at": "2026-11-17T09:28:05.406016+00:00",
+  "logical_request_id": "71161111f614dd449e3191be29542bfbb79b619a54bea64f83a92c9fc46e7283",
+  "execution_class": "direct_api"
+}

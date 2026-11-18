@@ -1,0 +1,94 @@
+{
+  "text": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(charsio)).\n:- use_module(library(dcg/basics)).\n\nmain :-\n    read_line_to_string(user_input, Line),\n    parse_int(Line, N),\n    N >= 0,\n    length(Prefix, N),\n    maplist(=(0), Prefix),\n    counts(N, Prefix, Counts),\n    maplist(number_chars, Counts, CountStrs),\n    atomic_list_concat(CountStrs, ' ', Out),\n    format(\"~s~n\", [Out]).\n\nparse_int(Line, N) :-\n    phrase((integer(N), whites_end), Line), !.\n\nwhites_end --> [].\nwhites_end --> [C], { C =< 32 }, whites_end.\n\ncounts(N, Prefix, Counts) :-\n    numlist(1, N, Is),\n    foldl(step, Is, Prefix, Counts).\n\nstep(I, Acc, [V|Acc]) :-\n    H is I // 2,\n    nth0(H, [V0|_Rest], _), % placeholder, replaced below\n    fail.\n```\n\nWait, that step is wrong. Let me rewrite properly.\n\n```prolog\n:- module(main, [main/0]).\n\nmain :-\n    read_line_to_string(user_input, Line),\n    split_string(Line, \" \\t\\r\\n\", \" \\t\\r\\n\", Parts),\n    Parts = [P|_],\n    number_string(N, P),\n    N >= 0,\n    build(N, 0, [], RevCounts),\n    reverse(RevCounts, Counts),\n    maplist(term_string, Counts, Strs),\n    atomic_list_concat(Strs, ' ', Out),\n    format(\"~s~n\", [Out]).\n\nbuild(N, I, Acc, Acc) :- I > N, !.\nbuild(N, I, Acc, Res) :-\n    H is I // 2,\n    nth0(H, Acc, HC),\n    B is I mod 2,\n    V is HC + B,\n    I1 is I + 1,\n    build(N, I1, [V|Acc], Res).\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 445,
+    "prompt_tokens": 578,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 1023
+  },
+  "usage_raw": {
+    "completion_tokens": 445,
+    "prompt_tokens": 578,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 1023
+  },
+  "cost_usd": 0.0021105600000000005,
+  "cost_source": "estimated",
+  "request_id": "624861bc-868f-40b7-9db4-8fe77ba21050",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0338\\cpp-via-prolog\\attempt-02\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(charsio)).\n:- use_module(library(dcg/basics)).\n\nmain :-\n    read_line_to_string(user_input, Line),\n    parse_int(Line, N),\n    N >= 0,\n    length(Prefix, N),\n    maplist(=(0), Prefix),\n    counts(N, Prefix, Counts),\n    maplist(number_chars, Counts, CountStrs),\n    atomic_list_concat(CountStrs, ' ', Out),\n    format(\"~s~n\", [Out]).\n\nparse_int(Line, N) :-\n    phrase((integer(N), whites_end), Line), !.\n\nwhites_end --> [].\nwhites_end --> [C], { C =< 32 }, whites_end.\n\ncounts(N, Prefix, Counts) :-\n    numlist(1, N, Is),\n    foldl(step, Is, Prefix, Counts).\n\nstep(I, Acc, [V|Acc]) :-\n    H is I // 2,\n    nth0(H, [V0|_Rest], _), % placeholder, replaced below\n    fail.\n```\n\nWait, that step is wrong. Let me rewrite properly.\n\n```prolog\n:- module(main, [main/0]).\n\nmain :-\n    read_line_to_string(user_input, Line),\n    split_string(Line, \" \\t\\r\\n\", \" \\t\\r\\n\", Parts),\n    Parts = [P|_],\n    number_string(N, P),\n    N >= 0,\n    build(N, 0, [], RevCounts),\n    reverse(RevCounts, Counts),\n    maplist(term_string, Counts, Strs),\n    atomic_list_concat(Strs, ' ', Out),\n    format(\"~s~n\", [Out]).\n\nbuild(N, I, Acc, Acc) :- I > N, !.\nbuild(N, I, Acc, Res) :-\n    H is I // 2,\n    nth0(H, Acc, HC),\n    B is I mod 2,\n    V is HC + B,\n    I1 is I + 1,\n    build(N, I1, [V|Acc], Res).\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794898280,
+    "id": "624861bc-868f-40b7-9db4-8fe77ba21050",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 445,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_53b1c08ca02d47cc94388e0832c6ff40",
+      "trace_id": "7171700f893647f49611d482a0b7b87b"
+    },
+    "usage": {
+      "completion_tokens": 445,
+      "prompt_tokens": 578,
+      "prompt_tokens_details": {
+        "cached_tokens": 576
+      },
+      "total_tokens": 1023
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.911036800011061,
+  "received_at": "2026-11-17T06:51:20.171266+00:00",
+  "logical_request_id": "4f66eb84badb859c2f9daff8bad9a2d317d03361580192e77c2459e0ba74d734",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::string ns;\n    if (!(std::cin >> ns)) return 0;\n\n    int n;\n    try {\n        n = std::stoi(ns);\n    } catch (...) {\n        return 0;\n    }\n\n    std::string firstToken;\n    if (!(std::cin >> firstToken)) return 0;\n\n    long long first;\n    try {\n        first = std::stoll(firstToken);\n    } catch (...) {\n        return 0;\n    }\n\n    long long cur = first;\n    long long best = first;\n\n    for (int i = 1; i < n; i++) {\n        std::string token;\n        if (!(std::cin >> token)) break;\n\n        long long x;\n        try {\n            x = std::stoll(token);\n        } catch (...) {\n            break;\n        }\n\n        cur = std::max(x, cur + x);\n        best = std::max(best, cur);\n    }\n\n    std::cout << best << '\\n';\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 627,
+    "total_tokens": 936,
+    "completion_tokens": 309,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 57
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 627,
+    "total_tokens": 936,
+    "completion_tokens": 309,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 57
+    }
+  },
+  "cost_usd": 0.0005589,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-63359bb425f16e767a6c83b59263a351",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-java\\attempt-03\\step-10\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-63359bb425f16e767a6c83b59263a351",
+    "object": "chat.completion",
+    "created": 1794980404,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::string ns;\n    if (!(std::cin >> ns)) return 0;\n\n    int n;\n    try {\n        n = std::stoi(ns);\n    } catch (...) {\n        return 0;\n    }\n\n    std::string firstToken;\n    if (!(std::cin >> firstToken)) return 0;\n\n    long long first;\n    try {\n        first = std::stoll(firstToken);\n    } catch (...) {\n        return 0;\n    }\n\n    long long cur = first;\n    long long best = first;\n\n    for (int i = 1; i < n; i++) {\n        std::string token;\n        if (!(std::cin >> token)) break;\n\n        long long x;\n        try {\n            x = std::stoll(token);\n        } catch (...) {\n            break;\n        }\n\n        cur = std::max(x, cur + x);\n        best = std::max(best, cur);\n    }\n\n    std::cout << best << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "Translate Java to C++ preserving behavior. Straightforward. Include handling of input. Note: if no input, return. Parse n, then first token. Use long long. Output best.\n\nEdge: original breaks if tokens missing. Replicate reasonably.\n\nProvide C++17 single file."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 627,
+      "total_tokens": 936,
+      "completion_tokens": 309,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.591219500056468,
+  "received_at": "2026-11-18T05:40:04.775191+00:00",
+  "logical_request_id": "5509ddccdc5c73a87cda47ba155e82deac9160b06a0bffcb26c2bb4d033e6750",
+  "execution_class": "direct_api"
+}

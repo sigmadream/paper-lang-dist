@@ -1,0 +1,94 @@
+{
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  inp <- getLine\n  let ws = words inp\n  case ws of\n    (ms:ns:_) -> do\n      let m = read ms :: Integer\n          n = read ns :: Integer\n      print (paths m n)\n\npaths :: Integer -> Integer -> Integer\npaths m n = go (replicate (fromIntegral n) 1) (fromIntegral m - 1)\n  where\n    go dp 0 = dp !! (fromIntegral n - 1)\n    go dp k = go (step dp) (k - 1)\n    step dp = 1 : tail (scanl1 (+) dp)\n```\n\nThe Haskell version preserves the DP algorithm: start with a row of ones, then repeatedly accumulate prefix sums (m-1) times, and output the last element.",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 198,
+    "prompt_tokens": 506,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 704
+  },
+  "usage_raw": {
+    "completion_tokens": 198,
+    "prompt_tokens": 506,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 704
+  },
+  "cost_usd": 0.00143368,
+  "cost_source": "estimated",
+  "request_id": "3f0b1a7d-883c-4254-bb09-26e205e21424",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0062\\cpp-via-haskell\\attempt-05\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  inp <- getLine\n  let ws = words inp\n  case ws of\n    (ms:ns:_) -> do\n      let m = read ms :: Integer\n          n = read ns :: Integer\n      print (paths m n)\n\npaths :: Integer -> Integer -> Integer\npaths m n = go (replicate (fromIntegral n) 1) (fromIntegral m - 1)\n  where\n    go dp 0 = dp !! (fromIntegral n - 1)\n    go dp k = go (step dp) (k - 1)\n    step dp = 1 : tail (scanl1 (+) dp)\n```\n\nThe Haskell version preserves the DP algorithm: start with a row of ones, then repeatedly accumulate prefix sums (m-1) times, and output the last element.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794896757,
+    "id": "3f0b1a7d-883c-4254-bb09-26e205e21424",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 198,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_7e5bac68e7f6456fb53e10da40789bfd",
+      "trace_id": "5855aab20b43467e9e7be95c0fc09db9"
+    },
+    "usage": {
+      "completion_tokens": 198,
+      "prompt_tokens": 506,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 704
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.55797550000716,
+  "received_at": "2026-11-17T06:25:56.740002+00:00",
+  "logical_request_id": "e88785d4218f9ae2a516a6118cb1d6d2ea038813389efde43c1df1d53ac72f80",
+  "execution_class": "direct_api"
+}

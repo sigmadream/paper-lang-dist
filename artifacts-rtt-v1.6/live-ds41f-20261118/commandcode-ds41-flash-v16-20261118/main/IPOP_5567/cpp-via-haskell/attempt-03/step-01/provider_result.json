@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Data.Array\nimport qualified Data.Set as Set\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n    s <- getContents\n    let vals = map read (words s) :: [Int]\n    case vals of\n        [] -> return ()\n        (n:m:rest) -> do\n            let es = take m (toPairs rest)\n                adj = accumArray (flip (:)) [] (1, n) $\n                      concatMap (\\(a, b) -> [(a, b), (b, a)]) es\n                ans = countWithinTwo n adj\n            print ans\n        _ -> return ()\n\ntoPairs :: [Int] -> [(Int, Int)]\ntoPairs (a:b:rest) = (a, b) : toPairs rest\ntoPairs _ = []\n\ncountWithinTwo :: Int -> Array Int [Int] -> Int\ncountWithinTwo n adj\n    | n < 1 = 0\n    | otherwise = go (Set.singleton 1) [(1, 0 :: Int)] 0\n  where\n    go _ [] ans = ans\n    go visited ((x, d):q) ans =\n        let nbrs = adj ! x\n            fresh = filter (`Set.notMember` visited) nbrs\n            visited' = foldl' (flip Set.insert) visited fresh\n            nd = d + 1\n            ans' = if nd <= 2 then ans + length fresh else ans\n            q' = if nd < 2 then q ++ [(y, nd) | y <- fresh] else q\n        in go visited' q' ans'\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 698,
+    "total_tokens": 3479,
+    "completion_tokens": 2781,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2421
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 698,
+    "total_tokens": 3479,
+    "completion_tokens": 2781,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2421
+    }
+  },
+  "cost_usd": 0.003508968,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-e7e9780f7af3f01243c0b7bc94533ee3",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_5567\\cpp-via-haskell\\attempt-03\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-e7e9780f7af3f01243c0b7bc94533ee3",
+    "object": "chat.completion",
+    "created": 1794983583,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Data.Array\nimport qualified Data.Set as Set\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n    s <- getContents\n    let vals = map read (words s) :: [Int]\n    case vals of\n        [] -> return ()\n        (n:m:rest) -> do\n            let es = take m (toPairs rest)\n                adj = accumArray (flip (:)) [] (1, n) $\n                      concatMap (\\(a, b) -> [(a, b), (b, a)]) es\n                ans = countWithinTwo n adj\n            print ans\n        _ -> return ()\n\ntoPairs :: [Int] -> [(Int, Int)]\ntoPairs (a:b:rest) = (a, b) : toPairs rest\ntoPairs _ = []\n\ncountWithinTwo :: Int -> Array Int [Int] -> Int\ncountWithinTwo n adj\n    | n < 1 = 0\n    | otherwise = go (Set.singleton 1) [(1, 0 :: Int)] 0\n  where\n    go _ [] ans = ans\n    go visited ((x, d):q) ans =\n        let nbrs = adj ! x\n            fresh = filter (`Set.notMember` visited) nbrs\n            visited' = foldl' (flip Set.insert) visited fresh\n            nd = d + 1\n            ans' = if nd <= 2 then ans + length fresh else ans\n            q' = if nd < 2 then q ++ [(y, nd) | y <- fresh] else q\n        in go visited' q' ans'\n```",
+          "reasoning_content": "We need answer translate to Haskell, one code block. Need think carefully. Source C++ reads n m. But example first input \"1\\n0\" although spec N>=2. C++ handles n=1 m=0 outputs 0. Need preserve. Haskell read stdin. Need output count vertices distance 1 or 2 from 1 excluding self. BFS or simpler. Need robust parse all ints. If empty? likely not. Implement main.\n\nPotential issue source counts during BFS when discovered and dist<=2. Equivalent count vertices with dist 1 or 2. Need handle n maybe 1. Graph undirected.\n\nHaskell code with Data.List, Data.Map? Simple BFS with adjacency list array. N <=500, M<=10000. Could use IntMap or list. Simpler: build adjacency list as [[Int]] using accumArray from Data.Array. BFS queue list. Or compute distances via BFS.\n\nNeed return exactly one complete source file in fenced code block no explanation. Must use module Main main :: IO (). Could write:\n\nmodule Main where\nimport System.IO\nimport qualified Data.ByteString.Lazy.Char8 as BS? standard. Simpler Prelude getContents reads all.\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let xs = map read (words input) :: [Int]\n  case xs of\n    [] -> return ()\n    (n:m:rest) -> ...\nBut if missing m? Source requires cin >> n >> m if fail return. For valid inputs okay. Could pattern [] -> pure; [n] -> pure? We can robust.\n\nBuild adj from rest pairs. For n maybe 1.\n\nUse Data.Array accumArray:\nimport Data.Array\nadj :: Array Int [Int]\nadj = accumArray (flip (:)) [] (1,n) (concatMap edges pairs) where edges (a,b) = [(a,b),(b,a)]\nBut accumArray needs bounds; if n >=1. N maybe >=2 but example n=1. okay. If n=0? not spec. Could handle n<1 output 0. But read.\n\nBFS:\nbfs :: Array Int [Int] -> Int -> [Int]\nbfs adj n = go [1] (replicate (n+1) False) maybe. Or compute distances.\n\nSimplest BFS using queue [(node,dist)]. To avoid counting duplicates use visited array? Could use Data.Set. N small.\n\ndist = Array Int Int initialized -1 with (//) updates? functional queue.\n\nUse IntMap for dist? Simpler: BFS levels:\nneighbors of 1 = nub [v | v<-adj!1]\nlevel2 = nub [w | v <- level1, w <- adj!v, w /= 1, notElem w level1]\nanswer = length level1 + length level2? But if level2 includes level1? We exclude level1? Distance of node in level1 is 1; need union distance 1 or2. level2 from level1 includes possibly 1 and other level1 (if edge among neighbors). Need exclude already visited. We can calculate BFS with visited set.\n\nUse Data.Set for visited and queue BFS. N small, simple.\n\nAlternative: count vertices v in 2..n where dist<=2 using BFS. Implement BFS with Set and list queue.\n\nLet's craft robust Haskell:\n\nmodule Main where\n\nimport qualified Data.Set as Set\nimport Data.Array\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n    s <- getContents\n    let vals = map read (words s) :: [Int]\n    case vals of\n        [] -> return ()\n        (n:m:rest) -> do\n            let edges = take m (pairs rest)\n                adj = accumArray (flip (:)) [] (1,n) (concatMap (\\(a,b) -> [(a,b),(b,a)]) edges)\n                ans = countWithin2 n adj\n            print ans\n        _ -> return ()\n\npairs (a:b:rest) = (a,b): pairs rest\npairs _ = []\n\ncountWithin2 n adj\n  | n < 1 = 0\n  | otherwise = go (Set.singleton 1) [1] 0\n  where\n    go visited [] count = count\n    go visited (x:q) count =\n       let nbrs = adj ! x\n           new = filter (`Set.notMember` visited) nbrs\n           visited' = foldl' (flip Set.insert) visited new\n           count' = count + length (filter (\\v -> v /= 1 ...?) No need? Need count distance <=2 only. BFS go must know depth. Need depth.\n\nBetter BFS with queue of (node, dist). Count when popped? Start (1,0). Expand up to dist 2. To count distances 1/2. Could maintain visited and count when adding if newDist <=2. Need queue with depth.\n\ngo visited queue count where queue [(Int,Int)]\nStart visited Set [1], queue [(1,0)]\nPop (x,d), for each neighbor y not visited: mark, if d+1<=2 count+1, enqueue (y,d+1). Since BFS, if d=2 no need expand beyond maybe but can still enqueue? if d+1=3 not count. But to avoid expand >2. Only if d<2 enqueue? Actually to find distance 2, expand from distance1. No need process distance2. So:\ngo visited [] cnt = cnt\ngo visited ((x,d):q) cnt =\n let nbrs = adj!x\n     candidates = filter not visited nbrs\n     visited' = foldl insert visited candidates\n     nd = d+1\n     cnt' = if nd <= 2 then cnt + length candidates else cnt\n     q' = q ++ [(y,nd) | y <- candidates, nd < 2? Wait if nd=1 enqueue, if nd=2 no need; but if we enqueue distance2 and process, candidates none new? Could include, but not needed. If enqueue dist2 and d=2, nd=3, all candidates? Actually if process dist2, new neighbors at dist3 would be marked and count not increment. It doesn't affect answer except marking irrelevant. But queue could process. Fine.\n in go visited' q' cnt'\n\nStart x=1 d=0, nd=1 count candidates (distance 1). Enqueue them. Process distance1: nd=2 count newly discovered (distance2), enqueue? If enqueue depth2, then process, nd=3 and mark all their unvisited neighbors. Not count. But could mark and maybe candidate list includes vertices at dist3. Doesn't count. But if a vertex at distance2 is discovered later? BFS ensures all distance2 discovered before processing dist2? Queue order: [dist1 nodes], as process first dist1, enqueue dist2 at end after remaining dist1 (since q ++). Good. It will process all dist1 then dist2. Count correct. Processing dist2 marks dist3 but no count. Could omit enqueue when nd>=2 to optimize. Need ensure not prevent discovering some dist2? No.\n\nBut issue duplicate candidates when multiple current nodes? We mark visited' before enqueuing but within same processing we filter based on visited before current node, then mark all. That's okay. For next node in q, visited includes. No duplicates.\n\nCould do simpler BFS distances array.\n\nNeed ensure count for n=1: adj bounds (1,1). Start queue [(1,0)], nbrs []; cnt0. Output 0. Good.\n\nPotential parse: if m lines but rest maybe more. pairs works. If invalid less edges, accumArray ignores? take m pairs may fewer; okay.\n\nNeed import Data.Array, Data.Set, Data.List.\n\nNeed avoid name clash pairs. Fine.\n\nImportant Haskell read ints with negative? No. If input empty, output nothing. If only n? Source would return 0? C++ if !(cin >> n >> m) return 0. Our case [n] -> return (). No output. Good.\n\nCould there be trailing newline. Fine.\n\nNeed final exactly fenced code. No explanation. Ensure code compiles GHC. Let's test mentally.\n\nmodule Main where\nimport Data.Array\nimport qualified Data.Set as Set\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n    s <- getContents\n    let vals = map read (words s) :: [Int]\n    case vals of\n        [] -> return ()\n        (n:m:rest) -> do\n            let es = take m (toPairs rest)\n                adj = accumArray (flip (:)) [] (1, n) (concatMap (\\(a,b) -> [(a,b),(b,a)]) es)\n                ans = count n adj\n            print ans\n        _ -> return ()\n\ntoPairs :: [Int] -> [(Int, Int)]\ntoPairs (a:b:rest) = (a,b) : toPairs rest\ntoPairs _ = []\n\ncount :: Int -> Array Int [Int] -> Int\ncount n adj\n    | n < 1 = 0\n    | otherwise = go (Set.singleton 1) [(1, 0 :: Int)] 0\n  where\n    go _ [] ans = ans\n    go visited ((x,d):q) ans =\n        let nbrs = adj ! x\n            fresh = filter (`Set.notMember` visited) nbrs\n            visited' = foldl' (flip Set.insert) visited fresh\n            nd = d + 1\n            ans' = if nd <= 2 then ans + length fresh else ans\n            q' = if nd < 2 then q ++ [(y, nd) | y <- fresh] else q\n        in go visited' q' ans'\n\nWait q' condition nd < 2 means enqueue only if nd=1. At start d=0 nd=1 enqueue fresh distance1. Process distance1 d=1 nd=2 count fresh distance2, do not enqueue. That's enough. Good. But what about a direct neighbor discovered when processing start: fresh all neighbors. Count ans += length fresh (distance1). visited includes them. q' includes them. Process each. For each neighbor, fresh are unvisited neighbors of neighbor. Some may include other distance1? Already visited, so filtered. Distance2 count. Good.\n\nNeed type annotation maybe d Int inferred. q list [(Int,Int)] by start (1,0). Fine.\n\nPotential bug: If n=1 and no edge, accumArray bounds (1,1) okay. If n<1 not spec but guard, but adj construction with bounds (1,n) where n<1 invalid if n=0? accumArray with lower > upper? For n=0, (1,0) invalid maybe error even if count guard? Lazy? adj not evaluated if count n<1 returns 0? count guard n<1 =0 ignoring adj. But ans thunk maybe not eval adj. main prints ans. Should be fine due guard. But n likely >=1. If n negative not.\n\nNeed preserve C++ source for N invalid? fine.\n\nCould simplify using Data.Array. Need import Data.Array (accumArray, (!), Array). Fine.\n\nFinal code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 698,
+      "total_tokens": 3479,
+      "completion_tokens": 2781,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 2421
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 24.69548009999562,
+  "received_at": "2026-11-18T06:33:25.335182+00:00",
+  "logical_request_id": "b95bb3fc73480135b3790506a36fe37e1eacf56711922e5deca2e2b39797dbf3",
+  "execution_class": "direct_api"
+}

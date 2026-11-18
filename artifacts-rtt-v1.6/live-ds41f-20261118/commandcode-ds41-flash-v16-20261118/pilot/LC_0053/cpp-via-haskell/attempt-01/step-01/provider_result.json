@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let values = map read (words input) :: [Integer]\n  case values of\n    (n:rest) ->\n      let a = take (fromIntegral n) rest\n      in case a of\n           [] -> return ()\n           (x:xs) ->\n             let (_, best) = foldl' step (x, x) xs\n                 step (cur, bestSoFar) y =\n                   let cur' = max y (cur + y)\n                       best' = max bestSoFar cur'\n                   in (cur', best')\n             in print best\n    _ -> return ()\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 610,
+    "total_tokens": 1069,
+    "completion_tokens": 459,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 299
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 610,
+    "total_tokens": 1069,
+    "completion_tokens": 459,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 299
+    }
+  },
+  "cost_usd": 0.0007338,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-8716f90acb5da64236f2568d22d2bc6f",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\pilot\\LC_0053\\cpp-via-haskell\\attempt-01\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-8716f90acb5da64236f2568d22d2bc6f",
+    "object": "chat.completion",
+    "created": 1794976232,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let values = map read (words input) :: [Integer]\n  case values of\n    (n:rest) ->\n      let a = take (fromIntegral n) rest\n      in case a of\n           [] -> return ()\n           (x:xs) ->\n             let (_, best) = foldl' step (x, x) xs\n                 step (cur, bestSoFar) y =\n                   let cur' = max y (cur + y)\n                       best' = max bestSoFar cur'\n                   in (cur', best')\n             in print best\n    _ -> return ()\n```",
+          "reasoning_content": "We need answer exactly one fenced code block Haskell. Need preserve stdin/out. Translate. Need consider N maybe valid. Read all ints. First n then n values. Compute max subarray, output integer newline.\n\nHaskell module Main main. Use getContents, words map read. Handle. Since constraints n>=1. Could parse first n and take. Need avoid hardcoding. Output.\n\nNeed return exactly source in fenced code block no explanation. Ensure C++17 -> Haskell GHC. Use foldl'. Code:\n\nmodule Main (main) where\nimport Data.List (foldl')\nmain :: IO ()\nmain = do\n  s <- getContents\n  let xs = map read (words s) :: [Integer]\n  case xs of\n    (n:rest) -> do\n      let a = take (fromIntegral n) rest\n      case a of\n        [] -> return ()\n        (x:xs') ->\n          let (_, best) = foldl' step (x,x) xs'\n              step (cur,best) y = let cur' = max y (cur+y); best' = max best cur' in (cur', best')\n          in print best\n    _ -> return ()\n\nCould parse Int or Integer. Max sum up to 1e9, Int safe 64bit. Use Integer robust. print output. For n maybe 0 unspecified. Fine.\n\nNeed no extra. final fenced."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 610,
+      "total_tokens": 1069,
+      "completion_tokens": 459,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 299
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.977312400005758,
+  "received_at": "2026-11-18T04:30:34.170497+00:00",
+  "logical_request_id": "6053885b77847c704c08da4fe46bd1837186160fba1c245d5a6453d3569394e4",
+  "execution_class": "direct_api"
+}

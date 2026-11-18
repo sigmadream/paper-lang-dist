@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<int> nonZero, zeros;\n    for (int i = 0; i < n; ++i) {\n        int x;\n        if (!(cin >> x)) break;\n        if (x != 0) nonZero.push_back(x);\n        else zeros.push_back(0);\n    }\n\n    nonZero.insert(nonZero.end(), zeros.begin(), zeros.end());\n\n    for (size_t i = 0; i < nonZero.size(); ++i) {\n        if (i) cout << ' ';\n        cout << nonZero[i];\n    }\n    cout << '\\n';\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 560,
+    "total_tokens": 1035,
+    "completion_tokens": 475,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 296
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 560,
+    "total_tokens": 1035,
+    "completion_tokens": 475,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 296
+    }
+  },
+  "cost_usd": 0.000738,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-5da00a34715fefc7928c9a17e462434e",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-haskell\\attempt-03\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-5da00a34715fefc7928c9a17e462434e",
+    "object": "chat.completion",
+    "created": 1794977204,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<int> nonZero, zeros;\n    for (int i = 0; i < n; ++i) {\n        int x;\n        if (!(cin >> x)) break;\n        if (x != 0) nonZero.push_back(x);\n        else zeros.push_back(0);\n    }\n\n    nonZero.insert(nonZero.end(), zeros.begin(), zeros.end());\n\n    for (size_t i = 0; i < nonZero.size(); ++i) {\n        if (i) cout << ' ';\n        cout << nonZero[i];\n    }\n    cout << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer with C++17 code translating. Need preserve stdin/stdout. Simple. Need exactly one fenced code block no explanation. Need consider Haskell partition preserves relative order? Data.List.partition returns (satisfy, not satisfy) preserving order yes. Output nonZero ++ zeros. Input N then N ints. If no values? Haskell if empty no output. If n maybe rest fewer? take n. We can mirror. We output newline. Need main. Include bits. For empty input no output. C++ reading long long? signed 32-bit int, int enough. N 10000. Use vector<int>. Read n; if fail return. Read n elements maybe rest; partition. Then output separated spaces + newline. If N could be 0? constraint >=1 but mirror if n=0 output blank line? Haskell: (0:rest) arr empty, nonZero++zeros empty, putStrLn (unwords []) => newline. So do output newline for n=0. If no values from initial values empty, no output. If input has only first n but missing rest, Haskell take n rest gets available, outputs accordingly. Our loop reading up to n; if fail break? Need mirror? valid inputs per spec always enough. Could implement while(cin>>x && count<n). If invalid after some, Haskell words maps read; invalid would error. not relevant.\n\nNeed final exactly."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 560,
+      "total_tokens": 1035,
+      "completion_tokens": 475,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 296
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.283773200004362,
+  "received_at": "2026-11-18T04:46:46.388743+00:00",
+  "logical_request_id": "e804b638135ec346ede7fb58a54ae6696f5f1ad48d2a3614015265616ec7f550",
+  "execution_class": "direct_api"
+}

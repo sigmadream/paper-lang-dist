@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let ws = words input\n    case ws of\n        [] -> return ()\n        (x:xs) -> do\n            let n = read x :: Int\n                grid = take n xs\n            putStrLn (solve grid 0 0 n)\n\nsolve :: [String] -> Int -> Int -> Int -> String\nsolve grid r c size =\n    let first = (grid !! r) !! c\n        same = and [ (grid !! i) !! j == first\n                   | i <- [r .. r + size - 1]\n                   , j <- [c .. c + size - 1]\n                   ]\n    in if same\n         then [first]\n         else\n           let half = size `div` 2\n               topLeft = solve grid r c half\n               topRight = solve grid r (c + half) half\n               bottomLeft = solve grid (r + half) c half\n               bottomRight = solve grid (r + half) (c + half) half\n           in \"(\" ++ topLeft ++ topRight ++ bottomLeft ++ bottomRight ++ \")\"\n```",
+          "reasoning_content": "We need answer only code block Haskell. Need translate. Need preserve stdin/stdout. Implement main. N up to 64. Read lines. Need quad tree. Use String grid [String]. solve :: [String] -> Int -> Int -> Int -> String perhaps slicing. Efficient enough.\n\nNeed handle input reading. `interact`? Read all tokens via words: first N then N strings. Since no spaces in rows. Use getContents, words. main = do input <- getContents; let ws=words input; case ws of [] -> return (); (nStr:rest) -> let n=read nStr; grid=take n rest in putStrLn (solve grid 0 0 n). But if trailing? fine.\n\nsolve grid r c size. Check same: first = grid !! r !! c; all cells in rectangle equal. Could use all. For i r..r+size-1, j. If same return [first], else \"(\" ++ ... ++ \")\".\n\nNeed careful laziness and indexing. Could create function same. Fine.\n\nPotential issue N=1 output single char newline. putStrLn okay.\n\nNeed exactly complete source file in fenced code block no explanation. Ensure Haskell module Main and main. We can include only.\n\nLet's craft.\n\nPotential compile concerns: `and [ grid !! i !! j == first | i <- [r..r+size-1], j <- [c..c+size-1] ]` This computes all, okay. It may short-circuit? `and` yes lazy. For 64 small.\n\nFunction name solve.\n\nInput: `words` strips whitespace; if input has Windows? words handles. If N line and rows. Good.\n\nCode:\n\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let ws = words input\n    case ws of\n        [] -> return ()\n        (x:xs) -> do\n            let n = read x :: Int\n                grid = take n xs\n            putStrLn (solve grid 0 0 n)\n\nsolve :: [String] -> Int -> Int -> Int -> String\nsolve grid r c size =\n    let first = (grid !! r) !! c\n        same = and [ (grid !! i) !! j == first\n                   | i <- [r .. r + size - 1]\n                   , j <- [c .. c + size - 1] ]\n    in if same\n         then [first]\n         else\n           let half = size `div` 2\n               topLeft = solve grid r c half\n               topRight = solve grid r (c + half) half\n               bottomLeft = solve grid (r + half) c half\n               bottomRight = solve grid (r + half) (c + half) half\n           in \"(\" ++ topLeft ++ topRight ++ bottomLeft ++ bottomRight ++ \")\"\n\nThis is complete. Ensure no explicit module signature? okay.\n\nWe should include code block exactly.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794989619,
+    "id": "chatcmpl-5b51f56df8c507bc0c05aaaf3fbefa58",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 879,
+      "completion_tokens_details": {
+        "reasoning_tokens": 623
+      },
+      "prompt_tokens": 752,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 1631
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.001167504,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 6.124104500049725,
+  "logical_request_id": "308342dd74610a588b3e72e0899dac9788f96473b4612d1b61e3404188b601f2",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_1992\\cpp-via-haskell\\attempt-01\\step-07\\response_body.txt",
+  "received_at": "2026-11-18T08:13:43.445608+00:00",
+  "request_id": "chatcmpl-5b51f56df8c507bc0c05aaaf3fbefa58",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let ws = words input\n    case ws of\n        [] -> return ()\n        (x:xs) -> do\n            let n = read x :: Int\n                grid = take n xs\n            putStrLn (solve grid 0 0 n)\n\nsolve :: [String] -> Int -> Int -> Int -> String\nsolve grid r c size =\n    let first = (grid !! r) !! c\n        same = and [ (grid !! i) !! j == first\n                   | i <- [r .. r + size - 1]\n                   , j <- [c .. c + size - 1]\n                   ]\n    in if same\n         then [first]\n         else\n           let half = size `div` 2\n               topLeft = solve grid r c half\n               topRight = solve grid r (c + half) half\n               bottomLeft = solve grid (r + half) c half\n               bottomRight = solve grid (r + half) (c + half) half\n           in \"(\" ++ topLeft ++ topRight ++ bottomLeft ++ bottomRight ++ \")\"\n```",
+  "usage": {
+    "completion_tokens": 879,
+    "completion_tokens_details": {
+      "reasoning_tokens": 623
+    },
+    "prompt_tokens": 752,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1631
+  },
+  "usage_raw": {
+    "completion_tokens": 879,
+    "completion_tokens_details": {
+      "reasoning_tokens": 623
+    },
+    "prompt_tokens": 752,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1631
+  }
+}

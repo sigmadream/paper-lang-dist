@@ -1,0 +1,94 @@
+{
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.Char (isDigit, isSpace)\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let n = read (takeWhile (\\c -> isDigit c || c == '-') (dropWhile isSpace input)) :: Int\n      counts = 0 : [ (counts !! (i `div` 2)) + (i `mod` 2) | i <- [1 .. n] ]\n  putStrLn (unwords (map show counts))\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 112,
+    "prompt_tokens": 579,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 691
+  },
+  "usage_raw": {
+    "completion_tokens": 112,
+    "prompt_tokens": 579,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 691
+  },
+  "cost_usd": 0.00064676,
+  "cost_source": "estimated",
+  "request_id": "82feeeaa-6742-46cc-bb17-4fcbc030f3d0",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0338\\cpp-via-haskell\\attempt-02\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.Char (isDigit, isSpace)\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let n = read (takeWhile (\\c -> isDigit c || c == '-') (dropWhile isSpace input)) :: Int\n      counts = 0 : [ (counts !! (i `div` 2)) + (i `mod` 2) | i <- [1 .. n] ]\n  putStrLn (unwords (map show counts))\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794901772,
+    "id": "82feeeaa-6742-46cc-bb17-4fcbc030f3d0",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 112,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_a14196daccbe497ba0ad4fa01532ce51",
+      "trace_id": "22518a74005745a78961ed1a3e487406"
+    },
+    "usage": {
+      "completion_tokens": 112,
+      "prompt_tokens": 579,
+      "prompt_tokens_details": {
+        "cached_tokens": 576
+      },
+      "total_tokens": 691
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.3422256999765523,
+  "received_at": "2026-11-17T07:49:31.773153+00:00",
+  "logical_request_id": "cf1ffcec7abbac71536fc8d731f4f9383298079f8612a0a322bc29baf680f61e",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,94 @@
+{
+  "text": "```haskell\nmodule Main (main) where\n\nimport System.IO\n\nsolve :: [String] -> Int -> Int -> Int -> String\nsolve g r c s =\n    let ch = (g !! r) !! c\n        same = all (\\i -> all (\\j -> (g !! (r+i)) !! (c+j) == ch) [0..s-1]) [0..s-1]\n    in if same then [ch]\n       else let h = s `div` 2\n            in \"(\" ++ solve g r c h ++ solve g r (c+h) h ++ solve g (r+h) c h ++ solve g (r+h) (c+h) h ++ \")\"\n\nmain :: IO ()\nmain = do\n    contents <- getContents\n    let (nLine:rest) = lines contents\n        n = read nLine :: Int\n        g = take n rest\n    putStrLn (solve g 0 0 n)\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 205,
+    "prompt_tokens": 676,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 881
+  },
+  "usage_raw": {
+    "completion_tokens": 205,
+    "prompt_tokens": 676,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 881
+  },
+  "cost_usd": 0.0013376800000000002,
+  "cost_source": "estimated",
+  "request_id": "b981fc62-1e8b-4630-a164-c65024f365ae",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_1992\\cpp-via-haskell\\attempt-03\\step-07\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport System.IO\n\nsolve :: [String] -> Int -> Int -> Int -> String\nsolve g r c s =\n    let ch = (g !! r) !! c\n        same = all (\\i -> all (\\j -> (g !! (r+i)) !! (c+j) == ch) [0..s-1]) [0..s-1]\n    in if same then [ch]\n       else let h = s `div` 2\n            in \"(\" ++ solve g r c h ++ solve g r (c+h) h ++ solve g (r+h) c h ++ solve g (r+h) (c+h) h ++ \")\"\n\nmain :: IO ()\nmain = do\n    contents <- getContents\n    let (nLine:rest) = lines contents\n        n = read nLine :: Int\n        g = take n rest\n    putStrLn (solve g 0 0 n)\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794901690,
+    "id": "b981fc62-1e8b-4630-a164-c65024f365ae",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 205,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_c49b999d4adc40a09e2c72d452c82f37",
+      "trace_id": "a13f27a799c74d89a860a28d57fa6857"
+    },
+    "usage": {
+      "completion_tokens": 205,
+      "prompt_tokens": 676,
+      "prompt_tokens_details": {
+        "cached_tokens": 448
+      },
+      "total_tokens": 881
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.9034681999473833,
+  "received_at": "2026-11-17T07:48:09.951074+00:00",
+  "logical_request_id": "085625adf7d22d89ab356367c6c57de2e09f4070f5933ff122889c131e1a6daa",
+  "execution_class": "direct_api"
+}

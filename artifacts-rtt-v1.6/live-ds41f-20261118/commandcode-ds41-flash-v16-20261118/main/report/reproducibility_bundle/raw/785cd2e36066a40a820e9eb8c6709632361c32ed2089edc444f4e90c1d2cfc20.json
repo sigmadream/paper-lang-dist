@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <string>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<long long> nums(n);\n    for (int i = 0; i < n; ++i) {\n        cin >> nums[i];\n    }\n\n    vector<long long> result;\n    result.reserve(n);\n\n    for (int i = 0; i < n; ++i) {\n        if (nums[i] != 0) {\n            result.push_back(nums[i]);\n        }\n    }\n\n    while ((int)result.size() < n) {\n        result.push_back(0);\n    }\n\n    for (int i = 0; i < n; ++i) {\n        if (i > 0) cout << ' ';\n        cout << result[i];\n    }\n    cout << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer with cpp code only fenced. Need translate. Preserve stdin/stdout. N then N ints, output array space separated newline. Signed 32-bit but use long long or int. C++17. No explanation. Ensure if N maybe tokens. Output exactly. Use vector<long long>. Edge N maybe 1. main.\n\nNeed return exactly one complete source file in fenced code block. No extra.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794981108,
+    "id": "chatcmpl-c6bde3c4838349e1a44abe661fc7fdfc",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 302,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 578,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 880
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0005357999999999999,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.2492819000035524,
+  "logical_request_id": "552120aaa0b9db46779f77c0ad340dcc950cabcf04c8da9260821cb84994b30b",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-haskell\\attempt-02\\step-04\\response_body.txt",
+  "received_at": "2026-11-18T05:51:49.509470+00:00",
+  "request_id": "chatcmpl-c6bde3c4838349e1a44abe661fc7fdfc",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n#include <string>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<long long> nums(n);\n    for (int i = 0; i < n; ++i) {\n        cin >> nums[i];\n    }\n\n    vector<long long> result;\n    result.reserve(n);\n\n    for (int i = 0; i < n; ++i) {\n        if (nums[i] != 0) {\n            result.push_back(nums[i]);\n        }\n    }\n\n    while ((int)result.size() < n) {\n        result.push_back(0);\n    }\n\n    for (int i = 0; i < n; ++i) {\n        if (i > 0) cout << ' ';\n        cout << result[i];\n    }\n    cout << '\\n';\n\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 302,
+    "completion_tokens_details": {
+      "reasoning_tokens": 90
+    },
+    "prompt_tokens": 578,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 880
+  },
+  "usage_raw": {
+    "completion_tokens": 302,
+    "completion_tokens_details": {
+      "reasoning_tokens": 90
+    },
+    "prompt_tokens": 578,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 880
+  }
+}

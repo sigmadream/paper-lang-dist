@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <string>\n#include <algorithm>\n\nint main() {\n    std::string s, t;\n    if (!std::getline(std::cin, s)) return 0;\n    if (!std::getline(std::cin, t)) return 0;\n    while (!s.empty() && (s.back() == '\\r' || s.back() == ' ' || s.back() == '\\t')) s.pop_back();\n    while (!t.empty() && (t.back() == '\\r' || t.back() == ' ' || t.back() == '\\t')) t.pop_back();\n    std::sort(s.begin(), s.end());\n    std::sort(t.begin(), t.end());\n    std::cout << (s == t ? \"1\" : \"0\") << \"\\n\";\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 454,
+    "total_tokens": 641,
+    "completion_tokens": 187,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 8
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 454,
+    "total_tokens": 641,
+    "completion_tokens": 187,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 8
+    }
+  },
+  "cost_usd": 0.00036060000000000004,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-b7918559d753ab094f00dae5fed93078",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0242\\cpp-via-haskell\\attempt-05\\step-04\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-b7918559d753ab094f00dae5fed93078",
+    "object": "chat.completion",
+    "created": 1794981790,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\n#include <algorithm>\n\nint main() {\n    std::string s, t;\n    if (!std::getline(std::cin, s)) return 0;\n    if (!std::getline(std::cin, t)) return 0;\n    while (!s.empty() && (s.back() == '\\r' || s.back() == ' ' || s.back() == '\\t')) s.pop_back();\n    while (!t.empty() && (t.back() == '\\r' || t.back() == ' ' || t.back() == '\\t')) t.pop_back();\n    std::sort(s.begin(), s.end());\n    std::sort(t.begin(), t.end());\n    std::cout << (s == t ? \"1\" : \"0\") << \"\\n\";\n    return 0;\n}\n```",
+          "reasoning_content": "Translating Haskell to C++. Simple."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 454,
+      "total_tokens": 641,
+      "completion_tokens": 187,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 8
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.9699988999636844,
+  "received_at": "2026-11-18T06:03:10.690048+00:00",
+  "logical_request_id": "79a47aa700b338f3e7a0a632c5a7b85e68fedd582afee0da7869325968f1d5f3",
+  "execution_class": "direct_api"
+}

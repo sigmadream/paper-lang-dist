@@ -1,0 +1,94 @@
+{
+  "text": "```python\nimport sys\n\ndef solve(grid, r, c, size):\n    first = grid[r][c]\n    same = True\n    for i in range(r, r + size):\n        if not same:\n            break\n        for j in range(c, c + size):\n            if grid[i][j] != first:\n                same = False\n                break\n    if same:\n        return first\n    half = size // 2\n    return (\"(\" + solve(grid, r, c, half)\n            + solve(grid, r, c + half, half)\n            + solve(grid, r + half, c, half)\n            + solve(grid, r + half, c + half, half) + \")\")\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    n = int(data[0])\n    grid = data[1:1 + n]\n    print(solve(grid, 0, 0, n))\n\nmain()\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 209,
+    "prompt_tokens": 685,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 894
+  },
+  "usage_raw": {
+    "completion_tokens": 209,
+    "prompt_tokens": 685,
+    "prompt_tokens_details": {
+      "cached_tokens": 448
+    },
+    "total_tokens": 894
+  },
+  "cost_usd": 0.0013678800000000001,
+  "cost_source": "estimated",
+  "request_id": "b21fb05c-a059-4eb2-9742-176b49f7c8de",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_1992\\cpp-via-python\\attempt-01\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```python\nimport sys\n\ndef solve(grid, r, c, size):\n    first = grid[r][c]\n    same = True\n    for i in range(r, r + size):\n        if not same:\n            break\n        for j in range(c, c + size):\n            if grid[i][j] != first:\n                same = False\n                break\n    if same:\n        return first\n    half = size // 2\n    return (\"(\" + solve(grid, r, c, half)\n            + solve(grid, r, c + half, half)\n            + solve(grid, r + half, c, half)\n            + solve(grid, r + half, c + half, half) + \")\")\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    n = int(data[0])\n    grid = data[1:1 + n]\n    print(solve(grid, 0, 0, n))\n\nmain()\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794895714,
+    "id": "b21fb05c-a059-4eb2-9742-176b49f7c8de",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 209,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_f72dde7159d84e51a3c6f36dda6ba6ec",
+      "trace_id": "9d4522e5c9594266b1b6514e624da3a9"
+    },
+    "usage": {
+      "completion_tokens": 209,
+      "prompt_tokens": 685,
+      "prompt_tokens_details": {
+        "cached_tokens": 448
+      },
+      "total_tokens": 894
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.3748462999938056,
+  "received_at": "2026-11-17T06:08:33.982616+00:00",
+  "logical_request_id": "8f1f5dfe6363a1aba37e0a5967f711712a747dcb445f0c15abd267c994870384",
+  "execution_class": "direct_api"
+}

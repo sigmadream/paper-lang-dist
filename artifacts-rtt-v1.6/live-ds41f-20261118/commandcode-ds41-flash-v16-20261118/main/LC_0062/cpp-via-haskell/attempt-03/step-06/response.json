@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    int m, n;\n    if (!(std::cin >> m >> n)) {\n        return 0;\n    }\n\n    std::vector<long long> row(n, 1);\n\n    for (int i = 1; i < m; ++i) {\n        for (int j = 1; j < n; ++j) {\n            row[j] += row[j - 1];\n        }\n    }\n\n    std::cout << row[n - 1] << '\\n';\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 497,
+    "total_tokens": 818,
+    "completion_tokens": 321,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 193
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 497,
+    "total_tokens": 818,
+    "completion_tokens": 321,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 193
+    }
+  },
+  "cost_usd": 0.0005342999999999999,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-cc7cc07f30f2010a50c365076d1fcef1",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-haskell\\attempt-03\\step-06\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-cc7cc07f30f2010a50c365076d1fcef1",
+    "object": "chat.completion",
+    "created": 1794994280,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    int m, n;\n    if (!(std::cin >> m >> n)) {\n        return 0;\n    }\n\n    std::vector<long long> row(n, 1);\n\n    for (int i = 1; i < m; ++i) {\n        for (int j = 1; j < n; ++j) {\n            row[j] += row[j - 1];\n        }\n    }\n\n    std::cout << row[n - 1] << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer translate Haskell to C++17. Need output source in fenced code block no explanation. Need preserve behavior. Problem unique paths M,N. Input first line M N. Compute combinatorial or DP. Need valid 1..100 answer <=2e9. C++ long long. Could just DP. Need exact stdin/stdout. Source code maybe handles missing input? Haskell if no m/n returns nothing. C++ can handle. Need main. Use std libs. Return exactly one complete source file fenced. Need decide algorithm constraints. Use DP with vector<long long> row(n,1); for i 1 to m-1 scan cumulative. Print row[n-1]. If missing no output. C++.\n\nNeed be careful if n=0? constraints >=1 but if input weird? no matter. We can read long long M,N. Using int. Need print integer one. Done.\n\nNeed final only fenced code."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 497,
+      "total_tokens": 818,
+      "completion_tokens": 321,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 193
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.929160700063221,
+  "received_at": "2026-11-18T09:31:22.168376+00:00",
+  "logical_request_id": "da2c157157a5307d71236a5db1e057e053f27877c82b78480840a966fea0b21b",
+  "execution_class": "direct_api"
+}

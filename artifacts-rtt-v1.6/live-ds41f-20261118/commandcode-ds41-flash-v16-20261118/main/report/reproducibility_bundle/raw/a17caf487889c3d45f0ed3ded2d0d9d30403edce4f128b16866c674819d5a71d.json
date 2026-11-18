@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int N, C;\n    if (!(cin >> N >> C)) return 0;\n\n    vector<long long> houses(N);\n    for (int i = 0; i < N; ++i) {\n        cin >> houses[i];\n    }\n\n    sort(houses.begin(), houses.end());\n\n    auto canPlace = [&](long long dist) -> bool {\n        int count = 1;\n        long long last = houses[0];\n\n        for (int i = 1; i < N; ++i) {\n            if (houses[i] - last >= dist) {\n                ++count;\n                last = houses[i];\n                if (count >= C) return true;\n            }\n        }\n\n        return count >= C;\n    };\n\n    long long lo = 1;\n    long long hi = houses.back() - houses.front();\n    long long answer = 0;\n\n    while (lo <= hi) {\n        long long mid = lo + (hi - lo) / 2;\n\n        if (canPlace(mid)) {\n            answer = mid;\n            lo = mid + 1;\n        } else {\n            hi = mid - 1;\n        }\n    }\n\n    cout << answer << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block cpp. Need translate. Need be careful edge cases. Provide single file. Include bits/stdc++.h, main read N C then N coords, sort, binary search max min distance. Constraints up to 2e5 coords 1e9. Use long long? Int sufficient for coords diff <=1e9 but mid l+r maybe up to 2e9 fits signed int? max hi = 1e9, l + (r-l)/2 avoids overflow. C int. Could use long long robust. Output long long.\n\nNeed only fenced code. No explanation. Ensure stdin EOF. Implementation.\n\nPotential C==1? constraints C>=2? 2<=C. N>=2. Fine. If empty no output but valid. binary lo=1 hi=last-first. If all? distinct and C>=2 so hi>0. Good.\n\nLet's craft.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794986896,
+    "id": "chatcmpl-a8abad1db3c75466929227dc66b127a1",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 483,
+      "completion_tokens_details": {
+        "reasoning_tokens": 190
+      },
+      "prompt_tokens": 769,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1252
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0008102999999999999,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 4.356200699927285,
+  "logical_request_id": "0b27b7937ac97bb9734a46573e0397295c97ccb5ed1a93131fdc0df898dee8c9",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2110\\cpp-via-haskell\\attempt-03\\step-02\\response_body.txt",
+  "received_at": "2026-11-18T07:28:18.702160+00:00",
+  "request_id": "chatcmpl-a8abad1db3c75466929227dc66b127a1",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int N, C;\n    if (!(cin >> N >> C)) return 0;\n\n    vector<long long> houses(N);\n    for (int i = 0; i < N; ++i) {\n        cin >> houses[i];\n    }\n\n    sort(houses.begin(), houses.end());\n\n    auto canPlace = [&](long long dist) -> bool {\n        int count = 1;\n        long long last = houses[0];\n\n        for (int i = 1; i < N; ++i) {\n            if (houses[i] - last >= dist) {\n                ++count;\n                last = houses[i];\n                if (count >= C) return true;\n            }\n        }\n\n        return count >= C;\n    };\n\n    long long lo = 1;\n    long long hi = houses.back() - houses.front();\n    long long answer = 0;\n\n    while (lo <= hi) {\n        long long mid = lo + (hi - lo) / 2;\n\n        if (canPlace(mid)) {\n            answer = mid;\n            lo = mid + 1;\n        } else {\n            hi = mid - 1;\n        }\n    }\n\n    cout << answer << '\\n';\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 483,
+    "completion_tokens_details": {
+      "reasoning_tokens": 190
+    },
+    "prompt_tokens": 769,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1252
+  },
+  "usage_raw": {
+    "completion_tokens": 483,
+    "completion_tokens_details": {
+      "reasoning_tokens": 190
+    },
+    "prompt_tokens": 769,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1252
+  }
+}

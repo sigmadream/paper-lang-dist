@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::string s;\n    if (!(std::cin >> s)) return 0;\n\n    bool valid = true;\n    for (std::size_t i = 0; i < s.length() / 2; i++) {\n        if (s[i] != s[s.length() - 1 - i]) {\n            valid = false;\n            break;\n        }\n    }\n    std::cout << (valid ? 1 : 0) << '\\n';\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 490,
+    "total_tokens": 651,
+    "completion_tokens": 161,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 22
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 490,
+    "total_tokens": 651,
+    "completion_tokens": 161,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 22
+    }
+  },
+  "cost_usd": 0.00022730399999999998,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-b371e80d57847eefe21b91534c97de6c",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-java\\attempt-04\\step-04\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-b371e80d57847eefe21b91534c97de6c",
+    "object": "chat.completion",
+    "created": 1794994658,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::string s;\n    if (!(std::cin >> s)) return 0;\n\n    bool valid = true;\n    for (std::size_t i = 0; i < s.length() / 2; i++) {\n        if (s[i] != s[s.length() - 1 - i]) {\n            valid = false;\n            break;\n        }\n    }\n    std::cout << (valid ? 1 : 0) << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "Translate to C++17. Preserve behavior: read token, check palindrome, print 1/0."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 490,
+      "total_tokens": 651,
+      "completion_tokens": 161,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 22
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.9628156999824569,
+  "received_at": "2026-11-18T09:37:38.779983+00:00",
+  "logical_request_id": "8e1b58e0e002b0f3a18467e55c56351916c8ac29b26210250776cf0e5fdaf6e6",
+  "execution_class": "direct_api"
+}

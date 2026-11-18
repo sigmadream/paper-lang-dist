@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n    long long m, n;\n    if (!(cin >> m >> n)) return 0;\n    vector<char> is_prime(n + 1, 1);\n    if (n >= 0) is_prime[0] = 0;\n    if (n >= 1) is_prime[1] = 0;\n    for (long long i = 2; i * i <= n; ++i) {\n        if (is_prime[i]) {\n            for (long long j = i * i; j <= n; j += i) is_prime[j] = 0;\n        }\n    }\n    bool first = true;\n    for (long long k = m; k <= n; ++k) {\n        if (is_prime[k]) {\n            if (!first) cout << '\\n';\n            cout << k;\n            first = false;\n        }\n    }\n    if (!first) cout << '\\n';\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794902008,
+    "id": "f2be66ea-f7ee-4b74-a186-9f53acfa1168",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 232,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_6abf4564c2d54f1daafa1f9aba793ed0",
+      "trace_id": "93f0b0534a3f46d2aaa190c19b42bb38"
+    },
+    "usage": {
+      "completion_tokens": 232,
+      "prompt_tokens": 567,
+      "prompt_tokens_details": {
+        "cached_tokens": 512
+      },
+      "total_tokens": 799
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0012309200000000001,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.1124952000100166,
+  "logical_request_id": "92388a1c7497b58458ca665143f15db6f8cb9ebe37ec2a906c48a46708ef8980",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_1929\\cpp-via-python\\attempt-05\\step-04\\response_body.txt",
+  "received_at": "2026-11-17T07:53:28.054080+00:00",
+  "request_id": "f2be66ea-f7ee-4b74-a186-9f53acfa1168",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n    long long m, n;\n    if (!(cin >> m >> n)) return 0;\n    vector<char> is_prime(n + 1, 1);\n    if (n >= 0) is_prime[0] = 0;\n    if (n >= 1) is_prime[1] = 0;\n    for (long long i = 2; i * i <= n; ++i) {\n        if (is_prime[i]) {\n            for (long long j = i * i; j <= n; j += i) is_prime[j] = 0;\n        }\n    }\n    bool first = true;\n    for (long long k = m; k <= n; ++k) {\n        if (is_prime[k]) {\n            if (!first) cout << '\\n';\n            cout << k;\n            first = false;\n        }\n    }\n    if (!first) cout << '\\n';\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 232,
+    "prompt_tokens": 567,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "total_tokens": 799
+  },
+  "usage_raw": {
+    "completion_tokens": 232,
+    "prompt_tokens": 567,
+    "prompt_tokens_details": {
+      "cached_tokens": 512
+    },
+    "total_tokens": 799
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nstatic string check(const string& s) {\n    int balance = 0;\n    for (char c : s) {\n        if (c == '(') {\n            ++balance;\n        } else if (c == ')') {\n            if (balance == 0) return \"NO\";\n            --balance;\n        }\n    }\n    return balance == 0 ? \"YES\" : \"NO\";\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    vector<string> tokens;\n    string token;\n    while (cin >> token) tokens.push_back(token);\n\n    if (tokens.empty()) return 0;\n\n    int n = stoi(tokens[0]);\n    int processed = 0;\n\n    for (size_t i = 1; i < tokens.size() && processed < n; ++i, ++processed) {\n        cout << check(tokens[i]) << '\\n';\n    }\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 618,
+    "total_tokens": 1206,
+    "completion_tokens": 588,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 374
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 618,
+    "total_tokens": 1206,
+    "completion_tokens": 588,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 374
+    }
+  },
+  "cost_usd": 0.000891,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-a026e63f78d32b348561c63b8b4310ad",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-haskell\\attempt-04\\step-08\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-a026e63f78d32b348561c63b8b4310ad",
+    "object": "chat.completion",
+    "created": 1794981036,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nstatic string check(const string& s) {\n    int balance = 0;\n    for (char c : s) {\n        if (c == '(') {\n            ++balance;\n        } else if (c == ')') {\n            if (balance == 0) return \"NO\";\n            --balance;\n        }\n    }\n    return balance == 0 ? \"YES\" : \"NO\";\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    vector<string> tokens;\n    string token;\n    while (cin >> token) tokens.push_back(token);\n\n    if (tokens.empty()) return 0;\n\n    int n = stoi(tokens[0]);\n    int processed = 0;\n\n    for (size_t i = 1; i < tokens.size() && processed < n; ++i, ++processed) {\n        cout << check(tokens[i]) << '\\n';\n    }\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need translate Haskell to C++17 preserving stdin/stdout. Need one complete source file fenced code block. No explanation.\n\nSpec: T then T strings. Haskell uses words, so tokenizes whitespace. For each of first n tokens after T, check balanced parentheses. Note check ignores non-paren chars. Output YES/NO lines. If tokens empty output nothing. If fewer than n, take n rest -> fewer outputs. We should replicate exactly: use words tokenization, read n int. Then iterate first n tokens, check each char (ignore non parens). C++.\n\nNeed consider read t :: Int could fail? Valid inputs. Use cin >> t. But Haskell words plus read. For robustness use string token T, stoi. But simplest. Need preserve behavior: tokens = words input; case [] return; (t:rest). So read first token as Int, n, take n rest. So if n fewer than tokens, process first n tokens. If negative? \"positive integer T\" so no. Use vector<string> tokens; read all with >>. If empty return. n = stoi(tokens[0]); for i=1; i<tokens.size() && count<n; ++i check. Note if n > rest size, process all rest. Output each check + \"\\n\".\n\ncheck algorithm: balance=0; for char c: if c=='(' balance++; else if c==')': if balance==0 return \"NO\"; else balance--; ignore others. End: balance==0 ? YES : NO.\n\nNeed ensure unlines adds trailing newline for each output. If no outputs, putStr unlines [] = \"\". Our loop print each line. Fine.\n\nReturn code fenced cpp.\n\nWe should include bits/stdc++.h. main. Use ios.\n\nLet's craft."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 618,
+      "total_tokens": 1206,
+      "completion_tokens": 588,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 374
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 6.062291599926539,
+  "received_at": "2026-11-18T05:50:39.722502+00:00",
+  "logical_request_id": "030babb3fdf5a64ea299ffe1dbda30d2ffce4ff439ecc58431b945aee1df9047",
+  "execution_class": "direct_api"
+}

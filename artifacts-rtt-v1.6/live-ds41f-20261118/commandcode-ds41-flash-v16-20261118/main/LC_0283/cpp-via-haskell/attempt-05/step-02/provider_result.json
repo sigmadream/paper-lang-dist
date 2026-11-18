@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    long long n;\n    if (!(std::cin >> n)) return 0;\n\n    std::vector<long long> nonZeros;\n    long long zeros = 0;\n    for (long long i = 0; i < n; ++i) {\n        long long x;\n        std::cin >> x;\n        if (x == 0) {\n            ++zeros;\n        } else {\n            nonZeros.push_back(x);\n        }\n    }\n\n    bool first = true;\n    for (long long x : nonZeros) {\n        if (!first) std::cout << ' ';\n        std::cout << x;\n        first = false;\n    }\n    for (long long i = 0; i < zeros; ++i) {\n        if (!first) std::cout << ' ';\n        std::cout << 0;\n        first = false;\n    }\n    std::cout << '\\n';\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 573,
+    "total_tokens": 890,
+    "completion_tokens": 317,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 100
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 573,
+    "total_tokens": 890,
+    "completion_tokens": 317,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 100
+    }
+  },
+  "cost_usd": 0.0005522999999999999,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-12b71b18ad461dfe20204f681dd0148e",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-haskell\\attempt-05\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-12b71b18ad461dfe20204f681dd0148e",
+    "object": "chat.completion",
+    "created": 1794991220,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    long long n;\n    if (!(std::cin >> n)) return 0;\n\n    std::vector<long long> nonZeros;\n    long long zeros = 0;\n    for (long long i = 0; i < n; ++i) {\n        long long x;\n        std::cin >> x;\n        if (x == 0) {\n            ++zeros;\n        } else {\n            nonZeros.push_back(x);\n        }\n    }\n\n    bool first = true;\n    for (long long x : nonZeros) {\n        if (!first) std::cout << ' ';\n        std::cout << x;\n        first = false;\n    }\n    for (long long i = 0; i < zeros; ++i) {\n        if (!first) std::cout << ' ';\n        std::cout << 0;\n        first = false;\n    }\n    std::cout << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need translate Haskell to C++17. Preserve behavior: read N then N integers, output nonzeros followed by zeros, space separated. Note Haskell uses Integer, but spec says signed 32-bit. Use long long. Output via cout. Handle edge: if no input do nothing. Also if n=0? constraint n>=1 but handle anyway. Output putStrLn adds newline. Match.\n\nNeed exactly one fenced code block, complete source. C++17 with main()."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 573,
+      "total_tokens": 890,
+      "completion_tokens": 317,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.055148799903691,
+  "received_at": "2026-11-18T08:40:22.015318+00:00",
+  "logical_request_id": "f8898fbdc1a193f93e11bda3471a20d24f4bf43ade448164abc80411e7e6e8a1",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,94 @@
+{
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.Char (ord)\nimport qualified Data.Map.Strict as M\n\nmain :: IO ()\nmain = do\n  ms <- getLine\n  case ms of\n    Nothing -> return ()\n    Just s -> do\n      mt <- getLine\n      let t = maybe \"\" id mt\n      print (if counts s == counts t then 1 else 0 :: Int)\n\ncounts :: String -> M.Map Char Int\ncounts = foldr (\\c m -> M.insertWith (+) c 1 m) M.empty\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 121,
+    "prompt_tokens": 506,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 627
+  },
+  "usage_raw": {
+    "completion_tokens": 121,
+    "prompt_tokens": 506,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 627
+  },
+  "cost_usd": 0.0010948800000000001,
+  "cost_source": "estimated",
+  "request_id": "a3468a23-f014-4afa-b858-bccfa11bd1ae",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0242\\cpp-via-haskell\\attempt-04\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.Char (ord)\nimport qualified Data.Map.Strict as M\n\nmain :: IO ()\nmain = do\n  ms <- getLine\n  case ms of\n    Nothing -> return ()\n    Just s -> do\n      mt <- getLine\n      let t = maybe \"\" id mt\n      print (if counts s == counts t then 1 else 0 :: Int)\n\ncounts :: String -> M.Map Char Int\ncounts = foldr (\\c m -> M.insertWith (+) c 1 m) M.empty\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794899811,
+    "id": "a3468a23-f014-4afa-b858-bccfa11bd1ae",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 121,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_93dbe5a1b135470e8b60b2e3488392ab",
+      "trace_id": "a7175e60d7e44d36913872fe0a9acee8"
+    },
+    "usage": {
+      "completion_tokens": 121,
+      "prompt_tokens": 506,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 627
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.604742299998179,
+  "received_at": "2026-11-17T07:16:51.037250+00:00",
+  "logical_request_id": "a64648b97fe2bc9e2777ec8047a19234b35bc05dfc6173c881a90ef21b01b549",
+  "execution_class": "direct_api"
+}

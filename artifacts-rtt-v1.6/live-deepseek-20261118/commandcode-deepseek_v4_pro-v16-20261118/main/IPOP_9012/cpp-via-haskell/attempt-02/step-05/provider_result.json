@@ -1,0 +1,107 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Data.List (words)\n\nisBalanced :: String -> Bool\nisBalanced = go 0\n  where\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '(' = go (bal + 1) cs\n      | c == ')' = if bal > 0 then go (bal - 1) cs else False\n      | otherwise = False\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (tStr : rest) ->\n      case reads tStr :: [(Int, String)] of\n        [(t, \"\")] ->\n          mapM_ (putStrLn . judge) (take t rest)\n        _ -> return ()\n  where\n    judge s = if isBalanced s then \"YES\" else \"NO\"\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4-pro",
+  "actual_model": "deepseek/deepseek-v4-pro",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4-pro",
+    "actual": "deepseek/deepseek-v4-pro",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 609,
+    "completion_tokens": 1452,
+    "total_tokens": 2061,
+    "prompt_tokens_details": {
+      "cached_tokens": 384,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1254,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "usage_raw": {
+    "prompt_tokens": 609,
+    "completion_tokens": 1452,
+    "total_tokens": 2061,
+    "prompt_tokens_details": {
+      "cached_tokens": 384,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1254,
+      "image_tokens": 0
+    },
+    "cache_creation_input_tokens": 0
+  },
+  "cost_usd": 0.006063816,
+  "cost_source": "estimated",
+  "request_id": "gen_01M7P78Y241PPH0A1RCJP7QF4B",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-deepseek-20261118\\commandcode-deepseek_v4_pro-v16-20261118\\main\\IPOP_9012\\cpp-via-haskell\\attempt-02\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "gen_01M7P78Y241PPH0A1RCJP7QF4B",
+    "object": "chat.completion",
+    "created": 1794968438,
+    "model": "deepseek/deepseek-v4-pro",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Data.List (words)\n\nisBalanced :: String -> Bool\nisBalanced = go 0\n  where\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '(' = go (bal + 1) cs\n      | c == ')' = if bal > 0 then go (bal - 1) cs else False\n      | otherwise = False\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (tStr : rest) ->\n      case reads tStr :: [(Int, String)] of\n        [(t, \"\")] ->\n          mapM_ (putStrLn . judge) (take t rest)\n        _ -> return ()\n  where\n    judge s = if isBalanced s then \"YES\" else \"NO\"\n```",
+          "reasoning": "We need to translate the C++ code to Haskell. The requirement: Haskell, GHC, module Main and main :: IO (). Use only standard libraries (Prelude, etc.). Preserve stdin/stdout behavior. Read integer T, then T lines, each a string of parentheses, output YES if balanced, NO otherwise.\n\nWe need to handle input exactly: The C++ reads T from first token, then reads T strings with `std::cin >> s`. In Haskell, we can use `interact` or read lines. Important: strings may be empty? No, length 2..50, so not empty. But they can have spaces? No, only parentheses. So we can just read all lines, first line is T, next T lines are strings. However, careful: if there are blank lines? The spec says each string is one per line, no spaces. So simplest: read all input as list of lines; first line is T, take next T lines. But there might be extra whitespace? The C++ skips whitespace. We need to replicate: if input has extra blank lines, C++ would ignore them and read T strings. But the problem says each string is on its own line, but we can be safe by reading all words (excluding whitespace) and take first as T, rest as strings. That matches `std::cin >> s` which reads a token, ignoring whitespace. So we can use `words` on the entire input (after reading all) or process line by line. Using `words` will split into tokens, ignoring blank lines. Then head is T, tail is list of strings. Take T of them. That preserves behavior for valid inputs. Should we handle invalid T? The C++ returns 0 if reading T fails. In Haskell, we can just return () if no input, but we can simply implement with `interact` and handle empty input accordingly.\n\nFunction isBalanced: iterate through string, maintain balance count, if encountering ')' with bal 0 => false, else decrement; encountering '(' increment; anything else false (though only parentheses). Return true if final bal == 0.\n\nNeed to output lines with YES or NO.\n\nWe'll implement:\n\n```haskell\nmodule Main where\n\nimport Data.List (words)\n\nisBalanced :: String -> Bool\nisBalanced = go 0\n  where\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '(' = go (bal+1) cs\n      | c == ')' = if bal > 0 then go (bal-1) cs else False\n      | otherwise = False\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (tStr:rest) ->\n      case reads tStr of\n        [(t, \"\")] ->\n          let strs = take t rest\n          in mapM_ (putStrLn . judge) strs\n        _ -> return ()\n  where\n    judge s = if isBalanced s then \"YES\" else \"NO\"\n```\n\nBut note: using `reads` might be overkill; but T is positive integer. Could also parse with `read`, but if invalid, it throws exception; better use reads to handle gracefully like C++ doesn't crash? C++ would just stop if T fails, but problem says T positive. We can keep `read` safe with `reads`.\n\nAlternatively, we can use `mapM_` and output each line.\n\nThis solution should be fine.\n\nHowever, the target language says Haskell (GHC), module Main and main :: IO (). So we need to output exactly that. We'll provide in a fenced code block.\n\nCheck examples: Input \"6\\n(())())\\n...\" tokens: [\"6\",\"(())())\",...]. take 6 produces correct. Output as expected.\n\nEdge cases: If T > number of remaining tokens, then `take t rest` will just take what's available and output fewer lines; C++ would attempt to read beyond EOF, maybe produce nothing extra? But spec says valid input has exactly T strings. So fine.\n\nSo final answer: Haskell code block.\n\nWe'll include `import Data.List (words)` though `words` is in Prelude? Actually `words` is in Prelude since base 4.8, I think. But to be safe, in Haskell 2010? Standard libraries shipped with GHC include Prelude with words. But we can just use it. We can optionally import Data.List, but it's not necessary. We can keep import to be explicit.\n\nThus final answer: \n```haskell\nmodule Main where\n\nimport Data.List (words)\n\nisBalanced :: String -> Bool\nisBalanced = go 0\n  where\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '(' = go (bal + 1) cs\n      | c == ')' = if bal > 0 then go (bal - 1) cs else False\n      | otherwise = False\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (tStr : rest) ->\n      case reads tStr :: [(Int, String)] of\n        [(t, \"\")] ->\n          mapM_ (putStrLn . judge) (take t rest)\n        _ -> return ()\n  where\n    judge s = if isBalanced s then \"YES\" else \"NO\"\n```\n\nBut note: The C++ program prints a newline after each result. `putStrLn` does that. Good.\n\nOne more nuance: `words` will split on any whitespace, including newline. So if the input has extra spaces or blank lines, it works. The C++ also skips whitespace. So okay.\n\nTherefore final answer with fenced code block.\n\nNo explanation, just the code.",
+          "reasoning_details": [
+            {
+              "type": "reasoning.text",
+              "text": "We need to translate the C++ code to Haskell. The requirement: Haskell, GHC, module Main and main :: IO (). Use only standard libraries (Prelude, etc.). Preserve stdin/stdout behavior. Read integer T, then T lines, each a string of parentheses, output YES if balanced, NO otherwise.\n\nWe need to handle input exactly: The C++ reads T from first token, then reads T strings with `std::cin >> s`. In Haskell, we can use `interact` or read lines. Important: strings may be empty? No, length 2..50, so not empty. But they can have spaces? No, only parentheses. So we can just read all lines, first line is T, next T lines are strings. However, careful: if there are blank lines? The spec says each string is one per line, no spaces. So simplest: read all input as list of lines; first line is T, take next T lines. But there might be extra whitespace? The C++ skips whitespace. We need to replicate: if input has extra blank lines, C++ would ignore them and read T strings. But the problem says each string is on its own line, but we can be safe by reading all words (excluding whitespace) and take first as T, rest as strings. That matches `std::cin >> s` which reads a token, ignoring whitespace. So we can use `words` on the entire input (after reading all) or process line by line. Using `words` will split into tokens, ignoring blank lines. Then head is T, tail is list of strings. Take T of them. That preserves behavior for valid inputs. Should we handle invalid T? The C++ returns 0 if reading T fails. In Haskell, we can just return () if no input, but we can simply implement with `interact` and handle empty input accordingly.\n\nFunction isBalanced: iterate through string, maintain balance count, if encountering ')' with bal 0 => false, else decrement; encountering '(' increment; anything else false (though only parentheses). Return true if final bal == 0.\n\nNeed to output lines with YES or NO.\n\nWe'll implement:\n\n```haskell\nmodule Main where\n\nimport Data.List (words)\n\nisBalanced :: String -> Bool\nisBalanced = go 0\n  where\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '(' = go (bal+1) cs\n      | c == ')' = if bal > 0 then go (bal-1) cs else False\n      | otherwise = False\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (tStr:rest) ->\n      case reads tStr of\n        [(t, \"\")] ->\n          let strs = take t rest\n          in mapM_ (putStrLn . judge) strs\n        _ -> return ()\n  where\n    judge s = if isBalanced s then \"YES\" else \"NO\"\n```\n\nBut note: using `reads` might be overkill; but T is positive integer. Could also parse with `read`, but if invalid, it throws exception; better use reads to handle gracefully like C++ doesn't crash? C++ would just stop if T fails, but problem says T positive. We can keep `read` safe with `reads`.\n\nAlternatively, we can use `mapM_` and output each line.\n\nThis solution should be fine.\n\nHowever, the target language says Haskell (GHC), module Main and main :: IO (). So we need to output exactly that. We'll provide in a fenced code block.\n\nCheck examples: Input \"6\\n(())())\\n...\" tokens: [\"6\",\"(())())\",...]. take 6 produces correct. Output as expected.\n\nEdge cases: If T > number of remaining tokens, then `take t rest` will just take what's available and output fewer lines; C++ would attempt to read beyond EOF, maybe produce nothing extra? But spec says valid input has exactly T strings. So fine.\n\nSo final answer: Haskell code block.\n\nWe'll include `import Data.List (words)` though `words` is in Prelude? Actually `words` is in Prelude since base 4.8, I think. But to be safe, in Haskell 2010? Standard libraries shipped with GHC include Prelude with words. But we can just use it. We can optionally import Data.List, but it's not necessary. We can keep import to be explicit.\n\nThus final answer: \n```haskell\nmodule Main where\n\nimport Data.List (words)\n\nisBalanced :: String -> Bool\nisBalanced = go 0\n  where\n    go bal [] = bal == 0\n    go bal (c:cs)\n      | c == '(' = go (bal + 1) cs\n      | c == ')' = if bal > 0 then go (bal - 1) cs else False\n      | otherwise = False\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let tokens = words input\n  case tokens of\n    [] -> return ()\n    (tStr : rest) ->\n      case reads tStr :: [(Int, String)] of\n        [(t, \"\")] ->\n          mapM_ (putStrLn . judge) (take t rest)\n        _ -> return ()\n  where\n    judge s = if isBalanced s then \"YES\" else \"NO\"\n```\n\nBut note: The C++ program prints a newline after each result. `putStrLn` does that. Good.\n\nOne more nuance: `words` will split on any whitespace, including newline. So if the input has extra spaces or blank lines, it works. The C++ also skips whitespace. So okay.\n\nTherefore final answer with fenced code block.\n\nNo explanation, just the code.",
+              "format": "unknown",
+              "index": 0
+            }
+          ]
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 609,
+      "completion_tokens": 1452,
+      "total_tokens": 2061,
+      "prompt_tokens_details": {
+        "cached_tokens": 384,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1254,
+        "image_tokens": 0
+      },
+      "cache_creation_input_tokens": 0
+    },
+    "system_fingerprint": "fp_g2wxlrq0ta"
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 20.391336400061846,
+  "received_at": "2026-11-18T02:20:37.358318+00:00",
+  "logical_request_id": "6f8c64229bd9de21b04d944860a77b9aa60db6eca702f97f5a06d83293dc0068",
+  "execution_class": "direct_api"
+}

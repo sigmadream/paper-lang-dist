@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Data.List (sort)\n\ncanPlace :: [Int] -> Int -> Int -> Bool\ncanPlace [] _ _ = False\ncanPlace (_:rest) c dist = go rest (head house) 1\n  where\n    house = []\n    go [] _ count = count >= c\n    go (h:hs) lastPos count\n      | h - lastPos >= dist =\n          if count + 1 >= c\n            then True\n            else go hs h (count + 1)\n      | otherwise = go hs lastPos count\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let nums = map read (words input) :: [Int]\n  case nums of\n    (n:c:rest) -> do\n      let houses = sort (take n rest)\n          lo = 1\n          hi = last houses - head houses\n          answer = search houses c lo hi 0\n      print answer\n    _ -> return ()\n\nsearch :: [Int] -> Int -> Int -> Int -> Int -> Int\nsearch houses c lo hi answer\n  | lo > hi = answer\n  | otherwise =\n      let mid = lo + (hi - lo) `div` 2\n      in if canPlace houses c mid\n           then search houses c (mid + 1) hi mid\n           else search houses c lo (mid - 1) answer\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 740,
+    "total_tokens": 1487,
+    "completion_tokens": 747,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 443
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 740,
+    "total_tokens": 1487,
+    "completion_tokens": 747,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 443
+    }
+  },
+  "cost_usd": 0.0011184,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-a9b853442535a5ad8591c5cfbcc5d0d7",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2110\\cpp-via-haskell\\attempt-03\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-a9b853442535a5ad8591c5cfbcc5d0d7",
+    "object": "chat.completion",
+    "created": 1794986931,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Data.List (sort)\n\ncanPlace :: [Int] -> Int -> Int -> Bool\ncanPlace [] _ _ = False\ncanPlace (_:rest) c dist = go rest (head house) 1\n  where\n    house = []\n    go [] _ count = count >= c\n    go (h:hs) lastPos count\n      | h - lastPos >= dist =\n          if count + 1 >= c\n            then True\n            else go hs h (count + 1)\n      | otherwise = go hs lastPos count\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let nums = map read (words input) :: [Int]\n  case nums of\n    (n:c:rest) -> do\n      let houses = sort (take n rest)\n          lo = 1\n          hi = last houses - head houses\n          answer = search houses c lo hi 0\n      print answer\n    _ -> return ()\n\nsearch :: [Int] -> Int -> Int -> Int -> Int -> Int\nsearch houses c lo hi answer\n  | lo > hi = answer\n  | otherwise =\n      let mid = lo + (hi - lo) `div` 2\n      in if canPlace houses c mid\n           then search houses c (mid + 1) hi mid\n           else search houses c lo (mid - 1) answer\n```",
+          "reasoning_content": "We need answer only code block Haskell. Need translate. Need preserve. Need write module Main main. Read stdin. N C and N coords. Sort. Binary search. Potential edge: hi = max-min maybe 0 though coordinates distinct and N>=2, C<=N, but distinct so hi >0. lo=1. answer. canPlace logic exactly. Haskell efficient for 200000. Use Data.List sort? fine O(n log n). Parsing all ints via words. Need be careful memory/time. Haskell implementation.\n\nNeed implement canPlace. Could define function:\ncanPlace :: [Int] -> Int -> Int -> Bool\ncanPlace houses c dist = go (tail houses) (head houses) 1\n go [] _ count = count >= c\n go (h:hs) lastPos count\n   | h - lastPos >= dist = if count + 1 >= c then True else go hs h (count+1)\n   | otherwise = go hs lastPos count\nNeed avoid head/tail on empty? n>=2. Or use foldl? For efficiency list recursion okay. Binary search.\n\nRead:\nmain = do\n  input <- getContents\n  let xs = map read (words input) :: [Int]\n  case xs of\n    (n:c:rest) -> ...\nNeed sort (take n rest). hi = last hs - head hs. search lo hi ans.\n\nBinary search:\nsearch lo hi answer\n | lo > hi = answer\n | otherwise = let mid = lo + (hi-lo) `div` 2\n               in if canPlace hs c mid then search (mid+1) hi mid else search lo (mid-1) answer\nprint answer. Need if hi maybe 0? no. If c? >=2. If N? fine.\n\nCould implement canPlace with fold to maybe concise and not use recursion? Need early stop? For 200000 * ~30 = 6 million, Haskell okay. But recursion with Int no issue. Use list.\n\nPotential issue count c when c=1 but constraints c>=2. fine.\n\nNeed no explanation. fenced code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 740,
+      "total_tokens": 1487,
+      "completion_tokens": 747,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 443
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 7.013102500000969,
+  "received_at": "2026-11-18T07:28:56.370181+00:00",
+  "logical_request_id": "2a5f50e64b67d7b823d07e38406ac0089896af3d4799481e14a2a51d30ee4f04",
+  "execution_class": "direct_api"
+}

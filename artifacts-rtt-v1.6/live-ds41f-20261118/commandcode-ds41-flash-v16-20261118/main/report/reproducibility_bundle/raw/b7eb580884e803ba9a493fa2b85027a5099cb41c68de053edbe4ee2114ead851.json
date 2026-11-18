@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let ws = words input\n  case ws of\n    [] -> return ()\n    (nw : rest) -> do\n      let n = read nw :: Int\n          values = map read (take n rest) :: [Int]\n          nonZeroes = filter (/= 0) values\n          result = nonZeroes ++ replicate (n - length nonZeroes) 0\n      putStrLn (unwords (map show result))\n```",
+          "reasoning_content": "We need answer exactly one fenced code block Haskell. Need preserve behavior. Need write Haskell program reads stdin N then N ints, outputs nonzero in order then zeros, space separated newline. Handle no input return nothing. N maybe. Need module Main main IO. Use standard libs. Need be careful output if n=0? constraints >=1, but source if cin n then vector n and output loop newline for n=0 (just newline). We can replicate. If no input, return (). Parse all words. Read n. Then take n values. result = filter (/=0) values ++ replicate (n - length nonzero) 0. Print unwords. For n=0 output newline. If input malformed not needed. Use getContents. Need avoid negative replicate. n-length. If fewer? valid. Could use let zeros = n - length nz.\n\nNeed output exactly one fenced code block no explanation. Haskell code. Ensure main :: IO (). Could use interact. Need if null ws then return. Parse first word read. Use readMaybe? standard Text.Read. Simpler reads. But if no input. Use case words input of [] -> return (); (nw:_) -> let n=read nw; vals=map read (take n (drop 1 ws)) ... putStrLn (unwords (map show result)). Could read all words. For n maybe no values. Good.\n\nNeed preserve signed int. Integer fine. Output formatting. Haskell lazy but okay.\n\nPotential issue source if n read but fewer values, cin leaves default 0? Actually vector initialized 0, for i loop cin >> values[i], if fail, values[i] set 0 since C++11? Maybe not valid input spec. Ignore.\n\nReturn code.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794977265,
+    "id": "chatcmpl-ded6ca486612f98f6c0f4aa41c25dfa5",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 487,
+      "completion_tokens_details": {
+        "reasoning_tokens": 367
+      },
+      "prompt_tokens": 628,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1115
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0007727999999999999,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 4.84949960000813,
+  "logical_request_id": "c8b59f442b214b6a2177dc79061e8f9a9a13b34a08d6a1ac3c11c42bc9aa9e94",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-haskell\\attempt-03\\step-09\\response_body.txt",
+  "received_at": "2026-11-18T04:47:48.217438+00:00",
+  "request_id": "chatcmpl-ded6ca486612f98f6c0f4aa41c25dfa5",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let ws = words input\n  case ws of\n    [] -> return ()\n    (nw : rest) -> do\n      let n = read nw :: Int\n          values = map read (take n rest) :: [Int]\n          nonZeroes = filter (/= 0) values\n          result = nonZeroes ++ replicate (n - length nonZeroes) 0\n      putStrLn (unwords (map show result))\n```",
+  "usage": {
+    "completion_tokens": 487,
+    "completion_tokens_details": {
+      "reasoning_tokens": 367
+    },
+    "prompt_tokens": 628,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1115
+  },
+  "usage_raw": {
+    "completion_tokens": 487,
+    "completion_tokens_details": {
+      "reasoning_tokens": 367
+    },
+    "prompt_tokens": 628,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1115
+  }
+}

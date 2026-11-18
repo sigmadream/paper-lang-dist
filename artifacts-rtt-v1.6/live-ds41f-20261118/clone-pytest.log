@@ -1,0 +1,51 @@
+...............F                                                         [100%]
+================================== FAILURES ===================================
+_______ test_new_campaign_keeps_problem_protocol_and_uses_api_provider ________
+
+    def test_new_campaign_keeps_problem_protocol_and_uses_api_provider():
+        from scripts import run_deepseek_v41_flash_20261118 as runner
+        from rttdist.providers import APIProvider
+    
+>       cfg = runner.load_config()
+              ^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_deepseek_flash_runner.py:336: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def load_config():
+        cfg = core.load_hops_config(*config_paths())
+        assert_destination(core.campaign_root(cfg))
+        llm = cfg["llm"]
+        if (
+            Path(cfg["output_root"]).resolve() != OUTPUT.resolve()
+            or cfg["campaign_id"] != CAMPAIGN_ID
+            or llm.get("provider") != "compatible"
+            or llm.get("protocol") != "chat_completions"
+            or llm.get("model") != MODEL_ID
+            or llm.get("allowed_response_models") != []
+            or llm.get("base_url") != "https://api.commandcode.ai/provider/v1"
+            or llm.get("request_path") != "/chat/completions"
+            or llm.get("generation") != GENERATION
+            or llm.get("max_input_tokens") != 32768
+            or cfg.get("phase_budget_policy") != PHASES
+            or cfg.get("budget")
+            != {
+                "max_logical_requests": 3600,
+                "max_transport_attempts": 10800,
+                "cost_cap_usd": 48.62,
+            }
+        ):
+            raise ValueError("DeepSeek 전용 설정·경로·단계 한도가 다릅니다")
+        if any(llm.get(k) != v for k, v in PHASES["main"].items()):
+            raise ValueError("본 실험 공급자 예산이 다릅니다")
+        wrapper = cfg.get("execution_wrapper", {})
+        if wrapper.get("path") != "scripts/run_deepseek_v41_flash_20261118.py" or wrapper.get(
+            "sha256"
+        ) != digest(Path(__file__).read_bytes()):
+>           raise ValueError("새 래퍼 해시가 설정과 다릅니다")
+E           ValueError: 새 래퍼 해시가 설정과 다릅니다
+
+scripts\run_deepseek_v41_flash_20261118.py:131: ValueError
+=========================== short test summary info ===========================
+FAILED tests/integration/test_deepseek_flash_runner.py::test_new_campaign_keeps_problem_protocol_and_uses_api_provider
+1 failed, 15 passed in 1.28s

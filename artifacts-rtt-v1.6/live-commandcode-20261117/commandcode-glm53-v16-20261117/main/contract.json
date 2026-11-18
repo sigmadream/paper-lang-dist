@@ -1,0 +1,1509 @@
+{
+  "protocol": "rtt-hops-v1.6",
+  "schema_version": "observation-v1.6",
+  "schema": "observation-v1.6",
+  "problem_ids": [
+    "IPOP_11729",
+    "IPOP_2110",
+    "IPOP_1992",
+    "IPOP_2579",
+    "IPOP_5567",
+    "IPOP_10988",
+    "IPOP_1929",
+    "IPOP_2609",
+    "IPOP_9012",
+    "LC_0053",
+    "LC_0062",
+    "IPOP_9663",
+    "LC_0242",
+    "LC_0283",
+    "LC_0338"
+  ],
+  "routes": [
+    [
+      "cpp",
+      "python"
+    ],
+    [
+      "cpp",
+      "java"
+    ],
+    [
+      "cpp",
+      "haskell"
+    ],
+    [
+      "cpp",
+      "prolog"
+    ]
+  ],
+  "repeats": 5,
+  "thresholds": [
+    0.8,
+    0.85,
+    0.9
+  ],
+  "primary_threshold": 0.85,
+  "config": {
+    "manuscript_version": "v1.6",
+    "experiment_version": "rtt-hops-v1.6",
+    "schema_version": "observation-v1.6",
+    "selection": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\papers\\v1.6\\data\\selection.json",
+    "corpus_root": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\data\\rtt-v1.6",
+    "validation": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\validation\\validation.json",
+    "output_root": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117",
+    "campaign_id": "commandcode-glm53-v16-20261117",
+    "profile_id": "commandcode-glm53-v16-low-16384",
+    "provider_config": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\configs\\v1.6\\providers\\commandcode_glm53_experiment.yaml",
+    "problem_ids": [
+      "IPOP_11729",
+      "IPOP_2110",
+      "IPOP_1992",
+      "IPOP_2579",
+      "IPOP_5567",
+      "IPOP_10988",
+      "IPOP_1929",
+      "IPOP_2609",
+      "IPOP_9012",
+      "LC_0053",
+      "LC_0062",
+      "IPOP_9663",
+      "LC_0242",
+      "LC_0283",
+      "LC_0338"
+    ],
+    "pilot_problem_ids": [
+      "IPOP_11729",
+      "IPOP_1992",
+      "LC_0053"
+    ],
+    "routes": [
+      [
+        "cpp",
+        "python"
+      ],
+      [
+        "cpp",
+        "java"
+      ],
+      [
+        "cpp",
+        "haskell"
+      ],
+      [
+        "cpp",
+        "prolog"
+      ]
+    ],
+    "repeats": 5,
+    "pilot_repeats": 1,
+    "threshold": 0.85,
+    "thresholds": [
+      0.8,
+      0.85,
+      0.9
+    ],
+    "max_hops": 10,
+    "confirmation_roundtrips": 1,
+    "schedule_seed": 20261117,
+    "observation_wall_seconds": 900,
+    "confirmation_wall_seconds": 300,
+    "runtime": {
+      "tools": {
+        "cpp": "C:\\Users\\sigma\\scoop\\apps\\perl\\5.42.3.1\\c\\bin\\g++.exe",
+        "python": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+        "java": "C:\\Users\\sigma\\scoop\\apps\\openjdk\\current\\bin\\javac.EXE",
+        "haskell": "C:\\Users\\sigma\\scoop\\apps\\ghcup\\current\\ghcup\\bin\\ghc.EXE",
+        "prolog": "C:\\Users\\sigma\\scoop\\shims\\swipl.EXE"
+      },
+      "compile_timeout": 180,
+      "fixture_timeout": 5,
+      "minimum_evaluation_cases": 13
+    },
+    "similarity": {
+      "java": "C:\\Users\\sigma\\scoop\\apps\\openjdk\\current\\bin\\java.exe",
+      "jar": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\jplag-6.3.0-jar-with-dependencies.jar",
+      "jar_sha256": "5f2c21e8b88ed77134effcb3a5a3ab13d188f6a3e16d401387f7479e92db9aa2",
+      "language": "cpp",
+      "minimum_tokens": 9,
+      "normalize": false,
+      "similarity_field": "averageSimilarity"
+    },
+    "budget": {
+      "max_logical_requests": 3600,
+      "max_transport_attempts": 10800,
+      "cost_cap_usd": 50
+    },
+    "llm": {
+      "provider": "compatible",
+      "protocol": "chat_completions",
+      "base_url": "https://api.commandcode.ai/provider/v1",
+      "request_path": "/chat/completions",
+      "auth": {
+        "type": "bearer",
+        "api_key_env": "CMD_API_KEY"
+      },
+      "model": "zai-org/GLM-5.3",
+      "allowed_response_models": [],
+      "generation_profile": {
+        "name": "commandcode-glm53-v16-low-16384",
+        "supported_options": [
+          "temperature",
+          "top_p",
+          "max_tokens",
+          "reasoning_effort"
+        ],
+        "option_values": {
+          "reasoning_effort": [
+            "low"
+          ]
+        }
+      },
+      "generation": {
+        "temperature": 0.6,
+        "top_p": 0.95,
+        "max_tokens": 16384,
+        "reasoning_effort": "low"
+      },
+      "request_timeout": 180,
+      "retries": 2,
+      "max_calls": 3600,
+      "max_transport_attempts": 10800,
+      "cost_cap_usd": 50,
+      "max_request_cost_usd": 0.25,
+      "max_input_tokens": 32768,
+      "pricing": {
+        "input_per_million": 1.4,
+        "output_per_million": 4.4,
+        "cached_input_per_million": 0.26
+      }
+    },
+    "execution_wrapper": {
+      "path": "scripts/run_commandcode_v16.py",
+      "sha256": "aee0838d6de8c586fb90a714ba80b11f37825d006455f2f110ea92491010ef9e",
+      "authentication_policy": "키는 메모리에 보관하고 provider.complete 동안에만 주입하며 평가·JPlag는 허용 목록 환경으로 수행합니다",
+      "serial_execution": true
+    },
+    "phase_budget_policy": {
+      "preflight": {
+        "max_calls": 1,
+        "max_transport_attempts": 1,
+        "cost_cap_usd": 0.25
+      },
+      "pilot": {
+        "max_calls": 144,
+        "max_transport_attempts": 432,
+        "cost_cap_usd": 50
+      },
+      "main": {
+        "max_calls": 3600,
+        "max_transport_attempts": 10800,
+        "cost_cap_usd": 50
+      }
+    }
+  },
+  "manifest": {
+    "schema_version": 1,
+    "corpus_version": "rtt-v1.6",
+    "selection_sha256": "68bd199cdf18eb0cba12917fc400c342978d52729628744f32a1ae25e5bc7add",
+    "reference_languages": [
+      "cpp",
+      "python",
+      "java",
+      "haskell",
+      "prolog"
+    ],
+    "problem_ids": [
+      "IPOP_11729",
+      "IPOP_2110",
+      "IPOP_1992",
+      "IPOP_2579",
+      "IPOP_5567",
+      "IPOP_10988",
+      "IPOP_1929",
+      "IPOP_2609",
+      "IPOP_9012",
+      "LC_0053",
+      "LC_0062",
+      "IPOP_9663",
+      "LC_0242",
+      "LC_0283",
+      "LC_0338"
+    ],
+    "problems": [
+      {
+        "problem_id": "IPOP_11729",
+        "source": "problem/IPOP_11729",
+        "reference_provenance": {
+          "cpp": {
+            "source": "problem/IPOP_11729/reference.cpp",
+            "sha256": "2f4e87370a961521b7ee6ae648a8afdb18cc3bad1439f957d4044662cf502f65",
+            "method": "원본 바이트 보존"
+          },
+          "python": {
+            "source": "references/IPOP_11729/reference.py",
+            "sha256": "765806e7759ecb78fd9b4d226ffcab801cdd1c1ec53bb49e51849321edfe2b13",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "java": {
+            "source": "references/IPOP_11729/reference.java",
+            "sha256": "47e8796741293420c3f0dd5eb56201a41c51e269d8c345dc6b31d5ff81f796bb",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "haskell": {
+            "source": "references/IPOP_11729/reference.hs",
+            "sha256": "cf43681767b75ebee66d1321b5f61a256962cea7b5c5494969bada55b3cadee4",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "prolog": {
+            "source": "references/IPOP_11729/reference.pl",
+            "sha256": "1f685cb0c4109953d603cb419c68395733976ce8f654f992a9e459116fb1cfa6",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          }
+        },
+        "evaluation_cases": 13,
+        "prompt_example_cases": 10
+      },
+      {
+        "problem_id": "IPOP_2110",
+        "source": "problem/IPOP_2110",
+        "reference_provenance": {
+          "cpp": {
+            "source": "problem/IPOP_2110/reference.cpp",
+            "sha256": "85c3bc32e810499c85b6c7eac6c03ee5531b068363d30f6c13a72905558f6c64",
+            "method": "원본 바이트 보존"
+          },
+          "python": {
+            "source": "references/IPOP_2110/reference.py",
+            "sha256": "30de3b23f75bc2aa809cb3a31e680da77fcbfef349eed2e555f9235ec350e193",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "java": {
+            "source": "references/IPOP_2110/reference.java",
+            "sha256": "52dd075bca43f5aff5a77e8700e911ead9b76ad6976a7387ef4303902d75e06a",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "haskell": {
+            "source": "references/IPOP_2110/reference.hs",
+            "sha256": "5ff337f7eea3749bbb319b3ae6b652995bcd96fa6c33525d51880231e61dc7a7",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "prolog": {
+            "source": "references/IPOP_2110/reference.pl",
+            "sha256": "fb120a533379dbd808b74de28c1fc78c920f2fcdf248c626dff472f0ef83fb04",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          }
+        },
+        "evaluation_cases": 13,
+        "prompt_example_cases": 10
+      },
+      {
+        "problem_id": "IPOP_1992",
+        "source": "problem/IPOP_1992",
+        "reference_provenance": {
+          "cpp": {
+            "source": "problem/IPOP_1992/reference.cpp",
+            "sha256": "f81654391c828b9ba16eae37cb02c1e9da3cb107c367e35bfc138b1e1ff1f40f",
+            "method": "원본 바이트 보존"
+          },
+          "python": {
+            "source": "references/IPOP_1992/reference.py",
+            "sha256": "e3c7da48566cb75efc7d467a9170e0e598b61153f9b3b0f32332d01d8d4b3ccf",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "java": {
+            "source": "references/IPOP_1992/reference.java",
+            "sha256": "fc433478cb8cd7702e79b7390a43e817f4172c2ab5015976e21fddce0dc44763",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "haskell": {
+            "source": "references/IPOP_1992/reference.hs",
+            "sha256": "760e868709da7fecd35964c935106d294dd1cb5076fcb8652da8f0a47bd16fff",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "prolog": {
+            "source": "references/IPOP_1992/reference.pl",
+            "sha256": "d7f1e37b356c9059c46b7f78c30c865eb768afe37baf20ef46dce0bd121083df",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          }
+        },
+        "evaluation_cases": 13,
+        "prompt_example_cases": 10
+      },
+      {
+        "problem_id": "IPOP_2579",
+        "source": "problem/IPOP_2579",
+        "reference_provenance": {
+          "cpp": {
+            "source": "problem/IPOP_2579/reference.cpp",
+            "sha256": "31882bc966fcd7d557ccd7f6df97d17dcb1b6d211029650ac70c7626b806bc3b",
+            "method": "원본 바이트 보존"
+          },
+          "python": {
+            "source": "references/IPOP_2579/reference.py",
+            "sha256": "cc1d7e5d390b83660e08fe4a8d7d3c990ebdae1cb5d3d04ddab41ccfc1e1a1a9",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "java": {
+            "source": "references/IPOP_2579/reference.java",
+            "sha256": "c16ee1ed73b58905d292f59ac882f6454f0e07d92b6d555b339d2a52a025cc17",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "haskell": {
+            "source": "references/IPOP_2579/reference.hs",
+            "sha256": "50be6b924736948e9d557ec2db0b4d8bfa64d632c946a31c824aa2223838634d",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "prolog": {
+            "source": "references/IPOP_2579/reference.pl",
+            "sha256": "ef8a37d9e94632dd61d0fa97210a6d746046249cc1d123643b7faa5c37ff7546",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          }
+        },
+        "evaluation_cases": 13,
+        "prompt_example_cases": 10
+      },
+      {
+        "problem_id": "IPOP_5567",
+        "source": "problem/IPOP_5567",
+        "reference_provenance": {
+          "cpp": {
+            "source": "problem/IPOP_5567/reference.cpp",
+            "sha256": "98c2b0e23d4a1b4107060d63a676a793f41896450718465573446caab91dd42f",
+            "method": "원본 바이트 보존"
+          },
+          "python": {
+            "source": "references/IPOP_5567/reference.py",
+            "sha256": "bf0dca09ffe935818a86e07af118642fe96dfd5a300cf5cb828751665f40822a",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "java": {
+            "source": "references/IPOP_5567/reference.java",
+            "sha256": "b60af20456dece6997aa9a9964b543a391648a6121e35ec22dd913769b95ea25",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "haskell": {
+            "source": "references/IPOP_5567/reference.hs",
+            "sha256": "06db5c7ea7b3be9a6f03ccfce30603ebaa9fecdbf247d6cbf1c45b6f8ac4dd52",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "prolog": {
+            "source": "references/IPOP_5567/reference.pl",
+            "sha256": "abd46a37de772b74330041a1d22e233eca4c2d8b4b37dd9d7562a4f131fe1754",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          }
+        },
+        "evaluation_cases": 13,
+        "prompt_example_cases": 10
+      },
+      {
+        "problem_id": "IPOP_10988",
+        "source": "problem/IPOP_10988",
+        "reference_provenance": {
+          "cpp": {
+            "source": "problem/IPOP_10988/reference.cpp",
+            "sha256": "3a122a7bddda0bee8eb23fcd824ef66f26f1635e0c3b07ad80036e655045b6e4",
+            "method": "원본 바이트 보존"
+          },
+          "python": {
+            "source": "references/IPOP_10988/reference.py",
+            "sha256": "14842d65925ba6c6b19d30f07581ea3bae10ad64acdba3028a783ffaaf50253a",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "java": {
+            "source": "references/IPOP_10988/reference.java",
+            "sha256": "2b9b9d05673c761d7aa8cf773e05ea244c6de018959237bcc13886dac883bcd3",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "haskell": {
+            "source": "references/IPOP_10988/reference.hs",
+            "sha256": "8e1fa8ae74c616938125b5172796d80a9213cdffd3b15d149b342ace4370b259",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "prolog": {
+            "source": "references/IPOP_10988/reference.pl",
+            "sha256": "5a379b22714b05d9a19ed6595aac8829039416f2671279d7f676f752307a46db",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          }
+        },
+        "evaluation_cases": 13,
+        "prompt_example_cases": 10
+      },
+      {
+        "problem_id": "IPOP_1929",
+        "source": "problem/IPOP_1929",
+        "reference_provenance": {
+          "cpp": {
+            "source": "problem/IPOP_1929/reference.cpp",
+            "sha256": "96e4e19cd7df2a60efe3bfecb2d7160544c3ca199a3fb27003a30487456ff58a",
+            "method": "원본 바이트 보존"
+          },
+          "python": {
+            "source": "references/IPOP_1929/reference.py",
+            "sha256": "a64bcf85a3c12352c805808b587de8e6466a990d278af31ffe60eb3903b77e0b",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "java": {
+            "source": "references/IPOP_1929/reference.java",
+            "sha256": "7ac6ebe053dc52acd2a4529a7c09095ac4ea842b7130b36b9978f8b9934b1c41",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "haskell": {
+            "source": "references/IPOP_1929/reference.hs",
+            "sha256": "1125d06ee3fa1aee237cc608ecdf38383bb5c3dd19abb9eb996bb8895332d24f",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "prolog": {
+            "source": "references/IPOP_1929/reference.pl",
+            "sha256": "1a8db00986882680d9038a0788b09d41e87cf4733d579e4e75c6782a07da10cd",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          }
+        },
+        "evaluation_cases": 13,
+        "prompt_example_cases": 10
+      },
+      {
+        "problem_id": "IPOP_2609",
+        "source": "problem/IPOP_2609",
+        "reference_provenance": {
+          "cpp": {
+            "source": "problem/IPOP_2609/reference.cpp",
+            "sha256": "917d9e5d1235e78de87279e3aaa70b471fb873b627ed399b9caa8a12ec308657",
+            "method": "원본 바이트 보존"
+          },
+          "python": {
+            "source": "references/IPOP_2609/reference.py",
+            "sha256": "80cb71e5f85995e4b98850db23a7534deb290ba431ad2ec9da71064d3d1e0424",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "java": {
+            "source": "references/IPOP_2609/reference.java",
+            "sha256": "7b6118502ffdcd6df59e477cefb2f7761592dbf0b4dd55ef23fa7c40ba6d344a",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "haskell": {
+            "source": "references/IPOP_2609/reference.hs",
+            "sha256": "652106026e523a3578033aae9286611f459a84d6f365d4f85ff1b02ea14335c6",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "prolog": {
+            "source": "references/IPOP_2609/reference.pl",
+            "sha256": "0b7e197de556b7034694b65e344b601c03cc341e429d0042a32bcca72e75edda",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          }
+        },
+        "evaluation_cases": 13,
+        "prompt_example_cases": 10
+      },
+      {
+        "problem_id": "IPOP_9012",
+        "source": "problem/IPOP_9012",
+        "reference_provenance": {
+          "cpp": {
+            "source": "problem/IPOP_9012/reference.cpp",
+            "sha256": "67c618434792fd193bb827bca3346299532cc5350036ea05425e0456c4ee6e6b",
+            "method": "원본 바이트 보존"
+          },
+          "python": {
+            "source": "references/IPOP_9012/reference.py",
+            "sha256": "72f68580f6530f4239b3648858fe662897173bdbc27cb7a2179170fe41f98772",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "java": {
+            "source": "references/IPOP_9012/reference.java",
+            "sha256": "a90575ba37f5b76e4b69747a7a19b9eae42b54b586610453b45c56c8becc3d87",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "haskell": {
+            "source": "references/IPOP_9012/reference.hs",
+            "sha256": "4ff27cedaf2b011949a310adb7b86a304a979c52cc03f1f5a089f4794ab18ff2",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "prolog": {
+            "source": "references/IPOP_9012/reference.pl",
+            "sha256": "159a7d04c476bb03c379e7d4033ab8ebc41b48f0b7f72b818d1639adfd7c8db5",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          }
+        },
+        "evaluation_cases": 13,
+        "prompt_example_cases": 10
+      },
+      {
+        "problem_id": "LC_0053",
+        "source": "problem/LC_0053",
+        "reference_provenance": {
+          "cpp": {
+            "source": "problem/LC_0053/reference.cpp",
+            "sha256": "45d21abbdef174890eb8b8c2fd8f58ba5385fb4bedd8e4bd189a2f0fcb9bb397",
+            "method": "원본 바이트 보존"
+          },
+          "python": {
+            "source": "references/LC_0053/reference.py",
+            "sha256": "e69d3067b5b0d94b7c5092360d20d9c09aadf8f96a1b7d261752cf184a441ba3",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "java": {
+            "source": "references/LC_0053/reference.java",
+            "sha256": "95b52e6785d5e92e27cb8878bf7dd8e9169451ab3c7a759338276016f5fddca0",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "haskell": {
+            "source": "references/LC_0053/reference.hs",
+            "sha256": "0ad3ba499c2afea0b2fd71fa0db8de9cd8970a1f7eddeaf924b9f9140aae0875",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "prolog": {
+            "source": "references/LC_0053/reference.pl",
+            "sha256": "717744c42bd3c20c2e2ac211990f7b733aeb60a676f3cc0f6aada93013ef1c35",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          }
+        },
+        "evaluation_cases": 13,
+        "prompt_example_cases": 1
+      },
+      {
+        "problem_id": "LC_0062",
+        "source": "problem/LC_0062",
+        "reference_provenance": {
+          "cpp": {
+            "source": "problem/LC_0062/reference.cpp",
+            "sha256": "97c6e32d3829835421c961a9997239c8b13ddaa5f1ce3b6b874afdb76e8e5ad1",
+            "method": "원본 바이트 보존"
+          },
+          "python": {
+            "source": "references/LC_0062/reference.py",
+            "sha256": "3abd2e8d31a3d7dd11de106112dfbe8ec5ddebd18757d025b010b06de9b613a5",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "java": {
+            "source": "references/LC_0062/reference.java",
+            "sha256": "2df954321a405601138a04b4940b3abddded1fbb58054981eeafd6d3f8fd0d58",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "haskell": {
+            "source": "references/LC_0062/reference.hs",
+            "sha256": "eaf9a046d4280754c33615c39a871cdd2e12efbd6f77149172da981bbaf1bc27",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "prolog": {
+            "source": "references/LC_0062/reference.pl",
+            "sha256": "5cbea51df35a41c52b966786e2c22e4d0b37d31053dec94ed0e6480a121de09b",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          }
+        },
+        "evaluation_cases": 13,
+        "prompt_example_cases": 1
+      },
+      {
+        "problem_id": "IPOP_9663",
+        "source": "problem/IPOP_9663",
+        "reference_provenance": {
+          "cpp": {
+            "source": "problem/IPOP_9663/reference.cpp",
+            "sha256": "b32adf15fc9dd12a954955c3a2a09090852b3cc4818ce8c586af1ef6cbe67346",
+            "method": "원본 바이트 보존"
+          },
+          "python": {
+            "source": "references/IPOP_9663/reference.py",
+            "sha256": "6514d434f04a60795e8b2a5730299a747490318be18f3d378faf36ec367c1d11",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "java": {
+            "source": "references/IPOP_9663/reference.java",
+            "sha256": "a7aaeca37578d5cbd13eefa10e56ac731b4698532df4909680f2c8a9f85227ea",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "haskell": {
+            "source": "references/IPOP_9663/reference.hs",
+            "sha256": "2447b8e75af062c11a94706f1df8b821c710c968b9c979e79cf119bf0e985af1",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "prolog": {
+            "source": "references/IPOP_9663/reference.pl",
+            "sha256": "6229548dbe9161e4fd17fa63331d15a66e661b08a150c14c2b23d08bcab450d3",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          }
+        },
+        "evaluation_cases": 13,
+        "prompt_example_cases": 10
+      },
+      {
+        "problem_id": "LC_0242",
+        "source": "problem/LC_0242",
+        "reference_provenance": {
+          "cpp": {
+            "source": "problem/LC_0242/reference.cpp",
+            "sha256": "f54941f3414c36ef48002bda665cd41f89f379a8445c5670eb80161a15f95d39",
+            "method": "원본 바이트 보존"
+          },
+          "python": {
+            "source": "references/LC_0242/reference.py",
+            "sha256": "6508403de012e83895466b3a0254bcdabb05f53bc9cfa8ff9b2d55943b029996",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "java": {
+            "source": "references/LC_0242/reference.java",
+            "sha256": "f9c59ef8b3d4d6b8b3ad8b808be48085697ad8a48e3309b9ca1e34c29e246f7a",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "haskell": {
+            "source": "references/LC_0242/reference.hs",
+            "sha256": "c643e294bd6ec9583d3c256fd3a1b7a11aaf3dc0610f730b5150638654d7ac7b",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "prolog": {
+            "source": "references/LC_0242/reference.pl",
+            "sha256": "5697e8f93d24f882d599c19ad1271e1fc7aa89f038e69d4df97fb9dffb35bee4",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          }
+        },
+        "evaluation_cases": 13,
+        "prompt_example_cases": 1
+      },
+      {
+        "problem_id": "LC_0283",
+        "source": "problem/LC_0283",
+        "reference_provenance": {
+          "cpp": {
+            "source": "problem/LC_0283/reference.cpp",
+            "sha256": "04a83561587faf1ecac6147edc6ffa98eadadf455dd53a5b5e782b8de3e7cc38",
+            "method": "원본 바이트 보존"
+          },
+          "python": {
+            "source": "references/LC_0283/reference.py",
+            "sha256": "f5300651423c3bbe95142bba9f17d642d7a6fb860659f007eae0c97ff95e304f",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "java": {
+            "source": "references/LC_0283/reference.java",
+            "sha256": "955f012aead7758d47d5eadc3c5ff22c4f4724bb6f3ed316a87a54e1917741ec",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "haskell": {
+            "source": "references/LC_0283/reference.hs",
+            "sha256": "f04ddd455d497484e0e8778fff2c0921ab4c78622110c337c5125b695eff40c9",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "prolog": {
+            "source": "references/LC_0283/reference.pl",
+            "sha256": "cd65e175d6e8fb91ec6f759327f9d2a97093ac4dad514fa57450c0406679589d",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          }
+        },
+        "evaluation_cases": 13,
+        "prompt_example_cases": 1
+      },
+      {
+        "problem_id": "LC_0338",
+        "source": "problem/LC_0338",
+        "reference_provenance": {
+          "cpp": {
+            "source": "problem/LC_0338/reference.cpp",
+            "sha256": "a5c4762bd30ba3923e54a1fb047a85040bd1d3106240f81162b987547f25e0df",
+            "method": "원본 바이트 보존"
+          },
+          "python": {
+            "source": "references/LC_0338/reference.py",
+            "sha256": "aeb517d344dae863eb0f8eb715113e17d3e610b04e12c1df6eb1cbc97f4a10f9",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "java": {
+            "source": "references/LC_0338/reference.java",
+            "sha256": "0729c6ce002b302af37c37e44bcd679c57bd347a2c9244506e91e79e704d8ef1",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "haskell": {
+            "source": "references/LC_0338/reference.hs",
+            "sha256": "f731b19dd35865bbb0d1610dd1f6e6e1bc917b4b035fc420ca3aca925e1294ca",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          },
+          "prolog": {
+            "source": "references/LC_0338/reference.pl",
+            "sha256": "4e9c1cc9893db9025271bc7f0403e5716eb462ad726a690caea30d97feb4b97b",
+            "method": "외부 모델 API 없이 로컬 작성, 기존 13개 평가 및 독립 계산과 대조"
+          }
+        },
+        "evaluation_cases": 13,
+        "prompt_example_cases": 1
+      }
+    ],
+    "file_hashes": {
+      "IPOP_10988/evaluation/case01.inp": "8e4621379786ef42a4fec155cd525c291dd7db3c1fde3478522f4f61c03fd1bd",
+      "IPOP_10988/evaluation/case01.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_10988/evaluation/case02.inp": "9ac2812ddcc8c533691aaee6e4b7ebd8bf65b2f8bb5a55013eb2d3bd2245ae80",
+      "IPOP_10988/evaluation/case02.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_10988/evaluation/case03.inp": "3d1766c406f4212d1d799d19b4ac9df472fe8ad7c70fa67e3e09ee17c153e534",
+      "IPOP_10988/evaluation/case03.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "IPOP_10988/evaluation/case04.inp": "9f044692f57e2d2543e1e8b5663dc4ba180260166f062ddb06427cbb51cf3a6e",
+      "IPOP_10988/evaluation/case04.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_10988/evaluation/case05.inp": "33f52b6e3e5378f136d6315227ed85680d457d695add09ad56489319dcf12af4",
+      "IPOP_10988/evaluation/case05.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_10988/evaluation/case06.inp": "381fe6d9d6caddb0d2b9fe828365351b7d910acea5c7c6410d378c084962410b",
+      "IPOP_10988/evaluation/case06.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "IPOP_10988/evaluation/case07.inp": "fbadd487e34039b5b6f66ca68d04b56f3b6c1d0a1c55c4bb16897a86ffd69fa9",
+      "IPOP_10988/evaluation/case07.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_10988/evaluation/case08.inp": "3ad37c276b5fdc5264cf59ef078655abcc1ec426b4ada17a56f0ea156d7d59f3",
+      "IPOP_10988/evaluation/case08.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_10988/evaluation/case09.inp": "e930d040e869c1d226c3e66a4c7895e6420f40e38491a21ca6d4b55a7cb5b05b",
+      "IPOP_10988/evaluation/case09.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "IPOP_10988/evaluation/case10.inp": "ab33af9f96cd121e7fcff10886dfb2fb1d0acd3d023fa1972d12edfe826eecc7",
+      "IPOP_10988/evaluation/case10.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_10988/evaluation/case11.inp": "be44589a52516d32f126aa5c8cf7427f2c83736aa72397de81626db43e66d3d8",
+      "IPOP_10988/evaluation/case11.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_10988/evaluation/case12.inp": "9b67be0b7ea8d5e7af14bc5c0201724e78cd2a4f8877c4662a714aee6c926ad7",
+      "IPOP_10988/evaluation/case12.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "IPOP_10988/evaluation/case13.inp": "6c043ce8ded9af0fbe7bd7dc46c6df2809ca50d292a0d14aa77d0bb7f05ed0a4",
+      "IPOP_10988/evaluation/case13.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_10988/prompt_examples/1.inp": "881b2c853cafc55d8ef3c1170af249367695da3e5ec52640e2999fd69cdecbc1",
+      "IPOP_10988/prompt_examples/1.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_10988/prompt_examples/10.inp": "32b74ea76ce8dfb61cc2381b4b4d768b86c2756522878966a759d664af8ec00d",
+      "IPOP_10988/prompt_examples/10.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "IPOP_10988/prompt_examples/2.inp": "32b74ea76ce8dfb61cc2381b4b4d768b86c2756522878966a759d664af8ec00d",
+      "IPOP_10988/prompt_examples/2.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "IPOP_10988/prompt_examples/3.inp": "881b2c853cafc55d8ef3c1170af249367695da3e5ec52640e2999fd69cdecbc1",
+      "IPOP_10988/prompt_examples/3.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_10988/prompt_examples/4.inp": "32b74ea76ce8dfb61cc2381b4b4d768b86c2756522878966a759d664af8ec00d",
+      "IPOP_10988/prompt_examples/4.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "IPOP_10988/prompt_examples/5.inp": "881b2c853cafc55d8ef3c1170af249367695da3e5ec52640e2999fd69cdecbc1",
+      "IPOP_10988/prompt_examples/5.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_10988/prompt_examples/6.inp": "32b74ea76ce8dfb61cc2381b4b4d768b86c2756522878966a759d664af8ec00d",
+      "IPOP_10988/prompt_examples/6.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "IPOP_10988/prompt_examples/7.inp": "881b2c853cafc55d8ef3c1170af249367695da3e5ec52640e2999fd69cdecbc1",
+      "IPOP_10988/prompt_examples/7.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_10988/prompt_examples/8.inp": "32b74ea76ce8dfb61cc2381b4b4d768b86c2756522878966a759d664af8ec00d",
+      "IPOP_10988/prompt_examples/8.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "IPOP_10988/prompt_examples/9.inp": "881b2c853cafc55d8ef3c1170af249367695da3e5ec52640e2999fd69cdecbc1",
+      "IPOP_10988/prompt_examples/9.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_10988/reference.cpp": "3a122a7bddda0bee8eb23fcd824ef66f26f1635e0c3b07ad80036e655045b6e4",
+      "IPOP_10988/reference.hs": "8e1fa8ae74c616938125b5172796d80a9213cdffd3b15d149b342ace4370b259",
+      "IPOP_10988/reference.java": "2b9b9d05673c761d7aa8cf773e05ea244c6de018959237bcc13886dac883bcd3",
+      "IPOP_10988/reference.pl": "5a379b22714b05d9a19ed6595aac8829039416f2671279d7f676f752307a46db",
+      "IPOP_10988/reference.py": "14842d65925ba6c6b19d30f07581ea3bae10ad64acdba3028a783ffaaf50253a",
+      "IPOP_10988/statement.md": "77a9c732f7d80c8c984179ab5ec55a9942d1366e7a93ca34ed860e47cb31cacb",
+      "IPOP_11729/evaluation/case01.inp": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_11729/evaluation/case01.out": "cd10597f78147879c2f0d812ad8ec5916051d4e4f8166fbcb1b8c05023c2736d",
+      "IPOP_11729/evaluation/case02.inp": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+      "IPOP_11729/evaluation/case02.out": "b0ebde704548f9f3e4298134cc2c0011895f76d0fd863090c3182be9c09c5097",
+      "IPOP_11729/evaluation/case03.inp": "7c468f5e59f2871b946e051445493bbcace531d597edbbcc9935e7d02d025114",
+      "IPOP_11729/evaluation/case03.out": "f8bb0a3c7600dac6a2c96e6c4b9125e337b1d504be74987b8f556d20402e88d0",
+      "IPOP_11729/evaluation/case04.inp": "7fb2aaeaf3eef66b52db104118c30f62899f5f0df520350a94a8fcb843c0dfdf",
+      "IPOP_11729/evaluation/case04.out": "8de46dc0f07687f9db4031ed8b255083c2d7bc6807b35e2348197ef17d7a05b9",
+      "IPOP_11729/evaluation/case05.inp": "92961e9752250efa971147344b22295db32d7b75e940e0971e5fb34f21d0bc67",
+      "IPOP_11729/evaluation/case05.out": "25598f688f27e9480810609dbed703559316b63319dc3d4f82664b557b98d516",
+      "IPOP_11729/evaluation/case06.inp": "9b6dd0f55d1cea37555db317f53a0631f694bd46df8018cc2aeed3d9e2f32f5f",
+      "IPOP_11729/evaluation/case06.out": "9dc576c891bff7fc0474e6432c6c079cc16217ff6b62ecc95cfb36033a743aff",
+      "IPOP_11729/evaluation/case07.inp": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f",
+      "IPOP_11729/evaluation/case07.out": "671d0315c40c12bb4ea4e9a93909ff92b7e9c8ddc7acc60b87e0765e867c4d3f",
+      "IPOP_11729/evaluation/case08.inp": "69fa4dd4fdc0b43ba7ca7c997539c4500f03ab9b220228e2b1e97bd305397806",
+      "IPOP_11729/evaluation/case08.out": "e9133ee11ffce017bdba7673dafc5bf8b358dd2274a3b365d62befab387eb589",
+      "IPOP_11729/evaluation/case09.inp": "4593c89b4d60161d78fef3f48312d7833649b876a0c1d762cb5b9d73acaa0a20",
+      "IPOP_11729/evaluation/case09.out": "a506375a76eebfa3619ae740160459378f90e6d3bf14f6ded18e434e307dc7e2",
+      "IPOP_11729/evaluation/case10.inp": "412a8da13330793d63a3a17bed32c76be361edad27fe0f6a0ceb144d3f0aa50e",
+      "IPOP_11729/evaluation/case10.out": "a4b1ad5ea80c9ba3c6fbcaf2335d21d4876ff131ef98156c5461712c5f61987a",
+      "IPOP_11729/evaluation/case11.inp": "f2bf6cb915ec521520920f625e9a641f22bae7808a5f5db7867c431c1a79440f",
+      "IPOP_11729/evaluation/case11.out": "e957a48f4a05e48873dcd34dcd2a3a9a534e021dbabbcd661908ae498b85960a",
+      "IPOP_11729/evaluation/case12.inp": "d91a915db080736443c7b2fa55b70a31d2e4cddb9182844bb91e04897b9d4598",
+      "IPOP_11729/evaluation/case12.out": "8abda202fcc2060b81d62a9422594807c2eff60d252b8965f331b5358d9173db",
+      "IPOP_11729/evaluation/case13.inp": "b7a33ec2d3fa6748259d5a72ed976b7308fa7355fd99818bc0dc12fece595277",
+      "IPOP_11729/evaluation/case13.out": "dd2baf3f434159ee569e0c2627f1b843ef73be1f55a446b898a90a1c9040ef0c",
+      "IPOP_11729/prompt_examples/1.inp": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed",
+      "IPOP_11729/prompt_examples/1.out": "1cb75008ef8f36b4e81da6c16836b2681cc6b09350509817558b2b1900a6fa5d",
+      "IPOP_11729/prompt_examples/10.inp": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed",
+      "IPOP_11729/prompt_examples/10.out": "1cb75008ef8f36b4e81da6c16836b2681cc6b09350509817558b2b1900a6fa5d",
+      "IPOP_11729/prompt_examples/2.inp": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed",
+      "IPOP_11729/prompt_examples/2.out": "1cb75008ef8f36b4e81da6c16836b2681cc6b09350509817558b2b1900a6fa5d",
+      "IPOP_11729/prompt_examples/3.inp": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed",
+      "IPOP_11729/prompt_examples/3.out": "1cb75008ef8f36b4e81da6c16836b2681cc6b09350509817558b2b1900a6fa5d",
+      "IPOP_11729/prompt_examples/4.inp": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed",
+      "IPOP_11729/prompt_examples/4.out": "1cb75008ef8f36b4e81da6c16836b2681cc6b09350509817558b2b1900a6fa5d",
+      "IPOP_11729/prompt_examples/5.inp": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed",
+      "IPOP_11729/prompt_examples/5.out": "1cb75008ef8f36b4e81da6c16836b2681cc6b09350509817558b2b1900a6fa5d",
+      "IPOP_11729/prompt_examples/6.inp": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed",
+      "IPOP_11729/prompt_examples/6.out": "1cb75008ef8f36b4e81da6c16836b2681cc6b09350509817558b2b1900a6fa5d",
+      "IPOP_11729/prompt_examples/7.inp": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed",
+      "IPOP_11729/prompt_examples/7.out": "1cb75008ef8f36b4e81da6c16836b2681cc6b09350509817558b2b1900a6fa5d",
+      "IPOP_11729/prompt_examples/8.inp": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed",
+      "IPOP_11729/prompt_examples/8.out": "1cb75008ef8f36b4e81da6c16836b2681cc6b09350509817558b2b1900a6fa5d",
+      "IPOP_11729/prompt_examples/9.inp": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed",
+      "IPOP_11729/prompt_examples/9.out": "1cb75008ef8f36b4e81da6c16836b2681cc6b09350509817558b2b1900a6fa5d",
+      "IPOP_11729/reference.cpp": "2f4e87370a961521b7ee6ae648a8afdb18cc3bad1439f957d4044662cf502f65",
+      "IPOP_11729/reference.hs": "cf43681767b75ebee66d1321b5f61a256962cea7b5c5494969bada55b3cadee4",
+      "IPOP_11729/reference.java": "47e8796741293420c3f0dd5eb56201a41c51e269d8c345dc6b31d5ff81f796bb",
+      "IPOP_11729/reference.pl": "1f685cb0c4109953d603cb419c68395733976ce8f654f992a9e459116fb1cfa6",
+      "IPOP_11729/reference.py": "765806e7759ecb78fd9b4d226ffcab801cdd1c1ec53bb49e51849321edfe2b13",
+      "IPOP_11729/statement.md": "2e3dfeace03b1db11a272f71db02a1b69fb053fbaa8b7fc810d67dd96a2f17db",
+      "IPOP_1929/evaluation/case01.inp": "01d16d3fc9baf02b7e1f16368d22e0d2b71cc96ac27eb8aa6f752c70ad323a70",
+      "IPOP_1929/evaluation/case01.out": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+      "IPOP_1929/evaluation/case02.inp": "8f5e5488b2fb251fe67a0bd2d8e7b4d115f4119ca02279ee63d71e510cfc41a0",
+      "IPOP_1929/evaluation/case02.out": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+      "IPOP_1929/evaluation/case03.inp": "1d35d939d057fe9005f6700ed968b78e4e02b773782e9301e45c5341292b600f",
+      "IPOP_1929/evaluation/case03.out": "5b677464f4941a4c274964d723bf47e3cd7cdcb5d53379a3b7176f0c456cf9a0",
+      "IPOP_1929/evaluation/case04.inp": "2dd0285bf900514d1484b2a7afa60a7b88e8d80afd5bbc9637a1905d8f429fdc",
+      "IPOP_1929/evaluation/case04.out": "0140f5a3224bb47eba1eedb4d5f337fe7e303084217296315c1efb8640185d00",
+      "IPOP_1929/evaluation/case05.inp": "d20c1e623c746049c03b0bedb6135c163b0ceee670f634334f1edb49ac510075",
+      "IPOP_1929/evaluation/case05.out": "999d075156e83be4ff45b3eda2f064fea51b4498a323c33afdb94615df261716",
+      "IPOP_1929/evaluation/case06.inp": "8a4ccf2dd98b59a195add5ebaaab4da9d92abcfa8d8ef442ab84a88bda25f686",
+      "IPOP_1929/evaluation/case06.out": "6a319fa264455f5beb79f7afbff6dd7db713e7692019fcd7150aaca88d4eb18d",
+      "IPOP_1929/evaluation/case07.inp": "5cc603017957943268e85482610a65d5ffb5abaf0746685c1953b68780021a7f",
+      "IPOP_1929/evaluation/case07.out": "7953ab480e804294c68275900ab1c586b4f68c7bdfa7a0fe8de72411f5ea3aa4",
+      "IPOP_1929/evaluation/case08.inp": "40b7e47db0a195e4d7a37847a5e221d9d9bc8ab8175b1096de890043f1285971",
+      "IPOP_1929/evaluation/case08.out": "349229bb5b16958815a71ff7a417fa3b01ca9d461cdf8d67a7a7d406a0ac491a",
+      "IPOP_1929/evaluation/case09.inp": "9c251f8818a5225b1303d2cc65e1d103490642d55476b76387586895d26930c0",
+      "IPOP_1929/evaluation/case09.out": "8d575cb808f20dc1190e30290a88b35fc04f74c444637a039d528a1ac72cddad",
+      "IPOP_1929/evaluation/case10.inp": "ec507dee325b0cfeab741d1f5af5dbd89dc0fd8821c144fe9582f972d22eafdd",
+      "IPOP_1929/evaluation/case10.out": "ff23a536aa9c52f45e05eed6226f66d8763b52183104f67117e2baf55b7e848a",
+      "IPOP_1929/evaluation/case11.inp": "03d8dda1d3ed29c347cc342570e62a60ae728898aaf5f895091de53165592955",
+      "IPOP_1929/evaluation/case11.out": "320365366546df10c1d24ed8af8dca586caee41211978c4cbe4cc144510a24e0",
+      "IPOP_1929/evaluation/case12.inp": "33de9aba3b3de35d8a8fc44d89f2385b745e2e134fa3617ed6303b47b7ce0632",
+      "IPOP_1929/evaluation/case12.out": "4d38fe12d76dae3dda6602fe32714b9d3772ca24f6657b4cc018f65dae0f53dd",
+      "IPOP_1929/evaluation/case13.inp": "13dd77dc5ecf47ca7c39f4f61f56e146cf113293215d85459df66f080eb28eb0",
+      "IPOP_1929/evaluation/case13.out": "1a28c561220df1810d0af926c3a77353575c5dfc4ffb2277087c08fad183292e",
+      "IPOP_1929/prompt_examples/1.inp": "72c546a6644d488aa369f1ef9aaecc961ed11796069d2391e3551b46032c280d",
+      "IPOP_1929/prompt_examples/1.out": "9270871f5a8b89597bc7daffeefe5732bd08d53d1c077d82c35a40591d9bf13c",
+      "IPOP_1929/prompt_examples/10.inp": "72c546a6644d488aa369f1ef9aaecc961ed11796069d2391e3551b46032c280d",
+      "IPOP_1929/prompt_examples/10.out": "9270871f5a8b89597bc7daffeefe5732bd08d53d1c077d82c35a40591d9bf13c",
+      "IPOP_1929/prompt_examples/2.inp": "72c546a6644d488aa369f1ef9aaecc961ed11796069d2391e3551b46032c280d",
+      "IPOP_1929/prompt_examples/2.out": "9270871f5a8b89597bc7daffeefe5732bd08d53d1c077d82c35a40591d9bf13c",
+      "IPOP_1929/prompt_examples/3.inp": "72c546a6644d488aa369f1ef9aaecc961ed11796069d2391e3551b46032c280d",
+      "IPOP_1929/prompt_examples/3.out": "9270871f5a8b89597bc7daffeefe5732bd08d53d1c077d82c35a40591d9bf13c",
+      "IPOP_1929/prompt_examples/4.inp": "72c546a6644d488aa369f1ef9aaecc961ed11796069d2391e3551b46032c280d",
+      "IPOP_1929/prompt_examples/4.out": "9270871f5a8b89597bc7daffeefe5732bd08d53d1c077d82c35a40591d9bf13c",
+      "IPOP_1929/prompt_examples/5.inp": "72c546a6644d488aa369f1ef9aaecc961ed11796069d2391e3551b46032c280d",
+      "IPOP_1929/prompt_examples/5.out": "9270871f5a8b89597bc7daffeefe5732bd08d53d1c077d82c35a40591d9bf13c",
+      "IPOP_1929/prompt_examples/6.inp": "72c546a6644d488aa369f1ef9aaecc961ed11796069d2391e3551b46032c280d",
+      "IPOP_1929/prompt_examples/6.out": "9270871f5a8b89597bc7daffeefe5732bd08d53d1c077d82c35a40591d9bf13c",
+      "IPOP_1929/prompt_examples/7.inp": "72c546a6644d488aa369f1ef9aaecc961ed11796069d2391e3551b46032c280d",
+      "IPOP_1929/prompt_examples/7.out": "9270871f5a8b89597bc7daffeefe5732bd08d53d1c077d82c35a40591d9bf13c",
+      "IPOP_1929/prompt_examples/8.inp": "72c546a6644d488aa369f1ef9aaecc961ed11796069d2391e3551b46032c280d",
+      "IPOP_1929/prompt_examples/8.out": "9270871f5a8b89597bc7daffeefe5732bd08d53d1c077d82c35a40591d9bf13c",
+      "IPOP_1929/prompt_examples/9.inp": "72c546a6644d488aa369f1ef9aaecc961ed11796069d2391e3551b46032c280d",
+      "IPOP_1929/prompt_examples/9.out": "9270871f5a8b89597bc7daffeefe5732bd08d53d1c077d82c35a40591d9bf13c",
+      "IPOP_1929/reference.cpp": "96e4e19cd7df2a60efe3bfecb2d7160544c3ca199a3fb27003a30487456ff58a",
+      "IPOP_1929/reference.hs": "1125d06ee3fa1aee237cc608ecdf38383bb5c3dd19abb9eb996bb8895332d24f",
+      "IPOP_1929/reference.java": "7ac6ebe053dc52acd2a4529a7c09095ac4ea842b7130b36b9978f8b9934b1c41",
+      "IPOP_1929/reference.pl": "1a8db00986882680d9038a0788b09d41e87cf4733d579e4e75c6782a07da10cd",
+      "IPOP_1929/reference.py": "a64bcf85a3c12352c805808b587de8e6466a990d278af31ffe60eb3903b77e0b",
+      "IPOP_1929/statement.md": "d1d8be46040e4bffe7a244a398657788c2ca23ef967f79f915df748815391602",
+      "IPOP_1992/evaluation/case01.inp": "8516632d770e25405fd0efa2c5504c30d462fe85ee635f83173f7983394d28a8",
+      "IPOP_1992/evaluation/case01.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "IPOP_1992/evaluation/case02.inp": "2a93ef399846526811d56221542f541f9397cd39f0b6718c7fbb44c08d2735fc",
+      "IPOP_1992/evaluation/case02.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_1992/evaluation/case03.inp": "f4e2985f0b7784a24c8c796cf3f5d97ba0bf39179df5ac66de0185811830b52c",
+      "IPOP_1992/evaluation/case03.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "IPOP_1992/evaluation/case04.inp": "ca67eb1b29f5f22837e3739fd3a417edf32432ecfa0f389514b17b60f43ff197",
+      "IPOP_1992/evaluation/case04.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_1992/evaluation/case05.inp": "deba4f165c9a7064ce4e102ff3d8476f2d251b36183423165b621cd861091466",
+      "IPOP_1992/evaluation/case05.out": "1f4e92c497f7fbc8418a1056fa0ff88a5f2adeca3c56be31447275fe6b74fe6e",
+      "IPOP_1992/evaluation/case06.inp": "f7413a3053f7d59b847efc1a615bb36fab99c08cb9f7e996399bb598dbe9e7e5",
+      "IPOP_1992/evaluation/case06.out": "f183d7d48e8acf7c601520a7dcc48ffeff90663ccbba11ea1c2c12227dc5cf66",
+      "IPOP_1992/evaluation/case07.inp": "afd71c9e27559486f0bb646887b92cb84d07e64e1bd965f82c126941abfee8eb",
+      "IPOP_1992/evaluation/case07.out": "dcbe39bda6337740edd53efd1d41b263b10eba8eee48a034e04f370f348293ba",
+      "IPOP_1992/evaluation/case08.inp": "53dee4b72411ce63024dcbac2e5042c437a415f23ac61a7539862a7295c57534",
+      "IPOP_1992/evaluation/case08.out": "9472c1258a499114dd70efe3eb2ba3df6b7f4aadee688ecc0efaedd902762264",
+      "IPOP_1992/evaluation/case09.inp": "b970e2ab672608cf05a064bbcbd363a779d15d9122d8927ace2ba87560cbc9a6",
+      "IPOP_1992/evaluation/case09.out": "7c7b351c86caa19250e11523bee87dc9cc75c88df3391d25762ec71e5f094851",
+      "IPOP_1992/evaluation/case10.inp": "b9420660cd926164b2eccbe2dbb6c55dc1cda7bd356d21c509024ac573345ddf",
+      "IPOP_1992/evaluation/case10.out": "1f4e92c497f7fbc8418a1056fa0ff88a5f2adeca3c56be31447275fe6b74fe6e",
+      "IPOP_1992/evaluation/case11.inp": "16dd662650f2db963e21fbe71580ca098c03481fdb2ec77cfe44007fe9b5f040",
+      "IPOP_1992/evaluation/case11.out": "9d212a909c6be5fae08181880ca6476f0a2845fa245da50fd335c4afb4df1084",
+      "IPOP_1992/evaluation/case12.inp": "de10602e66f231370d3dcb63e696dd4fa827cf23f44f2f9e40b407102acec40d",
+      "IPOP_1992/evaluation/case12.out": "49c4cd6b43106084110056e6f6a06bd71af108c2847a091e39ee9a5ca1437399",
+      "IPOP_1992/evaluation/case13.inp": "97937068616160959a6dab6db339eaf9a2412e0bf361e9014822b0ed3ce397bd",
+      "IPOP_1992/evaluation/case13.out": "658514abd6e0cb46d428d8eab76f2ee3b31d3aa8df819fb1eb2aeb282de42c4e",
+      "IPOP_1992/prompt_examples/1.inp": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81",
+      "IPOP_1992/prompt_examples/1.out": "ce81057b7126bcdf9a2f06aa8799361c3d23893472f46b66af90de74cf1db15e",
+      "IPOP_1992/prompt_examples/10.inp": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81",
+      "IPOP_1992/prompt_examples/10.out": "ce81057b7126bcdf9a2f06aa8799361c3d23893472f46b66af90de74cf1db15e",
+      "IPOP_1992/prompt_examples/2.inp": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81",
+      "IPOP_1992/prompt_examples/2.out": "ce81057b7126bcdf9a2f06aa8799361c3d23893472f46b66af90de74cf1db15e",
+      "IPOP_1992/prompt_examples/3.inp": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81",
+      "IPOP_1992/prompt_examples/3.out": "ce81057b7126bcdf9a2f06aa8799361c3d23893472f46b66af90de74cf1db15e",
+      "IPOP_1992/prompt_examples/4.inp": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81",
+      "IPOP_1992/prompt_examples/4.out": "ce81057b7126bcdf9a2f06aa8799361c3d23893472f46b66af90de74cf1db15e",
+      "IPOP_1992/prompt_examples/5.inp": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81",
+      "IPOP_1992/prompt_examples/5.out": "ce81057b7126bcdf9a2f06aa8799361c3d23893472f46b66af90de74cf1db15e",
+      "IPOP_1992/prompt_examples/6.inp": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81",
+      "IPOP_1992/prompt_examples/6.out": "ce81057b7126bcdf9a2f06aa8799361c3d23893472f46b66af90de74cf1db15e",
+      "IPOP_1992/prompt_examples/7.inp": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81",
+      "IPOP_1992/prompt_examples/7.out": "ce81057b7126bcdf9a2f06aa8799361c3d23893472f46b66af90de74cf1db15e",
+      "IPOP_1992/prompt_examples/8.inp": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81",
+      "IPOP_1992/prompt_examples/8.out": "ce81057b7126bcdf9a2f06aa8799361c3d23893472f46b66af90de74cf1db15e",
+      "IPOP_1992/prompt_examples/9.inp": "7f7f0e4a24993678a9638798f409e1b8a7ca2afb825c53685ee0e90c0c489a81",
+      "IPOP_1992/prompt_examples/9.out": "ce81057b7126bcdf9a2f06aa8799361c3d23893472f46b66af90de74cf1db15e",
+      "IPOP_1992/reference.cpp": "f81654391c828b9ba16eae37cb02c1e9da3cb107c367e35bfc138b1e1ff1f40f",
+      "IPOP_1992/reference.hs": "760e868709da7fecd35964c935106d294dd1cb5076fcb8652da8f0a47bd16fff",
+      "IPOP_1992/reference.java": "fc433478cb8cd7702e79b7390a43e817f4172c2ab5015976e21fddce0dc44763",
+      "IPOP_1992/reference.pl": "d7f1e37b356c9059c46b7f78c30c865eb768afe37baf20ef46dce0bd121083df",
+      "IPOP_1992/reference.py": "e3c7da48566cb75efc7d467a9170e0e598b61153f9b3b0f32332d01d8d4b3ccf",
+      "IPOP_1992/statement.md": "e103f7f49b133f273982e1f19021cb7a3ebe032dafcd4f5a16d21d43a5889b2f",
+      "IPOP_2110/evaluation/case01.inp": "cfd2631e0ca6a198e1b9ff307cd36054c81a28fc1ef9c5d2564aa69c546743c2",
+      "IPOP_2110/evaluation/case01.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_2110/evaluation/case02.inp": "2b364d5ff3b5c55cf7383b238361c807347f773862d03ec117030e7694c26e1a",
+      "IPOP_2110/evaluation/case02.out": "c38029691f44acacc2e533e91a213e03bcfc10d50ef256bfa7a0e962f73c8f41",
+      "IPOP_2110/evaluation/case03.inp": "66dabb5b014c6954d4b967fb7a88a6b6de5b1473efd575e81b772008a337e734",
+      "IPOP_2110/evaluation/case03.out": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+      "IPOP_2110/evaluation/case04.inp": "487e3cb5f6acfb56fe6ac0fcd0008051bcbd30b26949cadce0ddbbca95e39e79",
+      "IPOP_2110/evaluation/case04.out": "69fa4dd4fdc0b43ba7ca7c997539c4500f03ab9b220228e2b1e97bd305397806",
+      "IPOP_2110/evaluation/case05.inp": "ccd5553927bffe1c352b186ca9410d328f220f5cd516c45d4ee4ecc69f39d568",
+      "IPOP_2110/evaluation/case05.out": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+      "IPOP_2110/evaluation/case06.inp": "bee4984159e3c180126e4c0fadd8c7a7ec1b42a2a7483649ca27973ab180bc4d",
+      "IPOP_2110/evaluation/case06.out": "92961e9752250efa971147344b22295db32d7b75e940e0971e5fb34f21d0bc67",
+      "IPOP_2110/evaluation/case07.inp": "897cfaada24c5cd5f67eccfb0967c8f2771e642a39600ad109724e6790f807bc",
+      "IPOP_2110/evaluation/case07.out": "9b6dd0f55d1cea37555db317f53a0631f694bd46df8018cc2aeed3d9e2f32f5f",
+      "IPOP_2110/evaluation/case08.inp": "44ecf01d60f488c947fdd3e6e4b983720b0d2e2e93c1b837d255cc6d8661a796",
+      "IPOP_2110/evaluation/case08.out": "7c468f5e59f2871b946e051445493bbcace531d597edbbcc9935e7d02d025114",
+      "IPOP_2110/evaluation/case09.inp": "ba518443414ba6980fe78612a609e76da6ef375cd4cc3f79135555134c853897",
+      "IPOP_2110/evaluation/case09.out": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f",
+      "IPOP_2110/evaluation/case10.inp": "0978e0ede870b495ca4f3957c6a0683ec0b69c5b79c45062a38ac75c1fd87de6",
+      "IPOP_2110/evaluation/case10.out": "7fb2aaeaf3eef66b52db104118c30f62899f5f0df520350a94a8fcb843c0dfdf",
+      "IPOP_2110/evaluation/case11.inp": "1b5398221dbbb2bc45ab4f4e06a52c987a754a07eb74829011ec341a0096fb0e",
+      "IPOP_2110/evaluation/case11.out": "6edfde2b82519b387d0a1c07119f4d172aefce1a4af34fc35c6a6c2306e93f96",
+      "IPOP_2110/evaluation/case12.inp": "6632e0439b86dd5f0a643550499d5e7a6eebea94cf2b81f54e5e0731bc12a18c",
+      "IPOP_2110/evaluation/case12.out": "bfe35ef46218439ea00a50a31f900e0bcb4b9aa5bf7fa1cbb1b5e0a80f17c660",
+      "IPOP_2110/evaluation/case13.inp": "f6880e650ad0ed01e8694b971b48b926a72136cdbb0ec6ebf6a7fc067382013b",
+      "IPOP_2110/evaluation/case13.out": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+      "IPOP_2110/prompt_examples/1.inp": "4251bdefdfd2a6748622583d0f8eee248e2cbfd228f05ad43a09b2bade01ae8e",
+      "IPOP_2110/prompt_examples/1.out": "2dd9964aa7c59c01362061846da85dcf727bb9f7f25e6b1c67ff342e6ef8c69c",
+      "IPOP_2110/prompt_examples/10.inp": "5bcd9b97022bdb5261c54d3c433728a6a9e4de3812858cb99220afa65244e463",
+      "IPOP_2110/prompt_examples/10.out": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f",
+      "IPOP_2110/prompt_examples/2.inp": "dc7ea33954697da32d6cbf60ce9871374910e53089625e4a6da39fec9ad2cac4",
+      "IPOP_2110/prompt_examples/2.out": "b7a33ec2d3fa6748259d5a72ed976b7308fa7355fd99818bc0dc12fece595277",
+      "IPOP_2110/prompt_examples/3.inp": "28e9de6e20584aafe7780f776273a7446f8b738e4614f001692e85c6046c39b0",
+      "IPOP_2110/prompt_examples/3.out": "9b6dd0f55d1cea37555db317f53a0631f694bd46df8018cc2aeed3d9e2f32f5f",
+      "IPOP_2110/prompt_examples/4.inp": "9a8c501f5d03f9aef16175774a5b4511ee24d43614a9bb7a0a238ab28fca7045",
+      "IPOP_2110/prompt_examples/4.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_2110/prompt_examples/5.inp": "fd0c62179732453335fe185bd7013b777360dfc72bc1ee65c216917dffeefecf",
+      "IPOP_2110/prompt_examples/5.out": "4593c89b4d60161d78fef3f48312d7833649b876a0c1d762cb5b9d73acaa0a20",
+      "IPOP_2110/prompt_examples/6.inp": "be0f48b05a34b53cbd9cb915cdf2cfd54d97d025c67ce925048d6857cf671c63",
+      "IPOP_2110/prompt_examples/6.out": "9b6dd0f55d1cea37555db317f53a0631f694bd46df8018cc2aeed3d9e2f32f5f",
+      "IPOP_2110/prompt_examples/7.inp": "30efe4154de96ac8bfa12ee62b3b5b8f2fcabd3f2247e597c83f6408696f3c6f",
+      "IPOP_2110/prompt_examples/7.out": "f7c4f4cc6c99f0e5d21986eaf4e0ee5170b03b05ba444a6b2792a902e38f07b2",
+      "IPOP_2110/prompt_examples/8.inp": "714091e7460f5050e77ff3bb8e96d57839fcb3367aadae06db959a308858e8de",
+      "IPOP_2110/prompt_examples/8.out": "9b6dd0f55d1cea37555db317f53a0631f694bd46df8018cc2aeed3d9e2f32f5f",
+      "IPOP_2110/prompt_examples/9.inp": "ea46adf6da2077f67cbd06d2b2583c9de4a560ed0fe6ad36072709b6f1197451",
+      "IPOP_2110/prompt_examples/9.out": "4593c89b4d60161d78fef3f48312d7833649b876a0c1d762cb5b9d73acaa0a20",
+      "IPOP_2110/reference.cpp": "85c3bc32e810499c85b6c7eac6c03ee5531b068363d30f6c13a72905558f6c64",
+      "IPOP_2110/reference.hs": "5ff337f7eea3749bbb319b3ae6b652995bcd96fa6c33525d51880231e61dc7a7",
+      "IPOP_2110/reference.java": "52dd075bca43f5aff5a77e8700e911ead9b76ad6976a7387ef4303902d75e06a",
+      "IPOP_2110/reference.pl": "fb120a533379dbd808b74de28c1fc78c920f2fcdf248c626dff472f0ef83fb04",
+      "IPOP_2110/reference.py": "30de3b23f75bc2aa809cb3a31e680da77fcbfef349eed2e555f9235ec350e193",
+      "IPOP_2110/statement.md": "2c1705bbcc52332a5ff9e7eeffb09d37206d0b20143fbb2f3af1353c61a8733f",
+      "IPOP_2579/evaluation/case01.inp": "2a93ef399846526811d56221542f541f9397cd39f0b6718c7fbb44c08d2735fc",
+      "IPOP_2579/evaluation/case01.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_2579/evaluation/case02.inp": "72f5e4fda7de920eac867bdf3fd2da957b6841444686cd1218c827f0aade5102",
+      "IPOP_2579/evaluation/case02.out": "36736dd83c6e02474284d8c5f112dec95d5ed6876bf5353dcb672f365d6b0fd1",
+      "IPOP_2579/evaluation/case03.inp": "5d7715da1ec03ec8195c8a9346bc3213a16c7c43cbbdc4c4404c35825190ff41",
+      "IPOP_2579/evaluation/case03.out": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed",
+      "IPOP_2579/evaluation/case04.inp": "10bd7defca787de897ac70967755b92e6ca812a568a309acfdf9ec35ed04dc71",
+      "IPOP_2579/evaluation/case04.out": "9e290564f3c32f51413a42bb6907633851ee8630db4e6da4666282a07a4ecc56",
+      "IPOP_2579/evaluation/case05.inp": "1e5cfa94b7178baa65b4b20159c450582f9b6152d71b0095509ae2dfd9de6f07",
+      "IPOP_2579/evaluation/case05.out": "300ebb40c404965b5ca92647363c497d0b196278bee390ceb7462320a26a3395",
+      "IPOP_2579/evaluation/case06.inp": "09bf5075f9d738c9ba28f312820f5a2eaad6b70323a0dbcc8fbeb8b5a46e2589",
+      "IPOP_2579/evaluation/case06.out": "aa043caaed4834c480a3cc4731b00af0f600e5548e7117b9f0b6fa5ac19939b3",
+      "IPOP_2579/evaluation/case07.inp": "1e267380ffe85aa556ec4111e1baebdce29fadb15bae5bc60bfa6da560a4a984",
+      "IPOP_2579/evaluation/case07.out": "b7a33ec2d3fa6748259d5a72ed976b7308fa7355fd99818bc0dc12fece595277",
+      "IPOP_2579/evaluation/case08.inp": "3d7f8d88186c7640c069ce3b8472d144ccf70aea7a76cdc030721259344511fd",
+      "IPOP_2579/evaluation/case08.out": "e2bb232cac786f7284bb237d193407e94f32ee0fbf64d27d0ae8b1642de44923",
+      "IPOP_2579/evaluation/case09.inp": "4ac7988c74c70e5bc748f565ea4e8331313b3d2205a8458c362637d1849598bd",
+      "IPOP_2579/evaluation/case09.out": "2626af3c6db973ce1d427e24db537b4f22052e52fd2a9d813a2d9d8cf3e17c56",
+      "IPOP_2579/evaluation/case10.inp": "aa0366713d566193e83ba4517bec6abd78c91d92a3d61ad554a4ed7257c9ffdd",
+      "IPOP_2579/evaluation/case10.out": "45e26aeb4a0e45265193e9293e88a93d9b3c89af4e401cb1812161c4568d0b51",
+      "IPOP_2579/evaluation/case11.inp": "fbe5e9102f028f0e0ac21244ca3b904d9ad601887100212e6e231e1196e3d142",
+      "IPOP_2579/evaluation/case11.out": "692fdbc362c27482e995e1f6722a06da354b9d2958a37f9e9525de6cb0ccf847",
+      "IPOP_2579/evaluation/case12.inp": "38970395916d571c07988b621818934b2970534b526e9d424ac809a344266abb",
+      "IPOP_2579/evaluation/case12.out": "32ec64b54e93c61bd9d79c941b9ae74b402dc8112236beada127a7be498dcb75",
+      "IPOP_2579/evaluation/case13.inp": "3964995e4e65371bc7f1f9fc9201896dd1a23a2e70932bffd69f4032ed7ca4bf",
+      "IPOP_2579/evaluation/case13.out": "60917ab0addeddb2c67fa9fbad71a2a2c8d9dba8d7a97abf97dec60077b07468",
+      "IPOP_2579/prompt_examples/1.inp": "7ca5c6038d1e4e4b50c3e11f0c9f65ccc2b29c653ca3bfa880c5f3b70a89bbc4",
+      "IPOP_2579/prompt_examples/1.out": "4593c89b4d60161d78fef3f48312d7833649b876a0c1d762cb5b9d73acaa0a20",
+      "IPOP_2579/prompt_examples/10.inp": "cc098d8fc7443ccb28effa3c661d4f68ec1413b850fdcb0a6cb62ca8e84971be",
+      "IPOP_2579/prompt_examples/10.out": "64ca13ee5464e85ae8dc34b10e646f61a7775ac718fc550afd5b47af4ab12265",
+      "IPOP_2579/prompt_examples/2.inp": "c152f0e3e2f1ed5cf603d7f395dca0143710b234213b2e6537d2284a74aa5aaf",
+      "IPOP_2579/prompt_examples/2.out": "c5dbb92bcb2ba79188091ae09688fc17d60b46256d913b3712d785dbc16bc954",
+      "IPOP_2579/prompt_examples/3.inp": "1501ee2e00dc4c3064985ca690b83db950966f1ad3c24f77ddb7d7821db10865",
+      "IPOP_2579/prompt_examples/3.out": "f82cf59144a96566304c85bba4a1109856f78313add828a8e8629714ea2653ea",
+      "IPOP_2579/prompt_examples/4.inp": "d295a2f30856dba575d7a374612c5648b25214a390b9ec14695e3276ba1bf972",
+      "IPOP_2579/prompt_examples/4.out": "d01bbc67418c3877264f7d25ccd6cb6ba2bb71f9e0280a8989cb62e06e77683b",
+      "IPOP_2579/prompt_examples/5.inp": "91eeeb80811feedaf3cbefdf5c072bee4f5daf681b51476811a40d0bd0920573",
+      "IPOP_2579/prompt_examples/5.out": "45e26aeb4a0e45265193e9293e88a93d9b3c89af4e401cb1812161c4568d0b51",
+      "IPOP_2579/prompt_examples/6.inp": "6376f8dead5c8b3b16dd0a43cca55b3a46e0746b000b16fd38bfcaf119a9a3fb",
+      "IPOP_2579/prompt_examples/6.out": "1eae1d87951093430c50ebf08b70600140e26bd973b913fbd95f4c026164283f",
+      "IPOP_2579/prompt_examples/7.inp": "dda620581ece29f9b6ff164e7b6bc38dfa4beda232efa64a59986955d3463c33",
+      "IPOP_2579/prompt_examples/7.out": "88a748d6e3acf5b60136b6598f8c5108d69085774173929ea5fbcb0b9399cd60",
+      "IPOP_2579/prompt_examples/8.inp": "3d360ca9f9784a42d8290529e5ed4cfbb05f7f0f8838260f0c82b54cfa107352",
+      "IPOP_2579/prompt_examples/8.out": "e332f0d4c6b69a0ad5fcd2967faaa9ed73e2f597e20efaae0aad1ea31306c182",
+      "IPOP_2579/prompt_examples/9.inp": "13f82beb6aeaf40ce0abeed02ccd719b5b2224e5a537fb8edc81c7a481a7eed6",
+      "IPOP_2579/prompt_examples/9.out": "90b53df56816c127246136d4403aba3b26cec599b2b950fb2ba78d6c1fb4e6bf",
+      "IPOP_2579/reference.cpp": "31882bc966fcd7d557ccd7f6df97d17dcb1b6d211029650ac70c7626b806bc3b",
+      "IPOP_2579/reference.hs": "50be6b924736948e9d557ec2db0b4d8bfa64d632c946a31c824aa2223838634d",
+      "IPOP_2579/reference.java": "c16ee1ed73b58905d292f59ac882f6454f0e07d92b6d555b339d2a52a025cc17",
+      "IPOP_2579/reference.pl": "ef8a37d9e94632dd61d0fa97210a6d746046249cc1d123643b7faa5c37ff7546",
+      "IPOP_2579/reference.py": "cc1d7e5d390b83660e08fe4a8d7d3c990ebdae1cb5d3d04ddab41ccfc1e1a1a9",
+      "IPOP_2579/statement.md": "8aa281646dcc1f3872e33e4d7bb30a8a1a1b96e208c8f63e9751aac685a927af",
+      "IPOP_2609/evaluation/case01.inp": "2b0f5fbcc0989e147be531c252d960cdf037cd28b8357c6a9d1cb2b6208eea2e",
+      "IPOP_2609/evaluation/case01.out": "2a93ef399846526811d56221542f541f9397cd39f0b6718c7fbb44c08d2735fc",
+      "IPOP_2609/evaluation/case02.inp": "8ea8983561a7e16c2a569f96ba562ba56a4a3a3e254071fb9b8901d1dd8d92c2",
+      "IPOP_2609/evaluation/case02.out": "72f5e4fda7de920eac867bdf3fd2da957b6841444686cd1218c827f0aade5102",
+      "IPOP_2609/evaluation/case03.inp": "5ef0a33b290eb76e238ec7d17beee2da29b9259ea1d649be8d2083b0fa9d94fc",
+      "IPOP_2609/evaluation/case03.out": "51e40525a31dd73f294f0110dda3d15964a0fdde351f769ea13ee6e0a1aab8f6",
+      "IPOP_2609/evaluation/case04.inp": "e4ab1a25a2d5436675e36bc330c2055fc433bb06be9099c247f4bd39a75eaaa8",
+      "IPOP_2609/evaluation/case04.out": "eef571fdcdadfaa4419f5ce77185410f19b491a166d9ecad4ed761638819c00a",
+      "IPOP_2609/evaluation/case05.inp": "f170ec53930779c2ec7532dc077fb72deaa82996f3df4cbfda61c509427c2dcb",
+      "IPOP_2609/evaluation/case05.out": "42ad9c707a3f28522ff145e3eb5dd7c3cea0591c2b6ac7e8511e9b024bdd0aec",
+      "IPOP_2609/evaluation/case06.inp": "26535734c15f68136fd17a41602cd44b0bcb62b4c9528cb96c54e9bb8f5c6b68",
+      "IPOP_2609/evaluation/case06.out": "42ad9c707a3f28522ff145e3eb5dd7c3cea0591c2b6ac7e8511e9b024bdd0aec",
+      "IPOP_2609/evaluation/case07.inp": "bdbfd416a44eb80c369232867ff978ea4066398e18e7194e81abfb29e12fc840",
+      "IPOP_2609/evaluation/case07.out": "ac9a4a5e244aa155f15a15b4f629272aaa48fd57187326ecad8d88df51815251",
+      "IPOP_2609/evaluation/case08.inp": "ae1e3b321d6810413a3bda25892df0c6377e3e7d6e9f8feabfb4d73a89703e6d",
+      "IPOP_2609/evaluation/case08.out": "533a19908cde72b69c46c71233bcdc731cc4054ecc6a8212c212699367c619a0",
+      "IPOP_2609/evaluation/case09.inp": "90cd2b35be59e979392d98644fb28d012ce787da69363654278b2e84cba3261d",
+      "IPOP_2609/evaluation/case09.out": "a83e77653dc09023777adbb8e085bac490fc9072704f15d633bc4d5802a3a381",
+      "IPOP_2609/evaluation/case10.inp": "f2fffd5b5694c6461f40fe35914f4ef55c6858921df84fd2a58f345811132ec3",
+      "IPOP_2609/evaluation/case10.out": "ace28bbcafafa813703ace78474a4c75a976a0b097dbfd291cdccd2edb0b45c5",
+      "IPOP_2609/evaluation/case11.inp": "c83e0f593274b62ae637533f144d64d7226daf2784d7d15b723ea6ef598d20f1",
+      "IPOP_2609/evaluation/case11.out": "26820e11d89358270726f3966fe0dbc5917d61c27f297013e296a2e2e58fc211",
+      "IPOP_2609/evaluation/case12.inp": "3bfd964e143ad81348636bcc96d05ead75ac43a7c0cc7384db8fec8d7561c3e7",
+      "IPOP_2609/evaluation/case12.out": "d2fd85f9721ff900a2b0c76f2ec7a3dee258f4813a2afc64ea2440cf664d5f40",
+      "IPOP_2609/evaluation/case13.inp": "21e47027f5d47532b6b5e74d8779edd58fc6114746c465fee649f5ccc057c277",
+      "IPOP_2609/evaluation/case13.out": "3690ccb074500c11f6780f384b63016d7e83878ec7348b9c4b01d5fabc729044",
+      "IPOP_2609/prompt_examples/1.inp": "7d52d0cae20734646c517b72402dd145cacaa4d162f21d6a6ec85dc792138246",
+      "IPOP_2609/prompt_examples/1.out": "16462015a6f677d40577d1f1cd44a18ff40d85661f5e9dd7fad8cb2a075dad39",
+      "IPOP_2609/prompt_examples/10.inp": "7d52d0cae20734646c517b72402dd145cacaa4d162f21d6a6ec85dc792138246",
+      "IPOP_2609/prompt_examples/10.out": "16462015a6f677d40577d1f1cd44a18ff40d85661f5e9dd7fad8cb2a075dad39",
+      "IPOP_2609/prompt_examples/2.inp": "7d52d0cae20734646c517b72402dd145cacaa4d162f21d6a6ec85dc792138246",
+      "IPOP_2609/prompt_examples/2.out": "16462015a6f677d40577d1f1cd44a18ff40d85661f5e9dd7fad8cb2a075dad39",
+      "IPOP_2609/prompt_examples/3.inp": "7d52d0cae20734646c517b72402dd145cacaa4d162f21d6a6ec85dc792138246",
+      "IPOP_2609/prompt_examples/3.out": "16462015a6f677d40577d1f1cd44a18ff40d85661f5e9dd7fad8cb2a075dad39",
+      "IPOP_2609/prompt_examples/4.inp": "7d52d0cae20734646c517b72402dd145cacaa4d162f21d6a6ec85dc792138246",
+      "IPOP_2609/prompt_examples/4.out": "16462015a6f677d40577d1f1cd44a18ff40d85661f5e9dd7fad8cb2a075dad39",
+      "IPOP_2609/prompt_examples/5.inp": "7d52d0cae20734646c517b72402dd145cacaa4d162f21d6a6ec85dc792138246",
+      "IPOP_2609/prompt_examples/5.out": "16462015a6f677d40577d1f1cd44a18ff40d85661f5e9dd7fad8cb2a075dad39",
+      "IPOP_2609/prompt_examples/6.inp": "7d52d0cae20734646c517b72402dd145cacaa4d162f21d6a6ec85dc792138246",
+      "IPOP_2609/prompt_examples/6.out": "16462015a6f677d40577d1f1cd44a18ff40d85661f5e9dd7fad8cb2a075dad39",
+      "IPOP_2609/prompt_examples/7.inp": "7d52d0cae20734646c517b72402dd145cacaa4d162f21d6a6ec85dc792138246",
+      "IPOP_2609/prompt_examples/7.out": "16462015a6f677d40577d1f1cd44a18ff40d85661f5e9dd7fad8cb2a075dad39",
+      "IPOP_2609/prompt_examples/8.inp": "7d52d0cae20734646c517b72402dd145cacaa4d162f21d6a6ec85dc792138246",
+      "IPOP_2609/prompt_examples/8.out": "16462015a6f677d40577d1f1cd44a18ff40d85661f5e9dd7fad8cb2a075dad39",
+      "IPOP_2609/prompt_examples/9.inp": "7d52d0cae20734646c517b72402dd145cacaa4d162f21d6a6ec85dc792138246",
+      "IPOP_2609/prompt_examples/9.out": "16462015a6f677d40577d1f1cd44a18ff40d85661f5e9dd7fad8cb2a075dad39",
+      "IPOP_2609/reference.cpp": "917d9e5d1235e78de87279e3aaa70b471fb873b627ed399b9caa8a12ec308657",
+      "IPOP_2609/reference.hs": "652106026e523a3578033aae9286611f459a84d6f365d4f85ff1b02ea14335c6",
+      "IPOP_2609/reference.java": "7b6118502ffdcd6df59e477cefb2f7761592dbf0b4dd55ef23fa7c40ba6d344a",
+      "IPOP_2609/reference.pl": "0b7e197de556b7034694b65e344b601c03cc341e429d0042a32bcca72e75edda",
+      "IPOP_2609/reference.py": "80cb71e5f85995e4b98850db23a7534deb290ba431ad2ec9da71064d3d1e0424",
+      "IPOP_2609/statement.md": "32ab2f089a3eaf48cc7843bf4634cb09dd9678b51b982291992a35198d3ae067",
+      "IPOP_5567/evaluation/case01.inp": "df5103cb17f373f5a1b765d943847472f2fb231bddd972f6e48136dc8a6beee3",
+      "IPOP_5567/evaluation/case01.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "IPOP_5567/evaluation/case02.inp": "23fe1d600176cebd38a426ddb6f59c320ba2dad71a444b596ae090d814398976",
+      "IPOP_5567/evaluation/case02.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_5567/evaluation/case03.inp": "602547a7ab55c5dcd730a8c06a64840abbd369332e4c08efcefd2df299461198",
+      "IPOP_5567/evaluation/case03.out": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+      "IPOP_5567/evaluation/case04.inp": "5f8e2c24787ca3339950eb723dd0c9b3b017ca5ae211070c95cfc34d0fbcfe18",
+      "IPOP_5567/evaluation/case04.out": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+      "IPOP_5567/evaluation/case05.inp": "d00f6ee440f0814aa905b5ca98115f2a1f5218ed5a519d528d15c3b1abfeae2d",
+      "IPOP_5567/evaluation/case05.out": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+      "IPOP_5567/evaluation/case06.inp": "e908ab9623c7f6e97833bb8154b67dbfa079172369a4e00bc1068ccd93d65b23",
+      "IPOP_5567/evaluation/case06.out": "7fb2aaeaf3eef66b52db104118c30f62899f5f0df520350a94a8fcb843c0dfdf",
+      "IPOP_5567/evaluation/case07.inp": "98492fe6844087343b5e6e98d7403bf0ce8d367b76564236574247caf2daf9e5",
+      "IPOP_5567/evaluation/case07.out": "7c468f5e59f2871b946e051445493bbcace531d597edbbcc9935e7d02d025114",
+      "IPOP_5567/evaluation/case08.inp": "56a62ebbd695555f81f11d4ac1a59e91a5c61ff2332c454d455cd6a48e4f95d0",
+      "IPOP_5567/evaluation/case08.out": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed",
+      "IPOP_5567/evaluation/case09.inp": "f899668b365fb296bf77044bb4e4978fe2442d495fbf4c415f07689ae54ec7ce",
+      "IPOP_5567/evaluation/case09.out": "7c468f5e59f2871b946e051445493bbcace531d597edbbcc9935e7d02d025114",
+      "IPOP_5567/evaluation/case10.inp": "f18eb6295a613b82f98adb4f5460e81fad063af68281bc35c7ea4abf26330ee1",
+      "IPOP_5567/evaluation/case10.out": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+      "IPOP_5567/evaluation/case11.inp": "2188bb8866f6514913f80daa266af6bd184a2c37ceebe7d84fbfb9cf46fc5fe8",
+      "IPOP_5567/evaluation/case11.out": "4593c89b4d60161d78fef3f48312d7833649b876a0c1d762cb5b9d73acaa0a20",
+      "IPOP_5567/evaluation/case12.inp": "63bfc7a932eb3d23703e62ea4487b68aca57a8e0cc6ddd72c8172304b5adb466",
+      "IPOP_5567/evaluation/case12.out": "69fa4dd4fdc0b43ba7ca7c997539c4500f03ab9b220228e2b1e97bd305397806",
+      "IPOP_5567/evaluation/case13.inp": "fc360d0c7a47858c47fd18a396b7cf3ec19a321ae35b12955dc67ddf00cafd7b",
+      "IPOP_5567/evaluation/case13.out": "1ec8778086938207e0b4895d3a100a770aa58746eebbe14a7bb04eeec51d8b41",
+      "IPOP_5567/prompt_examples/1.inp": "9bf2e4c0408fcde39ebed7fbe4ecd2f0581e1f6ff3d49b665763325c768b6572",
+      "IPOP_5567/prompt_examples/1.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "IPOP_5567/prompt_examples/10.inp": "1f6119492358ff9e9639adb4517601c2f6fe6785bcefec8dd285dde27d6b8c2f",
+      "IPOP_5567/prompt_examples/10.out": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed",
+      "IPOP_5567/prompt_examples/2.inp": "b31b97ee02aeb866e4117f390280fa055395f34e8f7cd375c0bd7b881a1c58bf",
+      "IPOP_5567/prompt_examples/2.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_5567/prompt_examples/3.inp": "126bb7975337b83933784013c50333ef1b97edb42ced84ed07c6c08cbd6c2a4b",
+      "IPOP_5567/prompt_examples/3.out": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+      "IPOP_5567/prompt_examples/4.inp": "01b4db28f8d77b0fe69df1a4ffaf3ec632a166340f60efa9bbfb49441440538d",
+      "IPOP_5567/prompt_examples/4.out": "7c468f5e59f2871b946e051445493bbcace531d597edbbcc9935e7d02d025114",
+      "IPOP_5567/prompt_examples/5.inp": "01b4db28f8d77b0fe69df1a4ffaf3ec632a166340f60efa9bbfb49441440538d",
+      "IPOP_5567/prompt_examples/5.out": "7c468f5e59f2871b946e051445493bbcace531d597edbbcc9935e7d02d025114",
+      "IPOP_5567/prompt_examples/6.inp": "33b1b9e7ba81c7f0b9dc5ec0b8b23cb93498699ea84a1dd8f15f76888b96bcb5",
+      "IPOP_5567/prompt_examples/6.out": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+      "IPOP_5567/prompt_examples/7.inp": "350178f90b8050908d22aaaa453cfb0feb9b714697cd274797094cbacc4c1a9f",
+      "IPOP_5567/prompt_examples/7.out": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+      "IPOP_5567/prompt_examples/8.inp": "fee825e0cfd9b75441a3e5c2ce89b298b143f7c4b2f4a2a96603bf9206b578d4",
+      "IPOP_5567/prompt_examples/8.out": "7c468f5e59f2871b946e051445493bbcace531d597edbbcc9935e7d02d025114",
+      "IPOP_5567/prompt_examples/9.inp": "6113c08f7ff6876040066d5f08c46a4b05ffe08740d0a1d1ff1cde6affd5f537",
+      "IPOP_5567/prompt_examples/9.out": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed",
+      "IPOP_5567/reference.cpp": "98c2b0e23d4a1b4107060d63a676a793f41896450718465573446caab91dd42f",
+      "IPOP_5567/reference.hs": "06db5c7ea7b3be9a6f03ccfce30603ebaa9fecdbf247d6cbf1c45b6f8ac4dd52",
+      "IPOP_5567/reference.java": "b60af20456dece6997aa9a9964b543a391648a6121e35ec22dd913769b95ea25",
+      "IPOP_5567/reference.pl": "abd46a37de772b74330041a1d22e233eca4c2d8b4b37dd9d7562a4f131fe1754",
+      "IPOP_5567/reference.py": "bf0dca09ffe935818a86e07af118642fe96dfd5a300cf5cb828751665f40822a",
+      "IPOP_5567/statement.md": "1a9c2482677f29630f25abd09619d17f01f57983bcd616fd410c25f78e2a8d72",
+      "IPOP_9012/evaluation/case01.inp": "b27224139d4fefc9cb80f6a5d998155f714a95cbe3dffaa3b81e41256f4eda5e",
+      "IPOP_9012/evaluation/case01.out": "1c26f033eaad3de797860ebf899ae5969130ab20e8e1c492678b4eedd4cc3005",
+      "IPOP_9012/evaluation/case02.inp": "e55adc8d3c05a59bc12defb88ede7090cfe47b12d468ea7585fe814e07c7b678",
+      "IPOP_9012/evaluation/case02.out": "4f1e37b4ecc384b4939c4a21fcf06548708ebd635a8494ab181b18625332a6e5",
+      "IPOP_9012/evaluation/case03.inp": "a5dcb23a29d35a72eb191eeddc6ea1e5f0a3494aa129c8b707d13462f661e80a",
+      "IPOP_9012/evaluation/case03.out": "1c26f033eaad3de797860ebf899ae5969130ab20e8e1c492678b4eedd4cc3005",
+      "IPOP_9012/evaluation/case04.inp": "63782dfe8cbb5ca4e92b1105aa836b5decc2f4e33b50c83d96c804ea1b03cd3d",
+      "IPOP_9012/evaluation/case04.out": "1c26f033eaad3de797860ebf899ae5969130ab20e8e1c492678b4eedd4cc3005",
+      "IPOP_9012/evaluation/case05.inp": "541d9e104ecc7cf2338d264af63090431168db2ddd42af0ff262e23aac3c72cb",
+      "IPOP_9012/evaluation/case05.out": "4f1e37b4ecc384b4939c4a21fcf06548708ebd635a8494ab181b18625332a6e5",
+      "IPOP_9012/evaluation/case06.inp": "9365e55098d0d075e9eadde643c911d26764cb5ecb64408fb44d26d4d552d427",
+      "IPOP_9012/evaluation/case06.out": "4f1e37b4ecc384b4939c4a21fcf06548708ebd635a8494ab181b18625332a6e5",
+      "IPOP_9012/evaluation/case07.inp": "bc3cd2275f664466ee9219a7554bd68bb12228f9245c6047ec3bb374130eef07",
+      "IPOP_9012/evaluation/case07.out": "1c26f033eaad3de797860ebf899ae5969130ab20e8e1c492678b4eedd4cc3005",
+      "IPOP_9012/evaluation/case08.inp": "68259bd2a62e00db41cd91c2e36aa8445e04f10d112675153ad40cf4bc6e108e",
+      "IPOP_9012/evaluation/case08.out": "4f1e37b4ecc384b4939c4a21fcf06548708ebd635a8494ab181b18625332a6e5",
+      "IPOP_9012/evaluation/case09.inp": "03d68118c863baede75db29936b3b32238fbe4b25d9659f7d055c745f3107ace",
+      "IPOP_9012/evaluation/case09.out": "1c26f033eaad3de797860ebf899ae5969130ab20e8e1c492678b4eedd4cc3005",
+      "IPOP_9012/evaluation/case10.inp": "a814f14e1c1288468c6864c3d272309fa5a454148868dfe37a6d60c7eb3b9400",
+      "IPOP_9012/evaluation/case10.out": "28d86ddeed7f40a0f7548336e4b0dfa9696dae4a12b5afbb3adcf0bebd355261",
+      "IPOP_9012/evaluation/case11.inp": "5be5096c5fef3b896d06c441b51de59c85c7f3a9b6fd23f0964bd46ccf996bb7",
+      "IPOP_9012/evaluation/case11.out": "e0a8f9fa93f577b860e34a2fe1f0b79f99cb5f94f7932b7aa7324f8df45a2dc0",
+      "IPOP_9012/evaluation/case12.inp": "9b40e9a9dc452b9636fb87409b6bd9d3efbf49c651c7f825e7b5f40f95affa37",
+      "IPOP_9012/evaluation/case12.out": "e0a8f9fa93f577b860e34a2fe1f0b79f99cb5f94f7932b7aa7324f8df45a2dc0",
+      "IPOP_9012/evaluation/case13.inp": "df5227a03d18adf8de69a8f429aeab15f2cfa62dfa16a477bff081be9987f6a0",
+      "IPOP_9012/evaluation/case13.out": "fb79f8f84d0f06c7523abaa621fb4283d7ff1c4487829bc5b1dbc5c29212b60a",
+      "IPOP_9012/prompt_examples/1.inp": "6152d274854d1439adb2f636f34f55e0bcc2288f514e41a3ff495b4d82c17333",
+      "IPOP_9012/prompt_examples/1.out": "b46fc60544b682a4f5c35129319c60d3e89e6a238036f87f9299aef391ce04ee",
+      "IPOP_9012/prompt_examples/10.inp": "007eac5452e3a052844e2765d7960d36aed8f368ca35235c5f543fb72936d2ae",
+      "IPOP_9012/prompt_examples/10.out": "93c766a55613f0424ba99db403204baae99e5790c21cbacb80a93937cdc92a84",
+      "IPOP_9012/prompt_examples/2.inp": "007eac5452e3a052844e2765d7960d36aed8f368ca35235c5f543fb72936d2ae",
+      "IPOP_9012/prompt_examples/2.out": "93c766a55613f0424ba99db403204baae99e5790c21cbacb80a93937cdc92a84",
+      "IPOP_9012/prompt_examples/3.inp": "6152d274854d1439adb2f636f34f55e0bcc2288f514e41a3ff495b4d82c17333",
+      "IPOP_9012/prompt_examples/3.out": "b46fc60544b682a4f5c35129319c60d3e89e6a238036f87f9299aef391ce04ee",
+      "IPOP_9012/prompt_examples/4.inp": "007eac5452e3a052844e2765d7960d36aed8f368ca35235c5f543fb72936d2ae",
+      "IPOP_9012/prompt_examples/4.out": "93c766a55613f0424ba99db403204baae99e5790c21cbacb80a93937cdc92a84",
+      "IPOP_9012/prompt_examples/5.inp": "6152d274854d1439adb2f636f34f55e0bcc2288f514e41a3ff495b4d82c17333",
+      "IPOP_9012/prompt_examples/5.out": "b46fc60544b682a4f5c35129319c60d3e89e6a238036f87f9299aef391ce04ee",
+      "IPOP_9012/prompt_examples/6.inp": "007eac5452e3a052844e2765d7960d36aed8f368ca35235c5f543fb72936d2ae",
+      "IPOP_9012/prompt_examples/6.out": "93c766a55613f0424ba99db403204baae99e5790c21cbacb80a93937cdc92a84",
+      "IPOP_9012/prompt_examples/7.inp": "6152d274854d1439adb2f636f34f55e0bcc2288f514e41a3ff495b4d82c17333",
+      "IPOP_9012/prompt_examples/7.out": "b46fc60544b682a4f5c35129319c60d3e89e6a238036f87f9299aef391ce04ee",
+      "IPOP_9012/prompt_examples/8.inp": "007eac5452e3a052844e2765d7960d36aed8f368ca35235c5f543fb72936d2ae",
+      "IPOP_9012/prompt_examples/8.out": "93c766a55613f0424ba99db403204baae99e5790c21cbacb80a93937cdc92a84",
+      "IPOP_9012/prompt_examples/9.inp": "6152d274854d1439adb2f636f34f55e0bcc2288f514e41a3ff495b4d82c17333",
+      "IPOP_9012/prompt_examples/9.out": "b46fc60544b682a4f5c35129319c60d3e89e6a238036f87f9299aef391ce04ee",
+      "IPOP_9012/reference.cpp": "67c618434792fd193bb827bca3346299532cc5350036ea05425e0456c4ee6e6b",
+      "IPOP_9012/reference.hs": "4ff27cedaf2b011949a310adb7b86a304a979c52cc03f1f5a089f4794ab18ff2",
+      "IPOP_9012/reference.java": "a90575ba37f5b76e4b69747a7a19b9eae42b54b586610453b45c56c8becc3d87",
+      "IPOP_9012/reference.pl": "159a7d04c476bb03c379e7d4033ab8ebc41b48f0b7f72b818d1639adfd7c8db5",
+      "IPOP_9012/reference.py": "72f68580f6530f4239b3648858fe662897173bdbc27cb7a2179170fe41f98772",
+      "IPOP_9012/statement.md": "b90ea5452bd936c0c1997a4555f61d6f6b788391abc60e5e98b6974450bc602d",
+      "IPOP_9663/evaluation/case01.inp": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_9663/evaluation/case01.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "IPOP_9663/evaluation/case02.inp": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+      "IPOP_9663/evaluation/case02.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "IPOP_9663/evaluation/case03.inp": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed",
+      "IPOP_9663/evaluation/case03.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "IPOP_9663/evaluation/case04.inp": "7c468f5e59f2871b946e051445493bbcace531d597edbbcc9935e7d02d025114",
+      "IPOP_9663/evaluation/case04.out": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+      "IPOP_9663/evaluation/case05.inp": "7fb2aaeaf3eef66b52db104118c30f62899f5f0df520350a94a8fcb843c0dfdf",
+      "IPOP_9663/evaluation/case05.out": "4593c89b4d60161d78fef3f48312d7833649b876a0c1d762cb5b9d73acaa0a20",
+      "IPOP_9663/evaluation/case06.inp": "92961e9752250efa971147344b22295db32d7b75e940e0971e5fb34f21d0bc67",
+      "IPOP_9663/evaluation/case06.out": "7c468f5e59f2871b946e051445493bbcace531d597edbbcc9935e7d02d025114",
+      "IPOP_9663/evaluation/case07.inp": "9b6dd0f55d1cea37555db317f53a0631f694bd46df8018cc2aeed3d9e2f32f5f",
+      "IPOP_9663/evaluation/case07.out": "ec185e1b830b1db532bb59fae58e706de8371497b7a26a48795e7b870de6ab69",
+      "IPOP_9663/evaluation/case08.inp": "69fa4dd4fdc0b43ba7ca7c997539c4500f03ab9b220228e2b1e97bd305397806",
+      "IPOP_9663/evaluation/case08.out": "18dc18ac8ebbea7bc8f9d024862c6297915a79655d19d2107608c095c7c2c511",
+      "IPOP_9663/evaluation/case09.inp": "4593c89b4d60161d78fef3f48312d7833649b876a0c1d762cb5b9d73acaa0a20",
+      "IPOP_9663/evaluation/case09.out": "9a2076c7ac0f9dd3829720f029e7b19d2b9ce736094350e4fb6fdcf2fd8822b1",
+      "IPOP_9663/evaluation/case10.inp": "412a8da13330793d63a3a17bed32c76be361edad27fe0f6a0ceb144d3f0aa50e",
+      "IPOP_9663/evaluation/case10.out": "aedc4ce142ce48bb62a2b734ecc8311888c595e313a61b56ce2c9dcd964554c2",
+      "IPOP_9663/evaluation/case11.inp": "f2bf6cb915ec521520920f625e9a641f22bae7808a5f5db7867c431c1a79440f",
+      "IPOP_9663/evaluation/case11.out": "45a22e4251dce9e1dc0ba168030e3ff5d745b2e18c8a8d7f16c1a4fc51f459ad",
+      "IPOP_9663/evaluation/case12.inp": "f7c4f4cc6c99f0e5d21986eaf4e0ee5170b03b05ba444a6b2792a902e38f07b2",
+      "IPOP_9663/evaluation/case12.out": "67e4d6b37f66f659a9020e77d22ae6a09adb44137c39bed49ea33594ed894f90",
+      "IPOP_9663/evaluation/case13.inp": "d91a915db080736443c7b2fa55b70a31d2e4cddb9182844bb91e04897b9d4598",
+      "IPOP_9663/evaluation/case13.out": "40ffc867b8f2cc8ad778c48212aeec73203d89f06006c94caf7ecfbf9a5256dd",
+      "IPOP_9663/prompt_examples/1.inp": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f",
+      "IPOP_9663/prompt_examples/1.out": "e19febaa1875b95cea61c0f10c1da52419f73b0ec74e6abbba87cdeec0393da0",
+      "IPOP_9663/prompt_examples/10.inp": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f",
+      "IPOP_9663/prompt_examples/10.out": "e19febaa1875b95cea61c0f10c1da52419f73b0ec74e6abbba87cdeec0393da0",
+      "IPOP_9663/prompt_examples/2.inp": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f",
+      "IPOP_9663/prompt_examples/2.out": "e19febaa1875b95cea61c0f10c1da52419f73b0ec74e6abbba87cdeec0393da0",
+      "IPOP_9663/prompt_examples/3.inp": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f",
+      "IPOP_9663/prompt_examples/3.out": "e19febaa1875b95cea61c0f10c1da52419f73b0ec74e6abbba87cdeec0393da0",
+      "IPOP_9663/prompt_examples/4.inp": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f",
+      "IPOP_9663/prompt_examples/4.out": "e19febaa1875b95cea61c0f10c1da52419f73b0ec74e6abbba87cdeec0393da0",
+      "IPOP_9663/prompt_examples/5.inp": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f",
+      "IPOP_9663/prompt_examples/5.out": "e19febaa1875b95cea61c0f10c1da52419f73b0ec74e6abbba87cdeec0393da0",
+      "IPOP_9663/prompt_examples/6.inp": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f",
+      "IPOP_9663/prompt_examples/6.out": "e19febaa1875b95cea61c0f10c1da52419f73b0ec74e6abbba87cdeec0393da0",
+      "IPOP_9663/prompt_examples/7.inp": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f",
+      "IPOP_9663/prompt_examples/7.out": "e19febaa1875b95cea61c0f10c1da52419f73b0ec74e6abbba87cdeec0393da0",
+      "IPOP_9663/prompt_examples/8.inp": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f",
+      "IPOP_9663/prompt_examples/8.out": "e19febaa1875b95cea61c0f10c1da52419f73b0ec74e6abbba87cdeec0393da0",
+      "IPOP_9663/prompt_examples/9.inp": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f",
+      "IPOP_9663/prompt_examples/9.out": "e19febaa1875b95cea61c0f10c1da52419f73b0ec74e6abbba87cdeec0393da0",
+      "IPOP_9663/reference.cpp": "b32adf15fc9dd12a954955c3a2a09090852b3cc4818ce8c586af1ef6cbe67346",
+      "IPOP_9663/reference.hs": "2447b8e75af062c11a94706f1df8b821c710c968b9c979e79cf119bf0e985af1",
+      "IPOP_9663/reference.java": "a7aaeca37578d5cbd13eefa10e56ac731b4698532df4909680f2c8a9f85227ea",
+      "IPOP_9663/reference.pl": "6229548dbe9161e4fd17fa63331d15a66e661b08a150c14c2b23d08bcab450d3",
+      "IPOP_9663/reference.py": "6514d434f04a60795e8b2a5730299a747490318be18f3d378faf36ec367c1d11",
+      "IPOP_9663/statement.md": "7d47066bf6f4151f2e0d8c321409468c9fd821af574a16b395eebe1fedb565e4",
+      "LC_0053/evaluation/case01.inp": "a299388220f3f660b456176db03e53cea69aebc32ced01c42a3c594d2884bb9f",
+      "LC_0053/evaluation/case01.out": "3f1d5a51553d503fdf283595115196d68db5310d5a6986fe12fe48f615a44109",
+      "LC_0053/evaluation/case02.inp": "8516632d770e25405fd0efa2c5504c30d462fe85ee635f83173f7983394d28a8",
+      "LC_0053/evaluation/case02.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "LC_0053/evaluation/case03.inp": "72f5e4fda7de920eac867bdf3fd2da957b6841444686cd1218c827f0aade5102",
+      "LC_0053/evaluation/case03.out": "36736dd83c6e02474284d8c5f112dec95d5ed6876bf5353dcb672f365d6b0fd1",
+      "LC_0053/evaluation/case04.inp": "ef7be1e284125529f2688fe50814e38aab3dd39677f7bc16a9ee100cdebae46d",
+      "LC_0053/evaluation/case04.out": "bc9e7195e151f6a1f21497f20697dade2aabec130109b8196897bed6ba7be42b",
+      "LC_0053/evaluation/case05.inp": "63df407e9d062fb95d9e1861c141d17c18f3b2c7822a31a7353c28390ab452e3",
+      "LC_0053/evaluation/case05.out": "69fa4dd4fdc0b43ba7ca7c997539c4500f03ab9b220228e2b1e97bd305397806",
+      "LC_0053/evaluation/case06.inp": "7cfc3620520ebccad8b16d9e5b6a79558e6cab8f227e954758d806e98be97eda",
+      "LC_0053/evaluation/case06.out": "69fa4dd4fdc0b43ba7ca7c997539c4500f03ab9b220228e2b1e97bd305397806",
+      "LC_0053/evaluation/case07.inp": "add585cb46aa132b8fd1d43cd03e0fbbb5908b8f7f043335a889b1b01570f5b2",
+      "LC_0053/evaluation/case07.out": "92961e9752250efa971147344b22295db32d7b75e940e0971e5fb34f21d0bc67",
+      "LC_0053/evaluation/case08.inp": "6f1a3c0eb9de217ee8eca0a9673e3ed58c25d6a4e9c929234518b636e2ba52fe",
+      "LC_0053/evaluation/case08.out": "4593c89b4d60161d78fef3f48312d7833649b876a0c1d762cb5b9d73acaa0a20",
+      "LC_0053/evaluation/case09.inp": "cdc6174ee057a8790a114db539a7c384f24cb51469f946e2222d3bf7bcdca404",
+      "LC_0053/evaluation/case09.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "LC_0053/evaluation/case10.inp": "bc7b311113545d1ef587b2358e4368463f17fee1edb24c8b24edf9c2f4a5e4e9",
+      "LC_0053/evaluation/case10.out": "05260cb6fb015f9c062e0f22830d8d745508c4496eeb1eaa0531c73f5839e23c",
+      "LC_0053/evaluation/case11.inp": "5bddb44a96f16a2f7efd2714a44f3cd4f7990b1399b8444db65eddfeb99c84d8",
+      "LC_0053/evaluation/case11.out": "f6bca0e7f46a94bd3349fdb86511cbec4a9091e409b62dd2d6b8c1fdb9a3ce00",
+      "LC_0053/evaluation/case12.inp": "db980d11067e2d6111ec44de15ff822d20d94c344a4482935d51a33d0afc455c",
+      "LC_0053/evaluation/case12.out": "fb0615e4c79607329c3229d5d55189f680f6ff8eded6ede9186e5a89bfa532ca",
+      "LC_0053/evaluation/case13.inp": "2c896c49629f8afa138a39968ea490d6e029c9598cd45cef94e961d07f98d2b0",
+      "LC_0053/evaluation/case13.out": "c38029691f44acacc2e533e91a213e03bcfc10d50ef256bfa7a0e962f73c8f41",
+      "LC_0053/prompt_examples/example01.inp": "85b30085861e492247d55c69b5a0d804923954d7d7dd302142269785bc066579",
+      "LC_0053/prompt_examples/example01.out": "92961e9752250efa971147344b22295db32d7b75e940e0971e5fb34f21d0bc67",
+      "LC_0053/reference.cpp": "45d21abbdef174890eb8b8c2fd8f58ba5385fb4bedd8e4bd189a2f0fcb9bb397",
+      "LC_0053/reference.hs": "0ad3ba499c2afea0b2fd71fa0db8de9cd8970a1f7eddeaf924b9f9140aae0875",
+      "LC_0053/reference.java": "95b52e6785d5e92e27cb8878bf7dd8e9169451ab3c7a759338276016f5fddca0",
+      "LC_0053/reference.pl": "717744c42bd3c20c2e2ac211990f7b733aeb60a676f3cc0f6aada93013ef1c35",
+      "LC_0053/reference.py": "e69d3067b5b0d94b7c5092360d20d9c09aadf8f96a1b7d261752cf184a441ba3",
+      "LC_0053/statement.md": "c1229e43acbeb06a001c9dd14abf63effe49bc8b35d5895d637aba4d82c3a39d",
+      "LC_0062/evaluation/case01.inp": "2b0f5fbcc0989e147be531c252d960cdf037cd28b8357c6a9d1cb2b6208eea2e",
+      "LC_0062/evaluation/case01.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "LC_0062/evaluation/case02.inp": "d1f48990b21a631dbfd915129333dab1d5c5d1f5da5b6922c3244fa41e477a3f",
+      "LC_0062/evaluation/case02.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "LC_0062/evaluation/case03.inp": "2fb95080b644f991e4d9097e92a6a597533619bbb6cb20c0e9174f3588c7e6d5",
+      "LC_0062/evaluation/case03.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "LC_0062/evaluation/case04.inp": "8f5e5488b2fb251fe67a0bd2d8e7b4d115f4119ca02279ee63d71e510cfc41a0",
+      "LC_0062/evaluation/case04.out": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+      "LC_0062/evaluation/case05.inp": "cb18234ae48c1f9505aeff02c51a2e8f0e30adc177ce3ec32857c8d02973e14f",
+      "LC_0062/evaluation/case05.out": "7fb2aaeaf3eef66b52db104118c30f62899f5f0df520350a94a8fcb843c0dfdf",
+      "LC_0062/evaluation/case06.inp": "5655ae615032182a94dfc38d5fe5d4bd91e8fa30326c331d924acd4c5e8cf2a5",
+      "LC_0062/evaluation/case06.out": "7fb2aaeaf3eef66b52db104118c30f62899f5f0df520350a94a8fcb843c0dfdf",
+      "LC_0062/evaluation/case07.inp": "4792bfc609ba200bbecbd173be211832789c0f96bb66b66eab32b2b3364cba4d",
+      "LC_0062/evaluation/case07.out": "8ce88a8842c1584e3d6871e84e166e3b513c3ce2a9da6166760c7af1645dea29",
+      "LC_0062/evaluation/case08.inp": "7606e496b62130c1c84ed6e69900679c10c09f885d1e22743b80eb497c6f350d",
+      "LC_0062/evaluation/case08.out": "e2bb232cac786f7284bb237d193407e94f32ee0fbf64d27d0ae8b1642de44923",
+      "LC_0062/evaluation/case09.inp": "8476bed6191a0c28f5d68630ec86142895120bc0bbf49e258de7af148ac8b1ec",
+      "LC_0062/evaluation/case09.out": "15be601faf86e0f98cd5245b9402e650ab9ea7fc4d0ed81f0d53bf6f6ea22593",
+      "LC_0062/evaluation/case10.inp": "a9399ddf6205c9441777bc8ad192a753cecdce1eac70cf22d77d9e77389457b6",
+      "LC_0062/evaluation/case10.out": "90b53df56816c127246136d4403aba3b26cec599b2b950fb2ba78d6c1fb4e6bf",
+      "LC_0062/evaluation/case11.inp": "9a19cace9ef934e05087947a309739568c3952819a1f1d077c74767736799c48",
+      "LC_0062/evaluation/case11.out": "8a1c98d8689c5835bfaee427e003ee24ed59a2b9ed7d55837ab6c3d4c57c8ee5",
+      "LC_0062/evaluation/case12.inp": "e2354581a09e8676122c728d8c0d3282f17b45ca1f1135b9cbb09a73335829c9",
+      "LC_0062/evaluation/case12.out": "ea34a3aede585cbcd5a2dc30e7750ca98f6bbb83e489fbb3cb3352e49ada43a6",
+      "LC_0062/evaluation/case13.inp": "381f140d25fa471ab2c90302ae06692ae832215fde33f2e45d61338067176e7f",
+      "LC_0062/evaluation/case13.out": "101c384d6b5f22de4bf0ee5d16416cd68a1d03e49a2917d9f2a36fcd87ef272f",
+      "LC_0062/prompt_examples/example01.inp": "e0d369ea188977f1dca048b00dd5540ce0508a1eb4b6cda3ebd328312b6ba652",
+      "LC_0062/prompt_examples/example01.out": "aa043caaed4834c480a3cc4731b00af0f600e5548e7117b9f0b6fa5ac19939b3",
+      "LC_0062/reference.cpp": "97c6e32d3829835421c961a9997239c8b13ddaa5f1ce3b6b874afdb76e8e5ad1",
+      "LC_0062/reference.hs": "eaf9a046d4280754c33615c39a871cdd2e12efbd6f77149172da981bbaf1bc27",
+      "LC_0062/reference.java": "2df954321a405601138a04b4940b3abddded1fbb58054981eeafd6d3f8fd0d58",
+      "LC_0062/reference.pl": "5cbea51df35a41c52b966786e2c22e4d0b37d31053dec94ed0e6480a121de09b",
+      "LC_0062/reference.py": "3abd2e8d31a3d7dd11de106112dfbe8ec5ddebd18757d025b010b06de9b613a5",
+      "LC_0062/statement.md": "b6d3a5a2af084c7978359c433742055beae6d188c850a120c6ecdb94e0a6cc30",
+      "LC_0242/evaluation/case01.inp": "cee8f1d8fa61dd2483fcf338f8ed5062c25baef219443b45271685356e440c32",
+      "LC_0242/evaluation/case01.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "LC_0242/evaluation/case02.inp": "58055bdcc73787eb88c78d36f0b4939e9c5dc1c3ad17e25cc85a6833cf1a0cab",
+      "LC_0242/evaluation/case02.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "LC_0242/evaluation/case03.inp": "7a34a9fa09265f2ba21c828ec0f9cfcdd8744e8a174b3b0aac8c0143cd44a60c",
+      "LC_0242/evaluation/case03.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "LC_0242/evaluation/case04.inp": "0ae9508ece40e4d195760e69c0880f27d15f36111dd2ab637026bd9fe203cc7c",
+      "LC_0242/evaluation/case04.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "LC_0242/evaluation/case05.inp": "9dcfea3d1e76313597bbf74417e87c438e955b9642863b80a2224382c29cc9db",
+      "LC_0242/evaluation/case05.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "LC_0242/evaluation/case06.inp": "2868ef10209cd547fc6a00feda428c4a372ef343a281679097f5df59d8fc88dc",
+      "LC_0242/evaluation/case06.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "LC_0242/evaluation/case07.inp": "1178c38ab2ae9605f58435e67fe9a6849d23e45009cbbcf00432879c46f37051",
+      "LC_0242/evaluation/case07.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "LC_0242/evaluation/case08.inp": "9048d07dccb2b2e666f8849fd0a266db51ce536053e63f780aa73605f4d881f7",
+      "LC_0242/evaluation/case08.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "LC_0242/evaluation/case09.inp": "328ddd4615dc72a7f2ce0b00894947f153fe008b62da64b17a0a943f92412b9c",
+      "LC_0242/evaluation/case09.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "LC_0242/evaluation/case10.inp": "c423436852156d7687ad33e4f3f91c9c6ff395494d0e631d2fcda15bed6773a4",
+      "LC_0242/evaluation/case10.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "LC_0242/evaluation/case11.inp": "62e71acf0ffdd715daa46f7f458b5c36d626c3906954103bdc835794a7ba57e4",
+      "LC_0242/evaluation/case11.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "LC_0242/evaluation/case12.inp": "c342d2cf7dcd0978fd6bdd9671a6a95e5f894498d3c78f3c8c69b7eb4e1b73f8",
+      "LC_0242/evaluation/case12.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "LC_0242/evaluation/case13.inp": "29dd82a8b2c6db2768a88e25c436b4244c6fd5ce455683cb30971d80b2a45cff",
+      "LC_0242/evaluation/case13.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "LC_0242/prompt_examples/example01.inp": "5b0a1d277030220e4765b718dd5f84777e0dbaa817475077b3c349cb2bffe2af",
+      "LC_0242/prompt_examples/example01.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "LC_0242/reference.cpp": "f54941f3414c36ef48002bda665cd41f89f379a8445c5670eb80161a15f95d39",
+      "LC_0242/reference.hs": "c643e294bd6ec9583d3c256fd3a1b7a11aaf3dc0610f730b5150638654d7ac7b",
+      "LC_0242/reference.java": "f9c59ef8b3d4d6b8b3ad8b808be48085697ad8a48e3309b9ca1e34c29e246f7a",
+      "LC_0242/reference.pl": "5697e8f93d24f882d599c19ad1271e1fc7aa89f038e69d4df97fb9dffb35bee4",
+      "LC_0242/reference.py": "6508403de012e83895466b3a0254bcdabb05f53bc9cfa8ff9b2d55943b029996",
+      "LC_0242/statement.md": "fb721b1b51d9d4833d37214f14929b0b960f14433f02a9a397d57a0c01c35836",
+      "LC_0283/evaluation/case01.inp": "2a93ef399846526811d56221542f541f9397cd39f0b6718c7fbb44c08d2735fc",
+      "LC_0283/evaluation/case01.out": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "LC_0283/evaluation/case02.inp": "a3b547a9910538409299b37fe93bf3b29b88d5ed4f8854e392486bd5d8028c49",
+      "LC_0283/evaluation/case02.out": "fbaf6e2ac1852f6ea33a3d75a7a8d95d6771a25dc56d710e777ed9c84c6a34b0",
+      "LC_0283/evaluation/case03.inp": "b61379a43c83a6c371a873789c7da146584b6bc246d3d38f83d079251c685cf5",
+      "LC_0283/evaluation/case03.out": "ec234417894786c58930ebd0c1f100f8a117f04a7917952510ad46e36f2daf2b",
+      "LC_0283/evaluation/case04.inp": "63b09d6789160fe4c11de7548b881009ce3f87449314c4ae14567834a22b8015",
+      "LC_0283/evaluation/case04.out": "dc8c1af3c2cf97eea96c92b316d21742b89644c65cb58c1dc2c3036947c8a149",
+      "LC_0283/evaluation/case05.inp": "acb34345a16fe1589cf567fd288883ece8b723d51083b56ab2f4e8f23607aff6",
+      "LC_0283/evaluation/case05.out": "dc8c1af3c2cf97eea96c92b316d21742b89644c65cb58c1dc2c3036947c8a149",
+      "LC_0283/evaluation/case06.inp": "44ba7b84d5d101be7e795ca318ab1d6095b5207b58a44a9a5e258d0d62d643c7",
+      "LC_0283/evaluation/case06.out": "e13b51cd9032d23ad5949a814215bd7f0acc6373239482a5a4a8c376eefb3504",
+      "LC_0283/evaluation/case07.inp": "9e06fc918eb158b12fc10212c7cd0a997611af56ca3ccf1597b04a9c0f7605e7",
+      "LC_0283/evaluation/case07.out": "1d290be411fdabc44b43ecf84485e3a727e03340f06f2c9a4c3ec4dc75f2412c",
+      "LC_0283/evaluation/case08.inp": "a4e202484382063cd61392f23274431c9653262b28535bad4417380ffbfa0c2a",
+      "LC_0283/evaluation/case08.out": "3d101d6241167274504797326bfb3d11d38d3bae03b3cb9eca70e9c98ba5fcc3",
+      "LC_0283/evaluation/case09.inp": "363139f6587a150f731a65d526e386883c70d5d33b790f3a8baa9334c2f8f297",
+      "LC_0283/evaluation/case09.out": "2ec4c6f1ff4aabb41e921b229453257c002495965a413445783a64cf8fda7237",
+      "LC_0283/evaluation/case10.inp": "2deb595fb0352739cc1a3da96e33b5f90199c2882c756ca0088604fe0328d815",
+      "LC_0283/evaluation/case10.out": "1eb537cce5cf45ef6ea7666da723aa9c476f9540a1f82b24c5009b9bc8bfd0aa",
+      "LC_0283/evaluation/case11.inp": "71bd0faea13c964d4a62e0edb0ed6b4b5588c723cf0ccf687e8ced65d44783ad",
+      "LC_0283/evaluation/case11.out": "5afb4660d3fe8886cb0e6bc34a7ec8b9bf0b679721a78a7275d600978ed623c5",
+      "LC_0283/evaluation/case12.inp": "342019422cb325469d997b97d180e05a7ce6168ffece0250682e89eb783d2169",
+      "LC_0283/evaluation/case12.out": "3cc1abdc61fab4d43c493533385fdbb16550dff14387daca4ee89d9dcda003b0",
+      "LC_0283/evaluation/case13.inp": "96f9f4ed3c4cd20215ba6f77dec93984e2414ef5d1dedd0fa24689f66a110670",
+      "LC_0283/evaluation/case13.out": "e2b3505857930d610ad79b8fbebb0183bd49b87904fce23b09cec669e22a8772",
+      "LC_0283/prompt_examples/example01.inp": "321c13b2c75a35683d7973321fa8066bebd2058a11a78ff5011f34d5a0065df0",
+      "LC_0283/prompt_examples/example01.out": "0de64efe928e7eb9cdb4205437fac91d58511f48124375bbe39d86e1a7c299fa",
+      "LC_0283/reference.cpp": "04a83561587faf1ecac6147edc6ffa98eadadf455dd53a5b5e782b8de3e7cc38",
+      "LC_0283/reference.hs": "f04ddd455d497484e0e8778fff2c0921ab4c78622110c337c5125b695eff40c9",
+      "LC_0283/reference.java": "955f012aead7758d47d5eadc3c5ff22c4f4724bb6f3ed316a87a54e1917741ec",
+      "LC_0283/reference.pl": "cd65e175d6e8fb91ec6f759327f9d2a97093ac4dad514fa57450c0406679589d",
+      "LC_0283/reference.py": "f5300651423c3bbe95142bba9f17d642d7a6fb860659f007eae0c97ff95e304f",
+      "LC_0283/statement.md": "fc7fbd4b6b534d329e28e8ef5601547d0e9d241b02d7cdca15c783ced04d75b1",
+      "LC_0338/evaluation/case01.inp": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "LC_0338/evaluation/case01.out": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "LC_0338/evaluation/case02.inp": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "LC_0338/evaluation/case02.out": "064ad2ea83b15862d42df2078becc66fcb58701fc6045d8ba52f4f8a2f3e7d55",
+      "LC_0338/evaluation/case03.inp": "24ba1e99dc06b19351323aae0d7370243d586475a634b7f6ff7927fbc72cfaed",
+      "LC_0338/evaluation/case03.out": "aea1a49c5916a929dd8ffe7a18de567f8bedb92335aff5d83a97a0568be3297a",
+      "LC_0338/evaluation/case04.inp": "7c468f5e59f2871b946e051445493bbcace531d597edbbcc9935e7d02d025114",
+      "LC_0338/evaluation/case04.out": "a7057d23f1d485dc5a8ef9ff66b0438563c00e029d348cacbb417281d08a3d2b",
+      "LC_0338/evaluation/case05.inp": "9b6dd0f55d1cea37555db317f53a0631f694bd46df8018cc2aeed3d9e2f32f5f",
+      "LC_0338/evaluation/case05.out": "2ea5361369589ef36b2f62efd8f766c0c50b20e3289a3c0c77050011395572d8",
+      "LC_0338/evaluation/case06.inp": "e0c18a6a8d48da87994c100bbb324c758d413e95f0fa5135bd0738a692b4d56f",
+      "LC_0338/evaluation/case06.out": "6d7bf4470a78ea7159eb6bcf197468b0dcc4f4f8e8c8c0ac9ab99aaea012f6c1",
+      "LC_0338/evaluation/case07.inp": "e2bb232cac786f7284bb237d193407e94f32ee0fbf64d27d0ae8b1642de44923",
+      "LC_0338/evaluation/case07.out": "e84823acfbb7c068b4b18f4b0808cfd7db93e6ef7142b8a6fd304d31fb9b2e85",
+      "LC_0338/evaluation/case08.inp": "b7a33ec2d3fa6748259d5a72ed976b7308fa7355fd99818bc0dc12fece595277",
+      "LC_0338/evaluation/case08.out": "9b5dd65a3ffcfa6162a03d3ce762ea7e7c0f34205716201ee2f01b2236b64e35",
+      "LC_0338/evaluation/case09.inp": "a951e23594a3f4f473035249277fff93b85c2d9d21e4add532b377384ed31b89",
+      "LC_0338/evaluation/case09.out": "b19d13ec68d7becf8070d89aaf4a147e20001f51e5cb01d8c510928546a57ef2",
+      "LC_0338/evaluation/case10.inp": "5e7fdeb146334b292a336c2d6f43cfb0eff41100f6bb067e593318f71beb3ebe",
+      "LC_0338/evaluation/case10.out": "e9bc21c3c09473cc72b534f8346dd4bb17b6a3b137ac98edab915cfbdc89bfa8",
+      "LC_0338/evaluation/case11.inp": "da3f6868f09ca69bfc05b0c2ccf93739e50b4802369828ce65bbe658f5711a4a",
+      "LC_0338/evaluation/case11.out": "a8ff54201b3cded90deecf35b61c794c409efcef674054e8045c7bb35bada77e",
+      "LC_0338/evaluation/case12.inp": "2f89257ebc9dd17143709e7f3b3acc2c93579df6766b9d7ce9721839198d8129",
+      "LC_0338/evaluation/case12.out": "3487f40eb02d6124bff48c47d5f3d659cb6775beb26e1410d7b161ad92ad18c6",
+      "LC_0338/evaluation/case13.inp": "3ae5940a4240028ab538d5347bf8e572348b910b80cd48583cf1d108d50f80f8",
+      "LC_0338/evaluation/case13.out": "e50192df7173f150392688e6871ee1a87c0e722e8c87ac76013ff02a556c3585",
+      "LC_0338/prompt_examples/example01.inp": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+      "LC_0338/prompt_examples/example01.out": "e66c0502e9931fdfcd17da01530d6366ccf19f2da2cc4621816b13d4cfc40579",
+      "LC_0338/reference.cpp": "a5c4762bd30ba3923e54a1fb047a85040bd1d3106240f81162b987547f25e0df",
+      "LC_0338/reference.hs": "f731b19dd35865bbb0d1610dd1f6e6e1bc917b4b035fc420ca3aca925e1294ca",
+      "LC_0338/reference.java": "0729c6ce002b302af37c37e44bcd679c57bd347a2c9244506e91e79e704d8ef1",
+      "LC_0338/reference.pl": "4e9c1cc9893db9025271bc7f0403e5716eb462ad726a690caea30d97feb4b97b",
+      "LC_0338/reference.py": "aeb517d344dae863eb0f8eb715113e17d3e610b04e12c1df6eb1cbc97f4a10f9",
+      "LC_0338/statement.md": "30252cf810686f72a8b1bce713e9125b74907a11ef6174e23a239e1b10b93278",
+      "selection.json": "68bd199cdf18eb0cba12917fc400c342978d52729628744f32a1ae25e5bc7add"
+    }
+  },
+  "environment": {
+    "python": "3.15.1 (main, Oct 21 2026, 17:51:31) [MSC v.1951 64 bit (AMD64)]",
+    "python_executable": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+    "tools": {
+      "cpp": {
+        "path": "C:\\Users\\sigma\\scoop\\apps\\perl\\5.42.3.1\\c\\bin\\g++.exe",
+        "version": "g++.exe (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders, r8) 13.2.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+      },
+      "python": {
+        "path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\.venv\\Scripts\\python.exe",
+        "version": "Python 3.15.1"
+      },
+      "java": {
+        "path": "C:\\Users\\sigma\\scoop\\apps\\openjdk\\27.0.1.0.3-1\\bin\\javac.exe",
+        "version": "javac 27.0.1.0.3"
+      },
+      "haskell": {
+        "path": "C:\\Users\\sigma\\scoop\\persist\\ghcup\\ghcup\\bin\\ghc.exe",
+        "version": "The Glorious Glasgow Haskell Compilation System, version 9.10.3"
+      },
+      "prolog": {
+        "path": "C:\\Users\\sigma\\scoop\\shims\\swipl.exe",
+        "version": "SWI-Prolog version 10.0.2 for x64-win64"
+      },
+      "similarity_java": {
+        "path": "C:\\Users\\sigma\\scoop\\apps\\openjdk\\27.0.1.0.3-1\\bin\\java.exe",
+        "version": "openjdk 27.0.1.0.3 2026-10-25\nOpenJDK Runtime Environment (build 27.0.1.0.3+1-2)\nOpenJDK 64-Bit Server VM (build 27.0.1.0.3+1-2, mixed mode, sharing)"
+      }
+    },
+    "jplag_jar_sha256": "5f2c21e8b88ed77134effcb3a5a3ab13d188f6a3e16d401387f7479e92db9aa2"
+  },
+  "implementation_hashes": {
+    "__main__.py": "34cbd20eb83266cc6b75f7c38a9f64065abca8324fc482edbcabead721bf0c3c",
+    "cli.py": "1a8c40aef48730ca5d9b7145b106e32fac93958a660cc9d33bf37bdefad78d03",
+    "hops_experiment.py": "721b098ca2630c910d79cb8b895a47af62a5b82cd250ba1dc8d0b7aa13b2d5a3",
+    "hops_state.py": "266071696b2cbaac7015b73e1a885b0fe6d05a596498e906fa93187046e7cfed",
+    "hops_reporting.py": "5a6b112bf66e6c89a6b24116bb05e770e4cd229aac70d30321cb0a0ec38aec29",
+    "providers.py": "ae30b57fc25cb916a0758a96d46223e86e5f57cd6dfe8390c41df369838d9960",
+    "provider_protocols.py": "309560f09ddbd3eea614e43d10de0ff7ace567558007e5ce5bd957205f3f165e",
+    "copilot_provider.py": "7b24988107325ff93d5a24bd17075746ee3a3fd79fffe4dfd10f9b2c67035e81",
+    "fps_execution.py": "df321b3b4edaf5ef9456486d22df6ca0cceaeefac63fedb831cdea034ccdf4ab",
+    "jplag_similarity.py": "ae940dd55801295172740ca80f8a0c162a08e6b60e336867f0cd9a31226814da",
+    "extract.py": "34dcbffbf4e16dd8b610389374044f280e87ac2503dba8b8b2aa60c4db92f60a",
+    "scripts/prepare_v16_corpus.py": "458ffc918f57240b6daf900b2af375f4b5e81ba1bc5653d94c4cf7d00c9fd8f3",
+    "scripts/validate_v16_corpus.py": "2746e301b599313ddc5cd12cbec04f9264c3b13d4e04d1379ecbe06ecada4f89",
+    "problem/metadata/ipop19/tools/oracles.py": "d86c63c3b14339c342aa71496bb645592e2c7af2187a145e3b0ea8a2a6ac4c7c",
+    "problem/metadata/leetcode21/tools/oracles.py": "1fa179aa0d4c59abb6e09d132a89aba7d402b3b05ba7a60b9b1f3c238a9a5967"
+  },
+  "prompt_version": "hops.translation.v1.6",
+  "system_prompt": "Translate the supplied program to the requested language, preserving its complete stdin/stdout behavior for every valid input in the specification. Return exactly one complete source file in one fenced code block, with no explanation. Use only the standard libraries shipped with the specified toolchain. C++: C++17 with main(). Haskell: GHC, module Main and main :: IO (). Prolog: SWI-Prolog, define main/0; the evaluator invokes main; do not add initialization directives. Python: Python 3, one script that reads stdin and writes stdout. Java: Java 17, one file declaring public class Main with public static void main. Preserve required algorithmic constraints and output ordering. Do not hard-code examples.",
+  "stop_rules": {
+    "max_hops": 10,
+    "confirmation_roundtrips": 1,
+    "threshold": 0.85,
+    "thresholds": [
+      0.8,
+      0.85,
+      0.9
+    ],
+    "observation_wall_seconds": 900,
+    "confirmation_wall_seconds": 300
+  },
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_missing_reason": "server_not_reported",
+  "hashes": {
+    "code": "28bc450179f5e72f2318ebc1705a9ba72631a6c1dea082bdc5c34ff3e9aceb2e",
+    "aggregator": "5a6b112bf66e6c89a6b24116bb05e770e4cd229aac70d30321cb0a0ec38aec29",
+    "prompt": "e27b6a66cbded59d8ab350d7ce3f1d62e2f9fb8f938d023b6031124ce1219932",
+    "data": "fa7926b4d805dc3c6530d46bd3dbfdc24de0233a38de1c8445e84922029219b9",
+    "tools": "5f69344179722c045ce78a8e3315046c2577dd0e3c472c9686ac353f75c51511",
+    "provider": "aafff1c8da5b2be0c93921d1ad2f258366073bb9689e7d91d607860366cc88c9",
+    "generation": "220f8240e0c54e408b421c5f6e8b8c6482273594d5f0e3811e2fdc90bdad174c",
+    "stop_rules": "0f5a197eb32e1708fabd91ca744cd40c532794a0d6a875f00bcb942356c66e5c"
+  },
+  "dependency_hashes": {
+    "pyproject.toml": "b48b7c5a1811df70be81d9db48d09b8a7cb475f460741b019846d89b8c3d840e",
+    "uv.lock": "9e0b3e18d8ddb402d6fae9f96379a8d14ead1c8ff4df6403e10095986967dc9f"
+  },
+  "contract_hash": "ce8b51ee546d54b5e8eb15ee901ee689a40f410538f9bdbc7f6e6f4ae5b373ca"
+}

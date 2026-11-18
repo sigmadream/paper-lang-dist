@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    long long n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    std::vector<int> counts(static_cast<size_t>(n) + 1, 0);\n    for (long long i = 1; i <= n; ++i) {\n        counts[static_cast<size_t>(i)] = counts[static_cast<size_t>(i / 2)] + static_cast<int>(i % 2);\n    }\n\n    for (long long i = 0; i <= n; ++i) {\n        if (i > 0) {\n            std::cout << ' ';\n        }\n        std::cout << counts[static_cast<size_t>(i)];\n    }\n    std::cout << '\\n';\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 493,
+    "total_tokens": 758,
+    "completion_tokens": 265,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 79
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 493,
+    "total_tokens": 758,
+    "completion_tokens": 265,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 79
+    }
+  },
+  "cost_usd": 0.0004659,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-89be7c56214d4123ff6fcf3460c1aaee",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0338\\cpp-via-python\\attempt-05\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-89be7c56214d4123ff6fcf3460c1aaee",
+    "object": "chat.completion",
+    "created": 1794985366,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    long long n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    std::vector<int> counts(static_cast<size_t>(n) + 1, 0);\n    for (long long i = 1; i <= n; ++i) {\n        counts[static_cast<size_t>(i)] = counts[static_cast<size_t>(i / 2)] + static_cast<int>(i % 2);\n    }\n\n    for (long long i = 0; i <= n; ++i) {\n        if (i > 0) {\n            std::cout << ' ';\n        }\n        std::cout << counts[static_cast<size_t>(i)];\n    }\n    std::cout << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer with fenced code block C++ one file. Need preserve behavior. Implement DP counts no built-in popcount. Read N, output counts 0..N space separated + newline. Constraints 0<=N<=100000. Need exact source file no explanation. Use C++17. Ensure if no data return maybe. Use int. Join.\n\nNeed only code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 493,
+      "total_tokens": 758,
+      "completion_tokens": 265,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.0755005000391975,
+  "received_at": "2026-11-18T07:02:47.243705+00:00",
+  "logical_request_id": "2f9e3bbf1f046421f24976bcc36ed3c317c3fa51eadde1e124e9925f050c7747",
+  "execution_class": "direct_api"
+}

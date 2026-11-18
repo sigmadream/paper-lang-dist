@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <string>\n#include <cstdlib>\n\nstd::string output;\n\nvoid hanoi(int n, int start, int mid, int end) {\n    if (n == 1) {\n        output += std::to_string(start);\n        output += ' ';\n        output += std::to_string(end);\n        output += '\\n';\n        return;\n    }\n\n    hanoi(n - 1, start, end, mid);\n    output += std::to_string(start);\n    output += ' ';\n    output += std::to_string(end);\n    output += '\\n';\n    hanoi(n - 1, mid, start, end);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    int count = (1 << n) - 1;\n\n    output.reserve(static_cast<size_t>(count) * 5 + 16);\n    output += std::to_string(count);\n    output += '\\n';\n\n    hanoi(n, 1, 2, 3);\n\n    std::cout << output;\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block C++17. Need translate. Need be careful N<=20, 1<<20 fine. Output count and moves. Use ios fast. Could use string output with reserve count*5+16. Need complete source main. No explanation. Fenced code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794989249,
+    "id": "chatcmpl-3636ae0b58c6c4bc65e283a31beaac4b",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 315,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 705,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1020
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0005895,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.091697500087321,
+  "logical_request_id": "564dcd7a18d74be4c99f7f672d868476950915e36a34ee78b83d5dd568215580",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_11729\\cpp-via-java\\attempt-02\\step-06\\response_body.txt",
+  "received_at": "2026-11-18T08:07:30.553262+00:00",
+  "request_id": "chatcmpl-3636ae0b58c6c4bc65e283a31beaac4b",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <string>\n#include <cstdlib>\n\nstd::string output;\n\nvoid hanoi(int n, int start, int mid, int end) {\n    if (n == 1) {\n        output += std::to_string(start);\n        output += ' ';\n        output += std::to_string(end);\n        output += '\\n';\n        return;\n    }\n\n    hanoi(n - 1, start, end, mid);\n    output += std::to_string(start);\n    output += ' ';\n    output += std::to_string(end);\n    output += '\\n';\n    hanoi(n - 1, mid, start, end);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) return 0;\n\n    int count = (1 << n) - 1;\n\n    output.reserve(static_cast<size_t>(count) * 5 + 16);\n    output += std::to_string(count);\n    output += '\\n';\n\n    hanoi(n, 1, 2, 3);\n\n    std::cout << output;\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 315,
+    "completion_tokens_details": {
+      "reasoning_tokens": 60
+    },
+    "prompt_tokens": 705,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1020
+  },
+  "usage_raw": {
+    "completion_tokens": 315,
+    "completion_tokens_details": {
+      "reasoning_tokens": 60
+    },
+    "prompt_tokens": 705,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1020
+  }
+}

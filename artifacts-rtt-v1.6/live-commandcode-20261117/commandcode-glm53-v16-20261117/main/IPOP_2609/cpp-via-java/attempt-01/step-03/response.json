@@ -1,0 +1,94 @@
+{
+  "text": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    static int gcd(int a, int b) {\n        while (b != 0) {\n            int r = a % b;\n            a = b;\n            b = r;\n        }\n        return a;\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StringTokenizer st = new StringTokenizer(br.readLine());\n        int a = Integer.parseInt(st.nextToken());\n        int b = Integer.parseInt(st.nextToken());\n        int g = gcd(a, b);\n        System.out.println(g);\n        System.out.println((a / g) * b);\n    }\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 144,
+    "prompt_tokens": 466,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 610
+  },
+  "usage_raw": {
+    "completion_tokens": 144,
+    "prompt_tokens": 466,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 610
+  },
+  "cost_usd": 0.00114008,
+  "cost_source": "estimated",
+  "request_id": "28653b41-3d36-4194-bb61-16993ea4ebdc",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_2609\\cpp-via-java\\attempt-01\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    static int gcd(int a, int b) {\n        while (b != 0) {\n            int r = a % b;\n            a = b;\n            b = r;\n        }\n        return a;\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StringTokenizer st = new StringTokenizer(br.readLine());\n        int a = Integer.parseInt(st.nextToken());\n        int b = Integer.parseInt(st.nextToken());\n        int g = gcd(a, b);\n        System.out.println(g);\n        System.out.println((a / g) * b);\n    }\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794903064,
+    "id": "28653b41-3d36-4194-bb61-16993ea4ebdc",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 144,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_94b89ad08a014b268f1a601af971f9dd",
+      "trace_id": "2b7e28eaae5b46739af61ede4a17cea4"
+    },
+    "usage": {
+      "completion_tokens": 144,
+      "prompt_tokens": 466,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 610
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 11.467129500000738,
+  "received_at": "2026-11-17T08:11:04.302390+00:00",
+  "logical_request_id": "f5314e670b86a8ff417e7b4420d783b3d096c9562cab82f8f6c0ebe0cf1b6502",
+  "execution_class": "direct_api"
+}

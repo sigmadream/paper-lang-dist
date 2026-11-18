@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```prolog\n:- use_module(library(readutil)).\n\nmain :-\n    read_line_to_string(user_input, TLine),\n    (   TLine == end_of_file\n    ->  true\n    ;   number_string(TLine, T),\n        process(T)\n    ).\n\nprocess(0) :- !.\nprocess(N) :-\n    read_line_to_string(user_input, Line),\n    (   Line == end_of_file\n    ->  true\n    ;   string_chars(Line, Chars),\n        balanced(Chars, 0, Ok),\n        (   Ok == true\n        ->  write('YES'), nl\n        ;   write('NO'), nl\n        ),\n        N1 is N - 1,\n        process(N1)\n    ).\n\nbalanced([], Balance, Ok) :-\n    (   Balance =:= 0\n    ->  Ok = true\n    ;   Ok = false\n    ).\nbalanced([C|Cs], Balance, Ok) :-\n    (   C == '('\n    ->  B1 is Balance + 1,\n        balanced(Cs, B1, Ok)\n    ;   C == ')'\n    ->  (   Balance =:= 0\n        ->  Ok = false\n        ;   B1 is Balance - 1,\n            balanced(Cs, B1, Ok)\n        )\n    ;   balanced(Cs, Balance, Ok)\n    ).\n```",
+          "reasoning_content": "We need answer Prolog SWI, main/0, no initialization directives. Need translate. Need read T and lines, output YES/NO. Need preserve behavior all valid inputs. Need implement main predicate, read stdin, process T lines. Need careful with empty? lengths 2..50 valid. Need SWI read_line_to_string or read_string. Standard library. Use read_line_to_string(user_input, Line). First read T maybe read_line_to_string then atom_number. Then for each. But read T line. Could use read_line_to_string(user_input, TLine), atom_number(TLine,T). Then loop T, read_line_to_string. For each string atom (or string). Need parentheses check. SWI has string. Could use atom_chars or string_chars. Need count balance. Implement check(Str) using string_chars? read_line_to_string gives string or end_of_file. Valid input. Use string_chars(Str, Chars), valid(Chars,0,Ok). Need ensure after consuming all balance=0. Predicate valid([], B, true) if B=0 etc. Simpler is_balanced(Chars): traverse with counter and flag. Prolog.\n\nPotential issue input first line T, then lines. read_line_to_string. If Windows CR? SWI strips newline but may include \\r? read_line_to_string likely strips newline but retains \\r? Actually handles? Could trim? Valid input likely \\n. Could implement check ignores other? Only parentheses, no other chars. But if \\r remains could issue. SWI read_line_to_string removes newline but not carriage? It may remove both? Not sure. Could use read_string(user_input, \"\\n\", \"\\r\", _, TLine)? More complex. Use read_line_to_string likely okay. Could strip trailing \\r via normalization? Maybe not needed. To be robust, remove whitespace? But valid strings only parentheses. Use string_chars and ignore '\\r'? Could just check only '(' and ')' and ignore others? Original C++ processes other chars no effect. It reads line. If \\r included, C++ getline on Linux with \\r would include \\r, ignored in loop. So can ignore non-paren characters. Good. Our check can ignore any other char; if '\\r' ignored. Good.\n\nNeed output one per line. Use format(\"~w~n\",[Answer]) with atoms YES/NO.\n\nNeed main runs with initialization? Evaluator invokes main. In SWI, to allow main/0. Need no initialization directives. The code should define main/0. But if run swipl file, main might not auto execute? The evaluator invokes main. They said define main/0; evaluator invokes main; do not add initialization directives. So just main/0. Need maybe main :- ... . Good.\n\nNeed code only fenced.\n\nImplement:\n\n:- use_module(library(readutil)). Is that allowed? Standard library. But \"do not add initialization directives\" use_module okay? It is a directive, not initialization. They said do not add initialization directives. use_module is not initialization. Could avoid? read_line_to_string is built-in? In SWI, read_line_to_string/2 is built-in? It's in library(readutil) maybe autoloaded. SWI autoloads. But can include use_module(library(readutil)). Accept.\n\nmain :-\n    read_line_to_string(user_input, TLine),\n    ( TLine == end_of_file -> true\n    ; atom_number(TLine, T),\n      process(T)\n    ).\n\nprocess(0) :- !.\nprocess(N) :-\n    read_line_to_string(user_input, Line),\n    ( Line == end_of_file -> true\n    ; string_chars(Line, Chars),\n      balanced(Chars, 0, Ok),\n      ( Ok == true -> write('YES'), nl ; write('NO'), nl ),\n      N1 is N - 1,\n      process(N1)\n    ).\n\nNeed if end_of_file before N zero? Valid input no. Could simply process. But if early, stop. Balanced predicate:\n\nbalanced([], Balance, true) :- Balance =:= 0.\nbalanced([], Balance, false) :- Balance =\\= 0.\nbalanced([C|Cs], Balance, Ok) :-\n    ( C == '(' ->\n        B1 is Balance + 1,\n        balanced(Cs, B1, Ok)\n    ; C == ')' ->\n        ( Balance =:= 0 ->\n            Ok = false\n        ; B1 is Balance - 1,\n          balanced(Cs, B1, Ok)\n        )\n    ; balanced(Cs, Balance, Ok)\n    ).\n\nIssue if C==')' and Balance=0, we should set false and stop. This returns false regardless rest, OK. If balance nonzero at end false. This matches. But if early invalid, original C++ break and then if balance !=0 ? It breaks with ok false, then after loop checks balance != 0 ok false. Output false. Our predicate returns false and ignores rest. Fine.\n\nNeed ensure Ok variable bind. In C==')', Balance=0 -> Ok=false. Good. In other, recursive.\n\nCould optimize avoid -> but fine.\n\nNeed atom_number with string? SWI atom_number/2 accepts atom, not string? In SWI, atom_number(+Atom, -Number). read_line_to_string returns string. Need atom_string? Actually atom_number can accept string? Let's check: SWI atom_number(+Atom, -Number) expects atom or string? It says Atom is text? I think atom_number/2 accepts atom, string? In SWI, number_string/2 for string. Better use number_string(TLine, T). read_line_to_string gives string. number_string/2 parses. Use atom_number? To be safe: number_string(TLine, T). number_string/2 in SWI. If TLine maybe string. Use number_string(TLine,T). Good.\n\nAlso read_line_to_string returns string without newline. Good.\n\nNeed no extra explanation. Final fenced code.\n\nPotential issue with main/0 name conflicts? none.\n\nNeed \"Return exactly one complete source file in one fenced code block\". Good.\n\nLet's craft final.\n\nNeed consider output ordering. Yes.\n\nNeed C++ uses cin >> T then ignore rest line. If T line has trailing spaces? Our number_string on entire line including trailing spaces? In valid input no. Could trim. Not needed. But robust: use read_line_to_string and number_string. If trailing spaces, number_string might fail. Spec valid. Fine.\n\nNeed \"each length 2..50\" line no spaces. Good.\n\nNeed \"T positive integer first line.\" Good.\n\nPotential Prolog syntax: atom ')' ? Character code. In SWI, ')' is an atom? Single quoted atom `')'` is valid. `'('` valid. Use C == '(' etc. String_chars yields one-char atoms as chars? Actually string_chars(String, Chars) returns list of one-character atoms? In SWI, string_chars(\"abc\", [a,b,c])? Let's recall: SWI `string_chars(\"abc\", L)` gives L = ['a','b','c']? Actually SWI represents chars as atoms? There is `string_chars/2`: \"Convert between a string and a list of character codes\"? Wait SWI has string_codes for codes, string_chars for chars where char is atom of length 1. Example: string_chars(\"Hello\", [H,e,l,l,o])? In SWI, the elements are one-character atoms: H, e, etc? They are atoms `'H'`. So C == '(' works? '(' is atom with name \"(\"? In Prolog, `'('` is an atom. Yes. However `'('` is a quoted atom, `C == '('` compares atom. Should work. But wait in Prolog, parentheses cannot appear unquoted as atom, so quoted. Good.\n\nCould use string_codes and compare 0'( and 0'). But string_chars okay.\n\nNeed C == '(' is syntax? The quote: `C == '('` uses atom `'('`. Yes. But note in Prolog, `'('` is an atom whose name is `(`. That is fine. Similarly `')'`.\n\nPotential issue `C == '('` maybe parser sees `'('` as escaped? It is a quoted atom containing left parenthesis, valid. `'('` closed by single quote. Good.\n\nCould use `C == 0'(` for char code if string_codes. But string_chars elements as atoms. Let's verify SWI: `string_chars(\"a(b\", L).` returns L = [a, '(', b]? The char `(` represented as atom '('? Actually one-char atom is `'('`. Good.\n\nNeed maybe include `:- use_module(library(readutil)).` But directive, okay. They said no initialization directives; use_module is not initialization. If they strictly disallow directives? \"Prolog: SWI-Prolog, define main/0; the evaluator invokes main; do not add initialization directives.\" use_module is a directive but not initialization. Fine. Could omit to avoid. read_line_to_string/2 is autoloaded from library(readutil) in SWI? I think yes (autoload). But including is safe. Some evaluators might reject directives? They only say no initialization. use_module standard.\n\nNeed final only code block.\n\nLet's finalize.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1795001033,
+    "id": "chatcmpl-a5e35063190972907b2d4e055834adf6",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 2301,
+      "completion_tokens_details": {
+        "reasoning_tokens": 2005
+      },
+      "prompt_tokens": 644,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 2945
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.002841504,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 20.103445300017484,
+  "logical_request_id": "05f75600b7d06889a58c10c3fae5a11807b071bc4b753ef74714f327785f8991",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-prolog\\attempt-01\\step-07\\response_body.txt",
+  "received_at": "2026-11-18T11:24:12.839605+00:00",
+  "request_id": "chatcmpl-a5e35063190972907b2d4e055834adf6",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```prolog\n:- use_module(library(readutil)).\n\nmain :-\n    read_line_to_string(user_input, TLine),\n    (   TLine == end_of_file\n    ->  true\n    ;   number_string(TLine, T),\n        process(T)\n    ).\n\nprocess(0) :- !.\nprocess(N) :-\n    read_line_to_string(user_input, Line),\n    (   Line == end_of_file\n    ->  true\n    ;   string_chars(Line, Chars),\n        balanced(Chars, 0, Ok),\n        (   Ok == true\n        ->  write('YES'), nl\n        ;   write('NO'), nl\n        ),\n        N1 is N - 1,\n        process(N1)\n    ).\n\nbalanced([], Balance, Ok) :-\n    (   Balance =:= 0\n    ->  Ok = true\n    ;   Ok = false\n    ).\nbalanced([C|Cs], Balance, Ok) :-\n    (   C == '('\n    ->  B1 is Balance + 1,\n        balanced(Cs, B1, Ok)\n    ;   C == ')'\n    ->  (   Balance =:= 0\n        ->  Ok = false\n        ;   B1 is Balance - 1,\n            balanced(Cs, B1, Ok)\n        )\n    ;   balanced(Cs, Balance, Ok)\n    ).\n```",
+  "usage": {
+    "completion_tokens": 2301,
+    "completion_tokens_details": {
+      "reasoning_tokens": 2005
+    },
+    "prompt_tokens": 644,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 2945
+  },
+  "usage_raw": {
+    "completion_tokens": 2301,
+    "completion_tokens_details": {
+      "reasoning_tokens": 2005
+    },
+    "prompt_tokens": 644,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 2945
+  }
+}

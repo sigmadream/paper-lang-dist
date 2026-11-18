@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.Array\nimport qualified Data.Set as Set\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let xs = map read (words input) :: [Int]\n  case xs of\n    (n:m:rest) ->\n      if n < 1\n        then putStrLn \"0\"\n        else do\n          let pairs (a:b:ts) = (a, b) : pairs ts\n              pairs _        = []\n              edges = take m (pairs rest)\n              adj = accumArray (flip (++)) [] (1, n) $\n                      concatMap (\\(a, b) -> [(a, b), (b, a)]) edges\n              startVisited = Set.singleton 1\n              bfs [] _ acc = acc\n              bfs ((u, d):q) visited acc\n                | d >= 2 = bfs q visited acc\n                | otherwise =\n                    let nexts = [v | v <- adj ! u, not (Set.member v visited)]\n                        visited' = foldl (flip Set.insert) visited nexts\n                    in bfs (q ++ [(v, d + 1) | v <- nexts]) visited' (acc + length nexts)\n          print (bfs [(1, 0)] startVisited 0)\n    _ -> return ()\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 743,
+    "total_tokens": 3206,
+    "completion_tokens": 2463,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2164
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 743,
+    "total_tokens": 3206,
+    "completion_tokens": 2463,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2164
+    }
+  },
+  "cost_usd": 0.0031785,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-8e6038b0fd2916d5e6fee63ebb082dec",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_5567\\cpp-via-haskell\\attempt-02\\step-07\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-8e6038b0fd2916d5e6fee63ebb082dec",
+    "object": "chat.completion",
+    "created": 1794981495,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.Array\nimport qualified Data.Set as Set\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let xs = map read (words input) :: [Int]\n  case xs of\n    (n:m:rest) ->\n      if n < 1\n        then putStrLn \"0\"\n        else do\n          let pairs (a:b:ts) = (a, b) : pairs ts\n              pairs _        = []\n              edges = take m (pairs rest)\n              adj = accumArray (flip (++)) [] (1, n) $\n                      concatMap (\\(a, b) -> [(a, b), (b, a)]) edges\n              startVisited = Set.singleton 1\n              bfs [] _ acc = acc\n              bfs ((u, d):q) visited acc\n                | d >= 2 = bfs q visited acc\n                | otherwise =\n                    let nexts = [v | v <- adj ! u, not (Set.member v visited)]\n                        visited' = foldl (flip Set.insert) visited nexts\n                    in bfs (q ++ [(v, d + 1) | v <- nexts]) visited' (acc + length nexts)\n          print (bfs [(1, 0)] startVisited 0)\n    _ -> return ()\n```",
+          "reasoning_content": "We need answer with Haskell source only in code fence. Need translate. Need preserve behavior. Note spec N>=2 but example input \"1\\n0\" valid? Source reads n m, if n=1 m=0. We need handle. Haskell read all ints. Need parse first n, second m then edges. Output count vertices distance 1 or 2 from 1 excluding self, BFS.\n\nNeed exactly one code block. Haskell GHC module Main main IO. Use standard libraries. We can implement BFS. Input possibly empty? Source returns if no n m. For valid inputs. Could handle empty.\n\nNeed be careful Haskell laziness, parsing. Use Data.List, Data.Maybe, Data.Array? Simpler use IntMap or list adjacency with array. N<=500. Build list of lists. Use Data.Array maybe. Need import qualified Data.IntMap? Let's use Data.Array for efficient. But to build adjacency, can use accumArray. Edges list.\n\nRead all ints from stdin: words. Parse n first, m second, take 2*m remaining. Need handle empty. If no n, output nothing? main returns. Use case map read (words input) maybe read fails? valid. Use \"read\" for Int.\n\nImplementation BFS with queue list and distances array? Simpler use Data.Array mutable? Could compute distances via iterative levels. Since only need distance <=2, can compute neighbors of 1 and neighbors of those, set. But BFS straightforward.\n\nUse IntMap distances? Build adj as Array Int [Int] via accumArray (++) [] (1,n) edges both ways. If n could be 0? spec n>=2, example n=1. For n=1, array bounds (1,1) okay. m=0. Need handle n<1? Since source if n>=1. If n=0? Not valid. We can handle n==0 output 0.\n\nRead all ints. Case:\nmain = do\n  s <- getContents\n  let xs = map read (words s) :: [Int]\n  case xs of\n    (n:m:rest) -> ...\n    _ -> return ()\n\nBut pattern (n:m:rest) means n first, m second. Need n and m. If only \"1\" no m? spec has M. Source if fail returns, but no output. We can handle.\n\nBuild edges = take (2*m) rest, pairs. We can use helper toPairs. But if rest shorter? valid.\n\nadj = accumArray (flip (++)) [] (1,n) [ (a,b) | if n>=1]. Actually accumArray f init bounds [(i,a)] where f old new. Need both directions. We can generate list [(a,b),(b,a)].\n\nBFS:\nbfs :: Array Int [Int] -> Int -> Array Int Int\nWe can use queue and dist list? Since n small, use Data.Array.ST or use IntMap. Simpler use IntMap distances with Data.IntMap.Strict qualified as IM and Data.Sequence. But maybe less imports.\n\nAlternative: BFS with list of (vertex, distance), visited set (IntSet). We only need count distance 1 or 2. Use Data.Set. But n=500. Fine. Build neighbor function using array.\n\nLet's use Data.Array and Data.Set.\n\nvisited = Set.empty\nqueue = [(1,0)] if n>=1.\nLoop:\ngo queue visited count\npop (u,d). If d==2, no need expand. For each v in adj!u not in visited, insert, enqueue (v,d+1), count if d+1 <=2? Actually count distinct vertices at distance 1 or 2 excluding self. BFS first time distances. We can count when discovered at distance 1 or 2. Or after BFS count distances. Since BFS from 1, discovered distances. Use queue and Set. Count when v discovered and d+1 <=2. But need not expand distance 2. Simpler.\n\nBut need be careful duplicate edges, self? a<b no self.\n\nFunction:\nsolve n m edges =\n  let adj = accumArray (flip (++)) [] (1,n) (concatMap (\\(a,b) -> [(a,b),(b,a)]) edges)\n      bfs :: [(Int,Int)] -> Set Int -> Int -> Int\n      bfs [] _ acc = acc\n      bfs ((u,d):q) vis acc =\n         let nexts = [v | v <- adj ! u, not (Set.member v vis)]\n             vis' = foldl (flip Set.insert) vis nexts\n             q' = q ++ [(v,d+1) | v <- nexts]\n             acc' = acc + length [v | v <- nexts, d+1 <= 2]\n         in if d >= 2 then bfs q vis acc  -- but if d>=2 skip expansion? Actually if current d=2, we shouldn't expand. But we already popped. We can handle before computing nexts.\nNeed start with visited containing 1 to avoid returning to 1. queue [(1,0)], visited singleton 1. For d=0, nexts neighbors distance1, count. For d=1, nexts distance2 count. For d=2, stop expanding. So:\nbfs ((u,d):q) vis acc\n  | d >= 2 = bfs q vis acc\n  | otherwise = let nexts = ... in bfs (q ++ [(v,d+1)|v<-nexts]) vis' (acc + length nexts)\nSince d only 0 or 1 for expansion. For d=1, nexts are distance2 count. For d=0, distance1. If n=1, queue (1,0), adj empty, nexts empty, acc0, then q empty, output 0. Good.\n\nBut if we use q ++ each time O(n^2), fine. Or use Data.Sequence. Fine.\n\nNeed handle n maybe 0 to avoid array bounds. If n<1 output 0. However pattern n>=1. For n=0, no 1. Source if n>=1 starts, but loops i=2 to n none. However reading? N constraint no. Let's handle n <=0 output 0.\n\nEdge list parsing: Need pairs. We have rest list. If fewer? valid. Use toPairs function:\npairs (a:b:ts) = (a,b): pairs ts\npairs _ = []\nedges = take m (pairs rest). Good.\n\nPotential issue Haskell `read` on empty? If input empty, words empty => xs = [] pattern _ -> return (). Good.\n\nNeed output newline: putStrLn (show answer).\n\nNeed module Main where imports. Use qualified Data.Set as Set. Need import Data.Array. Need import Data.List? concatMap is Prelude.\n\nLet's craft:\nmodule Main (main) where\nimport Data.Array\nimport qualified Data.Set as Set\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let xs = map read (words input) :: [Int]\n  case xs of\n    (n:m:rest) -> if n < 1 then putStrLn \"0\" else do\n       let pairs (a:b:ts) = (a,b) : pairs ts\n           pairs _ = []\n           es = take m (pairs rest)\n           adj = accumArray (flip (++)) [] (1,n) $\n                   concatMap (\\(a,b) -> [(a,b),(b,a)]) es\n           startVis = Set.singleton 1\n           bfs [] _ acc = acc\n           bfs ((u,d):q) vis acc\n             | d >= 2 = bfs q vis acc\n             | otherwise =\n                 let ns = [v | v <- adj ! u, not (Set.member v vis)]\n                     vis' = foldl (flip Set.insert) vis ns\n                 in bfs (q ++ [(v,d+1) | v <- ns]) vis' (acc + length ns)\n       print (bfs [(1,0)] startVis 0)\n    _ -> return ()\n\nNeed check accumArray function. accumArray :: (a -> b -> a) -> a -> (i,i) -> [(i,b)] -> Array i a. Here a=[Int], b=Int. We want append. `(flip (++))` old new = new ++ old? Actually accumArray applies f old new. If f = flip (++), f old new = (++) new old = new ++ old. That appends new before old, order reversed. BFS order doesn't matter. Could use `(++)` old new = old ++ new, but accumArray combines? Either fine. Use `(flip (++))` as source? Source pushes. Order irrelevant. Fine.\n\nBut note `foldl (flip Set.insert) vis ns`: flip Set.insert :: Int -> Set Int -> Set Int? Set.insert :: Ord a => a -> Set a -> Set a. flip Set.insert :: Set a -> a -> Set a. Wait foldl :: (b -> a -> b) -> b -> [a] -> b. We need b=Set Int, a=Int, function Set Int -> Int -> Set Int. `flip Set.insert` has type Set a -> a -> Set a. Yes correct.\n\nNeed check d>=2: If a vertex at distance 2, we skip expanding. It was counted when discovered from d=1. Good. Queue may contain distance 2 and maybe distance 1. Since we append, BFS. If d>=2 skip. Fine.\n\nBut potential: if n=1 and m maybe >0? invalid. adj bound (1,1). Edges with >1 would error. valid.\n\nNeed preserve stdout for example \"1\\n0\" => n=1,m=0, rest empty, adj array (1,1), startVis {1}, bfs [(1,0)] {1} 0: d=0, ns=[], vis'={1}, bfs [] => 0. print 0. Good.\n\nExample 7: compute count 3.\n\nNow answer only code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 743,
+      "total_tokens": 3206,
+      "completion_tokens": 2463,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 2164
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 21.701291600009426,
+  "received_at": "2026-11-18T05:58:33.993310+00:00",
+  "logical_request_id": "1e2f2e56150c92a696361ff5de2cd459c2061f83ada3b49d06af7d19718441ea",
+  "execution_class": "direct_api"
+}

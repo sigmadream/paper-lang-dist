@@ -12,11 +12,12 @@ from rttdist.pipeline import run_rtt_loop
 from rttdist.run_state import ResumeValidationError
 from tests.integration.test_rtt_pipeline import RouteClient, SuccessEvaluator, _config
 
-
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
-@pytest.fixture(params=[(1, "IPOP_TEST"), (1, "LC_TEST"), (2, "IPOP_TEST"), (2, "LC_TEST")])
+@pytest.fixture(
+    params=[(1, "IPOP_TEST"), (1, "LC_TEST"), (2, "IPOP_TEST"), (2, "LC_TEST")]
+)
 def separated_corpus(tmp_path, request):
     config = _config(tmp_path)
     schema_version, problem_id = request.param
@@ -46,25 +47,50 @@ def separated_corpus(tmp_path, request):
     manifest = root / "dataset" / "manifest.json"
     manifest.write_text("{}", encoding="utf-8")
     index = root / "dataset-index.json"
-    index.write_text(json.dumps({"schema_version": schema_version, "datasets": [{
-        "manifest": "dataset/manifest.json",
-        "manifest_sha256": hashlib.sha256(manifest.read_bytes()).hexdigest(),
-        "problems": [{"id": problem_id, "directory": f"dataset/{problem_id}"}],
-    }]}), encoding="utf-8")
-    config = replace(config, problem_ids=(problem_id,), dataset_index=index,
-                     prompt_template_version="rtt.prompts.v2" if schema_version == 2 else "rtt.prompts.v1",
-                     runtime=replace(config.runtime, confirmation_cycles=0),
-                     lmstudio=replace(config.lmstudio, max_tokens=100))
+    index.write_text(
+        json.dumps(
+            {
+                "schema_version": schema_version,
+                "datasets": [
+                    {
+                        "manifest": "dataset/manifest.json",
+                        "manifest_sha256": hashlib.sha256(
+                            manifest.read_bytes()
+                        ).hexdigest(),
+                        "problems": [
+                            {"id": problem_id, "directory": f"dataset/{problem_id}"}
+                        ],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    config = replace(
+        config,
+        problem_ids=(problem_id,),
+        dataset_index=index,
+        prompt_template_version=(
+            "rtt.prompts.v2" if schema_version == 2 else "rtt.prompts.v1"
+        ),
+        runtime=replace(config.runtime, confirmation_cycles=0),
+        lmstudio=replace(config.lmstudio, max_tokens=100),
+    )
     return config, validate_corpus(config)[0]
 
 
 def test_prepared_dataset_loads_all_520_evaluation_cases(tmp_path):
-    # The historical launch YAML was removed; the index remains authoritative.
-    index_path = REPO_ROOT / "problem_v1/dataset-index.json"
+    # 정리된 실제 자료 인덱스에서 전체 문제와 비공개 평가를 검증합니다.
+    index_path = REPO_ROOT / "problem/dataset-index.json"
     index = json.loads(index_path.read_text(encoding="utf-8"))
     ids = tuple(p["id"] for dataset in index["datasets"] for p in dataset["problems"])
-    config = replace(_config(tmp_path), problem_ids=ids, problem_root=REPO_ROOT / "problem_v1", dataset_index=index_path)
-    assert config.dataset_index == REPO_ROOT / "problem_v1/dataset-index.json"
+    config = replace(
+        _config(tmp_path),
+        problem_ids=ids,
+        problem_root=REPO_ROOT / "problem",
+        dataset_index=index_path,
+    )
+    assert config.dataset_index == REPO_ROOT / "problem/dataset-index.json"
     entries = validate_corpus(config)
     assert len(entries) == 40
     assert sum(len(entry.fixture_pairs) for entry in entries) == 520
@@ -75,17 +101,28 @@ def test_prepared_dataset_loads_all_520_evaluation_cases(tmp_path):
         assert entry.fixture_directory == directory / "evaluation"
         assert len(entry.fixture_pairs) == 13
         assert entry.prompt_examples
-        assert all(pair.input_path.parent == directory / "prompt_examples" for pair in entry.prompt_examples)
-        assert entry.prompt_sample.input_path not in {p.input_path for p in entry.fixture_pairs}
+        assert all(
+            pair.input_path.parent == directory / "prompt_examples"
+            for pair in entry.prompt_examples
+        )
+        assert entry.prompt_sample.input_path not in {
+            p.input_path for p in entry.fixture_pairs
+        }
         assert entry.statement_path.name != "README.md"
 
 
 def test_prepared_v1_5_dataset_loads_all_65_evaluation_cases(tmp_path):
-    index_path = REPO_ROOT / "problem_v1.5/dataset-index.json"
-    index = json.loads(index_path.read_text(encoding="utf-8"))
-    ids = tuple(p["id"] for p in index["problems"])
-    config = replace(_config(tmp_path), problem_ids=ids, problem_root=REPO_ROOT / "problem_v1.5", dataset_index=index_path)
+    index_path = REPO_ROOT / "problem/dataset-index.json"
+    # git show 3ac2044d:problem_v1.5/dataset-index.json의 원래 목록입니다.
+    ids = ("LC_0338", "IPOP_9012", "LC_0283", "LC_0053", "LC_0547")
+    config = replace(
+        _config(tmp_path),
+        problem_ids=ids,
+        problem_root=REPO_ROOT / "problem",
+        dataset_index=index_path,
+    )
     entries = validate_corpus(config)
+    assert tuple(entry.problem_id for entry in entries) == ids
     assert len(entries) == 5
     assert sum(len(entry.fixture_pairs) for entry in entries) == 65
     for entry in entries:
@@ -95,12 +132,19 @@ def test_prepared_v1_5_dataset_loads_all_65_evaluation_cases(tmp_path):
         assert entry.fixture_directory == directory / "evaluation"
         assert len(entry.fixture_pairs) == 13
         assert entry.prompt_examples
-        assert all(pair.input_path.parent == directory / "prompt_examples" for pair in entry.prompt_examples)
-        assert entry.prompt_sample.input_path not in {p.input_path for p in entry.fixture_pairs}
+        assert all(
+            pair.input_path.parent == directory / "prompt_examples"
+            for pair in entry.prompt_examples
+        )
+        assert entry.prompt_sample.input_path not in {
+            p.input_path for p in entry.fixture_pairs
+        }
 
 
 @pytest.mark.parametrize("runner", ["pipeline", "versioned"])
-def test_both_runners_keep_evaluation_out_of_prompts(separated_corpus, monkeypatch, runner):
+def test_both_runners_keep_evaluation_out_of_prompts(
+    separated_corpus, monkeypatch, runner
+):
     config, problem = separated_corpus
     seed = problem.seed_path.read_text(encoding="utf-8")
     prompts, evaluations = [], []
@@ -108,37 +152,66 @@ def test_both_runners_keep_evaluation_out_of_prompts(separated_corpus, monkeypat
     def evaluate(**kwargs):
         evaluated = kwargs["problem"]
         assert len(evaluated.fixture_pairs) == 1
-        assert evaluated.fixture_pairs[0].input_path.read_text(encoding="utf-8") == "HELD_OUT_INPUT"
-        assert evaluated.fixture_pairs[0].output_path.read_text(encoding="utf-8") == "HELD_OUT_OUTPUT"
+        assert (
+            evaluated.fixture_pairs[0].input_path.read_text(encoding="utf-8")
+            == "HELD_OUT_INPUT"
+        )
+        assert (
+            evaluated.fixture_pairs[0].output_path.read_text(encoding="utf-8")
+            == "HELD_OUT_OUTPUT"
+        )
         evaluations.append(kwargs["language"])
         return SuccessEvaluator()(**kwargs)
 
     if runner == "pipeline":
+
         class Client(RouteClient):
             def translate(self, **kwargs):
                 prompts.append(json.dumps(kwargs))
                 return super().translate(**kwargs)
-        result = run_rtt_loop(config=config, run_id="split", problem=problem,
-                              target_language="python", translation_client=Client([seed, seed]),
-                              evaluate_source_fn=evaluate)
+
+        result = run_rtt_loop(
+            config=config,
+            run_id="split",
+            problem=problem,
+            target_language="python",
+            translation_client=Client([seed, seed]),
+            evaluate_source_fn=evaluate,
+        )
         assert result.final_record.status.value == "success"
     else:
         import rttdist.experiment_v1 as versioned
 
         def transport(payload, host, folder):
             prompts.append(json.dumps(payload))
-            return {"choices": [{"message": {"content": f"```\n{seed}\n```"}, "finish_reason": "stop"}]}
+            return {
+                "choices": [
+                    {
+                        "message": {"content": f"```\n{seed}\n```"},
+                        "finish_reason": "stop",
+                    }
+                ]
+            }
 
         monkeypatch.setattr(versioned, "request_translation", transport)
         monkeypatch.setattr(versioned, "evaluate_source", evaluate)
-        metadata = {"condition_hash": "fixed", "validation_hash": "validated", "decoding": {},
-                    "started_at": timestamp(), "recovery": {"max_resumes_per_route": 2, "max_wall_hours": 24}}
+        metadata = {
+            "condition_hash": "fixed",
+            "validation_hash": "validated",
+            "decoding": {},
+            "started_at": timestamp(),
+            "recovery": {"max_resumes_per_route": 2, "max_wall_hours": 24},
+        }
         result = versioned.run_route(config, problem, "python", "split", metadata)
         assert result["status"] == "success"
     assert evaluations == ["python", "cpp"]
     assert len(prompts) == 2
     for prompt in prompts:
-        assert "PUBLIC_INPUT" in prompt and "PUBLIC_OUTPUT" in prompt and "PUBLIC_STATEMENT" in prompt
+        assert (
+            "PUBLIC_INPUT" in prompt
+            and "PUBLIC_OUTPUT" in prompt
+            and "PUBLIC_STATEMENT" in prompt
+        )
         assert "HELD_OUT" not in prompt and "PRIVATE_DIAGNOSTICS" not in prompt
 
 
@@ -174,8 +247,13 @@ def test_resume_and_provenance_detect_input_changes(separated_corpus, source):
     config, problem = separated_corpus
     seed = problem.seed_path.read_text(encoding="utf-8")
     before = corpus_hashes((problem,))
-    arguments = dict(config=config, run_id="resume", problem=problem, target_language="python",
-                     evaluate_source_fn=SuccessEvaluator())
+    arguments = dict(
+        config=config,
+        run_id="resume",
+        problem=problem,
+        target_language="python",
+        evaluate_source_fn=SuccessEvaluator(),
+    )
     run_rtt_loop(**arguments, translation_client=RouteClient([seed, seed]))
     pair = problem.prompt_sample if source == "prompt" else problem.fixture_pairs[0]
     pair.output_path.write_text("CHANGED", encoding="utf-8")
@@ -187,7 +265,10 @@ def test_resume_and_provenance_detect_input_changes(separated_corpus, source):
 @pytest.mark.parametrize("value", [None, "", 123])
 def test_invalid_dataset_index_config_is_rejected(tmp_path, value):
     import yaml
-    raw = yaml.safe_load((REPO_ROOT / "tests/fixtures/config/minimal.yaml").read_text(encoding="utf-8"))
+
+    raw = yaml.safe_load(
+        (REPO_ROOT / "tests/fixtures/config/minimal.yaml").read_text(encoding="utf-8")
+    )
     raw["dataset_index"] = value
     path = tmp_path / "invalid.yaml"
     path.write_text(yaml.safe_dump(raw), encoding="utf-8")
@@ -210,6 +291,7 @@ def test_line_input_keeps_meaningful_spaces(separated_corpus):
 
 def test_prompt_profile_changes_resume_config_hash(tmp_path):
     from rttdist.run_state import compute_config_hash
+
     config = _config(tmp_path)
     assert compute_config_hash(config) != compute_config_hash(
         replace(config, prompt_template_version="rtt.prompts.v2")
@@ -218,9 +300,11 @@ def test_prompt_profile_changes_resume_config_hash(tmp_path):
 
 def test_generation_options_change_resume_config_hash(tmp_path):
     from rttdist.run_state import compute_config_hash
+
     config = _config(tmp_path)
     assert compute_config_hash(config) != compute_config_hash(
-        replace(config, lmstudio=replace(config.lmstudio, max_tokens=1024)))
-    one = replace(config, llm={'generation': {'top_p': .8}})
-    two = replace(config, llm={'generation': {'top_p': .95}})
+        replace(config, lmstudio=replace(config.lmstudio, max_tokens=1024))
+    )
+    one = replace(config, llm={"generation": {"top_p": 0.8}})
+    two = replace(config, llm={"generation": {"top_p": 0.95}})
     assert compute_config_hash(one) != compute_config_hash(two)

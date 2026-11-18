@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```java\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.io.IOException;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String s = br.readLine();\n        if (s == null) s = \"\";\n        s = s.replaceAll(\"^\\\\s+|\\\\s+$\", \"\");\n        boolean valid = true;\n        int len = s.length();\n        for (int i = 0; i < len / 2; i++) {\n            if (s.charAt(i) != s.charAt(len - 1 - i)) {\n                valid = false;\n                break;\n            }\n        }\n        System.out.println(valid ? 1 : 0);\n    }\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794900156,
+    "id": "1b89fa04-b3f2-4730-bd2f-157bfc994a7a",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 157,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_fddd52a1d0f444e289c22cd7b9f33096",
+      "trace_id": "f0c8c495aad74bd5a2e2a98e7ffde45d"
+    },
+    "usage": {
+      "completion_tokens": 157,
+      "prompt_tokens": 545,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 702
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0013078800000000002,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.3444320999551564,
+  "logical_request_id": "1b3f8aecea6104a9f2716f370d5b24db77091a8772e6c4c8da6b1857587be7f6",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_10988\\cpp-via-java\\attempt-03\\step-03\\response_body.txt",
+  "received_at": "2026-11-17T07:22:35.585187+00:00",
+  "request_id": "1b89fa04-b3f2-4730-bd2f-157bfc994a7a",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```java\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.io.IOException;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String s = br.readLine();\n        if (s == null) s = \"\";\n        s = s.replaceAll(\"^\\\\s+|\\\\s+$\", \"\");\n        boolean valid = true;\n        int len = s.length();\n        for (int i = 0; i < len / 2; i++) {\n            if (s.charAt(i) != s.charAt(len - 1 - i)) {\n                valid = false;\n                break;\n            }\n        }\n        System.out.println(valid ? 1 : 0);\n    }\n}\n```",
+  "usage": {
+    "completion_tokens": 157,
+    "prompt_tokens": 545,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 702
+  },
+  "usage_raw": {
+    "completion_tokens": 157,
+    "prompt_tokens": 545,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 702
+  }
+}

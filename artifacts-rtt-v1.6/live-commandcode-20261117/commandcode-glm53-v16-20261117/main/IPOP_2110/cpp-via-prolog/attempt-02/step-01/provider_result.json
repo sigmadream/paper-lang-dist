@@ -1,0 +1,94 @@
+{
+  "text": "```prolog\n:- module(main, [main/0]).\n:- set_prolog_flag(double_quotes, string).\n\nread_ints(Ints) :-\n    read_line_to_codes(user_input, Cs),\n    ( Cs == end_of_file -> Ints = []\n    ; Cs == [] -> Ints = []\n    ; atom_codes(A, Cs), split_string(A, \" \\t\\r\\n\", \" \\t\\r\\n\", Parts),\n      maplist(number_string, Ints, Parts)\n    ).\n\nread_all(All) :-\n    read_line_to_codes(user_input, Cs),\n    ( Cs == end_of_file -> All = []\n    ; Cs == [] -> All = []\n    ; atom_codes(A, Cs), split_string(A, \" \\t\\r\\n\", \" \\t\\r\\n\", Parts),\n      maplist(number_string, Nums, Parts),\n      append(Nums, Rest, All0), read_all(Rest), All = All0\n    ).\n\nmain :-\n    catch(\n        ( read_all(Data),\n          Data \\== []\n        ),\n        _,\n        Data = []\n    ),\n    ( var(Data) -> Data = [] ; true ),\n    ( Data == [] -> true\n    ; Data = [N, C|Coords],\n        msort(Coords, Sorted),\n        length(Coords, N),\n        ( N =:= 0 -> Ans = 0\n        ; Sorted = [First|_],\n          reverse(Sorted, [Last|_]),\n          Range is Last - First,\n          binary_search(1, Range, Sorted, C, 0, Ans)\n        ),\n        format(\"~d~n\", [Ans])\n    ).\n\nbinary_search(Left, Right, _, _, Acc, Acc) :- Left > Right, !.\nbinary_search(Left, Right, Sorted, C, _, Ans) :-\n    Left =< Right,\n    Mid is Left + (Right - Left) // 2,\n    count_installed(Sorted, Mid, Count),\n    ( Count >= C ->\n        NextAcc is Mid,\n        NextLeft is Mid + 1,\n        binary_search(NextLeft, Right, Sorted, C, NextAcc, Ans)\n    ;\n        NextRight is Mid - 1,\n        binary_search(Left, NextRight, Sorted, C, _, Ans)\n    ).\n\ncount_installed([First|Rest], Mid, Count) :-\n    count_loop(Rest, First, Mid, 1, Count).\n\ncount_loop([], _, _, Count, Count).\ncount_loop([X|Xs], Prev, Mid, Acc, Count) :-\n    ( X - Prev >= Mid ->\n        NewAcc is Acc + 1,\n        count_loop(Xs, X, Mid, NewAcc, Count)\n    ;\n        count_loop(Xs, Prev, Mid, Acc, Count)\n    ).\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 581,
+    "prompt_tokens": 685,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1266
+  },
+  "usage_raw": {
+    "completion_tokens": 581,
+    "prompt_tokens": 685,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 1266
+  },
+  "cost_usd": 0.0033694800000000002,
+  "cost_source": "estimated",
+  "request_id": "a9dda623-29dd-4b4e-8a73-84faa02f4ddc",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_2110\\cpp-via-prolog\\attempt-02\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n:- set_prolog_flag(double_quotes, string).\n\nread_ints(Ints) :-\n    read_line_to_codes(user_input, Cs),\n    ( Cs == end_of_file -> Ints = []\n    ; Cs == [] -> Ints = []\n    ; atom_codes(A, Cs), split_string(A, \" \\t\\r\\n\", \" \\t\\r\\n\", Parts),\n      maplist(number_string, Ints, Parts)\n    ).\n\nread_all(All) :-\n    read_line_to_codes(user_input, Cs),\n    ( Cs == end_of_file -> All = []\n    ; Cs == [] -> All = []\n    ; atom_codes(A, Cs), split_string(A, \" \\t\\r\\n\", \" \\t\\r\\n\", Parts),\n      maplist(number_string, Nums, Parts),\n      append(Nums, Rest, All0), read_all(Rest), All = All0\n    ).\n\nmain :-\n    catch(\n        ( read_all(Data),\n          Data \\== []\n        ),\n        _,\n        Data = []\n    ),\n    ( var(Data) -> Data = [] ; true ),\n    ( Data == [] -> true\n    ; Data = [N, C|Coords],\n        msort(Coords, Sorted),\n        length(Coords, N),\n        ( N =:= 0 -> Ans = 0\n        ; Sorted = [First|_],\n          reverse(Sorted, [Last|_]),\n          Range is Last - First,\n          binary_search(1, Range, Sorted, C, 0, Ans)\n        ),\n        format(\"~d~n\", [Ans])\n    ).\n\nbinary_search(Left, Right, _, _, Acc, Acc) :- Left > Right, !.\nbinary_search(Left, Right, Sorted, C, _, Ans) :-\n    Left =< Right,\n    Mid is Left + (Right - Left) // 2,\n    count_installed(Sorted, Mid, Count),\n    ( Count >= C ->\n        NextAcc is Mid,\n        NextLeft is Mid + 1,\n        binary_search(NextLeft, Right, Sorted, C, NextAcc, Ans)\n    ;\n        NextRight is Mid - 1,\n        binary_search(Left, NextRight, Sorted, C, _, Ans)\n    ).\n\ncount_installed([First|Rest], Mid, Count) :-\n    count_loop(Rest, First, Mid, 1, Count).\n\ncount_loop([], _, _, Count, Count).\ncount_loop([X|Xs], Prev, Mid, Acc, Count) :-\n    ( X - Prev >= Mid ->\n        NewAcc is Acc + 1,\n        count_loop(Xs, X, Mid, NewAcc, Count)\n    ;\n        count_loop(Xs, Prev, Mid, Acc, Count)\n    ).\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794902558,
+    "id": "a9dda623-29dd-4b4e-8a73-84faa02f4ddc",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 581,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_e2efb09d0e1a4fc8bfeb8183701666c9",
+      "trace_id": "73ee3fd28afe4d7e823ad136a26306cf"
+    },
+    "usage": {
+      "completion_tokens": 581,
+      "prompt_tokens": 685,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 1266
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 5.232434499950614,
+  "received_at": "2026-11-17T08:02:37.548843+00:00",
+  "logical_request_id": "a2f383fcd8559151de53e11ada5287d11a227081814bcb301fa6ac6f1f28a727",
+  "execution_class": "direct_api"
+}

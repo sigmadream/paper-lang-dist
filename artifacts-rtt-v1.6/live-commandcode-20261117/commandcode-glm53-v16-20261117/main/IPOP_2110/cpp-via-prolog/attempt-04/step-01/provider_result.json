@@ -1,0 +1,95 @@
+{
+  "text": "```prolog\n:- use_module(library(readutil)).\n\nread_all_numbers(Nums) :-\n    read_line_to_codes(user_input, L),\n    ( L == end_of_file -> Nums = []\n    ; phrase(numbers(Nums0), L), read_all_numbers(Rest),\n      append(Nums0, Rest, Nums)\n    ).\n\nnumbers([N|T]) --> ws, number_codes_(N), !, numbers(T).\nnumbers([]) --> ws, [].\nws --> [C], { C == 32 ; C == 9 ; C == 13 }, !, ws.\nws --> [].\n\nnumber_codes_(N) --> digits(D), { number_codes(N, D) }.\ndigits([D|T]) --> [D], { D >= 48, D =< 57 }, !, digits(T).\ndigits([]) --> [].\n\ncount_ok(Sorted, Mid, C) :-\n    Sorted = [First|Rest],\n    count_loop(Rest, First, Mid, 1, Count),\n    Count >= C.\n\ncount_loop([], _, _, Count, Count).\ncount_loop([X|Xs], Prev, Mid, Acc, Count) :-\n    ( X - Prev >= Mid ->\n        Acc1 is Acc + 1,\n        count_loop(Xs, X, Mid, Acc1, Count)\n    ; count_loop(Xs, Prev, Mid, Acc, Count)\n    ).\n\nbinary_search(Sorted, C, Lo, Hi, Ans0, Ans) :-\n    ( Lo > Hi -> Ans = Ans0\n    ; Mid is Lo + (Hi - Lo) // 2,\n      ( count_ok(Sorted, Mid, C) ->\n          Ans1 is Mid,\n          Lo1 is Mid + 1,\n          binary_search(Sorted, C, Lo1, Hi, Ans1, Ans)\n      ; Hi1 is Mid - 1,\n          binary_search(Sorted, C, Lo, Hi1, Ans0, Ans)\n      )\n    ).\n\nmain :-\n    read_all_numbers(Nums),\n    ( Nums == [] -> true\n    ; Nums = [N, C|Coords],\n      length(Coords, N),\n      msort(Coords, Sorted),\n      Sorted = [First|_],\n      last(Sorted, Last),\n      Hi is Last - First,\n      binary_search(Sorted, C, 1, Hi, 0, Ans),\n      format(\"~d~n\", [Ans])\n    ).\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 581,
+    "prompt_tokens": 685,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 1266
+  },
+  "usage_raw": {
+    "completion_tokens": 581,
+    "prompt_tokens": 685,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 1266
+  },
+  "cost_usd": 0.0027858,
+  "cost_source": "estimated",
+  "request_id": "e480a1fb-80f3-4cac-ad9f-efb054df4ecb",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_2110\\cpp-via-prolog\\attempt-04\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- use_module(library(readutil)).\n\nread_all_numbers(Nums) :-\n    read_line_to_codes(user_input, L),\n    ( L == end_of_file -> Nums = []\n    ; phrase(numbers(Nums0), L), read_all_numbers(Rest),\n      append(Nums0, Rest, Nums)\n    ).\n\nnumbers([N|T]) --> ws, number_codes_(N), !, numbers(T).\nnumbers([]) --> ws, [].\nws --> [C], { C == 32 ; C == 9 ; C == 13 }, !, ws.\nws --> [].\n\nnumber_codes_(N) --> digits(D), { number_codes(N, D) }.\ndigits([D|T]) --> [D], { D >= 48, D =< 57 }, !, digits(T).\ndigits([]) --> [].\n\ncount_ok(Sorted, Mid, C) :-\n    Sorted = [First|Rest],\n    count_loop(Rest, First, Mid, 1, Count),\n    Count >= C.\n\ncount_loop([], _, _, Count, Count).\ncount_loop([X|Xs], Prev, Mid, Acc, Count) :-\n    ( X - Prev >= Mid ->\n        Acc1 is Acc + 1,\n        count_loop(Xs, X, Mid, Acc1, Count)\n    ; count_loop(Xs, Prev, Mid, Acc, Count)\n    ).\n\nbinary_search(Sorted, C, Lo, Hi, Ans0, Ans) :-\n    ( Lo > Hi -> Ans = Ans0\n    ; Mid is Lo + (Hi - Lo) // 2,\n      ( count_ok(Sorted, Mid, C) ->\n          Ans1 is Mid,\n          Lo1 is Mid + 1,\n          binary_search(Sorted, C, Lo1, Hi, Ans1, Ans)\n      ; Hi1 is Mid - 1,\n          binary_search(Sorted, C, Lo, Hi1, Ans0, Ans)\n      )\n    ).\n\nmain :-\n    read_all_numbers(Nums),\n    ( Nums == [] -> true\n    ; Nums = [N, C|Coords],\n      length(Coords, N),\n      msort(Coords, Sorted),\n      Sorted = [First|_],\n      last(Sorted, Last),\n      Hi is Last - First,\n      binary_search(Sorted, C, 1, Hi, 0, Ans),\n      format(\"~d~n\", [Ans])\n    ).\n```",
+          "reasoning_content": "Prolog solution with binary search. Need fast I/O. Use SWI-Prolog, read all numbers from stdin.\n\nRead line by line. Use read_line_to_codes to parse integers. N up to 200000, fine.\n\nImplement:\n\nmain :- read numbers, sort, binary search.\n\nBinary search with counting greedy.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794902282,
+    "id": "e480a1fb-80f3-4cac-ad9f-efb054df4ecb",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 581,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_5f8958e875f746968fee22266d63f18d",
+      "trace_id": "104383ab321b40a7b4179bc34d558c4a"
+    },
+    "usage": {
+      "completion_tokens": 581,
+      "prompt_tokens": 685,
+      "prompt_tokens_details": {
+        "cached_tokens": 640
+      },
+      "total_tokens": 1266
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.855300199997146,
+  "received_at": "2026-11-17T07:58:02.415638+00:00",
+  "logical_request_id": "115cc0916d6233d1f02d5902cefabf08786a1e1231fe0c189cd090e50d2a7499",
+  "execution_class": "direct_api"
+}

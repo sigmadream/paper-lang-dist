@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    if (n < 0) {\n        n = 0;\n    }\n\n    std::vector<int> counts(n + 1, 0);\n    for (int i = 1; i <= n; ++i) {\n        counts[i] = counts[i / 2] + (i % 2);\n    }\n\n    for (int i = 0; i <= n; ++i) {\n        if (i > 0) {\n            std::cout << ' ';\n        }\n        std::cout << counts[i];\n    }\n    std::cout << '\\n';\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 509,
+    "total_tokens": 890,
+    "completion_tokens": 381,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 196
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 509,
+    "total_tokens": 890,
+    "completion_tokens": 381,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 196
+    }
+  },
+  "cost_usd": 0.0006099,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-691929c00baaa63369092306a104674b",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0338\\cpp-via-python\\attempt-01\\step-10\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-691929c00baaa63369092306a104674b",
+    "object": "chat.completion",
+    "created": 1794993697,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    int n;\n    if (!(std::cin >> n)) {\n        return 0;\n    }\n\n    if (n < 0) {\n        n = 0;\n    }\n\n    std::vector<int> counts(n + 1, 0);\n    for (int i = 1; i <= n; ++i) {\n        counts[i] = counts[i / 2] + (i % 2);\n    }\n\n    for (int i = 0; i <= n; ++i) {\n        if (i > 0) {\n            std::cout << ' ';\n        }\n        std::cout << counts[i];\n    }\n    std::cout << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer with one complete cpp source file fenced. Need preserve behavior. Need consider n maybe >? Spec 0..100000, source handles negative clamp. C++ read long long/int. If empty return. N first. If n<0 n=0. Need output counts 0..n space separated newline. Use vector<int> size n+1. n could large? spec <=100000 but source int Python arbitrary. We can use long long? vector size needs. Just int. For valid inputs within spec. If n huge memory anyway. Use ios.\n\nNeed exactly one source code block, no explanation. C++17 with main(). Use #include <bits/stdc++.h> standard? bits often but not guaranteed? \"standard libraries shipped\" includes. Could use iostream vector string. Need split whitespace. Just cin >> n; if not return. Handle n<0.\n\nOutput spacing. Use for loop.\n\nNeed final."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 509,
+      "total_tokens": 890,
+      "completion_tokens": 381,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 196
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 5.705141799990088,
+  "received_at": "2026-11-18T09:21:39.925635+00:00",
+  "logical_request_id": "e09d3599156ad22dba74efbfeaca81e4a83198727731a757ed1d644ff57c441a",
+  "execution_class": "direct_api"
+}

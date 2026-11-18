@@ -1,0 +1,94 @@
+{
+  "text": "```prolog\n:- module(main, [main/0]).\n:- set_prolog_flag(double_quotes, atom).\n\nmain :-\n    read_line_to_string(user_input, Line),\n    ( Line == end_of_file -> true\n    ; normalize_space(string(Ns), Line),\n      atom_number(Ns, N),\n      ( N < 1 -> true\n      ; length(Col, N), maplist(=(0), Col),\n        M is 2*N-1, length(D1, M), maplist(=(0), D1),\n        length(D2, M), maplist(=(0), D2),\n        solve(0, N, Col, D1, D2, Ans),\n        format(\"~d~n\", [Ans])\n      )\n    ).\n\nsolve(N, N, _, _, _, 1) :- !.\nsolve(R, N, Col, D1, D2, Count) :-\n    R < N,\n    findall(1,\n        ( between(0, N1, C), N1 is N-1,\n          nth0(C, Col, 0),\n          I is R+C, nth0(I, D1, 0),\n          J is R-C+N-1, nth0(J, D2, 0)\n        ), Sols),\n    count_solutions(Sols, Col, D1, D2, R, N, Count).\n\ncount_solutions([], _, _, _, _, _, 0).\ncount_solutions([C|Cs], Col, D1, D2, R, N, Total) :-\n    I is R+C, J is R-C+N-1,\n    set_flag(Col, C, 1, Col1),\n    set_flag(D1, I, 1, D1a),\n    set_flag(D2, J, 1, D2a),\n    solve(R+1, N, Col1, D1a, D2a, Sub),\n    count_solutions(Cs, Col, D1, D2, R, N, Rest),\n    Total is Sub + Rest.\n\nset_flag(List, Index, Value, NewList) :-\n    nth0(Index, List, _, Rest),\n    nth0(Index, NewList, Value, Rest).\n```\n\nNote: the `set_flag/4` predicate as written has an issue; here is the corrected complete file:\n\n```prolog\n:- module(main, [main/0]).\n\nmain :-\n    read_line_to_string(user_input, Line),\n    ( Line == end_of_file -> true\n    ; normalize_space(string(Ns), Line),\n      atom_number(Ns, N),\n      ( N < 1 -> true\n      ; length(Col, N), maplist(=(0), Col),\n        M is 2*N-1, length(D1, M), maplist(=(0), D1),\n        length(D2, M), maplist(=(0), D2),\n        solve(0, N, Col, D1, D2, Ans),\n        format(\"~d~n\", [Ans])\n      )\n    ).\n\nsolve(N, N, _, _, _, 1) :- !.\nsolve(R, N, Col, D1, D2, Count) :-\n    R < N,\n    findall(C,\n        ( N1 is N-1, between(0, N1, C),\n          nth0(C, Col, 0),\n          I is R+C, nth0(I, D1, 0),\n          J is R-C+N-1, nth0(J, D2, 0)\n        ), Sols),\n    count_solutions(Sols, Col, D1, D2, R, N, Count).\n\ncount_solutions([], _, _, _, _, _, 0).\ncount_solutions([C|Cs], Col, D1, D2, R, N, Total) :-\n    I is R+C, J is R-C+N-1,\n    replace(Col, C, 1, Col1),\n    replace(D1, I, 1, D1a),\n    replace(D2, J, 1, D2a),\n    solve(R+1, N, Col1, D1a, D2a, Sub),\n    count_solutions(Cs, Col, D1, D2, R, N, Rest),\n    Total is Sub + Rest.\n\nreplace(List, Index, Value, NewList) :-\n    nth0(Index, List, _, Rest),\n    nth0(Index, NewList, Value, Rest).\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 942,
+    "prompt_tokens": 610,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 1552
+  },
+  "usage_raw": {
+    "completion_tokens": 942,
+    "prompt_tokens": 610,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 1552
+  },
+  "cost_usd": 0.004342159999999999,
+  "cost_source": "estimated",
+  "request_id": "78b5fcaf-0393-488d-ab32-aa7122465923",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_9663\\cpp-via-prolog\\attempt-02\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n:- set_prolog_flag(double_quotes, atom).\n\nmain :-\n    read_line_to_string(user_input, Line),\n    ( Line == end_of_file -> true\n    ; normalize_space(string(Ns), Line),\n      atom_number(Ns, N),\n      ( N < 1 -> true\n      ; length(Col, N), maplist(=(0), Col),\n        M is 2*N-1, length(D1, M), maplist(=(0), D1),\n        length(D2, M), maplist(=(0), D2),\n        solve(0, N, Col, D1, D2, Ans),\n        format(\"~d~n\", [Ans])\n      )\n    ).\n\nsolve(N, N, _, _, _, 1) :- !.\nsolve(R, N, Col, D1, D2, Count) :-\n    R < N,\n    findall(1,\n        ( between(0, N1, C), N1 is N-1,\n          nth0(C, Col, 0),\n          I is R+C, nth0(I, D1, 0),\n          J is R-C+N-1, nth0(J, D2, 0)\n        ), Sols),\n    count_solutions(Sols, Col, D1, D2, R, N, Count).\n\ncount_solutions([], _, _, _, _, _, 0).\ncount_solutions([C|Cs], Col, D1, D2, R, N, Total) :-\n    I is R+C, J is R-C+N-1,\n    set_flag(Col, C, 1, Col1),\n    set_flag(D1, I, 1, D1a),\n    set_flag(D2, J, 1, D2a),\n    solve(R+1, N, Col1, D1a, D2a, Sub),\n    count_solutions(Cs, Col, D1, D2, R, N, Rest),\n    Total is Sub + Rest.\n\nset_flag(List, Index, Value, NewList) :-\n    nth0(Index, List, _, Rest),\n    nth0(Index, NewList, Value, Rest).\n```\n\nNote: the `set_flag/4` predicate as written has an issue; here is the corrected complete file:\n\n```prolog\n:- module(main, [main/0]).\n\nmain :-\n    read_line_to_string(user_input, Line),\n    ( Line == end_of_file -> true\n    ; normalize_space(string(Ns), Line),\n      atom_number(Ns, N),\n      ( N < 1 -> true\n      ; length(Col, N), maplist(=(0), Col),\n        M is 2*N-1, length(D1, M), maplist(=(0), D1),\n        length(D2, M), maplist(=(0), D2),\n        solve(0, N, Col, D1, D2, Ans),\n        format(\"~d~n\", [Ans])\n      )\n    ).\n\nsolve(N, N, _, _, _, 1) :- !.\nsolve(R, N, Col, D1, D2, Count) :-\n    R < N,\n    findall(C,\n        ( N1 is N-1, between(0, N1, C),\n          nth0(C, Col, 0),\n          I is R+C, nth0(I, D1, 0),\n          J is R-C+N-1, nth0(J, D2, 0)\n        ), Sols),\n    count_solutions(Sols, Col, D1, D2, R, N, Count).\n\ncount_solutions([], _, _, _, _, _, 0).\ncount_solutions([C|Cs], Col, D1, D2, R, N, Total) :-\n    I is R+C, J is R-C+N-1,\n    replace(Col, C, 1, Col1),\n    replace(D1, I, 1, D1a),\n    replace(D2, J, 1, D2a),\n    solve(R+1, N, Col1, D1a, D2a, Sub),\n    count_solutions(Cs, Col, D1, D2, R, N, Rest),\n    Total is Sub + Rest.\n\nreplace(List, Index, Value, NewList) :-\n    nth0(Index, List, _, Rest),\n    nth0(Index, NewList, Value, Rest).\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794897879,
+    "id": "78b5fcaf-0393-488d-ab32-aa7122465923",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 942,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_69e291cb78424feaa421ca68a95dfdb6",
+      "trace_id": "e68c93485a83460cb6ac6b22233b9303"
+    },
+    "usage": {
+      "completion_tokens": 942,
+      "prompt_tokens": 610,
+      "prompt_tokens_details": {
+        "cached_tokens": 576
+      },
+      "total_tokens": 1552
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 5.206682099960744,
+  "received_at": "2026-11-17T06:44:39.066280+00:00",
+  "logical_request_id": "2d970f94cbf04ce0e1d3d78342ecd70c943a5428c5990fd46394e1ce68446a9d",
+  "execution_class": "direct_api"
+}

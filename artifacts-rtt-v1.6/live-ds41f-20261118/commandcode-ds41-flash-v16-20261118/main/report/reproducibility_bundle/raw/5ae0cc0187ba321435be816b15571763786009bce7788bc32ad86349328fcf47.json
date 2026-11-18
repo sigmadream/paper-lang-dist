@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    long long N;\n    if (!(cin >> N)) return 0;\n\n    long long best = 0;\n    long long cur = 0;\n    bool first = true;\n\n    for (long long i = 0; i < N; ++i) {\n        long long x;\n        cin >> x;\n\n        if (first) {\n            cur = x;\n            best = x;\n            first = false;\n        } else {\n            cur = max(x, cur + x);\n            best = max(best, cur);\n        }\n    }\n\n    cout << best << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer exactly code block C++ source. Need translate. Need preserve behavior. Prolog reads all tokens lines, first N, take N values, max subarray (Kadane). Output Best newline.\n\nNeed consider edge cases. N>=1. Use long long? values -10000..10000, N 1e5 sum 1e9 fits int but long long safe. Need read tokens. Could simply cin >> N then values. If no input? spec valid. Return. Exact one code block. C++17 with main. No explanation. Need fenced code. \n",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794986989,
+    "id": "chatcmpl-66069bbf83381362956fabe5042d67a8",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 286,
+      "completion_tokens_details": {
+        "reasoning_tokens": 123
+      },
+      "prompt_tokens": 849,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 1135
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0005979,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.064339100033976,
+  "logical_request_id": "4e4181beae9f22ad3a8c18601fe5e08414a25b7badb69f2d63ef9f02e55f43d7",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-prolog\\attempt-03\\step-02\\response_body.txt",
+  "received_at": "2026-11-18T07:29:50.047096+00:00",
+  "request_id": "chatcmpl-66069bbf83381362956fabe5042d67a8",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    long long N;\n    if (!(cin >> N)) return 0;\n\n    long long best = 0;\n    long long cur = 0;\n    bool first = true;\n\n    for (long long i = 0; i < N; ++i) {\n        long long x;\n        cin >> x;\n\n        if (first) {\n            cur = x;\n            best = x;\n            first = false;\n        } else {\n            cur = max(x, cur + x);\n            best = max(best, cur);\n        }\n    }\n\n    cout << best << '\\n';\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 286,
+    "completion_tokens_details": {
+      "reasoning_tokens": 123
+    },
+    "prompt_tokens": 849,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1135
+  },
+  "usage_raw": {
+    "completion_tokens": 286,
+    "completion_tokens_details": {
+      "reasoning_tokens": 123
+    },
+    "prompt_tokens": 849,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1135
+  }
+}

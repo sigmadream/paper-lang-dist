@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\ncomb :: Integer -> Integer -> Integer\ncomb n k =\n  let k' = min k (n - k)\n      numerator = product [n - k' + 1 .. n]\n      denominator = product [1 .. k']\n  in numerator `div` denominator\n\nuniquePaths :: Integer -> Integer -> Integer\nuniquePaths m n = comb (m + n - 2) (min (m - 1) (n - 1))\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    (m : n : _) -> print (uniquePaths (read m) (read n))\n    _ -> return ()\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 563,
+    "total_tokens": 1055,
+    "completion_tokens": 492,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 342
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 563,
+    "total_tokens": 1055,
+    "completion_tokens": 492,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 342
+    }
+  },
+  "cost_usd": 0.0007593,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-c68da803561f0a19804d7985a85d506f",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-haskell\\attempt-04\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-c68da803561f0a19804d7985a85d506f",
+    "object": "chat.completion",
+    "created": 1794993006,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\ncomb :: Integer -> Integer -> Integer\ncomb n k =\n  let k' = min k (n - k)\n      numerator = product [n - k' + 1 .. n]\n      denominator = product [1 .. k']\n  in numerator `div` denominator\n\nuniquePaths :: Integer -> Integer -> Integer\nuniquePaths m n = comb (m + n - 2) (min (m - 1) (n - 1))\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  case words input of\n    (m : n : _) -> print (uniquePaths (read m) (read n))\n    _ -> return ()\n```",
+          "reasoning_content": "We need answer with Haskell source only in code block. Need translate preserving behavior. Input stdin first line M N, output integer. M,N up to 100, answer <=2e9. Haskell module Main main :: IO (). Need read two Integers or Int. Compute combinations. Could implement product division exact. Need be careful integer division. Haskell standard.\n\nWe can read all words, parse [Integer]. If at least two print uniquePaths m n. The C++ if (cin>>m>>n) output. If missing no output. Haskell using getContents, words, case. Need handle empty. For valid input. Return one complete source.\n\nImplementation:\n\nmodule Main where\n\nimport qualified Data.List as L\n\ncomb :: Integer -> Integer -> Integer\ncomb n k = let k' = min k (n-k)\n               numer = product [n-k'+1 .. n]\n               denom = product [1..k']\n           in numer `div` denom\n\nuniquePaths :: Integer -> Integer -> Integer\nuniquePaths m n = comb (m+n-2) (min (m-1) (n-1))\n\nmain :: IO ()\nmain = do\n  s <- getContents\n  let ws = words s\n  case ws of\n    (a:b:_) -> print (uniquePaths (read a) (read b))\n    _ -> return ()\n\nProduct [n-k'+1..n] with Integer. If k'=0 product [] =1. For n say 0? constraints positive. Works. Could also use Int as answer <=2e9, but Integer fine.\n\nNeed exactly one complete source file in fenced code block no explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 563,
+      "total_tokens": 1055,
+      "completion_tokens": 492,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 342
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.268244699924253,
+  "received_at": "2026-11-18T09:10:09.020120+00:00",
+  "logical_request_id": "cc966747c92ba3d2aefb3946c2e8080f17fcaa56f81b082cf3089333c99c51e6",
+  "execution_class": "direct_api"
+}

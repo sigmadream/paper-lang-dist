@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    long long M, N;\n    if (!(cin >> M >> N)) return 0;\n\n    vector<long long> row(static_cast<size_t>(N), 1);\n\n    for (long long i = 1; i < M; ++i) {\n        for (long long j = 1; j < N; ++j) {\n            row[static_cast<size_t>(j)] += row[static_cast<size_t>(j - 1)];\n        }\n    }\n\n    cout << row[static_cast<size_t>(N - 1)] << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block with C++ translation. Need preserve stdin behavior. Haskell reads words, if at least 2 prints paths m n else nothing. Constraints positive. Implement C++17 main. Need handle arbitrary? Simple. Calculate unique paths M,N. Could DP 1D. Answer <=2e9 but use long long. Input first two integers. If absent no output. Haskell pattern (m:n:_) matches at least two. If extra ignore. If only no second returns nothing. C++ read long long m,n; if(cin>>m>>n) print. Need algorithm: paths m n = with row length n initialized 1, iterate m-1 steps. Each step transforms row: result[0]=row[0]? Wait Haskell step (x:xs) = x : go x xs, go acc (y:ys) z=y+acc. So new row[0]=old[0], new[i]=old[i]+new[i-1]. Starting row all ones length n, repeated m-1. That computes C(m+n-2, m-1) with m rows. Standard. If m=1 last initial row, last = 1. n possibly 0? constraints >=1. Use vector<long long> row(n,1); for i=1;i<m;i++) for j=1;j<n;j++ row[j]+=row[j-1]; cout<<row[n-1]. Need n from input long long cast size_t; M,N<=100. Output newline. If input \"3 7\" -> row len7; iterate 2: after 1: [1,2,3,4,5,6,7]; after2:[1,3,6,10,15,21,28]. Good.\n\nNeed exactly one complete source file in fenced code block no explanation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794981236,
+    "id": "chatcmpl-4b018eadd6090eb5dce116d923895edf",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 538,
+      "completion_tokens_details": {
+        "reasoning_tokens": 385
+      },
+      "prompt_tokens": 554,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 1092
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.000698904,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 5.314795200014487,
+  "logical_request_id": "daeac0bbbed9b2a3798b9bbef96862808059ac88f30f970dc974117242d94d40",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-haskell\\attempt-05\\step-10\\response_body.txt",
+  "received_at": "2026-11-18T05:53:59.660303+00:00",
+  "request_id": "chatcmpl-4b018eadd6090eb5dce116d923895edf",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    long long M, N;\n    if (!(cin >> M >> N)) return 0;\n\n    vector<long long> row(static_cast<size_t>(N), 1);\n\n    for (long long i = 1; i < M; ++i) {\n        for (long long j = 1; j < N; ++j) {\n            row[static_cast<size_t>(j)] += row[static_cast<size_t>(j - 1)];\n        }\n    }\n\n    cout << row[static_cast<size_t>(N - 1)] << '\\n';\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 538,
+    "completion_tokens_details": {
+      "reasoning_tokens": 385
+    },
+    "prompt_tokens": 554,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1092
+  },
+  "usage_raw": {
+    "completion_tokens": 538,
+    "completion_tokens_details": {
+      "reasoning_tokens": 385
+    },
+    "prompt_tokens": 554,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1092
+  }
+}

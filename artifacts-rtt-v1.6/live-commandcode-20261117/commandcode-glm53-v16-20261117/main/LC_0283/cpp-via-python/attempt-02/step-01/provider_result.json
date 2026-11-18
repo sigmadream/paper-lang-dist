@@ -1,0 +1,94 @@
+{
+  "text": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    n = int(data[0])\n    a = list(map(int, data[1:1+n]))\n    write = 0\n    for read in range(n):\n        if a[read] != 0:\n            a[write], a[read] = a[read], a[write]\n            write += 1\n    print(\" \".join(map(str, a)))\n\nmain()\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 102,
+    "prompt_tokens": 652,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 754
+  },
+  "usage_raw": {
+    "completion_tokens": 102,
+    "prompt_tokens": 652,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 754
+  },
+  "cost_usd": 0.0012156799999999998,
+  "cost_source": "estimated",
+  "request_id": "b66673bf-b5cc-4398-93a6-53a4c92701f7",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0283\\cpp-via-python\\attempt-02\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```python\nimport sys\n\ndef main():\n    data = sys.stdin.read().split()\n    n = int(data[0])\n    a = list(map(int, data[1:1+n]))\n    write = 0\n    for read in range(n):\n        if a[read] != 0:\n            a[write], a[read] = a[read], a[write]\n            write += 1\n    print(\" \".join(map(str, a)))\n\nmain()\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794897409,
+    "id": "b66673bf-b5cc-4398-93a6-53a4c92701f7",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 102,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_a6b6cd54826f4df3b65fefd52e043ae4",
+      "trace_id": "8e04517ea6634905983ff5ef44e7a60d"
+    },
+    "usage": {
+      "completion_tokens": 102,
+      "prompt_tokens": 652,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 754
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 1.312562400009483,
+  "received_at": "2026-11-17T06:36:49.175918+00:00",
+  "logical_request_id": "5c575237a8f11d1760d33b50f49b472c3ee3e5db37e54b52c93d86b6ecb8cf95",
+  "execution_class": "direct_api"
+}

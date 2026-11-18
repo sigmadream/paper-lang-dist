@@ -1,0 +1,86 @@
+{
+  "text": "```java\nimport java.io.*;\n\npublic class Main {\n    private static boolean isTrimChar(char c) {\n        return c <= ' ';\n    }\n\n    private static boolean isCppSpaceAscii(char c) {\n        return c == ' ' || c == '\\t' || c == '\\n' || c == '\\u000B'\n                || c == '\\f' || c == '\\r';\n    }\n\n    private static Integer parseJavaInt(String s) {\n        if (s.isEmpty()) return null;\n\n        int i = 0;\n        boolean neg = false;\n\n        if (s.charAt(i) == '+' || s.charAt(i) == '-') {\n            neg = s.charAt(i) == '-';\n            ++i;\n            if (i == s.length()) return null;\n        }\n\n        long v = 0;\n        long limit = neg ? 2147483648L : 2147483647L;\n\n        for (; i < s.length(); ++i) {\n            char c = s.charAt(i);\n            if (c < '0' || c > '9') return null;\n\n            int d = c - '0';\n            if (v > (limit - d) / 10) return null;\n            v = v * 10 + d;\n        }\n\n        if (neg) {\n            if (v == 2147483648L) return Integer.MIN_VALUE;\n            return (int) -v;\n        } else {\n            return (int) v;\n        }\n    }\n\n    public static void main(String[] args) throws Exception {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        if (line == null) return;\n\n        int start = 0;\n        int end = line.length();\n\n        while (start < end && isTrimChar(line.charAt(start))) ++start;\n        while (end > start && isTrimChar(line.charAt(end - 1))) --end;\n\n        String trimmed = line.substring(start, end);\n        if (trimmed.isEmpty()) return;\n\n        int tokenEnd = 0;\n        while (tokenEnd < trimmed.length() && !isCppSpaceAscii(trimmed.charAt(tokenEnd))) {\n            ++tokenEnd;\n        }\n\n        String token = trimmed.substring(0, tokenEnd);\n        Integer parsed = parseJavaInt(token);\n        if (parsed == null) return;\n\n        int n = parsed;\n        if (n < 0) return;\n\n        int[] counts = new int[n + 1];\n        for (int i = 1; i <= n; ++i) {\n            counts[i] = counts[i / 2] + (i % 2);\n        }\n\n        StringBuilder output = new StringBuilder((n + 1) * 7);\n        for (int i = 0; i <= n; ++i) {\n            if (i > 0) output.append(' ');\n            output.append(counts[i]);\n        }\n        output.append('\\n');\n\n        System.out.print(output.toString());\n    }\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 1043,
+    "total_tokens": 3091,
+    "completion_tokens": 2048,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1417
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 1043,
+    "total_tokens": 3091,
+    "completion_tokens": 2048,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1417
+    }
+  },
+  "cost_usd": 0.0026576039999999996,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-0e589933e99e8e727f22e27904708418",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0338\\cpp-via-java\\attempt-01\\step-09\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-0e589933e99e8e727f22e27904708418",
+    "object": "chat.completion",
+    "created": 1794995936,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```java\nimport java.io.*;\n\npublic class Main {\n    private static boolean isTrimChar(char c) {\n        return c <= ' ';\n    }\n\n    private static boolean isCppSpaceAscii(char c) {\n        return c == ' ' || c == '\\t' || c == '\\n' || c == '\\u000B'\n                || c == '\\f' || c == '\\r';\n    }\n\n    private static Integer parseJavaInt(String s) {\n        if (s.isEmpty()) return null;\n\n        int i = 0;\n        boolean neg = false;\n\n        if (s.charAt(i) == '+' || s.charAt(i) == '-') {\n            neg = s.charAt(i) == '-';\n            ++i;\n            if (i == s.length()) return null;\n        }\n\n        long v = 0;\n        long limit = neg ? 2147483648L : 2147483647L;\n\n        for (; i < s.length(); ++i) {\n            char c = s.charAt(i);\n            if (c < '0' || c > '9') return null;\n\n            int d = c - '0';\n            if (v > (limit - d) / 10) return null;\n            v = v * 10 + d;\n        }\n\n        if (neg) {\n            if (v == 2147483648L) return Integer.MIN_VALUE;\n            return (int) -v;\n        } else {\n            return (int) v;\n        }\n    }\n\n    public static void main(String[] args) throws Exception {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        if (line == null) return;\n\n        int start = 0;\n        int end = line.length();\n\n        while (start < end && isTrimChar(line.charAt(start))) ++start;\n        while (end > start && isTrimChar(line.charAt(end - 1))) --end;\n\n        String trimmed = line.substring(start, end);\n        if (trimmed.isEmpty()) return;\n\n        int tokenEnd = 0;\n        while (tokenEnd < trimmed.length() && !isCppSpaceAscii(trimmed.charAt(tokenEnd))) {\n            ++tokenEnd;\n        }\n\n        String token = trimmed.substring(0, tokenEnd);\n        Integer parsed = parseJavaInt(token);\n        if (parsed == null) return;\n\n        int n = parsed;\n        if (n < 0) return;\n\n        int[] counts = new int[n + 1];\n        for (int i = 1; i <= n; ++i) {\n            counts[i] = counts[i / 2] + (i % 2);\n        }\n\n        StringBuilder output = new StringBuilder((n + 1) * 7);\n        for (int i = 0; i <= n; ++i) {\n            if (i > 0) output.append(' ');\n            output.append(counts[i]);\n        }\n        output.append('\\n');\n\n        System.out.print(output.toString());\n    }\n}\n```",
+          "reasoning_content": "We need answer exactly one complete source file in fenced code block, no explanation. Translate C++ to Java 17 public class Main. Preserve behavior. Need consider parsing Java int-like. C++ source reads first line, trims c<= ' ', takes first token nonspace, parseJavaInt token with optional sign and range int. If invalid return no output. If n<0 no output. Then counts DP no popcount. Output space-separated counts 0..N newline.\n\nJava implementation should mimic. Need be careful reading stdin line. C++ getline reads first line only. Java use BufferedReader readLine. If null return. Trim is c <= ' ' not standard trim (which <=0x20? String.trim removes <= U+0020 yes). C++ isTrim unsigned char c <= ' ' includes control bytes 0..32. For typical. Need parse token first until isspace. Java Character.isWhitespace may differ for some chars, but input spec integer line; can mimic C isspace locale? Use char c, c whitespace. They use std::isspace(unsigned char). Could implement c <= ' '? In C locale std::isspace includes space, \\t,\\n,\\v,\\f,\\r. Since line won't include newline. But for ASCII, same c <= ' ' includes other controls not considered whitespace, e.g NUL. Not relevant. Could implement Character.isWhitespace or c <= ' '. Need preserve? They trim c <= ' ', then token until !isspace. If NUL within token, not whitespace so parse invalid. Using c <= ' ' for token would stop at NUL incorrectly. But valid inputs integer. We can implement isCppSpaceAscii: c == ' ' || c == '\\t' || c == '\\n' || c == '\\v' || c == '\\f' || c == '\\r'. Need parse digits. Return no output if invalid. Use StringBuilder for output. n up to 100000 okay. Could use int[]. For empty trimmed return. For n<0 no output. parseJavaInt exactly. In Java int overflow check via long. Implement sign. Limit. For negative min, parse. Then counts. output append.\n\nNeed ensure if invalid parse no output. If line empty no output. If token empty no output. We can simplify but preserve.\n\nNeed main signature public static void main(String[] args) throws Exception.\n\nOutput: if n valid, counts includes 0 -> \"0\\n\" for n=0. For n=2 \"0 1 1\\n\". Good.\n\nNeed \"Use only standard libraries\". java.io.*, java.util? StringBuilder java.lang. IOException. Could throws Exception.\n\nPotential concern C++ parseJavaInt accepts leading +. Java Long parse no. We'll implement.\n\nLet's produce file.\n\nNeed no explanation. Fenced code block. Ensure public class Main only. \n\nLet's write:\n\nimport java.io.*;\n\npublic class Main {\n static boolean parseJavaInt(String s, int[] out) { ... } or return Integer? Need indicate success. Use Integer parse? To preserve. Could use boolean with int[] out. Or class. Simpler:\n\nprivate static Integer parseJavaInt(String s) { if empty return null; ... long v; limit; loop; if digit; overflow; return int maybe. For negative if v==2147483648L return Integer.MIN_VALUE; else return (int)-v; else (int)v. }\n\nBut using Integer null. Fine.\n\nMain:\nBufferedReader br = new BufferedReader(new InputStreamReader(System.in));\nString line = br.readLine();\nif (line == null) return;\nint start=0,end=line.length();\nwhile start<end && isTrim(line.charAt(start)) start++;\n...\nString trimmed = line.substring(start,end);\nif empty return;\nint tokenEnd=0;\nwhile tokenEnd<trimmed.length() && !isCppSpace(trimmed.charAt(tokenEnd))) tokenEnd++;\nString token=trimmed.substring(0, tokenEnd);\nInteger parsed=parseJavaInt(token);\nif parsed==null return;\nint n=parsed.intValue();\nif n<0 return;\nint[] counts = new int[n+1];\nfor (int i=1; i<=n; ++i) counts[i] = counts[i/2] + (i % 2);\nStringBuilder output=new StringBuilder(Math.max(1,(n+1)*7));\nfor (int i=0; i<=n; ++i) { if (i>0) output.append(' '); output.append(counts[i]);}\noutput.append('\\n');\nSystem.out.print(output.toString());\n\nisTrim c <= ' ' for char. Works.\n\nisCppSpaceAscii maybe:\nreturn c == ' ' || c == '\\t' || c == '\\n' || c == '\\v' || c == '\\f' || c == '\\r';\nC++ std::isspace for unsigned char in \"C\" locale. For ASCII. Good. In trimmed token only first token. If token ends with other controls, parse invalid maybe.\n\nCould just use Character.isWhitespace. But implement exact ascii. Note std::isspace may be locale? Default C locale. Fine.\n\nparse:\nif (s.isEmpty()) return null;\nint i=0; boolean neg=false;\nif (s.charAt(i)=='+'||s.charAt(i)=='-') { neg = s.charAt(i)=='-'; ++i; if(i==s.length()) return null;}\nlong v=0;\nlong limit = neg ? 2147483648L : 2147483647L;\nfor(; i<s.length(); ++i) { char c=...; if(c<'0'||c>'9') return null; int d=c-'0'; if(v > (limit-d)/10) return null; v=v*10+d;}\nif (neg) { if(v==2147483648L) return Integer.MIN_VALUE; else return (int)(-v);} else return (int)v;\nSubtle: C++ code if v == 2147483648 return min, else out=-static_cast<int>(v). For v could 0 => -0. Fine. If neg true and v <= limit ensures v<=2147483648. Return int. Good.\n\nPotential overflow in (limit-d)/10 no.\n\nNeed if tokenEnd==0? If trimmed begins whitespace? But trimmed start not trim c<=space, so char > space. isCppSpace might consider e.g tab? tab <= space trimmed removed. Okay token nonempty. If char e.g 0x1F, isTrim removes because <= space. If char 0x7F? > space and not cppspace (maybe C isspace no), token nonempty. parse invalid. Fine.\n\nNo explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 1043,
+      "total_tokens": 3091,
+      "completion_tokens": 2048,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1417
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 14.084779100026935,
+  "received_at": "2026-11-18T09:59:08.417401+00:00",
+  "logical_request_id": "bd8dd78388d780df00e620eb9a772cd7d43af2df42802b917bc51e1858c9d891",
+  "execution_class": "direct_api"
+}

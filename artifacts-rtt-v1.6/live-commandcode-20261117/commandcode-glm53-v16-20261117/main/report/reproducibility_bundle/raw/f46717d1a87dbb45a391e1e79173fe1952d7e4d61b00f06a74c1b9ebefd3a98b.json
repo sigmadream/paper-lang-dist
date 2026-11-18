@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(readutil)).\n\nread_grid(N, Grid) :-\n    read_line_to_codes(user_input, Line1),\n    ( Line1 == end_of_file -> Grid = []\n    ; length(Grid, N), fill_rows(Grid, Line1)\n    ).\n\nfill_rows([], _).\nfill_rows([Row|Rest], Prev) :-\n    ( Row == '-' -> Row = Prev\n    ; true ),\n    fill_rows(Rest, Prev).\n\nmain :-\n    read_line_to_codes(user_input, NLine),\n    NLine \\== end_of_file,\n    parse_number(NLine, N),\n    read_lines(N, GridCodes),\n    maplist(codes_chars, GridCodes, Grid),\n    ( Grid == [] -> true\n    ; solve(Grid, 0, 0, N, Result),\n      atom_chars(ResultAtom, Result),\n      write(ResultAtom), nl\n    ),\n    halt.\n\nparse_number(Codes, N) :-\n    number_codes(N, Codes).\n\nread_lines(0, []).\nread_lines(N, [Line|Rest]) :-\n    N > 0,\n    read_line_to_codes(user_input, Line),\n    ( Line == end_of_file -> Rest = []\n    ; N1 is N - 1, read_lines(N1, Rest)\n    ).\n\ncodes_chars([], []).\ncodes_chars([C|Cs], [H|T]) :- char_code(H, C), codes_chars(Cs, T).\n\nsolve(Grid, R, C, Size, Result) :-\n    nth0(R, Grid, Row),\n    nth0(C, Row, First),\n    ( all_same(Grid, R, C, Size, First)\n    -> Result = [First]\n    ; Half is Size // 2,\n      R2 is R + Half, C2 is C + Half,\n      solve(Grid, R, C, Half, TL),\n      solve(Grid, R, C2, Half, TR),\n      solve(Grid, R2, C, Half, BL),\n      solve(Grid, R2, C2, Half, BR),\n      append([TL, TR, BL, BR], Inner),\n      Result = ['(', Inner, ')']\n    ).\n\nall_same(_, _, _, 0, _).\nall_same(Grid, R, C, Size, First) :-\n    Size > 0,\n    nth0(R, Grid, Row),\n    nth0(C, Row, First),\n    C1 is C + 1, Size1 is Size - 1,\n    row_same(Row, C, Size, First),\n    R1 is R + 1,\n    all_same(Grid, R1, C, Size1, First).\n\nrow_same(_, _, 0, _).\nrow_same(Row, C, Size, First) :-\n    nth0(C, Row, First),\n    C1 is C + 1, Size1 is Size - 1,\n    row_same(Row, C1, Size1, First).\n\nappend([], []).\nappend([H|T], L) :- append(H, L).\nappend([], L, L).\nappend([H|T], L2) :- append(H, L3, L2), append(T, L3, L2).\n```\n\nWait — I mixed in a broken append. Let me provide the correct final version:\n\n```prolog\n:- module(main, [main/0]).\n:- use_module(library(readutil)).\n\nmain :-\n    read_line_to_codes(user_input, NLine),\n    ( NLine == end_of_file -> true\n    ; number_codes(N, NLine),\n      read_lines(N, GridCodes),\n      maplist(codes_chars, GridCodes, Grid),\n      solve(Grid, 0, 0, N, Result),\n      flatten(Result, Flat),\n      atom_chars(ResultAtom, Flat),\n      write(ResultAtom), nl\n    ),\n    halt.\n\nread_lines(0, []).\nread_lines(N, [Line|Rest]) :-\n    N > 0,\n    read_line_to_codes(user_input, Line),\n    ( Line == end_of_file -> Rest = []\n    ; N1 is N - 1, read_lines(N1, Rest)\n    ).\n\ncodes_chars([], []).\ncodes_chars([C|Cs], [H|T]) :- char_code(H, C), codes_chars(Cs, T).\n\nsolve(Grid, R, C, Size, Result) :-\n    nth0(R, Grid, Row),\n    nth0(C, Row, First),\n    ( all_same(Grid, R, C, Size, First)\n    -> Result = [First]\n    ; Half is Size // 2,\n      R2 is R + Half, C2 is C + Half,\n      solve(Grid, R, C, Half, TL),\n      solve(Grid, R, C2, Half, TR),\n      solve(Grid, R2, C, Half, BL),\n      solve(Grid, R2, C2, Half, BR),\n      Result = ['(', TL, TR, BL, BR, ')']\n    ).\n\nall_same(_, _, _, 0, _).\nall_same(Grid, R, C, Size, First) :-\n    Size > 0,\n    row_same(Grid, R, C, Size, First),\n    R1 is R + 1, Size1 is Size - 1,\n    all_same(Grid, R1, C, Size1, First).\n\nrow_same(_, _, _, 0, _).\nrow_same(Grid, R, C, Size, First) :-\n    Size > 0,\n    nth0(R, Grid, Row),\n    nth0(C, Row, First),\n    C1 is C + 1, Size1 is Size - 1,\n    row_same(Grid, R, C1, Size1, First).\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794895651,
+    "id": "b0826853-2adf-4991-9189-37f727f3dff6",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 1195,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_0da6323799c143c4b34965ab7dc5875b",
+      "trace_id": "2b60400847a8467ca13c1cd846bbe488"
+    },
+    "usage": {
+      "completion_tokens": 1195,
+      "prompt_tokens": 755,
+      "prompt_tokens_details": {
+        "cached_tokens": 704
+      },
+      "total_tokens": 1950
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0055124399999999995,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 7.27806010004133,
+  "logical_request_id": "b3281a55ca446d07f49f2c7aeb4f5b28079cc9da89bdde1cba85c87ce3cbe97b",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_1992\\cpp-via-prolog\\attempt-02\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T06:07:31.256603+00:00",
+  "request_id": "b0826853-2adf-4991-9189-37f727f3dff6",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```prolog\n:- module(main, [main/0]).\n:- use_module(library(readutil)).\n\nread_grid(N, Grid) :-\n    read_line_to_codes(user_input, Line1),\n    ( Line1 == end_of_file -> Grid = []\n    ; length(Grid, N), fill_rows(Grid, Line1)\n    ).\n\nfill_rows([], _).\nfill_rows([Row|Rest], Prev) :-\n    ( Row == '-' -> Row = Prev\n    ; true ),\n    fill_rows(Rest, Prev).\n\nmain :-\n    read_line_to_codes(user_input, NLine),\n    NLine \\== end_of_file,\n    parse_number(NLine, N),\n    read_lines(N, GridCodes),\n    maplist(codes_chars, GridCodes, Grid),\n    ( Grid == [] -> true\n    ; solve(Grid, 0, 0, N, Result),\n      atom_chars(ResultAtom, Result),\n      write(ResultAtom), nl\n    ),\n    halt.\n\nparse_number(Codes, N) :-\n    number_codes(N, Codes).\n\nread_lines(0, []).\nread_lines(N, [Line|Rest]) :-\n    N > 0,\n    read_line_to_codes(user_input, Line),\n    ( Line == end_of_file -> Rest = []\n    ; N1 is N - 1, read_lines(N1, Rest)\n    ).\n\ncodes_chars([], []).\ncodes_chars([C|Cs], [H|T]) :- char_code(H, C), codes_chars(Cs, T).\n\nsolve(Grid, R, C, Size, Result) :-\n    nth0(R, Grid, Row),\n    nth0(C, Row, First),\n    ( all_same(Grid, R, C, Size, First)\n    -> Result = [First]\n    ; Half is Size // 2,\n      R2 is R + Half, C2 is C + Half,\n      solve(Grid, R, C, Half, TL),\n      solve(Grid, R, C2, Half, TR),\n      solve(Grid, R2, C, Half, BL),\n      solve(Grid, R2, C2, Half, BR),\n      append([TL, TR, BL, BR], Inner),\n      Result = ['(', Inner, ')']\n    ).\n\nall_same(_, _, _, 0, _).\nall_same(Grid, R, C, Size, First) :-\n    Size > 0,\n    nth0(R, Grid, Row),\n    nth0(C, Row, First),\n    C1 is C + 1, Size1 is Size - 1,\n    row_same(Row, C, Size, First),\n    R1 is R + 1,\n    all_same(Grid, R1, C, Size1, First).\n\nrow_same(_, _, 0, _).\nrow_same(Row, C, Size, First) :-\n    nth0(C, Row, First),\n    C1 is C + 1, Size1 is Size - 1,\n    row_same(Row, C1, Size1, First).\n\nappend([], []).\nappend([H|T], L) :- append(H, L).\nappend([], L, L).\nappend([H|T], L2) :- append(H, L3, L2), append(T, L3, L2).\n```\n\nWait — I mixed in a broken append. Let me provide the correct final version:\n\n```prolog\n:- module(main, [main/0]).\n:- use_module(library(readutil)).\n\nmain :-\n    read_line_to_codes(user_input, NLine),\n    ( NLine == end_of_file -> true\n    ; number_codes(N, NLine),\n      read_lines(N, GridCodes),\n      maplist(codes_chars, GridCodes, Grid),\n      solve(Grid, 0, 0, N, Result),\n      flatten(Result, Flat),\n      atom_chars(ResultAtom, Flat),\n      write(ResultAtom), nl\n    ),\n    halt.\n\nread_lines(0, []).\nread_lines(N, [Line|Rest]) :-\n    N > 0,\n    read_line_to_codes(user_input, Line),\n    ( Line == end_of_file -> Rest = []\n    ; N1 is N - 1, read_lines(N1, Rest)\n    ).\n\ncodes_chars([], []).\ncodes_chars([C|Cs], [H|T]) :- char_code(H, C), codes_chars(Cs, T).\n\nsolve(Grid, R, C, Size, Result) :-\n    nth0(R, Grid, Row),\n    nth0(C, Row, First),\n    ( all_same(Grid, R, C, Size, First)\n    -> Result = [First]\n    ; Half is Size // 2,\n      R2 is R + Half, C2 is C + Half,\n      solve(Grid, R, C, Half, TL),\n      solve(Grid, R, C2, Half, TR),\n      solve(Grid, R2, C, Half, BL),\n      solve(Grid, R2, C2, Half, BR),\n      Result = ['(', TL, TR, BL, BR, ')']\n    ).\n\nall_same(_, _, _, 0, _).\nall_same(Grid, R, C, Size, First) :-\n    Size > 0,\n    row_same(Grid, R, C, Size, First),\n    R1 is R + 1, Size1 is Size - 1,\n    all_same(Grid, R1, C, Size1, First).\n\nrow_same(_, _, _, 0, _).\nrow_same(Grid, R, C, Size, First) :-\n    Size > 0,\n    nth0(R, Grid, Row),\n    nth0(C, Row, First),\n    C1 is C + 1, Size1 is Size - 1,\n    row_same(Grid, R, C1, Size1, First).\n```",
+  "usage": {
+    "completion_tokens": 1195,
+    "prompt_tokens": 755,
+    "prompt_tokens_details": {
+      "cached_tokens": 704
+    },
+    "total_tokens": 1950
+  },
+  "usage_raw": {
+    "completion_tokens": 1195,
+    "prompt_tokens": 755,
+    "prompt_tokens_details": {
+      "cached_tokens": 704
+    },
+    "total_tokens": 1950
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <numeric>\n\nint main() {\n    long long a, b;\n    if (!(std::cin >> a >> b)) return 0;\n    long long g = std::gcd(a, b);\n    std::cout << g << '\\n';\n    std::cout << (a / g) * b << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer code block only, C++17, preserve behavior. Straightforward. Need maybe return if <2 inputs. Compute std::gcd. Print gcd newline lcm. Use long long though <=10000. Exactly one fenced code block. No explanation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794996065,
+    "id": "chatcmpl-2d4c60d5c9949cb5d8a9f9842adb1cb4",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 140,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 439,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 579
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.000186804,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.3519155000103638,
+  "logical_request_id": "585cd13f33737614bd2b9c4bc7e1c2fd79ce9fcadc41be21b7f95775c59314fc",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2609\\cpp-via-python\\attempt-02\\step-10\\response_body.txt",
+  "received_at": "2026-11-18T10:01:06.437878+00:00",
+  "request_id": "chatcmpl-2d4c60d5c9949cb5d8a9f9842adb1cb4",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```cpp\n#include <iostream>\n#include <numeric>\n\nint main() {\n    long long a, b;\n    if (!(std::cin >> a >> b)) return 0;\n    long long g = std::gcd(a, b);\n    std::cout << g << '\\n';\n    std::cout << (a / g) * b << '\\n';\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 140,
+    "completion_tokens_details": {
+      "reasoning_tokens": 55
+    },
+    "prompt_tokens": 439,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 579
+  },
+  "usage_raw": {
+    "completion_tokens": 140,
+    "completion_tokens_details": {
+      "reasoning_tokens": 55
+    },
+    "prompt_tokens": 439,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 579
+  }
+}

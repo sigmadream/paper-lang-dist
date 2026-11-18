@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <string>\n\nstatic std::string trim(const std::string& s) {\n    std::size_t start = 0;\n    std::size_t end = s.length();\n\n    while (start < end && s[start] <= ' ') {\n        ++start;\n    }\n    while (end > start && s[end - 1] <= ' ') {\n        --end;\n    }\n\n    return s.substr(start, end - start);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::string first;\n    if (!std::getline(std::cin, first)) return 0;\n\n    int t = std::stoi(trim(first));\n    std::string output;\n\n    for (int i = 0; i < t; ++i) {\n        std::string s;\n        if (!std::getline(std::cin, s)) break;\n\n        s = trim(s);\n\n        int bal = 0;\n        bool valid = true;\n\n        for (char c : s) {\n            if (c == '(') {\n                ++bal;\n            } else {\n                --bal;\n            }\n\n            if (bal < 0) {\n                valid = false;\n                break;\n            }\n        }\n\n        if (bal != 0) {\n            valid = false;\n        }\n\n        output += valid ? \"YES\\n\" : \"NO\\n\";\n    }\n\n    std::cout << output;\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 773,
+    "total_tokens": 1535,
+    "completion_tokens": 762,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 445
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 773,
+    "total_tokens": 1535,
+    "completion_tokens": 762,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 445
+    }
+  },
+  "cost_usd": 0.0011463,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-6c36f7378ed394b93a39e41f114a248c",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9012\\cpp-via-java\\attempt-01\\step-06\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-6c36f7378ed394b93a39e41f114a248c",
+    "object": "chat.completion",
+    "created": 1794980145,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\n\nstatic std::string trim(const std::string& s) {\n    std::size_t start = 0;\n    std::size_t end = s.length();\n\n    while (start < end && s[start] <= ' ') {\n        ++start;\n    }\n    while (end > start && s[end - 1] <= ' ') {\n        --end;\n    }\n\n    return s.substr(start, end - start);\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::string first;\n    if (!std::getline(std::cin, first)) return 0;\n\n    int t = std::stoi(trim(first));\n    std::string output;\n\n    for (int i = 0; i < t; ++i) {\n        std::string s;\n        if (!std::getline(std::cin, s)) break;\n\n        s = trim(s);\n\n        int bal = 0;\n        bool valid = true;\n\n        for (char c : s) {\n            if (c == '(') {\n                ++bal;\n            } else {\n                --bal;\n            }\n\n            if (bal < 0) {\n                valid = false;\n                break;\n            }\n        }\n\n        if (bal != 0) {\n            valid = false;\n        }\n\n        output += valid ? \"YES\\n\" : \"NO\\n\";\n    }\n\n    std::cout << output;\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block C++. Need translate preserving behavior. Need consider source behavior nuances. Input T first line trim (<= ' '), parse int. For each t read line, if null break, trim, validate. It treats any char else than '(' as ')' effectively (if c=='(' bal++ else bal--). Specification only parentheses, but preserve complete behavior? \"every valid input in specification\", source code perhaps. We can mimic exactly.\n\nNeed output one complete source file C++17 main. Use standard libs. We need decide newline handling. Source uses BufferedReader.readLine: reads lines excluding line terminators. trim removes chars <= ' ' from both ends. In C++ getline with std::cin. But first read line? Need replicate readLine including possible empty lines. std::getline. But subtle: source first = br.readLine(); if null return. Then parse trim first. If first line maybe empty -> trim empty -> parseInt error. Valid inputs non-empty T. For each readLine; if null break. Using getline after reading first. Potential CRLF: getline leaves '\\r'? In C++ std::getline with '\\n' delimiter leaves '\\r' char, trim removes <= ' ', so fine. Java readLine strips both \\r\\n? yes.\n\nNeed implement trim for all chars <= ' ' maybe c char compare signed? ASCII. We can use unsigned char? For valid only. Use std::isspace? Source treats <= ' ' (controls and space) not DEL. Use char <= ' '. Fine.\n\nNeed output exactly as source. For each string, trim, iterate chars: if '(' ++bal else --bal. If bal<0 invalid break. After loop if bal !=0 invalid. append YES/NO newline. At end print.\n\nPotential input first line reading: If using getline(cin, first) after no prior. If input has leading newline? Not valid. If first could have trailing spaces. Fine.\n\nNeed include bits/stdc++.h? Standard libraries. C++17. We'll write.\n\nReturn exactly one complete source file in fenced code block, no explanation. Ensure code block only."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 773,
+      "total_tokens": 1535,
+      "completion_tokens": 762,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 445
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 6.675353999948129,
+  "received_at": "2026-11-18T05:35:48.859186+00:00",
+  "logical_request_id": "d8f814801bfb2a9509ccc30edeb64e05fa830660bebcdb22c3f3fde96fdc9dbe",
+  "execution_class": "direct_api"
+}

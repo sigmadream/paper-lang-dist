@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <string>\n\nlong long countQueens(int n) {\n    int full = (1 << n) - 1;\n\n    auto go = [&](auto&& self, int r, int cols, int diag1, int diag2) -> long long {\n        if (r == n) return 1;\n\n        long long acc = 0;\n        int available = full & ~(cols | diag1 | diag2);\n\n        while (available != 0) {\n            int bit = available & -available;\n            available ^= bit;\n\n            int nextCols = cols | bit;\n            int nextDiag1 = ((diag1 | bit) << 1) & full;\n            int nextDiag2 = (diag2 | bit) >> 1;\n\n            acc += self(self, r + 1, nextCols, nextDiag1, nextDiag2);\n        }\n\n        return acc;\n    };\n\n    return go(go, 0, 0, 0, 0);\n}\n\nint main() {\n    std::string input;\n    if (std::cin >> input) {\n        int n = std::stoi(input);\n        std::cout << countQueens(n) << '\\n';\n    }\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 681,
+    "total_tokens": 1284,
+    "completion_tokens": 603,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 322
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 681,
+    "total_tokens": 1284,
+    "completion_tokens": 603,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 322
+    }
+  },
+  "cost_usd": 0.0009279,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-d5e6cf12c564915ad6b2b372208b02dc",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9663\\cpp-via-haskell\\attempt-03\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-d5e6cf12c564915ad6b2b372208b02dc",
+    "object": "chat.completion",
+    "created": 1794978598,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <string>\n\nlong long countQueens(int n) {\n    int full = (1 << n) - 1;\n\n    auto go = [&](auto&& self, int r, int cols, int diag1, int diag2) -> long long {\n        if (r == n) return 1;\n\n        long long acc = 0;\n        int available = full & ~(cols | diag1 | diag2);\n\n        while (available != 0) {\n            int bit = available & -available;\n            available ^= bit;\n\n            int nextCols = cols | bit;\n            int nextDiag1 = ((diag1 | bit) << 1) & full;\n            int nextDiag2 = (diag2 | bit) >> 1;\n\n            acc += self(self, r + 1, nextCols, nextDiag1, nextDiag2);\n        }\n\n        return acc;\n    };\n\n    return go(go, 0, 0, 0, 0);\n}\n\nint main() {\n    std::string input;\n    if (std::cin >> input) {\n        int n = std::stoi(input);\n        std::cout << countQueens(n) << '\\n';\n    }\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer with C++17 source only in fenced code block. Need translate Haskell. Preserve behavior. N<15. Simple count N-Queens bitmask. Implement main reads int from stdin, outputs count. Need ensure no hardcode. Use unsigned/int. n up to14. Count max for 14 is 365596 fits int. Could use long long. Implement recursive function.\n\nNeed exactly one complete source file in fenced code block, no explanation. Provide C++17 with main. Use #include<bits/stdc++.h>? Standard libraries shipped; bits/stdc++.h is commonly available but not technically standard. Better include <iostream>, <vector> maybe no vector. Use iostream.\n\nNeed count function with lambda or global. n, full. Use long long dfs(int r, int cols, int diag1, int diag2). available = full & ~(cols|diag1|diag2). Loop bits. Use int bit = bits & -bits; bits ^= bit; etc. Return total. Shift diag1 left & full; diag2 >>1. Note diag2 maybe already within full. Use int. Count N=14 365596. Good.\n\nRead input: while? Source uses getContents and words, takes first word if any, otherwise returns. We can mimic: std::string s; if(cin>>s) { int n=stoi(s); cout<<countQueens(n)<<'\\n'; }. If extra tokens ignore. works.\n\nNeed no explanation. final code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 681,
+      "total_tokens": 1284,
+      "completion_tokens": 603,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 322
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 5.062394200009294,
+  "received_at": "2026-11-18T05:10:01.218898+00:00",
+  "logical_request_id": "4bca87a8df328ba091476d509fa2ecadd4e7ccf5f91564f8a2a4c684cef5a4bf",
+  "execution_class": "direct_api"
+}

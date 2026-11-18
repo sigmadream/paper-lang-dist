@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nbool possible(const vector<int>& homes, int c, int dist) {\n    int count = 1;\n    int prev = homes[0];\n\n    for (size_t i = 1; i < homes.size(); ++i) {\n        if (homes[i] - prev >= dist) {\n            ++count;\n            prev = homes[i];\n            if (count >= c) return true;\n        }\n    }\n\n    return count >= c;\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n, c;\n    cin >> n >> c;\n\n    vector<int> homes(n);\n    for (int i = 0; i < n; ++i) {\n        cin >> homes[i];\n    }\n\n    sort(homes.begin(), homes.end());\n\n    int low = 1;\n    int high = homes.back() - homes.front();\n    int answer = 0;\n\n    while (low <= high) {\n        int mid = low + (high - low) / 2;\n\n        if (possible(homes, c, mid)) {\n            answer = mid;\n            low = mid + 1;\n        } else {\n            high = mid - 1;\n        }\n    }\n\n    cout << answer << '\\n';\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 1026,
+    "total_tokens": 1695,
+    "completion_tokens": 669,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 380
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 1026,
+    "total_tokens": 1695,
+    "completion_tokens": 669,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 380
+    }
+  },
+  "cost_usd": 0.0011106,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-dae7c6746032b6dc0534432233134c8c",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_2110\\cpp-via-prolog\\attempt-05\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-dae7c6746032b6dc0534432233134c8c",
+    "object": "chat.completion",
+    "created": 1794998779,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nbool possible(const vector<int>& homes, int c, int dist) {\n    int count = 1;\n    int prev = homes[0];\n\n    for (size_t i = 1; i < homes.size(); ++i) {\n        if (homes[i] - prev >= dist) {\n            ++count;\n            prev = homes[i];\n            if (count >= c) return true;\n        }\n    }\n\n    return count >= c;\n}\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n, c;\n    cin >> n >> c;\n\n    vector<int> homes(n);\n    for (int i = 0; i < n; ++i) {\n        cin >> homes[i];\n    }\n\n    sort(homes.begin(), homes.end());\n\n    int low = 1;\n    int high = homes.back() - homes.front();\n    int answer = 0;\n\n    while (low <= high) {\n        int mid = low + (high - low) / 2;\n\n        if (possible(homes, c, mid)) {\n            answer = mid;\n            low = mid + 1;\n        } else {\n            high = mid - 1;\n        }\n    }\n\n    cout << answer << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer with C++17 code only fenced. Need preserve behavior. Need analyze source prolog potential quirks. It reads tokens line by line split whitespace, first two tokens N C; rest coords. Ignores N essentially. C parse. Coords to ints. msort. solve binary search [1, max-min], count possible with first as installed always. Answer max min distance. Standard.\n\nNeed output integer newline.\n\nNeed maybe edge cases C=1? Constraints C>=2. N possibly larger tokens than N? Valid input exactly N coords. Fine.\n\nNeed main.\n\nPotential issue source: binary_search starts Left=1. For C=1 would be weird but not needed. MaxDist could be 0? coordinates distinct, N>=2, max-min>0. C<=N.\n\nImplement fast input. Read long long? coords 0..1e9 int. N up to 2e5. int safe. Use long long perhaps.\n\nNeed \"Return exactly one complete source file in one fenced code block, no explanation.\" So final must be code block.\n\nNeed include bits/stdc++.h? standard library; C++17. Use <iostream>, <vector>, <algorithm>. Fast ios.\n\nFunction canPlace with minDist, sorted, C. Count=1 prev=sorted[0]; loop. If count>=C true. Binary search low=1 high=last-first ans=0. While low<=high. mid = low+(high-low)/2. if can -> ans=mid low=mid+1 else high=mid-1. output ans.\n\nLet's ensure if C>N? not valid. If C=2 etc.\n\nNeed maybe N unused but read. Coordinates vector N. Input first line N C then N lines maybe arbitrary whitespace. Use >>.\n\nLet's produce."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 1026,
+      "total_tokens": 1695,
+      "completion_tokens": 669,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 380
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.37616360001266,
+  "received_at": "2026-11-18T10:46:23.506387+00:00",
+  "logical_request_id": "ce77e0e1145e2c4adb2b47a85510020e9ec57d6c3552b518891381ad6771d631",
+  "execution_class": "direct_api"
+}

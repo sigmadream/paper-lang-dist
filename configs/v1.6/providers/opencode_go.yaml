@@ -1,0 +1,22 @@
+# Go 가입 워크스페이스의 키가 필요하며 논리 요청별 세션 헤더를 사용합니다.
+# https://opencode.ai/docs/console/harnesses
+provider: opencode_go
+protocol: chat_completions
+base_url: https://opencode.ai/inference/go/openai/v1
+request_path: /chat/completions
+auth:
+  type: bearer
+  api_key_env: OPENCODE_GO_API_KEY
+model: null
+allowed_response_models: []
+generation_profile:
+  name: opencode-go-explicit
+  supported_options: [temperature, top_p, max_tokens]
+generation:
+  temperature: 0.6
+  top_p: 0.95
+  max_tokens: 16384
+request_timeout: 120
+retries: 2
+max_calls: 3600
+max_transport_attempts: 10800

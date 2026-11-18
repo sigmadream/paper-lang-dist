@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```prolog\n:- module(main, [main/0]).\n:- set_prolog_flag(verbose, silent).\n\nmain :-\n    read_line_to(user_input, L1),\n    ( L1 == end_of_file -> true\n    ; atom_number(L1, N),\n      read_line_to(user_input, L2),\n      ( L2 == end_of_file -> M = 0\n      ; atom_number(L2, M)\n      ),\n      read_edges(M, Edges),\n      assertz(n(N)),\n      forall(member(u(A,B), Edges),\n             ( assertz(e(A,B)), assertz(e(B,A)) )),\n      findall(V,\n              ( between(1, N, V),\n                V \\= 1,\n                ( e(1, V)\n                ; e(1, W), e(W, V), W \\= V\n                ) ),\n              Vs),\n      sort(Vs, Sorted),\n      length(Sorted, Ans),\n      write(Ans), nl,\n      retractall(e(_, _)),\n      retractall(n(_))\n    ),\n    halt.\n\nread_edges(0, []) :- !.\nread_edges(M, [E|Es]) :-\n    read_line_to(user_input, Line),\n    ( Line == end_of_file -> E = u(0,0), Es = []\n    ; split_string(Line, \" \", \" \", Parts),\n      maplist(atom_number, Parts, [A, B]),\n      E = u(A, B),\n      M1 is M - 1,\n      read_edges(M1, Es)\n    ).\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794901993,
+    "id": "c5ead2e9-88dd-4159-9fd2-a97a692634af",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 323,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_200a1696d2914838ade321406a3245d7",
+      "trace_id": "21c94c7cc8a74e94a3df4b09d7bf4ecf"
+    },
+    "usage": {
+      "completion_tokens": 323,
+      "prompt_tokens": 695,
+      "prompt_tokens_details": {
+        "cached_tokens": 640
+      },
+      "total_tokens": 1018
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0016646000000000002,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 2.8188743999926373,
+  "logical_request_id": "ed9fe98a16dc362ef637436ae1e4ae4aa8f6bea39a55a1417cd781ceb284fc87",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_5567\\cpp-via-prolog\\attempt-04\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T07:53:12.529427+00:00",
+  "request_id": "c5ead2e9-88dd-4159-9fd2-a97a692634af",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```prolog\n:- module(main, [main/0]).\n:- set_prolog_flag(verbose, silent).\n\nmain :-\n    read_line_to(user_input, L1),\n    ( L1 == end_of_file -> true\n    ; atom_number(L1, N),\n      read_line_to(user_input, L2),\n      ( L2 == end_of_file -> M = 0\n      ; atom_number(L2, M)\n      ),\n      read_edges(M, Edges),\n      assertz(n(N)),\n      forall(member(u(A,B), Edges),\n             ( assertz(e(A,B)), assertz(e(B,A)) )),\n      findall(V,\n              ( between(1, N, V),\n                V \\= 1,\n                ( e(1, V)\n                ; e(1, W), e(W, V), W \\= V\n                ) ),\n              Vs),\n      sort(Vs, Sorted),\n      length(Sorted, Ans),\n      write(Ans), nl,\n      retractall(e(_, _)),\n      retractall(n(_))\n    ),\n    halt.\n\nread_edges(0, []) :- !.\nread_edges(M, [E|Es]) :-\n    read_line_to(user_input, Line),\n    ( Line == end_of_file -> E = u(0,0), Es = []\n    ; split_string(Line, \" \", \" \", Parts),\n      maplist(atom_number, Parts, [A, B]),\n      E = u(A, B),\n      M1 is M - 1,\n      read_edges(M1, Es)\n    ).\n```",
+  "usage": {
+    "completion_tokens": 323,
+    "prompt_tokens": 695,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 1018
+  },
+  "usage_raw": {
+    "completion_tokens": 323,
+    "prompt_tokens": 695,
+    "prompt_tokens_details": {
+      "cached_tokens": 640
+    },
+    "total_tokens": 1018
+  }
+}

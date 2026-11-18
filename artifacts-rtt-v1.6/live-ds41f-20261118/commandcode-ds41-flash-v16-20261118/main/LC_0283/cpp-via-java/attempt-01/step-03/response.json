@@ -1,0 +1,86 @@
+{
+  "text": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StringTokenizer st;\n\n        String line = br.readLine();\n        if (line == null) return;\n        int n = Integer.parseInt(line.trim());\n\n        long[] a = new long[n];\n        int idx = 0;\n        while (idx < n) {\n            String l = br.readLine();\n            if (l == null) break;\n            st = new StringTokenizer(l);\n            while (st.hasMoreTokens() && idx < n) {\n                a[idx++] = Long.parseLong(st.nextToken());\n            }\n        }\n\n        int write = 0;\n        for (int read = 0; read < n; ++read) {\n            if (a[read] != 0) {\n                long tmp = a[write];\n                a[write] = a[read];\n                a[read] = tmp;\n                ++write;\n            }\n        }\n\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i < n; ++i) {\n            if (i > 0) sb.append(' ');\n            sb.append(a[i]);\n        }\n        sb.append('\\n');\n        System.out.print(sb.toString());\n    }\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 665,
+    "total_tokens": 949,
+    "completion_tokens": 284,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 7
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 665,
+    "total_tokens": 949,
+    "completion_tokens": 284,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 7
+    }
+  },
+  "cost_usd": 0.0005403,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-b4a36eae8e0cac619415a7d96b92425c",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0283\\cpp-via-java\\attempt-01\\step-03\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-b4a36eae8e0cac619415a7d96b92425c",
+    "object": "chat.completion",
+    "created": 1794987348,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```java\nimport java.io.*;\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        StringTokenizer st;\n\n        String line = br.readLine();\n        if (line == null) return;\n        int n = Integer.parseInt(line.trim());\n\n        long[] a = new long[n];\n        int idx = 0;\n        while (idx < n) {\n            String l = br.readLine();\n            if (l == null) break;\n            st = new StringTokenizer(l);\n            while (st.hasMoreTokens() && idx < n) {\n                a[idx++] = Long.parseLong(st.nextToken());\n            }\n        }\n\n        int write = 0;\n        for (int read = 0; read < n; ++read) {\n            if (a[read] != 0) {\n                long tmp = a[write];\n                a[write] = a[read];\n                a[read] = tmp;\n                ++write;\n            }\n        }\n\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i < n; ++i) {\n            if (i > 0) sb.append(' ');\n            sb.append(a[i]);\n        }\n        sb.append('\\n');\n        System.out.print(sb.toString());\n    }\n}\n```",
+          "reasoning_content": "Translate to Java. Straightforward."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 665,
+      "total_tokens": 949,
+      "completion_tokens": 284,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 7
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.658450699993409,
+  "received_at": "2026-11-18T07:35:49.118896+00:00",
+  "logical_request_id": "145cdbb691dde89c2d991ad552a6b7884f63ac3f1ad48ec827c43c588b25ea60",
+  "execution_class": "direct_api"
+}

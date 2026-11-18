@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <iostream>\n\nint n;\nint full;\nlong long countSolutions;\n\nvoid dfs(int row, int cols, int diag1, int diag2) {\n    if (row == n) {\n        ++countSolutions;\n        return;\n    }\n\n    int available = full & ~(cols | diag1 | diag2);\n\n    while (available != 0) {\n        int bit = available & -available;\n        available &= available - 1;\n\n        dfs(row + 1,\n            cols | bit,\n            (diag1 | bit) << 1,\n            (diag2 | bit) >> 1);\n    }\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::cin >> n;\n\n    full = (1 << n) - 1;\n    countSolutions = 0;\n\n    dfs(0, 0, 0, 0);\n\n    std::cout << countSolutions << '\\n';\n\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 645,
+    "total_tokens": 1290,
+    "completion_tokens": 645,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 426
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 645,
+    "total_tokens": 1290,
+    "completion_tokens": 645,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 426
+    }
+  },
+  "cost_usd": 0.0009675,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-3da64f9d8f0c1fa8a3e818e5fbca96bd",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_9663\\cpp-via-haskell\\attempt-05\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-3da64f9d8f0c1fa8a3e818e5fbca96bd",
+    "object": "chat.completion",
+    "created": 1794980446,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <iostream>\n\nint n;\nint full;\nlong long countSolutions;\n\nvoid dfs(int row, int cols, int diag1, int diag2) {\n    if (row == n) {\n        ++countSolutions;\n        return;\n    }\n\n    int available = full & ~(cols | diag1 | diag2);\n\n    while (available != 0) {\n        int bit = available & -available;\n        available &= available - 1;\n\n        dfs(row + 1,\n            cols | bit,\n            (diag1 | bit) << 1,\n            (diag2 | bit) >> 1);\n    }\n}\n\nint main() {\n    std::ios::sync_with_stdio(false);\n    std::cin.tie(nullptr);\n\n    std::cin >> n;\n\n    full = (1 << n) - 1;\n    countSolutions = 0;\n\n    dfs(0, 0, 0, 0);\n\n    std::cout << countSolutions << '\\n';\n\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer only code block C++17. Need translate. Need preserve behavior. Input N 1..14. Use bitmask backtracking.\n\nNeed provide complete source file in fenced code block no explanation. C++ main.\n\nWe can implement iterative/recursive. Use int count. N<15, count max 365596 for 14? Actually N-queens counts: n=14 365596, fits int. Use long long safe.\n\nNeed stdin read int. Print count.\n\nImplement recursive lambda or function global. Bitmask: full=(1<<n)-1; dfs(r, cols, diag1, diag2). diag shifting left/right. In Haskell diag1 = (diag1|b)<<1, diag2=(diag2|b)>>1. Standard.\n\nNeed exact output. Use #include <bits/stdc++.h>? Standard libraries shipped. C++17. Could include iostream. We can use std::function or global function. Simple global n, full; long long dfs(int r,int cols,int d1,int d2). Watch shifts within int. N up to14, fine.\n\nBase r==n return 1. mask = full & ~(cols|d1|d2). Loop bits low. b = mask & -mask as unsigned? int okay. mask &= mask-1.\n\nPotential diag overflows? d1 shift left up to n times but masked by full only for available. In Haskell diag can have bits beyond full? Let's check: cols within full. diag1 starts 0, each (diag1|b)<<1. It can have bit n eventually. But mask=full & complement(union). complement infinite negative, then & full so only lower n. d1 shift may grow up to bit n? Over many row depth, max shifts r, bits within n+r? With n=14, bit <=27, safe. d2 right. int safe. Good.\n\nNeed answer only one fenced block. Ensure no explanation."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 645,
+      "total_tokens": 1290,
+      "completion_tokens": 645,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 426
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 5.153249199967831,
+  "received_at": "2026-11-18T05:40:50.206022+00:00",
+  "logical_request_id": "72be1ae57eaa8936f491192faae173f478ccf203486a6ed99483771b994510c9",
+  "execution_class": "direct_api"
+}

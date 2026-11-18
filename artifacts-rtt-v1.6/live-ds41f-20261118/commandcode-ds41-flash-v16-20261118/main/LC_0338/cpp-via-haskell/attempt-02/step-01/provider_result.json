@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Data.Array\nimport Data.List (words)\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let tokens = words input\n    let n = if null tokens then 0 else read (head tokens) :: Int\n    let counts = listArray (0, n) [if i == 0 then 0 else counts ! (i `div` 2) + i `mod` 2 | i <- [0..n]]\n    putStrLn $ unwords $ map show $ elems counts\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 579,
+    "total_tokens": 936,
+    "completion_tokens": 357,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 234
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 579,
+    "total_tokens": 936,
+    "completion_tokens": 357,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 234
+    }
+  },
+  "cost_usd": 0.0006020999999999999,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-812cc368f84c4c991f11af6e096b15bc",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0338\\cpp-via-haskell\\attempt-02\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-812cc368f84c4c991f11af6e096b15bc",
+    "object": "chat.completion",
+    "created": 1794996652,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Data.Array\nimport Data.List (words)\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let tokens = words input\n    let n = if null tokens then 0 else read (head tokens) :: Int\n    let counts = listArray (0, n) [if i == 0 then 0 else counts ! (i `div` 2) + i `mod` 2 | i <- [0..n]]\n    putStrLn $ unwords $ map show $ elems counts\n```",
+          "reasoning_content": "We need translate to Haskell. Read N, output counts 0..N space separated. Edge: N=0 outputs \"0\". Use DP: counts[i] = counts[i div 2] + i mod 2.\n\nNeed output line with spaces. Ensure trailing newline. Let's write.\n\nmain = do\n  input <- getLine\n  let n = read input :: Int\n  let counts = listArray... or simple scan.\n\nUse Data.Array or just build list recursively:\n\ncounts = 0 : [ counts !! (i `div` 2) + i `mod` 2 | i <- [1..n] ]\n\nBut O(n^2) if list indexing. Better use array.\n\nimport Data.Array\ncounts = listArray (0,n) [if i==0 then 0 else counts!(i`div`2)+i`mod`2 | i<-[0..n]]\n\nLazy array self-referential works in Haskell.\n\nThen output: putStrLn $ unwords $ map show $ elems counts\n\nReading robustly: getContents, take first token.\n\nLet's write."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 579,
+      "total_tokens": 936,
+      "completion_tokens": 357,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 234
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.849753300077282,
+  "received_at": "2026-11-18T10:10:55.096782+00:00",
+  "logical_request_id": "e21391c7b6eb57b84b1e98a4cb048e19130109fe6b48e9bd5cc23788d4d17443",
+  "execution_class": "direct_api"
+}

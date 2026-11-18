@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport qualified Data.IntSet as IS\nimport qualified Data.IntMap.Strict as IM\nimport Data.List (foldl')\nimport Data.Maybe (fromMaybe)\n\nmain :: IO ()\nmain = do\n  inp <- getContents\n  let (n:m:rest) = map read (words inp) :: [Int]\n      edges = pairs rest\n      adj = foldl' add IM.empty edges\n      add acc (a, b) = IM.insertWith (++) a [b] (IM.insertWith (++) b [a] acc)\n      pairs (x:y:xs) = (x, y) : pairs xs\n      pairs _ = []\n      bfs _ _ _ [] = ()\n      bfs dist visited _ _ = dist `seq` visited `seq` ()\n  let start = IS.singleton 1\n      dist0 = IM.singleton 1 (0 :: Int)\n      go dist visited frontier d\n        | d > 2 || null frontier = count dist\n        | otherwise =\n            let newNeighbors = [ v\n                               | u <- frontier\n                               , v <- fromMaybe [] (IM.lookup u adj)\n                               , not (IS.member v visited) ]\n                uniq = IS.fromList newNeighbors\n                visited' = IS.union visited uniq\n                dist' = foldl' (\\acc v -> IM.insert v d acc) dist (IS.toList uniq)\n            in go dist' visited' (IS.toList uniq) (d + 1)\n      count dist = length [ () | (_, d) <- IM.toList dist, d == 1 || d == 2 ]\n      ans = go dist0 start [1] 1\n  print ans\n```\n\nWait — there's a bug: `bfs` is unused and ill-typed. Let me provide a clean version.\n\n```haskell\nmodule Main (main) where\n\nimport qualified Data.IntSet as IS\nimport qualified Data.IntMap.Strict as IM\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  inp <- getContents\n  let ws = map read (words inp) :: [Int]\n      n = head ws\n      m = ws !! 1\n      rest = drop 2 ws\n      edges = go rest\n        where go (x:y:xs) = (x, y) : go xs\n              go _ = []\n      adj = foldl' add IM.empty edges\n      add acc (a, b) = IM.insertWith (++) a [b] (IM.insertWith (++) b [a] acc)\n      dist0 = IM.singleton 1 (0 :: Int)\n      visited0 = IS.singleton 1\n      bfs dist visited [] _ = dist\n      bfs dist visited frontier d\n        | d > 2 = dist\n        | otherwise =\n            let uniq = IS.difference\n                         (IS.fromList (concat [ fromMaybe [] (IM.lookup u adj) | u <- frontier ]))\n                         visited\n                visited' = IS.union visited uniq\n                dist' = foldl' (\\acc v -> IM.insert v d acc) dist (IS.toList uniq)\n            in bfs dist' visited' (IS.toList uniq) (d + 1)\n      fromMaybe dflt Nothing = dflt\n      fromMaybe _ (Just x) = x\n      finalDist = bfs dist0 visited0 [1] 1\n      ans = length [ () | (_, d) <- IM.toList finalDist, d == 1 || d == 2 ]\n  print ans\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794897627,
+    "id": "593087ad-c5f0-4f94-8797-7f5ac8c91c16",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 741,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_5cc207071ae64f8da599ded42de8863d",
+      "trace_id": "3ee3cb81524a458ea577f0e066f2d6ba"
+    },
+    "usage": {
+      "completion_tokens": 741,
+      "prompt_tokens": 695,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "total_tokens": 1436
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0037956400000000003,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 6.356405800033826,
+  "logical_request_id": "a6e427a1202c0e82a4ed9dbeb84d27fd6ba5d1c33065010e5876db4ea36e1475",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_5567\\cpp-via-haskell\\attempt-03\\step-03\\response_body.txt",
+  "received_at": "2026-11-17T06:40:27.269136+00:00",
+  "request_id": "593087ad-c5f0-4f94-8797-7f5ac8c91c16",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```haskell\nmodule Main (main) where\n\nimport qualified Data.IntSet as IS\nimport qualified Data.IntMap.Strict as IM\nimport Data.List (foldl')\nimport Data.Maybe (fromMaybe)\n\nmain :: IO ()\nmain = do\n  inp <- getContents\n  let (n:m:rest) = map read (words inp) :: [Int]\n      edges = pairs rest\n      adj = foldl' add IM.empty edges\n      add acc (a, b) = IM.insertWith (++) a [b] (IM.insertWith (++) b [a] acc)\n      pairs (x:y:xs) = (x, y) : pairs xs\n      pairs _ = []\n      bfs _ _ _ [] = ()\n      bfs dist visited _ _ = dist `seq` visited `seq` ()\n  let start = IS.singleton 1\n      dist0 = IM.singleton 1 (0 :: Int)\n      go dist visited frontier d\n        | d > 2 || null frontier = count dist\n        | otherwise =\n            let newNeighbors = [ v\n                               | u <- frontier\n                               , v <- fromMaybe [] (IM.lookup u adj)\n                               , not (IS.member v visited) ]\n                uniq = IS.fromList newNeighbors\n                visited' = IS.union visited uniq\n                dist' = foldl' (\\acc v -> IM.insert v d acc) dist (IS.toList uniq)\n            in go dist' visited' (IS.toList uniq) (d + 1)\n      count dist = length [ () | (_, d) <- IM.toList dist, d == 1 || d == 2 ]\n      ans = go dist0 start [1] 1\n  print ans\n```\n\nWait — there's a bug: `bfs` is unused and ill-typed. Let me provide a clean version.\n\n```haskell\nmodule Main (main) where\n\nimport qualified Data.IntSet as IS\nimport qualified Data.IntMap.Strict as IM\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  inp <- getContents\n  let ws = map read (words inp) :: [Int]\n      n = head ws\n      m = ws !! 1\n      rest = drop 2 ws\n      edges = go rest\n        where go (x:y:xs) = (x, y) : go xs\n              go _ = []\n      adj = foldl' add IM.empty edges\n      add acc (a, b) = IM.insertWith (++) a [b] (IM.insertWith (++) b [a] acc)\n      dist0 = IM.singleton 1 (0 :: Int)\n      visited0 = IS.singleton 1\n      bfs dist visited [] _ = dist\n      bfs dist visited frontier d\n        | d > 2 = dist\n        | otherwise =\n            let uniq = IS.difference\n                         (IS.fromList (concat [ fromMaybe [] (IM.lookup u adj) | u <- frontier ]))\n                         visited\n                visited' = IS.union visited uniq\n                dist' = foldl' (\\acc v -> IM.insert v d acc) dist (IS.toList uniq)\n            in bfs dist' visited' (IS.toList uniq) (d + 1)\n      fromMaybe dflt Nothing = dflt\n      fromMaybe _ (Just x) = x\n      finalDist = bfs dist0 visited0 [1] 1\n      ans = length [ () | (_, d) <- IM.toList finalDist, d == 1 || d == 2 ]\n  print ans\n```",
+  "usage": {
+    "completion_tokens": 741,
+    "prompt_tokens": 695,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1436
+  },
+  "usage_raw": {
+    "completion_tokens": 741,
+    "prompt_tokens": 695,
+    "prompt_tokens_details": {
+      "cached_tokens": 384
+    },
+    "total_tokens": 1436
+  }
+}

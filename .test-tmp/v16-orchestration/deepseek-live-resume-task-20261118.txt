@@ -1,0 +1,16 @@
+﻿작업 목표: 사용자가 2026-11-18에 명시적으로 재개를 요청한 DeepSeek v4 Pro 유료 실험을 인계 명세대로 실행하고 결과와 증거를 조정자에게 보고해 주십시오. 작업 경로는 C:/Users/sigma/orca/workspaces/paper-lang-dist/stickleback이며 현재 작업 공간을 공유합니다. 사용자 요청과 연결 문서 artifacts-rtt-v1.6/live-commandcode-20261117/deepseek-handoff.md를 반드시 읽어 주십시오. 관련 최종 검토는 .test-tmp/v16-orchestration/deepseek-restart-final-review.md 및 artifacts-rtt-v1.6/live-deepseek-20261118/independent-review.json입니다. 사용자의 재개 요청으로 이전 날짜의 유료 중지는 해제됐으며 별도 승인을 요청하지 마십시오.
+
+조정자가 확인한 현 상태: 새 루트 status.json은 offline_preparation_complete이고 아직 새 캠페인은 실행되지 않았습니다. 기존 전체 회귀 531개 통과와 독립 검토 증거가 있습니다. frozen source/config/기존 근거를 변경하지 않는 실행 업무이므로 중복 전체 테스트나 prepare 재작성은 필요하지 않습니다. 실행 전 현재 래퍼의 assert_sources, require_review, assert_live_date, assert_no_unknown_requests 등 실제 관문으로 소스·사본·보존 근거·검토 해시를 오프라인 검증해 주십시오. prepared_manifest_sha256도 실제 파일 SHA256과 대조해 주십시오. 실행 잠금과 중복 프로세스 여부를 확인하고 인증값은 절대 출력하거나 복사하지 마십시오. 별도 실행 점검 증거 파일을 새 루트에 작성할 수 있습니다.
+
+확정 범위: 새 캠페인 commandcode-deepseek_v4_pro-v16-20261118의 새 독립 OK 사전 점검 1회→전체 파일럿 12슬롯→완전성 감사→본 실험 동결→300슬롯→공식 보고 및 재현 검증입니다. 정확 모델 deepseek/deepseek-v4-pro, max_tokens 16384, reasoning_effort low이며 GLM/Flash/다른 모델을 실행하지 마십시오. 문제·프롬프트·평가·임계치·스케줄·중단 규칙은 유지해 주십시오. 기존 중단 캠페인의 4관측·응답·불명 요청과 새 결과를 합치거나 재사용하지 마십시오. 기존 원자료와 두 unknown/예약은 그대로 보존합니다.
+
+신규 비용 상한은 사전 점검 0.24 USD, 파일럿 49.62 USD, 본 실험 49.32 USD, 합계 99.18 USD입니다. 전체 기존 배정 포함 200.50 USD 이내입니다. 논리/전송 한도와 요청 예약도 기존 새 설정 그대로 유지합니다.
+
+정확 실행 명령(PowerShell):
+uv run --env-file 'C:/Users/sigma/works/paper-lang-dist/.env' --no-sync python scripts/run_deepseek_v16_20261118.py --run --review-evidence artifacts-rtt-v1.6/live-deepseek-20261118/independent-review.json > artifacts-rtt-v1.6/live-deepseek-20261118/run.log 2>&1
+
+실행은 위 전용 래퍼 한 프로세스로 수행해 주십시오. 스크립트나 설정·계약·준비 manifest·검토 증거를 수정하거나 guard를 우회하지 마십시오. 네트워크 장애·unknown·inflight·예산 관문으로 차단되면 원장을 초기화하거나 새 호출로 대체하지 마십시오. 비정상 종료가 나면 Task 실패로 보고하고 단계·저장 관측·불명 요청·비용·진단 근거를 안전하게 남기십시오. 재시작이 불명 요청 중복 생성으로 이어지면 실행하지 마십시오. 수정이 필요하면 근거와 함께 조정자에게 질문하십시오.
+
+허용 쓰기 범위: 새 실험 출력 루트 artifacts-rtt-v1.6/live-deepseek-20261118 및 필요 시 .test-tmp/v16-orchestration의 이번 실행 기록입니다. 별도 하위 작업자, git add/commit, 체크아웃은 생성하지 마십시오. 모든 설명과 작성 문서는 한국어 높임말로 작성하며 볼드/이탤릭을 쓰지 마십시오. 기존 수정사항은 건드리지 마십시오. 파이썬 실행과 의존성은 uv를 사용해 주십시오.
+
+장기 실행을 끝까지 감독하면서 사전 점검/파일럿/동결/본 실험 75슬롯 단위/보고 완료마다 orchestration send로 조정자에게 진행 메시지를 전달해 주십시오. 실행 프로세스의 polling은 필요한 간격으로 하되 orchestration check/watch polling은 하지 마십시오. 사용자께 전달할 실제 진행 근거를 포함해 주십시오. 완료 시 공식 보고와 재현 검증 종료 코드, 12/300 슬롯 상태, 임계치 결과, 비용·토큰·전송·비밀정보 감사 및 기존 자료 해시 보존 여부를 확인하여 한국어 최종 실행 보고서를 새 출력 루트에 작성하고 worker_done으로 경로와 핵심 결과를 보고해 주십시오. 실험이 차단되면 완료로 표시하지 말고 실패 결과와 안전한 상태를 보고해 주십시오.

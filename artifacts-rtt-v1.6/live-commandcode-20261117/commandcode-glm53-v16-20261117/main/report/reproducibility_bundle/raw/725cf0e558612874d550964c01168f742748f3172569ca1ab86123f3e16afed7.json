@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  s <- getLine\n  t <- getLine\n  let counts = foldl' (\\acc c -> acc ++ [fromEnum c - fromEnum 'a']) [] s\n  let ok = length s == length t && go counts (map (\\c -> fromEnum c - fromEnum 'a') t)\n  putStrLn (if ok then \"1\" else \"0\")\n  where\n    go [] [] = True\n    go (c:cs) (d:ds) = c == d && go cs ds\n    go _ _ = False\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794898600,
+    "id": "cb9ca031-9174-42c5-beb3-f0ad864f331b",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 146,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_fffbfd50f0c24579a9332d0c222e75b5",
+      "trace_id": "cab0865df1f2425f8642ad96841d66ea"
+    },
+    "usage": {
+      "completion_tokens": 146,
+      "prompt_tokens": 606,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 752
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0013448800000000001,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 1.866024799994193,
+  "logical_request_id": "c18cb8f588bfa9780d780fb71b7fbda9351c4e6d224b9338f5e9318b255153a8",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\LC_0242\\cpp-via-haskell\\attempt-03\\step-01\\response_body.txt",
+  "received_at": "2026-11-17T06:56:39.667306+00:00",
+  "request_id": "cb9ca031-9174-42c5-beb3-f0ad864f331b",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```haskell\nmodule Main (main) where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  s <- getLine\n  t <- getLine\n  let counts = foldl' (\\acc c -> acc ++ [fromEnum c - fromEnum 'a']) [] s\n  let ok = length s == length t && go counts (map (\\c -> fromEnum c - fromEnum 'a') t)\n  putStrLn (if ok then \"1\" else \"0\")\n  where\n    go [] [] = True\n    go (c:cs) (d:ds) = c == d && go cs ds\n    go _ _ = False\n```",
+  "usage": {
+    "completion_tokens": 146,
+    "prompt_tokens": 606,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 752
+  },
+  "usage_raw": {
+    "completion_tokens": 146,
+    "prompt_tokens": 606,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 752
+  }
+}

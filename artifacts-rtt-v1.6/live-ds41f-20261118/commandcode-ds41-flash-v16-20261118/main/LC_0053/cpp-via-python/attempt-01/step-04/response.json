@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; ++i) cin >> a[i];\n\n    long long cur = a[0];\n    long long best = a[0];\n\n    for (int i = 1; i < n; ++i) {\n        cur = max(a[i], cur + a[i]);\n        best = max(best, cur);\n    }\n\n    cout << best << '\\n';\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 517,
+    "total_tokens": 749,
+    "completion_tokens": 232,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 80
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 517,
+    "total_tokens": 749,
+    "completion_tokens": 232,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 80
+    }
+  },
+  "cost_usd": 0.0004335,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-0a5f7fb7717059347f00cbbe9098fd58",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-python\\attempt-01\\step-04\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-0a5f7fb7717059347f00cbbe9098fd58",
+    "object": "chat.completion",
+    "created": 1794985276,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    if (!(cin >> n)) return 0;\n\n    vector<long long> a(n);\n    for (int i = 0; i < n; ++i) cin >> a[i];\n\n    long long cur = a[0];\n    long long best = a[0];\n\n    for (int i = 1; i < n; ++i) {\n        cur = max(a[i], cur + a[i]);\n        best = max(best, cur);\n    }\n\n    cout << best << '\\n';\n    return 0;\n}\n```",
+          "reasoning_content": "We need answer exactly one fenced code block cpp. Need translate. No explanation. Ensure handles input. Use long long? Elements max 10000 n 1e5 sum 1e9 fits int, but safe long long. Output best. Code C++17 main reads. Let's craft concise. Ensure if no data return. Use vector maybe. Fenced code block only."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 517,
+      "total_tokens": 749,
+      "completion_tokens": 232,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.9495328000048175,
+  "received_at": "2026-11-18T07:01:17.120100+00:00",
+  "logical_request_id": "c804bc797815aee9cdac86f6899ddb3dcf7ca0214c2aecf2198f265b87e6c2c5",
+  "execution_class": "direct_api"
+}

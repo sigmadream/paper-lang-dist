@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let s = takeWhile (not . isSpace) input\n    putStrLn (if s == reverse s then \"1\" else \"0\")\n  where\n    isSpace c = c == ' ' || c == '\\n' || c == '\\r' || c == '\\t' || c == '\\f' || c == '\\v'\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 472,
+    "total_tokens": 658,
+    "completion_tokens": 186,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 87
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 472,
+    "total_tokens": 658,
+    "completion_tokens": 186,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 87
+    }
+  },
+  "cost_usd": 0.0003648,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-e29b08f06a8de54c3d5cd3a939fd84b4",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_10988\\cpp-via-haskell\\attempt-04\\step-05\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-e29b08f06a8de54c3d5cd3a939fd84b4",
+    "object": "chat.completion",
+    "created": 1794990419,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let s = takeWhile (not . isSpace) input\n    putStrLn (if s == reverse s then \"1\" else \"0\")\n  where\n    isSpace c = c == ' ' || c == '\\n' || c == '\\r' || c == '\\t' || c == '\\f' || c == '\\v'\n```",
+          "reasoning_content": "We need answer exactly one fenced code block with Haskell source, no explanation. Need translate. Need preserve stdin/stdout. Simple.\n\nNeed consider input whitespace? Source reads token via >> s, so reads one word. Spec string one lowercase no spaces. Haskell getLine maybe fine. Could use getContents and takeWhile not isSpace to mirror token. Output 1 if palindrome. Need main.\n\nEnsure fenced code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 472,
+      "total_tokens": 658,
+      "completion_tokens": 186,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 87
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 3.0986506000626832,
+  "received_at": "2026-11-18T08:27:00.435730+00:00",
+  "logical_request_id": "3299b7cab052890bab7a8b1c854182c79328051205c69051c8cc250b31279799",
+  "execution_class": "direct_api"
+}

@@ -1,0 +1,94 @@
+{
+  "actual_model": "zai-org/GLM-5.3",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```cpp\n#include <iostream>\n#include <string>\n#include <sstream>\nusing namespace std;\n\nstatic string moves;\n\nvoid hanoi(int n, int start, int mid, int end) {\n    if (n == 1) {\n        moves += to_string(start);\n        moves += ' ';\n        moves += to_string(end);\n        moves += '\\n';\n        return;\n    }\n    hanoi(n - 1, start, end, mid);\n    moves += to_string(start);\n    moves += ' ';\n    moves += to_string(end);\n    moves += '\\n';\n    hanoi(n - 1, mid, start, end);\n}\n\nint main() {\n    string s;\n    if (!getline(cin, s)) return 0;\n    string t;\n    {\n        size_t a = s.find_first_not_of(\" \\t\\r\\n\");\n        if (a == string::npos) return 0;\n        size_t b = s.find_last_not_of(\" \\t\\r\\n\");\n        t = s.substr(a, b - a + 1);\n    }\n    if (t.empty()) return 0;\n    int n;\n    istringstream iss(t);\n    if (!(iss >> n)) return 0;\n    hanoi(n, 1, 2, 3);\n    long long count = (1LL << n) - 1;\n    cout << count << '\\n' << moves;\n    return 0;\n}\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794899297,
+    "id": "4d1cb223-1fe1-43ab-906d-acdf1811c720",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 299,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_1b6e5a68fd7e4dfb8658db2a98c18f84",
+      "trace_id": "0a252a62f11045c1b2dbe7b0bdfcd43a"
+    },
+    "usage": {
+      "completion_tokens": 299,
+      "prompt_tokens": 697,
+      "prompt_tokens_details": {
+        "cached_tokens": 576
+      },
+      "total_tokens": 996
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0016347600000000003,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 3.368351300014183,
+  "logical_request_id": "fe4daea75fd13c297b3c35a017f35e77f041b5aa2c3d4005fb43c469e959a7cd",
+  "model_evidence": {
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": [],
+    "requested": "zai-org/GLM-5.3",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_11729\\cpp-via-java\\attempt-02\\step-08\\response_body.txt",
+  "received_at": "2026-11-17T07:08:17.087954+00:00",
+  "request_id": "4d1cb223-1fe1-43ab-906d-acdf1811c720",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "requested_model": "zai-org/GLM-5.3",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low",
+    "temperature": 0.6,
+    "top_p": 0.95
+  },
+  "text": "```cpp\n#include <iostream>\n#include <string>\n#include <sstream>\nusing namespace std;\n\nstatic string moves;\n\nvoid hanoi(int n, int start, int mid, int end) {\n    if (n == 1) {\n        moves += to_string(start);\n        moves += ' ';\n        moves += to_string(end);\n        moves += '\\n';\n        return;\n    }\n    hanoi(n - 1, start, end, mid);\n    moves += to_string(start);\n    moves += ' ';\n    moves += to_string(end);\n    moves += '\\n';\n    hanoi(n - 1, mid, start, end);\n}\n\nint main() {\n    string s;\n    if (!getline(cin, s)) return 0;\n    string t;\n    {\n        size_t a = s.find_first_not_of(\" \\t\\r\\n\");\n        if (a == string::npos) return 0;\n        size_t b = s.find_last_not_of(\" \\t\\r\\n\");\n        t = s.substr(a, b - a + 1);\n    }\n    if (t.empty()) return 0;\n    int n;\n    istringstream iss(t);\n    if (!(iss >> n)) return 0;\n    hanoi(n, 1, 2, 3);\n    long long count = (1LL << n) - 1;\n    cout << count << '\\n' << moves;\n    return 0;\n}\n```",
+  "usage": {
+    "completion_tokens": 299,
+    "prompt_tokens": 697,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 996
+  },
+  "usage_raw": {
+    "completion_tokens": 299,
+    "prompt_tokens": 697,
+    "prompt_tokens_details": {
+      "cached_tokens": 576
+    },
+    "total_tokens": 996
+  }
+}

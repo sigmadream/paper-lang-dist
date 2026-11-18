@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let ws = words input\n  case ws of\n    [] -> return ()\n    (nw:rest) -> do\n      let n = read nw :: Int\n          a = map read (take n rest) :: [Integer]\n      case a of\n        [] -> print (0 :: Integer)\n        (x:xs) ->\n          let (_, best) = foldl' step (x, x) xs\n              step (cur, bestSoFar) v =\n                let cur' = max v (cur + v)\n                in (cur', max bestSoFar cur')\n          in print best\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 610,
+    "total_tokens": 1106,
+    "completion_tokens": 496,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 335
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 610,
+    "total_tokens": 1106,
+    "completion_tokens": 496,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 335
+    }
+  },
+  "cost_usd": 0.0007781999999999999,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-ea55e34efe415c5476ba41af324654dc",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0053\\cpp-via-haskell\\attempt-02\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-ea55e34efe415c5476ba41af324654dc",
+    "object": "chat.completion",
+    "created": 1794992659,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Data.List (foldl')\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let ws = words input\n  case ws of\n    [] -> return ()\n    (nw:rest) -> do\n      let n = read nw :: Int\n          a = map read (take n rest) :: [Integer]\n      case a of\n        [] -> print (0 :: Integer)\n        (x:xs) ->\n          let (_, best) = foldl' step (x, x) xs\n              step (cur, bestSoFar) v =\n                let cur' = max v (cur + v)\n                in (cur', max bestSoFar cur')\n          in print best\n```",
+          "reasoning_content": "We need answer only Haskell code block. Need preserve behavior. Read N then N ints, compute max subarray sum. Input valid N>=1. Output integer newline. Haskell module Main main IO. Use standard libs. Need be careful read ints. We can parse all words. N first, then take. Use Int? Elements up to 10000, N 100000, sum up to 1e9 fits Int32 (1e9 < 2.147e9), but use Integer or Int64. Haskell Int on 64-bit fine. Compute Kadane. We can implement foldl'. Need first element. If n>=1.\n\nCode:\nmodule Main where\nimport System.IO\nimport Data.List (foldl')\nmain :: IO ()\nmain = do\n  input <- getContents\n  let ws = words input\n  case ws of\n    [] -> return ()\n    (nw:rest) -> do\n      let n = read nw :: Int\n          a = map read (take n rest) :: [Integer] -- or Int\n          (_, best) = foldl' step (head a, head a) (tail a)\n          step (cur,best) x = let cur' = max x (cur+x) in (cur', max best cur')\n      print best\nBut if n maybe 0? Spec N>=1. Could avoid head. Use case a of [] -> print 0? Not needed but safe. Need no explanation. Could use Integer.\n\nNeed ensure lazy getContents okay. Use print best prints Integer. Good.\n\nReturn fenced code only."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 610,
+      "total_tokens": 1106,
+      "completion_tokens": 496,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 335
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 4.048518399940804,
+  "received_at": "2026-11-18T09:04:21.776956+00:00",
+  "logical_request_id": "e891c22cde3c77050350d919fcbe9287eb07b851228c9bfb7e08b36000d07cf0",
+  "execution_class": "direct_api"
+}

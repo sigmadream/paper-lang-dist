@@ -1,0 +1,86 @@
+{
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "```prolog\n:- use_module(library(readutil)).\n\nmain :-\n    read_line_to_string(user_input, Line),\n    split_string(Line, \" \\t\\r\\n\", \" \\t\\r\\n\", Parts),\n    Parts = [MStr, NStr | _],\n    number_string(M, MStr),\n    number_string(N, NStr),\n    length(DP0, N),\n    maplist(=(1), DP0),\n    Rows is M - 1,\n    iterate_rows(Rows, DP0, DP),\n    last(DP, Answer),\n    writeln(Answer).\n\niterate_rows(0, DP, DP) :- !.\niterate_rows(K, DP, Result) :-\n    K > 0,\n    update_dp(DP, DP1),\n    K1 is K - 1,\n    iterate_rows(K1, DP1, Result).\n\nupdate_dp([X | Xs], [X | Ys]) :-\n    update_dp_helper(Xs, X, Ys).\n\nupdate_dp_helper([], _, []).\nupdate_dp_helper([A | As], Prev, [B | Bs]) :-\n    B is A + Prev,\n    update_dp_helper(As, B, Bs).\n```",
+          "reasoning_content": "We need answer only code block prolog. Need translate. Preserve stdin M N, output dp. Prolog main/0. Need read integers from stdin, compute unique paths. Need SWI-Prolog standard. Implement reading all? First line M N. Could read two integers. Output integer newline.\n\nNeed be careful SWI read? Use read_line_to_string and split? Simplest: read two terms with read/1? Input \"3 7\\n\" read(M), read(N) works? In SWI, read/1 reads terms separated by whitespace? Actually read reads a term terminated by period. \"3 7\" no period may error. Better use library(readutil) read_line_to_string? Need parse first line. Or read all input and split. We can use read_string(end_of_file, _, S) to read all stdin? SWI read_string/3 reads chars up to delimiter, with end_of_file? There is read_string(end_of_file, _, String) maybe. Or use current_input, read_line_to_string.\n\nImplement:\n:- use_module(library(readutil)).\nmain :-\n    read_line_to_string(user_input, Line),\n    split_string(Line, \" \\t\\r\\n\", \" \\t\\r\\n\", Parts),\n    maplist(number_string? Actually atom_to_term), parse ints.\nCould just tokens. Need if empty? valid.\n\nequiv: Parts atoms strings? split_string returns list of strings (atoms? In SWI, strings if double_quotes? Actually split_string(+String, +SepChars, +PadChars, -SubStrings), SubStrings are strings? Let's recall: split_string(\"a b\", \" \", \" \", L). L = [\"a\",\"b\"] with SWI default double_quotes code? In modern SWI strings are list? Hmm. Safer use number_codes with atom? Could use read_line_to_string returns string (list of chars), split_string returns list of strings. Then maplist(atom_number?) Actually atom_number expects atom. Could convert with atom_string(A, S). Or number_string(N,S).\n\nSWI has number_string/2: number_string(Number, String). It can parse. maplist(number_string, Nums, Parts) maybe number_string expects String. If Parts strings, works. Then M,N.\n\nAlternatively read all input and use atomic_list_concat? Let's use robust:\nread_line_to_string(user_input, Line),\nsplit_string(Line, \" \\t\", \" \\t\", Parts),\nmaplist(number_string, [M,N|_], Parts)? But maplist length mismatch if extra. Use Parts = [MStr,NStr|_], number_string(M,MStr), number_string(N,NStr). number_string with string. If Parts atoms? In SWI, split_string returns list of strings? Let's verify. SWI docs: split_string(+String, +SepChars, +PadChars, -SubStrings) where SubStrings is list of strings? Example: split_string(\"a,b\", \",\", \"\", L). L = [\"a\",\"b\"]. Double quote is string in SWI. Yes.\n\nCould use read_line_to_string; if no input, halt.\n\nComputation: unique paths. We can compute iterative DP as source. Need list of ones length N. Then for i from 1 to M-1 update. In Prolog, easier formula combinatorial? M,N <=100, answer <=2e9. Compute combinations: paths = C(M+N-2, M-1). Need big ints no issue. Use factorial? Or recurrence. Simpler DP with list.\n\nDP update: Given list [1,1,...] length N. For each row from 1 to M-1: update list: first remains 1, each next = prev_dp[j] + new_dp[j-1]. Need implement.\n\nCould write:\ninitial_dp(N, Ones) :- length(Ones,N), maplist(=(1), Ones).\n\nupdate_dp([X|Xs], [X|Ys]) :- update_dp_helper(Xs, X, Ys).\nupdate_dp_helper([], _, []).\nupdate_dp_helper([A|As], Prev, [B|Bs]) :-\n    B is A + Prev,\n    update_dp_helper(As, B, Bs).\n\nThen iterate M-1:\niterate(0, DP, DP).\niterate(K, DP, Result) :- K > 0, update_dp(DP, DP1), K1 is K-1, iterate(K1, DP1, Result).\n\nNeed last element: last(DP, Ans). Output writeln(Ans).\n\nBut wait initial vector dp(N,1). For M rows, loop i=1 to M-1 updates. If M=1, no update, answer dp[N-1]=1. Correct for one row. For N maybe 1, dp length 1. update_dp on [X] -> [X], okay. For M=1 N anything answer 1. For M=0 not valid.\n\nNeed parse input. M,N first line. Could use read_line_to_string. Import library(readutil). Ensure main/0. No init directives.\n\nPotential issue: main/0 should not have initialization. Fine.\n\nNeed exact one complete source file in fenced code block. No explanation.\n\nLet's produce Prolog code with module? Specification says SWI-Prolog, define main/0; no module requirement. Could include module? \"Prolog: SWI-Prolog, define main/0\". Usually just main. Avoid module to not require module Main? Prolog not Haskell. Use only standard. Code:\n\n:- use_module(library(readutil)).\n\nmain :-\n    ( read_line_to_string(user_input, Line) ->\n        true\n    ;   halt\n    ),\n    split_string(Line, \" \\t\\r\\n\", \" \\t\\r\\n\", Parts),\n    Parts = [Ms, Ns | _],\n    number_string(M, Ms),\n    number_string(N, Ns),\n    length(DP0, N),\n    maplist(=(1), DP0),\n    Rows is M - 1,\n    iterate_rows(Rows, DP0, DP),\n    last(DP, Ans),\n    writeln(Ans).\n\nNeed if Line empty? Valid input.\n\niterate_rows(0, DP, DP) :- !.\niterate_rows(K, DP, Result) :-\n    K > 0,\n    update_dp(DP, DP1),\n    K1 is K - 1,\n    iterate_rows(K1, DP1, Result).\n\nupdate_dp([X|Xs], [X|Ys]) :-\n    update_dp_helper(Xs, X, Ys).\n\nupdate_dp_helper([], _, []).\nupdate_dp_helper([A|As], Prev, [B|Bs]) :-\n    B is A + Prev,\n    update_dp_helper(As, B, Bs).\n\nNeed cut in iterate_rows base. Good.\n\nPotential parsing: If split_string returns atoms not strings? Let's ensure. In SWI, number_string(Number, String) where String is string. If Parts are atoms? Example split_string(\"3 7\",\" \",\" \",L). L = [\"3\",\"7\"]. In SWI-Prolog, double_quoted are strings by default? Since 7, yes string. If atom, number_string fails. Could robust use atom_to_term? Or number_codes. We can use catch(number_string...). Another approach: read_line_to_string returns string, split_string returns list of strings (each a string). Good.\n\nCould use atom_number if Parts atoms. To be robust, use `atom_number`? But if Parts strings, atom_number expects atom. Could convert with `atom_string(A, S)` then atom_number. Or use `number_string` with string. I think okay.\n\nIf input may have first line leading spaces? split_string handles padding.\n\nNeed if M,N possibly line has other whitespace. Good.\n\nAlternative parse from entire stdin using read_string? But line enough per contract first line. Good.\n\nNeed maybe `writeln` prints term with newline. Good.\n\nCheck example M=3,N=7. DP0 length 7 ones. Update row1: [1,2,3,4,5,6,7]. update row2: [1,3,6,10,15,21,28]. last 28.\n\nNeed final only code block.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794993131,
+    "id": "chatcmpl-42aeb82ac0dc9d29c5b1f2277db8f55c",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 2032,
+      "completion_tokens_details": {
+        "reasoning_tokens": 1768
+      },
+      "prompt_tokens": 528,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 2560
+    }
+  },
+  "cost_source": "estimated",
+  "cost_usd": 0.0025968000000000002,
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "execution_class": "direct_api",
+  "finish_reason": "stop",
+  "latency_seconds": 12.432486200006679,
+  "logical_request_id": "6321a8b33e928f676da291eb63179b2e8bcc34c0341e1954aff487be26246c00",
+  "model_evidence": {
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": [],
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "status": "exact",
+    "valid": true
+  },
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-prolog\\attempt-02\\step-03\\response_body.txt",
+  "received_at": "2026-11-18T09:12:22.193226+00:00",
+  "request_id": "chatcmpl-42aeb82ac0dc9d29c5b1f2277db8f55c",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "text": "```prolog\n:- use_module(library(readutil)).\n\nmain :-\n    read_line_to_string(user_input, Line),\n    split_string(Line, \" \\t\\r\\n\", \" \\t\\r\\n\", Parts),\n    Parts = [MStr, NStr | _],\n    number_string(M, MStr),\n    number_string(N, NStr),\n    length(DP0, N),\n    maplist(=(1), DP0),\n    Rows is M - 1,\n    iterate_rows(Rows, DP0, DP),\n    last(DP, Answer),\n    writeln(Answer).\n\niterate_rows(0, DP, DP) :- !.\niterate_rows(K, DP, Result) :-\n    K > 0,\n    update_dp(DP, DP1),\n    K1 is K - 1,\n    iterate_rows(K1, DP1, Result).\n\nupdate_dp([X | Xs], [X | Ys]) :-\n    update_dp_helper(Xs, X, Ys).\n\nupdate_dp_helper([], _, []).\nupdate_dp_helper([A | As], Prev, [B | Bs]) :-\n    B is A + Prev,\n    update_dp_helper(As, B, Bs).\n```",
+  "usage": {
+    "completion_tokens": 2032,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1768
+    },
+    "prompt_tokens": 528,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 2560
+  },
+  "usage_raw": {
+    "completion_tokens": 2032,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1768
+    },
+    "prompt_tokens": 528,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 2560
+  }
+}

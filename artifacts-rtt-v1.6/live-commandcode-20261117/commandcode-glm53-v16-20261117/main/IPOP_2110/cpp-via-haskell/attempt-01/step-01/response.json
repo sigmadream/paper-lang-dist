@@ -1,0 +1,94 @@
+{
+  "text": "```haskell\nmodule Main (main) where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.List (sort)\nimport Data.Maybe (fromMaybe)\n\nreadInts :: IO [Int]\nreadInts = do\n  s <- BS.getContents\n  return $ map (fst . fromMaybe (0,\"\") . BS.readInt) (BS.words s)\n\nmain :: IO ()\nmain = do\n  xs <- readInts\n  case xs of\n    (n:c:rest) -> do\n      let a = take n rest\n          sorted = sort a\n          lo0 = 1\n          hi0 = last sorted - head sorted\n          feasible mid = go (tail sorted) (head sorted) 1 >= c\n            where go [] _ cnt = cnt\n                  go (x:xs') prev cnt =\n                    if x - prev >= mid then go xs' x (cnt+1)\n                    else go xs' prev cnt\n          binSearch lo hi ans\n            | lo > hi = ans\n            | otherwise =\n                let mid = lo + (hi - lo) `div` 2\n                in if feasible mid\n                     then binSearch (mid+1) hi mid\n                     else binSearch lo (mid-1) ans\n      print (binSearch lo0 hi0 0)\n    _ -> return ()\n```",
+  "finish_reason": "stop",
+  "requested_model": "zai-org/GLM-5.3",
+  "actual_model": "zai-org/GLM-5.3",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "zai-org/GLM-5.3",
+    "actual": "zai-org/GLM-5.3",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "completion_tokens": 285,
+    "prompt_tokens": 686,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 971
+  },
+  "usage_raw": {
+    "completion_tokens": 285,
+    "prompt_tokens": 686,
+    "prompt_tokens_details": {
+      "cached_tokens": 128
+    },
+    "total_tokens": 971
+  },
+  "cost_usd": 0.00206848,
+  "cost_source": "estimated",
+  "request_id": "63123568-8fcd-4581-9c39-ce3330387918",
+  "requested_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-commandcode-20261117\\commandcode-glm53-v16-20261117\\main\\IPOP_2110\\cpp-via-haskell\\attempt-01\\step-01\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "```haskell\nmodule Main (main) where\n\nimport qualified Data.ByteString.Char8 as BS\nimport Data.List (sort)\nimport Data.Maybe (fromMaybe)\n\nreadInts :: IO [Int]\nreadInts = do\n  s <- BS.getContents\n  return $ map (fst . fromMaybe (0,\"\") . BS.readInt) (BS.words s)\n\nmain :: IO ()\nmain = do\n  xs <- readInts\n  case xs of\n    (n:c:rest) -> do\n      let a = take n rest\n          sorted = sort a\n          lo0 = 1\n          hi0 = last sorted - head sorted\n          feasible mid = go (tail sorted) (head sorted) 1 >= c\n            where go [] _ cnt = cnt\n                  go (x:xs') prev cnt =\n                    if x - prev >= mid then go xs' x (cnt+1)\n                    else go xs' prev cnt\n          binSearch lo hi ans\n            | lo > hi = ans\n            | otherwise =\n                let mid = lo + (hi - lo) `div` 2\n                in if feasible mid\n                     then binSearch (mid+1) hi mid\n                     else binSearch lo (mid-1) ans\n      print (binSearch lo0 hi0 0)\n    _ -> return ()\n```",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794896644,
+    "id": "63123568-8fcd-4581-9c39-ce3330387918",
+    "metadata": {
+      "weight_version": "default",
+      "weight_versions": [
+        {
+          "end": 285,
+          "start": 0,
+          "version": "default"
+        }
+      ]
+    },
+    "model": "zai-org/GLM-5.3",
+    "object": "chat.completion",
+    "subconscious": {
+      "logical_model": "subconscious/glm-5.3-marathon",
+      "request_id": "req_0ce9f4e9e8b948d5bb6c0879b929cf47",
+      "trace_id": "f286c84c560f455b9c13cfe4a33caa15"
+    },
+    "usage": {
+      "completion_tokens": 285,
+      "prompt_tokens": 686,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "total_tokens": 971
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.3844400999951176,
+  "received_at": "2026-11-17T06:24:03.691165+00:00",
+  "logical_request_id": "f91287953c46983d5e2479c7d311c2513c6fc9b389b37a9a107f91258cb7e010",
+  "execution_class": "direct_api"
+}

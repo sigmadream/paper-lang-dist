@@ -1,0 +1,86 @@
+{
+  "text": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    long long M, N;\n    if (!(cin >> M >> N)) return 0;\n    vector<long long> dp(N, 1);\n    for (long long k = 0; k < M - 1; ++k) {\n        for (long long j = 1; j < N; ++j) {\n            dp[j] += dp[j - 1];\n        }\n    }\n    cout << dp[N - 1] << \"\\n\";\n    return 0;\n}\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 699,
+    "total_tokens": 1011,
+    "completion_tokens": 312,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 185
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 699,
+    "total_tokens": 1011,
+    "completion_tokens": 312,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 185
+    }
+  },
+  "cost_usd": 0.0005840999999999999,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-648046c7f23d106357eb9fb0f27c3269",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\LC_0062\\cpp-via-prolog\\attempt-04\\step-02\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-648046c7f23d106357eb9fb0f27c3269",
+    "object": "chat.completion",
+    "created": 1794982412,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    long long M, N;\n    if (!(cin >> M >> N)) return 0;\n    vector<long long> dp(N, 1);\n    for (long long k = 0; k < M - 1; ++k) {\n        for (long long j = 1; j < N; ++j) {\n            dp[j] += dp[j - 1];\n        }\n    }\n    cout << dp[N - 1] << \"\\n\";\n    return 0;\n}\n```",
+          "reasoning_content": "We need translate Prolog to C++17 preserving behavior. Compute unique paths M,N up to 100, answer <= 2e9 (fits int but use long long). Need read M N from stdin. Output integer.\n\nEdge: M or N? constraints >=1. Modern approach: dp array size N, initialize 1, iterate M-1 times updating dp[j] += dp[j-1].\n\nBut to preserve exactly, the Prolog code: fill_ones(N) gives list of N ones. iterate M-1 times: update [First|Rest] keeping First, then cumulative sums. last is dp[N-1]. So answer = C(M+N-2, M-1) essentially. Works.\n\nNeed handle input parsing. Use cin >> M >> N. If fails, return 0. Output ans with newline.\n\nReturn exactly one complete source file in fenced code block."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 699,
+      "total_tokens": 1011,
+      "completion_tokens": 312,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 185
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 2.7284806000534445,
+  "received_at": "2026-11-18T06:13:33.711053+00:00",
+  "logical_request_id": "0378cd26d13a289f7d4e36fdc57dc1c6e7775699c60da6c190c4b05f4f4fe3df",
+  "execution_class": "direct_api"
+}

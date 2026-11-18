@@ -1,0 +1,86 @@
+{
+  "text": "```haskell\nmodule Main where\n\nimport Data.Bits (shiftL)\nimport Data.ByteString.Builder\nimport System.IO (stdout, getContents, hPutBuilder)\n\nhanoi :: Int -> Int -> Int -> Int -> Builder\nhanoi n start middle end\n    | n == 1 =\n        intDec start <> charUtf8 ' ' <> intDec end <> charUtf8 '\\n'\n    | otherwise =\n        hanoi (n - 1) start end middle\n        <> intDec start <> charUtf8 ' ' <> intDec end <> charUtf8 '\\n'\n        <> hanoi (n - 1) middle start end\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let n = read (head (words input)) :: Int\n        moves = (1 `shiftL` n) - 1\n    hPutBuilder stdout (intDec moves <> charUtf8 '\\n' <> hanoi n 1 2 3)\n```",
+  "finish_reason": "stop",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "model_evidence": {
+    "status": "exact",
+    "valid": true,
+    "requested": "deepseek/deepseek-v4.1-flash",
+    "actual": "deepseek/deepseek-v4.1-flash",
+    "allowed_response_models": []
+  },
+  "usage": {
+    "prompt_tokens": 713,
+    "total_tokens": 1680,
+    "completion_tokens": 967,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 751
+    }
+  },
+  "usage_raw": {
+    "prompt_tokens": 713,
+    "total_tokens": 1680,
+    "completion_tokens": 967,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 751
+    }
+  },
+  "cost_usd": 0.0013743,
+  "cost_source": "estimated",
+  "request_id": "chatcmpl-0fb511ab8c0ac0cfec09b11cd822acc6",
+  "requested_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "sent_generation": {
+    "max_tokens": 16384,
+    "reasoning_effort": "low"
+  },
+  "effective_generation": null,
+  "effective_generation_reason": "서버가 실효 생성 설정을 보고하지 않았습니다",
+  "raw_response_path": "C:\\Users\\sigma\\orca\\workspaces\\paper-lang-dist\\stickleback\\artifacts-rtt-v1.6\\live-ds41f-20261118\\commandcode-ds41-flash-v16-20261118\\main\\IPOP_11729\\cpp-via-haskell\\attempt-01\\step-07\\response_body.txt",
+  "protocol": "chat_completions",
+  "provider": "compatible",
+  "body": {
+    "id": "chatcmpl-0fb511ab8c0ac0cfec09b11cd822acc6",
+    "object": "chat.completion",
+    "created": 1794986302,
+    "model": "deepseek/deepseek-v4.1-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```haskell\nmodule Main where\n\nimport Data.Bits (shiftL)\nimport Data.ByteString.Builder\nimport System.IO (stdout, getContents, hPutBuilder)\n\nhanoi :: Int -> Int -> Int -> Int -> Builder\nhanoi n start middle end\n    | n == 1 =\n        intDec start <> charUtf8 ' ' <> intDec end <> charUtf8 '\\n'\n    | otherwise =\n        hanoi (n - 1) start end middle\n        <> intDec start <> charUtf8 ' ' <> intDec end <> charUtf8 '\\n'\n        <> hanoi (n - 1) middle start end\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let n = read (head (words input)) :: Int\n        moves = (1 `shiftL` n) - 1\n    hPutBuilder stdout (intDec moves <> charUtf8 '\\n' <> hanoi n 1 2 3)\n```",
+          "reasoning_content": "We need answer only code block Haskell. Need translate preserving. N<=20, moves up to 1,048,575, output large ~ 8MB. Haskell need efficient enough. Need main reads n, output count then moves. Could use Builder? Standard libraries only. Need avoid slow concatenation. We can build list of strings and putStr. For N 20 list million strings okay maybe memory but okay. Better use Data.ByteString.Builder from bytestring shipped with GHC. Use Builder, hPutBuilder stdout. Need count (2^n -1). Generate moves. Recursion appending builder can be lazy? Builder monoid. Define hanoi :: Int -> Int -> Int -> Int -> Builder. For n==1 int start <> space <> int end <> newline. But Int via intDec. Could use char ' ' and '\\n'. Need import Data.ByteString.Builder. hPutBuilder stdout. main.\n\nPotential stack? Recursion depth 20, fine. List? Builder combines. Need ensure strict? Fine.\n\nCount: 1 `shiftL` n - 1 (n Int). Use (1 :: Int) `shiftL` n - 1 precedence.\n\nCode:\n\nmodule Main where\nimport Data.ByteString.Builder\nimport System.IO\nimport Data.Bits\n\nhanoi :: Int -> Int -> Int -> Int -> Builder\nhanoi n start middle end\n | n == 1 = intDec start <> charUtf8 ' ' <> intDec end <> charUtf8 '\\n'\n | otherwise = hanoi (n-1) start end middle <> intDec start <> charUtf8 ' ' <> intDec end <> charUtf8 '\\n' <> hanoi (n-1) middle start end\n\nmain = do\n  input <- getLine? Need handle no input. getContents maybe. \n  let n = read (head (words input)) :: Int\n  hPutBuilder stdout (intDec ((1 `shiftL` n) - 1) <> charUtf8 '\\n' <> hanoi n 1 2 3)\n\nPotential getLine errors if empty, but valid input. Use getContents to be robust:\nmain = do\n s <- getContents\n let n = read (head (words s)) :: Int\n hPutBuilder stdout ...\nhPutBuilder available in bytestring. Need import Data.ByteString.Builder (Builder, intDec, charUtf8, hPutBuilder?) Actually hPutBuilder is in Data.ByteString.Builder, yes. GHC bytestring.\n\ncharUtf8 expects Char. Could use byteString, but okay.\n\nCould optimize with stringBuilder? intDec fine.\n\nNeed output exactly. hPutBuilder no newline after? yes each move newline. count newline. Good.\n\nNeed mention Haskell standard libraries shipped. bytestring is core library? GHC ships bytestring. \"only standard libraries shipped with specified toolchain\" GHC includes bytestring likely. If not, use Prelude. But safe? In many competitive Haskell, Data.ByteString.Builder available. Could also avoid bytestring using ShowS, putStr. For 20 1M moves, ShowS may be memory but okay. But ensure efficient and no hardcode. The evaluator likely GHC with bytestring package. Should be fine. However \"standard libraries shipped\" could include bytestring. GHC distribution includes bytestring as boot lib. Yes.\n\nPotential issue `intDec` in Data.ByteString.Builder. Yes.\n\nNeed exactly one source file fenced. No explanation. Final with code."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 713,
+      "total_tokens": 1680,
+      "completion_tokens": 967,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 751
+      }
+    }
+  },
+  "applied_generation": null,
+  "applied_generation_reason": "서버가 확인한 설정만 기록합니다",
+  "latency_seconds": 9.163479399983771,
+  "received_at": "2026-11-18T07:18:29.413202+00:00",
+  "logical_request_id": "b905f740e15748f0bc7932d925548e742faec5f7f2c0a6dc5a38abeb21ac6eb4",
+  "execution_class": "direct_api"
+}
