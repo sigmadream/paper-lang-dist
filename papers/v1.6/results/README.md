@@ -1,9 +1,23 @@
-# v1.6 실제 실행 자료 안내
+# v1.6 실험 결과와 근거
 
-2026-11-17 현재 GLM 본 실험 300슬롯의 보존 자료와 DeepSeek 본 실험 4슬롯 중단 자료를 정리하였습니다. 전체 두 모델 실험은 완료되지 않았으며, 이 인덱스는 기존 자료로 연결하는 안내입니다. 원자료를 복제하거나 모델 우열·논문 결론을 제시하지 않습니다.
+| 캠페인 | 본 실험 저장/계획 | 해석 |
+| --- | ---: | --- |
+| GLM-5.3, 2026-11-17 | 300/300 | 구조 감사 통과, 공식 임계치 완전성 모두 거짓 |
+| DeepSeek v4.1 Flash, 2026-11-18 | 300/300 | 구조 감사 통과, 공식 임계치 완전성 모두 거짓, 각 임계치 무효 3건 |
+| DeepSeek v4 Pro, 2026-11-17 | 4/300 | HTTP 524 이후 중단, 불명·진행 요청의 예약 0.50달러 보존 |
+| DeepSeek v4 Pro, 2026-11-18 | 11/300 | HTTP 524 결과 불명에서 중단, 예약 0.25달러 보존 |
 
-- [GLM 결과·표·그림·재현·원장 안내](../../../artifacts-rtt-v1.6/live-commandcode-20261117/glm-results.md)
-- [HTTP 524 사고 감사와 원관측/파생값 구분](../../../artifacts-rtt-v1.6/live-commandcode-20261117/incident-524.md)
-- [DeepSeek 다음 실행 인계와 검증 관문](../../../artifacts-rtt-v1.6/live-commandcode-20261117/deepseek-handoff.md)
+GLM 원관측, HTTP 524 감사 후 파생 집계, 후속 측정 실패 집계를 [GLM 결과 설명](../../../artifacts-rtt-v1.6/live-commandcode-20261117/glm-results.md)에서 확인해 주십시오. GLM 사후 처리에서는 측정 실패 3건을 별도 범주로 집계하며, 0.90에서는 HTTP 524 결과 불명 한 건이 무효로 남습니다. Flash는 각 임계치에서 측정 불가에 따른 무효 3건을 동결 규칙에 따라 유지합니다. Pro 두 건은 독립 캠페인으로 보존합니다. 미확인 과금은 각 원장과 중단 보고 기록을 참조해 주십시오.
 
-GLM의 JPlag 측정 불가 3건은 후속 사용자 요청에 따라 실패로 집계하고 별도 사유로 표시했습니다. 각 코드와 기능 검사 통과 근거를 GLM 결과 문서에 수록했으며, 0.85 Haskell은 성공 15/75·P=0.20·H=5.866667·D=29.333333입니다. 기존 원관측·공식 보고서는 보존하고 이번 사후 집계와 구분합니다. HTTP 524 재전송의 감사 판정도 유지하므로 0.90에는 생성 불명 1건이 남습니다. 이번 분류 변경을 기존 동결 규칙의 완전성 통과나 확증적 결론으로 해석하지 않습니다.
+## 데이터와 공식 산출물
+
+- GLM 공식 근거 — [공식 요약 복원 안내](../../../docs/superpowers/verification/2026-11-18-main-v16/README.md), [임계치 표](../../../artifacts-rtt-v1.6/live-commandcode-20261117/commandcode-glm53-v16-20261117/main/report/thresholds.csv), [실패 분류](../../../artifacts-rtt-v1.6/live-commandcode-20261117/commandcode-glm53-v16-20261117/main/report/failures.csv), [지표 그림](../../../artifacts-rtt-v1.6/live-commandcode-20261117/commandcode-glm53-v16-20261117/main/report/metrics.pdf), [프로토콜 그림](../../../artifacts-rtt-v1.6/live-commandcode-20261117/commandcode-glm53-v16-20261117/main/report/protocol.pdf), [그림 입력](../../../artifacts-rtt-v1.6/live-commandcode-20261117/commandcode-glm53-v16-20261117/main/report/figure_inputs.csv), [재현 판정](../../../artifacts-rtt-v1.6/live-commandcode-20261117/commandcode-glm53-v16-20261117/main/report/reproducibility.json), [묶음 해시](../../../artifacts-rtt-v1.6/live-commandcode-20261117/commandcode-glm53-v16-20261117/main/report/reproducibility_bundle/sha256.json), [동결 계약](../../../artifacts-rtt-v1.6/live-commandcode-20261117/commandcode-glm53-v16-20261117/main_design.json), [구조 감사](../../../artifacts-rtt-v1.6/live-commandcode-20261117/commandcode-glm53-v16-20261117/main/completion_audit.json), [원장](../../../artifacts-rtt-v1.6/live-commandcode-20261117/commandcode-glm53-v16-20261117/main/provider_ledger.jsonl)
+- Flash 공식 근거 — [공식 요약 복원 안내](../../../docs/superpowers/verification/2026-11-18-main-v16/README.md), [임계치 표](../../../artifacts-rtt-v1.6/live-ds41f-20261118/commandcode-ds41-flash-v16-20261118/main/report/thresholds.csv), [실패 분류](../../../artifacts-rtt-v1.6/live-ds41f-20261118/commandcode-ds41-flash-v16-20261118/main/report/failures.csv), [지표 그림](../../../artifacts-rtt-v1.6/live-ds41f-20261118/commandcode-ds41-flash-v16-20261118/main/report/metrics.pdf), [프로토콜 그림](../../../artifacts-rtt-v1.6/live-ds41f-20261118/commandcode-ds41-flash-v16-20261118/main/report/protocol.pdf), [그림 입력](../../../artifacts-rtt-v1.6/live-ds41f-20261118/commandcode-ds41-flash-v16-20261118/main/report/figure_inputs.csv), [재현 판정](../../../artifacts-rtt-v1.6/live-ds41f-20261118/commandcode-ds41-flash-v16-20261118/main/report/reproducibility.json), [묶음 해시](../../../artifacts-rtt-v1.6/live-ds41f-20261118/commandcode-ds41-flash-v16-20261118/main/report/reproducibility_bundle/sha256.json), [동결 계약](../../../artifacts-rtt-v1.6/live-ds41f-20261118/commandcode-ds41-flash-v16-20261118/main_design.json), [구조 감사](../../../artifacts-rtt-v1.6/live-ds41f-20261118/commandcode-ds41-flash-v16-20261118/main/completion_audit.json), [원장](../../../artifacts-rtt-v1.6/live-ds41f-20261118/commandcode-ds41-flash-v16-20261118/main/provider_ledger.jsonl)
+- 실행 상태 — [Flash 최종 실행보고서](../../../artifacts-rtt-v1.6/live-ds41f-20261118/최종-실행보고서.md), [첫 Pro와 GLM 중단·수집 보고](../../../artifacts-rtt-v1.6/live-commandcode-20261117/report.md), [HTTP 524 사고 감사](../../../artifacts-rtt-v1.6/live-commandcode-20261117/incident-524.md), [두 번째 Pro 중단 보고](../../../artifacts-rtt-v1.6/live-deepseek-20261118/최종-실행보고서.md)
+- Pro 동결·비용 이력 — [2026-11-17 계약](../../../artifacts-rtt-v1.6/live-commandcode-20261117/commandcode-deepseek_v4_pro-v16-20261117/main_design.json), [2026-11-17 본 실험 원장](../../../artifacts-rtt-v1.6/live-commandcode-20261117/commandcode-deepseek_v4_pro-v16-20261117/main/provider_ledger.jsonl), [2026-11-18 계약](../../../artifacts-rtt-v1.6/live-deepseek-20261118/commandcode-deepseek_v4_pro-v16-20261118/main_design.json), [2026-11-18 본 실험 원장](../../../artifacts-rtt-v1.6/live-deepseek-20261118/commandcode-deepseek_v4_pro-v16-20261118/main/provider_ledger.jsonl)
+- 기준 코퍼스 — [자료와 해시 목록](../../../data/rtt-v1.6/manifest.json), [독립 계산·기능 검증](../../../artifacts-rtt-v1.6/validation/validation.json), [기준 구현 출처](../data/PROVENANCE.md)
+- 원고 작성용 집계 — [경로별 임계치 CSV](임계치별-경로-결과.csv), [표·그림·계약의 근거와 해시](근거.json)
+
+큰 원본 요약 파일과 일부 재현 입력은 분할 압축을 복원하면 원래 경로에서 읽을 수 있습니다. 근거 JSON은 원본 경로와 SHA-256을 제공합니다. 공식 임계치와 실패 CSV는 바로 읽을 수 있습니다.
+
+공식 재현 결과는 저장된 자료로 JSON·CSV·그림 입력을 동일하게 다시 계산하였다는 근거입니다. 판단 가능한 슬롯의 완전성과 가설 지지는 별도로 확인해 주십시오.
