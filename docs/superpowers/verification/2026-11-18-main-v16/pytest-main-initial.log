@@ -1,0 +1,91 @@
+..........................................................F............. [ 12%]
+............F........................................................... [ 25%]
+........................................................................ [ 38%]
+........................................................................ [ 51%]
+........................................................................ [ 64%]
+........................................................................ [ 77%]
+........................................................................ [ 90%]
+.....................................................                    [100%]
+================================== FAILURES ===================================
+_______ test_new_campaign_keeps_problem_protocol_and_uses_api_provider ________
+
+    def test_new_campaign_keeps_problem_protocol_and_uses_api_provider():
+        from scripts import run_deepseek_v41_flash_20261118 as runner
+        from rttdist.providers import APIProvider
+    
+>       cfg = runner.load_config()
+              ^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_deepseek_flash_runner.py:339: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\run_deepseek_v41_flash_20261118.py:108: in load_config
+    assert_destination(core.campaign_root(cfg))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+path = WindowsPath('C:/Users/sigma/orca/workspaces/paper-lang-dist/stickleback/artifacts-rtt-v1.6/live-ds41f-20261118/commandcode-ds41-flash-v16-20261118')
+
+    def assert_destination(path):
+        expected = (ROOT / "artifacts-rtt-v1.6/live-ds41f-20261118").resolve()
+        if OUTPUT.resolve() != expected or not Path(path).resolve().is_relative_to(
+            expected
+        ):
+>           raise ValueError("새 캠페인 전용 경로 밖에는 기록할 수 없습니다")
+E           ValueError: 새 캠페인 전용 경로 밖에는 기록할 수 없습니다
+
+scripts\run_deepseek_v41_flash_20261118.py:67: ValueError
+_______ test_new_campaign_keeps_problem_protocol_and_uses_api_provider ________
+
+    def test_new_campaign_keeps_problem_protocol_and_uses_api_provider():
+        from scripts import run_deepseek_v16_20261118 as runner
+        from rttdist.providers import APIProvider
+    
+>       cfg = runner.load_config()
+              ^^^^^^^^^^^^^^^^^^^^
+
+tests\integration\test_deepseek_restart_runner.py:336: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\run_deepseek_v16_20261118.py:103: in load_config
+    assert_destination(core.campaign_root(cfg))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+path = WindowsPath('C:/Users/sigma/orca/workspaces/paper-lang-dist/stickleback/artifacts-rtt-v1.6/live-deepseek-20261118/commandcode-deepseek_v4_pro-v16-20261118')
+
+    def assert_destination(path):
+        expected = (ROOT / "artifacts-rtt-v1.6/live-deepseek-20261118").resolve()
+        if OUTPUT.resolve() != expected or not Path(path).resolve().is_relative_to(
+            expected
+        ):
+>           raise ValueError("새 캠페인 전용 경로 밖에는 기록할 수 없습니다")
+E           ValueError: 새 캠페인 전용 경로 밖에는 기록할 수 없습니다
+
+scripts\run_deepseek_v16_20261118.py:62: ValueError
+============================== warnings summary ===============================
+tests/integration/test_hops_cli.py: 39 warnings
+tests/integration/test_hops_experiment.py: 39 warnings
+tests/integration/test_v16_report.py: 351 warnings
+  C:\Users\sigma\works\paper-lang-dist\scripts\report_v16.py:103: MatplotlibDeprecationWarning: The x parameter as float was deprecated in Matplotlib 3.10 and will be removed in 3.12. Use int(x) instead.
+    fig.savefig(folder / "metrics.png", dpi=180)
+
+tests/integration/test_hops_cli.py: 39 warnings
+tests/integration/test_hops_experiment.py: 39 warnings
+tests/integration/test_v16_report.py: 351 warnings
+  C:\Users\sigma\works\paper-lang-dist\scripts\report_v16.py:103: MatplotlibDeprecationWarning: The y parameter as float was deprecated in Matplotlib 3.10 and will be removed in 3.12. Use int(y) instead.
+    fig.savefig(folder / "metrics.png", dpi=180)
+
+tests/integration/test_hops_cli.py: 11 warnings
+tests/integration/test_hops_experiment.py: 11 warnings
+tests/integration/test_v16_report.py: 132 warnings
+  C:\Users\sigma\works\paper-lang-dist\scripts\report_v16.py:139: MatplotlibDeprecationWarning: The x parameter as float was deprecated in Matplotlib 3.10 and will be removed in 3.12. Use int(x) instead.
+    fig.savefig(folder / "protocol.png", dpi=180)
+
+tests/integration/test_hops_cli.py: 11 warnings
+tests/integration/test_hops_experiment.py: 11 warnings
+tests/integration/test_v16_report.py: 132 warnings
+  C:\Users\sigma\works\paper-lang-dist\scripts\report_v16.py:139: MatplotlibDeprecationWarning: The y parameter as float was deprecated in Matplotlib 3.10 and will be removed in 3.12. Use int(y) instead.
+    fig.savefig(folder / "protocol.png", dpi=180)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/integration/test_deepseek_flash_runner.py::test_new_campaign_keeps_problem_protocol_and_uses_api_provider
+FAILED tests/integration/test_deepseek_restart_runner.py::test_new_campaign_keeps_problem_protocol_and_uses_api_provider
+2 failed, 555 passed, 1166 warnings in 204.94s (0:03:24)

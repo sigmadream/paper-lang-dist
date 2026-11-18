@@ -55,3 +55,12 @@ uv run --no-sync python scripts/restore_v16_preservation.py
 4. 전체 pytest 557개 통과, 종료 코드 0을 확인했습니다. 경고 1,166개는 Matplotlib 사용 중단 예정 경고입니다. 변경 Python 파일 46개의 black 검사는 종료 코드 0입니다.
 
 [통합 인벤토리와 해시](inventory.json), [pytest 실제 원출력](pytest.log), [pytest 종료 코드](pytest.exitcode), [Python 서식 검사 원출력](black.log)
+
+## 별도 체크아웃의 계약 검사
+
+현재 작업 공간에서 전체 검사를 통과한 뒤 별도 main 체크아웃에서 첫 재검사를 실행했습니다. 동결 YAML에 기록한 Orca 호스트의 절대 출력 경로가 현재 체크아웃의 출력 경로와 달라 계약 검사 두 건이 실패했습니다. 최초 재검사는 종료 코드 1, 555개 통과, 2개 실패였습니다. [최초 main 재검사 원출력](pytest-main-initial.log), [종료 코드](pytest-main-initial.exitcode)
+
+- `tests/integration/test_deepseek_flash_runner.py::test_new_campaign_keeps_problem_protocol_and_uses_api_provider`
+- `tests/integration/test_deepseek_restart_runner.py::test_new_campaign_keeps_problem_protocol_and_uses_api_provider`
+
+[추가 pytest 픽스처](../../../../tests/integration/conftest.py)는 위 두 테스트에서만 동결된 출력 경로의 마지막 두 구성 요소를 실제 캠페인 경로와 대조한 뒤 시험용 출력 루트를 현재 체크아웃과 맞춥니다. 스케줄, 정확 모델·공급자·생성 옵션·예산 검사는 기존 코드로 실행합니다. 기존 실행기와 동결 테스트 파일, YAML, 검토 자료는 기존 바이트 그대로 보존하며 실제 실행기의 출력 경로 관문도 유지됩니다.
