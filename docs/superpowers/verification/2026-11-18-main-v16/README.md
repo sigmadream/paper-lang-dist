@@ -64,3 +64,5 @@ uv run --no-sync python scripts/restore_v16_preservation.py
 - `tests/integration/test_deepseek_restart_runner.py::test_new_campaign_keeps_problem_protocol_and_uses_api_provider`
 
 [추가 pytest 픽스처](../../../../tests/integration/conftest.py)는 위 두 테스트에서만 동결된 출력 경로의 마지막 두 구성 요소를 실제 캠페인 경로와 대조한 뒤 시험용 출력 루트를 현재 체크아웃과 맞춥니다. 스케줄, 정확 모델·공급자·생성 옵션·예산 검사는 기존 코드로 실행합니다. 기존 실행기와 동결 테스트 파일, YAML, 검토 자료는 기존 바이트 그대로 보존하며 실제 실행기의 출력 경로 관문도 유지됩니다.
+
+보완 후 Orca와 main 양쪽에서 전체 pytest를 각각 다시 실행하여 557개 통과, Matplotlib 경고 1,166개, 종료 코드 0을 확인했습니다. 양쪽에서 세 실행 소스 manifest의 195개 참조를 확인했습니다. 이전 GLM 공유 코드의 당시 버전 두 파일은 각 체크아웃의 동결 사본과 일치했습니다. [Orca 재검사 로그](pytest-orca-final.log), [Orca 종료 코드](pytest-orca-final.exitcode), [main 재검사 로그](pytest-main-final.log), [main 종료 코드](pytest-main-final.exitcode), [픽스처 보완 범위와 SHA-256 확인](checkout-fixture-hashes.json)
